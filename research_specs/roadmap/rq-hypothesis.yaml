@@ -1,0 +1,90 @@
+questions:
+- rq_id: RQ-000001
+  code: RQ1
+  title: REPRESENTATION FIDELITY
+  canonical_wording_en: Can a log representation remove syntactic noise while preserving
+    security-critical dynamic parameters?
+  canonical_wording_vi: Có thể xây dựng representation loại bỏ nhiễu cú pháp nhưng
+    vẫn bảo toàn các dynamic parameters có ý nghĩa an toàn quan trọng hay không?
+  target_representation_aspect: Security-semantic parameter retention vs syntactic
+    noise abstraction
+- rq_id: RQ-000002
+  code: RQ2
+  title: CROSS-VIEW ALIGNMENT
+  canonical_wording_en: Can heterogeneous views be aligned without representation
+    collapse or negative transfer while preserving useful view-specific information?
+  canonical_wording_vi: Có thể căn chỉnh các view dị thể mà không gây representation
+    collapse, negative transfer, đồng thời vẫn bảo toàn thông tin hữu ích đặc thù
+    của từng view hay không?
+  target_representation_aspect: Sequential-provenance cross-view latent alignment
+    and collapse prevention
+- rq_id: RQ-000003
+  code: RQ3
+  title: VALIDITY WITHOUT SHORTCUTS
+  canonical_wording_en: Does the representation remain useful after removing dataset
+    shortcuts and under distribution shift?
+  canonical_wording_vi: Representation có còn hữu ích sau khi loại bỏ shortcut của
+    dataset và khi phân phối dữ liệu thay đổi hay không?
+  target_representation_aspect: Robustness under shortcut removal, OOV templates,
+    and temporal distribution shift
+- rq_id: RQ-000004
+  code: RQ4
+  title: WEAK EVIDENCE ATTRIBUTION
+  canonical_wording_en: Can attack evidence be assigned under coarse labels without
+    learning benign administrative behavior as inherently malicious?
+  canonical_wording_vi: Có thể gán đúng attack evidence dưới coarse labels mà không
+    học nhầm các hành vi quản trị hợp pháp thành malicious hay không?
+  target_representation_aspect: Multiple instance learning and risk-aware administrative
+    confounder control
+- rq_id: RQ-000005
+  code: RQ5
+  title: PRIVACY-SECURITY TRADE-OFF
+  canonical_wording_en: What balance between entity continuity and privacy leakage
+    yields useful security representations?
+  canonical_wording_vi: Đâu là sự cân bằng chấp nhận được giữa entity continuity và
+    privacy leakage để representation vẫn hữu ích cho phân tích an toàn?
+  target_representation_aspect: Controlled linkability vs re-identification and inversion
+    attacks
+hypotheses:
+- hyp_id: HYP-000001
+  code: H1
+  rq_id: RQ-000001
+  title: FIDELITY
+  statement: Parameter-aware representation provides greater security-semantic fidelity
+    than template-only representation.
+  falsification_criteria: Frozen probe detection PR-AUC and attribution accuracy on
+    dynamic parameter attacks do not exceed parser-based baseline by statistical significance
+    (p > 0.05).
+- hyp_id: HYP-000002
+  code: H2
+  rq_id: RQ-000002
+  title: MULTI-VIEW
+  statement: Controlled cross-view alignment improves representation quality without
+    inducing collapse or destructive negative transfer.
+  falsification_criteria: Aligned multi-view representation exhibits lower PR-AUC
+    or higher representation variance collapse than the best single-view representation
+    under identical probe capacity.
+- hyp_id: HYP-000003
+  code: H3
+  rq_id: RQ-000003
+  title: ROBUSTNESS
+  statement: The proposed representation retains useful performance after shortcut
+    removal and under distribution shift.
+  falsification_criteria: Representation performance drops to random or lexical-baseline
+    level when dataset shortcuts (host, process, path) are held out or perturbed.
+- hyp_id: HYP-000004
+  code: H4
+  rq_id: RQ-000004
+  title: OPERATIONAL
+  statement: Any representation-quality improvement must remain within explicit latency,
+    throughput, memory and bounded-state constraints.
+  falsification_criteria: Peak memory exceeds stream buffer budget (>500MB/host) or
+    p95 extraction latency exceeds 10ms per event window.
+- hyp_id: HYP-000005
+  code: H5
+  rq_id: RQ-000005
+  title: PRIVACY
+  statement: Controlled linkability can yield a superior Utility-Privacy trade-off
+    compared with both raw identifiers and extreme anonymization.
+  falsification_criteria: Empirical Pareto frontier of Utility vs Re-identification/Inversion
+    risk is strictly dominated by either raw identifiers or complete pseudonymization.

@@ -1,0 +1,86 @@
+axes:
+- axis_id: AXIS-A1
+  code: A1
+  name: REPRESENTATION FIDELITY
+  problem_summary: Security-semantic information loss during dynamic parameter abstraction.
+  path_nodes:
+  - 1.3.1
+  - 2.2.1
+  - '2.3'
+  - 3.2.1
+  - 3.3.1
+  core_question: Can a log representation remove syntactic noise while preserving
+    security-critical dynamic parameters?
+  core_risks:
+  - Parameter loss
+  - Template collision
+  - Parser instability
+  - Unseen templates
+- axis_id: AXIS-A2
+  code: A2
+  name: MULTI-VIEW REPRESENTATION
+  problem_summary: Cross-view misalignment, representation collapse, and negative
+    transfer.
+  path_nodes:
+  - 1.3.2
+  - '2.4'
+  - 3.3.1
+  core_question: Can heterogeneous views be aligned without representation collapse
+    or negative transfer?
+  core_risks:
+  - Representation collapse
+  - Negative transfer
+  - Missing view
+  - Partial correspondence
+- axis_id: AXIS-A3
+  code: A3
+  name: VALIDITY UNDER SHIFT
+  problem_summary: Pipeline leakage, shortcut learning, and non-stationary distribution
+    drift.
+  path_nodes:
+  - 1.3.3
+  - '2.1'
+  - '2.2'
+  - 3.1.2
+  - 3.3.2
+  - 3.3.3
+  core_question: Does the representation remain useful after removing dataset shortcuts
+    and under distribution shift?
+  core_risks:
+  - Pipeline leakage
+  - Dataset shortcuts
+  - Concept/Template drift
+  - Adversarial telemetry
+- axis_id: AXIS-A4
+  code: A4
+  name: WEAK EVIDENCE ATTRIBUTION
+  problem_summary: Coarse labels, credit assignment ambiguity, and admin-noise confusion.
+  path_nodes:
+  - 1.3.4
+  - 2.4.2
+  - 2.4.3
+  - 3.2.3
+  - 3.4.1
+  core_question: Can attack evidence be assigned under coarse labels without learning
+    benign administration as malicious?
+  core_risks:
+  - Granularity mismatch
+  - Wrong credit assignment
+  - Benign administration confused with attack
+- axis_id: AXIS-A5
+  code: A5
+  name: PRIVACY-AWARE OPERATIONAL STREAMING
+  problem_summary: Entity continuity vs privacy leakage under bounded streaming budgets.
+  path_nodes:
+  - 1.3.5
+  - 2.1.2
+  - 2.2.2
+  - 3.3.4
+  - 3.4.2
+  core_question: What balance between entity continuity and privacy leakage yields
+    useful security representations?
+  core_risks:
+  - Re-identification
+  - Membership inference
+  - State explosion
+  - Excessive latency

@@ -1,0 +1,68 @@
+controls:
+- control_id: CTRL-LEAK-001
+  category: LEAKAGE
+  name: Anti-Leakage Temporal Split
+  description: Strict causal-time split (Train < Val < Test); no random temporal shuffling;
+    preprocessors fit only on Train/Val.
+  target_nodes:
+  - 1.3.3.1
+  - 2.1.3.2
+  - 2.2.1.3
+  - 3.1.2.3
+- control_id: CTRL-SHORTCUT-001
+  category: SHORTCUT
+  name: Shortcut Removal & Lexical Baselines
+  description: Explicit simple lexical, path, host, and novelty baselines to verify
+    representation learns security semantics rather than environment artifacts.
+  target_nodes:
+  - 1.3.3.2
+  - 3.2.1.2
+  - 3.2.1.3
+- control_id: CTRL-PROBE-001
+  category: PROBE
+  name: Capacity-Controlled Frozen Probes
+  description: Evaluate representation with frozen extractor using linear/logistic
+    probes, kNN, and shallow MLP without end-to-end retraining.
+  target_nodes:
+  - 1.1.3.2
+  - 2.4.3.3
+  - 3.1.3.1.2
+  - 3.2.1.3
+- control_id: CTRL-PRIV-001
+  category: PRIVACY
+  name: Attack-Based Privacy Leakage Audit
+  description: Empirical re-identification, linkage, membership inference, and model
+    inversion attack benchmarks.
+  target_nodes:
+  - 1.3.5.2
+  - 2.2.2.3
+  - 3.3.4.1
+  - 3.3.4.2
+- control_id: CTRL-ADMIN-001
+  category: ADMIN_NOISE
+  name: Administrative Behavior Confounder Control
+  description: Benign-but-risky admin operations (PowerShell, admin tools) explicitly
+    evaluated without username/role shortcuts.
+  target_nodes:
+  - 1.3.4.2
+  - 2.4.2.1
+  - 2.4.2.2
+  - 3.3.1.1
+- control_id: CTRL-DRIFT-001
+  category: DRIFT
+  name: Unseen Template and Entity Shift Stress Test
+  description: Evaluation under unseen log templates, new hosts, new entities, and
+    novel attack campaigns.
+  target_nodes:
+  - 1.1.1.2.1
+  - 2.3.2.4
+  - 3.3.2.1
+  - 3.3.2.2
+- control_id: CTRL-ADAPT-001
+  category: ADAPTATION
+  name: Online Adaptation Contamination Verification
+  description: Verify online adaptation mechanisms do not contaminate representation
+    by learning attack labels from test streams.
+  target_nodes:
+  - 3.3.2.3
+  - 3.3.2.4

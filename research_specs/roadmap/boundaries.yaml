@@ -1,0 +1,93 @@
+boundaries:
+- boundary_id: BOUNDARY-01
+  title: Tier A Insufficiency for Attack Semantics
+  statement: HDFS/BGL Tier A benchmark alone is insufficient evidence for cyberattack
+    semantics.
+  rationale: System logs evaluate parsing and novelty separation, but lack rich entity
+    provenance and multi-stage cyberattack tactics.
+  affected_sections:
+  - 3.1.2.1
+  - 3.4.3.1
+- boundary_id: BOUNDARY-02
+  title: ATT&CK as Evidence Space, Not Linear State Machine
+  statement: MITRE ATT&CK tactics and techniques constitute an evidence and behavioral
+    taxonomy, not a mandatory linear state sequence.
+  rationale: Real-world multi-stage campaigns exhibit concurrency, backtracking, and
+    technique hopping.
+  affected_sections:
+  - 1.1.2.1
+  - 3.2.3.2
+  - 3.4.1.4
+- boundary_id: BOUNDARY-03
+  title: Dependency Does Not Equal Causality
+  statement: Provenance graph dependency does not automatically imply causal relationship
+    without explicit identification assumptions.
+  rationale: Observable information flow and OS event sequences must not be claimed
+    as causal mechanisms without causal proof.
+  affected_sections:
+  - 1.2.3.2
+  - 2.3.2.2
+- boundary_id: BOUNDARY-04
+  title: Detector Score Does Not Prove Representation Quality
+  statement: High detector accuracy does not automatically prove high-quality feature
+    representation.
+  rationale: An over-parameterized downstream detector can compensate for degraded
+    features by learning downstream shortcuts.
+  affected_sections:
+  - 1.1.3.2
+  - 2.1.1.1
+  - 3.2.1
+- boundary_id: BOUNDARY-05
+  title: Deep Architecture Does Not Guarantee Superiority Over Simple Baseline
+  statement: High-dimensional or deep neural methods do not automatically outperform
+    well-designed simple baselines.
+  rationale: Simple lexical/path/count baselines must be rigorously evaluated to rule
+    out benchmark artifacts.
+  affected_sections:
+  - 3.2.1.2
+  - 3.4.3.5
+- boundary_id: BOUNDARY-06
+  title: Privacy Claim Requires Attack-Based Empirical Evaluation
+  statement: A mechanism cannot be claimed as privacy-preserving without empirical
+    leakage evaluation under realistic threat models.
+  rationale: Theoretical pseudonymization frequently fails under linkage and membership
+    inference attacks.
+  affected_sections:
+  - 2.2.2.3
+  - 3.3.4.3
+- boundary_id: BOUNDARY-07
+  title: Explanation Plausibility Does Not Equal Fidelity
+  statement: Post-hoc explanations do not equal true representation fidelity unless
+    proven to directly govern model predictions.
+  rationale: Attribution subgraphs must be quantitatively verified for prediction
+    influence and completeness.
+  affected_sections:
+  - 3.4.1.1
+  - 3.4.1.2
+- boundary_id: BOUNDARY-08
+  title: Offline Metric Does Not Prove Operational Feasibility
+  statement: High offline F1-score does not demonstrate operational deployability
+    in SOC/SIEM streaming environments.
+  rationale: Operational constraints require bounded state size, low latency (p95),
+    high throughput, and manageable alert burden.
+  affected_sections:
+  - 2.1.2
+  - 3.1.3.3
+  - 3.4.2
+- boundary_id: BOUNDARY-09
+  title: Online Adaptation Must Not Ingest Test Attack Information
+  statement: Online stream adaptation cannot learn from test attack events and label
+    that adaptation as generalization.
+  rationale: Test stream contamination violates foundational machine learning evaluation
+    contracts.
+  affected_sections:
+  - 2.1.3.2
+  - 3.3.2.4
+- boundary_id: BOUNDARY-10
+  title: Negative Results Are Valid Scientific Outcomes
+  statement: Negative results, refuted hypotheses, and failed representations are
+    valid scientific assets, not pipeline failures.
+  rationale: Falsification is a core pillar of the scientific method and prevents
+    biased reporting.
+  affected_sections:
+  - 3.4.3.5

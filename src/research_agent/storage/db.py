@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS roadmaps (
     version TEXT NOT NULL,
     title TEXT NOT NULL,
     summary TEXT,
+    central_object TEXT,
     sha256_hash TEXT,
     created_at TEXT NOT NULL,
     updated_at TEXT NOT NULL
@@ -50,10 +51,14 @@ CREATE TABLE IF NOT EXISTS roadmap_nodes (
     order_index INTEGER NOT NULL,
     code TEXT NOT NULL,
     title TEXT NOT NULL,
-    description TEXT,
+    canonical_text TEXT,
+    expected_role TEXT DEFAULT 'SPECIFICATION',
+    research_axes_json TEXT,
+    methodological_constraints_json TEXT,
     expected_outputs_json TEXT,
     rq_ids_json TEXT,
     hyp_ids_json TEXT,
+    status TEXT DEFAULT 'SPECIFIED',
     metadata_json TEXT,
     FOREIGN KEY (roadmap_id) REFERENCES roadmaps(roadmap_id) ON DELETE CASCADE
 );
@@ -62,7 +67,8 @@ CREATE TABLE IF NOT EXISTS research_questions (
     rq_id TEXT PRIMARY KEY,
     code TEXT NOT NULL,
     title TEXT NOT NULL,
-    description TEXT,
+    canonical_wording_en TEXT NOT NULL,
+    canonical_wording_vi TEXT NOT NULL,
     target_aspect TEXT,
     created_at TEXT NOT NULL
 );
@@ -71,9 +77,61 @@ CREATE TABLE IF NOT EXISTS hypotheses (
     hyp_id TEXT PRIMARY KEY,
     code TEXT NOT NULL,
     rq_id TEXT NOT NULL,
+    title TEXT,
     statement TEXT NOT NULL,
     falsification_criteria TEXT,
     created_at TEXT NOT NULL,
+    FOREIGN KEY (rq_id) REFERENCES research_questions(rq_id)
+);
+
+CREATE TABLE IF NOT EXISTS research_axes (
+    axis_id TEXT PRIMARY KEY,
+    code TEXT NOT NULL,
+    name TEXT NOT NULL,
+    problem_summary TEXT NOT NULL,
+    path_nodes_json TEXT NOT NULL,
+    core_question TEXT NOT NULL,
+    core_risks_json TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS representation_contracts (
+    contract_id TEXT PRIMARY KEY,
+    preserve_json TEXT NOT NULL,
+    invariant_json TEXT NOT NULL,
+    exclude_json TEXT NOT NULL,
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS negative_controls (
+    control_id TEXT PRIMARY KEY,
+    category TEXT NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    target_nodes_json TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS research_boundaries (
+    boundary_id TEXT PRIMARY KEY,
+    title TEXT NOT NULL,
+    statement TEXT NOT NULL,
+    rationale TEXT NOT NULL,
+    affected_sections_json TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS defensibility_questions (
+    question_id TEXT PRIMARY KEY,
+    question_text TEXT NOT NULL,
+    target_audit_scope TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS traceability_entries (
+    rq_id TEXT PRIMARY KEY,
+    code TEXT NOT NULL,
+    gap_nodes_json TEXT NOT NULL,
+    mechanism_nodes_json TEXT NOT NULL,
+    evaluation_nodes_json TEXT NOT NULL,
+    hypothesis_ids_json TEXT NOT NULL,
+    controls_json TEXT NOT NULL,
     FOREIGN KEY (rq_id) REFERENCES research_questions(rq_id)
 );
 
@@ -415,6 +473,26 @@ class DatabaseManager:
             conn.close()
 
     def init_schema(self) -> None:
-        """Execute full schema migration if tables don't exist."""
+        """Execute full schema migration and upgrade tables if needed."""
         with self.session() as conn:
             conn.executescript(SCHEMA_SQL)
+            
+            # Helper to safely add column if missing
+            def ensure_column(table: str, column: str, col_type: str, default: str = ""):
+                cursor = conn.cursor()
+                cursor.execute(f"PRAGMA table_info({table})")
+                cols = [row["name"] for row in cursor.fetchall()]
+                if column not in cols:
+                    default_clause = f" DEFAULT {default}" if default else ""
+                    cursor.execute(f"ALTER TABLE {table} ADD COLUMN {column} {col_type}{default_clause}")
+
+            # Migrations for existing roadmaps tables
+            ensure_column("roadmaps", "central_object", "TEXT", "'feature representation z'")
+            ensure_column("roadmap_nodes", "canonical_text", "TEXT")
+            ensure_column("roadmap_nodes", "expected_role", "TEXT", "'SPECIFICATION'")
+            ensure_column("roadmap_nodes", "research_axes_json", "TEXT", "'[]'")
+            ensure_column("roadmap_nodes", "methodological_constraints_json", "TEXT", "'[]'")
+            ensure_column("roadmap_nodes", "status", "TEXT", "'SPECIFIED'")
+            ensure_column("research_questions", "canonical_wording_en", "TEXT", "''")
+            ensure_column("research_questions", "canonical_wording_vi", "TEXT", "''")
+            ensure_column("hypotheses", "title", "TEXT", "''")

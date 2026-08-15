@@ -3,6 +3,7 @@ Service Interfaces Export
 """
 
 from research_agent.interfaces.roadmap_ingestion import RoadmapIngestionService
+from research_agent.interfaces.roadmap_query import RoadmapQueryService
 from research_agent.interfaces.reference_map_ingestion import (
     ReferenceMappingEntry,
     ReferenceMapSpecification,

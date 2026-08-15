@@ -1,0 +1,111 @@
+traceability_matrix:
+- rq_id: RQ-000001
+  code: RQ1
+  chapter1_gap_nodes:
+  - 1.3.1
+  - 1.3.1.1
+  - 1.3.1.2
+  chapter2_mechanism_nodes:
+  - 2.2.1
+  - 2.2.1.1
+  - 2.2.1.2
+  - 2.3.1
+  - 2.3.1.1
+  chapter3_evaluation_nodes:
+  - 3.2.1
+  - 3.2.1.1
+  - 3.3.1
+  - 3.3.1.1
+  hypothesis_ids:
+  - HYP-000001
+  controls:
+  - CTRL-SHORTCUT-001
+  - CTRL-PROBE-001
+- rq_id: RQ-000002
+  code: RQ2
+  chapter1_gap_nodes:
+  - 1.3.2
+  - 1.3.2.1
+  - 1.3.2.2
+  - 1.3.2.3
+  chapter2_mechanism_nodes:
+  - 2.4.1
+  - 2.4.1.1
+  - 2.4.1.2
+  - 2.4.1.3
+  - 2.4.3.1
+  chapter3_evaluation_nodes:
+  - 3.3.1
+  - 3.3.1.2
+  - 3.3.1.3
+  hypothesis_ids:
+  - HYP-000002
+  controls:
+  - CTRL-PROBE-001
+- rq_id: RQ-000003
+  code: RQ3
+  chapter1_gap_nodes:
+  - 1.3.3
+  - 1.3.3.1
+  - 1.3.3.2
+  - 1.3.3.3
+  chapter2_mechanism_nodes:
+  - 2.1.1
+  - 2.1.3.2
+  - 2.2.1.3
+  chapter3_evaluation_nodes:
+  - 3.1.2
+  - 3.1.2.3
+  - 3.3.2
+  - 3.3.3
+  hypothesis_ids:
+  - HYP-000003
+  controls:
+  - CTRL-LEAK-001
+  - CTRL-SHORTCUT-001
+  - CTRL-DRIFT-001
+  - CTRL-ADAPT-001
+- rq_id: RQ-000004
+  code: RQ4
+  chapter1_gap_nodes:
+  - 1.3.4
+  - 1.3.4.1
+  - 1.3.4.2
+  - 1.3.4.3
+  chapter2_mechanism_nodes:
+  - 2.4.2
+  - 2.4.2.1
+  - 2.4.2.2
+  - 2.4.3.2
+  chapter3_evaluation_nodes:
+  - 3.2.3
+  - 3.2.3.2
+  - 3.4.1
+  - 3.4.1.1
+  hypothesis_ids:
+  - HYP-000004
+  controls:
+  - CTRL-ADMIN-001
+- rq_id: RQ-000005
+  code: RQ5
+  chapter1_gap_nodes:
+  - 1.3.5
+  - 1.3.5.1
+  - 1.3.5.2
+  - 1.3.5.3
+  chapter2_mechanism_nodes:
+  - 2.1.2
+  - 2.2.2
+  - 2.2.2.1
+  - 2.2.2.2
+  - 2.2.2.3
+  chapter3_evaluation_nodes:
+  - 3.3.4
+  - 3.3.4.1
+  - 3.3.4.2
+  - 3.3.4.3
+  - 3.4.2
+  hypothesis_ids:
+  - HYP-000005
+  controls:
+  - CTRL-PRIV-001

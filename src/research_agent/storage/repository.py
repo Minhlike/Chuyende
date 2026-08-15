@@ -23,6 +23,12 @@ from research_agent.schemas import (
     ResearchNode,
     ResearchQuestion,
     Hypothesis,
+    ResearchAxis,
+    RepresentationContract,
+    NegativeControl,
+    ResearchBoundary,
+    DefensibilityQuestion,
+    TraceabilityEntry,
     Source,
     SourceArtifact,
     Evidence,
@@ -180,6 +186,30 @@ class ResearchRepository:
                 created_at=datetime.fromisoformat(row["created_at"]),
                 updated_at=datetime.fromisoformat(row["updated_at"]),
             )
+
+    def list_sources(self) -> List[Source]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM sources ORDER BY source_id ASC").fetchall()
+            return [
+                Source(
+                    source_id=r["source_id"],
+                    title=r["title"],
+                    authors=json.loads(r["authors_json"]),
+                    year=r["year"],
+                    venue=r["venue"],
+                    doi=r["doi"],
+                    url=r["url"],
+                    bibtex=r["bibtex"],
+                    verification_status=VerificationStatus(r["verification_status"]),
+                    verification_method=r["verification_method"],
+                    abstract=r["abstract"],
+                    keywords=json.loads(r["keywords_json"] or "[]"),
+                    metadata=json.loads(r["metadata_json"] or "{}"),
+                    created_at=datetime.fromisoformat(r["created_at"]),
+                    updated_at=datetime.fromisoformat(r["updated_at"]),
+                )
+                for r in rows
+            ]
 
     def save_evidence(self, evidence: Evidence) -> Evidence:
         with self.db.session() as conn:
@@ -644,3 +674,450 @@ class ResearchRepository:
                 )
             )
         return mem
+
+    # -------------------------------------------------------------
+    # Canonical Roadmap & Execution Graph
+    # -------------------------------------------------------------
+    def save_roadmap(self, roadmap: ResearchRoadmap) -> ResearchRoadmap:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO roadmaps (roadmap_id, version, title, summary, central_object, sha256_hash, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(roadmap_id) DO UPDATE SET
+                    version=excluded.version,
+                    title=excluded.title,
+                    summary=excluded.summary,
+                    central_object=excluded.central_object,
+                    sha256_hash=excluded.sha256_hash,
+                    updated_at=excluded.updated_at
+                """,
+                (
+                    roadmap.roadmap_id,
+                    roadmap.version,
+                    roadmap.title,
+                    roadmap.summary,
+                    roadmap.central_object,
+                    roadmap.sha256_hash,
+                    roadmap.created_at.isoformat(),
+                    roadmap.updated_at.isoformat(),
+                )
+            )
+
+            # Insert/Update Nodes
+            for node in roadmap.nodes:
+                conn.execute(
+                    """
+                    INSERT INTO roadmap_nodes (node_id, roadmap_id, parent_node_id, level, order_index, code, title, canonical_text, expected_role, research_axes_json, methodological_constraints_json, expected_outputs_json, rq_ids_json, hyp_ids_json, status, metadata_json)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ON CONFLICT(node_id) DO UPDATE SET
+                        parent_node_id=excluded.parent_node_id,
+                        level=excluded.level,
+                        order_index=excluded.order_index,
+                        code=excluded.code,
+                        title=excluded.title,
+                        canonical_text=excluded.canonical_text,
+                        expected_role=excluded.expected_role,
+                        research_axes_json=excluded.research_axes_json,
+                        methodological_constraints_json=excluded.methodological_constraints_json,
+                        expected_outputs_json=excluded.expected_outputs_json,
+                        rq_ids_json=excluded.rq_ids_json,
+                        hyp_ids_json=excluded.hyp_ids_json,
+                        status=excluded.status,
+                        metadata_json=excluded.metadata_json
+                    """,
+                    (
+                        node.node_id,
+                        roadmap.roadmap_id,
+                        node.parent_node_id,
+                        node.level,
+                        node.order_index,
+                        node.code,
+                        node.title,
+                        node.canonical_text,
+                        node.expected_role,
+                        json.dumps(node.research_axes),
+                        json.dumps(node.methodological_constraints),
+                        json.dumps(node.expected_outputs),
+                        json.dumps(node.rq_ids),
+                        json.dumps(node.hyp_ids),
+                        node.status,
+                        json.dumps(node.metadata),
+                    )
+                )
+
+            # Insert/Update Questions
+            for q in roadmap.questions:
+                conn.execute(
+                    """
+                    INSERT INTO research_questions (rq_id, code, title, canonical_wording_en, canonical_wording_vi, target_aspect, created_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                    ON CONFLICT(rq_id) DO UPDATE SET
+                        code=excluded.code,
+                        title=excluded.title,
+                        canonical_wording_en=excluded.canonical_wording_en,
+                        canonical_wording_vi=excluded.canonical_wording_vi,
+                        target_aspect=excluded.target_aspect
+                    """,
+                    (q.rq_id, q.code, q.title, q.canonical_wording_en, q.canonical_wording_vi, q.target_representation_aspect, q.created_at.isoformat())
+                )
+
+            # Insert/Update Hypotheses
+            for h in roadmap.hypotheses:
+                conn.execute(
+                    """
+                    INSERT INTO hypotheses (hyp_id, code, rq_id, title, statement, falsification_criteria, created_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                    ON CONFLICT(hyp_id) DO UPDATE SET
+                        code=excluded.code,
+                        rq_id=excluded.rq_id,
+                        title=excluded.title,
+                        statement=excluded.statement,
+                        falsification_criteria=excluded.falsification_criteria
+                    """,
+                    (h.hyp_id, h.code, h.rq_id, h.title, h.statement, h.falsification_criteria, h.created_at.isoformat())
+                )
+
+            # Insert/Update Axes
+            for ax in roadmap.axes:
+                conn.execute(
+                    """
+                    INSERT INTO research_axes (axis_id, code, name, problem_summary, path_nodes_json, core_question, core_risks_json)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                    ON CONFLICT(axis_id) DO UPDATE SET
+                        code=excluded.code,
+                        name=excluded.name,
+                        problem_summary=excluded.problem_summary,
+                        path_nodes_json=excluded.path_nodes_json,
+                        core_question=excluded.core_question,
+                        core_risks_json=excluded.core_risks_json
+                    """,
+                    (ax.axis_id, ax.code, ax.name, ax.problem_summary, json.dumps(ax.path_nodes), ax.core_question, json.dumps(ax.core_risks))
+                )
+
+            # Insert/Update Representation Contract
+            if roadmap.representation_contract:
+                conn.execute(
+                    """
+                    INSERT INTO representation_contracts (contract_id, preserve_json, invariant_json, exclude_json, created_at)
+                    VALUES (?, ?, ?, ?, ?)
+                    ON CONFLICT(contract_id) DO UPDATE SET
+                        preserve_json=excluded.preserve_json,
+                        invariant_json=excluded.invariant_json,
+                        exclude_json=excluded.exclude_json
+                    """,
+                    (
+                        "REP-CONTRACT-1.0",
+                        json.dumps(roadmap.representation_contract.preserve),
+                        json.dumps(roadmap.representation_contract.invariant),
+                        json.dumps(roadmap.representation_contract.exclude),
+                        datetime.now(timezone.utc).isoformat(),
+                    )
+                )
+
+            # Insert/Update Negative Controls
+            for ctrl in roadmap.controls:
+                conn.execute(
+                    """
+                    INSERT INTO negative_controls (control_id, category, name, description, target_nodes_json)
+                    VALUES (?, ?, ?, ?, ?)
+                    ON CONFLICT(control_id) DO UPDATE SET
+                        category=excluded.category,
+                        name=excluded.name,
+                        description=excluded.description,
+                        target_nodes_json=excluded.target_nodes_json
+                    """,
+                    (ctrl.control_id, ctrl.category, ctrl.name, ctrl.description, json.dumps(ctrl.target_nodes))
+                )
+
+            # Insert/Update Research Boundaries
+            for b in roadmap.boundaries:
+                conn.execute(
+                    """
+                    INSERT INTO research_boundaries (boundary_id, title, statement, rationale, affected_sections_json)
+                    VALUES (?, ?, ?, ?, ?)
+                    ON CONFLICT(boundary_id) DO UPDATE SET
+                        title=excluded.title,
+                        statement=excluded.statement,
+                        rationale=excluded.rationale,
+                        affected_sections_json=excluded.affected_sections_json
+                    """,
+                    (b.boundary_id, b.title, b.statement, b.rationale, json.dumps(b.affected_sections))
+                )
+
+            # Insert/Update Defensibility Questions
+            for dq in roadmap.defensibility_questions:
+                conn.execute(
+                    """
+                    INSERT INTO defensibility_questions (question_id, question_text, target_audit_scope)
+                    VALUES (?, ?, ?)
+                    ON CONFLICT(question_id) DO UPDATE SET
+                        question_text=excluded.question_text,
+                        target_audit_scope=excluded.target_audit_scope
+                    """,
+                    (dq.question_id, dq.question_text, dq.target_audit_scope)
+                )
+
+            # Insert/Update Traceability Entries
+            for tr in roadmap.traceability_matrix:
+                conn.execute(
+                    """
+                    INSERT INTO traceability_entries (rq_id, code, gap_nodes_json, mechanism_nodes_json, evaluation_nodes_json, hypothesis_ids_json, controls_json)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                    ON CONFLICT(rq_id) DO UPDATE SET
+                        code=excluded.code,
+                        gap_nodes_json=excluded.gap_nodes_json,
+                        mechanism_nodes_json=excluded.mechanism_nodes_json,
+                        evaluation_nodes_json=excluded.evaluation_nodes_json,
+                        hypothesis_ids_json=excluded.hypothesis_ids_json,
+                        controls_json=excluded.controls_json
+                    """,
+                    (
+                        tr.rq_id,
+                        tr.code,
+                        json.dumps(tr.chapter1_gap_nodes),
+                        json.dumps(tr.chapter2_mechanism_nodes),
+                        json.dumps(tr.chapter3_evaluation_nodes),
+                        json.dumps(tr.hypothesis_ids),
+                        json.dumps(tr.controls),
+                    )
+                )
+
+        return roadmap
+
+    def get_roadmap(self, roadmap_id: str = "ROD-000001") -> Optional[ResearchRoadmap]:
+        with self.db.session() as conn:
+            r_row = conn.execute("SELECT * FROM roadmaps WHERE roadmap_id = ?", (roadmap_id,)).fetchone()
+            if not r_row:
+                return None
+
+            nodes = self.list_roadmap_nodes(roadmap_id)
+            questions = self.list_research_questions()
+            hypotheses = self.list_hypotheses()
+            axes = self.list_research_axes()
+            contract = self.get_representation_contract()
+            controls = self.list_negative_controls()
+            boundaries = self.list_research_boundaries()
+            dqs = self.list_defensibility_questions()
+            traceability = self.get_traceability_matrix()
+
+            return ResearchRoadmap(
+                roadmap_id=r_row["roadmap_id"],
+                version=r_row["version"],
+                title=r_row["title"],
+                summary=r_row["summary"] or "",
+                central_object=r_row["central_object"] or "feature representation z",
+                sha256_hash=r_row["sha256_hash"],
+                nodes=nodes,
+                questions=questions,
+                hypotheses=hypotheses,
+                axes=axes,
+                representation_contract=contract,
+                controls=controls,
+                boundaries=boundaries,
+                defensibility_questions=dqs,
+                traceability_matrix=traceability,
+                created_at=datetime.fromisoformat(r_row["created_at"]),
+                updated_at=datetime.fromisoformat(r_row["updated_at"]),
+            )
+
+    def list_roadmap_nodes(self, roadmap_id: str = "ROD-000001") -> List[ResearchNode]:
+        with self.db.session() as conn:
+            rows = conn.execute(
+                "SELECT * FROM roadmap_nodes WHERE roadmap_id = ? ORDER BY level ASC, order_index ASC",
+                (roadmap_id,)
+            ).fetchall()
+            return [
+                ResearchNode(
+                    node_id=r["node_id"],
+                    parent_node_id=r["parent_node_id"],
+                    level=r["level"],
+                    order_index=r["order_index"],
+                    code=r["code"],
+                    title=r["title"],
+                    canonical_text=r["canonical_text"],
+                    expected_role=r["expected_role"] or "SPECIFICATION",
+                    research_axes=json.loads(r["research_axes_json"] or "[]"),
+                    methodological_constraints=json.loads(r["methodological_constraints_json"] or "[]"),
+                    expected_outputs=json.loads(r["expected_outputs_json"] or "[]"),
+                    rq_ids=json.loads(r["rq_ids_json"] or "[]"),
+                    hyp_ids=json.loads(r["hyp_ids_json"] or "[]"),
+                    status=r["status"] or "SPECIFIED",
+                    metadata=json.loads(r["metadata_json"] or "{}"),
+                )
+                for r in rows
+            ]
+
+    def get_roadmap_node_by_code(self, code: str) -> Optional[ResearchNode]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM roadmap_nodes WHERE code = ?", (code,)).fetchone()
+            if not row:
+                return None
+            return ResearchNode(
+                node_id=row["node_id"],
+                parent_node_id=row["parent_node_id"],
+                level=row["level"],
+                order_index=row["order_index"],
+                code=row["code"],
+                title=row["title"],
+                canonical_text=row["canonical_text"],
+                expected_role=row["expected_role"] or "SPECIFICATION",
+                research_axes=json.loads(row["research_axes_json"] or "[]"),
+                methodological_constraints=json.loads(row["methodological_constraints_json"] or "[]"),
+                expected_outputs=json.loads(row["expected_outputs_json"] or "[]"),
+                rq_ids=json.loads(row["rq_ids_json"] or "[]"),
+                hyp_ids=json.loads(row["hyp_ids_json"] or "[]"),
+                status=row["status"] or "SPECIFIED",
+                metadata=json.loads(row["metadata_json"] or "{}"),
+            )
+
+    def list_research_questions(self) -> List[ResearchQuestion]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM research_questions ORDER BY rq_id ASC").fetchall()
+            return [
+                ResearchQuestion(
+                    rq_id=r["rq_id"],
+                    code=r["code"],
+                    title=r["title"],
+                    canonical_wording_en=r["canonical_wording_en"],
+                    canonical_wording_vi=r["canonical_wording_vi"],
+                    target_representation_aspect=r["target_aspect"] or "",
+                    created_at=datetime.fromisoformat(r["created_at"]),
+                )
+                for r in rows
+            ]
+
+    def get_research_question(self, rq_id_or_code: str) -> Optional[ResearchQuestion]:
+        with self.db.session() as conn:
+            row = conn.execute(
+                "SELECT * FROM research_questions WHERE rq_id = ? OR code = ?",
+                (rq_id_or_code, rq_id_or_code)
+            ).fetchone()
+            if not row:
+                return None
+            return ResearchQuestion(
+                rq_id=row["rq_id"],
+                code=row["code"],
+                title=row["title"],
+                canonical_wording_en=row["canonical_wording_en"],
+                canonical_wording_vi=row["canonical_wording_vi"],
+                target_representation_aspect=row["target_aspect"] or "",
+                created_at=datetime.fromisoformat(row["created_at"]),
+            )
+
+    def list_hypotheses(self) -> List[Hypothesis]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM hypotheses ORDER BY hyp_id ASC").fetchall()
+            return [
+                Hypothesis(
+                    hyp_id=r["hyp_id"],
+                    code=r["code"],
+                    rq_id=r["rq_id"],
+                    title=r["title"] or "",
+                    statement=r["statement"],
+                    falsification_criteria=r["falsification_criteria"] or "",
+                    created_at=datetime.fromisoformat(r["created_at"]),
+                )
+                for r in rows
+            ]
+
+    def get_hypothesis(self, hyp_id_or_code: str) -> Optional[Hypothesis]:
+        with self.db.session() as conn:
+            row = conn.execute(
+                "SELECT * FROM hypotheses WHERE hyp_id = ? OR code = ?",
+                (hyp_id_or_code, hyp_id_or_code)
+            ).fetchone()
+            if not row:
+                return None
+            return Hypothesis(
+                hyp_id=row["hyp_id"],
+                code=row["code"],
+                rq_id=row["rq_id"],
+                title=row["title"] or "",
+                statement=row["statement"],
+                falsification_criteria=row["falsification_criteria"] or "",
+                created_at=datetime.fromisoformat(row["created_at"]),
+            )
+
+    def list_research_axes(self) -> List[ResearchAxis]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM research_axes ORDER BY axis_id ASC").fetchall()
+            return [
+                ResearchAxis(
+                    axis_id=r["axis_id"],
+                    code=r["code"],
+                    name=r["name"],
+                    problem_summary=r["problem_summary"],
+                    path_nodes=json.loads(r["path_nodes_json"] or "[]"),
+                    core_question=r["core_question"],
+                    core_risks=json.loads(r["core_risks_json"] or "[]"),
+                )
+                for r in rows
+            ]
+
+    def get_representation_contract(self) -> Optional[RepresentationContract]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM representation_contracts LIMIT 1").fetchone()
+            if not row:
+                return None
+            return RepresentationContract(
+                preserve=json.loads(row["preserve_json"] or "[]"),
+                invariant=json.loads(row["invariant_json"] or "[]"),
+                exclude=json.loads(row["exclude_json"] or "[]"),
+            )
+
+    def list_negative_controls(self) -> List[NegativeControl]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM negative_controls ORDER BY control_id ASC").fetchall()
+            return [
+                NegativeControl(
+                    control_id=r["control_id"],
+                    category=r["category"],
+                    name=r["name"],
+                    description=r["description"],
+                    target_nodes=json.loads(r["target_nodes_json"] or "[]"),
+                )
+                for r in rows
+            ]
+
+    def list_research_boundaries(self) -> List[ResearchBoundary]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM research_boundaries ORDER BY boundary_id ASC").fetchall()
+            return [
+                ResearchBoundary(
+                    boundary_id=r["boundary_id"],
+                    title=r["title"],
+                    statement=r["statement"],
+                    rationale=r["rationale"],
+                    affected_sections=json.loads(r["affected_sections_json"] or "[]"),
+                )
+                for r in rows
+            ]
+
+    def list_defensibility_questions(self) -> List[DefensibilityQuestion]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM defensibility_questions ORDER BY question_id ASC").fetchall()
+            return [
+                DefensibilityQuestion(
+                    question_id=r["question_id"],
+                    question_text=r["question_text"],
+                    target_audit_scope=r["target_audit_scope"],
+                )
+                for r in rows
+            ]
+
+    def get_traceability_matrix(self) -> List[TraceabilityEntry]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM traceability_entries ORDER BY rq_id ASC").fetchall()
+            return [
+                TraceabilityEntry(
+                    rq_id=r["rq_id"],
+                    code=r["code"],
+                    chapter1_gap_nodes=json.loads(r["gap_nodes_json"] or "[]"),
+                    chapter2_mechanism_nodes=json.loads(r["mechanism_nodes_json"] or "[]"),
+                    chapter3_evaluation_nodes=json.loads(r["evaluation_nodes_json"] or "[]"),
+                    hypothesis_ids=json.loads(r["hypothesis_ids_json"] or "[]"),
+                    controls=json.loads(r["controls_json"] or "[]"),
+                )
+                for r in rows
+            ]
