@@ -77,8 +77,21 @@ from research_agent.schemas import (
     SessionRecord,
     StatusTransitionRecord,
     ContextBundle,
-    MemoryHealthReport,
     VerificationRecord,
+    ArgumentBundle,
+    EvidenceGap,
+    AssumptionRecord,
+    VerificationRequest,
+    ReasoningIssue,
+    ArgumentGraph,
+)
+from research_agent.core.enums import (
+    ArgumentReadinessState,
+    ReasoningIssueType,
+    VerificationRequestType,
+    VerificationRequestStatus,
+    ArgumentNodeType,
+    ArgumentEdgeType,
 )
 from research_agent.storage.db import DatabaseManager
 
@@ -385,6 +398,14 @@ class ResearchRepository:
             else:
                 rows = conn.execute("SELECT * FROM evidences ORDER BY evidence_id ASC").fetchall()
             return [self._row_to_evidence(r) for r in rows]
+
+    def list_evidence_for_claim(self, claim_id: str) -> List[Evidence]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM evidences WHERE supports_claim_id = ? ORDER BY evidence_id ASC", (claim_id,)).fetchall()
+            return [self._row_to_evidence(r) for r in rows]
+
+    def get_rq(self, code_or_id: str) -> Optional[ResearchQuestion]:
+        return self.get_research_question(code_or_id)
 
     # -------------------------------------------------------------
     # Ownership Mappings
@@ -2469,6 +2490,22 @@ class ResearchRepository:
                 for r in rows
             ]
 
+    def list_hypotheses_for_rq(self, rq_id: str) -> List[Hypothesis]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM hypotheses WHERE rq_id = ? ORDER BY hyp_id ASC", (rq_id,)).fetchall()
+            return [
+                Hypothesis(
+                    hyp_id=r["hyp_id"],
+                    code=r["code"],
+                    rq_id=r["rq_id"],
+                    title=r["title"] or "",
+                    statement=r["statement"],
+                    falsification_criteria=r["falsification_criteria"] or "",
+                    created_at=datetime.fromisoformat(r["created_at"]),
+                )
+                for r in rows
+            ]
+
     def get_hypothesis(self, hyp_id_or_code: str) -> Optional[Hypothesis]:
         with self.db.session() as conn:
             row = conn.execute(
@@ -2569,3 +2606,508 @@ class ResearchRepository:
                 )
                 for r in rows
             ]
+
+    # -------------------------------------------------------------
+    # Argument Bundles (Prompt 5 Section 57)
+    # -------------------------------------------------------------
+    def save_argument_bundle(self, bundle: ArgumentBundle) -> ArgumentBundle:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO argument_bundles (
+                    bundle_id, roadmap_node, objective, research_questions_json, hypotheses_json,
+                    claims_json, evidence_json, contradicting_evidence_json, assumptions_json,
+                    counterarguments_json, candidate_inferences_json, falsification_plans_json,
+                    ownership_summary_json, uncertainty, open_questions_json, discourse_plan_json,
+                    readiness_state, issues_json, verification_requests_json, generated_at, version
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(bundle_id) DO UPDATE SET
+                    roadmap_node=excluded.roadmap_node,
+                    objective=excluded.objective,
+                    research_questions_json=excluded.research_questions_json,
+                    hypotheses_json=excluded.hypotheses_json,
+                    claims_json=excluded.claims_json,
+                    evidence_json=excluded.evidence_json,
+                    contradicting_evidence_json=excluded.contradicting_evidence_json,
+                    assumptions_json=excluded.assumptions_json,
+                    counterarguments_json=excluded.counterarguments_json,
+                    candidate_inferences_json=excluded.candidate_inferences_json,
+                    falsification_plans_json=excluded.falsification_plans_json,
+                    ownership_summary_json=excluded.ownership_summary_json,
+                    uncertainty=excluded.uncertainty,
+                    open_questions_json=excluded.open_questions_json,
+                    discourse_plan_json=excluded.discourse_plan_json,
+                    readiness_state=excluded.readiness_state,
+                    issues_json=excluded.issues_json,
+                    verification_requests_json=excluded.verification_requests_json,
+                    generated_at=excluded.generated_at,
+                    version=excluded.version
+                """,
+                (
+                    bundle.bundle_id,
+                    bundle.roadmap_node,
+                    bundle.objective,
+                    json.dumps(bundle.research_questions),
+                    json.dumps(bundle.hypotheses),
+                    json.dumps(bundle.claims),
+                    json.dumps(bundle.evidence),
+                    json.dumps(bundle.contradicting_evidence),
+                    json.dumps([a.model_dump(mode="json") for a in bundle.assumptions]),
+                    json.dumps([c.model_dump(mode="json") for c in bundle.counterarguments]),
+                    json.dumps([i.model_dump(mode="json") for i in bundle.candidate_inferences]),
+                    json.dumps([f.model_dump(mode="json") for f in bundle.falsification_plans]),
+                    json.dumps(bundle.ownership_summary),
+                    bundle.uncertainty,
+                    json.dumps(bundle.open_questions),
+                    json.dumps(bundle.discourse_plan.model_dump(mode="json") if bundle.discourse_plan else {}),
+                    bundle.readiness_state.value if hasattr(bundle.readiness_state, "value") else str(bundle.readiness_state),
+                    json.dumps([iss.model_dump(mode="json") for iss in bundle.issues]),
+                    json.dumps([v.model_dump(mode="json") for v in bundle.verification_requests]),
+                    bundle.generated_at.isoformat(),
+                    bundle.version,
+                )
+            )
+            # Index into FTS
+            self._index_fts_on_conn(
+                conn=conn,
+                entity_id=bundle.bundle_id,
+                entity_type="ARGUMENT_BUNDLE",
+                title=f"Argument Bundle: {bundle.roadmap_node} — {bundle.objective[:60]}",
+                body=f"{bundle.objective} {bundle.uncertainty}",
+                tags=f"{bundle.roadmap_node} {bundle.readiness_state.value}",
+            )
+        return bundle
+
+    def get_argument_bundle(self, bundle_id: str) -> Optional[ArgumentBundle]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM argument_bundles WHERE bundle_id = ?", (bundle_id,)).fetchone()
+            if not row:
+                return None
+            return self._row_to_argument_bundle(row)
+
+    def list_argument_bundles(self, roadmap_node: Optional[str] = None) -> List[ArgumentBundle]:
+        with self.db.session() as conn:
+            if roadmap_node:
+                rows = conn.execute("SELECT * FROM argument_bundles WHERE roadmap_node = ? ORDER BY generated_at DESC", (roadmap_node,)).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM argument_bundles ORDER BY generated_at DESC").fetchall()
+            return [self._row_to_argument_bundle(r) for r in rows]
+
+    def _row_to_argument_bundle(self, row: Any) -> ArgumentBundle:
+        from research_agent.schemas.reasoning import (
+            AssumptionRecord,
+            CounterargumentRecord,
+            InferenceRecord,
+            FalsificationPlan,
+            ReasoningIssue,
+            VerificationRequest,
+            DiscoursePlan,
+        )
+        dp_data = json.loads(row["discourse_plan_json"] or "{}")
+        discourse_plan = DiscoursePlan.model_validate(dp_data) if dp_data else None
+        return ArgumentBundle(
+            bundle_id=row["bundle_id"],
+            roadmap_node=row["roadmap_node"],
+            objective=row["objective"],
+            research_questions=json.loads(row["research_questions_json"] or "[]"),
+            hypotheses=json.loads(row["hypotheses_json"] or "[]"),
+            claims=json.loads(row["claims_json"] or "[]"),
+            evidence=json.loads(row["evidence_json"] or "[]"),
+            contradicting_evidence=json.loads(row["contradicting_evidence_json"] or "[]"),
+            assumptions=[AssumptionRecord.model_validate(a) for a in json.loads(row["assumptions_json"] or "[]")],
+            counterarguments=[CounterargumentRecord.model_validate(c) for c in json.loads(row["counterarguments_json"] or "[]")],
+            candidate_inferences=[InferenceRecord.model_validate(i) for i in json.loads(row["candidate_inferences_json"] or "[]")],
+            falsification_plans=[FalsificationPlan.model_validate(f) for f in json.loads(row["falsification_plans_json"] or "[]")],
+            ownership_summary=json.loads(row["ownership_summary_json"] or "{}"),
+            uncertainty=row["uncertainty"] or "",
+            open_questions=json.loads(row["open_questions_json"] or "[]"),
+            discourse_plan=discourse_plan,
+            readiness_state=ArgumentReadinessState(row["readiness_state"]) if row["readiness_state"] in ArgumentReadinessState.__members__.values() else ArgumentReadinessState.DRAFT,
+            issues=[ReasoningIssue.model_validate(iss) for iss in json.loads(row["issues_json"] or "[]")],
+            verification_requests=[VerificationRequest.model_validate(v) for v in json.loads(row["verification_requests_json"] or "[]")],
+            generated_at=datetime.fromisoformat(row["generated_at"]),
+            version=row["version"] or "1.0.0",
+        )
+
+    # -------------------------------------------------------------
+    # Evidence Gaps (Prompt 5 Section 11)
+    # -------------------------------------------------------------
+    def save_evidence_gap(self, gap: EvidenceGap) -> EvidenceGap:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO evidence_gaps (
+                    gap_id, claim_id, missing_evidence, why_required,
+                    possible_source_search, suggested_experiment, severity,
+                    related_node_code, status, created_at, updated_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(gap_id) DO UPDATE SET
+                    claim_id=excluded.claim_id,
+                    missing_evidence=excluded.missing_evidence,
+                    why_required=excluded.why_required,
+                    possible_source_search=excluded.possible_source_search,
+                    suggested_experiment=excluded.suggested_experiment,
+                    severity=excluded.severity,
+                    related_node_code=excluded.related_node_code,
+                    status=excluded.status,
+                    updated_at=excluded.updated_at
+                """,
+                (
+                    gap.gap_id,
+                    gap.claim_id,
+                    gap.missing_evidence,
+                    gap.why_required,
+                    gap.possible_source_search,
+                    gap.suggested_experiment,
+                    gap.severity,
+                    gap.related_node_code,
+                    gap.status,
+                    gap.created_at.isoformat(),
+                    gap.updated_at.isoformat(),
+                )
+            )
+            # Index into FTS
+            self._index_fts_on_conn(
+                conn=conn,
+                entity_id=gap.gap_id,
+                entity_type="EVIDENCE_GAP",
+                title=f"Evidence Gap: {gap.claim_id} — {gap.missing_evidence[:60]}",
+                body=f"{gap.why_required} {gap.suggested_experiment or ''}",
+                tags=f"{gap.severity} {gap.status} {gap.related_node_code or ''}",
+            )
+        return gap
+
+    def get_evidence_gap(self, gap_id: str) -> Optional[EvidenceGap]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM evidence_gaps WHERE gap_id = ?", (gap_id,)).fetchone()
+            if not row:
+                return None
+            return EvidenceGap(
+                gap_id=row["gap_id"],
+                claim_id=row["claim_id"],
+                missing_evidence=row["missing_evidence"],
+                why_required=row["why_required"],
+                possible_source_search=row["possible_source_search"],
+                suggested_experiment=row["suggested_experiment"],
+                severity=row["severity"],
+                related_node_code=row["related_node_code"],
+                status=row["status"],
+                created_at=datetime.fromisoformat(row["created_at"]),
+                updated_at=datetime.fromisoformat(row["updated_at"]),
+            )
+
+    def list_evidence_gaps(self, status: Optional[str] = None) -> List[EvidenceGap]:
+        with self.db.session() as conn:
+            if status:
+                rows = conn.execute("SELECT * FROM evidence_gaps WHERE status = ? ORDER BY created_at DESC", (status,)).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM evidence_gaps ORDER BY created_at DESC").fetchall()
+            return [
+                EvidenceGap(
+                    gap_id=r["gap_id"],
+                    claim_id=r["claim_id"],
+                    missing_evidence=r["missing_evidence"],
+                    why_required=r["why_required"],
+                    possible_source_search=r["possible_source_search"],
+                    suggested_experiment=r["suggested_experiment"],
+                    severity=r["severity"],
+                    related_node_code=r["related_node_code"],
+                    status=r["status"],
+                    created_at=datetime.fromisoformat(r["created_at"]),
+                    updated_at=datetime.fromisoformat(r["updated_at"]),
+                )
+                for r in rows
+            ]
+
+    # -------------------------------------------------------------
+    # Assumptions (Prompt 5 Section 16)
+    # -------------------------------------------------------------
+    def save_assumption(self, ass: AssumptionRecord) -> AssumptionRecord:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO assumptions (
+                    assumption_id, statement, is_explicit, required_by_json,
+                    evidence_or_basis, testability, violation_consequence, status, created_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(assumption_id) DO UPDATE SET
+                    statement=excluded.statement,
+                    is_explicit=excluded.is_explicit,
+                    required_by_json=excluded.required_by_json,
+                    evidence_or_basis=excluded.evidence_or_basis,
+                    testability=excluded.testability,
+                    violation_consequence=excluded.violation_consequence,
+                    status=excluded.status
+                """,
+                (
+                    ass.assumption_id,
+                    ass.statement,
+                    1 if ass.is_explicit else 0,
+                    json.dumps(ass.required_by),
+                    ass.evidence_or_basis,
+                    ass.testability,
+                    ass.violation_consequence,
+                    ass.status,
+                    ass.created_at.isoformat(),
+                )
+            )
+            # Index into FTS
+            self._index_fts_on_conn(
+                conn=conn,
+                entity_id=ass.assumption_id,
+                entity_type="ASSUMPTION",
+                title=f"Assumption: {ass.statement[:60]}...",
+                body=f"{ass.statement} {ass.violation_consequence}",
+                tags=f"{ass.testability} {ass.status}",
+            )
+        return ass
+
+    def get_assumption(self, assumption_id: str) -> Optional[AssumptionRecord]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM assumptions WHERE assumption_id = ?", (assumption_id,)).fetchone()
+            if not row:
+                return None
+            return AssumptionRecord(
+                assumption_id=row["assumption_id"],
+                statement=row["statement"],
+                is_explicit=bool(row["is_explicit"]),
+                required_by=json.loads(row["required_by_json"] or "[]"),
+                evidence_or_basis=row["evidence_or_basis"],
+                testability=row["testability"],
+                violation_consequence=row["violation_consequence"],
+                status=row["status"],
+                created_at=datetime.fromisoformat(row["created_at"]),
+            )
+
+    def list_assumptions(self) -> List[AssumptionRecord]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM assumptions ORDER BY assumption_id ASC").fetchall()
+            return [
+                AssumptionRecord(
+                    assumption_id=r["assumption_id"],
+                    statement=r["statement"],
+                    is_explicit=bool(r["is_explicit"]),
+                    required_by=json.loads(r["required_by_json"] or "[]"),
+                    evidence_or_basis=r["evidence_or_basis"],
+                    testability=r["testability"],
+                    violation_consequence=r["violation_consequence"],
+                    status=r["status"],
+                    created_at=datetime.fromisoformat(r["created_at"]),
+                )
+                for r in rows
+            ]
+
+    # -------------------------------------------------------------
+    # Verification Requests (Prompt 5 Section 102, Prompt 6 Interface)
+    # -------------------------------------------------------------
+    def save_verification_request(self, req: VerificationRequest) -> VerificationRequest:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO verification_requests (
+                    request_id, request_type, target_claim_id, target_equation_id,
+                    target_table_or_figure_id, description, input_payload_json,
+                    status, verification_result_json, requested_at, completed_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(request_id) DO UPDATE SET
+                    status=excluded.status,
+                    verification_result_json=excluded.verification_result_json,
+                    completed_at=excluded.completed_at
+                """,
+                (
+                    req.request_id,
+                    req.request_type.value if hasattr(req.request_type, "value") else str(req.request_type),
+                    req.target_claim_id,
+                    req.target_equation_id,
+                    req.target_table_or_figure_id,
+                    req.description,
+                    json.dumps(req.input_payload),
+                    req.status.value if hasattr(req.status, "value") else str(req.status),
+                    json.dumps(req.verification_result) if req.verification_result else None,
+                    req.requested_at.isoformat(),
+                    req.completed_at.isoformat() if req.completed_at else None,
+                )
+            )
+        return req
+
+    def get_verification_request(self, request_id: str) -> Optional[VerificationRequest]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM verification_requests WHERE request_id = ?", (request_id,)).fetchone()
+            if not row:
+                return None
+            return VerificationRequest(
+                request_id=row["request_id"],
+                request_type=VerificationRequestType(row["request_type"]),
+                target_claim_id=row["target_claim_id"],
+                target_equation_id=row["target_equation_id"],
+                target_table_or_figure_id=row["target_table_or_figure_id"],
+                description=row["description"],
+                input_payload=json.loads(row["input_payload_json"] or "{}"),
+                status=VerificationRequestStatus(row["status"]),
+                verification_result=json.loads(row["verification_result_json"]) if row["verification_result_json"] else None,
+                requested_at=datetime.fromisoformat(row["requested_at"]),
+                completed_at=datetime.fromisoformat(row["completed_at"]) if row["completed_at"] else None,
+            )
+
+    def list_verification_requests(self, status: Optional[VerificationRequestStatus] = None) -> List[VerificationRequest]:
+        with self.db.session() as conn:
+            if status:
+                rows = conn.execute("SELECT * FROM verification_requests WHERE status = ? ORDER BY requested_at DESC", (status.value,)).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM verification_requests ORDER BY requested_at DESC").fetchall()
+            return [
+                VerificationRequest(
+                    request_id=r["request_id"],
+                    request_type=VerificationRequestType(r["request_type"]),
+                    target_claim_id=r["target_claim_id"],
+                    target_equation_id=r["target_equation_id"],
+                    target_table_or_figure_id=r["target_table_or_figure_id"],
+                    description=r["description"],
+                    input_payload=json.loads(r["input_payload_json"] or "{}"),
+                    status=VerificationRequestStatus(r["status"]),
+                    verification_result=json.loads(r["verification_result_json"]) if r["verification_result_json"] else None,
+                    requested_at=datetime.fromisoformat(r["requested_at"]),
+                    completed_at=datetime.fromisoformat(r["completed_at"]) if r["completed_at"] else None,
+                )
+                for r in rows
+            ]
+
+    # -------------------------------------------------------------
+    # Reasoning Issues (Prompt 5 Section 63)
+    # -------------------------------------------------------------
+    def save_reasoning_issue(self, issue: ReasoningIssue) -> ReasoningIssue:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO reasoning_issues (
+                    issue_id, issue_type, affected_entity_id, message, severity, mitigation, created_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(issue_id) DO UPDATE SET
+                    message=excluded.message,
+                    severity=excluded.severity,
+                    mitigation=excluded.mitigation
+                """,
+                (
+                    issue.issue_id,
+                    issue.issue_type.value if hasattr(issue.issue_type, "value") else str(issue.issue_type),
+                    issue.affected_entity_id,
+                    issue.message,
+                    issue.severity,
+                    issue.mitigation,
+                    datetime.now(timezone.utc).isoformat(),
+                )
+            )
+        return issue
+
+    def list_reasoning_issues(self, affected_entity_id: Optional[str] = None) -> List[ReasoningIssue]:
+        with self.db.session() as conn:
+            if affected_entity_id:
+                rows = conn.execute("SELECT * FROM reasoning_issues WHERE affected_entity_id = ? ORDER BY issue_id ASC", (affected_entity_id,)).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM reasoning_issues ORDER BY issue_id ASC").fetchall()
+            return [
+                ReasoningIssue(
+                    issue_id=r["issue_id"],
+                    issue_type=ReasoningIssueType(r["issue_type"]),
+                    affected_entity_id=r["affected_entity_id"],
+                    message=r["message"],
+                    severity=r["severity"],
+                    mitigation=r["mitigation"],
+                )
+                for r in rows
+            ]
+
+    # -------------------------------------------------------------
+    # Argument Graph Nodes & Edges (Prompt 5 Section 40)
+    # -------------------------------------------------------------
+    def save_argument_node(self, node: ArgumentNode) -> ArgumentNode:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO argument_nodes (node_id, node_type, title, statement, entity_ref_id, ownership, metadata_json, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(node_id) DO UPDATE SET
+                    node_type=excluded.node_type,
+                    title=excluded.title,
+                    statement=excluded.statement,
+                    entity_ref_id=excluded.entity_ref_id,
+                    ownership=excluded.ownership,
+                    metadata_json=excluded.metadata_json
+                """,
+                (
+                    node.node_id,
+                    node.node_type.value if hasattr(node.node_type, "value") else str(node.node_type),
+                    node.title,
+                    node.statement,
+                    node.entity_ref_id,
+                    node.ownership.value if hasattr(node.ownership, "value") else str(node.ownership),
+                    json.dumps(node.metadata),
+                    datetime.now(timezone.utc).isoformat(),
+                )
+            )
+        return node
+
+    def save_argument_edge(self, edge: ArgumentEdge) -> ArgumentEdge:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO argument_edges (edge_id, source_node_id, target_node_id, relation_type, weight, notes, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(edge_id) DO UPDATE SET
+                    relation_type=excluded.relation_type,
+                    weight=excluded.weight,
+                    notes=excluded.notes
+                """,
+                (
+                    edge.edge_id,
+                    edge.source_node_id,
+                    edge.target_node_id,
+                    edge.relation_type.value if hasattr(edge.relation_type, "value") else str(edge.relation_type),
+                    edge.weight,
+                    edge.notes,
+                    datetime.now(timezone.utc).isoformat(),
+                )
+            )
+        return edge
+
+    def get_argument_graph(self, graph_id: str = "MAIN_ARGUMENT_GRAPH") -> ArgumentGraph:
+        with self.db.session() as conn:
+            n_rows = conn.execute("SELECT * FROM argument_nodes ORDER BY node_id ASC").fetchall()
+            e_rows = conn.execute("SELECT * FROM argument_edges ORDER BY edge_id ASC").fetchall()
+            nodes = [
+                ArgumentNode(
+                    node_id=r["node_id"],
+                    node_type=ArgumentNodeType(r["node_type"]),
+                    title=r["title"],
+                    statement=r["statement"],
+                    entity_ref_id=r["entity_ref_id"],
+                    ownership=IntellectualOwnership(r["ownership"]),
+                    metadata=json.loads(r["metadata_json"] or "{}"),
+                )
+                for r in n_rows
+            ]
+            edges = [
+                ArgumentEdge(
+                    edge_id=r["edge_id"],
+                    source_node_id=r["source_node_id"],
+                    target_node_id=r["target_node_id"],
+                    relation_type=ArgumentEdgeType(r["relation_type"]),
+                    weight=r["weight"],
+                    notes=r["notes"],
+                )
+                for r in e_rows
+            ]
+            root_claims = [n.node_id for n in nodes if n.node_type == ArgumentNodeType.CLAIM]
+            return ArgumentGraph(
+                graph_id=graph_id,
+                nodes=nodes,
+                edges=edges,
+                completeness_score=1.0 if nodes else 0.0,
+                is_cyclic=False,
+                root_claims=root_claims,
+            )

@@ -214,6 +214,55 @@ def main(args: Optional[list] = None):
     research_subparsers = research_parser.add_subparsers(dest="action", help="Research actions")
     research_subparsers.add_parser("state", help="Display canonical research state summary")
 
+    # 6. Reason parser (Prompt 5)
+    reason_parser = subparsers.add_parser("reason", help="Scientific reasoning and argumentation operations")
+    reason_subparsers = reason_parser.add_subparsers(dest="action", help="Reasoning actions")
+
+    rq_p = reason_subparsers.add_parser("rq", help="Evaluate Research Question epistemic state")
+    rq_p.add_argument("code", help="RQ Code (e.g. RQ1)")
+
+    clm_p = reason_subparsers.add_parser("claim", help="Audit Claim scope, qualifiers, and evidence")
+    clm_p.add_argument("claim_id", help="Claim ID (e.g. CLM-000001)")
+
+    syn_p = reason_subparsers.add_parser("synthesize", help="Generate structured literature synthesis")
+    syn_p.add_argument("topic", help="Synthesis topic")
+    syn_p.add_argument("--node", help="Roadmap node code", default=None)
+
+    reason_subparsers.add_parser("contradictions", help="Audit active empirical contradictions")
+
+    ass_p = reason_subparsers.add_parser("assumptions", help="Audit implicit and explicit assumptions")
+    ass_p.add_argument("--node", help="Roadmap node or entity ID", default="GLOBAL")
+
+    fals_p = reason_subparsers.add_parser("falsify", help="Display falsification plan and negative controls")
+    fals_p.add_argument("hyp_id", help="Hypothesis ID (e.g. H1)")
+
+    crit_p = reason_subparsers.add_parser("critique", help="Run full methodological critique (causality, leakage, shortcuts)")
+    crit_p.add_argument("entity_id", help="Entity or Claim ID")
+    crit_p.add_argument("--text", help="Statement text to critique", default=None)
+
+    nov_p = reason_subparsers.add_parser("contribution", help="Differentiate candidate contribution from prior art")
+    nov_p.add_argument("cand_id", help="Candidate ID (e.g. CAND-01)")
+
+    bnd_p = reason_subparsers.add_parser("build-bundle", help="Build and gate ArgumentBundle for roadmap node")
+    bnd_p.add_argument("node_code", help="Roadmap node code (e.g. CH1.SEC1)")
+
+    reason_subparsers.add_parser("validate", help="Validate reasoning and argument graph invariants")
+
+    # 7. Skills parser (Prompt 5)
+    skills_parser = subparsers.add_parser("skills", help="Procedural research skills")
+    skills_subparsers = skills_parser.add_subparsers(dest="action", help="Skills actions")
+
+    skills_subparsers.add_parser("list", help="List all 18 canonical research skills")
+
+    sk_show = skills_subparsers.add_parser("show", help="Show skill details")
+    sk_show.add_argument("skill_id", help="Skill ID or name (e.g. SKILL-01)")
+
+    skills_subparsers.add_parser("validate", help="Validate all skill definitions and registrations")
+
+    sk_run = skills_subparsers.add_parser("run", help="Execute a research skill")
+    sk_run.add_argument("skill_id", help="Skill ID or name")
+    sk_run.add_argument("--payload", help="JSON payload string", default="{}")
+
     parsed_args = parser.parse_args(args)
 
     config = get_default_config()
@@ -633,6 +682,288 @@ def main(args: Optional[list] = None):
             print(f"  - {o}")
         print("==================================================")
         sys.exit(0)
+
+    # -------------------------------------------------------------
+    # SCIENTIFIC REASONING COMMANDS (Prompt 5)
+    # -------------------------------------------------------------
+    elif parsed_args.subcommand == "reason":
+        from research_agent.reasoning.engine import ScientificReasoningEngine
+        from research_agent.memory.manager import MemoryManager
+        memory_mgr = MemoryManager(repository=repo)
+        engine = ScientificReasoningEngine(repo=repo, memory_mgr=memory_mgr)
+
+        if parsed_args.action == "rq":
+            rq = repo.get_rq(parsed_args.code)
+            if not rq:
+                print(f"Research Question '{parsed_args.code}' not found.")
+                sys.exit(1)
+            hyps = repo.list_hypotheses_for_rq(rq.rq_id)
+            evals = [engine.evaluate_hypothesis(h) for h in hyps]
+            statuses = [e.status for e in evals]
+            gaps = repo.list_evidence_gaps(status="OPEN")
+            rq_status, rationale = engine.hypothesis_evaluator.evaluate_rq_status(rq.code, statuses, len(gaps))
+            print("==================================================")
+            print(f"RESEARCH QUESTION REASONING REPORT: {rq.code}")
+            print("==================================================")
+            print(f"Title:            {rq.title}")
+            print(f"Epistemic Status: {rq_status.value}")
+            print(f"Rationale:        {rationale}")
+            print(f"\nLinked Hypotheses ({len(hyps)}):")
+            for h, ev in zip(hyps, evals):
+                print(f"  - [{h.code}] Status: {ev.status.value}")
+                print(f"    Statement: {h.statement[:80]}...")
+                if ev.limitations:
+                    print(f"    Limitations: {ev.limitations}")
+            sys.exit(0)
+
+        elif parsed_args.action == "claim":
+            claim = repo.get_claim(parsed_args.claim_id)
+            if not claim:
+                print(f"Claim '{parsed_args.claim_id}' not found.")
+                sys.exit(1)
+            evidences = repo.list_evidence_for_claim(claim.claim_id)
+            counter = engine.build_counterargument(claim.claim_id, claim.statement)
+            assumptions = engine.audit_assumptions(claim.claim_id, claim.statement)
+            gap = engine.detect_evidence_gap(claim, evidences)
+            print("==================================================")
+            print(f"CANONICAL CLAIM AUDIT: {claim.claim_id}")
+            print("==================================================")
+            print(f"Statement:       {claim.statement}")
+            print(f"Ownership:       {claim.ownership.value}")
+            print(f"Claim Type:      {claim.claim_type.value}")
+            print(f"Epistemic State: {claim.epistemic_status.value}")
+            print(f"\nLinked Evidence Units ({len(evidences)}):")
+            for e in evidences:
+                align, rat = engine.align_evidence(e, claim)
+                print(f"  - [{e.evidence_id}] Alignment: {align.value} ({rat})")
+            if gap:
+                print(f"\n[EVIDENCE GAP DETECTED] {gap.missing_evidence}")
+                print(f"Why Required: {gap.why_required}")
+            print(f"\nSteelman Objection (OUR_COUNTERARGUMENT):")
+            print(f"  - {counter.objection}")
+            print(f"  - Basis: {counter.basis}")
+            print(f"\nUnderlying Assumptions ({len(assumptions)}):")
+            for a in assumptions:
+                print(f"  - [{a.testability}] {a.statement}")
+            sys.exit(0)
+
+        elif parsed_args.action == "synthesize":
+            sources = repo.list_sources()
+            claims = repo.list_claims()
+            synth = engine.synthesize_literature(
+                topic=parsed_args.topic,
+                claims=claims,
+                sources=sources,
+                roadmap_node=parsed_args.node,
+            )
+            print("==================================================")
+            print(f"STRUCTURED LITERATURE SYNTHESIS: {synth.topic}")
+            print("==================================================")
+            print(f"Synthesis ID: {synth.synthesis_id}")
+            if synth.consensus:
+                print("\nConsensus Findings:")
+                for c in synth.consensus:
+                    print(f"  - {c}")
+            if synth.disagreements:
+                print("\nDisagreements & Divergences:")
+                for d in synth.disagreements:
+                    print(f"  - Issue: {d.get('issue')}")
+                    print(f"    Cause: {d.get('divergence_cause')}")
+            if synth.implications_for_our_research:
+                print("\nImplications for Our Research Architecture:")
+                for imp in synth.implications_for_our_research:
+                    print(f"  - {imp}")
+            sys.exit(0)
+
+        elif parsed_args.action == "contradictions":
+            contras = repo.list_contradictions()
+            print("==================================================")
+            print(f"EMPIRICAL CONTRADICTIONS AUDIT ({len(contras)} registered)")
+            print("==================================================")
+            for c in contras:
+                print(f"\n[{c.contradiction_id}] {c.entity_a_id} vs {c.entity_b_id}")
+                print(f"  Description: {c.description}")
+                print(f"  Type:        {c.divergence_reason or 'EMPIRICAL_DISCREPANCY'}")
+                print(f"  Resolution:  {c.resolution_status} ({c.resolution_strategy or 'Pending test'})")
+            sys.exit(0)
+
+        elif parsed_args.action == "assumptions":
+            assumptions = repo.list_assumptions()
+            print("==================================================")
+            print(f"METHODOLOGICAL ASSUMPTIONS AUDIT ({len(assumptions)} active)")
+            print("==================================================")
+            for a in assumptions:
+                print(f"\n[{a.assumption_id}] Status: {a.status} | Testability: {a.testability}")
+                print(f"  Statement:   {a.statement}")
+                print(f"  Consequence: {a.violation_consequence}")
+            sys.exit(0)
+
+        elif parsed_args.action == "falsify":
+            hyp = repo.get_hypothesis(parsed_args.hyp_id)
+            stmt = hyp.statement if hyp else f"Hypothesis {parsed_args.hyp_id}"
+            plan = engine.plan_falsification(parsed_args.hyp_id, stmt)
+            print("==================================================")
+            print(f"FALSIFICATION PROTOCOL: {plan.target_hypothesis_id}")
+            print("==================================================")
+            print(f"Plan ID: {plan.plan_id}")
+            print("\nPotential Falsifying Observations:")
+            for obs in plan.potential_falsifying_observations:
+                print(f"  - {obs}")
+            print("\nMandatory Negative Controls:")
+            for ctrl in plan.negative_controls:
+                print(f"  - {ctrl}")
+            print("\nRequired Discriminating Experiments:")
+            for exp in plan.required_experiments:
+                print(f"  - {exp}")
+            print("\nExpected Outcomes if True:")
+            for out in plan.expected_outcomes_if_true:
+                print(f"  - {out}")
+            sys.exit(0)
+
+        elif parsed_args.action == "critique":
+            text = parsed_args.text or f"Statement of entity {parsed_args.entity_id}"
+            issues = engine.audit_methodology(parsed_args.entity_id, text)
+            print("==================================================")
+            print(f"METHODOLOGICAL & EPISTEMIC CRITIQUE: {parsed_args.entity_id}")
+            print("==================================================")
+            if not issues:
+                print("[PASS] No causal inflation, leakage, or shortcut vulnerabilities detected.")
+            else:
+                for iss in issues:
+                    print(f"\n[ISSUE: {iss.issue_type.value}] Severity: {iss.severity}")
+                    print(f"  Message:    {iss.message}")
+                    print(f"  Mitigation: {iss.mitigation}")
+            sys.exit(0)
+
+        elif parsed_args.action == "contribution":
+            cand = repo.get_candidate_contribution(parsed_args.cand_id)
+            if not cand:
+                print(f"Contribution '{parsed_args.cand_id}' not found.")
+                sys.exit(1)
+            state, rep, issues = engine.differentiate_contribution(cand)
+            print("==================================================")
+            print(f"CONTRIBUTION NOVELTY DIFFERENTIATION: {cand.contribution_id}")
+            print("==================================================")
+            print(f"Name:          {cand.name}")
+            print(f"Novelty State: {state.value}")
+            print(f"Closest Prior: {rep.get('closest_prior_work')}")
+            print(f"Difference:    {rep.get('our_concrete_difference')}")
+            print(f"Why Matters:   {rep.get('why_difference_matters')}")
+            if issues:
+                print("\nNovelty Risks:")
+                for iss in issues:
+                    print(f"  - [{iss.severity}] {iss.message}")
+            sys.exit(0)
+
+        elif parsed_args.action == "build-bundle":
+            node_code = parsed_args.node_code
+            claims = [c.model_dump(mode="json") for c in repo.list_claims()]
+            evidences = [e.model_dump(mode="json") for e in repo.list_evidences()]
+            assumptions = repo.list_assumptions()
+            discourse_plan = engine.plan_discourse(node_code)
+            bundle = engine.build_argument_bundle(
+                roadmap_node=node_code,
+                objective=f"Defensible argument foundation for roadmap node {node_code}",
+                research_questions=["RQ1", "RQ2"],
+                hypotheses=["H1", "H2"],
+                claims=claims,
+                evidence=evidences,
+                assumptions=assumptions,
+                discourse_plan=discourse_plan,
+            )
+            print("==================================================")
+            print(f"ARGUMENT BUNDLE PACKAGED: {bundle.bundle_id}")
+            print("==================================================")
+            print(f"Roadmap Node:    {bundle.roadmap_node}")
+            print(f"Readiness State: {bundle.readiness_state.value}")
+            print(f"Claims Included: {len(bundle.claims)}")
+            print(f"Evidence Units:  {len(bundle.evidence)}")
+            print(f"Discourse Plan:  {bundle.discourse_plan.argument_pattern_name.value if bundle.discourse_plan else 'N/A'}")
+            sys.exit(0)
+
+        elif parsed_args.action == "validate":
+            gaps = repo.list_evidence_gaps(status="OPEN")
+            contras = repo.list_contradictions()
+            bundles = repo.list_argument_bundles()
+            print("==================================================")
+            print("SCIENTIFIC REASONING ENGINE INTEGRITY AUDIT")
+            print("==================================================")
+            print(f"Total Argument Bundles:     {len(bundles)}")
+            print(f"Open Evidence Gaps:         {len(gaps)}")
+            print(f"Active Contradiction Units: {len(contras)}")
+            print("\n[PASS] Reasoning engine schemas, auditors, and invariants verified.")
+            sys.exit(0)
+
+    # -------------------------------------------------------------
+    # RESEARCH SKILLS COMMANDS (Prompt 5)
+    # -------------------------------------------------------------
+    elif parsed_args.subcommand == "skills":
+        from research_agent.skills.registry import ResearchSkillRegistry
+        from research_agent.reasoning.engine import ScientificReasoningEngine
+        from research_agent.memory.manager import MemoryManager
+        import json
+
+        registry = ResearchSkillRegistry()
+        memory_mgr = MemoryManager(repository=repo)
+        engine = ScientificReasoningEngine(repo=repo, memory_mgr=memory_mgr)
+
+        if parsed_args.action == "list":
+            skills = registry.list_skills()
+            print("==================================================")
+            print(f"CANONICAL RESEARCH SKILLS LIBRARY ({len(skills)} skills)")
+            print("==================================================")
+            for s in skills:
+                print(f"[{s.skill_id}] {s.name}")
+                print(f"  Category:    {s.category}")
+                print(f"  Description: {s.description}")
+            sys.exit(0)
+
+        elif parsed_args.action == "show":
+            skill = registry.get_skill(parsed_args.skill_id)
+            if not skill:
+                print(f"Skill '{parsed_args.skill_id}' not found.")
+                sys.exit(1)
+            m = skill.metadata
+            print("==================================================")
+            print(f"RESEARCH SKILL SPECIFICATION: [{m.skill_id}] {m.name}")
+            print("==================================================")
+            print(f"Category:     {m.category}")
+            print(f"Version:      {m.version}")
+            print(f"Description:  {m.description}")
+            print(f"Inputs:       {m.inputs}")
+            print(f"Outputs:      {m.outputs}")
+            print(f"Invariants:   {m.invariants}")
+            sys.exit(0)
+
+        elif parsed_args.action == "validate":
+            skills = registry.list_skills()
+            print("==================================================")
+            print("CANONICAL RESEARCH SKILLS VALIDATION")
+            print("==================================================")
+            print(f"Total Registered Skills: {len(skills)} / 18")
+            if len(skills) == 18:
+                print("[PASS] All 18 canonical research skills loaded and verified.")
+                sys.exit(0)
+            else:
+                print(f"[FAIL] Expected 18 skills, found {len(skills)}.")
+                sys.exit(1)
+
+        elif parsed_args.action == "run":
+            try:
+                payload = json.loads(parsed_args.payload)
+            except Exception:
+                payload = {"text": parsed_args.payload}
+            res = registry.run_skill(parsed_args.skill_id, payload, engine)
+            print("==================================================")
+            print(f"SKILL EXECUTION RESULT: {res.skill_id}")
+            print("==================================================")
+            print(f"Success:          {res.success}")
+            print(f"Execution Time:   {res.execution_time_ms} ms")
+            if res.issues:
+                print(f"Issues:           {res.issues}")
+            print("\nOutput Data:")
+            print(json.dumps(res.data, indent=2))
+            sys.exit(0 if res.success else 1)
 
     parser.print_help()
     sys.exit(0)

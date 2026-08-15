@@ -288,28 +288,33 @@ CREATE TABLE IF NOT EXISTS claim_relations (
     FOREIGN KEY (target_claim_id) REFERENCES claims(claim_id) ON DELETE CASCADE
 );
 
--- Arguments
+-- Arguments & M4 Argument Graph (Prompt 1 Section 11, Prompt 5 Section 40)
 CREATE TABLE IF NOT EXISTS argument_nodes (
     node_id TEXT PRIMARY KEY,
-    claim_id TEXT NOT NULL,
-    role TEXT NOT NULL,
-    summary TEXT NOT NULL,
+    claim_id TEXT,
+    role TEXT,
+    node_type TEXT NOT NULL DEFAULT 'CLAIM',
+    title TEXT,
+    statement TEXT,
+    summary TEXT,
+    entity_ref_id TEXT,
+    ownership TEXT NOT NULL DEFAULT 'OURS',
     metadata_json TEXT,
-    created_at TEXT NOT NULL,
-    FOREIGN KEY (claim_id) REFERENCES claims(claim_id) ON DELETE CASCADE
+    created_at TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS argument_edges (
     edge_id TEXT PRIMARY KEY,
-    from_node_id TEXT NOT NULL,
-    to_node_id TEXT NOT NULL,
+    from_node_id TEXT,
+    to_node_id TEXT,
+    source_node_id TEXT,
+    target_node_id TEXT,
     relation_type TEXT NOT NULL,
     weight REAL DEFAULT 1.0,
     rationale TEXT,
+    notes TEXT,
     metadata_json TEXT,
-    created_at TEXT NOT NULL,
-    FOREIGN KEY (from_node_id) REFERENCES argument_nodes(node_id) ON DELETE CASCADE,
-    FOREIGN KEY (to_node_id) REFERENCES argument_nodes(node_id) ON DELETE CASCADE
+    created_at TEXT NOT NULL
 );
 
 -- Equations & Symbols
@@ -631,6 +636,85 @@ CREATE TABLE IF NOT EXISTS verification_records (
     details TEXT NOT NULL,
     evidence_trail_json TEXT,
     metadata_json TEXT,
+    created_at TEXT NOT NULL
+);
+
+-- Argument Bundles (Prompt 5 Section 57)
+CREATE TABLE IF NOT EXISTS argument_bundles (
+    bundle_id TEXT PRIMARY KEY,
+    roadmap_node TEXT NOT NULL,
+    objective TEXT NOT NULL,
+    research_questions_json TEXT,
+    hypotheses_json TEXT,
+    claims_json TEXT,
+    evidence_json TEXT,
+    contradicting_evidence_json TEXT,
+    assumptions_json TEXT,
+    counterarguments_json TEXT,
+    candidate_inferences_json TEXT,
+    falsification_plans_json TEXT,
+    ownership_summary_json TEXT,
+    uncertainty TEXT,
+    open_questions_json TEXT,
+    discourse_plan_json TEXT,
+    readiness_state TEXT NOT NULL,
+    issues_json TEXT,
+    verification_requests_json TEXT,
+    generated_at TEXT NOT NULL,
+    version TEXT NOT NULL
+);
+
+-- Evidence Gaps (Prompt 5 Section 11)
+CREATE TABLE IF NOT EXISTS evidence_gaps (
+    gap_id TEXT PRIMARY KEY,
+    claim_id TEXT NOT NULL,
+    missing_evidence TEXT NOT NULL,
+    why_required TEXT NOT NULL,
+    possible_source_search TEXT,
+    suggested_experiment TEXT,
+    severity TEXT NOT NULL,
+    related_node_code TEXT,
+    status TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);
+
+-- Assumptions (Prompt 5 Section 16)
+CREATE TABLE IF NOT EXISTS assumptions (
+    assumption_id TEXT PRIMARY KEY,
+    statement TEXT NOT NULL,
+    is_explicit INTEGER NOT NULL DEFAULT 0,
+    required_by_json TEXT,
+    evidence_or_basis TEXT,
+    testability TEXT NOT NULL,
+    violation_consequence TEXT NOT NULL,
+    status TEXT NOT NULL,
+    created_at TEXT NOT NULL
+);
+
+-- Verification Requests (Prompt 5 Section 102)
+CREATE TABLE IF NOT EXISTS verification_requests (
+    request_id TEXT PRIMARY KEY,
+    request_type TEXT NOT NULL,
+    target_claim_id TEXT,
+    target_equation_id TEXT,
+    target_table_or_figure_id TEXT,
+    description TEXT NOT NULL,
+    input_payload_json TEXT,
+    status TEXT NOT NULL,
+    verification_result_json TEXT,
+    requested_at TEXT NOT NULL,
+    completed_at TEXT
+);
+
+-- Reasoning Issues Log (Prompt 5 Section 63)
+CREATE TABLE IF NOT EXISTS reasoning_issues (
+    issue_id TEXT PRIMARY KEY,
+    issue_type TEXT NOT NULL,
+    affected_entity_id TEXT NOT NULL,
+    message TEXT NOT NULL,
+    severity TEXT NOT NULL,
+    mitigation TEXT,
     created_at TEXT NOT NULL
 );
 """
