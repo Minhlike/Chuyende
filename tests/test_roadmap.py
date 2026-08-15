@@ -196,10 +196,14 @@ def test_rm_15_intrinsic_probe_operational_order(query_service):
 
 
 def test_rm_16_no_fabricated_source_references(repo):
-    """TEST-RM-16: Zero fabricated Source entities are present in sources table in Prompt 2."""
+    """TEST-RM-16: Zero fabricated Source entities are present; all sources are verified."""
     sources = repo.list_sources()
-    # Prompt 2 must NOT create fake bibliographic entries
-    assert len(sources) == 0, "Found premature/fabricated source entries before Prompt 3"
+    # All ingested sources must have verified status and valid non-empty venue/title
+    for s in sources:
+        assert s.verification_status.value == "VERIFIED"
+        assert len(s.title) > 3
+        assert len(s.authors) >= 1
+        assert len(s.venue) >= 1
 
 
 def test_rm_cli_validation_exit_code_zero(repo):

@@ -1,0 +1,250 @@
+contributions:
+- contribution_id: CAND-01
+  name: Three-Tier Representation Contract
+  description: Formal categorization of representation constraints into PRESERVE (temporal
+    order, dynamic parameters, entity linkage), INVARIANT (formatting noise, template
+    renaming), and EXCLUDE (dataset IDs, shortcuts).
+  roadmap_nodes:
+  - 1.1.3.1
+  - 2.1.1
+  ownership: OURS
+  novelty_status: CANDIDATE
+  literature_motivation:
+  - SRC-000008
+  nearest_prior_work:
+  - SRC-000005
+  - SRC-000007
+  differentiation_notes: Prior work either discards dynamic parameters during parsing
+    or retains full text as unconstrained token bags; this contract establishes a
+    typed boundary.
+- contribution_id: CAND-02
+  name: Canonical Research Questions Formulation (RQ1-RQ5)
+  description: Five orthogonal research questions targeting representation fidelity,
+    cross-view alignment, shortcut robustness, weak evidence attribution, and privacy
+    streaming.
+  roadmap_nodes:
+  - 1.3.1.2
+  - 1.3.2.3
+  - 1.3.3.3
+  - 1.3.4.3
+  - 1.3.5.3
+  ownership: OURS
+  novelty_status: CANDIDATE
+  literature_motivation:
+  - SRC-000002
+  - SRC-000016
+  - SRC-000018
+  nearest_prior_work:
+  - SRC-000009
+  - SRC-000010
+  differentiation_notes: Explicitly separates feature representation evaluation from
+    detector tuning.
+- contribution_id: CAND-03
+  name: Canonical Extractor Abstraction f_theta and Contract
+  description: 'Formalization of streaming extractor f_theta: L_1:t -> z_t with strict
+    input history, output granularity, and bounded-state contracts.'
+  roadmap_nodes:
+  - 2.1.1.1
+  - 2.4.3.3
+  ownership: OURS
+  novelty_status: CANDIDATE
+  literature_motivation: []
+  nearest_prior_work:
+  - SRC-000003
+  - SRC-000011
+  differentiation_notes: Freezes representation extraction independently of downstream
+    probe architectures.
+- contribution_id: CAND-04
+  name: Falsifiable Scientific Hypotheses (H1-H5)
+  description: Explicit scientific hypotheses with empirical falsification thresholds
+    for fidelity, multi-view alignment, robustness, operational latency, and privacy
+    trade-offs.
+  roadmap_nodes:
+  - 2.1.1.2
+  ownership: OURS
+  novelty_status: CANDIDATE
+  literature_motivation: []
+  nearest_prior_work: []
+  differentiation_notes: Defines quantitative failure criteria preventing confirmation
+    bias.
+- contribution_id: CAND-05
+  name: Heterogeneous Multi-View Security Representation Architecture
+  description: Dual-view feature extractor combining semantic-sequential Transformer
+    view and temporal provenance graph view with cross-view latent alignment.
+  roadmap_nodes:
+  - 2.1.3
+  - 2.3.1
+  - 2.3.2
+  - 2.3.3
+  - 2.4.1
+  ownership: OURS
+  novelty_status: CANDIDATE
+  literature_motivation:
+  - SRC-000004
+  - SRC-000012
+  - SRC-000022
+  nearest_prior_work:
+  - SRC-000004
+  - SRC-000012
+  differentiation_notes: Integrates unstructured textual log events with structured
+    OS audit graph topologies.
+- contribution_id: CAND-06
+  name: Dependency-Temporal Non-Causal Provenance Graph Contract
+  description: Methodological contract treating provenance graph edges strictly as
+    observable information flows without unverified causal claims.
+  roadmap_nodes:
+  - 2.3.2.2
+  - 3.4.3.1
+  ownership: OURS
+  novelty_status: CANDIDATE
+  literature_motivation:
+  - SRC-000009
+  - SRC-000020
+  nearest_prior_work:
+  - SRC-000011
+  - SRC-000020
+  differentiation_notes: Prevents spurious causal overgeneralization in attack graph
+    interpretations.
+- contribution_id: CAND-07
+  name: Security-Specific Multiple Instance Learning Mapping
+  description: MIL hierarchical structure mapping coarse bags to sessions/hosts/windows
+    and instances to individual log events/entities/subgraphs.
+  roadmap_nodes:
+  - 2.4.3.2
+  ownership: OURS
+  novelty_status: CANDIDATE
+  literature_motivation:
+  - SRC-000024
+  nearest_prior_work:
+  - SRC-000024
+  differentiation_notes: Adapts MIL attention pooling specifically to heterogeneous
+    security log telemetry.
+- contribution_id: CAND-08
+  name: Unified Multi-Task Extraction Loss Composition
+  description: Compound loss combining sequential self-supervision, graph message
+    passing, cross-view alignment, and weak-supervision MIL.
+  roadmap_nodes:
+  - 2.4.3.1
+  ownership: OURS
+  novelty_status: CANDIDATE
+  literature_motivation:
+  - SRC-000022
+  - SRC-000024
+  nearest_prior_work:
+  - SRC-000004
+  - SRC-000012
+  differentiation_notes: Jointly optimizes view preservation and collapse prevention
+    without requiring test attack labels.
+- contribution_id: CAND-09
+  name: Two-Tier Benchmark Framing (Tier A vs Tier B)
+  description: 'Methodological partitioning separating system-log stress testing (Tier
+    A: HDFS/BGL) from full multi-stage cyberattack provenance (Tier B: DARPA TC/LANL).'
+  roadmap_nodes:
+  - 3.1.2.1
+  - 3.1.2.2
+  ownership: OURS
+  novelty_status: CANDIDATE
+  literature_motivation:
+  - SRC-000002
+  - SRC-000018
+  nearest_prior_work:
+  - SRC-000006
+  - SRC-000028
+  differentiation_notes: Blocks the invalid generalization of HDFS anomaly results
+    to enterprise APT intrusion detection.
+- contribution_id: CAND-10
+  name: Three-Layer Evaluation Framework (Intrinsic -> Probe -> Operational)
+  description: Evaluation methodology evaluating representation manifold properties
+    first, capacity-controlled frozen probes second, and operational SOC streaming
+    metrics third.
+  roadmap_nodes:
+  - 3.1.3.1
+  ownership: OURS
+  novelty_status: CANDIDATE
+  literature_motivation:
+  - SRC-000016
+  nearest_prior_work:
+  - SRC-000016
+  - SRC-000017
+  differentiation_notes: Decouples representation quality from detector over-parameterization.
+- contribution_id: CAND-11
+  name: Capacity-Controlled Frozen Representation Probe Suite
+  description: Diagnostic probe suite fixing feature extractor weights and testing
+    linear, kNN, and shallow MLP probes against raw shortcuts.
+  roadmap_nodes:
+  - 3.2.1
+  - 3.2.1.3
+  ownership: OURS
+  novelty_status: CANDIDATE
+  literature_motivation:
+  - SRC-000016
+  nearest_prior_work:
+  - SRC-000016
+  differentiation_notes: Verifies whether downstream detection accuracy originates
+    from feature quality or detector memorization.
+- contribution_id: CAND-12
+  name: Seven-Step Ablation Ladder and Interaction Matrix
+  description: Systematic ablation progression testing statistical -> +parameters
+    -> +sequential -> +provenance -> +alignment -> +admin -> +MIL.
+  roadmap_nodes:
+  - 3.3.1.1
+  - 3.3.1.3
+  ownership: OURS
+  novelty_status: CANDIDATE
+  literature_motivation: []
+  nearest_prior_work:
+  - SRC-000016
+  differentiation_notes: Measures exact component-wise value-add and pairwise architectural
+    interactions.
+- contribution_id: CAND-13
+  name: Dataset Shortcut Counterfactual Test Suite
+  description: Perturbation suite applying entity renaming, path masking, and host
+    holdout to audit shortcut learning.
+  roadmap_nodes:
+  - 3.2.1.2
+  - 3.3.3
+  ownership: OURS
+  novelty_status: CANDIDATE
+  literature_motivation:
+  - SRC-000002
+  - SRC-000016
+  - SRC-000019
+  nearest_prior_work:
+  - SRC-000016
+  - SRC-000019
+  differentiation_notes: Exposes whether representations learn generalizable attack
+    behaviors or environment artifacts.
+- contribution_id: CAND-14
+  name: Controlled-Linkability Utility-Privacy Pareto Frontier
+  description: Evaluation framework quantifying the empirical Pareto tradeoff between
+    entity re-identification/inversion leakage and detection utility.
+  roadmap_nodes:
+  - 3.3.4.3
+  ownership: OURS
+  novelty_status: CANDIDATE
+  literature_motivation:
+  - SRC-000025
+  - SRC-000026
+  - SRC-000027
+  nearest_prior_work:
+  - SRC-000025
+  - SRC-000027
+  differentiation_notes: Applies attack-based empirical privacy audits to operational
+    enterprise log streams.
+- contribution_id: CAND-15
+  name: Research Artifact Package & Negative Results Protocol
+  description: Formal reproducibility protocol accepting negative findings and falsified
+    hypotheses as valid scientific outcomes.
+  roadmap_nodes:
+  - 3.1.1.3
+  - 3.4.3.5
+  - 3.4.3.6
+  ownership: OURS
+  novelty_status: CANDIDATE
+  literature_motivation:
+  - SRC-000002
+  - SRC-000016
+  nearest_prior_work:
+  - SRC-000017
+  differentiation_notes: Guarantees complete cryptographic reproducibility manifests
+    and unbiased reporting.

@@ -1,5 +1,5 @@
 """
-Core Enums defining Epistemic, Claim, Ownership, and Memory taxonomies.
+Core Enums defining Epistemic, Claim, Ownership, and Memory taxonomies (Prompt 1, 2, 3).
 """
 
 from enum import Enum
@@ -17,7 +17,7 @@ class ClaimType(str, Enum):
 
 
 class IntellectualOwnership(str, Enum):
-    """Intellectual Ownership Boundaries (RC-06)."""
+    """Canonical 4-class Intellectual Ownership Boundaries (RC-06, Section 4)."""
     SOURCE = "SOURCE"
     ADAPTED = "ADAPTED"
     OURS = "OURS"
@@ -32,6 +32,83 @@ class EpistemicStatus(str, Enum):
     CONTESTED = "CONTESTED"
     FALSIFIED = "FALSIFIED"
     SUPERSEDED = "SUPERSEDED"
+
+
+class SourceVerificationState(str, Enum):
+    """Bibliographic & Content Verification States (Section 7)."""
+    DISCOVERED = "DISCOVERED"
+    METADATA_VERIFIED = "METADATA_VERIFIED"
+    CONTENT_VERIFIED = "CONTENT_VERIFIED"
+    INGESTED = "INGESTED"
+    SUPERSEDED = "SUPERSEDED"
+    RETRACTED = "RETRACTED"
+    UNAVAILABLE = "UNAVAILABLE"
+
+
+class SourceRole(str, Enum):
+    """Functional roles of an external source in the research graph (Section 18)."""
+    DEFINITION = "DEFINITION"
+    BACKGROUND = "BACKGROUND"
+    METHOD = "METHOD"
+    BASELINE = "BASELINE"
+    DATASET = "DATASET"
+    VALIDITY = "VALIDITY"
+    ROBUSTNESS = "ROBUSTNESS"
+    PRIVACY = "PRIVACY"
+    REPRODUCIBILITY = "REPRODUCIBILITY"
+    METRIC = "METRIC"
+    CONTRADICTORY_EVIDENCE = "CONTRADICTORY_EVIDENCE"
+    IMPLEMENTATION_REFERENCE = "IMPLEMENTATION_REFERENCE"
+    EMERGING_WORK = "EMERGING_WORK"
+
+
+class SourceQualityTier(str, Enum):
+    """Bibliographic quality and provenance classes (Section 19)."""
+    PRIMARY_STANDARD = "PRIMARY_STANDARD"
+    PEER_REVIEWED_TOP_VENUE = "PEER_REVIEWED_TOP_VENUE"
+    PEER_REVIEWED = "PEER_REVIEWED"
+    OFFICIAL_DATASET = "OFFICIAL_DATASET"
+    INSTITUTIONAL_REPORT = "INSTITUTIONAL_REPORT"
+    PREPRINT = "PREPRINT"
+    SOFTWARE_ARTIFACT = "SOFTWARE_ARTIFACT"
+    SECONDARY_SURVEY = "SECONDARY_SURVEY"
+    DISCOVERY_ONLY = "DISCOVERY_ONLY"
+
+
+class SupportType(str, Enum):
+    """Citation Firewall support type relationship (Section 10)."""
+    DIRECT_SUPPORT = "DIRECT_SUPPORT"
+    PARTIAL_SUPPORT = "PARTIAL_SUPPORT"
+    BACKGROUND = "BACKGROUND"
+    MOTIVATION = "MOTIVATION"
+    CONTRADICTION = "CONTRADICTION"
+    METHOD_SOURCE = "METHOD_SOURCE"
+    DATASET_SOURCE = "DATASET_SOURCE"
+    BASELINE_SOURCE = "BASELINE_SOURCE"
+
+
+class EvidenceStrength(str, Enum):
+    """Categorical strength of evidence binding (Section 11)."""
+    STRONG = "STRONG"
+    MODERATE = "MODERATE"
+    WEAK = "WEAK"
+
+
+class NoveltyStatus(str, Enum):
+    """Novelty evaluation lifecycle states for candidate contributions (Section 17)."""
+    CANDIDATE = "CANDIDATE"
+    PRIOR_ART_SEARCHED = "PRIOR_ART_SEARCHED"
+    POTENTIALLY_NOVEL = "POTENTIALLY_NOVEL"
+    NOT_NOVEL = "NOT_NOVEL"
+    PARTIALLY_NOVEL = "PARTIALLY_NOVEL"
+    NOVELTY_UNRESOLVED = "NOVELTY_UNRESOLVED"
+
+
+class CitationFirewallStatus(str, Enum):
+    """Citation readiness state in Citation Firewall (Section 10)."""
+    READY = "READY"
+    BLOCKED = "BLOCKED"
+    UNRESOLVED = "UNRESOLVED"
 
 
 class EquationType(str, Enum):

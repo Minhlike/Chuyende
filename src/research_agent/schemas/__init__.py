@@ -25,6 +25,12 @@ from research_agent.schemas.claim import (
     Claim,
     ClaimRelation,
 )
+from research_agent.schemas.ownership import (
+    OwnershipMapping,
+    CandidateContribution,
+)
+from research_agent.schemas.citation import CitationFirewallRule
+from research_agent.schemas.reference_map import ReferenceMapSpecification
 from research_agent.schemas.argument import (
     ArgumentNode,
     ArgumentEdge,
@@ -76,6 +82,10 @@ __all__ = [
     "Evidence",
     "Claim",
     "ClaimRelation",
+    "OwnershipMapping",
+    "CandidateContribution",
+    "CitationFirewallRule",
+    "ReferenceMapSpecification",
     "ArgumentNode",
     "ArgumentEdge",
     "SymbolDefinition",

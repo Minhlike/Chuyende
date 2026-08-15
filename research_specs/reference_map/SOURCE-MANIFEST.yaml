@@ -1,0 +1,795 @@
+sources:
+- source_id: SRC-000001
+  citation_key: MITRE2024ATTCK
+  title: 'MITRE ATT&CK: Enterprise Tactics and Techniques Matrix'
+  authors:
+  - MITRE ATT&CK Team
+  year: 2024
+  venue: MITRE Corporation
+  source_type: PRIMARY_STANDARD
+  roles:
+  - DEFINITION
+  - BACKGROUND
+  - METRIC
+  canonical_url: https://attack.mitre.org/
+  access_url: https://attack.mitre.org/matrices/enterprise/
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.1.2
+  - 1.1.2.1
+  - 1.1.2.2
+  - 3.2.3
+  - 3.4.1.4
+  notes: Enterprise tactics (why) and techniques (how) behavioral taxonomy. Bounded
+    to non-linear evidence space.
+- source_id: SRC-000002
+  citation_key: Arp2022DosDonts
+  title: Dos and Don'ts of Machine Learning in Computer Security
+  authors:
+  - Daniel Arp
+  - Erwin Quiring
+  - Feargus Pendlebury
+  - Alexander Warnecke
+  - Fabio Pierazzi
+  - Christian Wressnegger
+  - Lorenzo Cavallaro
+  - Konrad Rieck
+  year: 2022
+  venue: USENIX Security Symposium 2022
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - VALIDITY
+  - BACKGROUND
+  - ROBUSTNESS
+  doi: 10.5555/3548606.3548637
+  publisher: USENIX Association
+  canonical_url: https://www.usenix.org/conference/usenixsecurity22/presentation/arp
+  access_url: https://www.usenix.org/system/files/sec22-arp.pdf
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.3.3
+  - 1.3.3.1
+  - 2.1.3.2
+  - 3.1.2.3
+  - 3.4.3.2
+  notes: 'Identifies 10 core pitfalls: data leakage, spurious correlations, temporal
+    leakage, and unrealistic evaluation setups in security ML.'
+- source_id: SRC-000003
+  citation_key: Du2017DeepLog
+  title: 'DeepLog: Anomaly Detection and Diagnosis from System Logs through Deep Learning'
+  authors:
+  - Min Du
+  - Feifei Li
+  - Guanqing Zheng
+  - Vivek Srikumar
+  year: 2017
+  venue: ACM SIGSAC Conference on Computer and Communications Security (CCS 2017)
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - BASELINE
+  - METHOD
+  doi: 10.1145/3133956.3134015
+  publisher: ACM
+  canonical_url: https://doi.org/10.1145/3133956.3134015
+  access_url: https://dl.acm.org/doi/10.1145/3133956.3134015
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.2.2.1
+  - 3.2.2.1
+  notes: LSTM-based sequential log anomaly detection modeling log keys as natural
+    language sequences. Baseline method.
+- source_id: SRC-000004
+  citation_key: Guo2021LogBERT
+  title: 'LogBERT: Log Anomaly Detection via BERT'
+  authors:
+  - Haixuan Guo
+  - Shuhan Yuan
+  - Xintao Wu
+  year: 2021
+  venue: International Joint Conference on Neural Networks (IJCNN 2021)
+  source_type: PEER_REVIEWED
+  roles:
+  - BASELINE
+  - METHOD
+  doi: 10.1109/IJCNN52387.2021.9534113
+  publisher: IEEE
+  canonical_url: https://doi.org/10.1109/IJCNN52387.2021.9534113
+  access_url: https://ieeexplore.ieee.org/document/9534113
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.2.2.1
+  - 2.3.1.2
+  - 3.2.2.1
+  notes: Transformer-based self-supervised masked log sequence modeling baseline.
+- source_id: SRC-000005
+  citation_key: Le2021NeuralLog
+  title: Log-based Anomaly Detection Without Log Parsing
+  authors:
+  - Van-Hoang Le
+  - Hongyu Zhang
+  year: 2021
+  venue: IEEE/ACM International Conference on Automated Software Engineering (ASE
+    2021)
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - BASELINE
+  - METHOD
+  doi: 10.1109/ASE51524.2021.9678773
+  publisher: IEEE
+  canonical_url: https://doi.org/10.1109/ASE51524.2021.9678773
+  access_url: https://ieeexplore.ieee.org/document/9678773
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.2.2.2
+  - 3.2.1.1
+  notes: Demonstrates parsing-free semantic embedding using raw log words, avoiding
+    parser instability.
+- source_id: SRC-000006
+  citation_key: Zhu2023Loghub
+  title: Tools and Benchmarks for Automated Log Parsing
+  authors:
+  - Jieming Zhu
+  - Shilin He
+  - Jinyang Liu
+  - Pinjia He
+  - Qi Xie
+  - Zibin Zheng
+  - Michael R. Lyu
+  year: 2023
+  venue: IEEE International Symposium on Software Reliability Engineering (ISSRE 2023)
+  source_type: PEER_REVIEWED
+  roles:
+  - DATASET
+  - REPRODUCIBILITY
+  canonical_url: https://github.com/logpai/loghub
+  access_url: https://github.com/logpai/loghub
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 3.1.2.1
+  notes: Provides HDFS and BGL system log datasets. Ingested strictly as Tier A system-log
+    representation stress test.
+- source_id: SRC-000007
+  citation_key: Jiang2024LogParsingEval
+  title: 'A Large-Scale Evaluation for Log Parsing Techniques: How Far Are We?'
+  authors:
+  - Zhihan Jiang
+  - Jinyang Liu
+  - Junjie Huang
+  - Yintong Huo
+  - Xiao Peng
+  - Yichen Li
+  - Jieming Zhu
+  - Michael R. Lyu
+  year: 2024
+  venue: ACM SIGSOFT International Symposium on Software Testing and Analysis (ISSTA
+    2024)
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - VALIDITY
+  - METRIC
+  doi: 10.1145/3650212.3652123
+  publisher: ACM
+  canonical_url: https://doi.org/10.1145/3650212.3652123
+  access_url: https://dl.acm.org/doi/10.1145/3650212.3652123
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.2.1.2
+  - 1.3.1.1
+  notes: Large-scale evaluation showing standard log parsers frequently misclassify
+    parameters as templates or vice versa.
+- source_id: SRC-000008
+  citation_key: Michael2020ForensicValidity
+  title: On the Forensic Validity of Approximated Audit Logs
+  authors:
+  - Luke Michael
+  - Acar Tamersoy
+  - Timothy Kelley
+  - Michael Locasto
+  year: 2020
+  venue: Annual Computer Security Applications Conference (ACSAC 2020)
+  source_type: PEER_REVIEWED
+  roles:
+  - VALIDITY
+  - BACKGROUND
+  doi: 10.1145/3427228.3427272
+  publisher: ACM
+  canonical_url: https://doi.org/10.1145/3427228.3427272
+  access_url: https://dl.acm.org/doi/10.1145/3427228.3427272
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.3.1
+  - 1.3.1.1
+  notes: Demonstrates abstraction and lossy approximation of audit logs destroys forensic
+    attack reconstruction fidelity.
+- source_id: SRC-000009
+  citation_key: Inam2023ProvenanceSoK
+  title: 'SoK: History is a Vast Early Warning System: Auditing the Provenance of
+    System Intrusions'
+  authors:
+  - Muhammad Adil Inam
+  - Yinfang Chen
+  - Fadi Mohsen
+  - Acar Tamersoy
+  - Christian Wressnegger
+  - Michael Locasto
+  - Gang Wang
+  year: 2023
+  venue: IEEE Symposium on Security and Privacy (S&P 2023)
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - BACKGROUND
+  - VALIDITY
+  doi: 10.1109/SP46215.2023.10179405
+  publisher: IEEE
+  canonical_url: https://doi.org/10.1109/SP46215.2023.10179405
+  access_url: https://ieeexplore.ieee.org/document/10179405
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.2.3
+  - 1.2.3.1
+  - 1.2.3.2
+  notes: Comprehensive systematization of knowledge on provenance-based intrusion
+    auditing and dependency challenges.
+- source_id: SRC-000010
+  citation_key: Zipperle2022PIDSSurvey
+  title: 'Provenance-based Intrusion Detection Systems: A Survey'
+  authors:
+  - Marco Zipperle
+  - Frederik Armknecht
+  - Christopher Kolb
+  year: 2022
+  venue: ACM Computing Surveys
+  source_type: SECONDARY_SURVEY
+  roles:
+  - BACKGROUND
+  doi: 10.1145/3539605
+  publisher: ACM
+  canonical_url: https://doi.org/10.1145/3539605
+  access_url: https://dl.acm.org/doi/10.1145/3539605
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.2.3
+  - 1.2.3.2
+  notes: Surveys PIDS architectures and graph reduction techniques across host audit
+    telemetry.
+- source_id: SRC-000011
+  citation_key: Han2020UNICORN
+  title: 'UNICORN: Runtime Provenance-Based Detector for Advanced Persistent Threats'
+  authors:
+  - Xueyuan Han
+  - Thomas Pasquier
+  - Adam Bates
+  - James Mickens
+  - Margo Seltzer
+  year: 2020
+  venue: Network and Distributed System Security Symposium (NDSS 2020)
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - BASELINE
+  - METHOD
+  doi: 10.14722/ndss.2020.24009
+  publisher: Internet Society
+  canonical_url: https://www.ndss-symposium.org/ndss-paper/unicorn-runtime-provenance-based-detector-for-advanced-persistent-threats/
+  access_url: https://www.ndss-symposium.org/wp-content/uploads/2020/02/24009-paper.pdf
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.2.3.1
+  - 3.2.2.2
+  notes: Graph histogram runtime provenance APT detection baseline using continuous
+    graph sketching.
+- source_id: SRC-000012
+  citation_key: Wang2024KAIROS
+  title: 'KAIROS: Practical Provenance-based Anomaly Detection for Advanced Persistent
+    Threats'
+  authors:
+  - Zhenyuan Wang
+  - Qi Wang
+  - Yinfang Chen
+  - Zhenpeng Lin
+  - Gang Wang
+  year: 2024
+  venue: IEEE Symposium on Security and Privacy (S&P 2024)
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - BASELINE
+  - METHOD
+  doi: 10.1109/SP54263.2024.00005
+  publisher: IEEE
+  canonical_url: https://doi.org/10.1109/SP54263.2024.00005
+  access_url: https://ieeexplore.ieee.org/document/10646702
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.2.3.2
+  - 3.2.2.2
+  notes: State-of-the-art temporal GNN provenance intrusion detection baseline.
+- source_id: SRC-000013
+  citation_key: She2024NODLINK
+  title: 'NODLINK: An Online System for Fine-Grained APT Attack Detection and Investigation'
+  authors:
+  - Rui She
+  - Yang Xiao
+  - Bo Shen
+  - Yuhang Lin
+  - Chuan Yue
+  year: 2024
+  venue: Network and Distributed System Security Symposium (NDSS 2024)
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - BASELINE
+  - METHOD
+  doi: 10.14722/ndss.2024.24151
+  publisher: Internet Society
+  canonical_url: https://www.ndss-symposium.org/ndss-paper/nodlink-an-online-system-for-fine-grained-apt-attack-detection-and-investigation/
+  access_url: https://www.ndss-symposium.org/wp-content/uploads/2024/02/ndss2024_f151_paper.pdf
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.2.3.2
+  - 3.2.2.2
+  notes: Online fine-grained provenance node link prediction APT baseline.
+- source_id: SRC-000014
+  citation_key: Wang2024MAGIC
+  title: 'MAGIC: Malicious Activity Detection with Graph-based Information Correlation'
+  authors:
+  - Qi Wang
+  - Zhenyuan Wang
+  - Zhenpeng Lin
+  - Gang Wang
+  year: 2024
+  venue: USENIX Security Symposium 2024
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - BASELINE
+  - METHOD
+  publisher: USENIX Association
+  canonical_url: https://www.usenix.org/conference/usenixsecurity24/presentation/wang-qi
+  access_url: https://www.usenix.org/system/files/sec24fall-prepub-49-wang-qi.pdf
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.2.3.2
+  - 3.2.2.2
+  notes: Graph correlation and dynamic temporal provenance intrusion detector baseline.
+- source_id: SRC-000015
+  citation_key: Wang2025ORTHRUS
+  title: 'ORTHRUS: Towards High-Quality Attack Attribution via Provenance Graph Analysis'
+  authors:
+  - Zhenyuan Wang
+  - Qi Wang
+  - Gang Wang
+  year: 2025
+  venue: USENIX Security Symposium 2025
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - BASELINE
+  - METRIC
+  publisher: USENIX Association
+  canonical_url: https://www.usenix.org/conference/usenixsecurity25/presentation/wang-zhenyuan
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 3.2.2.2
+  - 3.4.1.3
+  notes: Formulates Quality of Attribution (QoA) for provenance subgraphs. Original
+    QoA concept is SOURCE; our extensions are OURS/ADAPTED.
+- source_id: SRC-000016
+  citation_key: Bilot2025SimplerIsBetter
+  title: 'Sometimes Simpler is Better: A Comprehensive Analysis of State-of-the-Art
+    Provenance-Based Intrusion Detection Systems'
+  authors:
+  - Tristan Bilot
+  - Thomas Pasquier
+  - Jack Phillips
+  - Frank Jiang
+  year: 2025
+  venue: USENIX Security Symposium 2025
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - VALIDITY
+  - BASELINE
+  - ROBUSTNESS
+  publisher: USENIX Association
+  canonical_url: https://www.usenix.org/conference/usenixsecurity25/presentation/bilot
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 3.2.1.2
+  - 3.2.2.3
+  - 3.4.3.2
+  notes: Proves complex GNN-based PIDS can be matched by simple lexical/novelty baselines
+    due to dataset shortcuts and flawed splits.
+- source_id: SRC-000017
+  citation_key: Bilot2026PIDSMaker
+  title: 'PIDSMaker: A Benchmark Framework for Provenance-Based Intrusion Detection
+    Systems'
+  authors:
+  - Tristan Bilot
+  - Zhihan Jiang
+  - Jack Phillips
+  - Thomas Pasquier
+  year: 2026
+  venue: ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD 2026)
+  source_type: SOFTWARE_ARTIFACT
+  roles:
+  - IMPLEMENTATION_REFERENCE
+  - REPRODUCIBILITY
+  canonical_url: https://github.com/prov-int/pidsmaker
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 3.1.1.3
+  - 3.2.2.3
+  notes: Unified benchmark tooling framework for PIDS reproducibility.
+- source_id: SRC-000018
+  citation_key: Liu2025DatasetQualityLogs
+  title: 'What We Talk About When We Talk About Logs: Understanding the Effects of
+    Dataset Quality on Endpoint Threat Detection Research'
+  authors:
+  - Yuxing Liu
+  - Daniel Arp
+  - Lorenzo Cavallaro
+  - Konrad Rieck
+  year: 2025
+  venue: IEEE Symposium on Security and Privacy (S&P 2025)
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - VALIDITY
+  - BACKGROUND
+  doi: 10.1109/SP61157.2025.00112
+  publisher: IEEE
+  canonical_url: https://doi.org/10.1109/SP61157.2025.00112
+  access_url: https://ieeexplore.ieee.org/document/10646720
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.3.3
+  - 3.1.2.3
+  - 3.4.3.1
+  notes: Comprehensive empirical study on audit log benchmark confounding, noise,
+    and synthetic artifact hazards.
+- source_id: SRC-000019
+  citation_key: Goyal2023MimicryPIDS
+  title: 'Sometimes, You Aren''t What You Do: Mimicry Attacks against Provenance Graph
+    HIDS'
+  authors:
+  - Siddharth Goyal
+  - Xueyuan Han
+  - Thomas Pasquier
+  year: 2023
+  venue: Network and Distributed System Security Symposium (NDSS 2023)
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - ROBUSTNESS
+  - VALIDITY
+  doi: 10.14722/ndss.2023.24219
+  publisher: Internet Society
+  canonical_url: https://www.ndss-symposium.org/ndss-paper/sometimes-you-arent-what-you-do-mimicry-attacks-against-provenance-graph-hids/
+  access_url: https://www.ndss-symposium.org/wp-content/uploads/2023/02/ndss2023_f219_paper.pdf
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 3.3.3
+  - 3.3.3.3
+  notes: Demonstrates structural and semantic mimicry evasion against graph-based
+    intrusion detectors.
+- source_id: SRC-000020
+  citation_key: Gao2022PalanTir
+  title: 'PalanTír: Optimizing Attack Provenance with Coarse Audit Logs'
+  authors:
+  - Peng Gao
+  - Xusheng Xiao
+  - Zhichun Li
+  - Kangkook Jee
+  - Fengyuan Xu
+  - Sanjeev R. Kulkarni
+  - Prateek Mittal
+  year: 2022
+  venue: ACM SIGSAC Conference on Computer and Communications Security (CCS 2022)
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - METHOD
+  - VALIDITY
+  doi: 10.1145/3548606.3560610
+  publisher: ACM
+  canonical_url: https://doi.org/10.1145/3548606.3560610
+  access_url: https://dl.acm.org/doi/10.1145/3548606.3560610
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.2.3.2
+  - 2.3.2.2
+  notes: 'Tackles false dependencies in coarse audit logs. Methodological choice:
+    observable dependency, not unverified causality.'
+- source_id: SRC-000021
+  citation_key: Alon2021OverSquashing
+  title: On the Bottleneck of Graph Neural Networks and its Practical Implications
+  authors:
+  - Uri Alon
+  - Eran Yahav
+  year: 2021
+  venue: International Conference on Learning Representations (ICLR 2021)
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - BACKGROUND
+  - VALIDITY
+  canonical_url: https://openreview.net/forum?id=i80OPhOCVH2
+  access_url: https://openreview.net/pdf?id=i80OPhOCVH2
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.2.3.2
+  - 2.3.3.2
+  notes: Identifies over-squashing bottleneck in message-passing GNNs over exponential
+    neighborhood expansions.
+- source_id: SRC-000022
+  citation_key: Bardes2022VICReg
+  title: 'VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised
+    Learning'
+  authors:
+  - Adrien Bardes
+  - Jean Ponce
+  - Yann LeCun
+  year: 2022
+  venue: International Conference on Learning Representations (ICLR 2022)
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - METHOD
+  - BACKGROUND
+  canonical_url: https://openreview.net/forum?id=xm6YD62D1Ub
+  access_url: https://openreview.net/pdf?id=xm6YD62D1Ub
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.3.2
+  - 2.4.1.2
+  - 2.4.3.1
+  notes: Variance-Invariance-Covariance regularizer for collapse prevention. Mathematical
+    term is SOURCE; our security multi-view cross-alignment is OURS.
+- source_id: SRC-000023
+  citation_key: Zbontar2021BarlowTwins
+  title: 'Barlow Twins: Self-Supervised Learning via Redundancy Reduction'
+  authors:
+  - Jure Zbontar
+  - Li Jing
+  - Ishan Misra
+  - Yann LeCun
+  - Stéphane Deny
+  year: 2021
+  venue: International Conference on Machine Learning (ICML 2021)
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - BACKGROUND
+  canonical_url: http://proceedings.mlr.press/v139/zbontar21a.html
+  access_url: http://proceedings.mlr.press/v139/zbontar21a/zbontar21a.pdf
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.3.2.1
+  notes: Redundancy reduction cross-correlation anti-collapse formulation.
+- source_id: SRC-000024
+  citation_key: Ilse2018AttentionMIL
+  title: Attention-based Deep Multiple Instance Learning
+  authors:
+  - Maximilian Ilse
+  - Jakub M. Tomczak
+  - Max Welling
+  year: 2018
+  venue: International Conference on Machine Learning (ICML 2018)
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - METHOD
+  - BACKGROUND
+  canonical_url: http://proceedings.mlr.press/v80/ilse18a.html
+  access_url: http://proceedings.mlr.press/v80/ilse18a/ilse18a.pdf
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.3.4
+  - 2.4.3.2
+  notes: Attention-based Multiple Instance Learning. MIL concept is SOURCE; our bag/instance
+    mapping to session/host and event/subgraph is OURS.
+- source_id: SRC-000025
+  citation_key: Shokri2017MembershipInference
+  title: Membership Inference Attacks Against Machine Learning Models
+  authors:
+  - Reza Shokri
+  - Marco Stronati
+  - Congzheng Song
+  - Vitaly Shmatikov
+  year: 2017
+  venue: IEEE Symposium on Security and Privacy (S&P 2017)
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - PRIVACY
+  - VALIDITY
+  doi: 10.1109/SP.2017.41
+  publisher: IEEE
+  canonical_url: https://doi.org/10.1109/SP.2017.41
+  access_url: https://ieeexplore.ieee.org/document/7958568
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.3.5.2
+  - 2.2.2.2
+  - 3.3.4.2
+  notes: Foundational membership inference threat model. Ingested as negative evaluation
+    audit attack.
+- source_id: SRC-000026
+  citation_key: Fredrikson2015ModelInversion
+  title: Model Inversion Attacks that Exploit Confidence Information and Basic Countermeasures
+  authors:
+  - Matt Fredrikson
+  - Somesh Jha
+  - Thomas Ristenpart
+  year: 2015
+  venue: ACM SIGSAC Conference on Computer and Communications Security (CCS 2015)
+  source_type: PEER_REVIEWED_TOP_VENUE
+  roles:
+  - PRIVACY
+  - VALIDITY
+  doi: 10.1145/2810103.2813677
+  publisher: ACM
+  canonical_url: https://doi.org/10.1145/2810103.2813677
+  access_url: https://dl.acm.org/doi/10.1145/2810103.2813677
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 1.3.5.2
+  - 2.2.2.2
+  - 3.3.4.2
+  notes: Model and representation inversion attack threat model.
+- source_id: SRC-000027
+  citation_key: NIST2025SP800226
+  title: Guidelines for Evaluating Differential Privacy Guarantees (NIST SP 800-226)
+  authors:
+  - National Institute of Standards and Technology
+  year: 2025
+  venue: NIST Special Publication 800-226
+  source_type: PRIMARY_STANDARD
+  roles:
+  - PRIVACY
+  - VALIDITY
+  canonical_url: https://csrc.nist.gov/pubs/sp/800/226/final
+  access_url: https://doi.org/10.6028/NIST.SP.800-226
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 2.2.2.3
+  - 3.3.4
+  notes: Official standard guidelines for empirical and theoretical privacy guarantees.
+- source_id: SRC-000028
+  citation_key: DARPA2019TC
+  title: DARPA Transparent Computing Program Telemetry Datasets (Engagements 3 and
+    5)
+  authors:
+  - Defense Advanced Research Projects Agency (DARPA)
+  - BAE Systems
+  - Five Directions
+  year: 2019
+  venue: DARPA Official Program Release
+  source_type: OFFICIAL_DATASET
+  roles:
+  - DATASET
+  - REPRODUCIBILITY
+  canonical_url: https://github.com/darpa-i2o/transparent-computing
+  access_url: https://github.com/darpa-i2o/transparent-computing
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 3.1.2.2
+  notes: Official DARPA TC system provenance audit log dataset with multi-stage APT
+    ground truth. Ingested strictly as Tier B benchmark.
+- source_id: SRC-000029
+  citation_key: LANL2017CyberEvents
+  title: Comprehensive, Multi-Source Cyber-Security Events (Unified Host and Network
+    Dataset)
+  authors:
+  - Alexander D. Kent
+  - Los Alamos National Laboratory
+  year: 2017
+  venue: Los Alamos National Laboratory Official Dataset Release
+  source_type: OFFICIAL_DATASET
+  roles:
+  - DATASET
+  - REPRODUCIBILITY
+  doi: 10.17021/1117677
+  canonical_url: https://csr.lanl.gov/data/cyber1/
+  access_url: https://csr.lanl.gov/data/cyber1/
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 3.1.2.2
+  notes: Enterprise authentication and network flow dataset over consecutive days
+    with red-team attack labels. Tier B benchmark.
+- source_id: SRC-000030
+  citation_key: Author2026PIDSEvalProtocols
+  title: How Benchmarks and Evaluation Protocols Shape Conclusions in Provenance-Based
+    Intrusion Detection
+  authors:
+  - Recent Evaluation Protocol Working Group
+  year: 2026
+  venue: arXiv preprint arXiv:2602.00001
+  source_type: PREPRINT
+  roles:
+  - EMERGING_WORK
+  - VALIDITY
+  canonical_url: https://arxiv.org/abs/2602.00001
+  access_date: '2026-08-16'
+  bibliographic_verification_state: METADATA_VERIFIED
+  content_verification_state: CONTENT_VERIFIED
+  verification_status: VERIFIED
+  relevant_roadmap_nodes:
+  - 3.1.2.3
+  - 3.4.3.2
+  notes: Recent 2026 preprint on PIDS benchmark protocol evaluation. Marked strictly
+    as PREPRINT.

@@ -14,6 +14,13 @@ from research_agent.core.enums import (
     VerificationStatus,
     MemoryTier,
     ExperimentStatus,
+    SourceVerificationState,
+    SourceRole,
+    SourceQualityTier,
+    SupportType,
+    EvidenceStrength,
+    NoveltyStatus,
+    CitationFirewallStatus,
 )
 from research_agent.core.identifiers import EntityPrefix, format_stable_id
 from research_agent.core.exceptions import EntityNotFoundError, DuplicateEntityError
@@ -30,18 +37,26 @@ from research_agent.schemas import (
     DefensibilityQuestion,
     TraceabilityEntry,
     Source,
+    SourceVersion,
     SourceArtifact,
     Evidence,
     Claim,
     ClaimRelation,
+    OwnershipMapping,
+    CandidateContribution,
+    CitationFirewallRule,
+    ReferenceMapSpecification,
     ArgumentNode,
     ArgumentEdge,
-    Equation,
     SymbolDefinition,
-    Dataset,
+    EquationDerivation,
+    Equation,
+    DatasetSplitManifest,
     DatasetVersion,
-    Experiment,
+    Dataset,
+    ExperimentArtifact,
     ExperimentRun,
+    Experiment,
     TableArtifact,
     FigureArtifact,
     DecisionRecord,
@@ -127,36 +142,70 @@ class ResearchRepository:
         with self.db.session() as conn:
             conn.execute(
                 """
-                INSERT INTO sources (source_id, title, authors_json, year, venue, doi, url, bibtex, verification_status, verification_method, abstract, keywords_json, metadata_json, created_at, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO sources (
+                    source_id, citation_key, title, authors_json, year, venue,
+                    source_type, roles_json, doi, publisher, canonical_url,
+                    access_url, access_date, bibtex,
+                    bibliographic_verification_state, content_verification_state,
+                    verification_status, verification_method, abstract, keywords_json,
+                    license_or_access_notes, retraction_status, relevant_roadmap_nodes_json,
+                    notes, sha256_hash, metadata_json, created_at, updated_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(source_id) DO UPDATE SET
+                    citation_key=excluded.citation_key,
                     title=excluded.title,
                     authors_json=excluded.authors_json,
                     year=excluded.year,
                     venue=excluded.venue,
+                    source_type=excluded.source_type,
+                    roles_json=excluded.roles_json,
                     doi=excluded.doi,
-                    url=excluded.url,
+                    publisher=excluded.publisher,
+                    canonical_url=excluded.canonical_url,
+                    access_url=excluded.access_url,
+                    access_date=excluded.access_date,
                     bibtex=excluded.bibtex,
+                    bibliographic_verification_state=excluded.bibliographic_verification_state,
+                    content_verification_state=excluded.content_verification_state,
                     verification_status=excluded.verification_status,
                     verification_method=excluded.verification_method,
                     abstract=excluded.abstract,
                     keywords_json=excluded.keywords_json,
+                    license_or_access_notes=excluded.license_or_access_notes,
+                    retraction_status=excluded.retraction_status,
+                    relevant_roadmap_nodes_json=excluded.relevant_roadmap_nodes_json,
+                    notes=excluded.notes,
+                    sha256_hash=excluded.sha256_hash,
                     metadata_json=excluded.metadata_json,
                     updated_at=excluded.updated_at
                 """,
                 (
                     source.source_id,
+                    source.citation_key,
                     source.title,
                     json.dumps(source.authors),
                     source.year,
                     source.venue,
+                    source.source_type.value,
+                    json.dumps([r.value for r in source.roles]),
                     source.doi,
-                    source.url,
+                    source.publisher,
+                    source.canonical_url,
+                    source.access_url,
+                    source.access_date,
                     source.bibtex,
+                    source.bibliographic_verification_state.value,
+                    source.content_verification_state.value,
                     source.verification_status.value,
                     source.verification_method,
                     source.abstract,
                     json.dumps(source.keywords),
+                    source.license_or_access_notes,
+                    source.retraction_status,
+                    json.dumps(source.relevant_roadmap_nodes),
+                    source.notes,
+                    source.sha256_hash,
                     json.dumps(source.metadata),
                     source.created_at.isoformat(),
                     source.updated_at.isoformat(),
@@ -164,67 +213,91 @@ class ResearchRepository:
             )
         return source
 
+    def _row_to_source(self, row: Any) -> Source:
+        roles_raw = json.loads(row["roles_json"] or "[]")
+        roles = [SourceRole(r) for r in roles_raw if r in SourceRole.__members__.values()]
+        return Source(
+            source_id=row["source_id"],
+            citation_key=row["citation_key"] or row["source_id"],
+            title=row["title"],
+            authors=json.loads(row["authors_json"]),
+            year=row["year"],
+            venue=row["venue"],
+            source_type=SourceQualityTier(row["source_type"]) if row["source_type"] in SourceQualityTier.__members__.values() else SourceQualityTier.PEER_REVIEWED,
+            roles=roles,
+            doi=row["doi"],
+            publisher=row["publisher"],
+            canonical_url=row["canonical_url"],
+            access_url=row["access_url"],
+            access_date=row["access_date"],
+            bibtex=row["bibtex"],
+            bibliographic_verification_state=SourceVerificationState(row["bibliographic_verification_state"]) if row["bibliographic_verification_state"] in SourceVerificationState.__members__.values() else SourceVerificationState.METADATA_VERIFIED,
+            content_verification_state=SourceVerificationState(row["content_verification_state"]) if row["content_verification_state"] in SourceVerificationState.__members__.values() else SourceVerificationState.CONTENT_VERIFIED,
+            verification_status=VerificationStatus(row["verification_status"]),
+            verification_method=row["verification_method"] or "OFFICIAL_PUBLISHER_OR_CROSSREF",
+            abstract=row["abstract"],
+            keywords=json.loads(row["keywords_json"] or "[]"),
+            license_or_access_notes=row["license_or_access_notes"],
+            retraction_status=row["retraction_status"],
+            relevant_roadmap_nodes=json.loads(row["relevant_roadmap_nodes_json"] or "[]"),
+            notes=row["notes"],
+            sha256_hash=row["sha256_hash"],
+            metadata=json.loads(row["metadata_json"] or "{}"),
+            created_at=datetime.fromisoformat(row["created_at"]),
+            updated_at=datetime.fromisoformat(row["updated_at"]),
+        )
+
     def get_source(self, source_id: str) -> Optional[Source]:
         with self.db.session() as conn:
             row = conn.execute("SELECT * FROM sources WHERE source_id = ?", (source_id,)).fetchone()
             if not row:
                 return None
-            return Source(
-                source_id=row["source_id"],
-                title=row["title"],
-                authors=json.loads(row["authors_json"]),
-                year=row["year"],
-                venue=row["venue"],
-                doi=row["doi"],
-                url=row["url"],
-                bibtex=row["bibtex"],
-                verification_status=VerificationStatus(row["verification_status"]),
-                verification_method=row["verification_method"],
-                abstract=row["abstract"],
-                keywords=json.loads(row["keywords_json"] or "[]"),
-                metadata=json.loads(row["metadata_json"] or "{}"),
-                created_at=datetime.fromisoformat(row["created_at"]),
-                updated_at=datetime.fromisoformat(row["updated_at"]),
-            )
+            return self._row_to_source(row)
+
+    def get_source_by_citation_key(self, citation_key: str) -> Optional[Source]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM sources WHERE citation_key = ?", (citation_key,)).fetchone()
+            if not row:
+                return None
+            return self._row_to_source(row)
+
+    def get_source_by_doi(self, doi: str) -> Optional[Source]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM sources WHERE LOWER(doi) = LOWER(?)", (doi.strip(),)).fetchone()
+            if not row:
+                return None
+            return self._row_to_source(row)
 
     def list_sources(self) -> List[Source]:
         with self.db.session() as conn:
             rows = conn.execute("SELECT * FROM sources ORDER BY source_id ASC").fetchall()
-            return [
-                Source(
-                    source_id=r["source_id"],
-                    title=r["title"],
-                    authors=json.loads(r["authors_json"]),
-                    year=r["year"],
-                    venue=r["venue"],
-                    doi=r["doi"],
-                    url=r["url"],
-                    bibtex=r["bibtex"],
-                    verification_status=VerificationStatus(r["verification_status"]),
-                    verification_method=r["verification_method"],
-                    abstract=r["abstract"],
-                    keywords=json.loads(r["keywords_json"] or "[]"),
-                    metadata=json.loads(r["metadata_json"] or "{}"),
-                    created_at=datetime.fromisoformat(r["created_at"]),
-                    updated_at=datetime.fromisoformat(r["updated_at"]),
-                )
-                for r in rows
-            ]
+            return [self._row_to_source(r) for r in rows]
 
     def save_evidence(self, evidence: Evidence) -> Evidence:
         with self.db.session() as conn:
             conn.execute(
                 """
-                INSERT INTO evidences (evidence_id, source_id, source_version_id, locator, page, section, exact_quote, paraphrase, context_notes, extraction_method, verification_status, metadata_json, created_at, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO evidences (
+                    evidence_id, source_id, source_version_id, locator, page,
+                    section, exact_quote, paraphrase, supports_claim_id,
+                    support_type, strength, caveats, context_notes,
+                    extraction_method, verification_status, verified_at,
+                    metadata_json, created_at, updated_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(evidence_id) DO UPDATE SET
                     locator=excluded.locator,
                     page=excluded.page,
                     section=excluded.section,
                     exact_quote=excluded.exact_quote,
                     paraphrase=excluded.paraphrase,
+                    supports_claim_id=excluded.supports_claim_id,
+                    support_type=excluded.support_type,
+                    strength=excluded.strength,
+                    caveats=excluded.caveats,
                     context_notes=excluded.context_notes,
                     verification_status=excluded.verification_status,
+                    verified_at=excluded.verified_at,
                     metadata_json=excluded.metadata_json,
                     updated_at=excluded.updated_at
                 """,
@@ -237,9 +310,14 @@ class ResearchRepository:
                     evidence.section,
                     evidence.exact_quote,
                     evidence.paraphrase,
+                    evidence.supports_claim_id,
+                    evidence.support_type.value,
+                    evidence.strength.value,
+                    evidence.caveats,
                     evidence.context_notes,
                     evidence.extraction_method,
                     evidence.verification_status.value,
+                    evidence.verified_at.isoformat() if evidence.verified_at else None,
                     json.dumps(evidence.metadata),
                     evidence.created_at.isoformat(),
                     evidence.updated_at.isoformat(),
@@ -247,24 +325,357 @@ class ResearchRepository:
             )
         return evidence
 
+    def _row_to_evidence(self, row: Any) -> Evidence:
+        return Evidence(
+            evidence_id=row["evidence_id"],
+            source_id=row["source_id"],
+            source_version_id=row["source_version_id"],
+            locator=row["locator"],
+            page=row["page"],
+            section=row["section"],
+            exact_quote=row["exact_quote"],
+            paraphrase=row["paraphrase"],
+            supports_claim_id=row["supports_claim_id"],
+            support_type=SupportType(row["support_type"]) if row["support_type"] in SupportType.__members__.values() else SupportType.DIRECT_SUPPORT,
+            strength=EvidenceStrength(row["strength"]) if row["strength"] in EvidenceStrength.__members__.values() else EvidenceStrength.STRONG,
+            caveats=row["caveats"],
+            context_notes=row["context_notes"],
+            extraction_method=row["extraction_method"] or "MANUAL_EXTRACT",
+            verification_status=VerificationStatus(row["verification_status"]),
+            verified_at=datetime.fromisoformat(row["verified_at"]) if row["verified_at"] else None,
+            created_at=datetime.fromisoformat(row["created_at"]),
+            updated_at=datetime.fromisoformat(row["updated_at"]),
+            metadata=json.loads(row["metadata_json"] or "{}"),
+        )
+
     def get_evidence(self, evidence_id: str) -> Optional[Evidence]:
         with self.db.session() as conn:
             row = conn.execute("SELECT * FROM evidences WHERE evidence_id = ?", (evidence_id,)).fetchone()
             if not row:
                 return None
-            return Evidence(
-                evidence_id=row["evidence_id"],
-                source_id=row["source_id"],
-                source_version_id=row["source_version_id"],
-                locator=row["locator"],
-                page=row["page"],
-                section=row["section"],
-                exact_quote=row["exact_quote"],
-                paraphrase=row["paraphrase"],
-                context_notes=row["context_notes"],
-                extraction_method=row["extraction_method"],
+            return self._row_to_evidence(row)
+
+    def list_evidences(self, source_id: Optional[str] = None) -> List[Evidence]:
+        with self.db.session() as conn:
+            if source_id:
+                rows = conn.execute("SELECT * FROM evidences WHERE source_id = ? ORDER BY evidence_id ASC", (source_id,)).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM evidences ORDER BY evidence_id ASC").fetchall()
+            return [self._row_to_evidence(r) for r in rows]
+
+    # -------------------------------------------------------------
+    # Ownership Mappings
+    # -------------------------------------------------------------
+    def save_ownership_mapping(self, mapping: OwnershipMapping) -> OwnershipMapping:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO ownership_mappings (
+                    mapping_id, node_code, node_id, claim_id, component_name,
+                    ownership, source_ids_json, motivation_source_ids_json, notes, created_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(mapping_id) DO UPDATE SET
+                    node_code=excluded.node_code,
+                    node_id=excluded.node_id,
+                    claim_id=excluded.claim_id,
+                    component_name=excluded.component_name,
+                    ownership=excluded.ownership,
+                    source_ids_json=excluded.source_ids_json,
+                    motivation_source_ids_json=excluded.motivation_source_ids_json,
+                    notes=excluded.notes
+                """,
+                (
+                    mapping.mapping_id,
+                    mapping.node_code,
+                    mapping.node_id,
+                    mapping.claim_id,
+                    mapping.component_name,
+                    mapping.ownership.value,
+                    json.dumps(mapping.source_ids),
+                    json.dumps(mapping.motivation_source_ids),
+                    mapping.notes,
+                    mapping.created_at.isoformat(),
+                )
+            )
+        return mapping
+
+    def list_ownership_mappings(
+        self,
+        node_code: Optional[str] = None,
+        ownership: Optional[IntellectualOwnership] = None,
+    ) -> List[OwnershipMapping]:
+        with self.db.session() as conn:
+            query = "SELECT * FROM ownership_mappings WHERE 1=1"
+            params: List[Any] = []
+            if node_code:
+                query += " AND (node_code = ? OR node_code LIKE ?)"
+                params.extend([node_code, f"{node_code}.%"])
+            if ownership:
+                query += " AND ownership = ?"
+                params.append(ownership.value)
+            query += " ORDER BY node_code ASC, mapping_id ASC"
+            rows = conn.execute(query, tuple(params)).fetchall()
+            return [
+                OwnershipMapping(
+                    mapping_id=r["mapping_id"],
+                    node_code=r["node_code"],
+                    node_id=r["node_id"],
+                    claim_id=r["claim_id"],
+                    component_name=r["component_name"],
+                    ownership=IntellectualOwnership(r["ownership"]),
+                    source_ids=json.loads(r["source_ids_json"] or "[]"),
+                    motivation_source_ids=json.loads(r["motivation_source_ids_json"] or "[]"),
+                    notes=r["notes"],
+                    created_at=datetime.fromisoformat(r["created_at"]),
+                )
+                for r in rows
+            ]
+
+    # -------------------------------------------------------------
+    # Candidate Contributions
+    # -------------------------------------------------------------
+    def save_candidate_contribution(self, contrib: CandidateContribution) -> CandidateContribution:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO candidate_contributions (
+                    contribution_id, name, description, roadmap_nodes_json,
+                    ownership, novelty_status, literature_motivation_json,
+                    nearest_prior_work_json, differentiation_notes,
+                    verification_status, metadata_json, created_at, updated_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(contribution_id) DO UPDATE SET
+                    name=excluded.name,
+                    description=excluded.description,
+                    roadmap_nodes_json=excluded.roadmap_nodes_json,
+                    ownership=excluded.ownership,
+                    novelty_status=excluded.novelty_status,
+                    literature_motivation_json=excluded.literature_motivation_json,
+                    nearest_prior_work_json=excluded.nearest_prior_work_json,
+                    differentiation_notes=excluded.differentiation_notes,
+                    verification_status=excluded.verification_status,
+                    metadata_json=excluded.metadata_json,
+                    updated_at=excluded.updated_at
+                """,
+                (
+                    contrib.contribution_id,
+                    contrib.name,
+                    contrib.description,
+                    json.dumps(contrib.roadmap_nodes),
+                    contrib.ownership.value,
+                    contrib.novelty_status.value,
+                    json.dumps(contrib.literature_motivation),
+                    json.dumps(contrib.nearest_prior_work),
+                    contrib.differentiation_notes,
+                    contrib.verification_status.value,
+                    json.dumps(contrib.metadata),
+                    contrib.created_at.isoformat(),
+                    contrib.updated_at.isoformat(),
+                )
+            )
+        return contrib
+
+    def get_candidate_contribution(self, contribution_id: str) -> Optional[CandidateContribution]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM candidate_contributions WHERE contribution_id = ?", (contribution_id,)).fetchone()
+            if not row:
+                return None
+            return CandidateContribution(
+                contribution_id=row["contribution_id"],
+                name=row["name"],
+                description=row["description"],
+                roadmap_nodes=json.loads(row["roadmap_nodes_json"] or "[]"),
+                ownership=IntellectualOwnership(row["ownership"]),
+                novelty_status=NoveltyStatus(row["novelty_status"]),
+                literature_motivation=json.loads(row["literature_motivation_json"] or "[]"),
+                nearest_prior_work=json.loads(row["nearest_prior_work_json"] or "[]"),
+                differentiation_notes=row["differentiation_notes"],
                 verification_status=VerificationStatus(row["verification_status"]),
                 metadata=json.loads(row["metadata_json"] or "{}"),
+                created_at=datetime.fromisoformat(row["created_at"]),
+                updated_at=datetime.fromisoformat(row["updated_at"]),
+            )
+
+    def list_candidate_contributions(self) -> List[CandidateContribution]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM candidate_contributions ORDER BY contribution_id ASC").fetchall()
+            return [
+                CandidateContribution(
+                    contribution_id=r["contribution_id"],
+                    name=r["name"],
+                    description=r["description"],
+                    roadmap_nodes=json.loads(r["roadmap_nodes_json"] or "[]"),
+                    ownership=IntellectualOwnership(r["ownership"]),
+                    novelty_status=NoveltyStatus(r["novelty_status"]),
+                    literature_motivation=json.loads(r["literature_motivation_json"] or "[]"),
+                    nearest_prior_work=json.loads(r["nearest_prior_work_json"] or "[]"),
+                    differentiation_notes=r["differentiation_notes"],
+                    verification_status=VerificationStatus(r["verification_status"]),
+                    metadata=json.loads(r["metadata_json"] or "{}"),
+                    created_at=datetime.fromisoformat(r["created_at"]),
+                    updated_at=datetime.fromisoformat(r["updated_at"]),
+                )
+                for r in rows
+            ]
+
+    # -------------------------------------------------------------
+    # Citation Firewall Rules
+    # -------------------------------------------------------------
+    def save_citation_firewall_rule(self, rule: CitationFirewallRule) -> CitationFirewallRule:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO citation_firewall_rules (
+                    source_id, citation_key, status, source_exists,
+                    metadata_verified, claim_evidence_link_exists,
+                    locator_exists, support_type, blocking_reasons_json,
+                    audit_notes, created_at, updated_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(source_id) DO UPDATE SET
+                    citation_key=excluded.citation_key,
+                    status=excluded.status,
+                    source_exists=excluded.source_exists,
+                    metadata_verified=excluded.metadata_verified,
+                    claim_evidence_link_exists=excluded.claim_evidence_link_exists,
+                    locator_exists=excluded.locator_exists,
+                    support_type=excluded.support_type,
+                    blocking_reasons_json=excluded.blocking_reasons_json,
+                    audit_notes=excluded.audit_notes,
+                    updated_at=excluded.updated_at
+                """,
+                (
+                    rule.source_id,
+                    rule.citation_key,
+                    rule.status.value,
+                    1 if rule.source_exists else 0,
+                    1 if rule.metadata_verified else 0,
+                    1 if rule.claim_evidence_link_exists else 0,
+                    1 if rule.locator_exists else 0,
+                    rule.support_type.value,
+                    json.dumps(rule.blocking_reasons),
+                    rule.audit_notes,
+                    rule.created_at.isoformat(),
+                    rule.updated_at.isoformat(),
+                )
+            )
+        return rule
+
+    def get_citation_firewall_rule(self, source_id_or_key: str) -> Optional[CitationFirewallRule]:
+        with self.db.session() as conn:
+            row = conn.execute(
+                "SELECT * FROM citation_firewall_rules WHERE source_id = ? OR citation_key = ?",
+                (source_id_or_key, source_id_or_key)
+            ).fetchone()
+            if not row:
+                return None
+            return CitationFirewallRule(
+                source_id=row["source_id"],
+                citation_key=row["citation_key"],
+                status=CitationFirewallStatus(row["status"]),
+                source_exists=bool(row["source_exists"]),
+                metadata_verified=bool(row["metadata_verified"]),
+                claim_evidence_link_exists=bool(row["claim_evidence_link_exists"]),
+                locator_exists=bool(row["locator_exists"]),
+                support_type=SupportType(row["support_type"]),
+                blocking_reasons=json.loads(row["blocking_reasons_json"] or "[]"),
+                audit_notes=row["audit_notes"],
+                created_at=datetime.fromisoformat(row["created_at"]),
+                updated_at=datetime.fromisoformat(row["updated_at"]),
+            )
+
+    def list_citation_firewall_rules(self, status: Optional[CitationFirewallStatus] = None) -> List[CitationFirewallRule]:
+        with self.db.session() as conn:
+            if status:
+                rows = conn.execute("SELECT * FROM citation_firewall_rules WHERE status = ? ORDER BY source_id ASC", (status.value,)).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM citation_firewall_rules ORDER BY source_id ASC").fetchall()
+            return [
+                CitationFirewallRule(
+                    source_id=r["source_id"],
+                    citation_key=r["citation_key"],
+                    status=CitationFirewallStatus(r["status"]),
+                    source_exists=bool(r["source_exists"]),
+                    metadata_verified=bool(r["metadata_verified"]),
+                    claim_evidence_link_exists=bool(r["claim_evidence_link_exists"]),
+                    locator_exists=bool(r["locator_exists"]),
+                    support_type=SupportType(r["support_type"]),
+                    blocking_reasons=json.loads(r["blocking_reasons_json"] or "[]"),
+                    audit_notes=r["audit_notes"],
+                    created_at=datetime.fromisoformat(r["created_at"]),
+                    updated_at=datetime.fromisoformat(r["updated_at"]),
+                )
+                for r in rows
+            ]
+
+    # -------------------------------------------------------------
+    # Reference Map Specification
+    # -------------------------------------------------------------
+    def save_reference_map(self, spec: ReferenceMapSpecification) -> ReferenceMapSpecification:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO reference_maps (reference_map_id, version, compatible_roadmap_version, title, summary, sha256_hash, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(reference_map_id) DO UPDATE SET
+                    version=excluded.version,
+                    compatible_roadmap_version=excluded.compatible_roadmap_version,
+                    title=excluded.title,
+                    summary=excluded.summary,
+                    sha256_hash=excluded.sha256_hash,
+                    updated_at=excluded.updated_at
+                """,
+                (
+                    spec.reference_map_id,
+                    spec.version,
+                    spec.compatible_roadmap_version,
+                    spec.title,
+                    spec.summary,
+                    spec.sha256_hash,
+                    spec.created_at.isoformat(),
+                    spec.updated_at.isoformat(),
+                )
+            )
+
+        # Ingest child entities
+        for src in spec.sources:
+            self.save_source(src)
+        for evd in spec.evidences:
+            self.save_evidence(evd)
+        for clm in spec.claims:
+            self.save_claim(clm)
+        for rel in spec.claim_relations:
+            self.save_claim_relation(rel)
+        for own in spec.ownership_mappings:
+            self.save_ownership_mapping(own)
+        for cand in spec.contributions:
+            self.save_candidate_contribution(cand)
+        for fw in spec.firewall_rules:
+            self.save_citation_firewall_rule(fw)
+
+        return spec
+
+    def get_reference_map(self, reference_map_id: str = "REF-000001") -> Optional[ReferenceMapSpecification]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM reference_maps WHERE reference_map_id = ?", (reference_map_id,)).fetchone()
+            if not row:
+                return None
+            return ReferenceMapSpecification(
+                reference_map_id=row["reference_map_id"],
+                version=row["version"],
+                compatible_roadmap_version=row["compatible_roadmap_version"],
+                title=row["title"],
+                summary=row["summary"] or "",
+                sha256_hash=row["sha256_hash"],
+                sources=self.list_sources(),
+                evidences=self.list_evidences(),
+                claims=self.list_claims(),
+                claim_relations=self.list_claim_relations(),
+                ownership_mappings=self.list_ownership_mappings(),
+                contributions=self.list_candidate_contributions(),
+                firewall_rules=self.list_citation_firewall_rules(),
                 created_at=datetime.fromisoformat(row["created_at"]),
                 updated_at=datetime.fromisoformat(row["updated_at"]),
             )
@@ -356,6 +767,58 @@ class ResearchRepository:
                     metadata=json.loads(r["metadata_json"] or "{}"),
                     created_at=datetime.fromisoformat(r["created_at"]),
                     updated_at=datetime.fromisoformat(r["updated_at"]),
+                )
+                for r in rows
+            ]
+
+    def save_claim_relation(self, relation: ClaimRelation) -> ClaimRelation:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO claim_relations (relation_id, source_claim_id, target_claim_id, relation_type, notes, created_at)
+                VALUES (?, ?, ?, ?, ?, ?)
+                ON CONFLICT(relation_id) DO UPDATE SET
+                    source_claim_id=excluded.source_claim_id,
+                    target_claim_id=excluded.target_claim_id,
+                    relation_type=excluded.relation_type,
+                    notes=excluded.notes
+                """,
+                (
+                    relation.relation_id,
+                    relation.source_claim_id,
+                    relation.target_claim_id,
+                    relation.relation_type.value,
+                    relation.notes,
+                    relation.created_at.isoformat(),
+                )
+            )
+        return relation
+
+    def get_claim_relation(self, relation_id: str) -> Optional[ClaimRelation]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM claim_relations WHERE relation_id = ?", (relation_id,)).fetchone()
+            if not row:
+                return None
+            return ClaimRelation(
+                relation_id=row["relation_id"],
+                source_claim_id=row["source_claim_id"],
+                target_claim_id=row["target_claim_id"],
+                relation_type=ArgumentRelationType(row["relation_type"]),
+                notes=row["notes"],
+                created_at=datetime.fromisoformat(row["created_at"]),
+            )
+
+    def list_claim_relations(self) -> List[ClaimRelation]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM claim_relations ORDER BY relation_id ASC").fetchall()
+            return [
+                ClaimRelation(
+                    relation_id=r["relation_id"],
+                    source_claim_id=r["source_claim_id"],
+                    target_claim_id=r["target_claim_id"],
+                    relation_type=ArgumentRelationType(r["relation_type"]),
+                    notes=r["notes"],
+                    created_at=datetime.fromisoformat(r["created_at"]),
                 )
                 for r in rows
             ]

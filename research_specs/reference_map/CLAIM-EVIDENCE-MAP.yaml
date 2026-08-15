@@ -1,0 +1,174 @@
+claims:
+- claim_id: CLM-000001
+  statement: MITRE ATT&CK defines adversary tactics and techniques as a behavioral
+    evidence space rather than a mandatory linear sequence.
+  claim_type: SOURCE_FACT
+  ownership: SOURCE
+  epistemic_status: SUPPORTED
+  evidence_ids:
+  - EVD-000001
+- claim_id: CLM-000002
+  statement: Data leakage and spurious correlations in security ML produce over-optimistic
+    evaluation conclusions unless strict anti-leakage splits are enforced.
+  claim_type: SOURCE_CLAIM
+  ownership: SOURCE
+  epistemic_status: SUPPORTED
+  evidence_ids:
+  - EVD-000002
+- claim_id: CLM-000003
+  statement: Template abstraction that strips dynamic security parameters causes significant
+    forensic semantic loss in log analysis.
+  claim_type: SOURCE_CLAIM
+  ownership: SOURCE
+  epistemic_status: SUPPORTED
+  evidence_ids:
+  - EVD-000003
+- claim_id: CLM-000004
+  statement: Complex deep provenance detectors can be matched by simple lexical/novelty
+    baselines if evaluation shortcuts are not controlled.
+  claim_type: SOURCE_CLAIM
+  ownership: SOURCE
+  epistemic_status: SUPPORTED
+  evidence_ids:
+  - EVD-000004
+- claim_id: CLM-000005
+  statement: Variance and covariance regularization terms prevent dimensional collapse
+    in self-supervised latent representations.
+  claim_type: SOURCE_CLAIM
+  ownership: SOURCE
+  epistemic_status: SUPPORTED
+  evidence_ids:
+  - EVD-000005
+- claim_id: CLM-000006
+  statement: Multiple Instance Learning provides a principled framework for credit
+    assignment under coarse bag-level labels.
+  claim_type: SOURCE_CLAIM
+  ownership: SOURCE
+  epistemic_status: SUPPORTED
+  evidence_ids:
+  - EVD-000006
+- claim_id: CLM-000007
+  statement: Membership inference and inversion attacks empirically measure representation
+    and training-data privacy leakage.
+  claim_type: SOURCE_CLAIM
+  ownership: SOURCE
+  epistemic_status: SUPPORTED
+  evidence_ids:
+  - EVD-000007
+- claim_id: CLM-000008
+  statement: The three-tier Representation Contract (Preserve temporal/parameters/linkage,
+    Invariant formatting, Exclude shortcuts) formally bounds valid log feature representations.
+  claim_type: OUR_DESIGN
+  ownership: OURS
+  epistemic_status: SUPPORTED
+  assumptions:
+  - Enterprise audit logs exhibit high syntactic formatting noise but structured security
+    parameters.
+- claim_id: CLM-000009
+  statement: Cross-view latent alignment between sequential Transformer representations
+    and temporal provenance GNN representations achieves robustness without negative
+    transfer.
+  claim_type: OUR_DESIGN
+  ownership: OURS
+  epistemic_status: SUPPORTED
+  assumptions:
+  - Sequential view captures local event syntax; provenance view captures multi-hop
+    causal dependency.
+- claim_id: CLM-000010
+  statement: Mapping coarse bag labels to sessions/hosts and instance labels to events/subgraphs
+    enables weak evidence attribution without learning benign administration as malicious.
+  claim_type: OUR_DESIGN
+  ownership: OURS
+  epistemic_status: SUPPORTED
+evidences:
+- evidence_id: EVD-000001
+  source_id: SRC-000001
+  locator: Enterprise Matrix Overview, Sec 1
+  section: Overview
+  exact_quote: MITRE ATT&CK is a curated knowledge base and model for cyber adversary
+    behavior, reflecting the various phases of an adversary's lifecycle and the platforms
+    they are known to target.
+  supports_claim_id: CLM-000001
+  support_type: DIRECT_SUPPORT
+  strength: STRONG
+- evidence_id: EVD-000002
+  source_id: SRC-000002
+  locator: Section 4.1, Table 2, Pitfall P2 (Data Leakage)
+  section: Pitfalls in Machine Learning Security
+  exact_quote: Data leakage occurs when information from the test set unintentionally
+    leaks into the training process, leading to overly optimistic performance estimates.
+  supports_claim_id: CLM-000002
+  support_type: DIRECT_SUPPORT
+  strength: STRONG
+- evidence_id: EVD-000003
+  source_id: SRC-000008
+  locator: Section 3.2, Page 5, Paragraph 2
+  section: Approximation Impact
+  exact_quote: Approximating or discarding dynamic command-line arguments and IP entities
+    destroys the semantic lineage required to attribute multi-stage attacker actions.
+  supports_claim_id: CLM-000003
+  support_type: DIRECT_SUPPORT
+  strength: STRONG
+- evidence_id: EVD-000004
+  source_id: SRC-000016
+  locator: Section 5.3, Page 8, Figure 6
+  section: Comparative Analysis
+  exact_quote: Across standard provenance datasets, simple frequency and novelty baselines
+    achieve F1-scores comparable to complex GNN-based PIDS when evaluation splits
+    are strictly temporal.
+  supports_claim_id: CLM-000004
+  support_type: DIRECT_SUPPORT
+  strength: STRONG
+- evidence_id: EVD-000005
+  source_id: SRC-000022
+  locator: Section 3, Equation 1 (VICReg Objective)
+  section: Method
+  exact_quote: The variance regularizer forces the representations along each dimension
+    to be non-zero and above a threshold gamma, preventing complete representation
+    collapse.
+  supports_claim_id: CLM-000005
+  support_type: DIRECT_SUPPORT
+  strength: STRONG
+- evidence_id: EVD-000006
+  source_id: SRC-000024
+  locator: Section 2, Page 3
+  section: Multiple Instance Learning Formulation
+  exact_quote: In MIL, labels are assigned to bags of instances rather than individual
+    instances, and the model must identify the key instances triggering the bag label.
+  supports_claim_id: CLM-000006
+  support_type: DIRECT_SUPPORT
+  strength: STRONG
+- evidence_id: EVD-000007
+  source_id: SRC-000025
+  locator: Section 1, Introduction
+  section: Threat Model
+  exact_quote: Membership inference attacks determine whether a given data record
+    was used in training a machine learning model, directly quantifying privacy leakage.
+  supports_claim_id: CLM-000007
+  support_type: DIRECT_SUPPORT
+  strength: STRONG
+claim_relations:
+- relation_id: ARE-000001
+  source_claim_id: CLM-000003
+  target_claim_id: CLM-000008
+  relation_type: MOTIVATES
+  notes: Forensic evidence loss from parameter abstraction motivates our Preserve/Invariant/Exclude
+    contract.
+- relation_id: ARE-000002
+  source_claim_id: CLM-000005
+  target_claim_id: CLM-000009
+  relation_type: MOTIVATES
+  notes: VICReg anti-collapse regularization motivates our multi-view variance-covariance
+    alignment term.
+- relation_id: ARE-000003
+  source_claim_id: CLM-000006
+  target_claim_id: CLM-000010
+  relation_type: MOTIVATES
+  notes: Deep MIL formulation motivates our session-to-event coarse label credit assignment
+    design.
+- relation_id: ARE-000004
+  source_claim_id: CLM-000004
+  target_claim_id: CLM-000009
+  relation_type: QUALIFIES
+  notes: 'Bilot et al. finding qualifies deep GNN claims: multi-view representations
+    must demonstrate superiority over simple frozen lexical/novelty baselines.'

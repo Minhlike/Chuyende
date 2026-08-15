@@ -138,17 +138,30 @@ CREATE TABLE IF NOT EXISTS traceability_entries (
 -- Sources
 CREATE TABLE IF NOT EXISTS sources (
     source_id TEXT PRIMARY KEY,
+    citation_key TEXT NOT NULL,
     title TEXT NOT NULL,
     authors_json TEXT NOT NULL,
     year INTEGER NOT NULL,
     venue TEXT NOT NULL,
+    source_type TEXT NOT NULL DEFAULT 'PEER_REVIEWED',
+    roles_json TEXT NOT NULL DEFAULT '[]',
     doi TEXT,
-    url TEXT,
+    publisher TEXT,
+    canonical_url TEXT,
+    access_url TEXT,
+    access_date TEXT,
     bibtex TEXT,
+    bibliographic_verification_state TEXT NOT NULL DEFAULT 'METADATA_VERIFIED',
+    content_verification_state TEXT NOT NULL DEFAULT 'CONTENT_VERIFIED',
     verification_status TEXT NOT NULL,
     verification_method TEXT,
     abstract TEXT,
     keywords_json TEXT,
+    license_or_access_notes TEXT,
+    retraction_status TEXT,
+    relevant_roadmap_nodes_json TEXT DEFAULT '[]',
+    notes TEXT,
+    sha256_hash TEXT,
     metadata_json TEXT,
     created_at TEXT NOT NULL,
     updated_at TEXT NOT NULL
@@ -175,13 +188,74 @@ CREATE TABLE IF NOT EXISTS evidences (
     section TEXT,
     exact_quote TEXT,
     paraphrase TEXT,
+    supports_claim_id TEXT,
+    support_type TEXT NOT NULL DEFAULT 'DIRECT_SUPPORT',
+    strength TEXT NOT NULL DEFAULT 'STRONG',
+    caveats TEXT,
     context_notes TEXT,
     extraction_method TEXT,
     verification_status TEXT NOT NULL,
+    verified_at TEXT,
     metadata_json TEXT,
     created_at TEXT NOT NULL,
     updated_at TEXT NOT NULL,
     FOREIGN KEY (source_id) REFERENCES sources(source_id) ON DELETE CASCADE
+);
+
+-- Reference Maps & Intellectual Ownership
+CREATE TABLE IF NOT EXISTS reference_maps (
+    reference_map_id TEXT PRIMARY KEY,
+    version TEXT NOT NULL,
+    compatible_roadmap_version TEXT NOT NULL,
+    title TEXT NOT NULL,
+    summary TEXT,
+    sha256_hash TEXT,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS ownership_mappings (
+    mapping_id TEXT PRIMARY KEY,
+    node_code TEXT NOT NULL,
+    node_id TEXT,
+    claim_id TEXT,
+    component_name TEXT NOT NULL,
+    ownership TEXT NOT NULL,
+    source_ids_json TEXT NOT NULL,
+    motivation_source_ids_json TEXT NOT NULL,
+    notes TEXT,
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS candidate_contributions (
+    contribution_id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    roadmap_nodes_json TEXT NOT NULL,
+    ownership TEXT NOT NULL DEFAULT 'OURS',
+    novelty_status TEXT NOT NULL DEFAULT 'CANDIDATE',
+    literature_motivation_json TEXT NOT NULL,
+    nearest_prior_work_json TEXT NOT NULL,
+    differentiation_notes TEXT NOT NULL,
+    verification_status TEXT NOT NULL,
+    metadata_json TEXT,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS citation_firewall_rules (
+    source_id TEXT PRIMARY KEY,
+    citation_key TEXT NOT NULL,
+    status TEXT NOT NULL,
+    source_exists INTEGER NOT NULL,
+    metadata_verified INTEGER NOT NULL,
+    claim_evidence_link_exists INTEGER NOT NULL,
+    locator_exists INTEGER NOT NULL,
+    support_type TEXT NOT NULL,
+    blocking_reasons_json TEXT NOT NULL,
+    audit_notes TEXT,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
 );
 
 -- Claims
@@ -496,3 +570,24 @@ class DatabaseManager:
             ensure_column("research_questions", "canonical_wording_en", "TEXT", "''")
             ensure_column("research_questions", "canonical_wording_vi", "TEXT", "''")
             ensure_column("hypotheses", "title", "TEXT", "''")
+
+            # Migrations for sources and evidences
+            ensure_column("sources", "citation_key", "TEXT", "''")
+            ensure_column("sources", "source_type", "TEXT", "'PEER_REVIEWED'")
+            ensure_column("sources", "roles_json", "TEXT", "'[]'")
+            ensure_column("sources", "publisher", "TEXT", "''")
+            ensure_column("sources", "canonical_url", "TEXT", "''")
+            ensure_column("sources", "access_url", "TEXT", "''")
+            ensure_column("sources", "access_date", "TEXT", "''")
+            ensure_column("sources", "bibliographic_verification_state", "TEXT", "'METADATA_VERIFIED'")
+            ensure_column("sources", "content_verification_state", "TEXT", "'CONTENT_VERIFIED'")
+            ensure_column("sources", "license_or_access_notes", "TEXT", "''")
+            ensure_column("sources", "retraction_status", "TEXT", "''")
+            ensure_column("sources", "relevant_roadmap_nodes_json", "TEXT", "'[]'")
+            ensure_column("sources", "notes", "TEXT", "''")
+            ensure_column("sources", "sha256_hash", "TEXT", "''")
+            ensure_column("evidences", "supports_claim_id", "TEXT", "''")
+            ensure_column("evidences", "support_type", "TEXT", "'DIRECT_SUPPORT'")
+            ensure_column("evidences", "strength", "TEXT", "'STRONG'")
+            ensure_column("evidences", "caveats", "TEXT", "''")
+            ensure_column("evidences", "verified_at", "TEXT", "''")

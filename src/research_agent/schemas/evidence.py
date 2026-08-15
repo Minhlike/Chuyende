@@ -1,11 +1,15 @@
 """
-Evidence Schema (Section 10, RC-01, RC-11, RC-12)
+Evidence Schema (Section 10, Section 11, RC-01, RC-11, RC-12)
 """
 
 from datetime import datetime, timezone
 from typing import Any, Dict, Optional
 from pydantic import BaseModel, Field, model_validator
-from research_agent.core.enums import VerificationStatus
+from research_agent.core.enums import (
+    VerificationStatus,
+    SupportType,
+    EvidenceStrength,
+)
 from research_agent.core.identifiers import EntityPrefix, format_stable_id
 
 
@@ -19,9 +23,14 @@ class Evidence(BaseModel):
     section: Optional[str] = None
     exact_quote: Optional[str] = Field(default=None, description="Verbatim text span from source (RC-12)")
     paraphrase: Optional[str] = Field(default=None, description="Faithful paraphrase/summary")
+    supports_claim_id: Optional[str] = Field(default=None, description="Bound atomic proposition CLM-xxxxxx")
+    support_type: SupportType = Field(default=SupportType.DIRECT_SUPPORT)
+    strength: EvidenceStrength = Field(default=EvidenceStrength.STRONG)
+    caveats: Optional[str] = None
     context_notes: Optional[str] = None
     extraction_method: str = "MANUAL_EXTRACT"
     verification_status: VerificationStatus = VerificationStatus.VERIFIED
+    verified_at: Optional[datetime] = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     metadata: Dict[str, Any] = Field(default_factory=dict)

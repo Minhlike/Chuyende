@@ -1,0 +1,317 @@
+ownership_mappings:
+- mapping_id: OWN-000001
+  node_code: 1.1.1
+  component_name: Log Space Characteristics & Drift Taxonomy
+  ownership: ADAPTED
+  source_ids:
+  - SRC-000002
+  - SRC-000018
+  motivation_source_ids: []
+  notes: Operational taxonomy (Concept/Template/Population/Representation Drift) is
+    OURS/ADAPTED framing.
+- mapping_id: OWN-000002
+  node_code: 1.1.2
+  component_name: MITRE ATT&CK Evidence Space Interpretation
+  ownership: ADAPTED
+  source_ids:
+  - SRC-000001
+  motivation_source_ids: []
+  notes: Official definitions are SOURCE; interpretation as non-linear multi-label
+    evidence space is ADAPTED.
+- mapping_id: OWN-000003
+  node_code: 1.1.3.1
+  component_name: Preserve / Invariant / Exclude Representation Contract
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000008
+  notes: Representation contract triad is strictly OURS contribution.
+- mapping_id: OWN-000004
+  node_code: 1.1.3.2
+  component_name: Feature Extraction vs Detection Boundary
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000002
+  notes: 'Exact extractor contract f_theta: L -> z is OURS.'
+- mapping_id: OWN-000005
+  node_code: 1.2.1
+  component_name: Statistical & Template Log Methods
+  ownership: SOURCE
+  source_ids:
+  - SRC-000006
+  - SRC-000007
+  motivation_source_ids: []
+  notes: Prior art.
+- mapping_id: OWN-000006
+  node_code: 1.2.2
+  component_name: Sequential DeepLog / LogBERT / NeuralLog
+  ownership: BASELINE
+  source_ids:
+  - SRC-000003
+  - SRC-000004
+  - SRC-000005
+  motivation_source_ids: []
+  notes: Baselines.
+- mapping_id: OWN-000007
+  node_code: 1.2.3
+  component_name: Provenance Graph & PIDS Prior Art
+  ownership: SOURCE
+  source_ids:
+  - SRC-000009
+  - SRC-000010
+  - SRC-000011
+  - SRC-000012
+  - SRC-000020
+  - SRC-000021
+  motivation_source_ids: []
+  notes: Prior art survey.
+- mapping_id: OWN-000008
+  node_code: 1.3.1
+  component_name: Security-Semantic Parameter Loss & RQ1
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000007
+  - SRC-000008
+  notes: RQ1 is OURS; forensic validity loss is SOURCE.
+- mapping_id: OWN-000009
+  node_code: 1.3.2
+  component_name: Cross-View Alignment & RQ2
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000022
+  - SRC-000023
+  notes: RQ2 is OURS; anti-collapse principles are SOURCE.
+- mapping_id: OWN-000010
+  node_code: 1.3.3
+  component_name: Leakage, Shortcuts & RQ3
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000002
+  - SRC-000016
+  - SRC-000018
+  notes: RQ3 is OURS; methodological warnings are SOURCE.
+- mapping_id: OWN-000011
+  node_code: 1.3.4
+  component_name: Weak Evidence Attribution & RQ4
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000024
+  notes: RQ4 is OURS; MIL framework is SOURCE.
+- mapping_id: OWN-000012
+  node_code: 1.3.5
+  component_name: Privacy–Security Trade-off & RQ5
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000025
+  - SRC-000026
+  - SRC-000027
+  notes: RQ5 is OURS; privacy attack threats are SOURCE.
+- mapping_id: OWN-000013
+  node_code: 2.1.1
+  component_name: Canonical Extractor Abstraction f_theta and H1..H5
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids: []
+  notes: Central formalization is OURS.
+- mapping_id: OWN-000014
+  node_code: 2.1.2
+  component_name: Bounded-State Streaming Protocol
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000011
+  notes: Exact TTL, compaction, and bounded state budget design is OURS.
+- mapping_id: OWN-000015
+  node_code: 2.1.3
+  component_name: Multi-View End-to-End Extraction Pipeline
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids: []
+  notes: Pipeline integration is OURS.
+- mapping_id: OWN-000016
+  node_code: 2.2.1
+  component_name: Security-Aware Parameter Retention
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000007
+  - SRC-000008
+  notes: Typed schema and retention policy are OURS.
+- mapping_id: OWN-000017
+  node_code: 2.2.2
+  component_name: Controlled Linkability Privacy Contract
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000025
+  - SRC-000026
+  - SRC-000027
+  notes: Controlled linkability mechanism is OURS.
+- mapping_id: OWN-000018
+  node_code: 2.3.1
+  component_name: Transformer Semantic-Sequential Extractor
+  ownership: ADAPTED
+  source_ids:
+  - SRC-000004
+  motivation_source_ids: []
+  notes: Transformer sequential extractor adapted for dynamic parameter embeddings.
+- mapping_id: OWN-000019
+  node_code: 2.3.2
+  component_name: Dependency-Temporal Provenance Graph Contract
+  ownership: ADAPTED
+  source_ids:
+  - SRC-000009
+  - SRC-000020
+  motivation_source_ids: []
+  notes: Decoupled from causal assumptions.
+- mapping_id: OWN-000020
+  node_code: 2.3.3
+  component_name: Temporal GNN Message Passing & Over-squashing Controls
+  ownership: ADAPTED
+  source_ids:
+  - SRC-000012
+  - SRC-000021
+  motivation_source_ids: []
+  notes: Temporal GNN mechanisms with over-squashing mitigation.
+- mapping_id: OWN-000021
+  node_code: 2.4.1
+  component_name: Heterogeneous Cross-View Latent Alignment
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000022
+  notes: Cross-view alignment is OURS; VICReg regularizer component is SOURCE.
+- mapping_id: OWN-000022
+  node_code: 2.4.2
+  component_name: Risk-Aware Administrative Behavior Handling
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids: []
+  notes: Confounder control and admin noise separation is OURS.
+- mapping_id: OWN-000023
+  node_code: 2.4.3
+  component_name: Unified Objective & Detector-Agnostic Export
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000022
+  - SRC-000024
+  notes: Unified loss composition is OURS; constituent loss terms retain SOURCE provenance.
+- mapping_id: OWN-000024
+  node_code: 3.1.1
+  component_name: Reproducibility & Experiment Manifest Package
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000002
+  - SRC-000017
+  notes: Strict reproducibility artifact protocol is OURS.
+- mapping_id: OWN-000025
+  node_code: 3.1.2
+  component_name: Two-Tier Benchmark & Anti-Leakage Split
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000002
+  - SRC-000006
+  - SRC-000028
+  - SRC-000029
+  notes: Tier A vs Tier B distinction is OURS; datasets are SOURCE.
+- mapping_id: OWN-000026
+  node_code: 3.1.3
+  component_name: Three-Layer Evaluation Framework (Intrinsic -> Probe -> Operational)
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids: []
+  notes: Three-tier evaluation progression is strictly OURS.
+- mapping_id: OWN-000027
+  node_code: 3.2.1
+  component_name: Capacity-Controlled Frozen-Probe & Shortcut Baselines
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000016
+  notes: Capacity-controlled frozen-probe suite is OURS.
+- mapping_id: OWN-000028
+  node_code: 3.2.2
+  component_name: Deep/Provenance Modern Baselines Comparison
+  ownership: BASELINE
+  source_ids:
+  - SRC-000003
+  - SRC-000004
+  - SRC-000011
+  - SRC-000012
+  - SRC-000013
+  - SRC-000014
+  - SRC-000015
+  motivation_source_ids: []
+  notes: Baselines.
+- mapping_id: OWN-000029
+  node_code: 3.2.3
+  component_name: Multi-Label MITRE ATT&CK Evidence Mapping
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000001
+  notes: Multi-label mapping protocol is OURS.
+- mapping_id: OWN-000030
+  node_code: 3.3.1
+  component_name: Controlled Ablation Ladder & Interaction Ablations
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids: []
+  notes: Exact 7-step ablation ladder is OURS.
+- mapping_id: OWN-000031
+  node_code: 3.3.2
+  component_name: Unseen Template & Distribution Shift Evaluation
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000018
+  notes: Anti-contamination online adaptation protocol is OURS.
+- mapping_id: OWN-000032
+  node_code: 3.3.3
+  component_name: Adversarial Telemetry Robustness Suite
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000019
+  notes: Attack budget protocol with preserved semantics is OURS.
+- mapping_id: OWN-000033
+  node_code: 3.3.4
+  component_name: Utility-Privacy Pareto Frontier Evaluation
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000025
+  - SRC-000026
+  - SRC-000027
+  notes: Pareto frontier analysis for entity linkability is OURS.
+- mapping_id: OWN-000034
+  node_code: 3.4.1
+  component_name: Attribution Compactness & QoA Extensions
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids:
+  - SRC-000015
+  notes: Analyst effort evaluation is OURS; QoA foundation is SOURCE.
+- mapping_id: OWN-000035
+  node_code: 3.4.2
+  component_name: SIEM/SOC Streaming SLO & Failure Modes
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids: []
+  notes: Streaming SLA and failure mode matrix is OURS.
+- mapping_id: OWN-000036
+  node_code: 3.4.3
+  component_name: Validity Limitations & Negative Results Protocol
+  ownership: OURS
+  source_ids: []
+  motivation_source_ids: []
+  notes: Formal negative results acceptance is OURS.
