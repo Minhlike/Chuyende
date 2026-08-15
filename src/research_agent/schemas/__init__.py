@@ -61,6 +61,13 @@ from research_agent.schemas.decision import (
 from research_agent.schemas.memory import (
     SkillRecord,
     MemoryRecord,
+    EpisodeRecord,
+    OpenQuestion,
+    LessonLearned,
+    SessionRecord,
+    StatusTransitionRecord,
+    ContextBundle,
+    MemoryHealthReport,
 )
 from research_agent.schemas.verification import VerificationRecord
 
@@ -103,5 +110,12 @@ __all__ = [
     "ContradictionRecord",
     "SkillRecord",
     "MemoryRecord",
+    "EpisodeRecord",
+    "OpenQuestion",
+    "LessonLearned",
+    "SessionRecord",
+    "StatusTransitionRecord",
+    "ContextBundle",
+    "MemoryHealthReport",
     "VerificationRecord",
 ]

@@ -458,9 +458,19 @@ CREATE TABLE IF NOT EXISTS decision_records (
     status TEXT NOT NULL,
     context TEXT NOT NULL,
     decision TEXT NOT NULL,
+    rationale TEXT NOT NULL,
+    alternatives_considered_json TEXT NOT NULL DEFAULT '[]',
+    evidence_ids_json TEXT NOT NULL DEFAULT '[]',
     consequences TEXT NOT NULL,
-    target_affected_entities_json TEXT,
+    target_affected_entities_json TEXT DEFAULT '[]',
+    related_nodes_json TEXT DEFAULT '[]',
+    related_claims_json TEXT DEFAULT '[]',
+    related_experiments_json TEXT DEFAULT '[]',
+    supersedes_id TEXT,
+    superseded_by_id TEXT,
     diff_summary TEXT,
+    actor TEXT NOT NULL DEFAULT 'HUMAN_ARCHITECT_OR_AGENT',
+    made_at TEXT NOT NULL,
     metadata_json TEXT,
     created_at TEXT NOT NULL
 );
@@ -478,13 +488,31 @@ CREATE TABLE IF NOT EXISTS contradiction_records (
     updated_at TEXT NOT NULL
 );
 
--- Memory & Skills
+-- Memory (M0..M5)
 CREATE TABLE IF NOT EXISTS memory_records (
     memory_id TEXT PRIMARY KEY,
     tier TEXT NOT NULL,
+    record_type TEXT NOT NULL DEFAULT 'OBSERVATION',
+    promotion_state TEXT NOT NULL DEFAULT 'CONSOLIDATED',
     topic TEXT NOT NULL,
-    content TEXT NOT NULL,
+    summary TEXT NOT NULL,
+    content TEXT,
+    reference_type TEXT,
+    reference_id TEXT,
     associated_entity_ids_json TEXT,
+    ownership TEXT NOT NULL DEFAULT 'OURS',
+    epistemic_status TEXT NOT NULL DEFAULT 'SUPPORTED',
+    is_generated_summary INTEGER NOT NULL DEFAULT 0,
+    supersedes_id TEXT,
+    superseded_by_id TEXT,
+    is_stale INTEGER NOT NULL DEFAULT 0,
+    review_required INTEGER NOT NULL DEFAULT 0,
+    last_verified_at TEXT,
+    privacy TEXT NOT NULL DEFAULT 'INTERNAL',
+    actor TEXT NOT NULL DEFAULT 'RESEARCH_AGENT',
+    session_id TEXT,
+    confidence_category TEXT NOT NULL DEFAULT 'HIGH',
+    confidence_basis TEXT,
     tags_json TEXT,
     importance REAL NOT NULL DEFAULT 0.5,
     metadata_json TEXT,
@@ -492,15 +520,104 @@ CREATE TABLE IF NOT EXISTS memory_records (
     updated_at TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS skill_records (
+CREATE TABLE IF NOT EXISTS episodes (
+    episode_id TEXT PRIMARY KEY,
+    session_id TEXT,
+    timestamp TEXT NOT NULL,
+    actor TEXT NOT NULL,
+    action TEXT NOT NULL,
+    object_reference TEXT,
+    outcome TEXT NOT NULL,
+    status TEXT NOT NULL,
+    related_node_code TEXT,
+    related_rq_id TEXT,
+    related_hyp_id TEXT,
+    related_artifact_ids_json TEXT,
+    provenance_details_json TEXT,
+    tags_json TEXT,
+    is_failure INTEGER NOT NULL DEFAULT 0,
+    failure_reason TEXT,
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS open_questions (
+    question_id TEXT PRIMARY KEY,
+    question TEXT NOT NULL,
+    related_rq_id TEXT,
+    related_hyp_id TEXT,
+    related_node_code TEXT,
+    why_open TEXT NOT NULL,
+    required_evidence TEXT NOT NULL,
+    proposed_experiment TEXT,
+    priority TEXT NOT NULL DEFAULT 'HIGH',
+    status TEXT NOT NULL DEFAULT 'OPEN',
+    resolution_notes TEXT,
+    resolved_by_id TEXT,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS lessons_learned (
+    lesson_id TEXT PRIMARY KEY,
+    title TEXT NOT NULL,
+    statement TEXT NOT NULL,
+    originating_episode_id TEXT,
+    experiment_run_id TEXT,
+    evidence_ids_json TEXT,
+    scope TEXT,
+    actionable_recommendations_json TEXT,
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS research_sessions (
+    session_id TEXT PRIMARY KEY,
+    start_time TEXT NOT NULL,
+    end_time TEXT,
+    objective TEXT NOT NULL,
+    active_roadmap_nodes_json TEXT,
+    actions_summary_json TEXT,
+    decisions_made_json TEXT,
+    files_modified_json TEXT,
+    experiments_run_json TEXT,
+    sources_added_json TEXT,
+    claims_changed_json TEXT,
+    unresolved_items_json TEXT,
+    handoff_summary TEXT,
+    git_commit_hash TEXT,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS skills (
     skill_id TEXT PRIMARY KEY,
     name TEXT NOT NULL,
+    version TEXT NOT NULL DEFAULT '1.0',
+    status TEXT NOT NULL DEFAULT 'ACTIVE',
     category TEXT NOT NULL,
-    protocol_markdown_rel_path TEXT NOT NULL,
     description TEXT NOT NULL,
-    checklist_json TEXT,
+    inputs_json TEXT,
+    outputs_json TEXT,
+    preconditions_json TEXT,
+    invariants_json TEXT,
+    verification_procedure TEXT NOT NULL,
+    file_path TEXT,
+    dependencies_json TEXT,
     metadata_json TEXT,
-    created_at TEXT NOT NULL
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS status_transitions (
+    transition_id TEXT PRIMARY KEY,
+    entity_type TEXT NOT NULL,
+    entity_id TEXT NOT NULL,
+    from_status TEXT NOT NULL,
+    to_status TEXT NOT NULL,
+    cause TEXT NOT NULL,
+    evidence_id TEXT,
+    decision_id TEXT,
+    actor TEXT NOT NULL,
+    timestamp TEXT NOT NULL
 );
 
 -- Verification Audit Log
@@ -591,3 +708,67 @@ class DatabaseManager:
             ensure_column("evidences", "strength", "TEXT", "'STRONG'")
             ensure_column("evidences", "caveats", "TEXT", "''")
             ensure_column("evidences", "verified_at", "TEXT", "''")
+
+            # Migrations for decision_records
+            ensure_column("decision_records", "rationale", "TEXT", "''")
+            ensure_column("decision_records", "alternatives_considered_json", "TEXT", "'[]'")
+            ensure_column("decision_records", "evidence_ids_json", "TEXT", "'[]'")
+            ensure_column("decision_records", "target_affected_entities_json", "TEXT", "'[]'")
+            ensure_column("decision_records", "related_nodes_json", "TEXT", "'[]'")
+            ensure_column("decision_records", "related_claims_json", "TEXT", "'[]'")
+            ensure_column("decision_records", "related_experiments_json", "TEXT", "'[]'")
+            ensure_column("decision_records", "supersedes_id", "TEXT", "''")
+            ensure_column("decision_records", "superseded_by_id", "TEXT", "''")
+            ensure_column("decision_records", "actor", "TEXT", "'HUMAN_ARCHITECT_OR_AGENT'")
+            ensure_column("decision_records", "made_at", "TEXT", "''")
+
+            # Migrations for memory_records
+            ensure_column("memory_records", "record_type", "TEXT", "'OBSERVATION'")
+            ensure_column("memory_records", "promotion_state", "TEXT", "'CONSOLIDATED'")
+            ensure_column("memory_records", "summary", "TEXT", "''")
+            ensure_column("memory_records", "reference_type", "TEXT", "''")
+            ensure_column("memory_records", "reference_id", "TEXT", "''")
+            ensure_column("memory_records", "ownership", "TEXT", "'OURS'")
+            ensure_column("memory_records", "epistemic_status", "TEXT", "'SUPPORTED'")
+            ensure_column("memory_records", "is_generated_summary", "INTEGER", "0")
+            ensure_column("memory_records", "supersedes_id", "TEXT", "''")
+            ensure_column("memory_records", "superseded_by_id", "TEXT", "''")
+            ensure_column("memory_records", "is_stale", "INTEGER", "0")
+            ensure_column("memory_records", "review_required", "INTEGER", "0")
+            ensure_column("memory_records", "last_verified_at", "TEXT", "''")
+            ensure_column("memory_records", "privacy", "TEXT", "'INTERNAL'")
+            ensure_column("memory_records", "actor", "TEXT", "'RESEARCH_AGENT'")
+            ensure_column("memory_records", "session_id", "TEXT", "''")
+            ensure_column("memory_records", "confidence_category", "TEXT", "'HIGH'")
+            ensure_column("memory_records", "confidence_basis", "TEXT", "''")
+
+            # Initialize FTS5 table if supported
+            try:
+                conn.execute(
+                    """
+                    CREATE VIRTUAL TABLE IF NOT EXISTS memory_fts USING fts5(
+                        entity_id UNINDEXED,
+                        entity_type,
+                        title,
+                        body,
+                        tags,
+                        tokenize='porter unicode61'
+                    );
+                    """
+                )
+            except Exception:
+                # Fallback standard FTS5 without extra params
+                try:
+                    conn.execute(
+                        """
+                        CREATE VIRTUAL TABLE IF NOT EXISTS memory_fts USING fts5(
+                            entity_id UNINDEXED,
+                            entity_type,
+                            title,
+                            body,
+                            tags
+                        );
+                        """
+                    )
+                except Exception:
+                    pass

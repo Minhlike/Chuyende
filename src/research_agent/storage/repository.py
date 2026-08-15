@@ -21,6 +21,14 @@ from research_agent.core.enums import (
     EvidenceStrength,
     NoveltyStatus,
     CitationFirewallStatus,
+    MemoryRecordType,
+    MemoryPromotionState,
+    DecisionStatus,
+    OpenQuestionStatus,
+    EpisodeStatus,
+    SkillStatus,
+    QueryIntentType,
+    PrivacyClassification,
 )
 from research_agent.core.identifiers import EntityPrefix, format_stable_id
 from research_agent.core.exceptions import EntityNotFoundError, DuplicateEntityError
@@ -63,6 +71,13 @@ from research_agent.schemas import (
     ContradictionRecord,
     MemoryRecord,
     SkillRecord,
+    EpisodeRecord,
+    OpenQuestion,
+    LessonLearned,
+    SessionRecord,
+    StatusTransitionRecord,
+    ContextBundle,
+    MemoryHealthReport,
     VerificationRecord,
 )
 from research_agent.storage.db import DatabaseManager
@@ -210,6 +225,14 @@ class ResearchRepository:
                     source.created_at.isoformat(),
                     source.updated_at.isoformat(),
                 )
+            )
+            self._index_fts_on_conn(
+                conn=conn,
+                entity_id=source.source_id,
+                entity_type="SOURCE",
+                title=f"{source.citation_key}: {source.title}",
+                body=f"{source.abstract or ''} {source.notes or ''} {' '.join(source.keywords)}",
+                tags=" ".join(source.relevant_roadmap_nodes + source.authors),
             )
         return source
 
@@ -722,6 +745,14 @@ class ResearchRepository:
                     claim.updated_at.isoformat(),
                 )
             )
+            self._index_fts_on_conn(
+                conn=conn,
+                entity_id=claim.claim_id,
+                entity_type="CLAIM",
+                title=f"Claim: {claim.statement[:60]}...",
+                body=f"{claim.statement} {claim.scope or ''} {claim.falsification_conditions or ''}",
+                tags=f"{claim.ownership.value} {claim.claim_type.value}",
+            )
         return claim
 
     def get_claim(self, claim_id: str) -> Optional[Claim]:
@@ -808,9 +839,15 @@ class ResearchRepository:
                 created_at=datetime.fromisoformat(row["created_at"]),
             )
 
-    def list_claim_relations(self) -> List[ClaimRelation]:
+    def list_claim_relations(self, claim_id: Optional[str] = None) -> List[ClaimRelation]:
         with self.db.session() as conn:
-            rows = conn.execute("SELECT * FROM claim_relations ORDER BY relation_id ASC").fetchall()
+            if claim_id:
+                rows = conn.execute(
+                    "SELECT * FROM claim_relations WHERE source_claim_id = ? OR target_claim_id = ? ORDER BY relation_id ASC",
+                    (claim_id, claim_id)
+                ).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM claim_relations ORDER BY relation_id ASC").fetchall()
             return [
                 ClaimRelation(
                     relation_id=r["relation_id"],
@@ -1055,8 +1092,115 @@ class ResearchRepository:
         return fig
 
     # -------------------------------------------------------------
-    # Contradictions & Decisions
+    # Decisions & Contradictions (Prompt 4, Section 31)
     # -------------------------------------------------------------
+    def save_decision(self, dec: DecisionRecord) -> DecisionRecord:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO decision_records (
+                    decision_id, title, status, context, decision, rationale,
+                    alternatives_considered_json, evidence_ids_json, consequences,
+                    target_affected_entities_json, related_nodes_json,
+                    related_claims_json, related_experiments_json, supersedes_id,
+                    superseded_by_id, diff_summary, actor, made_at, metadata_json, created_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(decision_id) DO UPDATE SET
+                    title=excluded.title,
+                    status=excluded.status,
+                    context=excluded.context,
+                    decision=excluded.decision,
+                    rationale=excluded.rationale,
+                    alternatives_considered_json=excluded.alternatives_considered_json,
+                    evidence_ids_json=excluded.evidence_ids_json,
+                    consequences=excluded.consequences,
+                    target_affected_entities_json=excluded.target_affected_entities_json,
+                    related_nodes_json=excluded.related_nodes_json,
+                    related_claims_json=excluded.related_claims_json,
+                    related_experiments_json=excluded.related_experiments_json,
+                    supersedes_id=excluded.supersedes_id,
+                    superseded_by_id=excluded.superseded_by_id,
+                    diff_summary=excluded.diff_summary,
+                    actor=excluded.actor,
+                    made_at=excluded.made_at,
+                    metadata_json=excluded.metadata_json
+                """,
+                (
+                    dec.decision_id,
+                    dec.title,
+                    dec.status.value if hasattr(dec.status, "value") else str(dec.status),
+                    dec.context,
+                    dec.decision,
+                    dec.rationale,
+                    json.dumps(dec.alternatives_considered),
+                    json.dumps(dec.evidence_ids),
+                    dec.consequences,
+                    json.dumps(dec.target_affected_entities),
+                    json.dumps(dec.related_nodes),
+                    json.dumps(dec.related_claims),
+                    json.dumps(dec.related_experiments),
+                    dec.supersedes_id,
+                    dec.superseded_by_id,
+                    dec.diff_summary,
+                    dec.actor,
+                    dec.made_at.isoformat(),
+                    json.dumps(dec.metadata),
+                    dec.created_at.isoformat(),
+                )
+            )
+            # Index into FTS using active connection
+            self._index_fts_on_conn(
+                conn=conn,
+                entity_id=dec.decision_id,
+                entity_type="DECISION",
+                title=dec.title,
+                body=f"{dec.decision} {dec.rationale} {dec.context}",
+                tags=" ".join(dec.target_affected_entities + dec.related_nodes),
+            )
+        return dec
+
+    def get_decision(self, decision_id: str) -> Optional[DecisionRecord]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM decision_records WHERE decision_id = ?", (decision_id,)).fetchone()
+            if not row:
+                return None
+            return self._row_to_decision(row)
+
+    def _row_to_decision(self, row: Any) -> DecisionRecord:
+        status_val = row["status"]
+        status_enum = DecisionStatus(status_val) if status_val in DecisionStatus.__members__.values() else DecisionStatus.ACCEPTED
+        return DecisionRecord(
+            decision_id=row["decision_id"],
+            title=row["title"],
+            status=status_enum,
+            context=row["context"],
+            decision=row["decision"],
+            rationale=row["rationale"] or "",
+            alternatives_considered=json.loads(row["alternatives_considered_json"] or "[]"),
+            evidence_ids=json.loads(row["evidence_ids_json"] or "[]"),
+            consequences=row["consequences"],
+            target_affected_entities=json.loads(row["target_affected_entities_json"] or "[]"),
+            related_nodes=json.loads(row["related_nodes_json"] or "[]"),
+            related_claims=json.loads(row["related_claims_json"] or "[]"),
+            related_experiments=json.loads(row["related_experiments_json"] or "[]"),
+            supersedes_id=row["supersedes_id"],
+            superseded_by_id=row["superseded_by_id"],
+            diff_summary=row["diff_summary"],
+            actor=row["actor"] or "HUMAN_ARCHITECT_OR_AGENT",
+            made_at=datetime.fromisoformat(row["made_at"]) if row["made_at"] else datetime.fromisoformat(row["created_at"]),
+            created_at=datetime.fromisoformat(row["created_at"]),
+            metadata=json.loads(row["metadata_json"] or "{}"),
+        )
+
+    def list_decisions(self, status: Optional[DecisionStatus] = None) -> List[DecisionRecord]:
+        with self.db.session() as conn:
+            if status:
+                rows = conn.execute("SELECT * FROM decision_records WHERE status = ? ORDER BY made_at DESC", (status.value,)).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM decision_records ORDER BY made_at DESC").fetchall()
+            return [self._row_to_decision(r) for r in rows]
+
     def save_contradiction(self, ctr: ContradictionRecord) -> ContradictionRecord:
         with self.db.session() as conn:
             conn.execute(
@@ -1086,9 +1230,27 @@ class ResearchRepository:
             )
         return ctr
 
+    def get_contradiction(self, contradiction_id: str) -> Optional[ContradictionRecord]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM contradiction_records WHERE contradiction_id = ?", (contradiction_id,)).fetchone()
+            if not row:
+                return None
+            return ContradictionRecord(
+                contradiction_id=row["contradiction_id"],
+                claim_a_id=row["claim_a_id"],
+                claim_b_id=row["claim_b_id"],
+                description=row["description"],
+                domain_or_scope_divergence=row["domain_or_scope_divergence"],
+                resolution_status=row["resolution_status"],
+                resolution_notes=row["resolution_notes"],
+                metadata=json.loads(row["metadata_json"] or "{}"),
+                created_at=datetime.fromisoformat(row["created_at"]),
+                updated_at=datetime.fromisoformat(row["updated_at"]),
+            )
+
     def list_contradictions(self) -> List[ContradictionRecord]:
         with self.db.session() as conn:
-            rows = conn.execute("SELECT * FROM contradiction_records ORDER BY contradiction_id").fetchall()
+            rows = conn.execute("SELECT * FROM contradiction_records ORDER BY contradiction_id ASC").fetchall()
             return [
                 ContradictionRecord(
                     contradiction_id=r["contradiction_id"],
@@ -1106,18 +1268,44 @@ class ResearchRepository:
             ]
 
     # -------------------------------------------------------------
-    # Memory Records
+    # Memory Records (M0..M5)
     # -------------------------------------------------------------
     def save_memory(self, mem: MemoryRecord) -> MemoryRecord:
         with self.db.session() as conn:
             conn.execute(
                 """
-                INSERT INTO memory_records (memory_id, tier, topic, content, associated_entity_ids_json, tags_json, importance, metadata_json, created_at, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO memory_records (
+                    memory_id, tier, record_type, promotion_state, topic, summary,
+                    content, reference_type, reference_id, associated_entity_ids_json,
+                    ownership, epistemic_status, is_generated_summary, supersedes_id,
+                    superseded_by_id, is_stale, review_required, last_verified_at,
+                    privacy, actor, session_id, confidence_category, confidence_basis,
+                    tags_json, importance, metadata_json, created_at, updated_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(memory_id) DO UPDATE SET
+                    tier=excluded.tier,
+                    record_type=excluded.record_type,
+                    promotion_state=excluded.promotion_state,
                     topic=excluded.topic,
+                    summary=excluded.summary,
                     content=excluded.content,
+                    reference_type=excluded.reference_type,
+                    reference_id=excluded.reference_id,
                     associated_entity_ids_json=excluded.associated_entity_ids_json,
+                    ownership=excluded.ownership,
+                    epistemic_status=excluded.epistemic_status,
+                    is_generated_summary=excluded.is_generated_summary,
+                    supersedes_id=excluded.supersedes_id,
+                    superseded_by_id=excluded.superseded_by_id,
+                    is_stale=excluded.is_stale,
+                    review_required=excluded.review_required,
+                    last_verified_at=excluded.last_verified_at,
+                    privacy=excluded.privacy,
+                    actor=excluded.actor,
+                    session_id=excluded.session_id,
+                    confidence_category=excluded.confidence_category,
+                    confidence_basis=excluded.confidence_basis,
                     tags_json=excluded.tags_json,
                     importance=excluded.importance,
                     metadata_json=excluded.metadata_json,
@@ -1126,9 +1314,27 @@ class ResearchRepository:
                 (
                     mem.memory_id,
                     mem.tier.value,
+                    mem.record_type.value if hasattr(mem.record_type, "value") else str(mem.record_type),
+                    mem.promotion_state.value if hasattr(mem.promotion_state, "value") else str(mem.promotion_state),
                     mem.topic,
+                    mem.summary,
                     mem.content,
+                    mem.reference_type,
+                    mem.reference_id,
                     json.dumps(mem.associated_entity_ids),
+                    mem.ownership.value if hasattr(mem.ownership, "value") else str(mem.ownership),
+                    mem.epistemic_status.value if hasattr(mem.epistemic_status, "value") else str(mem.epistemic_status),
+                    1 if mem.is_generated_summary else 0,
+                    mem.supersedes_id,
+                    mem.superseded_by_id,
+                    1 if mem.is_stale else 0,
+                    1 if mem.review_required else 0,
+                    mem.last_verified_at.isoformat() if mem.last_verified_at else None,
+                    mem.privacy.value if hasattr(mem.privacy, "value") else str(mem.privacy),
+                    mem.actor,
+                    mem.session_id,
+                    mem.confidence_category,
+                    mem.confidence_basis,
                     json.dumps(mem.tags),
                     mem.importance,
                     json.dumps(mem.metadata),
@@ -1136,7 +1342,786 @@ class ResearchRepository:
                     mem.updated_at.isoformat(),
                 )
             )
+            # Index into FTS using active connection
+            self._index_fts_on_conn(
+                conn=conn,
+                entity_id=mem.memory_id,
+                entity_type=mem.record_type.value if hasattr(mem.record_type, "value") else "MEMORY",
+                title=mem.topic,
+                body=f"{mem.summary} {mem.content or ''}",
+                tags=" ".join(mem.tags + mem.associated_entity_ids),
+            )
         return mem
+
+    def _row_to_memory(self, row: Any) -> MemoryRecord:
+        tier_val = row["tier"]
+        tier_enum = MemoryTier(tier_val) if tier_val in MemoryTier.__members__.values() else MemoryTier.M2_SEMANTIC
+        rec_type_val = row["record_type"] or "OBSERVATION"
+        rec_type_enum = MemoryRecordType(rec_type_val) if rec_type_val in MemoryRecordType.__members__.values() else MemoryRecordType.OBSERVATION
+        promo_val = row["promotion_state"] or "CONSOLIDATED"
+        promo_enum = MemoryPromotionState(promo_val) if promo_val in MemoryPromotionState.__members__.values() else MemoryPromotionState.CONSOLIDATED
+        ownership_val = row["ownership"] or "OURS"
+        ownership_enum = IntellectualOwnership(ownership_val) if ownership_val in IntellectualOwnership.__members__.values() else IntellectualOwnership.OURS
+        epistemic_val = row["epistemic_status"] or "SUPPORTED"
+        epistemic_enum = EpistemicStatus(epistemic_val) if epistemic_val in EpistemicStatus.__members__.values() else EpistemicStatus.SUPPORTED
+
+        return MemoryRecord(
+            memory_id=row["memory_id"],
+            tier=tier_enum,
+            record_type=rec_type_enum,
+            promotion_state=promo_enum,
+            topic=row["topic"],
+            summary=row["summary"] or row["content"] or "",
+            content=row["content"],
+            reference_type=row["reference_type"],
+            reference_id=row["reference_id"],
+            associated_entity_ids=json.loads(row["associated_entity_ids_json"] or "[]"),
+            ownership=ownership_enum,
+            epistemic_status=epistemic_enum,
+            is_generated_summary=bool(row["is_generated_summary"]),
+            supersedes_id=row["supersedes_id"],
+            superseded_by_id=row["superseded_by_id"],
+            is_stale=bool(row["is_stale"]),
+            review_required=bool(row["review_required"]),
+            last_verified_at=datetime.fromisoformat(row["last_verified_at"]) if row["last_verified_at"] else None,
+            privacy=PrivacyClassification(row["privacy"]) if row["privacy"] in PrivacyClassification.__members__.values() else PrivacyClassification.INTERNAL,
+            actor=row["actor"] or "RESEARCH_AGENT",
+            session_id=row["session_id"],
+            confidence_category=row["confidence_category"] or "HIGH",
+            confidence_basis=row["confidence_basis"],
+            tags=json.loads(row["tags_json"] or "[]"),
+            importance=row["importance"],
+            metadata=json.loads(row["metadata_json"] or "{}"),
+            created_at=datetime.fromisoformat(row["created_at"]),
+            updated_at=datetime.fromisoformat(row["updated_at"]),
+        )
+
+    def get_memory(self, memory_id: str) -> Optional[MemoryRecord]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM memory_records WHERE memory_id = ?", (memory_id,)).fetchone()
+            if not row:
+                return None
+            return self._row_to_memory(row)
+
+    def list_memories(
+        self,
+        tier: Optional[MemoryTier] = None,
+        record_type: Optional[MemoryRecordType] = None,
+        promotion_state: Optional[MemoryPromotionState] = None,
+    ) -> List[MemoryRecord]:
+        with self.db.session() as conn:
+            query = "SELECT * FROM memory_records WHERE 1=1"
+            params: List[Any] = []
+            if tier:
+                query += " AND tier = ?"
+                params.append(tier.value)
+            if record_type:
+                query += " AND record_type = ?"
+                params.append(record_type.value)
+            if promotion_state:
+                query += " AND promotion_state = ?"
+                params.append(promotion_state.value)
+            query += " ORDER BY created_at DESC"
+            rows = conn.execute(query, tuple(params)).fetchall()
+            return [self._row_to_memory(r) for r in rows]
+
+    # -------------------------------------------------------------
+    # Episodes (M3)
+    # -------------------------------------------------------------
+    def save_episode(self, ep: EpisodeRecord) -> EpisodeRecord:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO episodes (
+                    episode_id, session_id, timestamp, actor, action, object_reference,
+                    outcome, status, related_node_code, related_rq_id, related_hyp_id,
+                    related_artifact_ids_json, provenance_details_json, tags_json,
+                    is_failure, failure_reason, created_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(episode_id) DO UPDATE SET
+                    session_id=excluded.session_id,
+                    timestamp=excluded.timestamp,
+                    actor=excluded.actor,
+                    action=excluded.action,
+                    object_reference=excluded.object_reference,
+                    outcome=excluded.outcome,
+                    status=excluded.status,
+                    related_node_code=excluded.related_node_code,
+                    related_rq_id=excluded.related_rq_id,
+                    related_hyp_id=excluded.related_hyp_id,
+                    related_artifact_ids_json=excluded.related_artifact_ids_json,
+                    provenance_details_json=excluded.provenance_details_json,
+                    tags_json=excluded.tags_json,
+                    is_failure=excluded.is_failure,
+                    failure_reason=excluded.failure_reason
+                """,
+                (
+                    ep.episode_id,
+                    ep.session_id,
+                    ep.timestamp.isoformat(),
+                    ep.actor,
+                    ep.action,
+                    ep.object_reference,
+                    ep.outcome,
+                    ep.status.value if hasattr(ep.status, "value") else str(ep.status),
+                    ep.related_node_code,
+                    ep.related_rq_id,
+                    ep.related_hyp_id,
+                    json.dumps(ep.related_artifact_ids),
+                    json.dumps(ep.provenance_details),
+                    json.dumps(ep.tags),
+                    1 if ep.is_failure else 0,
+                    ep.failure_reason,
+                    ep.created_at.isoformat(),
+                )
+            )
+            # Index into FTS using active connection
+            self._index_fts_on_conn(
+                conn=conn,
+                entity_id=ep.episode_id,
+                entity_type="EPISODE",
+                title=f"Episode: {ep.action} on {ep.object_reference or 'general'}",
+                body=f"{ep.outcome} {ep.failure_reason or ''}",
+                tags=" ".join(ep.tags + ([ep.related_node_code] if ep.related_node_code else [])),
+            )
+        return ep
+
+    def get_episode(self, episode_id: str) -> Optional[EpisodeRecord]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM episodes WHERE episode_id = ?", (episode_id,)).fetchone()
+            if not row:
+                return None
+            return self._row_to_episode(row)
+
+    def _row_to_episode(self, row: Any) -> EpisodeRecord:
+        st_val = row["status"]
+        st_enum = EpisodeStatus(st_val) if st_val in EpisodeStatus.__members__.values() else EpisodeStatus.COMPLETED
+        return EpisodeRecord(
+            episode_id=row["episode_id"],
+            session_id=row["session_id"],
+            timestamp=datetime.fromisoformat(row["timestamp"]),
+            actor=row["actor"],
+            action=row["action"],
+            object_reference=row["object_reference"],
+            outcome=row["outcome"],
+            status=st_enum,
+            related_node_code=row["related_node_code"],
+            related_rq_id=row["related_rq_id"],
+            related_hyp_id=row["related_hyp_id"],
+            related_artifact_ids=json.loads(row["related_artifact_ids_json"] or "[]"),
+            provenance_details=json.loads(row["provenance_details_json"] or "{}"),
+            tags=json.loads(row["tags_json"] or "[]"),
+            is_failure=bool(row["is_failure"]),
+            failure_reason=row["failure_reason"],
+            created_at=datetime.fromisoformat(row["created_at"]),
+        )
+
+    def list_episodes(self, session_id: Optional[str] = None, only_failures: bool = False) -> List[EpisodeRecord]:
+        with self.db.session() as conn:
+            query = "SELECT * FROM episodes WHERE 1=1"
+            params: List[Any] = []
+            if session_id:
+                query += " AND session_id = ?"
+                params.append(session_id)
+            if only_failures:
+                query += " AND is_failure = 1"
+            query += " ORDER BY timestamp DESC"
+            rows = conn.execute(query, tuple(params)).fetchall()
+            return [self._row_to_episode(r) for r in rows]
+
+    # -------------------------------------------------------------
+    # Open Questions
+    # -------------------------------------------------------------
+    def save_open_question(self, oq: OpenQuestion) -> OpenQuestion:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO open_questions (
+                    question_id, question, related_rq_id, related_hyp_id, related_node_code,
+                    why_open, required_evidence, proposed_experiment, priority, status,
+                    resolution_notes, resolved_by_id, created_at, updated_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(question_id) DO UPDATE SET
+                    question=excluded.question,
+                    related_rq_id=excluded.related_rq_id,
+                    related_hyp_id=excluded.related_hyp_id,
+                    related_node_code=excluded.related_node_code,
+                    why_open=excluded.why_open,
+                    required_evidence=excluded.required_evidence,
+                    proposed_experiment=excluded.proposed_experiment,
+                    priority=excluded.priority,
+                    status=excluded.status,
+                    resolution_notes=excluded.resolution_notes,
+                    resolved_by_id=excluded.resolved_by_id,
+                    updated_at=excluded.updated_at
+                """,
+                (
+                    oq.question_id,
+                    oq.question,
+                    oq.related_rq_id,
+                    oq.related_hyp_id,
+                    oq.related_node_code,
+                    oq.why_open,
+                    oq.required_evidence,
+                    oq.proposed_experiment,
+                    oq.priority,
+                    oq.status.value if hasattr(oq.status, "value") else str(oq.status),
+                    oq.resolution_notes,
+                    oq.resolved_by_id,
+                    oq.created_at.isoformat(),
+                    oq.updated_at.isoformat(),
+                )
+            )
+            # Index into FTS using active connection
+            self._index_fts_on_conn(
+                conn=conn,
+                entity_id=oq.question_id,
+                entity_type="OPEN_QUESTION",
+                title=f"Open Question: {oq.question[:60]}...",
+                body=f"{oq.question} {oq.why_open} {oq.required_evidence}",
+                tags=f"{oq.priority} {oq.status.value}",
+            )
+        return oq
+
+    def get_open_question(self, question_id: str) -> Optional[OpenQuestion]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM open_questions WHERE question_id = ?", (question_id,)).fetchone()
+            if not row:
+                return None
+            st_val = row["status"]
+            st_enum = OpenQuestionStatus(st_val) if st_val in OpenQuestionStatus.__members__.values() else OpenQuestionStatus.OPEN
+            return OpenQuestion(
+                question_id=row["question_id"],
+                question=row["question"],
+                related_rq_id=row["related_rq_id"],
+                related_hyp_id=row["related_hyp_id"],
+                related_node_code=row["related_node_code"],
+                why_open=row["why_open"],
+                required_evidence=row["required_evidence"],
+                proposed_experiment=row["proposed_experiment"],
+                priority=row["priority"] or "HIGH",
+                status=st_enum,
+                resolution_notes=row["resolution_notes"],
+                resolved_by_id=row["resolved_by_id"],
+                created_at=datetime.fromisoformat(row["created_at"]),
+                updated_at=datetime.fromisoformat(row["updated_at"]),
+            )
+
+    def list_open_questions(self, status: Optional[OpenQuestionStatus] = None) -> List[OpenQuestion]:
+        with self.db.session() as conn:
+            if status:
+                rows = conn.execute("SELECT * FROM open_questions WHERE status = ? ORDER BY created_at DESC", (status.value,)).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM open_questions ORDER BY created_at DESC").fetchall()
+            results = []
+            for r in rows:
+                st_val = r["status"]
+                st_enum = OpenQuestionStatus(st_val) if st_val in OpenQuestionStatus.__members__.values() else OpenQuestionStatus.OPEN
+                results.append(
+                    OpenQuestion(
+                        question_id=r["question_id"],
+                        question=r["question"],
+                        related_rq_id=r["related_rq_id"],
+                        related_hyp_id=r["related_hyp_id"],
+                        related_node_code=r["related_node_code"],
+                        why_open=r["why_open"],
+                        required_evidence=r["required_evidence"],
+                        proposed_experiment=r["proposed_experiment"],
+                        priority=r["priority"] or "HIGH",
+                        status=st_enum,
+                        resolution_notes=r["resolution_notes"],
+                        resolved_by_id=r["resolved_by_id"],
+                        created_at=datetime.fromisoformat(r["created_at"]),
+                        updated_at=datetime.fromisoformat(r["updated_at"]),
+                    )
+                )
+            return results
+
+    # -------------------------------------------------------------
+    # Lessons Learned
+    # -------------------------------------------------------------
+    def save_lesson_learned(self, les: LessonLearned) -> LessonLearned:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO lessons_learned (
+                    lesson_id, title, statement, originating_episode_id, experiment_run_id,
+                    evidence_ids_json, scope, actionable_recommendations_json, created_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(lesson_id) DO UPDATE SET
+                    title=excluded.title,
+                    statement=excluded.statement,
+                    originating_episode_id=excluded.originating_episode_id,
+                    experiment_run_id=excluded.experiment_run_id,
+                    evidence_ids_json=excluded.evidence_ids_json,
+                    scope=excluded.scope,
+                    actionable_recommendations_json=excluded.actionable_recommendations_json
+                """,
+                (
+                    les.lesson_id,
+                    les.title,
+                    les.statement,
+                    les.originating_episode_id,
+                    les.experiment_run_id,
+                    json.dumps(les.evidence_ids),
+                    les.scope,
+                    json.dumps(les.actionable_recommendations),
+                    les.created_at.isoformat(),
+                )
+            )
+            # Index into FTS using active connection
+            self._index_fts_on_conn(
+                conn=conn,
+                entity_id=les.lesson_id,
+                entity_type="LESSON",
+                title=les.title,
+                body=f"{les.statement} {' '.join(les.actionable_recommendations)}",
+                tags=" ".join(les.evidence_ids),
+            )
+        return les
+
+    def get_lesson_learned(self, lesson_id: str) -> Optional[LessonLearned]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM lessons_learned WHERE lesson_id = ?", (lesson_id,)).fetchone()
+            if not row:
+                return None
+            return LessonLearned(
+                lesson_id=row["lesson_id"],
+                title=row["title"],
+                statement=row["statement"],
+                originating_episode_id=row["originating_episode_id"],
+                experiment_run_id=row["experiment_run_id"],
+                evidence_ids=json.loads(row["evidence_ids_json"] or "[]"),
+                scope=row["scope"],
+                actionable_recommendations=json.loads(row["actionable_recommendations_json"] or "[]"),
+                created_at=datetime.fromisoformat(row["created_at"]),
+            )
+
+    def list_lessons_learned(self) -> List[LessonLearned]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM lessons_learned ORDER BY created_at DESC").fetchall()
+            return [
+                LessonLearned(
+                    lesson_id=r["lesson_id"],
+                    title=r["title"],
+                    statement=r["statement"],
+                    originating_episode_id=r["originating_episode_id"],
+                    experiment_run_id=r["experiment_run_id"],
+                    evidence_ids=json.loads(r["evidence_ids_json"] or "[]"),
+                    scope=r["scope"],
+                    actionable_recommendations=json.loads(r["actionable_recommendations_json"] or "[]"),
+                    created_at=datetime.fromisoformat(r["created_at"]),
+                )
+                for r in rows
+            ]
+
+    # -------------------------------------------------------------
+    # Research Sessions
+    # -------------------------------------------------------------
+    def save_research_session(self, sess: SessionRecord) -> SessionRecord:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO research_sessions (
+                    session_id, start_time, end_time, objective, active_roadmap_nodes_json,
+                    actions_summary_json, decisions_made_json, files_modified_json,
+                    experiments_run_json, sources_added_json, claims_changed_json,
+                    unresolved_items_json, handoff_summary, git_commit_hash, created_at, updated_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(session_id) DO UPDATE SET
+                    start_time=excluded.start_time,
+                    end_time=excluded.end_time,
+                    objective=excluded.objective,
+                    active_roadmap_nodes_json=excluded.active_roadmap_nodes_json,
+                    actions_summary_json=excluded.actions_summary_json,
+                    decisions_made_json=excluded.decisions_made_json,
+                    files_modified_json=excluded.files_modified_json,
+                    experiments_run_json=excluded.experiments_run_json,
+                    sources_added_json=excluded.sources_added_json,
+                    claims_changed_json=excluded.claims_changed_json,
+                    unresolved_items_json=excluded.unresolved_items_json,
+                    handoff_summary=excluded.handoff_summary,
+                    git_commit_hash=excluded.git_commit_hash,
+                    updated_at=excluded.updated_at
+                """,
+                (
+                    sess.session_id,
+                    sess.start_time.isoformat(),
+                    sess.end_time.isoformat() if sess.end_time else None,
+                    sess.objective,
+                    json.dumps(sess.active_roadmap_nodes),
+                    json.dumps(sess.actions_summary),
+                    json.dumps(sess.decisions_made),
+                    json.dumps(sess.files_modified),
+                    json.dumps(sess.experiments_run),
+                    json.dumps(sess.sources_added),
+                    json.dumps(sess.claims_changed),
+                    json.dumps(sess.unresolved_items),
+                    sess.handoff_summary,
+                    sess.git_commit_hash,
+                    sess.created_at.isoformat(),
+                    sess.updated_at.isoformat(),
+                )
+            )
+        return sess
+
+    def get_research_session(self, session_id: str) -> Optional[SessionRecord]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM research_sessions WHERE session_id = ?", (session_id,)).fetchone()
+            if not row:
+                return None
+            return SessionRecord(
+                session_id=row["session_id"],
+                start_time=datetime.fromisoformat(row["start_time"]),
+                end_time=datetime.fromisoformat(row["end_time"]) if row["end_time"] else None,
+                objective=row["objective"],
+                active_roadmap_nodes=json.loads(row["active_roadmap_nodes_json"] or "[]"),
+                actions_summary=json.loads(row["actions_summary_json"] or "[]"),
+                decisions_made=json.loads(row["decisions_made_json"] or "[]"),
+                files_modified=json.loads(row["files_modified_json"] or "[]"),
+                experiments_run=json.loads(row["experiments_run_json"] or "[]"),
+                sources_added=json.loads(row["sources_added_json"] or "[]"),
+                claims_changed=json.loads(row["claims_changed_json"] or "[]"),
+                unresolved_items=json.loads(row["unresolved_items_json"] or "[]"),
+                handoff_summary=row["handoff_summary"],
+                git_commit_hash=row["git_commit_hash"],
+                created_at=datetime.fromisoformat(row["created_at"]),
+                updated_at=datetime.fromisoformat(row["updated_at"]),
+            )
+
+    def list_research_sessions(self) -> List[SessionRecord]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM research_sessions ORDER BY start_time DESC").fetchall()
+            return [
+                SessionRecord(
+                    session_id=r["session_id"],
+                    start_time=datetime.fromisoformat(r["start_time"]),
+                    end_time=datetime.fromisoformat(r["end_time"]) if r["end_time"] else None,
+                    objective=r["objective"],
+                    active_roadmap_nodes=json.loads(r["active_roadmap_nodes_json"] or "[]"),
+                    actions_summary=json.loads(r["actions_summary_json"] or "[]"),
+                    decisions_made=json.loads(r["decisions_made_json"] or "[]"),
+                    files_modified=json.loads(r["files_modified_json"] or "[]"),
+                    experiments_run=json.loads(r["experiments_run_json"] or "[]"),
+                    sources_added=json.loads(r["sources_added_json"] or "[]"),
+                    claims_changed=json.loads(r["claims_changed_json"] or "[]"),
+                    unresolved_items=json.loads(r["unresolved_items_json"] or "[]"),
+                    handoff_summary=r["handoff_summary"],
+                    git_commit_hash=r["git_commit_hash"],
+                    created_at=datetime.fromisoformat(r["created_at"]),
+                    updated_at=datetime.fromisoformat(r["updated_at"]),
+                )
+                for r in rows
+            ]
+
+    # -------------------------------------------------------------
+    # Skills (M5 Procedural)
+    # -------------------------------------------------------------
+    def save_skill(self, sk: SkillRecord) -> SkillRecord:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO skills (
+                    skill_id, name, version, status, category, description,
+                    inputs_json, outputs_json, preconditions_json, invariants_json,
+                    verification_procedure, file_path, dependencies_json,
+                    metadata_json, created_at, updated_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(skill_id) DO UPDATE SET
+                    name=excluded.name,
+                    version=excluded.version,
+                    status=excluded.status,
+                    category=excluded.category,
+                    description=excluded.description,
+                    inputs_json=excluded.inputs_json,
+                    outputs_json=excluded.outputs_json,
+                    preconditions_json=excluded.preconditions_json,
+                    invariants_json=excluded.invariants_json,
+                    verification_procedure=excluded.verification_procedure,
+                    file_path=excluded.file_path,
+                    dependencies_json=excluded.dependencies_json,
+                    metadata_json=excluded.metadata_json,
+                    updated_at=excluded.updated_at
+                """,
+                (
+                    sk.skill_id,
+                    sk.name,
+                    sk.version,
+                    sk.status.value if hasattr(sk.status, "value") else str(sk.status),
+                    sk.category,
+                    sk.description,
+                    json.dumps(sk.inputs),
+                    json.dumps(sk.outputs),
+                    json.dumps(sk.preconditions),
+                    json.dumps(sk.invariants),
+                    sk.verification_procedure,
+                    sk.file_path,
+                    json.dumps(sk.dependencies),
+                    json.dumps(sk.metadata),
+                    sk.created_at.isoformat(),
+                    sk.updated_at.isoformat(),
+                )
+            )
+        return sk
+
+    def get_skill(self, skill_id: str) -> Optional[SkillRecord]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM skills WHERE skill_id = ?", (skill_id,)).fetchone()
+            if not row:
+                return None
+            st_val = row["status"]
+            st_enum = SkillStatus(st_val) if st_val in SkillStatus.__members__.values() else SkillStatus.ACTIVE
+            return SkillRecord(
+                skill_id=row["skill_id"],
+                name=row["name"],
+                version=row["version"] or "1.0",
+                status=st_enum,
+                category=row["category"],
+                description=row["description"],
+                inputs=json.loads(row["inputs_json"] or "[]"),
+                outputs=json.loads(row["outputs_json"] or "[]"),
+                preconditions=json.loads(row["preconditions_json"] or "[]"),
+                invariants=json.loads(row["invariants_json"] or "[]"),
+                verification_procedure=row["verification_procedure"],
+                file_path=row["file_path"],
+                dependencies=json.loads(row["dependencies_json"] or "[]"),
+                metadata=json.loads(row["metadata_json"] or "{}"),
+                created_at=datetime.fromisoformat(row["created_at"]),
+                updated_at=datetime.fromisoformat(row["updated_at"]),
+            )
+
+    def list_skills(self) -> List[SkillRecord]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM skills ORDER BY skill_id ASC").fetchall()
+            results = []
+            for r in rows:
+                st_val = r["status"]
+                st_enum = SkillStatus(st_val) if st_val in SkillStatus.__members__.values() else SkillStatus.ACTIVE
+                results.append(
+                    SkillRecord(
+                        skill_id=r["skill_id"],
+                        name=r["name"],
+                        version=r["version"] or "1.0",
+                        status=st_enum,
+                        category=r["category"],
+                        description=r["description"],
+                        inputs=json.loads(r["inputs_json"] or "[]"),
+                        outputs=json.loads(r["outputs_json"] or "[]"),
+                        preconditions=json.loads(r["preconditions_json"] or "[]"),
+                        invariants=json.loads(r["invariants_json"] or "[]"),
+                        verification_procedure=r["verification_procedure"],
+                        file_path=r["file_path"],
+                        dependencies=json.loads(r["dependencies_json"] or "[]"),
+                        metadata=json.loads(r["metadata_json"] or "{}"),
+                        created_at=datetime.fromisoformat(r["created_at"]),
+                        updated_at=datetime.fromisoformat(r["updated_at"]),
+                    )
+                )
+            return results
+
+    # -------------------------------------------------------------
+    # Status Transitions (Section 8, Section 9)
+    # -------------------------------------------------------------
+    def save_status_transition(self, trans: StatusTransitionRecord) -> StatusTransitionRecord:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT INTO status_transitions (
+                    transition_id, entity_type, entity_id, from_status, to_status,
+                    cause, evidence_id, decision_id, actor, timestamp
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(transition_id) DO UPDATE SET
+                    entity_type=excluded.entity_type,
+                    entity_id=excluded.entity_id,
+                    from_status=excluded.from_status,
+                    to_status=excluded.to_status,
+                    cause=excluded.cause,
+                    evidence_id=excluded.evidence_id,
+                    decision_id=excluded.decision_id,
+                    actor=excluded.actor,
+                    timestamp=excluded.timestamp
+                """,
+                (
+                    trans.transition_id,
+                    trans.entity_type,
+                    trans.entity_id,
+                    trans.from_status,
+                    trans.to_status,
+                    trans.cause,
+                    trans.evidence_id,
+                    trans.decision_id,
+                    trans.actor,
+                    trans.timestamp.isoformat(),
+                )
+            )
+        return trans
+
+    def list_status_transitions(self, entity_id: Optional[str] = None) -> List[StatusTransitionRecord]:
+        with self.db.session() as conn:
+            if entity_id:
+                rows = conn.execute(
+                    "SELECT * FROM status_transitions WHERE entity_id = ? ORDER BY timestamp ASC",
+                    (entity_id,)
+                ).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM status_transitions ORDER BY timestamp ASC").fetchall()
+            return [
+                StatusTransitionRecord(
+                    transition_id=r["transition_id"],
+                    entity_type=r["entity_type"],
+                    entity_id=r["entity_id"],
+                    from_status=r["from_status"],
+                    to_status=r["to_status"],
+                    cause=r["cause"],
+                    evidence_id=r["evidence_id"],
+                    decision_id=r["decision_id"],
+                    actor=r["actor"],
+                    timestamp=datetime.fromisoformat(r["timestamp"]),
+                )
+                for r in rows
+            ]
+
+    # -------------------------------------------------------------
+    # Full-Text Search (FTS5) Indexing & Query
+    # -------------------------------------------------------------
+    def _index_fts_on_conn(self, conn: Any, entity_id: str, entity_type: str, title: str, body: str, tags: str = "") -> None:
+        try:
+            conn.execute("DELETE FROM memory_fts WHERE entity_id = ?", (entity_id,))
+            conn.execute(
+                "INSERT INTO memory_fts (entity_id, entity_type, title, body, tags) VALUES (?, ?, ?, ?, ?)",
+                (entity_id, entity_type, title, body, tags)
+            )
+        except Exception:
+            pass
+
+    def index_fts_entity(self, entity_id: str, entity_type: str, title: str, body: str, tags: str = "") -> None:
+        try:
+            with self.db.session() as conn:
+                self._index_fts_on_conn(conn, entity_id, entity_type, title, body, tags)
+        except Exception:
+            pass
+
+    def search_fts(self, query_str: str, entity_type: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
+        with self.db.session() as conn:
+            # Clean search query for FTS5 syntax
+            safe_terms = [f'"{t.replace('"', '')}"' for t in query_str.split() if t.strip()]
+            if not safe_terms:
+                return []
+            match_query = " OR ".join(safe_terms)
+            try:
+                if entity_type:
+                    rows = conn.execute(
+                        "SELECT entity_id, entity_type, title, body, tags, rank FROM memory_fts WHERE memory_fts MATCH ? AND entity_type = ? ORDER BY rank LIMIT ?",
+                        (match_query, entity_type, limit)
+                    ).fetchall()
+                else:
+                    rows = conn.execute(
+                        "SELECT entity_id, entity_type, title, body, tags, rank FROM memory_fts WHERE memory_fts MATCH ? ORDER BY rank LIMIT ?",
+                        (match_query, limit)
+                    ).fetchall()
+                return [dict(r) for r in rows]
+            except Exception:
+                # Fallback substring search
+                fallback_query = "%" + query_str.strip() + "%"
+                rows = conn.execute(
+                    "SELECT entity_id, entity_type, title, body, tags, 0.0 as rank FROM memory_fts WHERE title LIKE ? OR body LIKE ? OR tags LIKE ? LIMIT ?",
+                    (fallback_query, fallback_query, fallback_query, limit)
+                ).fetchall()
+                return [dict(r) for r in rows]
+
+    def rebuild_fts_index(self) -> int:
+        """Rebuild entire FTS5 index from canonical sources, claims, decisions, episodes, lessons, and questions."""
+        count = 0
+        with self.db.session() as conn:
+            try:
+                conn.execute("DELETE FROM memory_fts")
+            except Exception:
+                pass
+
+        # Index Sources
+        for s in self.list_sources():
+            self.index_fts_entity(
+                entity_id=s.source_id,
+                entity_type="SOURCE",
+                title=s.title,
+                body=f"{s.citation_key} {s.venue} {s.notes or ''} {' '.join(s.authors)}",
+                tags=" ".join(s.keywords + [r.value for r in s.roles]),
+            )
+            count += 1
+
+        # Index Claims
+        for c in self.list_claims():
+            self.index_fts_entity(
+                entity_id=c.claim_id,
+                entity_type="CLAIM",
+                title=f"Claim: {c.statement[:60]}...",
+                body=f"{c.statement} {c.scope or ''} {' '.join(c.assumptions)}",
+                tags=f"{c.claim_type.value} {c.ownership.value} {c.epistemic_status.value}",
+            )
+            count += 1
+
+        # Index Decisions
+        for d in self.list_decisions():
+            self.index_fts_entity(
+                entity_id=d.decision_id,
+                entity_type="DECISION",
+                title=d.title,
+                body=f"{d.decision} {d.rationale} {d.context}",
+                tags=" ".join(d.target_affected_entities + d.related_nodes),
+            )
+            count += 1
+
+        # Index Episodes
+        for e in self.list_episodes():
+            self.index_fts_entity(
+                entity_id=e.episode_id,
+                entity_type="EPISODE",
+                title=f"Episode: {e.action} on {e.object_reference or 'general'}",
+                body=f"{e.outcome} {e.failure_reason or ''}",
+                tags=" ".join(e.tags + ([e.related_node_code] if e.related_node_code else [])),
+            )
+            count += 1
+
+        # Index Lessons
+        for l in self.list_lessons_learned():
+            self.index_fts_entity(
+                entity_id=l.lesson_id,
+                entity_type="LESSON",
+                title=l.title,
+                body=f"{l.statement} {' '.join(l.actionable_recommendations)}",
+                tags=" ".join(l.evidence_ids),
+            )
+            count += 1
+
+        # Index Open Questions
+        for o in self.list_open_questions():
+            self.index_fts_entity(
+                entity_id=o.question_id,
+                entity_type="OPEN_QUESTION",
+                title=f"Open Question: {o.question[:60]}...",
+                body=f"{o.question} {o.why_open} {o.required_evidence}",
+                tags=f"{o.priority} {o.status.value}",
+            )
+            count += 1
+
+        # Index Memory Records
+        for m in self.list_memories():
+            self.index_fts_entity(
+                entity_id=m.memory_id,
+                entity_type=m.record_type.value if hasattr(m.record_type, "value") else "MEMORY",
+                title=m.topic,
+                body=f"{m.summary} {m.content or ''}",
+                tags=" ".join(m.tags + m.associated_entity_ids),
+            )
+            count += 1
+
+        return count
 
     # -------------------------------------------------------------
     # Canonical Roadmap & Execution Graph

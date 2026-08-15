@@ -1,5 +1,5 @@
 """
-Core Enums defining Epistemic, Claim, Ownership, and Memory taxonomies (Prompt 1, 2, 3).
+Core Enums defining Epistemic, Claim, Ownership, Memory, and Retrieval taxonomies (Prompt 1, 2, 3, 4).
 """
 
 from enum import Enum
@@ -144,13 +144,106 @@ class VerificationStatus(str, Enum):
 
 
 class MemoryTier(str, Enum):
-    """Long-term Memory Architecture Tiers (Section 7)."""
+    """Canonical 6-Tier Research Memory Architecture (Prompt 4 Section 5)."""
     M0_WORKING = "M0_WORKING"
     M1_SOURCE = "M1_SOURCE"
     M2_SEMANTIC = "M2_SEMANTIC"
     M3_EPISODIC = "M3_EPISODIC"
     M4_ARGUMENT = "M4_ARGUMENT"
     M5_PROCEDURAL = "M5_PROCEDURAL"
+
+
+class MemoryRecordType(str, Enum):
+    """Typed Research Memory Record Categories (Prompt 4 Section 6)."""
+    FACT_REFERENCE = "FACT_REFERENCE"
+    CLAIM_REFERENCE = "CLAIM_REFERENCE"
+    EVIDENCE_REFERENCE = "EVIDENCE_REFERENCE"
+    DECISION = "DECISION"
+    OBSERVATION = "OBSERVATION"
+    EXPERIMENT_EPISODE = "EXPERIMENT_EPISODE"
+    FAILURE = "FAILURE"
+    LESSON = "LESSON"
+    OPEN_QUESTION = "OPEN_QUESTION"
+    TODO = "TODO"
+    ASSUMPTION = "ASSUMPTION"
+    CONTRADICTION = "CONTRADICTION"
+    HYPOTHESIS_UPDATE = "HYPOTHESIS_UPDATE"
+    METHODOLOGY_CONSTRAINT = "METHODOLOGY_CONSTRAINT"
+    USER_DECISION = "USER_DECISION"
+    PROCEDURE = "PROCEDURE"
+    SYSTEM_CHANGE = "SYSTEM_CHANGE"
+
+
+class MemoryPromotionState(str, Enum):
+    """Memory Consolidation Lifecycle States (Prompt 4 Section 13)."""
+    CAPTURED = "CAPTURED"
+    CLASSIFIED = "CLASSIFIED"
+    VALIDATED = "VALIDATED"
+    CONSOLIDATED = "CONSOLIDATED"
+    REJECTED = "REJECTED"
+    TEMPORARY = "TEMPORARY"
+
+
+class DecisionStatus(str, Enum):
+    """Architecture and Research Decision Status (Prompt 4 Section 31)."""
+    ACTIVE = "ACTIVE"
+    ACCEPTED = "ACCEPTED"
+    SUPERSEDED = "SUPERSEDED"
+    REVERSED = "REVERSED"
+    EXPERIMENTAL = "EXPERIMENTAL"
+    PENDING = "PENDING"
+    REJECTED = "REJECTED"
+
+
+class OpenQuestionStatus(str, Enum):
+    """Open Research Question Lifecycle States (Prompt 4 Section 32)."""
+    OPEN = "OPEN"
+    INVESTIGATING = "INVESTIGATING"
+    RESOLVED = "RESOLVED"
+    BLOCKED = "BLOCKED"
+    ABANDONED = "ABANDONED"
+
+
+class EpisodeStatus(str, Enum):
+    """Episodic Event Lifecycle Status (Prompt 4 Section 5)."""
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"
+    ABORTED = "ABORTED"
+    IN_PROGRESS = "IN_PROGRESS"
+
+
+class SkillStatus(str, Enum):
+    """Procedural Skill Lifecycle Status (Prompt 4 Section 35)."""
+    DRAFT = "DRAFT"
+    ACTIVE = "ACTIVE"
+    DEPRECATED = "DEPRECATED"
+    SUPERSEDED = "SUPERSEDED"
+
+
+class QueryIntentType(str, Enum):
+    """Hybrid Retrieval Intent Classifications (Prompt 4 Section 21)."""
+    SOURCE_LOOKUP = "SOURCE_LOOKUP"
+    CLAIM_LOOKUP = "CLAIM_LOOKUP"
+    EVIDENCE_LOOKUP = "EVIDENCE_LOOKUP"
+    ROADMAP_LOOKUP = "ROADMAP_LOOKUP"
+    ARGUMENT_LOOKUP = "ARGUMENT_LOOKUP"
+    CONTRADICTION_LOOKUP = "CONTRADICTION_LOOKUP"
+    DECISION_LOOKUP = "DECISION_LOOKUP"
+    EXPERIMENT_LOOKUP = "EXPERIMENT_LOOKUP"
+    HISTORY_LOOKUP = "HISTORY_LOOKUP"
+    CURRENT_STATE = "CURRENT_STATE"
+    OPEN_QUESTION_LOOKUP = "OPEN_QUESTION_LOOKUP"
+    CONTRIBUTION_LOOKUP = "CONTRIBUTION_LOOKUP"
+    PROCEDURE_LOOKUP = "PROCEDURE_LOOKUP"
+    SEMANTIC_DISCOVERY = "SEMANTIC_DISCOVERY"
+
+
+class PrivacyClassification(str, Enum):
+    """Research Memory Privacy and Access Boundary (Prompt 4 Section 48)."""
+    PUBLIC = "PUBLIC"
+    INTERNAL = "INTERNAL"
+    SENSITIVE = "SENSITIVE"
+    RESTRICTED = "RESTRICTED"
 
 
 class ExperimentStatus(str, Enum):

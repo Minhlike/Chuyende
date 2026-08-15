@@ -182,6 +182,38 @@ def main(args: Optional[list] = None):
     refs_subparsers.add_parser("firewall", help="Audit Citation Firewall status across all sources")
     refs_subparsers.add_parser("coverage", help="Display overall reference, ownership, and citation coverage")
 
+    # 3. Memory parser (Prompt 4)
+    memory_parser = subparsers.add_parser("memory", help="Long-Term Research Memory operations")
+    memory_subparsers = memory_parser.add_subparsers(dest="action", help="Memory actions")
+    memory_subparsers.add_parser("status", help="Display memory health and metrics")
+
+    search_p = memory_subparsers.add_parser("search", help="Execute hybrid retrieval")
+    search_p.add_argument("query", help="Query string")
+
+    show_mem_p = memory_subparsers.add_parser("show", help="Display record details")
+    show_mem_p.add_argument("entity_id", help="Entity ID (e.g. CLM-000001, DEC-000001)")
+
+    hist_p = memory_subparsers.add_parser("history", help="Display status transition timeline")
+    hist_p.add_argument("entity_id", help="Entity ID")
+
+    memory_subparsers.add_parser("contradictions", help="List contradiction records")
+    memory_subparsers.add_parser("open-questions", help="List open research questions")
+    memory_subparsers.add_parser("decisions", help="List architecture/research decisions")
+    memory_subparsers.add_parser("lessons", help="List lessons learned from experiments")
+    memory_subparsers.add_parser("sessions", help="List research sessions")
+    memory_subparsers.add_parser("snapshot", help="Create point-in-time state snapshot")
+    memory_subparsers.add_parser("rebuild-index", help="Rebuild derived vector & FTS indexes")
+    memory_subparsers.add_parser("validate", help="Validate memory invariants (MQ-01..MQ-15)")
+    memory_subparsers.add_parser("state", help="Display canonical research state summary")
+
+    # 4. Resume parser (Prompt 4 Section 74)
+    subparsers.add_parser("resume", help="Continuation bootstrap ContextBundle")
+
+    # 5. Research parser
+    research_parser = subparsers.add_parser("research", help="Research state operations")
+    research_subparsers = research_parser.add_subparsers(dest="action", help="Research actions")
+    research_subparsers.add_parser("state", help="Display canonical research state summary")
+
     parsed_args = parser.parse_args(args)
 
     config = get_default_config()
@@ -358,6 +390,249 @@ def main(args: Optional[list] = None):
                 print(f"{k.replace('_', ' ').title():<35}: {v}")
             print("==================================================")
             sys.exit(0)
+
+    # -------------------------------------------------------------
+    # MEMORY SUBCOMMANDS (Prompt 4)
+    # -------------------------------------------------------------
+    elif parsed_args.subcommand == "memory":
+        from research_agent.memory.manager import MemoryManager
+        memory_mgr = MemoryManager(repository=repo)
+
+        if parsed_args.action == "status":
+            health = memory_mgr.audit_health()
+            state = memory_mgr.get_research_state()
+            print("==================================================")
+            print("RESEARCH AGENT LONG-TERM MEMORY STATUS")
+            print("==================================================")
+            print(f"Roadmap Version:        {state['roadmap_version']}")
+            print(f"Reference Map Version:  {state['reference_map_version']}")
+            print(f"Total Memory Records:   {health.total_memory_records}")
+            print(f"Total Episodes (M3):    {health.total_episodes}")
+            print(f"Failed Runs Logged:     {health.total_failures}")
+            print(f"Total Decisions (M4):   {health.total_decisions}")
+            print(f"Lessons Learned:        {health.total_lessons}")
+            print(f"Open Research Questions:{health.total_open_questions}")
+            print(f"Contradiction Units:    {health.total_contradictions}")
+            print(f"Pending Consolidation:  {health.pending_consolidation}")
+            print(f"Stale / Review Flags:   {health.stale_records}")
+            print(f"Derived Index Status:   {health.derived_index_status}")
+            print(f"Audit Overall Status:   {'[HEALTHY]' if health.audit_passed else '[ISSUES FOUND]'}")
+            print("==================================================")
+            sys.exit(0)
+
+        elif parsed_args.action == "search":
+            query_str = parsed_args.query
+            bundle = memory_mgr.retrieve(query=query_str)
+            print(f"Hybrid Retrieval for: '{query_str}' (Intent: {bundle.resolved_intent.value})")
+            print(f"Estimated Token Budget: ~{bundle.token_estimate} tokens\n")
+            if bundle.canonical_entities:
+                print(f"--- Canonical Entities ({len(bundle.canonical_entities)}) ---")
+                for e in bundle.canonical_entities:
+                    e_id = e.get("source_id") or e.get("claim_id") or e.get("node_id") or e.get("decision_id")
+                    title = e.get("title") or e.get("statement") or e.get("name")
+                    print(f"  - [{e_id}] {title}")
+            if bundle.verified_facts:
+                print(f"\n--- Verified Facts ({len(bundle.verified_facts)}) ---")
+                for f_item in bundle.verified_facts:
+                    print(f"  - [{f_item.get('claim_id')}] {f_item.get('statement')}")
+            if bundle.supporting_evidence:
+                print(f"\n--- Supporting Evidence ({len(bundle.supporting_evidence)}) ---")
+                for ev in bundle.supporting_evidence:
+                    print(f"  - [{ev.get('evidence_id')}] From: {ev.get('source_id')} | Locator: {ev.get('locator')}")
+            if bundle.contradictory_evidence:
+                print(f"\n--- Contradictory Evidence ({len(bundle.contradictory_evidence)}) ---")
+                for c in bundle.contradictory_evidence:
+                    print(f"  - [CONTRADICTION] {c.get('description') or c.get('notes')}")
+            if bundle.decisions:
+                print(f"\n--- Relevant Decisions ({len(bundle.decisions)}) ---")
+                for d in bundle.decisions:
+                    print(f"  - [{d.get('decision_id')}] {d.get('title')}: {d.get('decision')}")
+            if bundle.open_questions:
+                print(f"\n--- Open Questions ({len(bundle.open_questions)}) ---")
+                for o in bundle.open_questions:
+                    print(f"  - [{o.get('question_id')}] {o.get('question')}")
+            if bundle.lessons:
+                print(f"\n--- Lessons Learned ({len(bundle.lessons)}) ---")
+                for l in bundle.lessons:
+                    print(f"  - [{l.get('lesson_id')}] {l.get('title')}: {l.get('statement')}")
+            sys.exit(0)
+
+        elif parsed_args.action == "show":
+            target_id = parsed_args.entity_id
+            bundle = memory_mgr.retrieve(query=target_id)
+            found = False
+            for ent_list in [bundle.canonical_entities, bundle.verified_facts, bundle.decisions, bundle.open_questions, bundle.lessons]:
+                for item in ent_list:
+                    if target_id in str(item):
+                        print(json.dumps(item, indent=2))
+                        found = True
+                        break
+                if found:
+                    break
+            if not found:
+                print(f"Entity '{target_id}' not found in canonical memory.")
+                sys.exit(1)
+            sys.exit(0)
+
+        elif parsed_args.action == "history":
+            target_id = parsed_args.entity_id
+            transitions = repo.list_status_transitions(entity_id=target_id)
+            print(f"Status Transition Timeline for '{target_id}' ({len(transitions)} records):")
+            for t in transitions:
+                print(f"  [{t.timestamp.isoformat()}] {t.from_status} -> {t.to_status} | Cause: {t.cause}")
+            sys.exit(0)
+
+        elif parsed_args.action == "contradictions":
+            ctrs = repo.list_contradictions()
+            print(f"Registered Contradiction Units ({len(ctrs)} records):")
+            for c in ctrs:
+                print(f"[{c.contradiction_id}] Status: {c.resolution_status}")
+                print(f"  Claim A: {c.claim_a_id} | Claim B: {c.claim_b_id}")
+                print(f"  Description: {c.description}")
+                if c.resolution_notes:
+                    print(f"  Resolution:  {c.resolution_notes}\n")
+            sys.exit(0)
+
+        elif parsed_args.action == "open-questions":
+            oqs = repo.list_open_questions()
+            print(f"Persistent Open Research Questions ({len(oqs)} active):")
+            for o in oqs:
+                print(f"[{o.question_id}] Priority: {o.priority} | Status: {o.status.value}")
+                print(f"  Question: {o.question}")
+                print(f"  Why open: {o.why_open}")
+                print(f"  Required: {o.required_evidence}\n")
+            sys.exit(0)
+
+        elif parsed_args.action == "decisions":
+            decs = repo.list_decisions()
+            print(f"Architecture & Research Decisions ({len(decs)} records):")
+            for d in decs:
+                sup_info = f" (Supersedes: {d.supersedes_id})" if d.supersedes_id else ""
+                print(f"[{d.decision_id}] Status: {d.status.value}{sup_info} | {d.title}")
+                print(f"  Decision:  {d.decision}")
+                print(f"  Rationale: {d.rationale}\n")
+            sys.exit(0)
+
+        elif parsed_args.action == "lessons":
+            lessons = repo.list_lessons_learned()
+            print(f"Lessons Learned from Experiments ({len(lessons)} entries):")
+            for l in lessons:
+                print(f"[{l.lesson_id}] {l.title}")
+                print(f"  Statement: {l.statement}")
+                if l.actionable_recommendations:
+                    print(f"  Recommendations: {l.actionable_recommendations}\n")
+            sys.exit(0)
+
+        elif parsed_args.action == "sessions":
+            sessions = repo.list_research_sessions()
+            print(f"Persistent Research Sessions ({len(sessions)} records):")
+            for s in sessions:
+                print(f"[{s.session_id}] Objective: {s.objective}")
+                print(f"  Time: {s.start_time.isoformat()} to {s.end_time.isoformat() if s.end_time else 'ongoing'}")
+                print(f"  Actions: {len(s.actions_summary)} | Decisions: {len(s.decisions_made)}\n")
+            sys.exit(0)
+
+        elif parsed_args.action == "snapshot":
+            path = memory_mgr.create_snapshot()
+            print(f"[OK] Research state snapshot saved successfully to: {path}")
+            sys.exit(0)
+
+        elif parsed_args.action == "rebuild-index":
+            fts_c, vec_c = memory_mgr.rebuild_indexes()
+            print(f"[OK] Successfully rebuilt derived indexes: {fts_c} FTS entries, {vec_c} semantic vectors.")
+            sys.exit(0)
+
+        elif parsed_args.action == "validate":
+            health = memory_mgr.audit_health()
+            print("==================================================")
+            print("RESEARCH AGENT MEMORY QUALITY & HEALTH AUDIT")
+            print("==================================================")
+            print(f"Total Canonical Records: {health.total_memory_records}")
+            print(f"Broken References:       {health.broken_references}")
+            print(f"Circular Support Cycles: {health.circular_support_count}")
+            print(f"Stale Records:           {health.stale_records}")
+            if health.issues:
+                print("\nAudit Issues Detected:")
+                for issue in health.issues:
+                    print(f"  [FAIL] {issue}")
+                sys.exit(1)
+            else:
+                print("\n[PASS] All Memory Invariants (MQ-01..MQ-15) Verified.")
+                sys.exit(0)
+
+        elif parsed_args.action == "state":
+            state = memory_mgr.get_research_state()
+            print("==================================================")
+            print("CANONICAL RESEARCH STATE SUMMARY")
+            print("==================================================")
+            print(f"Roadmap Version:       {state['roadmap_version']}")
+            print(f"Reference Map Version: {state['reference_map_version']}")
+            print(f"Central Object:        {state['central_object']}")
+            print(f"\nResearch Questions ({len(state['research_questions'])}):")
+            for q in state['research_questions']:
+                print(f"  - {q}")
+            print(f"\nHypotheses ({len(state['hypotheses'])}):")
+            for h in state['hypotheses']:
+                print(f"  - {h}")
+            print(f"\nActive Decisions ({len(state['active_decisions'])}):")
+            for d in state['active_decisions']:
+                print(f"  - {d}")
+            print(f"\nOpen Questions ({len(state['open_questions'])}):")
+            for o in state['open_questions']:
+                print(f"  - {o}")
+            print("==================================================")
+            sys.exit(0)
+
+    # -------------------------------------------------------------
+    # RESUME BOOTSTRAP COMMAND (Prompt 4, Section 74)
+    # -------------------------------------------------------------
+    elif parsed_args.subcommand == "resume":
+        from research_agent.memory.manager import MemoryManager
+        memory_mgr = MemoryManager(repository=repo)
+        bundle = memory_mgr.generate_resume_bundle()
+        state = memory_mgr.get_research_state()
+        print("==================================================")
+        print("RESEARCH AGENT CONTINUATION BOOTSTRAP")
+        print("==================================================")
+        print(f"Roadmap Version:       {state['roadmap_version']}")
+        print(f"Reference Map Version: {state['reference_map_version']}")
+        print(f"Central Focus:         {state['central_object']}")
+        print(f"Active Contributions:  {len(state['active_contributions'])}")
+        print(f"Open Questions:        {len(state['open_questions'])}")
+        print(f"Active Decisions:      {len(state['active_decisions'])}")
+        print("\nNext Recommended Actions / Open Items:")
+        for o in state['open_questions'][:3]:
+            print(f"  - {o}")
+        print("==================================================")
+        sys.exit(0)
+
+    # -------------------------------------------------------------
+    # RESEARCH STATE COMMAND (Prompt 4 Section 73)
+    # -------------------------------------------------------------
+    elif parsed_args.subcommand == "research" and parsed_args.action == "state":
+        from research_agent.memory.manager import MemoryManager
+        memory_mgr = MemoryManager(repository=repo)
+        state = memory_mgr.get_research_state()
+        print("==================================================")
+        print("CANONICAL RESEARCH STATE SUMMARY")
+        print("==================================================")
+        print(f"Roadmap Version:       {state['roadmap_version']}")
+        print(f"Reference Map Version: {state['reference_map_version']}")
+        print(f"Central Object:        {state['central_object']}")
+        print(f"\nResearch Questions ({len(state['research_questions'])}):")
+        for q in state['research_questions']:
+            print(f"  - {q}")
+        print(f"\nHypotheses ({len(state['hypotheses'])}):")
+        for h in state['hypotheses']:
+            print(f"  - {h}")
+        print(f"\nActive Decisions ({len(state['active_decisions'])}):")
+        for d in state['active_decisions']:
+            print(f"  - {d}")
+        print(f"\nOpen Questions ({len(state['open_questions'])}):")
+        for o in state['open_questions']:
+            print(f"  - {o}")
+        print("==================================================")
+        sys.exit(0)
 
     parser.print_help()
     sys.exit(0)
