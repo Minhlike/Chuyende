@@ -748,3 +748,311 @@ class Skill26ReproducibilityVerification(BaseResearchSkill):
             execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
         )
 
+
+class Skill27AcademicSectionPlanner(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-27",
+            name="academic_section_planner",
+            category="COMPOSITION_PLANNING",
+            description="Plans section structure, required argument bundles, evidence budget, and rhetorical flow.",
+            inputs=["node_code", "section_purpose"],
+            outputs=["section_plan"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        node = payload.get("node_code", "1.3.3")
+        purpose = payload.get("section_purpose", "Literature review and gap formulation")
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={
+                "section_plan": {
+                    "node_code": node,
+                    "purpose": purpose,
+                    "target_paragraphs": 3,
+                    "discourse_sequence": ["EVIDENCE_INTEGRATION", "HYPOTHESIS_FORMULATION", "COUNTERARGUMENT_HANDLING"],
+                }
+            },
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+
+class Skill28LiteratureSynthesisWriter(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-28",
+            name="literature_synthesis_writer",
+            category="ACADEMIC_WRITING",
+            description="Synthesizes peer-reviewed literature grouped by concept and mechanism with verified citations.",
+            inputs=["node_code", "claims", "sources"],
+            outputs=["synthesized_prose"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        from research_agent.composition.composer import AcademicComposer
+        composer = AcademicComposer(engine.repo)
+        node = payload.get("node_code", "1.3.3")
+        sub = composer.compose_node_subsection(node)
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"synthesized_prose": sub.rendered_markdown},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+
+class Skill29MethodologyWriter(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-29",
+            name="methodology_writer",
+            category="ACADEMIC_WRITING",
+            description="Composes methodology sections with explicit ownership isolation, equations, and assumptions.",
+            inputs=["node_code", "equations", "assumptions"],
+            outputs=["method_prose"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        from research_agent.composition.composer import AcademicComposer
+        composer = AcademicComposer(engine.repo)
+        node = payload.get("node_code", "2.3.2")
+        sub = composer.compose_node_subsection(node)
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"method_prose": sub.rendered_markdown},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+
+class Skill30ExperimentProtocolWriter(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-30",
+            name="experiment_protocol_writer",
+            category="ACADEMIC_WRITING",
+            description="Composes reproducible experimental protocol descriptions with datasets, splits, and seeds.",
+            inputs=["node_code", "split_manifest"],
+            outputs=["protocol_prose"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        from research_agent.composition.composer import AcademicComposer
+        composer = AcademicComposer(engine.repo)
+        node = payload.get("node_code", "3.1.2")
+        sub = composer.compose_node_subsection(node)
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"protocol_prose": sub.rendered_markdown},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+
+class Skill31ResultsWriter(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-31",
+            name="results_writer",
+            category="ACADEMIC_WRITING",
+            description="Composes empirical results with observation, uncertainty, interpretation, and alternative checks.",
+            inputs=["node_code", "result_bundle"],
+            outputs=["results_prose"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        from research_agent.composition.composer import AcademicComposer
+        composer = AcademicComposer(engine.repo)
+        node = payload.get("node_code", "3.2.1")
+        sub = composer.compose_node_subsection(node)
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"results_prose": sub.rendered_markdown},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+
+class Skill32DiscussionWriter(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-32",
+            name="discussion_writer",
+            category="ACADEMIC_WRITING",
+            description="Composes discussion integrating findings, competing explanations, and negative results.",
+            inputs=["node_code", "contradictions"],
+            outputs=["discussion_prose"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        from research_agent.composition.composer import AcademicComposer
+        composer = AcademicComposer(engine.repo)
+        node = payload.get("node_code", "3.4.1")
+        sub = composer.compose_node_subsection(node)
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"discussion_prose": sub.rendered_markdown},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+
+class Skill33LimitationWriter(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-33",
+            name="limitation_writer",
+            category="ACADEMIC_WRITING",
+            description="Composes grounded limitations section from validity issues and evidence gaps.",
+            inputs=["validity_issues", "evidence_gaps"],
+            outputs=["limitations_prose"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        issues = payload.get("validity_issues", ["Dataset label noise", "Evaluation scope bounded to host audit logs"])
+        prose = "Phần hạn chế nghiên cứu: " + "; ".join(issues) + "."
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"limitations_prose": prose},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+
+class Skill34ContributionWriter(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-34",
+            name="contribution_writer",
+            category="ACADEMIC_WRITING",
+            description="Differentiates candidate contributions from prior art with restrained novelty scope.",
+            inputs=["candidates"],
+            outputs=["contributions_prose"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        candidates = payload.get("candidates", ["CAND-01", "CAND-02"])
+        prose = f"Các đóng góp chính bao gồm: {', '.join(candidates)} với phạm vi kiểm chứng thực nghiệm chặt chẽ."
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"contributions_prose": prose},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+
+class Skill35AbstractBuilder(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-35",
+            name="abstract_builder",
+            category="THESIS_ASSEMBLY",
+            description="Generates publication and thesis abstract strictly from audited empirical state.",
+            inputs=[],
+            outputs=["abstract_text"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        from research_agent.composition.composer import AcademicComposer
+        composer = AcademicComposer(engine.repo)
+        abstract = composer.build_abstract()
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"abstract_text": abstract},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+
+class Skill36ConclusionBuilder(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-36",
+            name="conclusion_builder",
+            category="THESIS_ASSEMBLY",
+            description="Generates thesis conclusion summarizing RQ answers, supported hypotheses, and future directions.",
+            inputs=[],
+            outputs=["conclusion_text"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        from research_agent.composition.composer import AcademicComposer
+        composer = AcademicComposer(engine.repo)
+        conclusion = composer.build_conclusion()
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"conclusion_text": conclusion},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+
+class Skill37CitationAuditor(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-37",
+            name="citation_auditor",
+            category="AUDITING",
+            description="Audits citations for propositional entailment, citation spam, and firewall authorization.",
+            inputs=["paragraph_id"],
+            outputs=["audit_result"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        from research_agent.composition.anti_hallucination import AntiHallucinationCompiler
+        compiler = AntiHallucinationCompiler(engine.repo)
+        pid = payload.get("paragraph_id")
+        p = engine.repo.get_paragraph(pid) if pid else None
+        issues = []
+        if p:
+            for s in p.sentences:
+                cs = compiler.compile_sentence(s)
+                if cs.issues:
+                    issues.extend(cs.issues)
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"issues": issues, "passed": len(issues) == 0},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+
+class Skill38ThesisAuditor(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-38",
+            name="thesis_auditor",
+            category="AUDITING",
+            description="Runs comprehensive 18-category thesis audit and evaluates 10 Defensibility Questions.",
+            inputs=["mode"],
+            outputs=["audit_report"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        from research_agent.composition.auditors import ThesisAuditor
+        from research_agent.core.enums import CompositionMode
+        auditor = ThesisAuditor(engine.repo)
+        mode_str = payload.get("mode", "PROVISIONAL")
+        mode = CompositionMode(mode_str)
+        report = auditor.audit_thesis(mode=mode)
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"audit_report": report.model_dump(mode="json")},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+

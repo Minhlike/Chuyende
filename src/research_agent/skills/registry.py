@@ -31,6 +31,18 @@ from research_agent.skills.implementations import (
     Skill24ScientificTableConstruction,
     Skill25ScientificFigureGeneration,
     Skill26ReproducibilityVerification,
+    Skill27AcademicSectionPlanner,
+    Skill28LiteratureSynthesisWriter,
+    Skill29MethodologyWriter,
+    Skill30ExperimentProtocolWriter,
+    Skill31ResultsWriter,
+    Skill32DiscussionWriter,
+    Skill33LimitationWriter,
+    Skill34ContributionWriter,
+    Skill35AbstractBuilder,
+    Skill36ConclusionBuilder,
+    Skill37CitationAuditor,
+    Skill38ThesisAuditor,
 )
 
 
@@ -71,6 +83,18 @@ class ResearchSkillRegistry:
             Skill24ScientificTableConstruction(),
             Skill25ScientificFigureGeneration(),
             Skill26ReproducibilityVerification(),
+            Skill27AcademicSectionPlanner(),
+            Skill28LiteratureSynthesisWriter(),
+            Skill29MethodologyWriter(),
+            Skill30ExperimentProtocolWriter(),
+            Skill31ResultsWriter(),
+            Skill32DiscussionWriter(),
+            Skill33LimitationWriter(),
+            Skill34ContributionWriter(),
+            Skill35AbstractBuilder(),
+            Skill36ConclusionBuilder(),
+            Skill37CitationAuditor(),
+            Skill38ThesisAuditor(),
         ]
         for s in skills:
             self._skills[s.metadata.skill_id] = s

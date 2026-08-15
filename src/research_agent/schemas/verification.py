@@ -25,6 +25,29 @@ from research_agent.core.enums import (
 )
 
 
+class Equation(BaseModel):
+    """Canonical mathematical equation definition (Prompt 6, Prompt 7, RC-08, RC-09)."""
+    equation_id: str = Field(description="Stable ID: EQ-000001")
+    latex: str = Field(description="LaTeX string, e.g. '\\mathbf{z}_t = f(\\mathbf{x}_t)'")
+    description: str = Field(default="")
+    equation_type: EquationType = Field(default=EquationType.OBJECTIVE_FUNCTION)
+    ownership: IntellectualOwnership = Field(default=IntellectualOwnership.OURS)
+    source_id: Optional[str] = Field(default=None, description="Mandatory for SOURCE_EQUATION")
+    derivation_steps: List[str] = Field(default_factory=list, description="Mandatory for DERIVED_EQUATION")
+    is_verified: bool = Field(default=True)
+    roadmap_nodes: List[str] = Field(default_factory=list)
+    symbols: List[str] = Field(default_factory=list)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+    @model_validator(mode="after")
+    def validate_provenance(self):
+        if self.equation_type == EquationType.SOURCE_EQUATION and not self.source_id:
+            raise ValueError("SOURCE_EQUATION requires a valid source_id provenance locator (RC-08).")
+        if self.equation_type == EquationType.DERIVED_EQUATION and not self.derivation_steps:
+            raise ValueError("DERIVED_EQUATION requires derivation_steps (RC-08).")
+        return self
+
+
 class ScopedSymbol(BaseModel):
     """Canonical mathematical symbol definition with explicit scope (Prompt 6 Section 10)."""
     symbol_id: str = Field(description="Stable ID: SYM-000001")

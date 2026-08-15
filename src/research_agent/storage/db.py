@@ -740,6 +740,19 @@ CREATE TABLE IF NOT EXISTS numerical_claims (
     created_at TEXT NOT NULL
 );
 
+-- Mathematical Equations (Prompt 6, Prompt 7)
+CREATE TABLE IF NOT EXISTS equations (
+    equation_id TEXT PRIMARY KEY,
+    latex TEXT NOT NULL,
+    description TEXT,
+    equation_type TEXT NOT NULL DEFAULT 'OBJECTIVE_FUNCTION',
+    ownership TEXT NOT NULL DEFAULT 'OURS',
+    is_verified INTEGER NOT NULL DEFAULT 1,
+    roadmap_nodes_json TEXT NOT NULL DEFAULT '[]',
+    symbols_json TEXT NOT NULL DEFAULT '[]',
+    created_at TEXT NOT NULL
+);
+
 -- Metric Definitions (Prompt 6 Section 28)
 CREATE TABLE IF NOT EXISTS metric_definitions (
     metric_id TEXT PRIMARY KEY,
@@ -900,6 +913,88 @@ CREATE TABLE IF NOT EXISTS reproducibility_logs (
     divergence_details TEXT,
     executed_at TEXT NOT NULL
 );
+
+-- ======================================================================
+-- PROMPT 7 TABLES: PARAGRAPHS, SENTENCES, AUDITS, MANIFESTS
+-- ======================================================================
+
+CREATE TABLE IF NOT EXISTS thesis_paragraphs (
+    paragraph_id TEXT PRIMARY KEY,
+    node_code TEXT NOT NULL,
+    section_code TEXT NOT NULL,
+    chapter_code TEXT NOT NULL,
+    discourse_function TEXT NOT NULL,
+    argument_bundle_id TEXT,
+    raw_text TEXT NOT NULL,
+    audited_text TEXT NOT NULL,
+    review_status TEXT NOT NULL,
+    is_human_edited INTEGER NOT NULL DEFAULT 0,
+    human_edit_notes TEXT,
+    version INTEGER NOT NULL DEFAULT 1,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS thesis_sentences (
+    sentence_id TEXT PRIMARY KEY,
+    paragraph_id TEXT NOT NULL,
+    sentence_index INTEGER NOT NULL,
+    text TEXT NOT NULL,
+    claim_type TEXT NOT NULL,
+    ownership TEXT NOT NULL,
+    target_claim_id TEXT,
+    citation_source_ids_json TEXT NOT NULL DEFAULT '[]',
+    numerical_claim_ids_json TEXT NOT NULL DEFAULT '[]',
+    equation_ids_json TEXT NOT NULL DEFAULT '[]',
+    table_ids_json TEXT NOT NULL DEFAULT '[]',
+    figure_ids_json TEXT NOT NULL DEFAULT '[]',
+    compilation_state TEXT NOT NULL,
+    issues_json TEXT NOT NULL DEFAULT '[]'
+);
+
+CREATE TABLE IF NOT EXISTS thesis_audit_reports (
+    build_id TEXT PRIMARY KEY,
+    mode TEXT NOT NULL,
+    total_sentences INTEGER NOT NULL,
+    total_paragraphs INTEGER NOT NULL,
+    total_issues INTEGER NOT NULL,
+    report_json TEXT NOT NULL,
+    overall_status TEXT NOT NULL,
+    is_ready_for_final_build INTEGER NOT NULL DEFAULT 0,
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS thesis_audit_issues (
+    issue_id TEXT PRIMARY KEY,
+    build_id TEXT,
+    category TEXT NOT NULL,
+    severity TEXT NOT NULL,
+    location TEXT NOT NULL,
+    description TEXT NOT NULL,
+    affected_entity_id TEXT,
+    recommended_action TEXT,
+    is_blocking INTEGER NOT NULL DEFAULT 0,
+    status TEXT NOT NULL,
+    waiver_rationale TEXT,
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS thesis_build_manifests (
+    build_id TEXT PRIMARY KEY,
+    timestamp TEXT NOT NULL,
+    mode TEXT NOT NULL,
+    git_commit TEXT NOT NULL,
+    roadmap_version TEXT NOT NULL,
+    reference_map_version TEXT NOT NULL,
+    memory_schema_version TEXT NOT NULL,
+    reasoning_version TEXT NOT NULL,
+    verification_version TEXT NOT NULL,
+    total_nodes_compiled INTEGER NOT NULL,
+    unresolved_critical_count INTEGER NOT NULL,
+    unresolved_high_count INTEGER NOT NULL,
+    output_file_path TEXT NOT NULL,
+    output_sha256 TEXT NOT NULL
+);
 """
 
 
@@ -908,6 +1003,8 @@ class DatabaseManager:
 
     def __init__(self, db_path: Path | str | None = None, config: WorkspaceConfig | None = None):
         cfg = config or get_default_config()
+        if isinstance(db_path, str) and db_path.startswith("sqlite:///"):
+            db_path = db_path[len("sqlite:///"):]
         self.db_path = Path(db_path) if db_path else cfg.db_path
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         self.init_schema()

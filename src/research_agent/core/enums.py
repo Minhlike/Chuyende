@@ -500,6 +500,19 @@ class SymbolicEqualityState(str, Enum):
     PARSE_FAILED = "PARSE_FAILED"
 
 
+class EquationType(str, Enum):
+    """Scientific Equation Classifications (Prompt 6 Section 10, RC-09)."""
+    SOURCE_EQUATION = "SOURCE_EQUATION"
+    DERIVED_EQUATION = "DERIVED_EQUATION"
+    OUR_EQUATION = "OUR_EQUATION"
+    OBJECTIVE_FUNCTION = "OBJECTIVE_FUNCTION"
+    LOSS_FUNCTION = "LOSS_FUNCTION"
+    REPRESENTATION_TRANSFORM = "REPRESENTATION_TRANSFORM"
+    METRIC_FORMULA = "METRIC_FORMULA"
+    BOUND_OR_INEQUALITY = "BOUND_OR_INEQUALITY"
+    EMPIRICAL_RELATION = "EMPIRICAL_RELATION"
+
+
 class NumericalClaimType(str, Enum):
     """Numerical Claim Origin Classification (Prompt 6 Section 50)."""
     SOURCE_REPORTED = "SOURCE_REPORTED"
@@ -595,3 +608,146 @@ class TransformationOp(str, Enum):
     APPLY_IDENTITY = "APPLY_IDENTITY"
     APPLY_DEFINITION = "APPLY_DEFINITION"
     APPROXIMATE = "APPROXIMATE"
+
+
+# ======================================================================
+# PROMPT 7 ENUMS: ACADEMIC COMPOSER, ANTI-HALLUCINATION & THESIS AUDITOR
+# ======================================================================
+
+class DiscourseFunction(str, Enum):
+    """Rhetorical and Argument Discourse Step Functions (Prompt 5 Section 53, Prompt 7 Section 7)."""
+    # Prompt 5 granular functions
+    DEFINE = "DEFINE"
+    DELIMIT = "DELIMIT"
+    DISTINGUISH = "DISTINGUISH"
+    COMPARE = "COMPARE"
+    CONTRAST = "CONTRAST"
+    SYNTHESIZE = "SYNTHESIZE"
+    EXPLAIN_MECHANISM = "EXPLAIN_MECHANISM"
+    PRESENT_EVIDENCE = "PRESENT_EVIDENCE"
+    QUALIFY = "QUALIFY"
+    COUNTERARGUE = "COUNTERARGUE"
+    RESOLVE_CONFLICT = "RESOLVE_CONFLICT"
+    DERIVE = "DERIVE"
+    MOTIVATE = "MOTIVATE"
+    HYPOTHESIZE = "HYPOTHESIZE"
+    INTERPRET = "INTERPRET"
+    LIMIT = "LIMIT"
+    TRANSITION = "TRANSITION"
+    FALSIFY = "FALSIFY"
+    # Prompt 7 composite functions
+    CLAIM_INTRODUCTION = "CLAIM_INTRODUCTION"
+    EVIDENCE_INTEGRATION = "EVIDENCE_INTEGRATION"
+    HYPOTHESIS_FORMULATION = "HYPOTHESIS_FORMULATION"
+    MECHANISM_EXPLANATION = "MECHANISM_EXPLANATION"
+    COUNTERARGUMENT_HANDLING = "COUNTERARGUMENT_HANDLING"
+    SYNTHESIS_AND_IMPLICATION = "SYNTHESIS_AND_IMPLICATION"
+    LIMITATION_BOUNDING = "LIMITATION_BOUNDING"
+
+
+class WritingReadiness(str, Enum):
+    """Roadmap Node Writing Readiness State (Prompt 7 Section 4)."""
+    NOT_READY = "NOT_READY"
+    PROVISIONAL = "PROVISIONAL"
+    READY = "READY"
+    BLOCKED = "BLOCKED"
+    DRAFTED = "DRAFTED"
+    AUDITED = "AUDITED"
+    APPROVED = "APPROVED"
+
+
+class SentenceClaimType(str, Enum):
+    """Sentence-Level Propositional Classification (Prompt 7 Section 8)."""
+    SOURCE_FACT = "SOURCE_FACT"
+    SOURCE_CLAIM = "SOURCE_CLAIM"
+    SYNTHESIS = "SYNTHESIS"
+    OUR_INFERENCE = "OUR_INFERENCE"
+    OUR_DESIGN = "OUR_DESIGN"
+    EXPERIMENT_RESULT = "EXPERIMENT_RESULT"
+    HYPOTHESIS = "HYPOTHESIS"
+    TRANSITION = "TRANSITION"
+    INTERPRETATION = "INTERPRETATION"
+    LIMITATION = "LIMITATION"
+
+
+class SentenceCompilationState(str, Enum):
+    """Sentence Anti-Hallucination Compilation State (Prompt 7 Section 10)."""
+    DRAFT = "DRAFT"
+    VALIDATING = "VALIDATING"
+    PASS = "PASS"
+    NEEDS_CITATION = "NEEDS_CITATION"
+    UNSUPPORTED = "UNSUPPORTED"
+    OWNERSHIP_CONFLICT = "OWNERSHIP_CONFLICT"
+    NUMERICALLY_UNVERIFIED = "NUMERICALLY_UNVERIFIED"
+    EQUATION_UNVERIFIED = "EQUATION_UNVERIFIED"
+    OVERGENERALIZED = "OVERGENERALIZED"
+    CONTRADICTION_IGNORED = "CONTRADICTION_IGNORED"
+    SCOPE_MISMATCH = "SCOPE_MISMATCH"
+    REJECTED = "REJECTED"
+
+
+class ParagraphReviewStatus(str, Enum):
+    """Document IR Paragraph Lifecycle & Review Status (Prompt 7 Section 83)."""
+    DRAFT = "DRAFT"
+    GENERATED = "GENERATED"
+    AUDIT_FAILED = "AUDIT_FAILED"
+    MACHINE_AUDITED = "MACHINE_AUDITED"
+    HUMAN_REVIEW_PENDING = "HUMAN_REVIEW_PENDING"
+    HUMAN_ACCEPTED = "HUMAN_ACCEPTED"
+    HUMAN_REJECTED = "HUMAN_REJECTED"
+    STALE = "STALE"
+
+
+class AuditCategory(str, Enum):
+    """Thesis Multi-Dimensional Audit Categories (Prompt 7 Section 57)."""
+    CLAIMS = "CLAIMS"
+    CITATIONS = "CITATIONS"
+    OWNERSHIP = "OWNERSHIP"
+    LOGIC = "LOGIC"
+    NUMBERS = "NUMBERS"
+    STATISTICS = "STATISTICS"
+    EQUATIONS = "EQUATIONS"
+    TABLES = "TABLES"
+    FIGURES = "FIGURES"
+    ARGUMENTATION = "ARGUMENTATION"
+    VALIDITY = "VALIDITY"
+    REPRODUCIBILITY = "REPRODUCIBILITY"
+    TERMINOLOGY = "TERMINOLOGY"
+    STRUCTURE = "STRUCTURE"
+    STYLE = "STYLE"
+    REPETITION = "REPETITION"
+    CONTRIBUTIONS = "CONTRIBUTIONS"
+    RQ_H_COVERAGE = "RQ_H_COVERAGE"
+
+
+class AuditSeverity(str, Enum):
+    """Audit Finding Severity Levels (Prompt 7 Section 131)."""
+    CRITICAL = "CRITICAL"
+    HIGH = "HIGH"
+    MEDIUM = "MEDIUM"
+    LOW = "LOW"
+    INFO = "INFO"
+
+
+class AuditIssueStatus(str, Enum):
+    """Lifecycle of Identified Audit Issues (Prompt 7 Section 132)."""
+    OPEN = "OPEN"
+    ACKNOWLEDGED = "ACKNOWLEDGED"
+    FIXED = "FIXED"
+    WAIVED = "WAIVED"
+    FALSE_POSITIVE = "FALSE_POSITIVE"
+
+
+class CompositionMode(str, Enum):
+    """Thesis Compilation Modes (Prompt 7 Section 54-55)."""
+    PROVISIONAL = "PROVISIONAL"
+    FINAL = "FINAL"
+
+
+class DefensibilityStatus(str, Enum):
+    """10 Defensibility Questions Evaluation Status (Prompt 7 Section 99)."""
+    PASS = "PASS"
+    PARTIAL = "PARTIAL"
+    FAIL = "FAIL"
+    NOT_APPLICABLE = "NOT_APPLICABLE"
+

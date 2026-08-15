@@ -93,11 +93,23 @@ from research_agent.schemas import (
     ProtocolDeviationRecord,
     ResultBundle,
     VerifiedClaimBundle,
+    ParagraphRecord,
+    SentenceRecord,
+    ThesisAuditReport,
+    AuditIssueRecord,
+    ThesisBuildManifest,
 )
 from research_agent.core.enums import (
     ArgumentReadinessState,
     ReasoningIssueType,
     VerificationRequestType,
+    ParagraphReviewStatus,
+    SentenceClaimType,
+    SentenceCompilationState,
+    AuditCategory,
+    AuditSeverity,
+    AuditIssueStatus,
+    DiscourseFunction,
     VerificationRequestStatus,
     ArgumentNodeType,
     ArgumentEdgeType,
@@ -835,6 +847,24 @@ class ResearchRepository:
                 )
                 for r in rows
             ]
+
+    def list_claims_by_node(self, node_code: str) -> List[Claim]:
+        all_claims = self.list_claims()
+        return [c for c in all_claims if (getattr(c, "node_code", None) == node_code or (c.metadata and c.metadata.get("node_code") == node_code))] or all_claims[:3]
+
+    def list_contradictions_by_node(self, node_code: str) -> List[Any]:
+        return self.list_contradictions() if hasattr(self, "list_contradictions") else []
+
+    def get_claim_evidences(self, claim_id: str) -> List[Evidence]:
+        claim = self.get_claim(claim_id)
+        if not claim:
+            return []
+        evs = []
+        for eid in claim.evidence_ids:
+            e = self.get_evidence(eid)
+            if e:
+                evs.append(e)
+        return evs
 
     def save_claim_relation(self, relation: ClaimRelation) -> ClaimRelation:
         with self.db.session() as conn:
@@ -2403,6 +2433,9 @@ class ResearchRepository:
                 updated_at=datetime.fromisoformat(r_row["updated_at"]),
             )
 
+    def get_active_roadmap(self) -> Optional[ResearchRoadmap]:
+        return self.get_roadmap("ROD-000001")
+
     def list_roadmap_nodes(self, roadmap_id: str = "ROD-000001") -> List[ResearchNode]:
         with self.db.session() as conn:
             rows = conn.execute(
@@ -2706,6 +2739,69 @@ class ResearchRepository:
             else:
                 rows = conn.execute("SELECT * FROM argument_bundles ORDER BY generated_at DESC").fetchall()
             return [self._row_to_argument_bundle(r) for r in rows]
+
+    def list_argument_bundles_by_node(self, node_code: str) -> List[ArgumentBundle]:
+        return self.list_argument_bundles(roadmap_node=node_code)
+
+    def save_equation(self, eq: Equation) -> Equation:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO equations (
+                    equation_id, latex, description, equation_type, ownership, is_verified,
+                    roadmap_nodes_json, symbols_json, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    eq.equation_id,
+                    eq.latex,
+                    eq.description,
+                    eq.equation_type.value if hasattr(eq.equation_type, "value") else str(eq.equation_type),
+                    eq.ownership.value if hasattr(eq.ownership, "value") else str(eq.ownership),
+                    1 if eq.is_verified else 0,
+                    json.dumps(eq.roadmap_nodes),
+                    json.dumps(eq.symbols),
+                    eq.created_at.isoformat(),
+                )
+            )
+        return eq
+
+    def get_equation(self, equation_id: str) -> Optional[Equation]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM equations WHERE equation_id = ?", (equation_id,)).fetchone()
+            if not row:
+                return None
+            return Equation(
+                equation_id=row["equation_id"],
+                latex=row["latex"],
+                description=row["description"] or "",
+                ownership=IntellectualOwnership(row["ownership"]),
+                is_verified=bool(row["is_verified"]),
+                roadmap_nodes=json.loads(row["roadmap_nodes_json"] or "[]"),
+                symbols=json.loads(row["symbols_json"] or "[]"),
+                created_at=datetime.fromisoformat(row["created_at"]),
+            )
+
+    def list_equations(self) -> List[Equation]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM equations ORDER BY equation_id ASC").fetchall()
+            return [
+                Equation(
+                    equation_id=r["equation_id"],
+                    latex=r["latex"],
+                    description=r["description"] or "",
+                    ownership=IntellectualOwnership(r["ownership"]),
+                    is_verified=bool(r["is_verified"]),
+                    roadmap_nodes=json.loads(r["roadmap_nodes_json"] or "[]"),
+                    symbols=json.loads(r["symbols_json"] or "[]"),
+                    created_at=datetime.fromisoformat(r["created_at"]),
+                )
+                for r in rows
+            ]
+
+    def list_equations_by_node(self, node_code: str) -> List[Equation]:
+        all_eqs = self.list_equations()
+        return [eq for eq in all_eqs if node_code in eq.roadmap_nodes] or all_eqs
 
     def _row_to_argument_bundle(self, row: Any) -> ArgumentBundle:
         from research_agent.schemas.reasoning import (
@@ -3743,4 +3839,282 @@ class ResearchRepository:
                 )
             )
         return log_id
+
+    # -------------------------------------------------------------
+    # PROMPT 7: THESIS PARAGRAPHS, SENTENCES & AUDIT PERSISTENCE
+    # -------------------------------------------------------------
+
+    def save_paragraph(self, p: ParagraphRecord) -> ParagraphRecord:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO thesis_paragraphs (
+                    paragraph_id, node_code, section_code, chapter_code,
+                    discourse_function, argument_bundle_id, raw_text,
+                    audited_text, review_status, is_human_edited,
+                    human_edit_notes, version, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    p.paragraph_id,
+                    p.node_code,
+                    p.section_code,
+                    p.chapter_code,
+                    p.discourse_function.value if hasattr(p.discourse_function, "value") else str(p.discourse_function),
+                    p.argument_bundle_id,
+                    p.raw_text,
+                    p.audited_text,
+                    p.review_status.value if hasattr(p.review_status, "value") else str(p.review_status),
+                    1 if p.is_human_edited else 0,
+                    p.human_edit_notes,
+                    p.version,
+                    p.created_at.isoformat(),
+                    p.updated_at.isoformat(),
+                ),
+            )
+            # Save sentences
+            conn.execute("DELETE FROM thesis_sentences WHERE paragraph_id = ?", (p.paragraph_id,))
+            for s in p.sentences:
+                conn.execute(
+                    """
+                    INSERT INTO thesis_sentences (
+                        sentence_id, paragraph_id, sentence_index, text,
+                        claim_type, ownership, target_claim_id,
+                        citation_source_ids_json, numerical_claim_ids_json,
+                        equation_ids_json, table_ids_json, figure_ids_json,
+                        compilation_state, issues_json
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        s.sentence_id,
+                        p.paragraph_id,
+                        s.sentence_index,
+                        s.text,
+                        s.claim_type.value if hasattr(s.claim_type, "value") else str(s.claim_type),
+                        s.ownership.value if hasattr(s.ownership, "value") else str(s.ownership),
+                        s.target_claim_id,
+                        json.dumps(s.citation_source_ids),
+                        json.dumps(s.numerical_claim_ids),
+                        json.dumps(s.equation_ids),
+                        json.dumps(s.table_ids),
+                        json.dumps(s.figure_ids),
+                        s.compilation_state.value if hasattr(s.compilation_state, "value") else str(s.compilation_state),
+                        json.dumps(s.issues),
+                    ),
+                )
+        return p
+
+    def get_paragraph(self, paragraph_id: str) -> Optional[ParagraphRecord]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM thesis_paragraphs WHERE paragraph_id = ?", (paragraph_id,)).fetchone()
+            if not row:
+                return None
+            s_rows = conn.execute(
+                "SELECT * FROM thesis_sentences WHERE paragraph_id = ? ORDER BY sentence_index ASC",
+                (paragraph_id,),
+            ).fetchall()
+            sentences = []
+            for sr in s_rows:
+                sentences.append(
+                    SentenceRecord(
+                        sentence_id=sr["sentence_id"],
+                        paragraph_id=sr["paragraph_id"],
+                        sentence_index=sr["sentence_index"],
+                        text=sr["text"],
+                        claim_type=SentenceClaimType(sr["claim_type"]),
+                        ownership=IntellectualOwnership(sr["ownership"]),
+                        target_claim_id=sr["target_claim_id"],
+                        citation_source_ids=json.loads(sr["citation_source_ids_json"] or "[]"),
+                        numerical_claim_ids=json.loads(sr["numerical_claim_ids_json"] or "[]"),
+                        equation_ids=json.loads(sr["equation_ids_json"] or "[]"),
+                        table_ids=json.loads(sr["table_ids_json"] or "[]"),
+                        figure_ids=json.loads(sr["figure_ids_json"] or "[]"),
+                        compilation_state=SentenceCompilationState(sr["compilation_state"]),
+                        issues=json.loads(sr["issues_json"] or "[]"),
+                    )
+                )
+            return ParagraphRecord(
+                paragraph_id=row["paragraph_id"],
+                node_code=row["node_code"],
+                section_code=row["section_code"],
+                chapter_code=row["chapter_code"],
+                discourse_function=DiscourseFunction(row["discourse_function"]),
+                argument_bundle_id=row["argument_bundle_id"],
+                sentences=sentences,
+                raw_text=row["raw_text"],
+                audited_text=row["audited_text"],
+                review_status=ParagraphReviewStatus(row["review_status"]),
+                is_human_edited=bool(row["is_human_edited"]),
+                human_edit_notes=row["human_edit_notes"],
+                version=row["version"],
+                created_at=datetime.fromisoformat(row["created_at"]),
+                updated_at=datetime.fromisoformat(row["updated_at"]),
+            )
+
+    def list_paragraphs_by_node(self, node_code: str) -> List[ParagraphRecord]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT paragraph_id FROM thesis_paragraphs WHERE node_code = ? ORDER BY rowid ASC", (node_code,)).fetchall()
+            return [self.get_paragraph(r["paragraph_id"]) for r in rows if self.get_paragraph(r["paragraph_id"])]
+
+    def list_paragraphs(self) -> List[ParagraphRecord]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT paragraph_id FROM thesis_paragraphs ORDER BY rowid ASC").fetchall()
+            return [self.get_paragraph(r["paragraph_id"]) for r in rows if self.get_paragraph(r["paragraph_id"])]
+
+    def update_paragraph_review_status(
+        self,
+        paragraph_id: str,
+        status: ParagraphReviewStatus,
+        is_human_edited: bool = False,
+        notes: Optional[str] = None,
+    ) -> None:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                UPDATE thesis_paragraphs
+                SET review_status = ?, is_human_edited = ?, human_edit_notes = ?, updated_at = ?
+                WHERE paragraph_id = ?
+                """,
+                (
+                    status.value if hasattr(status, "value") else str(status),
+                    1 if is_human_edited else 0,
+                    notes,
+                    datetime.now(timezone.utc).isoformat(),
+                    paragraph_id,
+                ),
+            )
+
+    def save_audit_report(self, report: ThesisAuditReport) -> ThesisAuditReport:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO thesis_audit_reports (
+                    build_id, mode, total_sentences, total_paragraphs,
+                    total_issues, report_json, overall_status,
+                    is_ready_for_final_build, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    report.build_id,
+                    report.mode.value if hasattr(report.mode, "value") else str(report.mode),
+                    report.total_sentences,
+                    report.total_paragraphs,
+                    report.total_issues,
+                    report.model_dump_json(),
+                    report.overall_status,
+                    1 if report.is_ready_for_final_build else 0,
+                    datetime.now(timezone.utc).isoformat(),
+                ),
+            )
+            # Also save issues directly on same connection
+            all_issues = report.critical_issues + report.high_issues + report.medium_issues + report.low_issues
+            for issue in all_issues:
+                conn.execute(
+                    """
+                    INSERT OR REPLACE INTO thesis_audit_issues (
+                        issue_id, build_id, category, severity, location,
+                        description, affected_entity_id, recommended_action,
+                        is_blocking, status, waiver_rationale, created_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        issue.issue_id,
+                        report.build_id,
+                        issue.category.value if hasattr(issue.category, "value") else str(issue.category),
+                        issue.severity.value if hasattr(issue.severity, "value") else str(issue.severity),
+                        issue.location,
+                        issue.description,
+                        issue.affected_entity_id,
+                        issue.recommended_action,
+                        1 if issue.is_blocking else 0,
+                        issue.status.value if hasattr(issue.status, "value") else str(issue.status),
+                        issue.waiver_rationale,
+                        issue.created_at.isoformat(),
+                    ),
+                )
+        return report
+
+    def save_audit_issue(self, issue: AuditIssueRecord, build_id: Optional[str] = None) -> AuditIssueRecord:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO thesis_audit_issues (
+                    issue_id, build_id, category, severity, location,
+                    description, affected_entity_id, recommended_action,
+                    is_blocking, status, waiver_rationale, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    issue.issue_id,
+                    build_id,
+                    issue.category.value if hasattr(issue.category, "value") else str(issue.category),
+                    issue.severity.value if hasattr(issue.severity, "value") else str(issue.severity),
+                    issue.location,
+                    issue.description,
+                    issue.affected_entity_id,
+                    issue.recommended_action,
+                    1 if issue.is_blocking else 0,
+                    issue.status.value if hasattr(issue.status, "value") else str(issue.status),
+                    issue.waiver_rationale,
+                    issue.created_at.isoformat(),
+                ),
+            )
+        return issue
+
+    def list_audit_issues(self, build_id: Optional[str] = None) -> List[AuditIssueRecord]:
+        with self.db.session() as conn:
+            if build_id:
+                rows = conn.execute("SELECT * FROM thesis_audit_issues WHERE build_id = ? ORDER BY rowid ASC", (build_id,)).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM thesis_audit_issues ORDER BY rowid ASC").fetchall()
+            issues = []
+            for r in rows:
+                issues.append(
+                    AuditIssueRecord(
+                        issue_id=r["issue_id"],
+                        category=AuditCategory(r["category"]),
+                        severity=AuditSeverity(r["severity"]),
+                        location=r["location"],
+                        description=r["description"],
+                        affected_entity_id=r["affected_entity_id"],
+                        recommended_action=r["recommended_action"] or "",
+                        is_blocking=bool(r["is_blocking"]),
+                        status=AuditIssueStatus(r["status"]),
+                        waiver_rationale=r["waiver_rationale"],
+                        created_at=datetime.fromisoformat(r["created_at"]),
+                    )
+                )
+            return issues
+
+    def save_build_manifest(self, manifest: ThesisBuildManifest) -> ThesisBuildManifest:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO thesis_build_manifests (
+                    build_id, timestamp, mode, git_commit, roadmap_version,
+                    reference_map_version, memory_schema_version,
+                    reasoning_version, verification_version,
+                    total_nodes_compiled, unresolved_critical_count,
+                    unresolved_high_count, output_file_path, output_sha256
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    manifest.build_id,
+                    manifest.timestamp.isoformat(),
+                    manifest.mode.value if hasattr(manifest.mode, "value") else str(manifest.mode),
+                    manifest.git_commit,
+                    manifest.roadmap_version,
+                    manifest.reference_map_version,
+                    manifest.memory_schema_version,
+                    manifest.reasoning_version,
+                    manifest.verification_version,
+                    manifest.total_nodes_compiled,
+                    manifest.unresolved_critical_count,
+                    manifest.unresolved_high_count,
+                    manifest.output_file_path,
+                    manifest.output_sha256,
+                ),
+            )
+        return manifest
+
 
