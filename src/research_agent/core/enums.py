@@ -434,7 +434,8 @@ class NoveltyReasoningState(str, Enum):
 
 
 class VerificationRequestType(str, Enum):
-    """Scientific Verification Request Types for Prompt 6 Interface (Prompt 5 Section 103)."""
+    """Scientific Verification Request Types for Prompt 6 Interface (Prompt 5 Section 103, Prompt 6 Section 5)."""
+    EQUATION_CHECK = "EQUATION_CHECK"
     EQUATION_VERIFY = "EQUATION_VERIFY"
     EQUATION_DERIVE = "EQUATION_DERIVE"
     NUMERICAL_CHECK = "NUMERICAL_CHECK"
@@ -449,12 +450,22 @@ class VerificationRequestType(str, Enum):
 
 
 class VerificationRequestStatus(str, Enum):
-    """Verification Request Processing Lifecycle."""
-    PENDING = "PENDING"
-    IN_PROGRESS = "IN_PROGRESS"
-    VERIFIED = "VERIFIED"
-    REJECTED = "REJECTED"
-    FAILED = "FAILED"
+    """Verification Request Processing Lifecycle (Prompt 6 Section 5)."""
+    REQUESTED = "REQUESTED"
+    VALIDATING = "VALIDATING"
+    READY = "READY"
+    RUNNING = "RUNNING"
+    PASS = "PASS"
+    FAIL = "FAIL"
+    INCONCLUSIVE = "INCONCLUSIVE"
+    BLOCKED = "BLOCKED"
+    SUPERSEDED = "SUPERSEDED"
+    # Legacy / Compatibility aliases
+    PENDING = "REQUESTED"
+    IN_PROGRESS = "RUNNING"
+    VERIFIED = "PASS"
+    REJECTED = "FAIL"
+    FAILED = "FAIL"
 
 
 class ResearchPriorityLevel(str, Enum):
@@ -477,3 +488,110 @@ class ArgumentPatternType(str, Enum):
     BENEFIT_COST_BOUNDARY = "BENEFIT_COST_BOUNDARY"
     CLAIM_COUNTEREXAMPLE_REFINED_CLAIM = "CLAIM_COUNTEREXAMPLE_REFINED_CLAIM"
     EVIDENCE_LIMITATION_NARROWED_CONCLUSION = "EVIDENCE_LIMITATION_NARROWED_CONCLUSION"
+
+
+class SymbolicEqualityState(str, Enum):
+    """Symbolic Expression Equivalence Classification (Prompt 6 Section 14)."""
+    PROVEN_EQUIVALENT = "PROVEN_EQUIVALENT"
+    NUMERICALLY_CONSISTENT = "NUMERICALLY_CONSISTENT"
+    NOT_EQUIVALENT = "NOT_EQUIVALENT"
+    UNDETERMINED = "UNDETERMINED"
+    DOMAIN_DEPENDENT = "DOMAIN_DEPENDENT"
+    PARSE_FAILED = "PARSE_FAILED"
+
+
+class NumericalClaimType(str, Enum):
+    """Numerical Claim Origin Classification (Prompt 6 Section 50)."""
+    SOURCE_REPORTED = "SOURCE_REPORTED"
+    RECOMPUTED = "RECOMPUTED"
+    EXPERIMENT_RESULT = "EXPERIMENT_RESULT"
+    DERIVED = "DERIVED"
+    ESTIMATE = "ESTIMATE"
+
+
+class TableType(str, Enum):
+    """Scientific Table Classifications (Prompt 6 Section 54)."""
+    EVIDENCE_TABLE = "EVIDENCE_TABLE"
+    COMPUTED_TABLE = "COMPUTED_TABLE"
+    SUMMARY_TABLE = "SUMMARY_TABLE"
+    CONFIGURATION_TABLE = "CONFIGURATION_TABLE"
+    TRACEABILITY_TABLE = "TRACEABILITY_TABLE"
+
+
+class FigureType(str, Enum):
+    """Scientific Visualization Types (Prompt 6 Section 67)."""
+    LINE_PLOT = "LINE_PLOT"
+    SCATTER_PLOT = "SCATTER_PLOT"
+    BAR_PLOT = "BAR_PLOT"
+    BOX_PLOT = "BOX_PLOT"
+    PR_CURVE = "PR_CURVE"
+    ROC_CURVE = "ROC_CURVE"
+    ABLATION_PLOT = "ABLATION_PLOT"
+    PARETO_FRONTIER = "PARETO_FRONTIER"
+    LATENCY_THROUGHPUT = "LATENCY_THROUGHPUT"
+    ROBUSTNESS_CURVE = "ROBUSTNESS_CURVE"
+
+
+class ReproducibilityLevel(str, Enum):
+    """5-Tier Reproducibility Hierarchy (Prompt 6 Section 80)."""
+    LEVEL_1_INTEGRITY = "LEVEL_1_INTEGRITY"
+    LEVEL_2_METRIC = "LEVEL_2_METRIC"
+    LEVEL_3_ANALYSIS = "LEVEL_3_ANALYSIS"
+    LEVEL_4_RERUN = "LEVEL_4_RERUN"
+    LEVEL_5_END_TO_END = "LEVEL_5_END_TO_END"
+
+
+class AllowedWordingStrength(str, Enum):
+    """Scientific Wording Policy Bounds for Thesis Writing (Prompt 6 Section 139)."""
+    DESCRIPTIVE_ONLY = "DESCRIPTIVE_ONLY"
+    ASSOCIATIONAL = "ASSOCIATIONAL"
+    COMPARATIVE = "COMPARATIVE"
+    SUPPORTIVE = "SUPPORTIVE"
+    STRONG_SUPPORT = "STRONG_SUPPORT"
+    INCONCLUSIVE = "INCONCLUSIVE"
+
+
+class MetricGranularity(str, Enum):
+    """Telemetry Metric Evaluation Granularities (Prompt 6 Section 29)."""
+    EVENT = "EVENT"
+    ENTITY = "ENTITY"
+    SESSION = "SESSION"
+    HOST = "HOST"
+    CAMPAIGN = "CAMPAIGN"
+    SUBGRAPH = "SUBGRAPH"
+
+
+class ProtocolLockState(str, Enum):
+    """Experiment Protocol Execution Lifecycle (Prompt 6 Section 83)."""
+    DRAFT = "DRAFT"
+    LOCKED = "LOCKED"
+    EXECUTED = "EXECUTED"
+    DEVIATED = "DEVIATED"
+    CLOSED = "CLOSED"
+
+
+class UnitOfMeasurement(str, Enum):
+    """Standardized Physical and Computing Units (Prompt 6 Section 91)."""
+    MILLISECONDS = "ms"
+    SECONDS = "s"
+    EVENTS_PER_SEC = "events/s"
+    MB = "MB"
+    GB = "GB"
+    COUNT = "count"
+    PERCENT = "%"
+    PROBABILITY = "probability"
+    DIMENSIONLESS = "dimensionless"
+
+
+class TransformationOp(str, Enum):
+    """Mathematical and Derivation Transformation Operations (Prompt 6 Section 11)."""
+    SUBSTITUTE = "SUBSTITUTE"
+    EXPAND = "EXPAND"
+    FACTOR = "FACTOR"
+    DIFFERENTIATE = "DIFFERENTIATE"
+    INTEGRATE = "INTEGRATE"
+    REARRANGE = "REARRANGE"
+    SIMPLIFY = "SIMPLIFY"
+    APPLY_IDENTITY = "APPLY_IDENTITY"
+    APPLY_DEFINITION = "APPLY_DEFINITION"
+    APPROXIMATE = "APPROXIMATE"

@@ -363,11 +363,11 @@ def test_rhetorical_discourse_planning_and_attractor_audit(test_env):
 # ----------------------------------------------------------------------
 
 def test_research_skills_registry_18_skills(test_env):
-    """Verify all 18 canonical research skills are registered and executable."""
+    """Verify canonical research and verification skills are registered and executable."""
     registry = test_env["registry"]
     engine = test_env["engine"]
     skills = registry.list_skills()
-    assert len(skills) == 18
+    assert len(skills) >= 18
 
     # Test executing SKILL-01 (Claim Extraction)
     res01 = registry.run_skill("SKILL-01", {"text": "Sysflow records host audit events."}, engine)

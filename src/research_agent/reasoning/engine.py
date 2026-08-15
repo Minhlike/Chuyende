@@ -353,3 +353,20 @@ class ScientificReasoningEngine:
             verification_requests=verification_requests or [],
         )
         return self.repo.save_argument_bundle(bundle)
+
+    def execute_verification_request(self, request_or_id: Any) -> Any:
+        """
+        Executes a VerificationRequest through the ScientificVerificationPipeline.
+        """
+        from research_agent.verification.pipeline import ScientificVerificationPipeline
+        pipeline = ScientificVerificationPipeline(self.repo)
+
+        if isinstance(request_or_id, str):
+            req = self.repo.get_verification_request(request_or_id)
+            if not req:
+                raise ValueError(f"VerificationRequest '{request_or_id}' not found.")
+        else:
+            req = request_or_id
+
+        return pipeline.execute_request(req)
+

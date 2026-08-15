@@ -717,6 +717,189 @@ CREATE TABLE IF NOT EXISTS reasoning_issues (
     mitigation TEXT,
     created_at TEXT NOT NULL
 );
+
+-- Numerical Claims (Prompt 6 Section 50)
+CREATE TABLE IF NOT EXISTS numerical_claims (
+    numerical_claim_id TEXT PRIMARY KEY,
+    statement TEXT NOT NULL,
+    quantity_name TEXT NOT NULL,
+    raw_value REAL NOT NULL,
+    display_value TEXT NOT NULL,
+    unit TEXT NOT NULL DEFAULT 'dimensionless',
+    uncertainty TEXT,
+    source_type TEXT NOT NULL,
+    source_id TEXT,
+    source_locator TEXT,
+    computation_id TEXT,
+    metric_name TEXT,
+    granularity TEXT DEFAULT 'EVENT',
+    scope_dataset TEXT,
+    verification_status TEXT NOT NULL DEFAULT 'PENDING',
+    related_claim_id TEXT,
+    is_estimate INTEGER NOT NULL DEFAULT 0,
+    created_at TEXT NOT NULL
+);
+
+-- Metric Definitions (Prompt 6 Section 28)
+CREATE TABLE IF NOT EXISTS metric_definitions (
+    metric_id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    formula_latex TEXT NOT NULL,
+    unit TEXT NOT NULL DEFAULT 'dimensionless',
+    aggregation TEXT NOT NULL DEFAULT 'MEAN',
+    granularity TEXT NOT NULL DEFAULT 'EVENT',
+    positive_class TEXT DEFAULT 'ATTACK / ANOMALY',
+    interpolation_method TEXT DEFAULT 'LINEAR',
+    assumptions_json TEXT NOT NULL DEFAULT '[]',
+    version TEXT NOT NULL DEFAULT 'v1.0',
+    created_at TEXT NOT NULL
+);
+
+-- Statistical Results (Prompt 6 Section 34..43)
+CREATE TABLE IF NOT EXISTS statistical_results (
+    stat_id TEXT PRIMARY KEY,
+    question TEXT NOT NULL,
+    test_name TEXT NOT NULL,
+    sample_unit TEXT NOT NULL,
+    sample_size_n INTEGER NOT NULL,
+    statistic_value REAL,
+    p_value REAL,
+    effect_size_name TEXT,
+    effect_size_value REAL,
+    ci_lower REAL,
+    ci_upper REAL,
+    ci_level REAL NOT NULL DEFAULT 0.95,
+    bootstrap_resamples INTEGER,
+    random_seed INTEGER,
+    assumptions_met INTEGER NOT NULL DEFAULT 1,
+    assumptions_evaluated_json TEXT NOT NULL DEFAULT '[]',
+    is_significant INTEGER,
+    multiple_comparisons_context TEXT,
+    interpretation_notes TEXT,
+    created_at TEXT NOT NULL
+);
+
+-- Dataset Manifests & Profiles (Prompt 6 Section 21, 23)
+CREATE TABLE IF NOT EXISTS dataset_manifests (
+    manifest_id TEXT PRIMARY KEY,
+    dataset_version_id TEXT NOT NULL,
+    files_json TEXT NOT NULL DEFAULT '[]',
+    total_files INTEGER NOT NULL DEFAULT 0,
+    total_bytes INTEGER NOT NULL DEFAULT 0,
+    total_events INTEGER NOT NULL DEFAULT 0,
+    manifest_sha256 TEXT NOT NULL,
+    schema_fields_json TEXT NOT NULL DEFAULT '[]',
+    timestamp_start TEXT,
+    timestamp_end TEXT,
+    label_field TEXT,
+    entity_fields_json TEXT NOT NULL DEFAULT '[]',
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS dataset_profiles (
+    profile_id TEXT PRIMARY KEY,
+    dataset_version_id TEXT NOT NULL,
+    total_events INTEGER NOT NULL DEFAULT 0,
+    total_entities INTEGER NOT NULL DEFAULT 0,
+    label_counts_json TEXT NOT NULL DEFAULT '{}',
+    class_ratios_json TEXT NOT NULL DEFAULT '{}',
+    missing_rates_json TEXT NOT NULL DEFAULT '{}',
+    template_count INTEGER,
+    host_count INTEGER,
+    timestamp_range TEXT,
+    script_path TEXT NOT NULL,
+    code_commit_hash TEXT NOT NULL,
+    profile_sha256 TEXT NOT NULL,
+    computed_at TEXT NOT NULL
+);
+
+-- Split Manifests & Preprocessing Lineage (Prompt 6 Section 24, 26)
+CREATE TABLE IF NOT EXISTS split_manifests (
+    split_id TEXT PRIMARY KEY,
+    dataset_version_id TEXT NOT NULL,
+    strategy TEXT NOT NULL,
+    train_hashes_json TEXT NOT NULL DEFAULT '[]',
+    val_hashes_json TEXT NOT NULL DEFAULT '[]',
+    test_hashes_json TEXT NOT NULL DEFAULT '[]',
+    train_count INTEGER NOT NULL DEFAULT 0,
+    val_count INTEGER NOT NULL DEFAULT 0,
+    test_count INTEGER NOT NULL DEFAULT 0,
+    temporal_boundaries_json TEXT NOT NULL DEFAULT '{}',
+    host_holdout_json TEXT NOT NULL DEFAULT '[]',
+    campaign_holdout_json TEXT NOT NULL DEFAULT '[]',
+    seed INTEGER NOT NULL DEFAULT 42,
+    manifest_sha256 TEXT NOT NULL,
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS preprocessing_transformations (
+    transformation_id TEXT PRIMARY KEY,
+    input_dataset_version_id TEXT NOT NULL,
+    output_dataset_version_id TEXT NOT NULL,
+    transformation_type TEXT NOT NULL,
+    script_path TEXT NOT NULL,
+    parameters_json TEXT NOT NULL DEFAULT '{}',
+    fitted_on_subset TEXT NOT NULL DEFAULT 'TRAIN_ONLY',
+    execution_time_sec REAL NOT NULL DEFAULT 0.0,
+    code_commit_hash TEXT NOT NULL,
+    output_sha256 TEXT NOT NULL,
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS protocol_deviations (
+    deviation_id TEXT PRIMARY KEY,
+    experiment_id TEXT NOT NULL,
+    original_protocol TEXT NOT NULL,
+    deviated_protocol TEXT NOT NULL,
+    reason TEXT NOT NULL,
+    timing TEXT NOT NULL,
+    impact_assessment TEXT NOT NULL,
+    approved_by TEXT NOT NULL DEFAULT 'RESEARCH_ARCHITECT',
+    created_at TEXT NOT NULL
+);
+
+-- Result Bundles & Verified Claim Bundles (Prompt 6 Section 98, 138)
+CREATE TABLE IF NOT EXISTS result_bundles (
+    bundle_id TEXT PRIMARY KEY,
+    roadmap_node_code TEXT NOT NULL,
+    rq_id TEXT NOT NULL,
+    hyp_id TEXT NOT NULL,
+    experiment_run_ids_json TEXT NOT NULL DEFAULT '[]',
+    verified_metrics_json TEXT NOT NULL DEFAULT '{}',
+    numerical_claims_json TEXT NOT NULL DEFAULT '[]',
+    statistical_results_json TEXT NOT NULL DEFAULT '[]',
+    table_ids_json TEXT NOT NULL DEFAULT '[]',
+    figure_ids_json TEXT NOT NULL DEFAULT '[]',
+    data_provenance_summary TEXT NOT NULL,
+    limitations_json TEXT NOT NULL DEFAULT '[]',
+    comparability_constraints_json TEXT NOT NULL DEFAULT '[]',
+    invalidated_run_ids_json TEXT NOT NULL DEFAULT '[]',
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS verified_claim_bundles (
+    claim_id TEXT PRIMARY KEY,
+    statement TEXT NOT NULL,
+    ownership TEXT NOT NULL DEFAULT 'OURS',
+    source_evidence_ids_json TEXT NOT NULL DEFAULT '[]',
+    numerical_claims_json TEXT NOT NULL DEFAULT '[]',
+    equation_ids_json TEXT NOT NULL DEFAULT '[]',
+    result_bundle_id TEXT,
+    uncertainty_description TEXT,
+    allowed_wording_strength TEXT NOT NULL DEFAULT 'SUPPORTIVE',
+    citation_keys_json TEXT NOT NULL DEFAULT '[]',
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS reproducibility_logs (
+    log_id TEXT PRIMARY KEY,
+    target_artifact_id TEXT NOT NULL,
+    reproducibility_level TEXT NOT NULL,
+    reproduction_command TEXT NOT NULL,
+    success INTEGER NOT NULL,
+    divergence_details TEXT,
+    executed_at TEXT NOT NULL
+);
 """
 
 

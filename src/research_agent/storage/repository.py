@@ -84,6 +84,15 @@ from research_agent.schemas import (
     VerificationRequest,
     ReasoningIssue,
     ArgumentGraph,
+    NumericalClaim,
+    MetricDefinition,
+    StatisticalResult,
+    DatasetManifest,
+    DataProfile,
+    PreprocessingTransformation,
+    ProtocolDeviationRecord,
+    ResultBundle,
+    VerifiedClaimBundle,
 )
 from research_agent.core.enums import (
     ArgumentReadinessState,
@@ -92,6 +101,10 @@ from research_agent.core.enums import (
     VerificationRequestStatus,
     ArgumentNodeType,
     ArgumentEdgeType,
+    NumericalClaimType,
+    MetricGranularity,
+    AllowedWordingStrength,
+    ReproducibilityLevel,
 )
 from research_agent.storage.db import DatabaseManager
 
@@ -3111,3 +3124,623 @@ class ResearchRepository:
                 is_cyclic=False,
                 root_claims=root_claims,
             )
+
+    # -------------------------------------------------------------
+    # Scientific Verification Layer (Prompt 6)
+    # -------------------------------------------------------------
+
+    def save_numerical_claim(self, claim: NumericalClaim) -> NumericalClaim:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO numerical_claims (
+                    numerical_claim_id, statement, quantity_name, raw_value, display_value,
+                    unit, uncertainty, source_type, source_id, source_locator,
+                    computation_id, metric_name, granularity, scope_dataset,
+                    verification_status, related_claim_id, is_estimate, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    claim.numerical_claim_id,
+                    claim.statement,
+                    claim.quantity_name,
+                    claim.raw_value,
+                    claim.display_value,
+                    claim.unit,
+                    claim.uncertainty,
+                    claim.source_type.value if hasattr(claim.source_type, "value") else str(claim.source_type),
+                    claim.source_id,
+                    claim.source_locator,
+                    claim.computation_id,
+                    claim.metric_name,
+                    claim.granularity.value if hasattr(claim.granularity, "value") else str(claim.granularity),
+                    claim.scope_dataset,
+                    claim.verification_status.value if hasattr(claim.verification_status, "value") else str(claim.verification_status),
+                    claim.related_claim_id,
+                    1 if claim.is_estimate else 0,
+                    claim.created_at.isoformat(),
+                )
+            )
+        return claim
+
+    def get_numerical_claim(self, claim_id: str) -> Optional[NumericalClaim]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM numerical_claims WHERE numerical_claim_id = ?", (claim_id,)).fetchone()
+            if not row:
+                return None
+            return NumericalClaim(
+                numerical_claim_id=row["numerical_claim_id"],
+                statement=row["statement"],
+                quantity_name=row["quantity_name"],
+                raw_value=row["raw_value"],
+                display_value=row["display_value"],
+                unit=row["unit"],
+                uncertainty=row["uncertainty"],
+                source_type=NumericalClaimType(row["source_type"]),
+                source_id=row["source_id"],
+                source_locator=row["source_locator"],
+                computation_id=row["computation_id"],
+                metric_name=row["metric_name"],
+                granularity=MetricGranularity(row["granularity"]) if row["granularity"] else MetricGranularity.EVENT,
+                scope_dataset=row["scope_dataset"],
+                verification_status=VerificationStatus(row["verification_status"]),
+                related_claim_id=row["related_claim_id"],
+                is_estimate=bool(row["is_estimate"]),
+                created_at=datetime.fromisoformat(row["created_at"]),
+            )
+
+    def list_numerical_claims(self, related_claim_id: Optional[str] = None) -> List[NumericalClaim]:
+        with self.db.session() as conn:
+            if related_claim_id:
+                rows = conn.execute("SELECT * FROM numerical_claims WHERE related_claim_id = ? ORDER BY numerical_claim_id ASC", (related_claim_id,)).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM numerical_claims ORDER BY numerical_claim_id ASC").fetchall()
+            return [
+                NumericalClaim(
+                    numerical_claim_id=r["numerical_claim_id"],
+                    statement=r["statement"],
+                    quantity_name=r["quantity_name"],
+                    raw_value=r["raw_value"],
+                    display_value=r["display_value"],
+                    unit=r["unit"],
+                    uncertainty=r["uncertainty"],
+                    source_type=NumericalClaimType(r["source_type"]),
+                    source_id=r["source_id"],
+                    source_locator=r["source_locator"],
+                    computation_id=r["computation_id"],
+                    metric_name=r["metric_name"],
+                    granularity=MetricGranularity(r["granularity"]) if r["granularity"] else MetricGranularity.EVENT,
+                    scope_dataset=r["scope_dataset"],
+                    verification_status=VerificationStatus(r["verification_status"]),
+                    related_claim_id=r["related_claim_id"],
+                    is_estimate=bool(r["is_estimate"]),
+                    created_at=datetime.fromisoformat(r["created_at"]),
+                )
+                for r in rows
+            ]
+
+    def save_metric_definition(self, metric: MetricDefinition) -> MetricDefinition:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO metric_definitions (
+                    metric_id, name, formula_latex, unit, aggregation, granularity,
+                    positive_class, interpolation_method, assumptions_json, version, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    metric.metric_id,
+                    metric.name,
+                    metric.formula_latex,
+                    metric.unit,
+                    metric.aggregation,
+                    metric.granularity.value if hasattr(metric.granularity, "value") else str(metric.granularity),
+                    metric.positive_class,
+                    metric.interpolation_method,
+                    json.dumps(metric.assumptions),
+                    metric.version,
+                    metric.created_at.isoformat(),
+                )
+            )
+        return metric
+
+    def get_metric_definition(self, metric_id: str) -> Optional[MetricDefinition]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM metric_definitions WHERE metric_id = ?", (metric_id,)).fetchone()
+            if not row:
+                return None
+            return MetricDefinition(
+                metric_id=row["metric_id"],
+                name=row["name"],
+                formula_latex=row["formula_latex"],
+                unit=row["unit"],
+                aggregation=row["aggregation"],
+                granularity=MetricGranularity(row["granularity"]),
+                positive_class=row["positive_class"],
+                interpolation_method=row["interpolation_method"],
+                assumptions=json.loads(row["assumptions_json"] or "[]"),
+                version=row["version"],
+                created_at=datetime.fromisoformat(row["created_at"]),
+            )
+
+    def list_metric_definitions(self) -> List[MetricDefinition]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM metric_definitions ORDER BY metric_id ASC").fetchall()
+            return [
+                MetricDefinition(
+                    metric_id=r["metric_id"],
+                    name=r["name"],
+                    formula_latex=r["formula_latex"],
+                    unit=r["unit"],
+                    aggregation=r["aggregation"],
+                    granularity=MetricGranularity(r["granularity"]),
+                    positive_class=r["positive_class"],
+                    interpolation_method=r["interpolation_method"],
+                    assumptions=json.loads(r["assumptions_json"] or "[]"),
+                    version=r["version"],
+                    created_at=datetime.fromisoformat(r["created_at"]),
+                )
+                for r in rows
+            ]
+
+    def save_statistical_result(self, res: StatisticalResult) -> StatisticalResult:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO statistical_results (
+                    stat_id, question, test_name, sample_unit, sample_size_n,
+                    statistic_value, p_value, effect_size_name, effect_size_value,
+                    ci_lower, ci_upper, ci_level, bootstrap_resamples, random_seed,
+                    assumptions_met, assumptions_evaluated_json, is_significant,
+                    multiple_comparisons_context, interpretation_notes, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    res.stat_id,
+                    res.question,
+                    res.test_name,
+                    res.sample_unit,
+                    res.sample_size_n,
+                    res.statistic_value,
+                    res.p_value,
+                    res.effect_size_name,
+                    res.effect_size_value,
+                    res.ci_lower,
+                    res.ci_upper,
+                    res.ci_level,
+                    res.bootstrap_resamples,
+                    res.random_seed,
+                    1 if res.assumptions_met else 0,
+                    json.dumps(res.assumptions_evaluated),
+                    1 if res.is_significant else (0 if res.is_significant is False else None),
+                    res.multiple_comparisons_context,
+                    res.interpretation_notes,
+                    res.created_at.isoformat(),
+                )
+            )
+        return res
+
+    def get_statistical_result(self, stat_id: str) -> Optional[StatisticalResult]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM statistical_results WHERE stat_id = ?", (stat_id,)).fetchone()
+            if not row:
+                return None
+            return StatisticalResult(
+                stat_id=row["stat_id"],
+                question=row["question"],
+                test_name=row["test_name"],
+                sample_unit=row["sample_unit"],
+                sample_size_n=row["sample_size_n"],
+                statistic_value=row["statistic_value"],
+                p_value=row["p_value"],
+                effect_size_name=row["effect_size_name"],
+                effect_size_value=row["effect_size_value"],
+                ci_lower=row["ci_lower"],
+                ci_upper=row["ci_upper"],
+                ci_level=row["ci_level"],
+                bootstrap_resamples=row["bootstrap_resamples"],
+                random_seed=row["random_seed"],
+                assumptions_met=bool(row["assumptions_met"]),
+                assumptions_evaluated=json.loads(row["assumptions_evaluated_json"] or "[]"),
+                is_significant=bool(row["is_significant"]) if row["is_significant"] is not None else None,
+                multiple_comparisons_context=row["multiple_comparisons_context"],
+                interpretation_notes=row["interpretation_notes"] or "",
+                created_at=datetime.fromisoformat(row["created_at"]),
+            )
+
+    def save_dataset_manifest(self, man: DatasetManifest) -> DatasetManifest:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO dataset_manifests (
+                    manifest_id, dataset_version_id, files_json, total_files,
+                    total_bytes, total_events, manifest_sha256, schema_fields_json,
+                    timestamp_start, timestamp_end, label_field, entity_fields_json, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    man.manifest_id,
+                    man.dataset_version_id,
+                    json.dumps(man.files),
+                    man.total_files,
+                    man.total_bytes,
+                    man.total_events,
+                    man.manifest_sha256,
+                    json.dumps(man.schema_fields),
+                    man.timestamp_start,
+                    man.timestamp_end,
+                    man.label_field,
+                    json.dumps(man.entity_fields),
+                    man.created_at.isoformat(),
+                )
+            )
+        return man
+
+    def get_dataset_manifest(self, dataset_version_id: str) -> Optional[DatasetManifest]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM dataset_manifests WHERE dataset_version_id = ? OR manifest_id = ?", (dataset_version_id, dataset_version_id)).fetchone()
+            if not row:
+                return None
+            return DatasetManifest(
+                manifest_id=row["manifest_id"],
+                dataset_version_id=row["dataset_version_id"],
+                files=json.loads(row["files_json"] or "[]"),
+                total_files=row["total_files"],
+                total_bytes=row["total_bytes"],
+                total_events=row["total_events"],
+                manifest_sha256=row["manifest_sha256"],
+                schema_fields=json.loads(row["schema_fields_json"] or "[]"),
+                timestamp_start=row["timestamp_start"],
+                timestamp_end=row["timestamp_end"],
+                label_field=row["label_field"],
+                entity_fields=json.loads(row["entity_fields_json"] or "[]"),
+                created_at=datetime.fromisoformat(row["created_at"]),
+            )
+
+    def save_dataset_profile(self, profile: DataProfile) -> DataProfile:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO dataset_profiles (
+                    profile_id, dataset_version_id, total_events, total_entities,
+                    label_counts_json, class_ratios_json, missing_rates_json,
+                    template_count, host_count, timestamp_range, script_path,
+                    code_commit_hash, profile_sha256, computed_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    profile.profile_id,
+                    profile.dataset_version_id,
+                    profile.total_events,
+                    profile.total_entities,
+                    json.dumps(profile.label_counts),
+                    json.dumps(profile.class_ratios),
+                    json.dumps(profile.missing_rates),
+                    profile.template_count,
+                    profile.host_count,
+                    profile.timestamp_range,
+                    profile.script_path,
+                    profile.code_commit_hash,
+                    profile.profile_sha256,
+                    profile.computed_at.isoformat(),
+                )
+            )
+        return profile
+
+    def get_dataset_profile(self, dataset_version_id: str) -> Optional[DataProfile]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM dataset_profiles WHERE dataset_version_id = ? OR profile_id = ?", (dataset_version_id, dataset_version_id)).fetchone()
+            if not row:
+                return None
+            return DataProfile(
+                profile_id=row["profile_id"],
+                dataset_version_id=row["dataset_version_id"],
+                total_events=row["total_events"],
+                total_entities=row["total_entities"],
+                label_counts=json.loads(row["label_counts_json"] or "{}"),
+                class_ratios=json.loads(row["class_ratios_json"] or "{}"),
+                missing_rates=json.loads(row["missing_rates_json"] or "{}"),
+                template_count=row["template_count"],
+                host_count=row["host_count"],
+                timestamp_range=row["timestamp_range"],
+                script_path=row["script_path"],
+                code_commit_hash=row["code_commit_hash"],
+                profile_sha256=row["profile_sha256"],
+                computed_at=datetime.fromisoformat(row["computed_at"]),
+            )
+
+    def save_split_manifest(self, sm: DatasetSplitManifest) -> Any:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO split_manifests (
+                    split_id, dataset_version_id, strategy, train_hashes_json,
+                    val_hashes_json, test_hashes_json, train_count, val_count,
+                    test_count, temporal_boundaries_json, host_holdout_json,
+                    campaign_holdout_json, seed, manifest_sha256, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    sm.split_id,
+                    getattr(sm, "dataset_version_id", "DSV-DEFAULT"),
+                    getattr(sm, "strategy", "TEMPORAL"),
+                    json.dumps(getattr(sm, "train_hashes", [getattr(sm, "train_hash", "")])),
+                    json.dumps(getattr(sm, "val_hashes", [getattr(sm, "val_hash", "")])),
+                    json.dumps(getattr(sm, "test_hashes", [getattr(sm, "test_hash", "")])),
+                    getattr(sm, "train_count", 0),
+                    getattr(sm, "val_count", 0),
+                    getattr(sm, "test_count", 0),
+                    json.dumps(getattr(sm, "temporal_boundaries", {})),
+                    json.dumps(getattr(sm, "host_holdout", [])),
+                    json.dumps(getattr(sm, "campaign_holdout", [])),
+                    getattr(sm, "random_seed", getattr(sm, "seed", 42)),
+                    getattr(sm, "manifest_sha256", "sha256-default"),
+                    datetime.now(timezone.utc).isoformat(),
+                )
+            )
+        return sm
+
+    def save_preprocessing_transformation(self, trf: PreprocessingTransformation) -> PreprocessingTransformation:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO preprocessing_transformations (
+                    transformation_id, input_dataset_version_id, output_dataset_version_id,
+                    transformation_type, script_path, parameters_json, fitted_on_subset,
+                    execution_time_sec, code_commit_hash, output_sha256, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    trf.transformation_id,
+                    trf.input_dataset_version_id,
+                    trf.output_dataset_version_id,
+                    trf.transformation_type,
+                    trf.script_path,
+                    json.dumps(trf.parameters),
+                    trf.fitted_on_subset,
+                    trf.execution_time_sec,
+                    trf.code_commit_hash,
+                    trf.output_sha256,
+                    trf.created_at.isoformat(),
+                )
+            )
+        return trf
+
+    def list_preprocessing_transformations(self) -> List[PreprocessingTransformation]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM preprocessing_transformations ORDER BY transformation_id ASC").fetchall()
+            return [
+                PreprocessingTransformation(
+                    transformation_id=r["transformation_id"],
+                    input_dataset_version_id=r["input_dataset_version_id"],
+                    output_dataset_version_id=r["output_dataset_version_id"],
+                    transformation_type=r["transformation_type"],
+                    script_path=r["script_path"],
+                    parameters=json.loads(r["parameters_json"] or "{}"),
+                    fitted_on_subset=r["fitted_on_subset"],
+                    execution_time_sec=r["execution_time_sec"],
+                    code_commit_hash=r["code_commit_hash"],
+                    output_sha256=r["output_sha256"],
+                    created_at=datetime.fromisoformat(r["created_at"]),
+                )
+                for r in rows
+            ]
+
+    def save_protocol_deviation(self, dev: ProtocolDeviationRecord) -> ProtocolDeviationRecord:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO protocol_deviations (
+                    deviation_id, experiment_id, original_protocol, deviated_protocol,
+                    reason, timing, impact_assessment, approved_by, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    dev.deviation_id,
+                    dev.experiment_id,
+                    dev.original_protocol,
+                    dev.deviated_protocol,
+                    dev.reason,
+                    dev.timing,
+                    dev.impact_assessment,
+                    dev.approved_by,
+                    dev.created_at.isoformat(),
+                )
+            )
+        return dev
+
+    def list_protocol_deviations(self, experiment_id: Optional[str] = None) -> List[ProtocolDeviationRecord]:
+        with self.db.session() as conn:
+            if experiment_id:
+                rows = conn.execute("SELECT * FROM protocol_deviations WHERE experiment_id = ? ORDER BY deviation_id ASC", (experiment_id,)).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM protocol_deviations ORDER BY deviation_id ASC").fetchall()
+            return [
+                ProtocolDeviationRecord(
+                    deviation_id=r["deviation_id"],
+                    experiment_id=r["experiment_id"],
+                    original_protocol=r["original_protocol"],
+                    deviated_protocol=r["deviated_protocol"],
+                    reason=r["reason"],
+                    timing=r["timing"],
+                    impact_assessment=r["impact_assessment"],
+                    approved_by=r["approved_by"],
+                    created_at=datetime.fromisoformat(r["created_at"]),
+                )
+                for r in rows
+            ]
+
+    def save_result_bundle(self, bundle: ResultBundle) -> ResultBundle:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO result_bundles (
+                    bundle_id, roadmap_node_code, rq_id, hyp_id, experiment_run_ids_json,
+                    verified_metrics_json, numerical_claims_json, statistical_results_json,
+                    table_ids_json, figure_ids_json, data_provenance_summary,
+                    limitations_json, comparability_constraints_json, invalidated_run_ids_json, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    bundle.bundle_id,
+                    bundle.roadmap_node_code,
+                    bundle.rq_id,
+                    bundle.hyp_id,
+                    json.dumps(bundle.experiment_run_ids),
+                    json.dumps(bundle.verified_metrics),
+                    json.dumps([c.model_dump(mode="json") for c in bundle.numerical_claims]),
+                    json.dumps([s.model_dump(mode="json") for s in bundle.statistical_results]),
+                    json.dumps(bundle.table_ids),
+                    json.dumps(bundle.figure_ids),
+                    bundle.data_provenance_summary,
+                    json.dumps(bundle.limitations),
+                    json.dumps(bundle.comparability_constraints),
+                    json.dumps(bundle.invalidated_run_ids),
+                    bundle.created_at.isoformat(),
+                )
+            )
+        return bundle
+
+    def get_result_bundle(self, bundle_id: str) -> Optional[ResultBundle]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM result_bundles WHERE bundle_id = ?", (bundle_id,)).fetchone()
+            if not row:
+                return None
+            num_claims_raw = json.loads(row["numerical_claims_json"] or "[]")
+            stat_res_raw = json.loads(row["statistical_results_json"] or "[]")
+            return ResultBundle(
+                bundle_id=row["bundle_id"],
+                roadmap_node_code=row["roadmap_node_code"],
+                rq_id=row["rq_id"],
+                hyp_id=row["hyp_id"],
+                experiment_run_ids=json.loads(row["experiment_run_ids_json"] or "[]"),
+                verified_metrics=json.loads(row["verified_metrics_json"] or "{}"),
+                numerical_claims=[NumericalClaim.model_validate(c) for c in num_claims_raw],
+                statistical_results=[StatisticalResult.model_validate(s) for s in stat_res_raw],
+                table_ids=json.loads(row["table_ids_json"] or "[]"),
+                figure_ids=json.loads(row["figure_ids_json"] or "[]"),
+                data_provenance_summary=row["data_provenance_summary"],
+                limitations=json.loads(row["limitations_json"] or "[]"),
+                comparability_constraints=json.loads(row["comparability_constraints_json"] or "[]"),
+                invalidated_run_ids=json.loads(row["invalidated_run_ids_json"] or "[]"),
+                created_at=datetime.fromisoformat(row["created_at"]),
+            )
+
+    def list_result_bundles(self) -> List[ResultBundle]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM result_bundles ORDER BY bundle_id ASC").fetchall()
+            bundles = []
+            for r in rows:
+                num_claims_raw = json.loads(r["numerical_claims_json"] or "[]")
+                stat_res_raw = json.loads(r["statistical_results_json"] or "[]")
+                bundles.append(
+                    ResultBundle(
+                        bundle_id=r["bundle_id"],
+                        roadmap_node_code=r["roadmap_node_code"],
+                        rq_id=r["rq_id"],
+                        hyp_id=r["hyp_id"],
+                        experiment_run_ids=json.loads(r["experiment_run_ids_json"] or "[]"),
+                        verified_metrics=json.loads(r["verified_metrics_json"] or "{}"),
+                        numerical_claims=[NumericalClaim.model_validate(c) for c in num_claims_raw],
+                        statistical_results=[StatisticalResult.model_validate(s) for s in stat_res_raw],
+                        table_ids=json.loads(r["table_ids_json"] or "[]"),
+                        figure_ids=json.loads(r["figure_ids_json"] or "[]"),
+                        data_provenance_summary=r["data_provenance_summary"],
+                        limitations=json.loads(r["limitations_json"] or "[]"),
+                        comparability_constraints=json.loads(r["comparability_constraints_json"] or "[]"),
+                        invalidated_run_ids=json.loads(r["invalidated_run_ids_json"] or "[]"),
+                        created_at=datetime.fromisoformat(r["created_at"]),
+                    )
+                )
+            return bundles
+
+    def save_verified_claim_bundle(self, vcb: VerifiedClaimBundle) -> VerifiedClaimBundle:
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO verified_claim_bundles (
+                    claim_id, statement, ownership, source_evidence_ids_json,
+                    numerical_claims_json, equation_ids_json, result_bundle_id,
+                    uncertainty_description, allowed_wording_strength, citation_keys_json, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    vcb.claim_id,
+                    vcb.statement,
+                    vcb.ownership.value if hasattr(vcb.ownership, "value") else str(vcb.ownership),
+                    json.dumps(vcb.source_evidence_ids),
+                    json.dumps([c.model_dump(mode="json") for c in vcb.numerical_claims]),
+                    json.dumps(vcb.equation_ids),
+                    vcb.result_bundle_id,
+                    vcb.uncertainty_description,
+                    vcb.allowed_wording_strength.value if hasattr(vcb.allowed_wording_strength, "value") else str(vcb.allowed_wording_strength),
+                    json.dumps(vcb.citation_keys),
+                    vcb.created_at.isoformat(),
+                )
+            )
+        return vcb
+
+    def get_verified_claim_bundle(self, claim_id: str) -> Optional[VerifiedClaimBundle]:
+        with self.db.session() as conn:
+            row = conn.execute("SELECT * FROM verified_claim_bundles WHERE claim_id = ?", (claim_id,)).fetchone()
+            if not row:
+                return None
+            num_claims_raw = json.loads(row["numerical_claims_json"] or "[]")
+            return VerifiedClaimBundle(
+                claim_id=row["claim_id"],
+                statement=row["statement"],
+                ownership=IntellectualOwnership(row["ownership"]),
+                source_evidence_ids=json.loads(row["source_evidence_ids_json"] or "[]"),
+                numerical_claims=[NumericalClaim.model_validate(c) for c in num_claims_raw],
+                equation_ids=json.loads(row["equation_ids_json"] or "[]"),
+                result_bundle_id=row["result_bundle_id"],
+                uncertainty_description=row["uncertainty_description"],
+                allowed_wording_strength=AllowedWordingStrength(row["allowed_wording_strength"]),
+                citation_keys=json.loads(row["citation_keys_json"] or "[]"),
+                created_at=datetime.fromisoformat(row["created_at"]),
+            )
+
+    def list_verified_claim_bundles(self) -> List[VerifiedClaimBundle]:
+        with self.db.session() as conn:
+            rows = conn.execute("SELECT * FROM verified_claim_bundles ORDER BY claim_id ASC").fetchall()
+            bundles = []
+            for r in rows:
+                num_claims_raw = json.loads(r["numerical_claims_json"] or "[]")
+                bundles.append(
+                    VerifiedClaimBundle(
+                        claim_id=r["claim_id"],
+                        statement=r["statement"],
+                        ownership=IntellectualOwnership(r["ownership"]),
+                        source_evidence_ids=json.loads(r["source_evidence_ids_json"] or "[]"),
+                        numerical_claims=[NumericalClaim.model_validate(c) for c in num_claims_raw],
+                        equation_ids=json.loads(r["equation_ids_json"] or "[]"),
+                        result_bundle_id=r["result_bundle_id"],
+                        uncertainty_description=r["uncertainty_description"],
+                        allowed_wording_strength=AllowedWordingStrength(r["allowed_wording_strength"]),
+                        citation_keys=json.loads(r["citation_keys_json"] or "[]"),
+                        created_at=datetime.fromisoformat(r["created_at"]),
+                    )
+                )
+            return bundles
+
+    def save_reproducibility_log(self, target_artifact_id: str, level: ReproducibilityLevel, command: str, success: bool, details: Optional[str] = None) -> str:
+        log_id = f"REP-{abs(hash(target_artifact_id + command + str(datetime.now(timezone.utc)))) % 1000000:06d}"
+        with self.db.session() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO reproducibility_logs (
+                    log_id, target_artifact_id, reproducibility_level, reproduction_command, success, divergence_details, executed_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    log_id,
+                    target_artifact_id,
+                    level.value if hasattr(level, "value") else str(level),
+                    command,
+                    1 if success else 0,
+                    details,
+                    datetime.now(timezone.utc).isoformat(),
+                )
+            )
+        return log_id
+

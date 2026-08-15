@@ -23,12 +23,20 @@ from research_agent.skills.implementations import (
     Skill16ArgumentGraphConstruction,
     Skill17RhetoricalDiscoursePlanning,
     Skill18ArgumentBundlePackaging,
+    Skill19SymbolicEquationVerification,
+    Skill20DatasetValidationAndProfiling,
+    Skill21DeterministicMetricRecomputation,
+    Skill22HypothesisTestingAndEffectSize,
+    Skill23MultiSeedAggregation,
+    Skill24ScientificTableConstruction,
+    Skill25ScientificFigureGeneration,
+    Skill26ReproducibilityVerification,
 )
 
 
 class ResearchSkillRegistry:
     """
-    Central registry and execution manager for the 18 canonical research skills.
+    Central registry and execution manager for canonical research skills.
     """
 
     def __init__(self):
@@ -55,6 +63,14 @@ class ResearchSkillRegistry:
             Skill16ArgumentGraphConstruction(),
             Skill17RhetoricalDiscoursePlanning(),
             Skill18ArgumentBundlePackaging(),
+            Skill19SymbolicEquationVerification(),
+            Skill20DatasetValidationAndProfiling(),
+            Skill21DeterministicMetricRecomputation(),
+            Skill22HypothesisTestingAndEffectSize(),
+            Skill23MultiSeedAggregation(),
+            Skill24ScientificTableConstruction(),
+            Skill25ScientificFigureGeneration(),
+            Skill26ReproducibilityVerification(),
         ]
         for s in skills:
             self._skills[s.metadata.skill_id] = s

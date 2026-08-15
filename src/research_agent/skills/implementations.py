@@ -518,3 +518,233 @@ class Skill18ArgumentBundlePackaging(BaseResearchSkill):
             },
             execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
         )
+
+
+class Skill19SymbolicEquationVerification(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-19",
+            name="symbolic_equation_verification",
+            category="MATHEMATICAL_VALIDATION",
+            description="Performs SymPy algebraic equivalence, derivative check, domain constraints, and loss composition audits.",
+            inputs=["expr_a", "expr_b"],
+            outputs=["symbolic_state", "details"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        from research_agent.verification.equations.symbolic_engine import SymbolicVerificationEngine
+        sym_eng = SymbolicVerificationEngine()
+        expr_a = payload.get("expr_a", "")
+        expr_b = payload.get("expr_b", "")
+        state, details = sym_eng.verify_algebraic_equivalence(expr_a, expr_b)
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"symbolic_state": state.value, "details": details},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+
+class Skill20DatasetValidationAndProfiling(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-20",
+            name="dataset_validation_and_profiling",
+            category="DATA_ENGINEERING",
+            description="Validates dataset hash integrity, schema, missing rates, and generates deterministic DataProfile.",
+            inputs=["dataframe", "dataset_version_id"],
+            outputs=["profile", "hash_valid"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        import pandas as pd
+        from research_agent.verification.datasets.data_profiler import DataProfiler
+        profiler = DataProfiler()
+        df = payload.get("dataframe")
+        dsv_id = payload.get("dataset_version_id", "DSV-DEFAULT")
+        if df is None or not isinstance(df, pd.DataFrame):
+            df = pd.DataFrame(payload.get("records", []))
+        profile = profiler.compute_profile(df, dataset_version_id=dsv_id)
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"profile": profile.model_dump(mode="json")},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+
+class Skill21DeterministicMetricRecomputation(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-21",
+            name="deterministic_metric_recomputation",
+            category="METRIC_VERIFICATION",
+            description="Recomputes confusion matrix, Precision, Recall, F1, PR-AUC from raw ground truth and prediction arrays.",
+            inputs=["y_true", "y_pred"],
+            outputs=["confusion_matrix", "pr_auc"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        from research_agent.verification.metrics.recomputation import MetricRecomputationEngine
+        m_eng = MetricRecomputationEngine()
+        y_true = payload.get("y_true", [])
+        y_pred = payload.get("y_pred", [])
+        y_scores = payload.get("y_scores")
+        cm = m_eng.compute_confusion_matrix(y_true, y_pred)
+        pr_auc = None
+        if y_scores is not None:
+            pr_auc, _, _, _ = m_eng.compute_pr_curve_and_auc(y_true, y_scores)
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"confusion_matrix": cm.model_dump(mode="json"), "pr_auc": pr_auc},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+
+class Skill22HypothesisTestingAndEffectSize(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-22",
+            name="hypothesis_testing_and_effect_size",
+            category="STATISTICAL_VERIFICATION",
+            description="Executes paired/unpaired hypothesis tests with Shapiro-Wilk check, Hedges' g, and bootstrap CI.",
+            inputs=["group_ours", "group_baseline", "question"],
+            outputs=["statistical_result"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        from research_agent.verification.statistics.hypothesis_tests import HypothesisTestingEngine
+        h_eng = HypothesisTestingEngine()
+        g_ours = payload.get("group_ours", [])
+        g_base = payload.get("group_baseline", [])
+        question = payload.get("question", "Hypothesis Test")
+        res = h_eng.run_paired_test(g_ours, g_base, question=question)
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"statistical_result": res.model_dump(mode="json")},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+
+class Skill23MultiSeedAggregation(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-23",
+            name="multi_seed_aggregation_and_cherry_picking_guard",
+            category="STATISTICAL_VERIFICATION",
+            description="Aggregates metric values across multiple seeds and detects cherry-picking of single best runs.",
+            inputs=["seed_runs", "metric_key"],
+            outputs=["aggregation_summary", "cherry_picking_warning"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        from research_agent.verification.statistics.multi_seed_aggregator import MultiSeedAggregator
+        agg = MultiSeedAggregator()
+        runs = payload.get("seed_runs", [])
+        key = payload.get("metric_key", "f1")
+        summary = agg.aggregate_seed_metrics(runs, key)
+        reported = payload.get("reported_value")
+        warning = None
+        if reported is not None:
+            _, warning = agg.audit_cherry_picking(reported, summary["all_seed_values"])
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"aggregation_summary": summary, "cherry_picking_warning": warning},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+
+class Skill24ScientificTableConstruction(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-24",
+            name="scientific_table_construction",
+            category="ARTIFACT_VERIFICATION",
+            description="Constructs deterministic CSV, Markdown, LaTeX tables with cell provenance and fairness checks.",
+            inputs=["table_id", "title", "caption", "dataframe"],
+            outputs=["table_specification"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        import pandas as pd
+        from research_agent.verification.tables.builder import TableBuilder
+        builder = TableBuilder()
+        df = payload.get("dataframe")
+        if df is None or not isinstance(df, pd.DataFrame):
+            df = pd.DataFrame(payload.get("records", []))
+        tbl = builder.build_table(
+            table_id=payload.get("table_id", "TBL-000001"),
+            title=payload.get("title", "Table"),
+            caption=payload.get("caption", "Caption"),
+            df=df,
+        )
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"table_specification": tbl.model_dump(mode="json")},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+
+class Skill25ScientificFigureGeneration(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-25",
+            name="scientific_figure_generation",
+            category="ARTIFACT_VERIFICATION",
+            description="Generates publication figures with companion figure-data.csv and metadata JSON.",
+            inputs=["figure_id", "title", "caption", "curves_data"],
+            outputs=["figure_specification"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        from research_agent.verification.figures.builder import FigureBuilder
+        builder = FigureBuilder()
+        fig_id = payload.get("figure_id", "FIG-000001")
+        title = payload.get("title", "Figure")
+        caption = payload.get("caption", "Caption")
+        curves = payload.get("curves_data", [])
+        spec = builder.plot_pr_curve(fig_id, title, caption, curves)
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"figure_specification": spec.model_dump(mode="json")},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
+
+class Skill26ReproducibilityVerification(BaseResearchSkill):
+    def __init__(self):
+        super().__init__(SkillMetadata(
+            skill_id="SKILL-26",
+            name="reproducibility_verification",
+            category="REPRODUCIBILITY",
+            description="Runs 5-tier scientific reproducibility audits (hash, metric, rerun).",
+            inputs=["recomputed_metrics", "original_metrics"],
+            outputs=["reproducibility_result"],
+        ))
+
+    def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
+        t0 = time.perf_counter()
+        from research_agent.verification.reproducibility.reproduce import ReproductionRunner
+        runner = ReproductionRunner()
+        recomp = payload.get("recomputed_metrics", {})
+        orig = payload.get("original_metrics", {})
+        passed, details = runner.verify_level_2_metrics(recomp, orig)
+        return SkillResult(
+            skill_id=self.metadata.skill_id,
+            success=True,
+            data={"reproducibility_passed": passed, "details": details},
+            execution_time_ms=round((time.perf_counter() - t0) * 1000, 2),
+        )
+
