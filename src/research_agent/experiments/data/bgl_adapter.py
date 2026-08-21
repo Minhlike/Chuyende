@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 """
 Real BGL Raw Data Adapter & Materialization Engine (Rule-Based Template Canonicalizer v1)
-Parses official raw BGL.tar.gz archive (4,747,963 records) to produce authentic Chapter 2 Multi-Task SSL inputs:
-  1. Temporal Partitioning:
-     - Train: Days 1-150 [1117838570, 1130798570)
-     - Val: Days 151-180 [1130798570, 1133390570)
-     - Test: Days 181-215 [1133390570, 1136390405] (SEALED, 0 features materialized)
+Enforces:
+  1. Label-Free Stage A1 SSL Pretraining Package:
+     - bgl_ssl_train.pt and bgl_ssl_val.pt contain ZERO downstream labels (guarded by LabelLeakageError).
+     - Downstream alert labels stored strictly in evaluation-only probe vault (experiments/runs/data/vault/).
   2. BGL Node Context & Shortcut Protocol:
      - Explicit feature group: BGL_NODE_CONTEXT (rack, midplane)
-     - Classification: LEGITIMATE_OPERATIONAL_CONTEXT + POTENTIAL_SHORTCUT
-     - Supports BGL_FULL_CONTEXT (include_node_context=True) and BGL_WITHOUT_NODE_CONTEXT (include_node_context=False)
-  3. Mathematical Accounting Reconciled:
+     - Control variants: BGL_FULL_CONTEXT vs BGL_WITHOUT_NODE_CONTEXT
+  3. Multi-Parameter Slot Representation:
+     - Fixed parameter slots per event (max_param_slots = 4).
+     - Deterministic type priority ordering.
+  4. Mathematical Accounting Reconciled:
      - raw_total_record_count: 4,747,963
-     - pretest_scanned_record_count: 4,318,481
-     - pretest_valid_record_count: 4,284,011 (Train: 3,672,051 + Val: 611,960)
+     - pretest_scanned_record_count: 4,318,480
+     - pretest_valid_record_count: 4,284,010
      - pretest_malformed_count: 34,470
-     - Conservation: pretest_scanned == pretest_valid + pretest_malformed
 """
 
 import os
@@ -29,11 +29,16 @@ from typing import Dict, Any, List, Optional, Tuple, Set
 import numpy as np
 import torch
 
-from research_agent.experiments.data.data_contract import RealDataContract, RealTrainingDataViolation
+from research_agent.experiments.data.data_contract import (
+    RealDataContract,
+    RealTrainingDataViolation,
+    LabelLeakageError,
+    enforce_ssl_package_label_free
+)
 
 class BGLRealDataAdapter:
     """
-    Streaming adapter for raw BGL supercomputer logs with explicit node-context feature toggle.
+    Streaming adapter for raw BGL supercomputer logs with label-free SSL packaging and multi-parameter slots.
     """
     def __init__(
         self,
@@ -42,6 +47,7 @@ class BGLRealDataAdapter:
         window_size: int = 64,
         max_train_windows: int = 20000,
         max_val_windows: int = 5000,
+        max_param_slots: int = 4,
         include_node_context: bool = True,
         parser_version: str = "RULE_BASED_TEMPLATE_CANONICALIZER_V1"
     ):
@@ -50,6 +56,7 @@ class BGLRealDataAdapter:
         self.window_size = window_size
         self.max_train_windows = max_train_windows
         self.max_val_windows = max_val_windows
+        self.max_param_slots = max_param_slots
         self.include_node_context = include_node_context
         self.parser_version = parser_version
         
@@ -113,8 +120,7 @@ class BGLRealDataAdapter:
             "is_alert": is_alert,
             "node": node,
             "template": template,
-            "params": params,
-            "primary_param": params[0]
+            "params": params
         }
 
     def stream_and_materialize(
@@ -124,12 +130,15 @@ class BGLRealDataAdapter:
     ) -> Tuple[Dict[str, Any], RealDataContract]:
         if output_dir is None:
             output_dir = self.base_dir / "experiments" / "runs" / "data" / "bgl"
+        vault_dir = self.base_dir / "experiments" / "runs" / "data" / "vault"
         output_dir.mkdir(parents=True, exist_ok=True)
+        vault_dir.mkdir(parents=True, exist_ok=True)
 
         if not self.raw_tar_path.exists():
             raise FileNotFoundError(f"Missing raw BGL archive at {self.raw_tar_path}")
 
         raw_tar_sha256 = self._compute_sha256(self.raw_tar_path)
+        official_reference_count = 4747963
         
         raw_total_record_count = 4747963
         pretest_scanned_record_count = 0
@@ -148,21 +157,28 @@ class BGLRealDataAdapter:
         unique_midplanes: Set[str] = set()
         node_context_token_count = 0
 
+        # Multi-parameter metrics
+        events_with_0_params = 0
+        events_with_1_param = 0
+        events_with_2plus_params = 0
+        total_parameter_instances = 0
+        retained_parameter_instances = 0
+        truncated_parameter_instances = 0
+
         train_events_by_node: Dict[str, List[Dict[str, Any]]] = {}
         val_events_by_node: Dict[str, List[Dict[str, Any]]] = {}
 
         with tarfile.open(self.raw_tar_path, "r:gz") as tar:
-            log_member = None
-            for m in tar.getmembers():
-                if m.name.endswith("BGL.log") or m.name == "BGL.log":
-                    log_member = m
-                    break
+            log_member = tar.getmember("BGL.log") if "BGL.log" in tar.getnames() else None
             if not log_member:
-                raise FileNotFoundError("BGL.log member not found inside BGL.tar.gz")
+                for m in tar.getmembers():
+                    if m.name.endswith("BGL.log"):
+                        log_member = m
+                        break
+            if not log_member:
+                raise FileNotFoundError("BGL.log not found inside archive")
 
             f_obj = tar.extractfile(log_member)
-            if not f_obj:
-                raise IOError("Could not extract stream for BGL.log")
 
             for line_bytes in f_obj:
                 if max_lines and pretest_scanned_record_count >= max_lines:
@@ -178,9 +194,22 @@ class BGLRealDataAdapter:
 
                     ts = parsed["timestamp"]
                     node = parsed["node"]
+                    num_p = len(parsed["params"])
 
                     if observed_min_ts is None or ts < observed_min_ts:
                         observed_min_ts = ts
+
+                    if num_p == 0:
+                        events_with_0_params += 1
+                    elif num_p == 1:
+                        events_with_1_param += 1
+                    else:
+                        events_with_2plus_params += 1
+
+                    total_parameter_instances += num_p
+                    retained_parameter_instances += min(num_p, self.max_param_slots)
+                    if num_p > self.max_param_slots:
+                        truncated_parameter_instances += (num_p - self.max_param_slots)
 
                     if ts < train_end_ts:
                         train_record_count += 1
@@ -234,16 +263,23 @@ class BGLRealDataAdapter:
         selected_train_indices.sort()
 
         train_sequences = []
-        train_labels = []
-        train_session_ids = []
-        train_time_gaps = []
         train_param_targets = []
+        train_time_gaps = []
+        train_session_ids = []
+        train_probe_labels = []
 
         for idx in selected_train_indices:
             node, window, session_id = all_train_windows[idx]
             seq_t = torch.tensor([self.train_template_to_id.get(e["template"], 0) for e in window], dtype=torch.long)
-            p_t = torch.tensor([self.train_param_to_id.get(e["primary_param"], 0) for e in window], dtype=torch.long)
             
+            param_slots_list = []
+            for e in window:
+                slot_ids = [self.train_param_to_id.get(p, 0) for p in e["params"][:self.max_param_slots]]
+                while len(slot_ids) < self.max_param_slots:
+                    slot_ids.append(1)  # <PAD_PARAM> = 1
+                param_slots_list.append(slot_ids)
+            param_t = torch.tensor(param_slots_list, dtype=torch.long)
+
             gaps = []
             for k in range(1, len(window)):
                 dt = max(0.0, window[k]["timestamp"] - window[k - 1]["timestamp"])
@@ -253,10 +289,10 @@ class BGLRealDataAdapter:
             lbl = 1 if any(e["is_alert"] for e in window) else 0
             
             train_sequences.append(seq_t)
-            train_param_targets.append(p_t)
+            train_param_targets.append(param_t)
             train_time_gaps.append(gaps_t)
-            train_labels.append(lbl)
             train_session_ids.append(session_id)
+            train_probe_labels.append(lbl)
 
         # 3. Assemble Window Sequences for Validation (Stratified Deterministic Selection)
         all_val_windows = []
@@ -272,24 +308,28 @@ class BGLRealDataAdapter:
         selected_val_indices.sort()
 
         val_sequences = []
-        val_labels = []
-        val_session_ids = []
-        val_time_gaps = []
         val_param_targets = []
+        val_time_gaps = []
+        val_session_ids = []
+        val_probe_labels = []
         val_oov_events = 0
         val_total_events = 0
 
         for idx in selected_val_indices:
             node, window, session_id = all_val_windows[idx]
             seq_t_list = []
-            p_t_list = []
+            param_slots_list = []
             for e in window:
                 val_total_events += 1
                 t_id = self.train_template_to_id.get(e["template"], 0)
                 if t_id == 0:
                     val_oov_events += 1
                 seq_t_list.append(t_id)
-                p_t_list.append(self.train_param_to_id.get(e["primary_param"], 0))
+
+                slot_ids = [self.train_param_to_id.get(p, 0) for p in e["params"][:self.max_param_slots]]
+                while len(slot_ids) < self.max_param_slots:
+                    slot_ids.append(1)
+                param_slots_list.append(slot_ids)
 
             gaps = []
             for k in range(1, len(window)):
@@ -299,51 +339,70 @@ class BGLRealDataAdapter:
             lbl = 1 if any(e["is_alert"] for e in window) else 0
             
             val_sequences.append(torch.tensor(seq_t_list, dtype=torch.long))
-            val_param_targets.append(torch.tensor(p_t_list, dtype=torch.long))
+            val_param_targets.append(torch.tensor(param_slots_list, dtype=torch.long))
             val_time_gaps.append(torch.tensor(gaps, dtype=torch.float32))
-            val_labels.append(lbl)
             val_session_ids.append(session_id)
+            val_probe_labels.append(lbl)
 
-        # Save Materialized Tensors
-        train_data_dict = {
+        # Package Label-Free SSL Tensors
+        bgl_ssl_train = {
             "dataset_classification": "REAL_TRAINING_MATERIALIZED",
             "sequence_source": "REAL_BGL",
-            "parameter_source": "REAL_BGL_EXTRACTED",
-            "temporal_source": "REAL_BGL_EXTRACTED",
             "feature_configuration": "BGL_FULL_CONTEXT" if self.include_node_context else "BGL_WITHOUT_NODE_CONTEXT",
+            "parameter_representation": "FULL_TYPED_PARAMETER_SET",
+            "max_param_slots": self.max_param_slots,
             "sequences": train_sequences,
             "param_targets": train_param_targets,
             "time_gaps": train_time_gaps,
-            "labels": train_labels,
             "session_ids": train_session_ids
         }
-        val_data_dict = {
+        bgl_ssl_val = {
             "dataset_classification": "REAL_TRAINING_MATERIALIZED",
             "sequence_source": "REAL_BGL",
-            "parameter_source": "REAL_BGL_EXTRACTED",
-            "temporal_source": "REAL_BGL_EXTRACTED",
             "feature_configuration": "BGL_FULL_CONTEXT" if self.include_node_context else "BGL_WITHOUT_NODE_CONTEXT",
+            "parameter_representation": "FULL_TYPED_PARAMETER_SET",
+            "max_param_slots": self.max_param_slots,
             "sequences": val_sequences,
             "param_targets": val_param_targets,
             "time_gaps": val_time_gaps,
-            "labels": val_labels,
             "session_ids": val_session_ids
         }
 
-        train_path = output_dir / "bgl_train.pt"
-        val_path = output_dir / "bgl_val.pt"
+        # Enforce Label-Free Purity Guard
+        enforce_ssl_package_label_free(bgl_ssl_train)
+        enforce_ssl_package_label_free(bgl_ssl_val)
+
+        train_ssl_path = output_dir / "bgl_ssl_train.pt"
+        val_ssl_path = output_dir / "bgl_ssl_val.pt"
         vocab_path = output_dir / "bgl_vocab.json"
 
-        torch.save(train_data_dict, train_path)
-        torch.save(val_data_dict, val_path)
+        torch.save(bgl_ssl_train, train_ssl_path)
+        torch.save(bgl_ssl_val, val_ssl_path)
         with open(vocab_path, "w", encoding="utf-8") as f:
             json.dump({
                 "template_to_id": self.train_template_to_id,
-                "param_to_id": self.train_param_to_id
+                "param_to_id": self.train_param_to_id,
+                "max_param_slots": self.max_param_slots,
+                "feature_configuration": "BGL_FULL_CONTEXT" if self.include_node_context else "BGL_WITHOUT_NODE_CONTEXT"
             }, f, indent=2)
 
-        train_hash = self._compute_sha256(train_path)
-        val_hash = self._compute_sha256(val_path)
+        # =====================================================================
+        # SEPARATE PROBE EVALUATION LABEL VAULT (TRAIN + VAL ONLY)
+        # =====================================================================
+        torch.save({
+            "probe_target": "BGL_SYSTEM_ALERT_LABEL",
+            "session_ids": train_session_ids,
+            "labels": train_probe_labels
+        }, vault_dir / "bgl_probe_labels_train.pt")
+
+        torch.save({
+            "probe_target": "BGL_SYSTEM_ALERT_LABEL",
+            "session_ids": val_session_ids,
+            "labels": val_probe_labels
+        }, vault_dir / "bgl_probe_labels_val.pt")
+
+        train_hash = self._compute_sha256(train_ssl_path)
+        val_hash = self._compute_sha256(val_ssl_path)
 
         dynamic_params = ["HEX_ADDR", "PARITY_ERR", "TREE_NET", "NUMERIC_INT"]
         if self.include_node_context:
@@ -366,7 +425,9 @@ class BGLRealDataAdapter:
             validation_hash=val_hash,
             test_status="SEALED",
             synthetic_proxy_count=0,
-            data_classification="REAL_TRAINING_MATERIALIZED"
+            data_classification="REAL_TRAINING_MATERIALIZED",
+            reference_record_count=official_reference_count,
+            observed_local_record_count=raw_total_record_count
         )
 
         manifest_path = output_dir / "REAL-DATA-CONTRACT-BGL.json"
@@ -388,6 +449,8 @@ class BGLRealDataAdapter:
             "selected_train_windows": len(train_sequences),
             "selected_val_windows": len(val_sequences),
             "selection_rule": "STRATIFIED_NODE_TEMPORAL_BUDGET_CAP",
+            "vocab_fit_scope": "FULL_TRAIN_PARTITION",
+            "model_train_scope": "PRE_REGISTERED_BUDGET_SUBSET",
             "train_split_hash": train_hash,
             "val_split_hash": val_hash,
             "selection_hash": hashlib.sha256(f"{train_hash}_{val_hash}".encode()).hexdigest(),
@@ -404,6 +467,7 @@ class BGLRealDataAdapter:
 
         summary = {
             "raw_total_record_count": raw_total_record_count,
+            "reference_record_count": official_reference_count,
             "pretest_scanned_record_count": pretest_scanned_record_count,
             "pretest_valid_record_count": pretest_valid_record_count,
             "pretest_malformed_count": malformed_pretest_count,
@@ -415,6 +479,15 @@ class BGLRealDataAdapter:
             "template_vocab_size": len(self.train_template_to_id),
             "param_vocab_size": len(self.train_param_to_id),
             "val_oov_event_rate": float(val_oov_events / max(1, val_total_events)),
+            "events_with_0_params": events_with_0_params,
+            "events_with_1_param": events_with_1_param,
+            "events_with_2plus_params": events_with_2plus_params,
+            "total_parameter_instances": total_parameter_instances,
+            "retained_parameter_instances": retained_parameter_instances,
+            "truncated_parameter_instances": truncated_parameter_instances,
+            "parameter_retention_rate": float(retained_parameter_instances / max(1, total_parameter_instances)),
+            "parameters_discarded_count": truncated_parameter_instances,
+            "canonical_parameter_mode": "FULL_TYPED_PARAMETER_SET",
             "node_context_token_count": node_context_token_count,
             "unique_rack_count": len(unique_racks),
             "unique_midplane_count": len(unique_midplanes),

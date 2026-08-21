@@ -23,9 +23,11 @@
     "block_id",
     "session_id"
   ],
-  "train_hash": "201188905848c04f6eea2850e60bdf9fa57471d9b9c672d16a47423bb6e73b86",
-  "validation_hash": "cfd87e7a73a642de284c29fdb001a6ebd86376fae5b49febfca6f0357ab7898e",
+  "train_hash": "ada2b9b88a05a65ed1e0b8d6f9b0c0d0498813287383a79ec8918abe12d1c006",
+  "validation_hash": "ea041ac516df46c278ccc70d137a8097c5ba31c94a4b0aa15a47746b8df67619",
   "test_status": "SEALED",
   "synthetic_proxy_count": 0,
-  "data_classification": "REAL_TRAINING_MATERIALIZED"
+  "data_classification": "REAL_TRAINING_MATERIALIZED",
+  "reference_record_count": 11175629,
+  "observed_local_record_count": 11175629
 }

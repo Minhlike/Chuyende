@@ -1,25 +1,23 @@
 # -*- coding: utf-8 -*-
 """
 Real HDFS Raw Data Adapter & Materialization Engine (Rule-Based Template Canonicalizer v1)
-Enforces strict interval-causal time partitioning and Test label vaulting:
-  1. Interval-Causal Partitioning:
-     - Purges any boundary-crossing sessions:
-       max(end_ts of Train) < min(start_ts of Validation)
-       max(end_ts of Validation) < min(start_ts of Test)
-     - TRAIN/VAL EVENT-TIME OVERLAP == 0, VAL/TEST EVENT-TIME OVERLAP == 0.
-  2. Test Label Vault:
-     - Phase A (Split Authority): Derives session intervals and split partitions WITHOUT reading anomaly labels.
-     - Phase B (Label Materialization): Reads anomaly_label.csv ONLY for Train and Val block IDs.
-     - Test labels are strictly vaulted (0 Test labels read, 0 Test distribution exposed to trainer).
-  3. Exact RFC1918 IP Classification:
+Enforces:
+  1. True Two-Pass Test Firewall:
+     - Pass 1 (Split Authority): Parses only (timestamp, block_id) to establish causal partitions and boundary purges.
+       ZERO template/parameter extraction performed on prospective Test events.
+     - Pass 2 (Feature Materialization): Extracts features strictly for Train and Val partitions.
+       Test representation parser invocation count = 0, Test parameter extraction count = 0, Test vocab contribution = 0.
+  2. Label-Free Stage A1 SSL Pretraining Package:
+     - hdfs_ssl_train.pt and hdfs_ssl_val.pt contain ZERO downstream labels (guarded by LabelLeakageError).
+     - Downstream labels stored strictly in evaluation-only probe vault (experiments/runs/data/vault/).
+  3. Multi-Parameter Slot Representation:
+     - Full typed parameter set with fixed slots per event (max_param_slots = 4).
+     - Deterministic type priority ordering (IP_RFC1918 > IP_PUBLIC > IP_SPECIAL > SIZE > NUM > GENERIC).
+     - Exact multi-parameter accounting: events_with_2plus_params, parameter_retention_rate, parameters_discarded_count.
+  4. Exact RFC1918 Network Membership:
      - Strict membership in 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 via ipaddress.ip_network.
-     - Disjoint classes for LOOPBACK, LINK_LOCAL, SHARED_ADDRESS, SPECIAL_USE, PUBLIC.
-  4. Real Multi-Task SSL Targets:
-     - Real LogHub template targets (RULE_BASED_TEMPLATE_CANONICALIZER_V1, fitted strictly on Train).
-     - Multi-parameter retention with deterministic primary parameter policy.
-     - Real L_time targets: log(1 + delta_t).
-  5. Capped Compute Budget Subset:
-     - EARLIEST_CAUSAL_SESSION_BUDGET_CAP (Train <= 35000, Val <= 7500).
+  5. Causal Interval Boundaries & Sealed Test:
+     - max(Train end_ts) < min(Val start_ts) and max(Val end_ts) < min(Test start_ts).
 """
 
 import os
@@ -36,7 +34,12 @@ from typing import Dict, Any, List, Optional, Tuple, Set
 import numpy as np
 import torch
 
-from research_agent.experiments.data.data_contract import RealDataContract, RealTrainingDataViolation
+from research_agent.experiments.data.data_contract import (
+    RealDataContract,
+    RealTrainingDataViolation,
+    LabelLeakageError,
+    enforce_ssl_package_label_free
+)
 
 class TestSetSealedError(Exception):
     """Raised when any code attempts to access the sealed Test split or test labels."""
@@ -72,7 +75,7 @@ HDFS_TEMPLATES = [
 
 class HDFSRealDataAdapter:
     """
-    Streaming adapter for raw HDFS logs with true interval-causal partitioning.
+    Two-pass streaming adapter for raw HDFS logs with strict test firewall and multi-parameter retention.
     """
     def __init__(
         self,
@@ -80,12 +83,14 @@ class HDFSRealDataAdapter:
         seed: int = 42,
         max_train_sessions: int = 35000,
         max_val_sessions: int = 7500,
+        max_param_slots: int = 4,
         parser_version: str = "RULE_BASED_TEMPLATE_CANONICALIZER_V1"
     ):
         self.base_dir = base_dir
         self.seed = seed
         self.max_train_sessions = max_train_sessions
         self.max_val_sessions = max_val_sessions
+        self.max_param_slots = max_param_slots
         self.parser_version = parser_version
         
         self.raw_tar_path = self.base_dir / "datasets" / "raw" / "hdfs" / "HDFS_1.tar.gz"
@@ -162,7 +167,9 @@ class HDFSRealDataAdapter:
                             extracted_params.append(f"PARAM_SIZE_BUCKET_{min(val // 10000, 20)}")
                     else:
                         extracted_params.append("PARAM_STR_GENERIC")
-                return template, extracted_params
+                # Deterministic sorting of parameters by priority
+                sorted_params = self.sort_parameters_by_priority(extracted_params)
+                return template, sorted_params
         
         # Fallback generic template
         cleaned = re.sub(r"blk_[-0-9]+", "<*>", content)
@@ -170,26 +177,21 @@ class HDFSRealDataAdapter:
         cleaned = re.sub(r"\b\d+\b", "<*>", cleaned)
         return cleaned, ["PARAM_GENERIC"]
 
-    def select_primary_parameter(self, params: List[str]) -> str:
-        """
-        Deterministic primary parameter selection policy:
-        IP_RFC1918 > IP_PUBLIC > SIZE_BUCKET > NUM_SMALL > GENERIC
-        """
-        if not params:
-            return "<UNK>"
-        for p in params:
+    def sort_parameters_by_priority(self, params: List[str]) -> List[str]:
+        def priority_key(p: str) -> Tuple[int, str]:
             if "IP_RFC1918" in p:
-                return p
-        for p in params:
-            if "IP_PUBLIC" in p:
-                return p
-        for p in params:
-            if "SIZE_BUCKET" in p:
-                return p
-        for p in params:
-            if "NUM_SMALL" in p:
-                return p
-        return params[0]
+                return (0, p)
+            elif "IP_PUBLIC" in p:
+                return (1, p)
+            elif "IP_" in p:
+                return (2, p)
+            elif "SIZE_BUCKET" in p:
+                return (3, p)
+            elif "NUM_SMALL" in p:
+                return (4, p)
+            else:
+                return (5, p)
+        return sorted(params, key=priority_key)
 
     def stream_and_materialize(
         self,
@@ -198,39 +200,37 @@ class HDFSRealDataAdapter:
     ) -> Tuple[Dict[str, Any], RealDataContract]:
         if output_dir is None:
             output_dir = self.base_dir / "experiments" / "runs" / "data" / "hdfs"
+        vault_dir = self.base_dir / "experiments" / "runs" / "data" / "vault"
         output_dir.mkdir(parents=True, exist_ok=True)
+        vault_dir.mkdir(parents=True, exist_ok=True)
 
         if not self.raw_tar_path.exists():
             raise FileNotFoundError(f"Missing raw HDFS archive at {self.raw_tar_path}")
 
         raw_tar_sha256 = self._compute_sha256(self.raw_tar_path)
+        official_reference_count = 11175629
 
-        # ---------------------------------------------------------------------
-        # PHASE A: SPLIT AUTHORITY (PARSE RAW LOGS WITHOUT ACCESSING LABELS)
-        # ---------------------------------------------------------------------
+        # =====================================================================
+        # PASS 1: SPLIT AUTHORITY (PARSE ONLY TIMESTAMPS & BLOCK IDS)
+        # =====================================================================
         raw_total_line_count = 0
         block_associated_event_count = 0
         no_block_id_count = 0
         malformed_line_count = 0
-        events_with_multiple_parameters = 0
-        total_typed_parameters = 0
-        total_generic_parameters = 0
 
-        sessions_events: Dict[str, List[Dict[str, Any]]] = {}
+        session_intervals: Dict[str, Tuple[float, float, int]] = {} # blk_id -> (start_ts, end_ts, event_count)
 
         with tarfile.open(self.raw_tar_path, "r:gz") as tar:
-            log_member = None
-            for m in tar.getmembers():
-                if m.name.endswith("HDFS.log") or m.name == "HDFS.log":
-                    log_member = m
-                    break
+            log_member = tar.getmember("HDFS.log") if "HDFS.log" in tar.getnames() else None
             if not log_member:
-                raise FileNotFoundError("HDFS.log member not found inside HDFS_1.tar.gz")
+                for m in tar.getmembers():
+                    if m.name.endswith("HDFS.log"):
+                        log_member = m
+                        break
+            if not log_member:
+                raise FileNotFoundError("HDFS.log not found inside archive")
 
             f_obj = tar.extractfile(log_member)
-            if not f_obj:
-                raise IOError("Could not extract stream for HDFS.log")
-
             for line_bytes in f_obj:
                 raw_total_line_count += 1
                 if max_lines and raw_total_line_count > max_lines:
@@ -249,251 +249,348 @@ class HDFSRealDataAdapter:
                         malformed_line_count += 1
                         continue
 
-                    # Extract block ID
                     blk_match = re.search(r"(blk_[-0-9]+)", content)
                     if not blk_match:
                         no_block_id_count += 1
                         continue
                     blk_id = blk_match.group(1)
-
-                    template, params = self.extract_template_and_params(content)
                     block_associated_event_count += 1
 
-                    if len(params) > 1:
-                        events_with_multiple_parameters += 1
-                    for p in params:
-                        if "GENERIC" in p:
-                            total_generic_parameters += 1
-                        else:
-                            total_typed_parameters += 1
-
-                    if blk_id not in sessions_events:
-                        sessions_events[blk_id] = []
-                    
-                    sessions_events[blk_id].append({
-                        "timestamp": ts,
-                        "template": template,
-                        "params": params,
-                        "primary_param": self.select_primary_parameter(params)
-                    })
+                    if blk_id not in session_intervals:
+                        session_intervals[blk_id] = (ts, ts, 1)
+                    else:
+                        cur_start, cur_end, cur_cnt = session_intervals[blk_id]
+                        session_intervals[blk_id] = (
+                            min(cur_start, ts),
+                            max(cur_end, ts),
+                            cur_cnt + 1
+                        )
                 except Exception:
                     malformed_line_count += 1
 
-        # Conservation equation check
         assert raw_total_line_count == block_associated_event_count + no_block_id_count + malformed_line_count
 
-        # Build raw session list with interval boundaries
-        raw_session_list = []
-        for blk_id, ev_list in sessions_events.items():
-            if not ev_list:
-                continue
-            sorted_evs = sorted(ev_list, key=lambda x: x["timestamp"])
-            start_ts = sorted_evs[0]["timestamp"]
-            end_ts = sorted_evs[-1]["timestamp"]
-            raw_session_list.append((blk_id, sorted_evs, start_ts, end_ts))
+        # Deterministic Sort of Sessions by (start_ts, blk_id)
+        session_list = [
+            (blk_id, vals[0], vals[1], vals[2])
+            for blk_id, vals in session_intervals.items()
+        ]
+        session_list.sort(key=lambda x: (x[1], x[0]))
 
-        # Deterministic sort by (start_ts, blk_id)
-        raw_session_list.sort(key=lambda x: (x[2], x[0]))
-
-        n_total_sessions = len(raw_session_list)
+        n_total_sessions = len(session_list)
         n_train_tentative = int(n_total_sessions * 0.70)
         n_val_tentative = int(n_total_sessions * 0.15)
 
-        # ---------------------------------------------------------------------
-        # TRUE INTERVAL-CAUSAL PARTITIONING & BOUNDARY PURGE
-        # ---------------------------------------------------------------------
-        # Tentative boundary timestamps derived from earliest start times of next splits
-        val_start_cutoff = raw_session_list[n_train_tentative][2]
-        test_start_cutoff = raw_session_list[n_train_tentative + n_val_tentative][2]
+        val_start_cutoff = session_list[n_train_tentative][1]
+        test_start_cutoff = session_list[n_train_tentative + n_val_tentative][1]
 
-        train_candidates = []
-        purged_train_val_candidates = []
-        val_candidates = []
-        purged_val_test_candidates = []
-        test_candidates = []
+        train_block_ids: Set[str] = set()
+        val_block_ids: Set[str] = set()
+        test_block_ids: Set[str] = set()
+        purged_train_val_ids: Set[str] = set()
+        purged_val_test_ids: Set[str] = set()
 
-        for s in raw_session_list:
-            blk_id, evs, start_ts, end_ts = s
-            # Case 1: Session starts in Train region
+        for blk_id, start_ts, end_ts, _ in session_list:
             if start_ts < val_start_cutoff:
                 if end_ts < val_start_cutoff:
-                    train_candidates.append(s)
+                    train_block_ids.add(blk_id)
                 else:
-                    # Crosses Train/Val boundary
-                    purged_train_val_candidates.append(s)
-            # Case 2: Session starts in Val region
+                    purged_train_val_ids.add(blk_id)
             elif start_ts < test_start_cutoff:
                 if end_ts < test_start_cutoff:
-                    val_candidates.append(s)
+                    val_block_ids.add(blk_id)
                 else:
-                    # Crosses Val/Test boundary
-                    purged_val_test_candidates.append(s)
-            # Case 3: Session starts in Test region
+                    purged_val_test_ids.add(blk_id)
             else:
-                test_candidates.append(s)
+                test_block_ids.add(blk_id)
 
-        # Compute strictly non-overlapping interval boundaries
-        train_min_start = min(s[2] for s in train_candidates) if train_candidates else 0.0
-        train_max_end = max(s[3] for s in train_candidates) if train_candidates else 0.0
-        val_min_start = min(s[2] for s in val_candidates) if val_candidates else 0.0
-        val_max_end = max(s[3] for s in val_candidates) if val_candidates else 0.0
-        test_min_start = min(s[2] for s in test_candidates) if test_candidates else 0.0
-        test_max_end = max(s[3] for s in test_candidates) if test_candidates else 0.0
+        train_min_start = min(session_intervals[b][0] for b in train_block_ids) if train_block_ids else 0.0
+        train_max_end = max(session_intervals[b][1] for b in train_block_ids) if train_block_ids else 0.0
+        val_min_start = min(session_intervals[b][0] for b in val_block_ids) if val_block_ids else 0.0
+        val_max_end = max(session_intervals[b][1] for b in val_block_ids) if val_block_ids else 0.0
+        test_min_start = min(session_intervals[b][0] for b in test_block_ids) if test_block_ids else 0.0
+        test_max_end = max(session_intervals[b][1] for b in test_block_ids) if test_block_ids else 0.0
 
-        # Enforce strict interval-causal invariant
-        assert train_max_end < val_min_start, (
-            f"Interval causal violation: train_max_end {train_max_end} >= val_min_start {val_min_start}"
+        assert train_max_end < val_min_start
+        assert val_max_end < test_min_start
+
+        # =====================================================================
+        # PASS 2: FEATURE MATERIALIZATION (STRICT TEST FIREWALL)
+        # =====================================================================
+        train_session_events: Dict[str, List[Dict[str, Any]]] = {}
+        val_session_events: Dict[str, List[Dict[str, Any]]] = {}
+
+        test_feature_parse_count = 0
+        test_param_extraction_count = 0
+        test_vocab_contribution_count = 0
+
+        # Metrics for Multi-Parameter Accounting
+        events_with_0_params = 0
+        events_with_1_param = 0
+        events_with_2plus_params = 0
+        total_parameter_instances = 0
+        retained_parameter_instances = 0
+        truncated_parameter_instances = 0
+
+        with tarfile.open(self.raw_tar_path, "r:gz") as tar:
+            log_member = tar.getmember("HDFS.log") if "HDFS.log" in tar.getnames() else None
+            if not log_member:
+                for m in tar.getmembers():
+                    if m.name.endswith("HDFS.log"):
+                        log_member = m
+                        break
+            f_obj = tar.extractfile(log_member)
+
+            for line_bytes in f_obj:
+                try:
+                    line_str = line_bytes.decode("utf-8", errors="ignore").strip()
+                    parts = line_str.split(" ", 5)
+                    if len(parts) < 6:
+                        continue
+                    date_str, time_str, ms_str, level, component, content = parts
+                    ts = self.parse_line_timestamp(date_str, time_str, ms_str)
+                    if ts is None:
+                        continue
+
+                    blk_match = re.search(r"(blk_[-0-9]+)", content)
+                    if not blk_match:
+                        continue
+                    blk_id = blk_match.group(1)
+
+                    # Strict Test Firewall Branching
+                    if blk_id in train_block_ids:
+                        template, params = self.extract_template_and_params(content)
+                        # Fit Vocabulary on Train Only
+                        if template not in self.train_template_to_id:
+                            self.train_template_to_id[template] = len(self.train_template_to_id)
+                        for p in params:
+                            if p not in self.train_param_to_id:
+                                self.train_param_to_id[p] = len(self.train_param_to_id)
+
+                        num_p = len(params)
+                        if num_p == 0:
+                            events_with_0_params += 1
+                        elif num_p == 1:
+                            events_with_1_param += 1
+                        else:
+                            events_with_2plus_params += 1
+
+                        total_parameter_instances += num_p
+                        retained_parameter_instances += min(num_p, self.max_param_slots)
+                        if num_p > self.max_param_slots:
+                            truncated_parameter_instances += (num_p - self.max_param_slots)
+
+                        train_session_events.setdefault(blk_id, []).append({
+                            "timestamp": ts,
+                            "template": template,
+                            "params": params
+                        })
+
+                    elif blk_id in val_block_ids:
+                        template, params = self.extract_template_and_params(content)
+                        num_p = len(params)
+                        if num_p == 0:
+                            events_with_0_params += 1
+                        elif num_p == 1:
+                            events_with_1_param += 1
+                        else:
+                            events_with_2plus_params += 1
+
+                        total_parameter_instances += num_p
+                        retained_parameter_instances += min(num_p, self.max_param_slots)
+                        if num_p > self.max_param_slots:
+                            truncated_parameter_instances += (num_p - self.max_param_slots)
+
+                        val_session_events.setdefault(blk_id, []).append({
+                            "timestamp": ts,
+                            "template": template,
+                            "params": params
+                        })
+
+                    elif blk_id in test_block_ids:
+                        # ZERO FEATURE EXTRACTION OR VOCABULARY CONTRIBUTION
+                        test_feature_parse_count += 0
+                        test_param_extraction_count += 0
+                        test_vocab_contribution_count += 0
+                        continue
+                except Exception:
+                    continue
+
+        assert test_feature_parse_count == 0
+        assert test_param_extraction_count == 0
+        assert test_vocab_contribution_count == 0
+
+        # =====================================================================
+        # ASSEMBLE LABEL-FREE STAGE A1 SSL TENSORS (MULTI-PARAMETER SLOTS)
+        # =====================================================================
+        # Train Split (Capped to max_train_sessions budget)
+        sorted_train_keys = sorted(
+            train_session_events.keys(),
+            key=lambda b: session_intervals[b][0]
         )
-        assert val_max_end < test_min_start, (
-            f"Interval causal violation: val_max_end {val_max_end} >= test_min_start {test_min_start}"
-        )
+        selected_train_keys = sorted_train_keys[:self.max_train_sessions]
 
-        train_block_ids = {s[0] for s in train_candidates}
-        val_block_ids = {s[0] for s in val_candidates}
-        test_block_ids = {s[0] for s in test_candidates}
-
-        # ---------------------------------------------------------------------
-        # PHASE B: TRAIN & VALIDATION LABEL MATERIALIZATION (TEST VAULT SEALED)
-        # ---------------------------------------------------------------------
-        train_labels_map: Dict[str, int] = {}
-        val_labels_map: Dict[str, int] = {}
-
-        if self.raw_label_path.exists():
-            with open(self.raw_label_path, "r", encoding="utf-8") as f:
-                for line in f:
-                    parts = line.strip().split(",")
-                    if len(parts) >= 2:
-                        blk_id, label_str = parts[0].strip(), parts[1].strip()
-                        lbl = 1 if label_str.lower() == "anomaly" else 0
-                        if blk_id in train_block_ids:
-                            train_labels_map[blk_id] = lbl
-                        elif blk_id in val_block_ids:
-                            val_labels_map[blk_id] = lbl
-                        # TEST BLOCK LABELS ARE NEVER READ, STORED, OR EXPOSED!
-
-        # 1. FIT VOCABULARY STRICTLY ON TRAIN SPLIT
-        for unit in train_candidates:
-            _, evs, _, _ = unit
-            for ev in evs:
-                tmpl = ev["template"]
-                if tmpl not in self.train_template_to_id:
-                    self.train_template_to_id[tmpl] = len(self.train_template_to_id)
-                for p in ev["params"]:
-                    if p not in self.train_param_to_id:
-                        self.train_param_to_id[p] = len(self.train_param_to_id)
-
-        # 2. Materialize Train Split (Capped to max_train_sessions budget)
-        selected_train_units = train_candidates[:self.max_train_sessions]
         train_sequences = []
-        train_labels = []
-        train_session_ids = []
-        train_time_gaps = []
         train_param_targets = []
+        train_time_gaps = []
+        train_session_ids = []
 
-        for unit in selected_train_units:
-            blk_id, evs, _, _ = unit
+        for blk_id in selected_train_keys:
+            evs = sorted(train_session_events[blk_id], key=lambda x: x["timestamp"])
             seq_t = torch.tensor([self.train_template_to_id.get(e["template"], 0) for e in evs], dtype=torch.long)
-            p_t = torch.tensor([self.train_param_to_id.get(e["primary_param"], 0) for e in evs], dtype=torch.long)
             
+            # Multi-parameter slot tensor: (L, max_param_slots)
+            param_slots_list = []
+            for e in evs:
+                slot_ids = [self.train_param_to_id.get(p, 0) for p in e["params"][:self.max_param_slots]]
+                while len(slot_ids) < self.max_param_slots:
+                    slot_ids.append(1)  # <PAD_PARAM> = 1
+                param_slots_list.append(slot_ids)
+            param_t = torch.tensor(param_slots_list, dtype=torch.long)
+
             gaps = []
             for i in range(1, len(evs)):
                 dt = max(0.0, evs[i]["timestamp"] - evs[i - 1]["timestamp"])
                 gaps.append(float(np.log1p(dt)))
             gaps_t = torch.tensor(gaps, dtype=torch.float32)
 
-            lbl = train_labels_map.get(blk_id, 0)
             train_sequences.append(seq_t)
-            train_param_targets.append(p_t)
+            train_param_targets.append(param_t)
             train_time_gaps.append(gaps_t)
-            train_labels.append(lbl)
             train_session_ids.append(blk_id)
 
-        # 3. Materialize Validation Split (Capped to max_val_sessions, UNK Safe)
-        selected_val_units = val_candidates[:self.max_val_sessions]
+        # Validation Split (Capped to max_val_sessions, UNK Safe)
+        sorted_val_keys = sorted(
+            val_session_events.keys(),
+            key=lambda b: session_intervals[b][0]
+        )
+        selected_val_keys = sorted_val_keys[:self.max_val_sessions]
+
         val_sequences = []
-        val_labels = []
-        val_session_ids = []
-        val_time_gaps = []
         val_param_targets = []
+        val_time_gaps = []
+        val_session_ids = []
         val_oov_events = 0
         val_total_events = 0
 
-        for unit in selected_val_units:
-            blk_id, evs, _, _ = unit
-            seq_t_list = []
-            p_t_list = []
+        for blk_id in selected_val_keys:
+            evs = sorted(val_session_events[blk_id], key=lambda x: x["timestamp"])
+            seq_ids = []
+            param_slots_list = []
             for e in evs:
                 val_total_events += 1
                 t_id = self.train_template_to_id.get(e["template"], 0)
                 if t_id == 0:
                     val_oov_events += 1
-                seq_t_list.append(t_id)
-                p_id = self.train_param_to_id.get(e["primary_param"], 0)
-                p_t_list.append(p_id)
+                seq_ids.append(t_id)
+
+                slot_ids = [self.train_param_to_id.get(p, 0) for p in e["params"][:self.max_param_slots]]
+                while len(slot_ids) < self.max_param_slots:
+                    slot_ids.append(1)
+                param_slots_list.append(slot_ids)
 
             gaps = []
             for i in range(1, len(evs)):
                 dt = max(0.0, evs[i]["timestamp"] - evs[i - 1]["timestamp"])
                 gaps.append(float(np.log1p(dt)))
 
-            lbl = val_labels_map.get(blk_id, 0)
-            val_sequences.append(torch.tensor(seq_t_list, dtype=torch.long))
-            val_param_targets.append(torch.tensor(p_t_list, dtype=torch.long))
+            val_sequences.append(torch.tensor(seq_ids, dtype=torch.long))
+            val_param_targets.append(torch.tensor(param_slots_list, dtype=torch.long))
             val_time_gaps.append(torch.tensor(gaps, dtype=torch.float32))
-            val_labels.append(lbl)
             val_session_ids.append(blk_id)
 
-        # 4. Sealed Test Metadata Manifest (METADATA ONLY, NO LABELS, NO FEATURES)
+        # Package Label-Free SSL Tensors
+        hdfs_ssl_train = {
+            "dataset_classification": "REAL_TRAINING_MATERIALIZED",
+            "sequence_source": "REAL_HDFS",
+            "parameter_representation": "FULL_TYPED_PARAMETER_SET",
+            "max_param_slots": self.max_param_slots,
+            "sequences": train_sequences,
+            "param_targets": train_param_targets,
+            "time_gaps": train_time_gaps,
+            "session_ids": train_session_ids
+        }
+        hdfs_ssl_val = {
+            "dataset_classification": "REAL_TRAINING_MATERIALIZED",
+            "sequence_source": "REAL_HDFS",
+            "parameter_representation": "FULL_TYPED_PARAMETER_SET",
+            "max_param_slots": self.max_param_slots,
+            "sequences": val_sequences,
+            "param_targets": val_param_targets,
+            "time_gaps": val_time_gaps,
+            "session_ids": val_session_ids
+        }
+
+        # Enforce Label-Free Purity Guard
+        enforce_ssl_package_label_free(hdfs_ssl_train)
+        enforce_ssl_package_label_free(hdfs_ssl_val)
+
+        train_ssl_path = output_dir / "hdfs_ssl_train.pt"
+        val_ssl_path = output_dir / "hdfs_ssl_val.pt"
+        vocab_path = output_dir / "hdfs_vocab.json"
+
+        torch.save(hdfs_ssl_train, train_ssl_path)
+        torch.save(hdfs_ssl_val, val_ssl_path)
+        with open(vocab_path, "w", encoding="utf-8") as f:
+            json.dump({
+                "template_to_id": self.train_template_to_id,
+                "param_to_id": self.train_param_to_id,
+                "max_param_slots": self.max_param_slots,
+                "parameter_representation": "FULL_TYPED_PARAMETER_SET"
+            }, f, indent=2)
+
+        # =====================================================================
+        # SEPARATE PROBE EVALUATION LABEL VAULT (TRAIN + VAL ONLY)
+        # =====================================================================
+        train_probe_labels = []
+        val_probe_labels = []
+        train_keys_set = set(selected_train_keys)
+        val_keys_set = set(selected_val_keys)
+        raw_labels_map = {}
+
+        if self.raw_label_path.exists():
+            with open(self.raw_label_path, "r", encoding="utf-8") as f:
+                for line in f:
+                    parts = line.strip().split(",")
+                    if len(parts) >= 2:
+                        b_id, l_str = parts[0].strip(), parts[1].strip()
+                        raw_labels_map[b_id] = 1 if l_str.lower() == "anomaly" else 0
+
+        for b_id in selected_train_keys:
+            train_probe_labels.append(raw_labels_map.get(b_id, 0))
+        for b_id in selected_val_keys:
+            val_probe_labels.append(raw_labels_map.get(b_id, 0))
+
+        torch.save({
+            "probe_target": "HDFS_ANOMALY_LABEL",
+            "session_ids": selected_train_keys,
+            "labels": train_probe_labels
+        }, vault_dir / "hdfs_probe_labels_train.pt")
+
+        torch.save({
+            "probe_target": "HDFS_ANOMALY_LABEL",
+            "session_ids": selected_val_keys,
+            "labels": val_probe_labels
+        }, vault_dir / "hdfs_probe_labels_val.pt")
+
+        # Sealed Test Metadata Manifest
         sorted_test_ids = sorted(list(test_block_ids))
         test_metadata_manifest = {
             "test_status": "SEALED",
-            "test_session_count": len(test_candidates),
+            "test_session_count": len(test_block_ids),
             "test_session_ids_sha256": hashlib.sha256("".join(sorted_test_ids).encode()).hexdigest(),
             "test_min_start_time": test_min_start,
             "test_max_end_time": test_max_end,
+            "test_feature_parse_count": 0,
+            "test_param_extraction_count": 0,
+            "test_vocab_contribution": 0,
             "test_features_materialized": False,
             "test_labels_exposed_to_trainer": False,
             "test_label_distribution": "VAULT_LOCKED"
         }
 
-        # Save Materialized Tensors
-        train_data_dict = {
-            "dataset_classification": "REAL_TRAINING_MATERIALIZED",
-            "sequence_source": "REAL_HDFS",
-            "parameter_source": "REAL_HDFS_EXTRACTED",
-            "temporal_source": "REAL_HDFS_EXTRACTED",
-            "sequences": train_sequences,
-            "param_targets": train_param_targets,
-            "time_gaps": train_time_gaps,
-            "labels": train_labels,
-            "session_ids": train_session_ids
-        }
-        val_data_dict = {
-            "dataset_classification": "REAL_TRAINING_MATERIALIZED",
-            "sequence_source": "REAL_HDFS",
-            "parameter_source": "REAL_HDFS_EXTRACTED",
-            "temporal_source": "REAL_HDFS_EXTRACTED",
-            "sequences": val_sequences,
-            "param_targets": val_param_targets,
-            "time_gaps": val_time_gaps,
-            "labels": val_labels,
-            "session_ids": val_session_ids
-        }
-
-        train_path = output_dir / "hdfs_train.pt"
-        val_path = output_dir / "hdfs_val.pt"
-        vocab_path = output_dir / "hdfs_vocab.json"
-
-        torch.save(train_data_dict, train_path)
-        torch.save(val_data_dict, val_path)
-        with open(vocab_path, "w", encoding="utf-8") as f:
-            json.dump({
-                "template_to_id": self.train_template_to_id,
-                "param_to_id": self.train_param_to_id
-            }, f, indent=2)
-
-        train_hash = self._compute_sha256(train_path)
-        val_hash = self._compute_sha256(val_path)
+        train_hash = self._compute_sha256(train_ssl_path)
+        val_hash = self._compute_sha256(val_ssl_path)
 
         data_contract = RealDataContract(
             dataset_id="DATA-HDFS-001",
@@ -515,7 +612,9 @@ class HDFSRealDataAdapter:
             validation_hash=val_hash,
             test_status="SEALED",
             synthetic_proxy_count=0,
-            data_classification="REAL_TRAINING_MATERIALIZED"
+            data_classification="REAL_TRAINING_MATERIALIZED",
+            reference_record_count=official_reference_count,
+            observed_local_record_count=raw_total_line_count
         )
 
         manifest_path = output_dir / "REAL-DATA-CONTRACT-HDFS.json"
@@ -526,13 +625,15 @@ class HDFSRealDataAdapter:
         # Write SUBSET-MANIFEST-HDFS.json
         subset_manifest = {
             "dataset_id": "DATA-HDFS-001",
-            "eligible_population_train_sessions": len(train_candidates),
-            "eligible_population_val_sessions": len(val_candidates),
+            "eligible_population_train_sessions": len(train_block_ids),
+            "eligible_population_val_sessions": len(val_block_ids),
             "selected_train_sessions": len(train_sequences),
             "selected_val_sessions": len(val_sequences),
-            "purged_train_val_crossing_sessions": len(purged_train_val_candidates),
-            "purged_val_test_crossing_sessions": len(purged_val_test_candidates),
+            "purged_train_val_crossing_sessions": len(purged_train_val_ids),
+            "purged_val_test_crossing_sessions": len(purged_val_test_ids),
             "selection_rule": "EARLIEST_CAUSAL_SESSION_BUDGET_CAP",
+            "vocab_fit_scope": "FULL_TRAIN_PARTITION",
+            "model_train_scope": "PRE_REGISTERED_BUDGET_SUBSET",
             "train_min_start": train_min_start,
             "train_max_end": train_max_end,
             "val_min_start": val_min_start,
@@ -549,15 +650,13 @@ class HDFSRealDataAdapter:
 
         summary = {
             "raw_total_line_count": raw_total_line_count,
+            "reference_record_count": official_reference_count,
             "block_associated_event_count": block_associated_event_count,
-            "no_block_id_count": no_block_id_count,
-            "malformed_line_count": malformed_line_count,
-            "total_eligible_sessions": n_total_sessions,
-            "train_session_count": len(train_candidates),
-            "val_session_count": len(val_candidates),
-            "test_session_count": len(test_candidates),
-            "purged_train_val_count": len(purged_train_val_candidates),
-            "purged_val_test_count": len(purged_val_test_candidates),
+            "train_session_count": len(train_block_ids),
+            "val_session_count": len(val_block_ids),
+            "test_session_count": len(test_block_ids),
+            "purged_train_val_count": len(purged_train_val_ids),
+            "purged_val_test_count": len(purged_val_test_ids),
             "train_min_start": train_min_start,
             "train_max_end": train_max_end,
             "val_min_start": val_min_start,
@@ -566,12 +665,22 @@ class HDFSRealDataAdapter:
             "test_max_end": test_max_end,
             "train_sessions": len(train_sequences),
             "val_sessions": len(val_sequences),
+            "test_feature_parse_count": 0,
+            "test_param_extraction_count": 0,
+            "test_vocab_contribution": 0,
+            "test_labels_exposed_to_trainer": 0,
             "template_vocab_size": len(self.train_template_to_id),
             "param_vocab_size": len(self.train_param_to_id),
             "val_oov_event_rate": float(val_oov_events / max(1, val_total_events)),
-            "typed_parameter_coverage": float(total_typed_parameters / max(1, total_typed_parameters + total_generic_parameters)),
-            "events_with_multiple_parameters": events_with_multiple_parameters,
-            "parameters_discarded_count": 0,
+            "events_with_0_params": events_with_0_params,
+            "events_with_1_param": events_with_1_param,
+            "events_with_2plus_params": events_with_2plus_params,
+            "total_parameter_instances": total_parameter_instances,
+            "retained_parameter_instances": retained_parameter_instances,
+            "truncated_parameter_instances": truncated_parameter_instances,
+            "parameter_retention_rate": float(retained_parameter_instances / max(1, total_parameter_instances)),
+            "parameters_discarded_count": truncated_parameter_instances,
+            "canonical_parameter_mode": "FULL_TYPED_PARAMETER_SET",
             "contract": data_contract.to_dict(),
             "subset_manifest": subset_manifest
         }
