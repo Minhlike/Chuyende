@@ -1,15 +1,15 @@
 # CHAPTER 3 — REAL TRAINING DESIGN & DATASET-ROLE SPECIFICATION
 **Protocol Status:** FROZEN PRE-EXECUTION DESIGN SPECIFICATION  
 **Execution Status:** DESIGN ONLY (NO TRAINING INITIATED / TEST SEALED)  
-**Document ID:** `SPEC-REAL-TRAINING-CH3-V1.1`  
+**Document ID:** `SPEC-REAL-TRAINING-CH3-V1.2`  
 **Repository:** `Minhlike/Chuyende`  
-**Branch:** `data/ch3-real-materialization`
+**Branch:** `train/ch3-stage-a1-preflight`
 
 ---
 
 ## 1. Scientific Principles & Dataset-Role Boundary (Claim Hygiene)
 
-1. **Strict Test Set Firewall:** The Test partition for all datasets remains SEALED throughout architecture design, training stage implementation, hyperparameter selection, and threshold tuning.
+1. **Strict Test Set Firewall:** The Test partition for all datasets remains SEALED throughout architecture design, training stage implementation, and threshold tuning.
 2. **Tier-A vs. Tier-B Evidential Boundary:**
    - **Tier A (HDFS LogHub & BGL):** Serves strictly as representation, template/parameter fidelity, and system-log anomaly context stress tests.
    - **CRITICAL HYGIENE:** HDFS/BGL logs **MUST NOT** independently establish cyberattack semantic fidelity, provenance attack semantics, or the final confirmatory claim for Hypothesis $H1$.
@@ -34,9 +34,9 @@
 
 ```mermaid
 graph TD
-    subgraph "Stage A1: Sequence Pretraining"
-        A1_Data["Tier A Train Partition (HDFS / BGL)"] --> A1_Trans["Sequence Transformer"]
-        A1_Trans --> A1_Loss["L_seq = L_MEP + L_MPP + L_time"]
+    subgraph "Stage A1: Sequence Pretraining (Locked Hyperparameters)"
+        A1_Data["Tier A Train Partition (HDFS / BGL)"] --> A1_Trans["Sequence Transformer (L=4, d=128, H=4, d_ffn=512)"]
+        A1_Trans --> A1_Loss["L_seq = 1.0*L_MEP + 1.0*L_MPP + 0.1*L_time"]
     end
 
     subgraph "Stage A2: Provenance Graph Pretraining"
@@ -49,7 +49,7 @@ graph TD
         A3_Pair --> A2_TGNN
         A1_Trans --> A3_VICReg["VICReg Loss (Invariance + Variance + Covariance)"]
         A2_TGNN --> A3_VICReg
-        A3_VICReg --> A3_Fuse["L_fuse_rec (Gated Multi-View Fusion)"]
+        A3_Fuse --> A3_Fuse["L_fuse_rec (Gated Multi-View Fusion)"]
     end
 
     subgraph "Stage B: Multiple Instance Learning & Readout"
@@ -64,29 +64,29 @@ graph TD
 
 ---
 
-## 4. Hardware Resource & Memory Optimization Plan (RTX 3050 Ti Laptop GPU)
-
-> [!NOTE]
-> **CLASSIFICATION:** `PLANNING_ESTIMATE`  
-> **STATUS:** `NOT_EMPIRICAL_RESULT` / `NOT_SLO_EVIDENCE`  
-> Actual operational metrics are determined exclusively by post-run benchmark logs.
+## 4. Hardware Resource & Execution Regime (RTX 3050 Ti Laptop GPU)
 
 - **Dedicated VRAM Ceiling:** 4096 MB (4.0 GB)
 - **Host RAM Budget:** 16.0 GB
-- **Micro-Batch Size:**
-  - Sequence Transformer: `batch_size = 16`, `max_seq_len = 128`
-  - Temporal GNN: `batch_size = 8`, `window_size = 200` causal interaction events
-- **Gradient Accumulation:** 4 micro-steps (effective batch size = 32–64)
+- **Sequence Transformer Training Regime (Stage A1):**
+  - `micro_batch_size = 16`
+  - `gradient_accumulation_steps = 4`
+  - `effective_batch_size = 64`
+  - `max_seq_len = 128`
+  - `optimizer = AdamW (lr = 5e-4, weight_decay = 0.01)`
+  - `warmup = 5% of total optimizer steps`
+  - `validation_cadence = once per completed epoch`
+  - `early_stopping_patience = 3 epochs`
+- **Temporal GNN Training Regime (Stage A2):**
+  - `micro_batch_size = 8`, `window_size = 200` causal interaction events
+  - `gradient_accumulation_steps = 4` (effective batch size = 32)
 - **Entity Memory Bank Management:**
   - `max_entities = 5000` per active stream with LRU eviction.
   - Active state payload bytes $\le 2.5 \text{ MB}$.
-- **Estimated Resource Profile (Planning Estimates Only):**
-  - Estimated Peak VRAM: $\approx 2.8 \text{ GB}$ (Planning target $\le 70\%$ of physical VRAM)
-  - Estimated Peak Host RAM: $\approx 4.8 \text{ GB}$ (Planning target $\le 35\%$ of host RAM)
 
 ---
 
 ## 5. Prerequisites for Real Confirmatory Training
 1. Acquisition and checksum verification of raw DARPA TC E3 CDM18 archives on drive `D:\Research\datasets\raw\darpa\e3\`.
-2. Validation of ground-truth attack manifest mapping without looking at sealed Test events.
-3. Execution of full Validation-only hyperparameter tuning across seeds `[42, 1337, 2024, 7, 999]`.
+2. Validation of ground-truth attack manifest mapping without inspecting sealed Test events.
+3. Pre-execution configuration lock verified against `STAGE-A1-PREEXECUTION-LOCK.json`.

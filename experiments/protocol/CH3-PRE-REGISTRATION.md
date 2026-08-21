@@ -59,9 +59,9 @@ The baseline specifications, textual content, code generators, and foundational 
 
 ## 4. Canonical Hypotheses & Falsification Conditions (H1–H5)
 
-- **H1 — FIDELITY:** $\mathcal{I}(\mathbf{z}; Y_{\text{sec}}) > \mathcal{I}(\mathbf{z}_{\text{abstracted}}; Y_{\text{sec}})$. Falsified if frozen probe PR-AUC on dynamic parameter attacks does not exceed template-only baseline ($p > 0.0125$ under Bonferroni correction, or Hedges' $g < 0.20$).
-- **H2 — MULTI-VIEW:** $\text{Utility}(\mathbf{z}) > \max(\text{Utility}(\mathbf{z}^{(\text{seq})}), \text{Utility}(\mathbf{z}^{(\text{graph})})) - \epsilon_{\text{margin}}$. Falsified if aligned multi-view PR-AUC is lower than best single-view ($p > 0.0167$) or suffers variance collapse ($\text{Var}(\mathbf{z}) < 0.01$).
-- **H3 — ROBUSTNESS:** $\|\mathbf{z}(T(X)) - \mathbf{z}(X)\|_2 \le \epsilon_{\text{inv}}$. Falsified if performance collapses to random guess level (PR-AUC $\le 0.50$) or converges to lexical baseline under shortcut removal or 12 perturbation attacks.
+- **H1 — FIDELITY:** $\mathcal{I}(\mathbf{z}; Y_{\text{sec}}) > \mathcal{I}(\mathbf{z}_{\text{abstracted}}; Y_{\text{sec}})$. Falsified if frozen probe Average Precision (AP) on dynamic parameter attacks does not exceed template-only baseline ($p > 0.0125$ under Bonferroni correction, or Hedges' $g < 0.20$).
+- **H2 — MULTI-VIEW:** $\text{Utility}(\mathbf{z}) > \max(\text{Utility}(\mathbf{z}^{(\text{seq})}), \text{Utility}(\mathbf{z}^{(\text{graph})})) - \epsilon_{\text{margin}}$. Falsified if aligned multi-view AP is lower than best single-view ($p > 0.0167$) or suffers variance collapse ($\text{Var}(\mathbf{z}) < 0.01$).
+- **H3 — ROBUSTNESS:** $\|\mathbf{z}(T(X)) - \mathbf{z}(X)\|_2 \le \epsilon_{\text{inv}}$. Falsified if performance collapses to sample positive prevalence chance level ($\text{AP} \le \pi_0$) or converges to lexical baseline under shortcut removal or 12 perturbation attacks.
 - **H4 — OPERATIONAL:** $\Delta t(e_t) \le 10\text{ ms}$ (p95), $\text{Mem}(\mathcal{S}_t) \le 500\text{ MB/host}$. Falsified if extraction latency exceeds $10\text{ ms}$ or peak memory exceeds $500\text{ MB/host}$ at $10,000$ events/s.
 - **H5 — PRIVACY:** Controlled linkability Pareto-dominates raw identifiers and extreme anonymization. Falsified if empirical Pareto frontier is strictly dominated by either extreme.
 

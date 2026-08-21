@@ -1,0 +1,75 @@
+{
+  "lock_identifier": "LOCK-STAGE-A1-20260822-CANONICAL",
+  "status": "FROZEN_PRE_EXECUTION",
+  "source_commit": "1d7d1b8094926354d48ba46fd2354bd5cb79e0c7",
+  "architecture": {
+    "family": "Bidirectional Transformer Encoder",
+    "layers": 4,
+    "d_model": 128,
+    "n_heads": 4,
+    "d_ffn": 512,
+    "dropout": 0.10,
+    "max_seq_len": 128,
+    "max_param_slots": 4,
+    "parameter_representation_mode": "BOUNDED_MULTI_SLOT_TYPED_PARAMETER_SET_K4"
+  },
+  "losses_and_weights": {
+    "lambda_MEP": 1.0,
+    "lambda_MPP": 1.0,
+    "lambda_time": 0.1,
+    "masking_probability": 0.15,
+    "mep_mask_ratio": 0.80,
+    "mep_random_ratio": 0.10,
+    "mep_unchanged_ratio": 0.10
+  },
+  "optimization": {
+    "optimizer": "AdamW",
+    "learning_rate": 0.0005,
+    "weight_decay": 0.01,
+    "adam_beta1": 0.9,
+    "adam_beta2": 0.98,
+    "adam_eps": 1e-8,
+    "scheduler": "LinearWarmupCosineDecay",
+    "warmup_ratio": 0.05,
+    "min_lr": 1e-5,
+    "micro_batch_size": 16,
+    "gradient_accumulation_steps": 4,
+    "effective_batch_size": 64,
+    "clip_norm": 1.0,
+    "max_epochs": 20,
+    "validation_cadence": "ONCE_PER_COMPLETED_EPOCH",
+    "early_stopping_patience": 3,
+    "checkpoint_selection_rule": "MIN_VAL_L_SEQ"
+  },
+  "canonical_seeds": [
+    42,
+    1337,
+    2024,
+    7,
+    999
+  ],
+  "dataset_roles": {
+    "HDFS": {
+      "tier": "Tier A",
+      "model_id": "MODEL-A1-HDFS",
+      "vocab_fit_scope": "FULL_TRAIN_PARTITION",
+      "train_budget_sessions": 35000,
+      "val_budget_sessions": 7500,
+      "test_status": "SEALED"
+    },
+    "BGL": {
+      "tier": "Tier A",
+      "model_id": "MODEL-A1-BGL",
+      "vocab_fit_scope": "FULL_TRAIN_PARTITION",
+      "train_budget_windows": 20000,
+      "val_budget_windows": 5000,
+      "test_status": "SEALED"
+    }
+  },
+  "test_status": "SEALED",
+  "execution_state": {
+    "optimizer_steps": 0,
+    "models_trained": 0,
+    "test_opened": false
+  }
+}

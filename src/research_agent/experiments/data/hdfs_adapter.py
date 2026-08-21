@@ -503,7 +503,7 @@ class HDFSRealDataAdapter:
         hdfs_ssl_train = {
             "dataset_classification": "REAL_TRAINING_MATERIALIZED",
             "sequence_source": "REAL_HDFS",
-            "parameter_representation": "FULL_TYPED_PARAMETER_SET",
+            "parameter_representation": "BOUNDED_MULTI_SLOT_TYPED_PARAMETER_SET_K4",
             "max_param_slots": self.max_param_slots,
             "sequences": train_sequences,
             "param_targets": train_param_targets,
@@ -513,7 +513,7 @@ class HDFSRealDataAdapter:
         hdfs_ssl_val = {
             "dataset_classification": "REAL_TRAINING_MATERIALIZED",
             "sequence_source": "REAL_HDFS",
-            "parameter_representation": "FULL_TYPED_PARAMETER_SET",
+            "parameter_representation": "BOUNDED_MULTI_SLOT_TYPED_PARAMETER_SET_K4",
             "max_param_slots": self.max_param_slots,
             "sequences": val_sequences,
             "param_targets": val_param_targets,
@@ -536,7 +536,7 @@ class HDFSRealDataAdapter:
                 "template_to_id": self.train_template_to_id,
                 "param_to_id": self.train_param_to_id,
                 "max_param_slots": self.max_param_slots,
-                "parameter_representation": "FULL_TYPED_PARAMETER_SET"
+                "parameter_representation": "BOUNDED_MULTI_SLOT_TYPED_PARAMETER_SET_K4"
             }, f, indent=2)
 
         # =====================================================================
@@ -680,7 +680,7 @@ class HDFSRealDataAdapter:
             "truncated_parameter_instances": truncated_parameter_instances,
             "parameter_retention_rate": float(retained_parameter_instances / max(1, total_parameter_instances)),
             "parameters_discarded_count": truncated_parameter_instances,
-            "canonical_parameter_mode": "FULL_TYPED_PARAMETER_SET",
+            "canonical_parameter_mode": "BOUNDED_MULTI_SLOT_TYPED_PARAMETER_SET_K4",
             "contract": data_contract.to_dict(),
             "subset_manifest": subset_manifest
         }

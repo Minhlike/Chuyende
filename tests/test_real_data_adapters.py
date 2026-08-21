@@ -174,3 +174,28 @@ def test_06_stage_a1_training_contract_locked():
     assert "lambda_{\\text{MPP}} = 1.0" in content
     assert "lambda_{\\text{time}} = 0.1" in content
     assert "42, 1337, 2024, 7, 999" in content
+    assert "BOUNDED_MULTI_SLOT_TYPED_PARAMETER_SET_K4" in content
+
+def test_07_stage_a1_preexecution_lock_file():
+    if Path("/mnt/d/Research").exists():
+        base_dir = Path("/mnt/d/Research")
+    else:
+        base_dir = Path(r"D:\Research")
+
+    lock_path = base_dir / "experiments" / "protocol" / "STAGE-A1-PREEXECUTION-LOCK.json"
+    assert lock_path.exists()
+    lock_data = json.loads(lock_path.read_text(encoding="utf-8"))
+
+    assert lock_data["lock_identifier"] == "LOCK-STAGE-A1-20260822-CANONICAL"
+    assert lock_data["architecture"]["layers"] == 4
+    assert lock_data["architecture"]["d_model"] == 128
+    assert lock_data["architecture"]["n_heads"] == 4
+    assert lock_data["architecture"]["d_ffn"] == 512
+    assert lock_data["architecture"]["parameter_representation_mode"] == "BOUNDED_MULTI_SLOT_TYPED_PARAMETER_SET_K4"
+    assert lock_data["optimization"]["micro_batch_size"] == 16
+    assert lock_data["optimization"]["gradient_accumulation_steps"] == 4
+    assert lock_data["optimization"]["effective_batch_size"] == 64
+    assert lock_data["canonical_seeds"] == [42, 1337, 2024, 7, 999]
+    assert lock_data["execution_state"]["optimizer_steps"] == 0
+    assert lock_data["execution_state"]["models_trained"] == 0
+    assert lock_data["execution_state"]["test_opened"] is False
