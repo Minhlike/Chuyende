@@ -172,8 +172,6 @@ def paired_cluster_bootstrap_recompute(
         adjusted_alpha = alpha / 4.0
     elif correction_family == "bonferroni_h2":
         adjusted_alpha = alpha / 3.0
-    elif correction_family == "holm_bonferroni":
-        adjusted_alpha = alpha / 2.0
 
     # Decision Semantics: SUPPORTED, INCONCLUSIVE, FALSIFIED
     is_supported = bool(p_val <= adjusted_alpha and ci_lower > 0.0)

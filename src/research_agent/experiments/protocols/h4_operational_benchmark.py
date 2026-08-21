@@ -10,8 +10,8 @@ Implements Chapter 2 & Chapter 3 Frozen Operational Specification (Section 2.5 &
   - Real Hardware Resource Profiler:
       * Continuous Peak RAM tracking during benchmark loop
       * Peak VRAM tracking via CUDA memory counters
-      * Active entity state size bytes footprint (measured from extractor memory bank)
-      * Telemetry event count derived directly from input objects
+      * Active entity state size bytes and peak state bytes measured during/after run
+      * Telemetry event count deduplicated from actual source observation units
   - Distinct Execution Path Profiling:
       * benchmark_end_to_end(...) (Full Tokenize + Sequence + Temporal Graph + Fusion)
       * benchmark_incremental_fusion(...) (Isolated Fusion & Readout step)
@@ -21,7 +21,7 @@ import time
 import os
 import threading
 import tracemalloc
-from typing import Dict, Any, List, Optional, Tuple, Callable
+from typing import Dict, Any, List, Optional, Tuple, Callable, Set
 import numpy as np
 
 try:
@@ -107,36 +107,37 @@ class LiveOperationalBenchmarkHarness:
         tokenizer: Any,
         raw_log_lines_batch: List[List[str]],
         graph_events_batch: List[List[Dict[str, Any]]],
+        source_event_ids: Optional[Set[Any]] = None,
         warmup_runs: int = 3,
         repeat_runs: int = 20
     ) -> Dict[str, Any]:
         """
-        Benchmarks full end-to-end extractor path:
-        Preprocessing/Tokenize + Sequence Branch + Temporal Graph + Gated Fusion.
-        Derives telemetry event count directly from actual input list lengths.
+        Benchmarks full end-to-end extractor path.
+        Deduplicates source telemetry events: if sequence and graph views represent the same
+        underlying telemetry events, counts each source observation unit ONCE.
         """
-        # Count actual telemetry events from input
-        num_seq_events = sum(len(lines) for lines in raw_log_lines_batch)
-        num_graph_events = sum(len(events) for events in graph_events_batch)
-        total_events_per_iter = num_seq_events + num_graph_events
+        if source_event_ids is not None:
+            telemetry_event_count = len(source_event_ids)
+        else:
+            num_seq = sum(len(lines) for lines in raw_log_lines_batch)
+            num_graph = sum(len(events) for events in graph_events_batch)
+            # When corresponding multi-view representations reflect the same log session, count canonical events once
+            telemetry_event_count = max(num_seq, num_graph)
 
         def forward_e2e():
             if hasattr(extractor_model, "graph_extractor") and hasattr(extractor_model.graph_extractor, "memory_bank"):
                 extractor_model.graph_extractor.memory_bank.reset_memory()
 
-            # 1. Preprocessing / Tokenization
             seq_tensors = []
             for lines in raw_log_lines_batch:
                 token_ids = tokenizer.encode_sequence(lines)
                 seq_tensors.append(torch.tensor(token_ids, dtype=torch.long, device=self.device))
             
-            # Pad batch
             max_len = max(t.size(0) for t in seq_tensors)
             padded = torch.zeros(len(seq_tensors), max_len, dtype=torch.long, device=self.device)
             for idx, t in enumerate(seq_tensors):
                 padded[idx, :t.size(0)] = t
 
-            # 2. Extract Representation
             z_mv = extractor_model.extract_representation(
                 seq_inputs=padded,
                 graph_events_batch=graph_events_batch,
@@ -144,19 +145,20 @@ class LiveOperationalBenchmarkHarness:
             )
             return z_mv
 
-        # Measure state size from memory bank
-        state_metrics = {}
-        if hasattr(extractor_model, "graph_extractor") and hasattr(extractor_model.graph_extractor, "memory_bank"):
-            state_metrics = extractor_model.graph_extractor.memory_bank.get_state_metrics()
-
-        return self._run_profile_loop(
+        res = self._run_profile_loop(
             forward_fn=forward_e2e,
-            telemetry_event_count=total_events_per_iter,
+            telemetry_event_count=telemetry_event_count,
             warmup_runs=warmup_runs,
             repeat_runs=repeat_runs,
-            path_name="Full_End_to_End",
-            state_metrics=state_metrics
+            path_name="Full_End_to_End"
         )
+
+        # Measure state metrics during/after run from active memory bank
+        if hasattr(extractor_model, "graph_extractor") and hasattr(extractor_model.graph_extractor, "memory_bank"):
+            state_metrics = extractor_model.graph_extractor.memory_bank.get_state_metrics()
+            res.update(state_metrics)
+
+        return res
 
     def benchmark_incremental_fusion(
         self,
@@ -166,9 +168,6 @@ class LiveOperationalBenchmarkHarness:
         warmup_runs: int = 5,
         repeat_runs: int = 50
     ) -> Dict[str, Any]:
-        """
-        Benchmarks isolated incremental fusion & readout step.
-        """
         def forward_fusion():
             return fusion_module(z_seq, z_graph)
 
@@ -186,8 +185,7 @@ class LiveOperationalBenchmarkHarness:
         telemetry_event_count: int,
         warmup_runs: int,
         repeat_runs: int,
-        path_name: str,
-        state_metrics: Optional[Dict[str, Any]] = None
+        path_name: str
     ) -> Dict[str, Any]:
         for _ in range(warmup_runs):
             _ = forward_fn()
@@ -249,13 +247,13 @@ class LiveOperationalBenchmarkHarness:
             },
             "conjunctive_slo_satisfied": all_slo_passed,
             "verdict": "SUPPORTED" if all_slo_passed else "FALSIFIED",
-            "falsification_status": "NOT_FALSIFIED" if all_slo_passed else "FALSIFIED"
+            "falsification_status": "NOT_FALSIFIED" if all_slo_passed else "FALSIFIED",
+            "state_size_bytes": 0,
+            "peak_state_bytes": 0,
+            "state_size_mb": 0.0,
+            "peak_state_mb": 0.0,
+            "active_entities": 0,
+            "peak_active_entities": 0
         }
-        if state_metrics:
-            res.update(state_metrics)
-        else:
-            res["state_size_bytes"] = 0
-            res["state_size_mb"] = 0.0
-            res["active_entities"] = 0
 
         return res

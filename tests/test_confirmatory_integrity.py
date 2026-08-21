@@ -11,6 +11,8 @@ Enforces:
   7. Attribution evaluation on HDFS returns NOT_EVALUABLE_ON_HDFS without real GT.
   8. Graph and Sequence branches required for H2 multi-view.
   9. 4 Privacy tokenization regimes required for H5.
+  10. ReID adversary requires disjoint train/val/test splits (0 overlap).
+  11. Paired cluster bootstrap contains zero stale holm alpha/2 branches.
 """
 
 import pytest
@@ -35,7 +37,10 @@ from research_agent.experiments.protocols.h1_fidelity_contract import evaluate_h
 from research_agent.experiments.protocols.h2_multiview_contract import evaluate_h2_multiview_alignment_contract
 from research_agent.experiments.protocols.h3_robustness_contract import evaluate_h3_robustness_contract
 from research_agent.experiments.protocols.h4_operational_benchmark import LiveOperationalBenchmarkHarness
-from research_agent.experiments.protocols.h5_privacy_frontier import evaluate_h5_privacy_utility_frontier
+from research_agent.experiments.protocols.h5_privacy_frontier import (
+    evaluate_h5_privacy_utility_frontier,
+    ReIdentificationAdversary
+)
 
 def test_01_synthetic_dataset_cannot_become_sealed(tmp_path):
     manifest = {
@@ -127,7 +132,7 @@ def test_08_graph_and_sequence_views_for_multiview():
     pytest.importorskip("torch")
     from research_agent.experiments.extractor.multi_view import MultiViewRepresentationModel
     
-    mv = MultiViewRepresentationModel(seq_vocab_size=20, graph_vocab_size=10, embed_dim=16, mode="aligned")
+    mv = MultiViewRepresentationModel(seq_vocab_size=20, graph_node_attr_dim=8, embed_dim=16, mode="aligned")
     seq_in = torch.randint(0, 10, (2, 8))
     graph_events = [[{"timestamp": 1.0, "src": 1, "dst": 2, "relation_type": 0}], [{"timestamp": 2.0, "src": 2, "dst": 3, "relation_type": 1}]]
 
@@ -151,3 +156,34 @@ def test_09_four_privacy_regimes_defined():
     assert "<IP>" in out_anon
     assert "<PSEUDO:" in out_link
     assert "<IP_INTERNAL:" in out_param and "<PATH_CONFIG>" in out_param
+
+def test_10_reid_adversary_split_disjointness_enforcement():
+    adv = ReIdentificationAdversary()
+    
+    train_emb = np.random.randn(20, 8)
+    train_lab = np.random.randint(0, 3, 20)
+    val_emb = np.random.randn(10, 8)
+    val_lab = np.random.randint(0, 3, 10)
+    test_emb = np.random.randn(10, 8)
+    test_lab = np.random.randint(0, 3, 10)
+
+    # Contaminated split with overlapping IDs
+    train_ids = {1, 2, 3, 4, 5}
+    val_ids = {5, 6, 7}  # Overlap on 5
+    test_ids = {8, 9, 10}
+
+    with pytest.raises(ValueError, match="Attack split contamination detected"):
+        adv.evaluate_sealed(
+            train_emb, train_lab,
+            val_emb, val_lab,
+            test_emb, test_lab,
+            train_ids=train_ids,
+            val_ids=val_ids,
+            test_ids=test_ids
+        )
+
+def test_11_zero_stale_holm_alpha_half_in_bootstrap():
+    import inspect
+    from research_agent.experiments.protocols import paired_cluster_bootstrap
+    src = inspect.getsource(paired_cluster_bootstrap)
+    assert 'alpha / 2' not in src, "Stale Holm alpha/2 shortcut must not exist in paired_cluster_bootstrap.py"

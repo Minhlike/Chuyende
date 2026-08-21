@@ -3,7 +3,9 @@
 Multi-View Extractor & Optimization Engine
 Implements Chapter 2 Frozen Multi-View Representation Contract (Section 2.4 & Bang 2.4):
   - True Per-Sample Correspondence: Each sample i has its own sequence input and graph event list
-  - Zero canonical z_graph.repeat(batch_size, 1) broadcast
+  - Explicit Multi-View Memory Scope:
+      * "independent" (Default for windowed anomaly detection): Each sample i has isolated/reset memory bank.
+      * "continuous_streaming": Continuous memory state maintained across strict causal stream.
   - Real Batch VICReg Anti-Collapse Optimization over paired representations [z_seq, z_graph]
   - Explicit Availability Masks & Learned Missing-View Token per sample
   - Gated Fusion Mechanism: z_mv = alpha * z^(seq) + (1 - alpha) * z^(graph)
@@ -53,11 +55,6 @@ class VICRegLoss(nn.Module):
         z_graph: torch.Tensor,
         valid_mask: Optional[torch.Tensor] = None
     ) -> Tuple[torch.Tensor, Dict[str, float]]:
-        """
-        z_seq: [B, D]
-        z_graph: [B, D]
-        valid_mask: [B] boolean mask of corresponding & available pairs
-        """
         if valid_mask is not None:
             if not valid_mask.any():
                 zero_loss = torch.tensor(0.0, device=z_seq.device, requires_grad=True)
@@ -128,11 +125,12 @@ class MultiViewRepresentationModel(nn.Module):
     def __init__(
         self,
         seq_vocab_size: int,
-        graph_vocab_size: int = 100,
+        graph_node_attr_dim: int = 16,
         param_vocab_size: int = 30,
         embed_dim: int = 64,
         mode: str = "aligned",
-        align_lambda: float = 1.0
+        align_lambda: float = 1.0,
+        memory_scope_mode: str = "independent"
     ):
         super().__init__()
         valid_modes = ["sequence_only", "graph_only", "unaligned", "aligned"]
@@ -141,6 +139,7 @@ class MultiViewRepresentationModel(nn.Module):
         self.mode = mode
         self.embed_dim = embed_dim
         self.align_lambda = align_lambda
+        self.memory_scope_mode = memory_scope_mode
 
         # Extractors
         self.seq_extractor = SequenceViewExtractor(
@@ -149,7 +148,7 @@ class MultiViewRepresentationModel(nn.Module):
             projection_dim=embed_dim
         )
         self.graph_extractor = TemporalGraphViewExtractor(
-            node_vocab_size=graph_vocab_size,
+            node_attr_dim=graph_node_attr_dim,
             out_dim=embed_dim
         )
 
@@ -183,9 +182,7 @@ class MultiViewRepresentationModel(nn.Module):
     ) -> Tuple[torch.Tensor, torch.Tensor]:
         """
         Extracts genuine per-sample graph embeddings for each item in the batch.
-        Returns:
-            z_graph_batch: [B, embed_dim]
-            valid_mask: [B] bool tensor
+        In 'independent' mode, resets memory bank per sample for strict isolation.
         """
         z_graph_list = []
         valid_flags = []
@@ -196,12 +193,12 @@ class MultiViewRepresentationModel(nn.Module):
             
             is_avail = (corr_i is None or corr_i.graph_available) and bool(events_i)
             if is_avail and events_i:
-                # Fresh memory or scoped entity state for item i
+                if self.memory_scope_mode == "independent":
+                    self.graph_extractor.memory_bank.reset_memory()
                 z_g_i = self.graph_extractor.forward(events_i, device=device)
                 z_graph_list.append(z_g_i.squeeze(0))
                 valid_flags.append(corr_i.is_valid_for_alignment() if corr_i else True)
             else:
-                # Learned missing-graph token
                 z_graph_list.append(self.missing_graph_token.squeeze(0))
                 valid_flags.append(False)
 
@@ -216,9 +213,6 @@ class MultiViewRepresentationModel(nn.Module):
         correspondence_list: Optional[List[MultiViewCorrespondence]] = None,
         device: Optional[torch.device] = None
     ) -> torch.Tensor:
-        """
-        Extracts frozen latent representation z under active evaluation mode.
-        """
         if device is None:
             device = seq_inputs.device
 
@@ -292,6 +286,8 @@ class MultiViewRepresentationModel(nn.Module):
 
             is_avail = (corr_i is None or corr_i.graph_available) and bool(events_i)
             if is_avail and events_i:
+                if self.memory_scope_mode == "independent":
+                    self.graph_extractor.memory_bank.reset_memory()
                 z_g_i, ssl_g_i = self.graph_extractor.process_causal_events(events_i, device=device)
                 z_graph_list.append(z_g_i.squeeze(0))
                 if ssl_g_i:
