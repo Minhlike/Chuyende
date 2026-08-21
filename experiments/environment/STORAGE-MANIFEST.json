@@ -1,0 +1,44 @@
+{
+  "authoritative_windows_storage_paths": {
+    "artifact_root": "D:\\Research\\artifacts",
+    "download_staging_root": "D:\\Research\\downloads",
+    "manifest_root": "D:\\Research\\datasets\\manifests",
+    "raw_dataset_root": "D:\\Research\\datasets\\raw"
+  },
+  "cleanliness_audit": {
+    "large_research_artifacts_on_c_count": 0,
+    "research_heavy_storage_on_d_gate": "PASS",
+    "threshold_mib": 256
+  },
+  "host_storage_topology": {
+    "drive_c": {
+      "free_gib": 9.55,
+      "role": "WINDOWS_SYSTEM_ONLY",
+      "total_gib": 182.7,
+      "used_gib": 173.15
+    },
+    "drive_d": {
+      "free_gib": 85.02,
+      "role": "PRIMARY_RESEARCH_HEAVY_STORAGE",
+      "total_gib": 292.97,
+      "used_gib": 207.95
+    }
+  },
+  "linux_filesystem_paths": {
+    "cache_root": "/home/researcher/chuyende-cache",
+    "compute_workspace": "/home/researcher/chuyende",
+    "working_data_root": "/home/researcher/chuyende-data"
+  },
+  "schema_version": "STORAGE_MANIFEST_V1",
+  "timestamp_utc": "2026-08-21T07:50:00Z",
+  "wsl_physical_storage_allocation": {
+    "distro_name": "Research-Ubuntu-24.04",
+    "distro_vhdx_drive": "D:",
+    "distro_vhdx_on_d": true,
+    "distro_vhdx_path": "D:\\WSL\\Research-Ubuntu-24.04\\ext4.vhdx",
+    "distro_wsl_version": 2,
+    "wsl_swap_drive": "D:",
+    "wsl_swap_on_d": true,
+    "wsl_swap_path": "D:\\WSL\\wsl-swap.vhdx"
+  }
+}

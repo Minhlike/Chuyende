@@ -1,0 +1,14 @@
+{
+  "canonical_test_inclusion": false,
+  "classification": "CANDIDATE_EXTERNAL_GENERALIZATION",
+  "engagement": "E5",
+  "metadata_files": [
+    {
+      "file_name": "CDM20.avdl",
+      "sha256": "b6742fe7d28a85c7eea7547b1fc77bee76f7a9a96f2d86bd9f4a62d1ebbd4fd0"
+    }
+  ],
+  "notes": "E5 reserved exclusively for post-hoc external generalization evaluation; zero leakage into Stage A/B training.",
+  "schema_version": "CDM20",
+  "status": "METADATA_ACQUIRED"
+}

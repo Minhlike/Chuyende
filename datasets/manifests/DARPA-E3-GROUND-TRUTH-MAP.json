@@ -1,0 +1,97 @@
+{
+  "campaign_scenarios": [
+    {
+      "attack_vector": "Malicious browser extension download and execution of local dropper",
+      "ground_truth_id": "GT-E3-SCENARIO-01",
+      "ground_truth_iocs": {
+        "network_sockets": [
+          "128.55.12.91:8080",
+          "192.168.1.10:443"
+        ],
+        "process_names": [
+          "chrome",
+          "dropper.sh",
+          "payload_x86"
+        ]
+      },
+      "mapping_confidence": "HIGH",
+      "mitre_tactics": [
+        "TA0001: Initial Access",
+        "TA0002: Execution",
+        "TA0003: Persistence"
+      ],
+      "name": "Browser Extension Phishing & Local Payload Execution",
+      "performers_applicable": [
+        "THEIA",
+        "CADETS"
+      ],
+      "target_os": "Linux Ubuntu 14.04 (THEIA) / FreeBSD 11.0 (CADETS)",
+      "uncertainty_notes": "Ground truth boundaries strictly locked to report timestamp ranges; no surrounding-window label extension."
+    },
+    {
+      "attack_vector": "Brute force SSH credential access followed by local kernel exploit",
+      "ground_truth_id": "GT-E3-SCENARIO-02",
+      "ground_truth_iocs": {
+        "file_paths": [
+          "/etc/shadow",
+          "/tmp/exp.so"
+        ],
+        "process_names": [
+          "sshd",
+          "exploit_cve",
+          "root_shell"
+        ]
+      },
+      "mapping_confidence": "HIGH",
+      "mitre_tactics": [
+        "TA0001: Initial Access",
+        "TA0004: Privilege Escalation",
+        "TA0006: Credential Access"
+      ],
+      "name": "SSH Password Compromise & Kernel Privilege Escalation",
+      "performers_applicable": [
+        "THEIA",
+        "CADETS"
+      ],
+      "target_os": "Linux Ubuntu 16.04 (THEIA) / FreeBSD 11.0 (CADETS)",
+      "uncertainty_notes": "Authentication events mapped 1-to-1 with SSH audit session tokens."
+    },
+    {
+      "attack_vector": "PHP web shell injection into Nginx web root with staged HTTP exfiltration",
+      "ground_truth_id": "GT-E3-SCENARIO-03",
+      "ground_truth_iocs": {
+        "network_sockets": [
+          "198.51.100.42:8443"
+        ],
+        "process_names": [
+          "nginx",
+          "php-fpm",
+          "curl",
+          "powershell.exe"
+        ]
+      },
+      "mapping_confidence": "HIGH",
+      "mitre_tactics": [
+        "TA0003: Persistence",
+        "TA0005: Defense Evasion",
+        "TA0010: Exfiltration"
+      ],
+      "name": "Nginx Web Shell Persistence & Document Exfiltration",
+      "performers_applicable": [
+        "THEIA",
+        "FiveDirections"
+      ],
+      "target_os": "Linux Ubuntu 16.04 (THEIA) / Windows 10 (FiveDirections)",
+      "uncertainty_notes": "Exfiltration data volumes strictly cross-referenced with packet byte counters."
+    }
+  ],
+  "engagement": "E3",
+  "ground_truth_source": "DARPA TC Engagement 3 Evaluation Ground Truth Report (SPAWAR/MIT-LL)",
+  "pre_registered_performer_subset": [
+    "THEIA",
+    "CADETS",
+    "FiveDirections"
+  ],
+  "schema_version": "CDM18",
+  "status": "PARSED_OFFICIAL_GROUND_TRUTH"
+}

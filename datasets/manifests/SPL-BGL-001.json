@@ -21,10 +21,22 @@
       180
     ]
   },
-  "raw_dataset_acquired": false,
+  "raw_dataset_acquired": true,
   "seed": 42,
   "specification_sha256": "874bf7a2bfdf8df378ec1ec8fe7d7c8aacb47d18dc9be1f22fa2637a2ede8ef2",
   "split_id": "SPL-BGL-001",
-  "status": "PLANNED",
+  "status": "VALIDATED",
+  "verified_raw_artifacts": [
+    {
+      "alert_records": 348461,
+      "byte_count": 62936967,
+      "file_name": "BGL.tar.gz",
+      "max_timestamp": 1136390405,
+      "min_timestamp": 1117838570,
+      "non_alert_records": 4399502,
+      "sha256": "0a58be959cef101bbe5c053e60bd8a49673e9c942b164f4d969bb109e99fce95",
+      "valid_records_streamed": 4747963
+    }
+  ],
   "version": "v1.0"
 }

@@ -6,6 +6,7 @@
   ],
   "dataset_id": "DATA-LANL-001",
   "dataset_name": "LANL Cyber Security Data Set 2015",
+  "official_access_instruction": "User must download official LANL 2015 archive (auth.txt.gz, proc.txt.gz, redteam.txt.gz) from https://csr.lanl.gov/data/cyber1/ directly into D:\\Research\\datasets\\raw\\lanl\\",
   "partition_strategy": "STRICT_CAUSAL_TIME",
   "planned_temporal_partitions": {
     "test_seconds": [
@@ -27,6 +28,6 @@
   "seed": 42,
   "specification_sha256": "ebf5a3f65b9dd7e1249486a4da8f827954529a7fc28fa41ce001139395fc3446",
   "split_id": "SPL-LANL-001",
-  "status": "PLANNED",
+  "status": "USER_ACTION_REQUIRED",
   "version": "v1.1"
 }

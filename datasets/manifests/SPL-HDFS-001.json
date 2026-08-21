@@ -15,10 +15,23 @@
     "train": 0.7,
     "val": 0.15
   },
-  "raw_dataset_acquired": false,
+  "raw_dataset_acquired": true,
   "seed": 42,
   "specification_sha256": "4492d3f6a0c8071b46e7b17f86dbf1cb0e8e70a0c7daf8a4bac6c598066bcb81",
   "split_id": "SPL-HDFS-001",
-  "status": "PLANNED",
+  "status": "VALIDATED",
+  "verified_raw_artifacts": [
+    {
+      "byte_count": 161886385,
+      "file_name": "HDFS_1.tar.gz",
+      "sha256": "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169",
+      "valid_records_streamed": 11750692
+    },
+    {
+      "byte_count": 18637554,
+      "file_name": "anomaly_label.csv",
+      "sha256": "1c711ed6c8848fc3243fb4d092f172f31d128c8a6ec7f26ebba72ab931885ed8"
+    }
+  ],
   "version": "v1.0"
 }

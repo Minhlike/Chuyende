@@ -1,0 +1,34 @@
+{
+  "execution_modes": {
+    "PERFORMANCE": {
+      "cuda_deterministic_algorithms": false,
+      "description": "Optimized streaming inference mode for operational complexity benchmarking (H4).",
+      "torch_benchmark": true,
+      "torch_deterministic": false
+    },
+    "RESEARCH_DETERMINISTIC": {
+      "bootstrap_seed": 10007,
+      "canonical_seeds": [
+        42,
+        1337,
+        2024,
+        7,
+        999
+      ],
+      "cuda_deterministic_algorithms": true,
+      "description": "Enforces strict mathematical reproducibility for all confirmatory hypothesis tests.",
+      "torch_benchmark": false,
+      "torch_deterministic": true
+    }
+  },
+  "runtime_stack": {
+    "cuda_available": true,
+    "pyg_version": "2.6.1",
+    "python_version": "3.12.3",
+    "pytorch_version": "2.6.0+cu124",
+    "target_device": "cuda:0",
+    "torch_cuda_runtime": "12.4"
+  },
+  "schema_version": "ENVIRONMENT_LOCK_V1",
+  "status": "LOCKED"
+}

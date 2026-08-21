@@ -1,0 +1,22 @@
+{
+  "compute_hardware": {
+    "cpu_logical_processors": 16,
+    "cpu_model": "12th Gen Intel(R) Core(TM) i5-12500H",
+    "cpu_physical_cores": 12,
+    "gpu_cuda_compute_capability": "8.6",
+    "gpu_model": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "gpu_vram_mib": 4096,
+    "nvidia_cuda_driver_support": "13.2",
+    "nvidia_driver_version": "595.95",
+    "system_ram_gib": 16.0
+  },
+  "sanitization_status": "PUBLIC_SAFE_ALL_MACHINE_SPECIFIC_IDENTIFIERS_MASKED",
+  "schema_version": "HOST_MANIFEST_V1",
+  "system_architecture": {
+    "os_build": "10.0.26200",
+    "os_family": "Windows NT",
+    "os_name": "Microsoft Windows 11 Home",
+    "virtualization_platform": "WSL2 (Windows Subsystem for Linux)"
+  },
+  "timestamp_utc": "2026-08-21T07:50:00Z"
+}
