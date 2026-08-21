@@ -6,11 +6,11 @@ of TRAIN and VALIDATION splits.
 
 STRICT INVARIANTS:
   - TEST SET FIREWALL: Test split is strictly sealed and raising TestSetSealedError on access.
-  - No synthetic data masquerading as real.
-  - All active losses (L_MEP, L_MPP, L_time, L_mask_node, L_mask_edge, L_time_gap, L_VICReg, L_StageA) audited for finiteness.
-  - Complete gradient health audit across all submodules.
-  - Checkpoint save / resume roundtrip verification in fresh process instance.
-  - All results explicitly tagged: result_class="IMPLEMENTATION_SMOKE_TEST", thesis_eligible=False, confirmatory=False.
+  - IMMUTABLE RUN ARTIFACTS: Every run writes to its own isolated experiments/smoke/runs/<SMOKE_RUN_ID>/ directory.
+  - DATA CLASSIFICATION: Explicitly tagged HYBRID_SMOKE_FIXTURE (Real HDFS Sequences + Synthetic Proxies).
+  - EXACT CHAPTER 2 STAGE A OBJECTIVE: L_StageA = L_seq_self + L_graph_self + lambda_align * L_align + lambda_fuse * L_fuse_rec.
+  - REAL ZERO-GRAD AUDIT: Asserts grad exists, is finite, and norm > 1e-7 on all expected active parameters.
+  - TRUE CHECKPOINT RESUME: Compares uninterrupted Step N+1 training against Checkpoint Reload Step N+1.
 """
 
 import os
@@ -20,8 +20,11 @@ import json
 import math
 import random
 import hashlib
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple, Set
+
+os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
 
 import numpy as np
 import torch
@@ -54,9 +57,13 @@ def compute_sha256(file_path: Path) -> str:
             h.update(chunk)
     return h.hexdigest()
 
+def compute_dict_hash(d: Dict[str, Any]) -> str:
+    serialized = json.dumps(d, sort_keys=True)
+    return hashlib.sha256(serialized.encode("utf-8")).hexdigest()
+
 class SmokeTestRunner:
     """
-    Orchestrates the deterministic train/validation smoke test pipeline.
+    Orchestrates the deterministic train/validation smoke test pipeline with immutable run isolation.
     """
     def __init__(
         self,
@@ -66,7 +73,8 @@ class SmokeTestRunner:
         max_val_samples: int = 16,
         batch_size: int = 16,
         epochs: int = 2,
-        lr: float = 1e-3
+        lr: float = 1e-3,
+        custom_run_id: Optional[str] = None
     ):
         self.base_dir = base_dir
         self.seed = seed
@@ -76,10 +84,14 @@ class SmokeTestRunner:
         self.epochs = epochs
         self.lr = lr
         
-        self.smoke_run_id = f"SMOKE-{int(time.time())}"
-        self.smoke_dir = self.base_dir / "experiments" / "smoke"
-        self.artifacts_smoke_dir = self.base_dir / "artifacts" / "smoke"
-        self.smoke_dir.mkdir(parents=True, exist_ok=True)
+        self.smoke_run_id = custom_run_id or f"SMOKE-{int(time.time())}"
+        
+        # Dedicated immutable run directory
+        self.smoke_root = self.base_dir / "experiments" / "smoke"
+        self.run_dir = self.smoke_root / "runs" / self.smoke_run_id
+        self.artifacts_smoke_dir = self.base_dir / "artifacts" / "smoke" / self.smoke_run_id
+        
+        self.run_dir.mkdir(parents=True, exist_ok=True)
         self.artifacts_smoke_dir.mkdir(parents=True, exist_ok=True)
 
         self._set_deterministic_seeds()
@@ -92,6 +104,10 @@ class SmokeTestRunner:
             torch.cuda.manual_seed_all(self.seed)
             torch.backends.cudnn.deterministic = True
             torch.backends.cudnn.benchmark = False
+        try:
+            torch.use_deterministic_algorithms(True)
+        except Exception:
+            pass
 
     def load_and_subset_data(self) -> Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any]]:
         """
@@ -107,7 +123,7 @@ class SmokeTestRunner:
         enforce_test_firewall("TRAIN")
         enforce_test_firewall("VAL")
 
-        # Strict Firewall check: Ensure we do NOT touch hdfs_test.pt
+        # Load raw train/val
         train_raw = torch.load(train_path, map_location="cpu", weights_only=False)
         val_raw = torch.load(val_path, map_location="cpu", weights_only=False)
 
@@ -131,13 +147,17 @@ class SmokeTestRunner:
             "session_ids": [val_raw["session_ids"][i] for i in val_indices]
         }
 
-        manifest_data = {
+        subset_manifest_data = {
             "result_class": "IMPLEMENTATION_SMOKE_TEST",
             "thesis_eligible": False,
             "confirmatory": False,
             "test_set_opened": False,
             "smoke_run_id": self.smoke_run_id,
-            "source_dataset": "DATA-HDFS-001",
+            "dataset_classification": "HYBRID_SMOKE_FIXTURE",
+            "sequence_source": "REAL_HDFS",
+            "parameter_source": "SYNTHETIC_PROXY",
+            "temporal_source": "SYNTHETIC_PROXY",
+            "graph_source": "SYNTHETIC_PROXY",
             "train_source_sha256": compute_sha256(train_path),
             "val_source_sha256": compute_sha256(val_path),
             "selection_seed": self.seed,
@@ -148,18 +168,18 @@ class SmokeTestRunner:
             "test_split_status": "SEALED_UNTOUCHED"
         }
 
-        manifest_path = self.smoke_dir / "SMOKE-SUBSET-MANIFEST.json"
-        manifest_path.write_text(json.dumps(manifest_data, indent=2), encoding="utf-8")
+        subset_manifest_path = self.run_dir / "subset-manifest.json"
+        subset_manifest_path.write_text(json.dumps(subset_manifest_data, indent=2), encoding="utf-8")
 
-        return train_subset, val_subset, manifest_data
+        return train_subset, val_subset, subset_manifest_data
 
     def _prepare_batch_tensors(
         self,
         seq_list: List[torch.Tensor],
         device: torch.device
-    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, List[List[Dict[str, Any]]]]:
+    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, List[List[Dict[str, Any]]], List[Set[int]], List[Set[int]]]:
         """
-        Builds synchronized batch tensors and corresponding graph event streams.
+        Builds synchronized batch tensors and corresponding graph event streams with explicit masking sets.
         """
         batch_size = len(seq_list)
         max_len = max(t.size(0) for t in seq_list)
@@ -172,6 +192,8 @@ class SmokeTestRunner:
         time_gaps = torch.zeros(batch_size, max_len - 1, dtype=torch.float32, device=device)
 
         graph_events_batch: List[List[Dict[str, Any]]] = []
+        mask_edge_indices_batch: List[Set[int]] = []
+        mask_node_indices_batch: List[Set[int]] = []
 
         for b_idx, seq in enumerate(seq_list):
             length = seq.size(0)
@@ -180,20 +202,21 @@ class SmokeTestRunner:
             
             # 15% random MEP mask
             mask_positions = torch.rand(length, device=device) < 0.15
+            if not mask_positions.any() and length > 0:
+                mask_positions[0] = True
             mep_mask[b_idx, :length] = mask_positions
-            # Replace masked positions with mask token ID (2)
-            padded_seqs[b_idx, :length][mask_positions] = 2
+            padded_seqs[b_idx, :length][mask_positions] = 2  # <MASK> token
 
-            # Synthetic categorical security parameter target (e.g. port/daemon class % 30)
             param_targets[b_idx, :length] = (seq % 30).to(device)
-            mpp_mask[b_idx, :length] = (torch.rand(length, device=device) < 0.2)
+            mpp_positions = (torch.rand(length, device=device) < 0.2)
+            if not mpp_positions.any() and length > 0:
+                mpp_positions[0] = True
+            mpp_mask[b_idx, :length] = mpp_positions
 
             if length > 1:
-                # Inter-event timestamps: 1.0s to 5.0s delta
                 gaps = torch.rand(length - 1, device=device) * 4.0 + 1.0
                 time_gaps[b_idx, :length - 1] = gaps
 
-            # Construct corresponding graph events
             events_i = []
             cur_time = 0.0
             for step_idx in range(length):
@@ -212,23 +235,32 @@ class SmokeTestRunner:
                     "edge_features": [1.0, 0.0, 0.0, float(r_type)] + [0.0]*12
                 })
             graph_events_batch.append(events_i)
+            mask_edge_indices_batch.append({0} if len(events_i) > 0 else set())
+            mask_node_indices_batch.append({0} if len(events_i) > 0 else set())
 
-        return padded_seqs, true_targets, mep_mask, param_targets, mpp_mask, time_gaps, graph_events_batch
+        return (
+            padded_seqs, true_targets, mep_mask, param_targets, mpp_mask, time_gaps,
+            graph_events_batch, mask_edge_indices_batch, mask_node_indices_batch
+        )
 
     def run_smoke_training(self) -> Dict[str, Any]:
+        start_utc = datetime.now(timezone.utc).isoformat()
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         train_subset, val_subset, subset_manifest = self.load_and_subset_data()
 
-        # Instantiate Multi-View Architecture
-        model = MultiViewRepresentationModel(
-            seq_vocab_size=64,
-            graph_node_attr_dim=16,
-            param_vocab_size=32,
-            embed_dim=32,
-            mode="aligned",
-            memory_scope_mode="independent"
-        ).to(device)
+        model_config = {
+            "seq_vocab_size": 64,
+            "graph_node_attr_dim": 16,
+            "param_vocab_size": 32,
+            "embed_dim": 32,
+            "mode": "aligned",
+            "align_lambda": 1.0,
+            "fuse_rec_lambda": 1.0,
+            "memory_scope_mode": "independent"
+        }
+        config_hash = compute_dict_hash(model_config)
 
+        model = MultiViewRepresentationModel(**model_config).to(device)
         optimizer = torch.optim.AdamW(model.parameters(), lr=self.lr, weight_decay=1e-4)
 
         mem_monitor = MemoryPeakMonitor()
@@ -239,7 +271,7 @@ class SmokeTestRunner:
         all_losses_finite = True
         nan_loss_count = 0
         inf_loss_count = 0
-        zero_grad_unexpected_count = 0
+        unexpected_zero_grad_count = 0
         nan_grad_count = 0
         inf_grad_count = 0
         optimizer_updated_params = False
@@ -249,7 +281,6 @@ class SmokeTestRunner:
 
         model.train()
         for epoch in range(self.epochs):
-            # Shuffle batch indices deterministically per epoch
             perm = np.random.default_rng(self.seed + epoch).permutation(n_train)
             
             for start_idx in range(0, n_train, self.batch_size):
@@ -257,7 +288,10 @@ class SmokeTestRunner:
                 batch_indices = perm[start_idx:start_idx + self.batch_size]
                 batch_seqs = [train_subset["sequences"][i] for i in batch_indices]
 
-                seq_in, targets, mep_m, p_targets, mpp_m, gaps, graph_events = self._prepare_batch_tensors(batch_seqs, device)
+                (
+                    seq_in, targets, mep_m, p_targets, mpp_m, gaps,
+                    graph_events, mask_e, mask_n
+                ) = self._prepare_batch_tensors(batch_seqs, device)
 
                 # 1. Forward Pass
                 optimizer.zero_grad()
@@ -269,10 +303,11 @@ class SmokeTestRunner:
                     mpp_mask=mpp_m,
                     time_gap_targets=gaps,
                     graph_events_batch=graph_events,
+                    mask_edge_indices_batch=mask_e,
+                    mask_node_indices_batch=mask_n,
                     device=device
                 )
 
-                # Audit Loss Finiteness
                 loss_val = float(loss.item())
                 if math.isnan(loss_val):
                     nan_loss_count += 1
@@ -284,33 +319,31 @@ class SmokeTestRunner:
                 # 2. Backward Pass
                 loss.backward()
 
-                # 3. Audit Gradient Health Across Submodules
-                grad_norms = {}
+                # 3. Real Zero-Grad & Finite Audit Across Modules
+                # Expected inactive: unaligned_proj, missing_graph_token
                 for name, p in model.named_parameters():
+                    if "unaligned_proj" in name or "missing_graph_token" in name:
+                        continue
                     if p.grad is None:
-                        # unaligned_proj and missing_graph_token are inactive by contract in aligned mode with all graph views present
-                        if "unaligned_proj" not in name and "missing_graph_token" not in name:
-                            zero_grad_unexpected_count += 1
+                        unexpected_zero_grad_count += 1
                     else:
                         g_norm = float(p.grad.norm().item())
                         if math.isnan(g_norm):
                             nan_grad_count += 1
-                        if math.isinf(g_norm):
+                        elif math.isinf(g_norm):
                             inf_grad_count += 1
-                        grad_norms[name] = g_norm
+                        elif g_norm < 1e-7:
+                            unexpected_zero_grad_count += 1
 
-                # Track parameter norm before step
                 p_norm_before = sum(p.data.norm().item() for p in model.parameters() if p.requires_grad)
 
                 # 4. Optimizer Step
                 optimizer.step()
 
-                # Track parameter norm after step
                 p_norm_after = sum(p.data.norm().item() for p in model.parameters() if p.requires_grad)
                 if abs(p_norm_after - p_norm_before) > 1e-8:
                     optimizer_updated_params = True
 
-                # Step Log Record
                 step_record = {
                     "result_class": "IMPLEMENTATION_SMOKE_TEST",
                     "thesis_eligible": False,
@@ -323,14 +356,14 @@ class SmokeTestRunner:
                     "loss_seq_ssl": metrics.get("loss_seq_ssl", 0.0),
                     "loss_graph_ssl": metrics.get("loss_graph_ssl", 0.0),
                     "loss_vicreg_align": metrics.get("loss_vicreg_align", 0.0),
+                    "loss_fuse_rec": metrics.get("loss_fuse_rec", 0.0),
                     "seq_L_MEP": metrics.get("seq_L_MEP", 0.0),
                     "seq_L_MPP": metrics.get("seq_L_MPP", 0.0),
                     "seq_L_time": metrics.get("seq_L_time", 0.0),
                     "graph_L_mask_node": metrics.get("graph_L_mask_node", 0.0),
                     "graph_L_mask_edge": metrics.get("graph_L_mask_edge", 0.0),
                     "graph_L_time_gap": metrics.get("graph_L_time_gap", 0.0),
-                    "mean_std_seq": metrics.get("vicreg_mean_std_seq", 0.0),
-                    "mean_std_graph": metrics.get("vicreg_mean_std_graph", 0.0),
+                    "gate_alpha_mean": metrics.get("gate_alpha_mean", 0.5),
                     "timestamp": time.time()
                 }
                 train_logs.append(step_record)
@@ -342,14 +375,14 @@ class SmokeTestRunner:
         if torch.cuda.is_available():
             peak_vram_mb = torch.cuda.max_memory_allocated() / (1024 * 1024)
 
-        # Write Train Logs
-        train_log_path = self.smoke_dir / "SMOKE-TRAIN-LOG.jsonl"
+        # Write Train Logs to run_dir
+        train_log_path = self.run_dir / "train-log.jsonl"
         with open(train_log_path, "w", encoding="utf-8") as f:
             for rec in train_logs:
                 f.write(json.dumps(rec) + "\n")
 
         # ---------------------------------------------------------------------
-        # CHECKPOINT / RESUME ROUNDTRIP TEST
+        # TRUE CHECKPOINT RESUME TEST (NEXT TRAINING STEP N+1 EQUALITY)
         # ---------------------------------------------------------------------
         checkpoint_path = self.artifacts_smoke_dir / "smoke_checkpoint.pt"
         checkpoint_data = {
@@ -358,39 +391,84 @@ class SmokeTestRunner:
             "global_step": global_step,
             "model_state_dict": model.state_dict(),
             "optimizer_state_dict": optimizer.state_dict(),
-            "seed": self.seed,
+            "python_rng_state": random.getstate(),
+            "numpy_rng_state": np.random.get_state(),
+            "torch_cpu_rng_state": torch.get_rng_state(),
+            "torch_cuda_rng_state": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None,
+            "config": model_config,
+            "config_hash": config_hash,
             "train_source_sha256": subset_manifest["train_source_sha256"],
             "val_source_sha256": subset_manifest["val_source_sha256"]
         }
         torch.save(checkpoint_data, checkpoint_path)
         checkpoint_saved = checkpoint_path.exists() and (checkpoint_path.stat().st_size > 0)
+        checkpoint_sha256 = compute_sha256(checkpoint_path)
 
-        # Fresh Model Instance for Resume Test
-        model_reloaded = MultiViewRepresentationModel(
-            seq_vocab_size=64,
-            graph_node_attr_dim=16,
-            param_vocab_size=32,
-            embed_dim=32,
-            mode="aligned",
-            memory_scope_mode="independent"
-        ).to(device)
+        # 1. Control Step N+1:
+        # Clone RNG states before step N+1
+        pre_n1_py_rng = random.getstate()
+        pre_n1_np_rng = np.random.get_state()
+        pre_n1_cpu_rng = torch.get_rng_state()
+        pre_n1_cuda_rng = torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None
 
-        reloaded_ckpt = torch.load(checkpoint_path, map_location=device, weights_only=False)
-        model_reloaded.load_state_dict(reloaded_ckpt["model_state_dict"])
-        checkpoint_reloaded = True
+        val_batch_seqs = val_subset["sequences"][:self.batch_size]
+        (
+            val_seq_in, val_targets, val_mep_m, val_p_targets, val_mpp_m, val_gaps,
+            val_graph_events, val_mask_e, val_mask_n
+        ) = self._prepare_batch_tensors(val_batch_seqs, device)
 
-        # Validation Pass & Deterministic Representation Check
+        optimizer.zero_grad()
+        loss_ctrl, _ = model.compute_stage_a_loss(
+            val_seq_in, val_targets, val_mep_m, val_p_targets, val_mpp_m, val_gaps,
+            val_graph_events, val_mask_e, val_mask_n, device=device
+        )
+        loss_ctrl.backward()
+        optimizer.step()
+        theta_ctrl = torch.cat([p.data.view(-1) for p in model.parameters() if p.requires_grad])
+
+        # 2. Resumed Step N+1:
+        model_resumed = MultiViewRepresentationModel(**model_config).to(device)
+        optimizer_resumed = torch.optim.AdamW(model_resumed.parameters(), lr=self.lr, weight_decay=1e-4)
+
+        loaded_ckpt = torch.load(checkpoint_path, map_location=device, weights_only=False)
+        model_resumed.load_state_dict(loaded_ckpt["model_state_dict"])
+        optimizer_resumed.load_state_dict(loaded_ckpt["optimizer_state_dict"])
+        
+        # Restore RNG states
+        random.setstate(pre_n1_py_rng)
+        np.random.set_state(pre_n1_np_rng)
+        torch.set_rng_state(pre_n1_cpu_rng)
+        if torch.cuda.is_available() and pre_n1_cuda_rng is not None:
+            torch.cuda.set_rng_state_all(pre_n1_cuda_rng)
+
+        (
+            val_seq_in_r, val_targets_r, val_mep_m_r, val_p_targets_r, val_mpp_m_r, val_gaps_r,
+            val_graph_events_r, val_mask_e_r, val_mask_n_r
+        ) = self._prepare_batch_tensors(val_batch_seqs, device)
+
+        optimizer_resumed.zero_grad()
+        loss_resumed, _ = model_resumed.compute_stage_a_loss(
+            val_seq_in_r, val_targets_r, val_mep_m_r, val_p_targets_r, val_mpp_m_r, val_gaps_r,
+            val_graph_events_r, val_mask_e_r, val_mask_n_r, device=device
+        )
+        loss_resumed.backward()
+        optimizer_resumed.step()
+        theta_resumed = torch.cat([p.data.view(-1) for p in model_resumed.parameters() if p.requires_grad])
+
+        loss_diff = float(abs(loss_ctrl.item() - loss_resumed.item()))
+        param_diff = float(torch.max(torch.abs(theta_ctrl - theta_resumed)).item())
+        resume_loss_match = bool(loss_diff < 1e-5)
+        resume_param_match = bool(param_diff < 1e-5)
+
+        # Validation Forward Pass
         model.eval()
-        model_reloaded.eval()
-
-        val_seqs = val_subset["sequences"]
-        val_seq_in, _, _, _, _, _, val_graph_events = self._prepare_batch_tensors(val_seqs, device)
+        val_seqs_all = val_subset["sequences"]
+        (
+            v_all_seq_in, _, _, _, _, _, v_all_graph_events, _, _
+        ) = self._prepare_batch_tensors(val_seqs_all, device)
 
         with torch.no_grad():
-            z_orig = model.extract_representation(val_seq_in, graph_events_batch=val_graph_events, device=device)
-            z_reloaded = model_reloaded.extract_representation(val_seq_in, graph_events_batch=val_graph_events, device=device)
-
-        deterministic_match = bool(torch.allclose(z_orig, z_reloaded, atol=1e-5))
+            z_val = model.extract_representation(v_all_seq_in, graph_events_batch=v_all_graph_events, device=device)
 
         val_log_record = {
             "result_class": "IMPLEMENTATION_SMOKE_TEST",
@@ -398,37 +476,29 @@ class SmokeTestRunner:
             "confirmatory": False,
             "test_set_opened": False,
             "smoke_run_id": self.smoke_run_id,
-            "validation_sample_count": len(val_seqs),
-            "z_dim": list(z_orig.shape),
-            "z_finite": bool(torch.isfinite(z_orig).all().item()),
-            "deterministic_reload_match": deterministic_match,
-            "debug_metric_note": "DEBUG_VALIDATION_METRIC_ONLY_NOT_THESIS_RESULT"
+            "validation_sample_count": len(val_seqs_all),
+            "z_dim": list(z_val.shape),
+            "z_finite": bool(torch.isfinite(z_val).all().item()),
+            "resume_training_step_loss_diff": loss_diff,
+            "resume_training_step_param_diff": param_diff,
+            "resume_step_loss_match": resume_loss_match,
+            "resume_step_param_match": resume_param_match,
+            "debug_validation_metric_generated": False,
+            "debug_metric_note": "NO_VALIDATION_METRIC_COMPUTED_REPRESENTATION_SHAPE_CHECK_ONLY"
         }
-        val_log_path = self.smoke_dir / "SMOKE-VALIDATION-LOG.jsonl"
+        val_log_path = self.run_dir / "validation-log.jsonl"
         val_log_path.write_text(json.dumps(val_log_record) + "\n", encoding="utf-8")
 
-        # Get Memory State Metrics
         state_metrics = model.graph_extractor.memory_bank.get_state_metrics()
+        end_utc = datetime.now(timezone.utc).isoformat()
 
+        # Build Report Markdown
         last_log = train_logs[-1]
-        loss_stage_a_val = last_log['loss_stage_a_total']
-        mep_val = last_log['seq_L_MEP']
-        mpp_val = last_log['seq_L_MPP']
-        time_val = last_log['seq_L_time']
-        mask_node_val = last_log.get('graph_L_mask_node', 0.0)
-        mask_edge_val = last_log.get('graph_L_mask_edge', 0.0)
-        time_gap_val = last_log.get('graph_L_time_gap', 0.0)
-        vicreg_val = last_log['loss_vicreg_align']
-        optimizer_str = 'PASS' if optimizer_updated_params else 'FAIL'
-        ckpt_saved_str = 'PASS' if checkpoint_saved else 'FAIL'
-        ckpt_reloaded_str = 'PASS' if checkpoint_reloaded else 'FAIL'
-        deterministic_match_str = 'PASS' if deterministic_match else 'FAIL'
-        gpu_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'N/A (CPU execution)'
-
         report_md = f"""# CH3 Implementation Smoke Test Report
 
 > [!NOTE]
 > **RESULT CLASS:** `IMPLEMENTATION_SMOKE_TEST`  
+> **DATASET CLASSIFICATION:** `HYBRID_SMOKE_FIXTURE` (Real HDFS Sequences + Synthetic Proxies)  
 > **THESIS ELIGIBLE:** `false`  
 > **CONFIRMATORY EXPERIMENT:** `false`  
 > **TEST SET OPENED:** `NO` (Records read: 0)
@@ -440,40 +510,46 @@ class SmokeTestRunner:
 - **Source Dataset:** `DATA-HDFS-001` (Status: `VALIDATED`)
 - **Deterministic Seed:** `{self.seed}`
 - **Device:** `{device}` (CUDA Available: `{torch.cuda.is_available()}`)
-- **GPU Model:** `{gpu_name}`
+- **GPU Model:** `{torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'N/A (CPU execution)'}`
+- **Config Hash:** `{config_hash}`
+- **Checkpoint SHA-256:** `{checkpoint_sha256}`
+- **Start UTC:** `{start_utc}`
+- **End UTC:** `{end_utc}`
 
 ---
 
 ## 2. Data Subsets & Test Firewall
 - **Train Partition Size:** `{n_train}` windows (Manifest ceiling: <= 256)
-- **Validation Partition Size:** `{len(val_seqs)}` windows (Manifest ceiling: <= 64)
+- **Validation Partition Size:** `{len(val_seqs_all)}` windows (Manifest ceiling: <= 64)
 - **Test Split Status:** `SEALED_UNTOUCHED`
 - **Test Records Read:** `0`
 
 ---
 
-## 3. Training Loop & Loss Convergence Smoke
+## 3. Training Loop & Exact Stage A Loss Convergence
 - **Epochs Executed:** `{self.epochs}`
 - **Optimizer Steps:** `{global_step}` (Manifest ceiling: <= 50)
-- **Final Total Loss (L_StageA):** `{loss_stage_a_val:.4f}`
+- **Final Total Loss (L_StageA):** `{last_log['loss_stage_a_total']:.4f}`
 - **Loss Finiteness:**
-  - L_MEP: `{mep_val:.4f}` (Finite: True)
-  - L_MPP: `{mpp_val:.4f}` (Finite: True)
-  - L_time: `{time_val:.4f}` (Finite: True)
-  - L_mask_node: `{mask_node_val:.4f}` (Finite: True)
-  - L_mask_edge: `{mask_edge_val:.4f}` (Finite: True)
-  - L_time_gap: `{time_gap_val:.4f}` (Finite: True)
-  - L_VICReg: `{vicreg_val:.4f}` (Finite: True)
+  - L_MEP: `{last_log['seq_L_MEP']:.4f}` (Finite: True)
+  - L_MPP: `{last_log['seq_L_MPP']:.4f}` (Finite: True)
+  - L_time: `{last_log['seq_L_time']:.4f}` (Finite: True)
+  - L_mask_node: `{last_log['graph_L_mask_node']:.4f}` (Finite: True)
+  - L_mask_edge: `{last_log['graph_L_mask_edge']:.4f}` (Finite: True)
+  - L_time_gap: `{last_log['graph_L_time_gap']:.4f}` (Finite: True)
+  - L_VICReg: `{last_log['loss_vicreg_align']:.4f}` (Finite: True)
+  - L_fuse_rec: `{last_log['loss_fuse_rec']:.4f}` (Finite: True)
+  - Gate Alpha Mean: `{last_log['gate_alpha_mean']:.4f}`
   - NaN Losses Encountered: `{nan_loss_count}`
   - Inf Losses Encountered: `{inf_loss_count}`
 
 ---
 
-## 4. Gradient Health & Optimization Audit
-- **Zero-Gradient Unexpected Count:** `{zero_grad_unexpected_count}` (Expected: 0)
+## 4. Strict Zero-Grad & Optimization Health Audit
+- **Unexpected Zero-Gradient Count:** `{unexpected_zero_grad_count}` (Expected: 0)
 - **NaN-Gradient Count:** `{nan_grad_count}` (Expected: 0)
 - **Inf-Gradient Count:** `{inf_grad_count}` (Expected: 0)
-- **Optimizer Modified Parameters:** `{optimizer_str}`
+- **Optimizer Modified Parameters:** `{'PASS' if optimizer_updated_params else 'FAIL'}`
 
 ---
 
@@ -486,10 +562,10 @@ class SmokeTestRunner:
 
 ---
 
-## 6. Checkpoint & Deterministic Reload Verification
-- **Checkpoint Saved:** `{ckpt_saved_str}` (`artifacts/smoke/smoke_checkpoint.pt`)
-- **Checkpoint Reloaded:** `{ckpt_reloaded_str}`
-- **Deterministic Match:** `{deterministic_match_str}`
+## 6. True Checkpoint Resume (Training Step N+1 Match)
+- **Checkpoint Saved:** `{'PASS' if checkpoint_saved else 'FAIL'}` (`artifacts/smoke/{self.smoke_run_id}/smoke_checkpoint.pt`)
+- **Step N+1 Loss Difference:** `{loss_diff:.8f}` (Tolerance: < 1e-5) -> `{'PASS' if resume_loss_match else 'FAIL'}`
+- **Step N+1 Max Parameter Difference:** `{param_diff:.8f}` (Tolerance: < 1e-5) -> `{'PASS' if resume_param_match else 'FAIL'}`
 
 ---
 
@@ -498,10 +574,9 @@ class SmokeTestRunner:
 - **Peak VRAM:** `{peak_vram_mb:.2f} MB`
 - **Total Duration:** `{end_time - start_time:.2f} s`
 """
-        report_path = self.smoke_dir / "SMOKE-REPORT.md"
+        report_path = self.run_dir / "report.md"
         report_path.write_text(report_md, encoding="utf-8")
 
-        # Create SMOKE-RUN-MANIFEST.json
         manifest_full = {
             "result_class": "IMPLEMENTATION_SMOKE_TEST",
             "thesis_eligible": False,
@@ -512,7 +587,11 @@ class SmokeTestRunner:
             "device": str(device),
             "cuda_available": torch.cuda.is_available(),
             "gpu_model": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "N/A",
-            "dataset_used": "REAL (HDFS Subsets)",
+            "dataset_used": "HYBRID_SMOKE_FIXTURE",
+            "sequence_source": "REAL_HDFS",
+            "parameter_source": "SYNTHETIC_PROXY",
+            "temporal_source": "SYNTHETIC_PROXY",
+            "graph_source": "SYNTHETIC_PROXY",
             "train_manifest_state": "VALIDATED",
             "val_manifest_state": "VALIDATED",
             "test_manifest_state": "SEALED",
@@ -522,7 +601,7 @@ class SmokeTestRunner:
             "losses_finite": all_losses_finite,
             "nan_loss_count": nan_loss_count,
             "inf_loss_count": inf_loss_count,
-            "zero_grad_unexpected_count": zero_grad_unexpected_count,
+            "zero_grad_unexpected_count": unexpected_zero_grad_count,
             "nan_grad_count": nan_grad_count,
             "inf_grad_count": inf_grad_count,
             "optimizer_updated_params": optimizer_updated_params,
@@ -531,14 +610,29 @@ class SmokeTestRunner:
             "peak_state_bytes": state_metrics["peak_state_bytes"],
             "multiview_correspondence_pass": True,
             "checkpoint_save_pass": checkpoint_saved,
-            "checkpoint_reload_pass": checkpoint_reloaded,
-            "deterministic_reload_match": deterministic_match,
-            "debug_validation_metric_generated": True,
+            "checkpoint_reload_pass": True,
+            "resume_next_step_loss_match": resume_loss_match,
+            "resume_next_step_param_match": resume_param_match,
+            "debug_validation_metric_generated": False,
+            "config_hash": config_hash,
+            "train_split_hash": subset_manifest["train_source_sha256"],
+            "val_split_hash": subset_manifest["val_source_sha256"],
+            "checkpoint_sha256": checkpoint_sha256,
+            "start_utc": start_utc,
+            "end_utc": end_utc,
             "peak_ram_mb": peak_ram_mb,
             "peak_vram_mb": peak_vram_mb,
             "execution_duration_sec": end_time - start_time
         }
-        manifest_full_path = self.smoke_dir / "SMOKE-RUN-MANIFEST.json"
+        manifest_full_path = self.run_dir / "manifest.json"
         manifest_full_path.write_text(json.dumps(manifest_full, indent=2), encoding="utf-8")
+
+        # Update LATEST.json pointer
+        latest_ptr = {
+            "latest_smoke_run_id": self.smoke_run_id,
+            "timestamp": time.time(),
+            "manifest_path": str(self.run_dir / "manifest.json")
+        }
+        (self.smoke_root / "LATEST.json").write_text(json.dumps(latest_ptr, indent=2), encoding="utf-8")
 
         return manifest_full

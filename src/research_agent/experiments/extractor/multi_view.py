@@ -7,9 +7,11 @@ Implements Chapter 2 Frozen Multi-View Representation Contract (Section 2.4 & Ba
       * "independent" (Default for windowed anomaly detection): Each sample i has isolated/reset memory bank.
       * "continuous_streaming": Continuous memory state maintained across strict causal stream.
   - Real Batch VICReg Anti-Collapse Optimization over paired representations [z_seq, z_graph]
-  - Explicit Availability Masks & Learned Missing-View Token per sample
-  - Gated Fusion Mechanism: z_mv = alpha * z^(seq) + (1 - alpha) * z^(graph)
-  - Supports 4 canonical H2 modes: "sequence_only", "graph_only", "unaligned", "aligned"
+  - Multi-View Gated Fusion with Reconstruction Loss:
+      L_fuse_rec = 0.5 * ||z_mv - stopgrad(z_seq)||^2 + 0.5 * ||z_mv - stopgrad(z_graph)||^2
+      Trains gating mechanism W_gate without conflicting extractor gradients.
+  - Complete Stage A Multi-Task Objective:
+      L_StageA = L_seq_self + L_graph_self + lambda_align * L_align + lambda_fuse * L_fuse_rec
 """
 
 from dataclasses import dataclass
@@ -130,6 +132,7 @@ class MultiViewRepresentationModel(nn.Module):
         embed_dim: int = 64,
         mode: str = "aligned",
         align_lambda: float = 1.0,
+        fuse_rec_lambda: float = 1.0,
         memory_scope_mode: str = "independent"
     ):
         super().__init__()
@@ -139,6 +142,7 @@ class MultiViewRepresentationModel(nn.Module):
         self.mode = mode
         self.embed_dim = embed_dim
         self.align_lambda = align_lambda
+        self.fuse_rec_lambda = fuse_rec_lambda
         self.memory_scope_mode = memory_scope_mode
 
         # Extractors
@@ -258,8 +262,8 @@ class MultiViewRepresentationModel(nn.Module):
         device: Optional[torch.device] = None
     ) -> Tuple[torch.Tensor, Dict[str, float]]:
         """
-        Computes Stage A objective over real per-sample paired representations:
-          L_StageA = L_seq_ssl + L_graph_ssl + lambda_align * L_VICReg
+        Computes exact Chapter 2 Stage A multi-task objective:
+          L_StageA = L_seq_self + L_graph_self + lambda_align * L_align + lambda_fuse * L_fuse_rec
         """
         if device is None:
             device = seq_inputs.device
@@ -324,17 +328,21 @@ class MultiViewRepresentationModel(nn.Module):
 
         l_vicreg, vicreg_metrics = self.vicreg(p_seq, p_graph, valid_mask=valid_mask)
 
-        # 4. Gated Fusion Forward Path (Verifies full gradient connectivity)
+        # 4. Multi-View Gated Fusion Reconstruction Loss
+        # L_fuse_rec = 0.5 * ||z_mv - stopgrad(z_seq)||^2 + 0.5 * ||z_mv - stopgrad(z_graph)||^2
         z_mv, alpha_gate = self.fusion(z_seq_pool, z_graph_batch)
+        l_fuse_rec = 0.5 * F.mse_loss(z_mv, z_seq_pool.detach()) + 0.5 * F.mse_loss(z_mv, z_graph_batch.detach())
 
-        # 5. Total Combined Stage A Loss
-        total_loss = l_seq_total + l_graph_total + self.align_lambda * l_vicreg + (alpha_gate.mean() * 0.0)
+        # 5. Total Combined Stage A Objective
+        total_loss = l_seq_total + l_graph_total + self.align_lambda * l_vicreg + self.fuse_rec_lambda * l_fuse_rec
 
         metrics_summary = {
             "loss_stage_a_total": float(total_loss.item()),
             "loss_seq_ssl": float(l_seq_total.item()),
             "loss_graph_ssl": float(l_graph_total.item()),
-            "loss_vicreg_align": float(l_vicreg.item())
+            "loss_vicreg_align": float(l_vicreg.item()),
+            "loss_fuse_rec": float(l_fuse_rec.item()),
+            "gate_alpha_mean": float(alpha_gate.mean().item())
         }
         for k, v in seq_losses.items():
             metrics_summary[f"seq_{k}"] = float(v.item())
