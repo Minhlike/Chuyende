@@ -26,9 +26,27 @@
     "FiveDirections"
   ],
   "raw_dataset_acquired": false,
+  "sealed_split_artifacts": {
+    "test": {
+      "count": 600,
+      "path": "/mnt/d/Research/experiments/runs/data/darpa/darpa_test.pt",
+      "sha256": "570a171c6d52cc8ace33bf67b47774febee42bacd907feab825a90234879024b",
+      "status": "SEALED"
+    },
+    "train": {
+      "count": 2800,
+      "path": "/mnt/d/Research/experiments/runs/data/darpa/darpa_train.pt",
+      "sha256": "6ee6175cd4af2cbccc1456aeb4cec71e706be50d4f76b76d4517c504e8ff0b3c"
+    },
+    "val": {
+      "count": 600,
+      "path": "/mnt/d/Research/experiments/runs/data/darpa/darpa_val.pt",
+      "sha256": "35cad1daf4f8e810b352e9834b28f8157225543ee233a89f78f2dd5bc2b81923"
+    }
+  },
   "seed": 42,
   "specification_sha256": "cc6e36af5be6c434d74bf27f78940010b1eee06b0c89330d028de25504b7dfbd",
   "split_id": "SPL-DTC-001",
-  "status": "PLANNED",
+  "status": "SEALED",
   "version": "v1.1"
 }

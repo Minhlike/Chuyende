@@ -16,10 +16,28 @@
     "val": 0.15
   },
   "raw_dataset_acquired": true,
+  "sealed_split_artifacts": {
+    "test": {
+      "count": 7502,
+      "path": "/mnt/d/Research/experiments/runs/data/hdfs/hdfs_test.pt",
+      "sha256": "9af27934ceff4264b9231570aed24e330331c7b12e4c2093e27e950cb612d399",
+      "status": "SEALED"
+    },
+    "train": {
+      "count": 34999,
+      "path": "/mnt/d/Research/experiments/runs/data/hdfs/hdfs_train.pt",
+      "sha256": "b7beee1b19828474d3a2354da5a9d032fbddbabf29e0863e2e8a37f7b440fc21"
+    },
+    "val": {
+      "count": 7499,
+      "path": "/mnt/d/Research/experiments/runs/data/hdfs/hdfs_val.pt",
+      "sha256": "ae544d5d04b2973c4825501f7a02f422dfa9a1615ee63686acdeb45b530b4329"
+    }
+  },
   "seed": 42,
   "specification_sha256": "4492d3f6a0c8071b46e7b17f86dbf1cb0e8e70a0c7daf8a4bac6c598066bcb81",
   "split_id": "SPL-HDFS-001",
-  "status": "VALIDATED",
+  "status": "SEALED",
   "verified_raw_artifacts": [
     {
       "byte_count": 161886385,

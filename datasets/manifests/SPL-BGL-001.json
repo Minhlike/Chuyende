@@ -22,10 +22,28 @@
     ]
   },
   "raw_dataset_acquired": true,
+  "sealed_split_artifacts": {
+    "test": {
+      "count": 13333,
+      "path": "/mnt/d/Research/experiments/runs/data/bgl/bgl_test.pt",
+      "sha256": "49f4992a95bfc545058622ea1bdd40e0546ea2111405f6e39f1bfc606d0f7623",
+      "status": "SEALED"
+    },
+    "train": {
+      "count": 13333,
+      "path": "/mnt/d/Research/experiments/runs/data/bgl/bgl_train.pt",
+      "sha256": "525062a017d2972d05243b08780a7ce85e81846e0515b43ab896f865b3f30649"
+    },
+    "val": {
+      "count": 13333,
+      "path": "/mnt/d/Research/experiments/runs/data/bgl/bgl_val.pt",
+      "sha256": "3464c9267b4d1a86637d8edba5e7184e1193de019013e35c68573db61e8bd64b"
+    }
+  },
   "seed": 42,
   "specification_sha256": "874bf7a2bfdf8df378ec1ec8fe7d7c8aacb47d18dc9be1f22fa2637a2ede8ef2",
   "split_id": "SPL-BGL-001",
-  "status": "VALIDATED",
+  "status": "SEALED",
   "verified_raw_artifacts": [
     {
       "alert_records": 348461,

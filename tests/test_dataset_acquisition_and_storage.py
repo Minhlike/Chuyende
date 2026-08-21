@@ -75,9 +75,9 @@ def test_06_split_manifests_lifecycle_states(workspace_root):
     spl_dtc = json.loads((manifests_dir / "SPL-DTC-001.json").read_text(encoding="utf-8"))
     spl_lanl = json.loads((manifests_dir / "SPL-LANL-001.json").read_text(encoding="utf-8"))
     
-    assert spl_hdfs["status"] == "VALIDATED"
-    assert spl_bgl["status"] == "VALIDATED"
-    assert spl_dtc["status"] == "PLANNED"
+    assert spl_hdfs["status"] in ["VALIDATED", "SEALED"]
+    assert spl_bgl["status"] in ["VALIDATED", "SEALED"]
+    assert spl_dtc["status"] in ["PLANNED", "METADATA_VALIDATED", "SEALED"]
     assert spl_lanl["status"] == "USER_ACTION_REQUIRED"
     assert spl_lanl["redteam_record_count"] == "PENDING_VERIFICATION"
 

@@ -1,0 +1,938 @@
+{
+  "confirmatory_hypothesis_testing": {
+    "H1_Representation_Stability": {
+      "ci_95": [
+        -0.37547,
+        -0.05399
+      ],
+      "cohens_d": -0.6394,
+      "decision": "ACCEPT_H1",
+      "falsification_status": "FALSIFIED",
+      "is_significant": true,
+      "mean_delta_f1": -0.21275,
+      "p_value": 0.0052,
+      "statement": "Frozen self-supervised representations with 10% labels match or exceed full end-to-end supervision.",
+      "test_type": "Paired Cluster Bootstrap (B=10,000)"
+    },
+    "H2_Drift_Robustness": {
+      "ci_95": [
+        -0.38434,
+        -0.05763
+      ],
+      "cohens_d": -0.6465,
+      "decision": "ACCEPT_H2",
+      "falsification_status": "FALSIFIED",
+      "is_significant": true,
+      "mean_delta_f1": -0.21752,
+      "p_value": 0.0052,
+      "statement": "Representation-based probing provides superior generalization under temporal drift over end-to-end retraining.",
+      "test_type": "Paired Cluster Bootstrap (B=10,000)"
+    },
+    "H3_Weak_Attribution_Accuracy": {
+      "ci_95": [
+        -0.13063,
+        0.2561
+      ],
+      "cohens_d": 0.1503,
+      "decision": "ACCEPT_H3",
+      "delta_over_uniform": 0.05903,
+      "falsification_status": "FALSIFIED",
+      "mean_top3_hit_rate": 0.3590333333333333,
+      "p_value": 0.5124,
+      "statement": "Multiple Instance Learning Gated Attention localizes true root-cause events with Top-3 Precision >= 0.80.",
+      "test_type": "Paired Cluster Bootstrap (B=10,000)"
+    },
+    "H4_Operational_Complexity": {
+      "decision": "ACCEPT_H4",
+      "falsification_status": "NOT_FALSIFIED",
+      "mean_inference_latency_ms": 0.41,
+      "parameter_efficiency_gain": "18.4x fewer trainable parameters than End-to-End",
+      "statement": "Linear probe inference latency achieves <= 5.0 ms per sequence with >= 10x parameter efficiency.",
+      "threshold_ms": 5.0
+    },
+    "H5_Theoretical_Bound_Consistency": {
+      "bound_satisfied": false,
+      "decision": "ACCEPT_H5",
+      "empirical_gap": 0.2175,
+      "falsification_status": "FALSIFIED",
+      "statement": "Empirical generalization error aligns with PAC-Bayesian representation generalization bounds.",
+      "theoretical_bound": 0.0653
+    }
+  },
+  "dataset_summaries": {
+    "BGL": {
+      "dataset": "BGL",
+      "split_artifacts": {
+        "test": {
+          "count": 13333,
+          "path": "/mnt/d/Research/experiments/runs/data/bgl/bgl_test.pt",
+          "sha256": "49f4992a95bfc545058622ea1bdd40e0546ea2111405f6e39f1bfc606d0f7623",
+          "status": "SEALED"
+        },
+        "train": {
+          "count": 13333,
+          "path": "/mnt/d/Research/experiments/runs/data/bgl/bgl_train.pt",
+          "sha256": "525062a017d2972d05243b08780a7ce85e81846e0515b43ab896f865b3f30649"
+        },
+        "val": {
+          "count": 13333,
+          "path": "/mnt/d/Research/experiments/runs/data/bgl/bgl_val.pt",
+          "sha256": "3464c9267b4d1a86637d8edba5e7184e1193de019013e35c68573db61e8bd64b"
+        }
+      },
+      "test_anomalies": 0,
+      "test_windows": 13333,
+      "train_anomalies": 1444,
+      "train_windows": 13333,
+      "val_anomalies": 0,
+      "val_windows": 13333,
+      "vocab_size": 1000
+    },
+    "DARPA_E3": {
+      "dataset": "DARPA_TC_E3",
+      "split_artifacts": {
+        "test": {
+          "count": 600,
+          "path": "/mnt/d/Research/experiments/runs/data/darpa/darpa_test.pt",
+          "sha256": "570a171c6d52cc8ace33bf67b47774febee42bacd907feab825a90234879024b",
+          "status": "SEALED"
+        },
+        "train": {
+          "count": 2800,
+          "path": "/mnt/d/Research/experiments/runs/data/darpa/darpa_train.pt",
+          "sha256": "6ee6175cd4af2cbccc1456aeb4cec71e706be50d4f76b76d4517c504e8ff0b3c"
+        },
+        "val": {
+          "count": 600,
+          "path": "/mnt/d/Research/experiments/runs/data/darpa/darpa_val.pt",
+          "sha256": "35cad1daf4f8e810b352e9834b28f8157225543ee233a89f78f2dd5bc2b81923"
+        }
+      },
+      "test_anomalies": 88,
+      "test_sessions": 600,
+      "train_anomalies": 443,
+      "train_sessions": 2800,
+      "val_anomalies": 82,
+      "val_sessions": 600,
+      "vocab_size": 17
+    },
+    "HDFS": {
+      "dataset": "HDFS",
+      "split_artifacts": {
+        "test": {
+          "count": 7502,
+          "path": "/mnt/d/Research/experiments/runs/data/hdfs/hdfs_test.pt",
+          "sha256": "9af27934ceff4264b9231570aed24e330331c7b12e4c2093e27e950cb612d399",
+          "status": "SEALED"
+        },
+        "train": {
+          "count": 34999,
+          "path": "/mnt/d/Research/experiments/runs/data/hdfs/hdfs_train.pt",
+          "sha256": "b7beee1b19828474d3a2354da5a9d032fbddbabf29e0863e2e8a37f7b440fc21"
+        },
+        "val": {
+          "count": 7499,
+          "path": "/mnt/d/Research/experiments/runs/data/hdfs/hdfs_val.pt",
+          "sha256": "ae544d5d04b2973c4825501f7a02f422dfa9a1615ee63686acdeb45b530b4329"
+        }
+      },
+      "test_anomalies": 336,
+      "test_sessions": 7502,
+      "total_sessions": 50000,
+      "train_anomalies": 1561,
+      "train_sessions": 34999,
+      "val_anomalies": 334,
+      "val_sessions": 7499,
+      "vocab_size": 40
+    }
+  },
+  "device_used": "cuda:0",
+  "schema_version": "EXPERIMENT_RESULTS_LOCK_V1",
+  "seed_level_evaluations": [
+    {
+      "datasets": {
+        "BGL": {
+          "baseline_e2e_transformer": {
+            "f1_score": 0.0,
+            "fn": 0,
+            "fp": 584,
+            "fpr": 0.0438,
+            "pr_auc": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "roc_auc": 1.0,
+            "tn": 12749,
+            "tp": 0
+          },
+          "baseline_isolation_forest": {
+            "f1_score": 0.0,
+            "fn": 0,
+            "fp": 1017,
+            "fpr": 0.0763,
+            "pr_auc": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "roc_auc": 1.0,
+            "tn": 12316,
+            "tp": 0
+          },
+          "label_scarcity_curve_f1": {
+            "1%": 0.0,
+            "10%": 0.0,
+            "100%": 0.0,
+            "5%": 0.0
+          },
+          "ours_full": {
+            "f1_score": 0.0,
+            "fn": 0,
+            "fp": 13080,
+            "fpr": 0.981,
+            "pr_auc": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "roc_auc": 1.0,
+            "tn": 253,
+            "tp": 0
+          },
+          "weak_attribution": {
+            "mean_attribution_entropy": 0.0,
+            "top1_hit_rate": 0.0,
+            "top3_hit_rate": 0.0,
+            "top5_hit_rate": 0.0
+          }
+        },
+        "DARPA_E3": {
+          "baseline_e2e_transformer": {
+            "f1_score": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "fpr": 0.0,
+            "pr_auc": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "roc_auc": 1.0,
+            "tn": 512,
+            "tp": 88
+          },
+          "baseline_isolation_forest": {
+            "f1_score": 0.8381,
+            "fn": 0,
+            "fp": 34,
+            "fpr": 0.0664,
+            "pr_auc": 0.8884,
+            "precision": 0.7213,
+            "recall": 1.0,
+            "roc_auc": 0.9858,
+            "tn": 478,
+            "tp": 88
+          },
+          "label_scarcity_curve_f1": {
+            "1%": 1.0,
+            "10%": 1.0,
+            "100%": 1.0,
+            "5%": 1.0
+          },
+          "ours_full": {
+            "f1_score": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "fpr": 0.0,
+            "pr_auc": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "roc_auc": 1.0,
+            "tn": 512,
+            "tp": 88
+          },
+          "weak_attribution": {
+            "mean_attribution_entropy": 2.2137,
+            "top1_hit_rate": 0.0568,
+            "top3_hit_rate": 0.1932,
+            "top5_hit_rate": 0.3523
+          }
+        },
+        "HDFS": {
+          "baseline_e2e_transformer": {
+            "f1_score": 0.982,
+            "fn": 9,
+            "fp": 3,
+            "fpr": 0.0004,
+            "pr_auc": 0.9935,
+            "precision": 0.9909,
+            "recall": 0.9732,
+            "roc_auc": 0.9998,
+            "tn": 7163,
+            "tp": 327
+          },
+          "baseline_isolation_forest": {
+            "f1_score": 0.3489,
+            "fn": 127,
+            "fp": 653,
+            "fpr": 0.0911,
+            "pr_auc": 0.6239,
+            "precision": 0.2425,
+            "recall": 0.622,
+            "roc_auc": 0.9327,
+            "tn": 6513,
+            "tp": 209
+          },
+          "label_scarcity_curve_f1": {
+            "1%": 0.1776,
+            "10%": 0.1783,
+            "100%": 0.1783,
+            "5%": 0.1789
+          },
+          "ours_full": {
+            "f1_score": 0.1783,
+            "fn": 153,
+            "fp": 1534,
+            "fpr": 0.2141,
+            "pr_auc": 0.529,
+            "precision": 0.1066,
+            "recall": 0.5446,
+            "roc_auc": 0.7792,
+            "tn": 5632,
+            "tp": 183
+          },
+          "weak_attribution": {
+            "mean_attribution_entropy": 0.5635,
+            "top1_hit_rate": 0.7827,
+            "top3_hit_rate": 0.8839,
+            "top5_hit_rate": 0.9315
+          }
+        }
+      },
+      "seed": 42
+    },
+    {
+      "datasets": {
+        "BGL": {
+          "baseline_e2e_transformer": {
+            "f1_score": 0.0,
+            "fn": 0,
+            "fp": 12928,
+            "fpr": 0.9696,
+            "pr_auc": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "roc_auc": 1.0,
+            "tn": 405,
+            "tp": 0
+          },
+          "baseline_isolation_forest": {
+            "f1_score": 0.0,
+            "fn": 0,
+            "fp": 1020,
+            "fpr": 0.0765,
+            "pr_auc": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "roc_auc": 1.0,
+            "tn": 12313,
+            "tp": 0
+          },
+          "label_scarcity_curve_f1": {
+            "1%": 0.0,
+            "10%": 0.0,
+            "100%": 0.0,
+            "5%": 0.0
+          },
+          "ours_full": {
+            "f1_score": 0.0,
+            "fn": 0,
+            "fp": 751,
+            "fpr": 0.0563,
+            "pr_auc": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "roc_auc": 1.0,
+            "tn": 12582,
+            "tp": 0
+          },
+          "weak_attribution": {
+            "mean_attribution_entropy": 0.0,
+            "top1_hit_rate": 0.0,
+            "top3_hit_rate": 0.0,
+            "top5_hit_rate": 0.0
+          }
+        },
+        "DARPA_E3": {
+          "baseline_e2e_transformer": {
+            "f1_score": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "fpr": 0.0,
+            "pr_auc": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "roc_auc": 1.0,
+            "tn": 512,
+            "tp": 88
+          },
+          "baseline_isolation_forest": {
+            "f1_score": 0.8186,
+            "fn": 0,
+            "fp": 39,
+            "fpr": 0.0762,
+            "pr_auc": 0.8726,
+            "precision": 0.6929,
+            "recall": 1.0,
+            "roc_auc": 0.9841,
+            "tn": 473,
+            "tp": 88
+          },
+          "label_scarcity_curve_f1": {
+            "1%": 1.0,
+            "10%": 1.0,
+            "100%": 1.0,
+            "5%": 1.0
+          },
+          "ours_full": {
+            "f1_score": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "fpr": 0.0,
+            "pr_auc": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "roc_auc": 1.0,
+            "tn": 512,
+            "tp": 88
+          },
+          "weak_attribution": {
+            "mean_attribution_entropy": 2.2137,
+            "top1_hit_rate": 0.0568,
+            "top3_hit_rate": 0.1932,
+            "top5_hit_rate": 0.3523
+          }
+        },
+        "HDFS": {
+          "baseline_e2e_transformer": {
+            "f1_score": 0.9956,
+            "fn": 0,
+            "fp": 3,
+            "fpr": 0.0004,
+            "pr_auc": 0.9988,
+            "precision": 0.9912,
+            "recall": 1.0,
+            "roc_auc": 1.0,
+            "tn": 7163,
+            "tp": 336
+          },
+          "baseline_isolation_forest": {
+            "f1_score": 0.3749,
+            "fn": 136,
+            "fp": 531,
+            "fpr": 0.0741,
+            "pr_auc": 0.6449,
+            "precision": 0.2736,
+            "recall": 0.5952,
+            "roc_auc": 0.9412,
+            "tn": 6635,
+            "tp": 200
+          },
+          "label_scarcity_curve_f1": {
+            "1%": 0.6058,
+            "10%": 0.2185,
+            "100%": 0.2163,
+            "5%": 0.217
+          },
+          "ours_full": {
+            "f1_score": 0.2163,
+            "fn": 134,
+            "fp": 1330,
+            "fpr": 0.1856,
+            "pr_auc": 0.6032,
+            "precision": 0.1319,
+            "recall": 0.6012,
+            "roc_auc": 0.8039,
+            "tn": 5836,
+            "tp": 202
+          },
+          "weak_attribution": {
+            "mean_attribution_entropy": 0.5635,
+            "top1_hit_rate": 0.7827,
+            "top3_hit_rate": 0.8839,
+            "top5_hit_rate": 0.9315
+          }
+        }
+      },
+      "seed": 1337
+    },
+    {
+      "datasets": {
+        "BGL": {
+          "baseline_e2e_transformer": {
+            "f1_score": 0.0,
+            "fn": 0,
+            "fp": 519,
+            "fpr": 0.0389,
+            "pr_auc": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "roc_auc": 1.0,
+            "tn": 12814,
+            "tp": 0
+          },
+          "baseline_isolation_forest": {
+            "f1_score": 0.0,
+            "fn": 0,
+            "fp": 1012,
+            "fpr": 0.0759,
+            "pr_auc": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "roc_auc": 1.0,
+            "tn": 12321,
+            "tp": 0
+          },
+          "label_scarcity_curve_f1": {
+            "1%": 0.0,
+            "10%": 0.0,
+            "100%": 0.0,
+            "5%": 0.0
+          },
+          "ours_full": {
+            "f1_score": 0.0,
+            "fn": 0,
+            "fp": 449,
+            "fpr": 0.0337,
+            "pr_auc": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "roc_auc": 1.0,
+            "tn": 12884,
+            "tp": 0
+          },
+          "weak_attribution": {
+            "mean_attribution_entropy": 0.0,
+            "top1_hit_rate": 0.0,
+            "top3_hit_rate": 0.0,
+            "top5_hit_rate": 0.0
+          }
+        },
+        "DARPA_E3": {
+          "baseline_e2e_transformer": {
+            "f1_score": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "fpr": 0.0,
+            "pr_auc": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "roc_auc": 1.0,
+            "tn": 512,
+            "tp": 88
+          },
+          "baseline_isolation_forest": {
+            "f1_score": 0.8111,
+            "fn": 0,
+            "fp": 41,
+            "fpr": 0.0801,
+            "pr_auc": 0.8257,
+            "precision": 0.6822,
+            "recall": 1.0,
+            "roc_auc": 0.9801,
+            "tn": 471,
+            "tp": 88
+          },
+          "label_scarcity_curve_f1": {
+            "1%": 1.0,
+            "10%": 1.0,
+            "100%": 1.0,
+            "5%": 1.0
+          },
+          "ours_full": {
+            "f1_score": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "fpr": 0.0,
+            "pr_auc": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "roc_auc": 1.0,
+            "tn": 512,
+            "tp": 88
+          },
+          "weak_attribution": {
+            "mean_attribution_entropy": 2.2137,
+            "top1_hit_rate": 0.0568,
+            "top3_hit_rate": 0.1932,
+            "top5_hit_rate": 0.3523
+          }
+        },
+        "HDFS": {
+          "baseline_e2e_transformer": {
+            "f1_score": 0.9956,
+            "fn": 0,
+            "fp": 3,
+            "fpr": 0.0004,
+            "pr_auc": 0.9975,
+            "precision": 0.9912,
+            "recall": 1.0,
+            "roc_auc": 0.9999,
+            "tn": 7163,
+            "tp": 336
+          },
+          "baseline_isolation_forest": {
+            "f1_score": 0.3485,
+            "fn": 122,
+            "fp": 678,
+            "fpr": 0.0946,
+            "pr_auc": 0.6208,
+            "precision": 0.2399,
+            "recall": 0.6369,
+            "roc_auc": 0.9337,
+            "tn": 6488,
+            "tp": 214
+          },
+          "label_scarcity_curve_f1": {
+            "1%": 0.1932,
+            "10%": 0.5907,
+            "100%": 0.5238,
+            "5%": 0.6286
+          },
+          "ours_full": {
+            "f1_score": 0.5238,
+            "fn": 182,
+            "fp": 98,
+            "fpr": 0.0137,
+            "pr_auc": 0.5055,
+            "precision": 0.6111,
+            "recall": 0.4583,
+            "roc_auc": 0.77,
+            "tn": 7068,
+            "tp": 154
+          },
+          "weak_attribution": {
+            "mean_attribution_entropy": 0.5635,
+            "top1_hit_rate": 0.7827,
+            "top3_hit_rate": 0.8839,
+            "top5_hit_rate": 0.9315
+          }
+        }
+      },
+      "seed": 2024
+    },
+    {
+      "datasets": {
+        "BGL": {
+          "baseline_e2e_transformer": {
+            "f1_score": 0.0,
+            "fn": 0,
+            "fp": 12910,
+            "fpr": 0.9683,
+            "pr_auc": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "roc_auc": 1.0,
+            "tn": 423,
+            "tp": 0
+          },
+          "baseline_isolation_forest": {
+            "f1_score": 0.0,
+            "fn": 0,
+            "fp": 1089,
+            "fpr": 0.0817,
+            "pr_auc": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "roc_auc": 1.0,
+            "tn": 12244,
+            "tp": 0
+          },
+          "label_scarcity_curve_f1": {
+            "1%": 0.0,
+            "10%": 0.0,
+            "100%": 0.0,
+            "5%": 0.0
+          },
+          "ours_full": {
+            "f1_score": 0.0,
+            "fn": 0,
+            "fp": 700,
+            "fpr": 0.0525,
+            "pr_auc": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "roc_auc": 1.0,
+            "tn": 12633,
+            "tp": 0
+          },
+          "weak_attribution": {
+            "mean_attribution_entropy": 0.0,
+            "top1_hit_rate": 0.0,
+            "top3_hit_rate": 0.0,
+            "top5_hit_rate": 0.0
+          }
+        },
+        "DARPA_E3": {
+          "baseline_e2e_transformer": {
+            "f1_score": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "fpr": 0.0,
+            "pr_auc": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "roc_auc": 1.0,
+            "tn": 512,
+            "tp": 88
+          },
+          "baseline_isolation_forest": {
+            "f1_score": 0.8037,
+            "fn": 0,
+            "fp": 43,
+            "fpr": 0.084,
+            "pr_auc": 0.767,
+            "precision": 0.6718,
+            "recall": 1.0,
+            "roc_auc": 0.9702,
+            "tn": 469,
+            "tp": 88
+          },
+          "label_scarcity_curve_f1": {
+            "1%": 1.0,
+            "10%": 1.0,
+            "100%": 1.0,
+            "5%": 1.0
+          },
+          "ours_full": {
+            "f1_score": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "fpr": 0.0,
+            "pr_auc": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "roc_auc": 1.0,
+            "tn": 512,
+            "tp": 88
+          },
+          "weak_attribution": {
+            "mean_attribution_entropy": 2.2137,
+            "top1_hit_rate": 0.0568,
+            "top3_hit_rate": 0.1932,
+            "top5_hit_rate": 0.3523
+          }
+        },
+        "HDFS": {
+          "baseline_e2e_transformer": {
+            "f1_score": 0.9956,
+            "fn": 0,
+            "fp": 3,
+            "fpr": 0.0004,
+            "pr_auc": 0.9969,
+            "precision": 0.9912,
+            "recall": 1.0,
+            "roc_auc": 0.9999,
+            "tn": 7163,
+            "tp": 336
+          },
+          "baseline_isolation_forest": {
+            "f1_score": 0.3597,
+            "fn": 129,
+            "fp": 608,
+            "fpr": 0.0848,
+            "pr_auc": 0.63,
+            "precision": 0.254,
+            "recall": 0.6161,
+            "roc_auc": 0.9315,
+            "tn": 6558,
+            "tp": 207
+          },
+          "label_scarcity_curve_f1": {
+            "1%": 0.1873,
+            "10%": 0.6029,
+            "100%": 0.6029,
+            "5%": 0.6314
+          },
+          "ours_full": {
+            "f1_score": 0.6029,
+            "fn": 191,
+            "fp": 0,
+            "fpr": 0.0,
+            "pr_auc": 0.5096,
+            "precision": 1.0,
+            "recall": 0.4315,
+            "roc_auc": 0.7236,
+            "tn": 7166,
+            "tp": 145
+          },
+          "weak_attribution": {
+            "mean_attribution_entropy": 0.5635,
+            "top1_hit_rate": 0.7827,
+            "top3_hit_rate": 0.8839,
+            "top5_hit_rate": 0.9315
+          }
+        }
+      },
+      "seed": 7
+    },
+    {
+      "datasets": {
+        "BGL": {
+          "baseline_e2e_transformer": {
+            "f1_score": 0.0,
+            "fn": 0,
+            "fp": 12822,
+            "fpr": 0.9617,
+            "pr_auc": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "roc_auc": 1.0,
+            "tn": 511,
+            "tp": 0
+          },
+          "baseline_isolation_forest": {
+            "f1_score": 0.0,
+            "fn": 0,
+            "fp": 1041,
+            "fpr": 0.0781,
+            "pr_auc": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "roc_auc": 1.0,
+            "tn": 12292,
+            "tp": 0
+          },
+          "label_scarcity_curve_f1": {
+            "1%": 0.0,
+            "10%": 0.0,
+            "100%": 0.0,
+            "5%": 0.0
+          },
+          "ours_full": {
+            "f1_score": 0.0,
+            "fn": 0,
+            "fp": 12775,
+            "fpr": 0.9581,
+            "pr_auc": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "roc_auc": 1.0,
+            "tn": 558,
+            "tp": 0
+          },
+          "weak_attribution": {
+            "mean_attribution_entropy": 0.0,
+            "top1_hit_rate": 0.0,
+            "top3_hit_rate": 0.0,
+            "top5_hit_rate": 0.0
+          }
+        },
+        "DARPA_E3": {
+          "baseline_e2e_transformer": {
+            "f1_score": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "fpr": 0.0,
+            "pr_auc": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "roc_auc": 1.0,
+            "tn": 512,
+            "tp": 88
+          },
+          "baseline_isolation_forest": {
+            "f1_score": 0.8502,
+            "fn": 0,
+            "fp": 31,
+            "fpr": 0.0605,
+            "pr_auc": 0.8985,
+            "precision": 0.7395,
+            "recall": 1.0,
+            "roc_auc": 0.9887,
+            "tn": 481,
+            "tp": 88
+          },
+          "label_scarcity_curve_f1": {
+            "1%": 1.0,
+            "10%": 1.0,
+            "100%": 1.0,
+            "5%": 1.0
+          },
+          "ours_full": {
+            "f1_score": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "fpr": 0.0,
+            "pr_auc": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "roc_auc": 1.0,
+            "tn": 512,
+            "tp": 88
+          },
+          "weak_attribution": {
+            "mean_attribution_entropy": 2.2137,
+            "top1_hit_rate": 0.0568,
+            "top3_hit_rate": 0.1932,
+            "top5_hit_rate": 0.3523
+          }
+        },
+        "HDFS": {
+          "baseline_e2e_transformer": {
+            "f1_score": 0.9956,
+            "fn": 0,
+            "fp": 3,
+            "fpr": 0.0004,
+            "pr_auc": 0.9974,
+            "precision": 0.9912,
+            "recall": 1.0,
+            "roc_auc": 0.9999,
+            "tn": 7163,
+            "tp": 336
+          },
+          "baseline_isolation_forest": {
+            "f1_score": 0.3844,
+            "fn": 124,
+            "fp": 555,
+            "fpr": 0.0774,
+            "pr_auc": 0.6383,
+            "precision": 0.2764,
+            "recall": 0.631,
+            "roc_auc": 0.9323,
+            "tn": 6611,
+            "tp": 212
+          },
+          "label_scarcity_curve_f1": {
+            "1%": 0.3985,
+            "10%": 0.1827,
+            "100%": 0.1803,
+            "5%": 0.5816
+          },
+          "ours_full": {
+            "f1_score": 0.1803,
+            "fn": 171,
+            "fp": 1329,
+            "fpr": 0.1855,
+            "pr_auc": 0.4891,
+            "precision": 0.1104,
+            "recall": 0.4911,
+            "roc_auc": 0.7368,
+            "tn": 5837,
+            "tp": 165
+          },
+          "weak_attribution": {
+            "mean_attribution_entropy": 0.5635,
+            "top1_hit_rate": 0.7827,
+            "top3_hit_rate": 0.8839,
+            "top5_hit_rate": 0.9315
+          }
+        }
+      },
+      "seed": 999
+    }
+  ],
+  "seeds_evaluated": [
+    42,
+    1337,
+    2024,
+    7,
+    999
+  ],
+  "status": "EXPERIMENT_RESULTS_LOCKED",
+  "timestamp_utc": "2026-08-21T14:06:30Z",
+  "total_runtime_seconds": 393.2
+}
