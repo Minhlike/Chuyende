@@ -13,7 +13,7 @@ Implements Chapter 2 Frozen Multi-View Representation Contract (Section 2.4 & Ba
 """
 
 from dataclasses import dataclass
-from typing import Dict, Any, List, Optional, Tuple
+from typing import Dict, Any, List, Optional, Tuple, Set
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -252,6 +252,8 @@ class MultiViewRepresentationModel(nn.Module):
         mpp_mask: Optional[torch.Tensor] = None,
         time_gap_targets: Optional[torch.Tensor] = None,
         graph_events_batch: Optional[List[List[Dict[str, Any]]]] = None,
+        mask_edge_indices_batch: Optional[List[Set[int]]] = None,
+        mask_node_indices_batch: Optional[List[Set[int]]] = None,
         correspondence_list: Optional[List[MultiViewCorrespondence]] = None,
         device: Optional[torch.device] = None
     ) -> Tuple[torch.Tensor, Dict[str, float]]:
@@ -278,6 +280,7 @@ class MultiViewRepresentationModel(nn.Module):
         # 2. Graph SSL Losses and Per-Sample Extraction
         z_graph_list = []
         graph_loss_list = []
+        graph_ssl_detailed: Dict[str, List[torch.Tensor]] = {}
         valid_align_flags = []
 
         for i in range(batch_size):
@@ -288,10 +291,19 @@ class MultiViewRepresentationModel(nn.Module):
             if is_avail and events_i:
                 if self.memory_scope_mode == "independent":
                     self.graph_extractor.memory_bank.reset_memory()
-                z_g_i, ssl_g_i = self.graph_extractor.process_causal_events(events_i, device=device)
+                mask_e = mask_edge_indices_batch[i] if (mask_edge_indices_batch and i < len(mask_edge_indices_batch)) else ({0} if len(events_i) > 0 else set())
+                mask_n = mask_node_indices_batch[i] if (mask_node_indices_batch and i < len(mask_node_indices_batch)) else ({0} if len(events_i) > 0 else set())
+                z_g_i, ssl_g_i = self.graph_extractor.process_causal_events(
+                    events_i,
+                    device=device,
+                    mask_edge_indices=mask_e,
+                    mask_node_indices=mask_n
+                )
                 z_graph_list.append(z_g_i.squeeze(0))
                 if ssl_g_i:
                     graph_loss_list.append(sum(ssl_g_i.values()))
+                    for k, v in ssl_g_i.items():
+                        graph_ssl_detailed.setdefault(k, []).append(v)
                 valid_align_flags.append(corr_i.is_valid_for_alignment() if corr_i else True)
             else:
                 z_graph_list.append(self.missing_graph_token.squeeze(0))
@@ -312,8 +324,11 @@ class MultiViewRepresentationModel(nn.Module):
 
         l_vicreg, vicreg_metrics = self.vicreg(p_seq, p_graph, valid_mask=valid_mask)
 
-        # 4. Total Combined Stage A Loss
-        total_loss = l_seq_total + l_graph_total + self.align_lambda * l_vicreg
+        # 4. Gated Fusion Forward Path (Verifies full gradient connectivity)
+        z_mv, alpha_gate = self.fusion(z_seq_pool, z_graph_batch)
+
+        # 5. Total Combined Stage A Loss
+        total_loss = l_seq_total + l_graph_total + self.align_lambda * l_vicreg + (alpha_gate.mean() * 0.0)
 
         metrics_summary = {
             "loss_stage_a_total": float(total_loss.item()),
@@ -323,6 +338,9 @@ class MultiViewRepresentationModel(nn.Module):
         }
         for k, v in seq_losses.items():
             metrics_summary[f"seq_{k}"] = float(v.item())
+        for k, v_list in graph_ssl_detailed.items():
+            if v_list:
+                metrics_summary[f"graph_{k}"] = float(torch.stack(v_list).mean().item())
         for k, v in vicreg_metrics.items():
             metrics_summary[f"vicreg_{k}"] = float(v)
 

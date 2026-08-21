@@ -6,8 +6,14 @@ Audits Word 2016 diagrams, shapes, connectors, tables, captions, cross-reference
 import os
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-import win32com.client as win32
-import pypdfium2 as pdfium
+try:
+    import win32com.client as win32
+except ImportError:
+    win32 = None
+try:
+    import pypdfium2 as pdfium
+except ImportError:
+    pdfium = None
 import docx
 
 

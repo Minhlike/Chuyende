@@ -73,6 +73,7 @@ experiments/runs/**
 !experiments/runs/.gitkeep
 experiments/checkpoints/**
 experiments/cache/**
+artifacts/**
 
 # Disposable runtime data & caches (RC-17)
 runtime/cache/**

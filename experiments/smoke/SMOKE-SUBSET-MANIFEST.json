@@ -1,0 +1,42 @@
+{
+  "result_class": "IMPLEMENTATION_SMOKE_TEST",
+  "thesis_eligible": false,
+  "confirmatory": false,
+  "test_set_opened": false,
+  "smoke_run_id": "SMOKE-1787339433",
+  "source_dataset": "DATA-HDFS-001",
+  "train_source_sha256": "b7beee1b19828474d3a2354da5a9d032fbddbabf29e0863e2e8a37f7b440fc21",
+  "val_source_sha256": "ae544d5d04b2973c4825501f7a02f422dfa9a1615ee63686acdeb45b530b4329",
+  "selection_seed": 42,
+  "selected_train_count": 16,
+  "selected_val_count": 8,
+  "selected_train_session_ids": [
+    "blk_3920644598616202229",
+    "blk_564635024163994914",
+    "blk_2765400108151836777",
+    "blk_-8106633456864643782",
+    "blk_1600424523535437568",
+    "blk_5355549571447638834",
+    "blk_-4482565413323942461",
+    "blk_-4249375814767022114",
+    "blk_-8320630432307440834",
+    "blk_-126114886553563498",
+    "blk_9057638282919485214",
+    "blk_4322384722483793854",
+    "blk_127115745360206429",
+    "blk_-1596352699890616985",
+    "blk_6144814013810676164",
+    "blk_7291834724279667224"
+  ],
+  "selected_val_session_ids": [
+    "blk_4370484231061141440",
+    "blk_-7880965771301166359",
+    "blk_-7318231140750189710",
+    "blk_6250888937636060926",
+    "blk_3556492567840444123",
+    "blk_-4589714098975704943",
+    "blk_-7385019746290967026",
+    "blk_-6979727900259097920"
+  ],
+  "test_split_status": "SEALED_UNTOUCHED"
+}

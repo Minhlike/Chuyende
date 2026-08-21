@@ -1,0 +1,1 @@
+{"result_class": "IMPLEMENTATION_SMOKE_TEST", "thesis_eligible": false, "confirmatory": false, "test_set_opened": false, "smoke_run_id": "SMOKE-1787339433", "validation_sample_count": 8, "z_dim": [8, 32], "z_finite": true, "deterministic_reload_match": true, "debug_metric_note": "DEBUG_VALIDATION_METRIC_ONLY_NOT_THESIS_RESULT"}
