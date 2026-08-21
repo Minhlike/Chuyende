@@ -1,14 +1,27 @@
 {
   "dataset_id": "DATA-BGL-001",
+  "feature_group": "BGL_NODE_CONTEXT (rack, midplane) -> LEGITIMATE_OPERATIONAL_CONTEXT + POTENTIAL_SHORTCUT",
+  "control_variants": [
+    "BGL_FULL_CONTEXT",
+    "BGL_WITHOUT_NODE_CONTEXT"
+  ],
+  "active_variant": "BGL_FULL_CONTEXT",
+  "node_context_token_count": 8389012,
+  "unique_rack_count": 65,
+  "unique_midplane_count": 3,
   "eligible_population_train_windows": 34753,
   "eligible_population_val_windows": 5250,
   "selected_train_windows": 20000,
   "selected_val_windows": 5000,
   "selection_rule": "STRATIFIED_NODE_TEMPORAL_BUDGET_CAP",
-  "train_split_hash": "107eb95d833e659dbe88bc77e11a70199086821b59ac4872c9651c6420b6c8f2",
-  "val_split_hash": "54f8ebdfb81563809e82b7955ef551bceb4c1623b653ae3fad2c2fdb0f125272",
-  "selection_hash": "d7cd6598dc0741ed5367ea5aacf3206ab948e6005851f91cc727910f67eb93d7",
+  "train_split_hash": "62f94bb804a26f24a39a8358d1ceb2f32e7efeaf6bc6cf1804e186e9a73cf147",
+  "val_split_hash": "c6d3ab3023e1a67371c7c36cc5985e8a75150863b30a16eabff46b6142ad781c",
+  "selection_hash": "b1f2867fad3ba5951d8de08c85a8bf5ba42efb45d2faac2aa51c43e991c4afdd",
   "raw_total_record_count": 4747963,
-  "pretest_scanned_record_count": 4318481,
+  "pretest_scanned_record_count": 4318480,
+  "pretest_valid_record_count": 4284010,
+  "pretest_malformed_count": 34470,
+  "train_record_count": 3680646,
+  "validation_record_count": 603364,
   "test_status": "SEALED_DAYS_181_TO_215"
 }

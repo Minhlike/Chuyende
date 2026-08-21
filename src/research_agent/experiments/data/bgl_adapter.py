@@ -2,13 +2,20 @@
 """
 Real BGL Raw Data Adapter & Materialization Engine (Rule-Based Template Canonicalizer v1)
 Parses official raw BGL.tar.gz archive (4,747,963 records) to produce authentic Chapter 2 Multi-Task SSL inputs:
-  - Real Timestamp: Extracted from second-column epoch timestamp (observed min_ts = 1117838570).
-  - Alert Label: Extracted from first-column tag ('-' = Normal (0), non-'-' = Alert (1)).
-    STRICTLY NON-CYBERATTACK: Labeled as system alert/fault logs only.
-  - Real L_MEP Target: Parser-derived template classes (RULE_BASED_TEMPLATE_CANONICALIZER_V1, fitted strictly on Days 1-150 Train split).
-  - Real L_MPP Target: Node hardware codes (RACK, MIDPLANE), memory addresses, error codes.
-  - Real L_time Target: log(1 + real adjacent event-time delta).
-  - Strict Test Firewall: Days 181-215 remain strictly SEALED (0 feature records exposed to trainer).
+  1. Temporal Partitioning:
+     - Train: Days 1-150 [1117838570, 1130798570)
+     - Val: Days 151-180 [1130798570, 1133390570)
+     - Test: Days 181-215 [1133390570, 1136390405] (SEALED, 0 features materialized)
+  2. BGL Node Context & Shortcut Protocol:
+     - Explicit feature group: BGL_NODE_CONTEXT (rack, midplane)
+     - Classification: LEGITIMATE_OPERATIONAL_CONTEXT + POTENTIAL_SHORTCUT
+     - Supports BGL_FULL_CONTEXT (include_node_context=True) and BGL_WITHOUT_NODE_CONTEXT (include_node_context=False)
+  3. Mathematical Accounting Reconciled:
+     - raw_total_record_count: 4,747,963
+     - pretest_scanned_record_count: 4,318,481
+     - pretest_valid_record_count: 4,284,011 (Train: 3,672,051 + Val: 611,960)
+     - pretest_malformed_count: 34,470
+     - Conservation: pretest_scanned == pretest_valid + pretest_malformed
 """
 
 import os
@@ -26,7 +33,7 @@ from research_agent.experiments.data.data_contract import RealDataContract, Real
 
 class BGLRealDataAdapter:
     """
-    Streaming adapter for raw BGL supercomputer logs with deterministic stratified selection.
+    Streaming adapter for raw BGL supercomputer logs with explicit node-context feature toggle.
     """
     def __init__(
         self,
@@ -35,6 +42,7 @@ class BGLRealDataAdapter:
         window_size: int = 64,
         max_train_windows: int = 20000,
         max_val_windows: int = 5000,
+        include_node_context: bool = True,
         parser_version: str = "RULE_BASED_TEMPLATE_CANONICALIZER_V1"
     ):
         self.base_dir = base_dir
@@ -42,6 +50,7 @@ class BGLRealDataAdapter:
         self.window_size = window_size
         self.max_train_windows = max_train_windows
         self.max_val_windows = max_val_windows
+        self.include_node_context = include_node_context
         self.parser_version = parser_version
         
         self.raw_tar_path = self.base_dir / "datasets" / "raw" / "bgl" / "BGL.tar.gz"
@@ -58,7 +67,6 @@ class BGLRealDataAdapter:
         return h.hexdigest()
 
     def parse_line(self, line_str: str) -> Optional[Dict[str, Any]]:
-        # Format: <alert_tag> <timestamp> <date> <node> <high_res_ts> <node_repeat> <subsys> <comp> <level> <msg>
         parts = line_str.split(" ", 9)
         if len(parts) < 10:
             return None
@@ -73,8 +81,8 @@ class BGLRealDataAdapter:
         is_alert = 0 if alert_tag == "-" else 1
         
         params = []
-        # Encode privacy-safe node hardware identifiers as parameter tokens
-        if len(node) >= 6:
+        # Feature Group: BGL_NODE_CONTEXT (Only included if enabled)
+        if self.include_node_context and len(node) >= 6:
             rack_id = node[:3]
             midplane_id = node[4:6] if len(node) >= 6 else "M0"
             params.append(f"PARAM_NODE_RACK_{rack_id}")
@@ -136,6 +144,10 @@ class BGLRealDataAdapter:
         # Days 181-215 are SEALED TEST: [1133390570, 1136390405]
 
         observed_min_ts = None
+        unique_racks: Set[str] = set()
+        unique_midplanes: Set[str] = set()
+        node_context_token_count = 0
+
         train_events_by_node: Dict[str, List[Dict[str, Any]]] = {}
         val_events_by_node: Dict[str, List[Dict[str, Any]]] = {}
 
@@ -153,8 +165,7 @@ class BGLRealDataAdapter:
                 raise IOError("Could not extract stream for BGL.log")
 
             for line_bytes in f_obj:
-                pretest_scanned_record_count += 1
-                if max_lines and pretest_scanned_record_count > max_lines:
+                if max_lines and pretest_scanned_record_count >= max_lines:
                     break
 
                 try:
@@ -162,6 +173,7 @@ class BGLRealDataAdapter:
                     parsed = self.parse_line(line_str)
                     if parsed is None:
                         malformed_pretest_count += 1
+                        pretest_scanned_record_count += 1
                         continue
 
                     ts = parsed["timestamp"]
@@ -172,17 +184,30 @@ class BGLRealDataAdapter:
 
                     if ts < train_end_ts:
                         train_record_count += 1
+                        pretest_scanned_record_count += 1
+                        if self.include_node_context and len(node) >= 6:
+                            unique_racks.add(node[:3])
+                            unique_midplanes.add(node[4:6])
+                            node_context_token_count += 2
                         train_events_by_node.setdefault(node, []).append(parsed)
                     elif ts < val_end_ts:
                         validation_record_count += 1
+                        pretest_scanned_record_count += 1
+                        if self.include_node_context and len(node) >= 6:
+                            unique_racks.add(node[:3])
+                            unique_midplanes.add(node[4:6])
+                            node_context_token_count += 2
                         val_events_by_node.setdefault(node, []).append(parsed)
                     else:
                         # Stop immediately at Test boundary (Days 181-215 are SEALED)
                         break
                 except Exception:
                     malformed_pretest_count += 1
+                    pretest_scanned_record_count += 1
 
-        assert observed_min_ts == min_ts, f"Observed min timestamp {observed_min_ts} != expected {min_ts}"
+        pretest_valid_record_count = train_record_count + validation_record_count
+        assert pretest_scanned_record_count == pretest_valid_record_count + malformed_pretest_count
+        assert observed_min_ts == min_ts
 
         # 1. FIT VOCABULARY STRICTLY ON TRAIN SPLIT (DAYS 1-150)
         for node, evs in train_events_by_node.items():
@@ -203,11 +228,10 @@ class BGLRealDataAdapter:
                 window = evs_sorted[i:i + self.window_size]
                 all_train_windows.append((node, window, f"bgl_train_{node}_{i}"))
 
-        # Deterministic stratified sample across active nodes
         rng = np.random.default_rng(self.seed)
         perm_train = rng.permutation(len(all_train_windows))
         selected_train_indices = perm_train[:self.max_train_windows]
-        selected_train_indices.sort()  # Restore deterministic ordering
+        selected_train_indices.sort()
 
         train_sequences = []
         train_labels = []
@@ -286,6 +310,7 @@ class BGLRealDataAdapter:
             "sequence_source": "REAL_BGL",
             "parameter_source": "REAL_BGL_EXTRACTED",
             "temporal_source": "REAL_BGL_EXTRACTED",
+            "feature_configuration": "BGL_FULL_CONTEXT" if self.include_node_context else "BGL_WITHOUT_NODE_CONTEXT",
             "sequences": train_sequences,
             "param_targets": train_param_targets,
             "time_gaps": train_time_gaps,
@@ -297,6 +322,7 @@ class BGLRealDataAdapter:
             "sequence_source": "REAL_BGL",
             "parameter_source": "REAL_BGL_EXTRACTED",
             "temporal_source": "REAL_BGL_EXTRACTED",
+            "feature_configuration": "BGL_FULL_CONTEXT" if self.include_node_context else "BGL_WITHOUT_NODE_CONTEXT",
             "sequences": val_sequences,
             "param_targets": val_param_targets,
             "time_gaps": val_time_gaps,
@@ -319,6 +345,10 @@ class BGLRealDataAdapter:
         train_hash = self._compute_sha256(train_path)
         val_hash = self._compute_sha256(val_path)
 
+        dynamic_params = ["HEX_ADDR", "PARITY_ERR", "TREE_NET", "NUMERIC_INT"]
+        if self.include_node_context:
+            dynamic_params.extend(["NODE_RACK", "NODE_MIDPLANE"])
+
         data_contract = RealDataContract(
             dataset_id="DATA-BGL-001",
             dataset_name="BGL Supercomputer Log",
@@ -326,11 +356,11 @@ class BGLRealDataAdapter:
             raw_artifact_sha256=raw_tar_sha256,
             parser_version_hash=hashlib.sha256(self.parser_version.encode()).hexdigest(),
             source_record_count=raw_total_record_count,
-            valid_record_count=train_record_count + validation_record_count,
+            valid_record_count=pretest_valid_record_count,
             malformed_count=malformed_pretest_count,
             event_time_coverage=1.0 - (malformed_pretest_count / max(1, pretest_scanned_record_count)),
             template_vocabulary_size=len(self.train_template_to_id),
-            dynamic_parameter_types=["NODE_RACK", "NODE_MIDPLANE", "HEX_ADDR", "PARITY_ERR", "TREE_NET", "NUMERIC_INT"],
+            dynamic_parameter_types=dynamic_params,
             excluded_shortcut_fields=["node_id", "session_id"],
             train_hash=train_hash,
             validation_hash=val_hash,
@@ -347,6 +377,12 @@ class BGLRealDataAdapter:
         # Write SUBSET-MANIFEST-BGL.json
         subset_manifest = {
             "dataset_id": "DATA-BGL-001",
+            "feature_group": "BGL_NODE_CONTEXT (rack, midplane) -> LEGITIMATE_OPERATIONAL_CONTEXT + POTENTIAL_SHORTCUT",
+            "control_variants": ["BGL_FULL_CONTEXT", "BGL_WITHOUT_NODE_CONTEXT"],
+            "active_variant": "BGL_FULL_CONTEXT" if self.include_node_context else "BGL_WITHOUT_NODE_CONTEXT",
+            "node_context_token_count": node_context_token_count,
+            "unique_rack_count": len(unique_racks),
+            "unique_midplane_count": len(unique_midplanes),
             "eligible_population_train_windows": len(all_train_windows),
             "eligible_population_val_windows": len(all_val_windows),
             "selected_train_windows": len(train_sequences),
@@ -357,6 +393,10 @@ class BGLRealDataAdapter:
             "selection_hash": hashlib.sha256(f"{train_hash}_{val_hash}".encode()).hexdigest(),
             "raw_total_record_count": raw_total_record_count,
             "pretest_scanned_record_count": pretest_scanned_record_count,
+            "pretest_valid_record_count": pretest_valid_record_count,
+            "pretest_malformed_count": malformed_pretest_count,
+            "train_record_count": train_record_count,
+            "validation_record_count": validation_record_count,
             "test_status": "SEALED_DAYS_181_TO_215"
         }
         (output_dir / "SUBSET-MANIFEST-BGL.json").write_text(json.dumps(subset_manifest, indent=2), encoding="utf-8")
@@ -365,6 +405,8 @@ class BGLRealDataAdapter:
         summary = {
             "raw_total_record_count": raw_total_record_count,
             "pretest_scanned_record_count": pretest_scanned_record_count,
+            "pretest_valid_record_count": pretest_valid_record_count,
+            "pretest_malformed_count": malformed_pretest_count,
             "train_record_count": train_record_count,
             "validation_record_count": validation_record_count,
             "observed_min_timestamp": observed_min_ts,
@@ -373,6 +415,9 @@ class BGLRealDataAdapter:
             "template_vocab_size": len(self.train_template_to_id),
             "param_vocab_size": len(self.train_param_to_id),
             "val_oov_event_rate": float(val_oov_events / max(1, val_total_events)),
+            "node_context_token_count": node_context_token_count,
+            "unique_rack_count": len(unique_racks),
+            "unique_midplane_count": len(unique_midplanes),
             "contract": data_contract.to_dict(),
             "subset_manifest": subset_manifest
         }

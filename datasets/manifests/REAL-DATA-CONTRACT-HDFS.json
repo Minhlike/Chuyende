@@ -11,6 +11,10 @@
   "template_vocabulary_size": 53,
   "dynamic_parameter_types": [
     "IP_RFC1918_PRIVATE",
+    "IP_LOOPBACK",
+    "IP_LINK_LOCAL",
+    "IP_SHARED_ADDRESS",
+    "IP_SPECIAL_USE",
     "IP_PUBLIC",
     "NUMERIC_SMALL",
     "BYTE_SIZE_BUCKET"
@@ -20,7 +24,7 @@
     "session_id"
   ],
   "train_hash": "201188905848c04f6eea2850e60bdf9fa57471d9b9c672d16a47423bb6e73b86",
-  "validation_hash": "1918deb2ff1bf05125cc74f6f6af66ab4df897136bddb537d155a93be4929667",
+  "validation_hash": "cfd87e7a73a642de284c29fdb001a6ebd86376fae5b49febfca6f0357ab7898e",
   "test_status": "SEALED",
   "synthetic_proxy_count": 0,
   "data_classification": "REAL_TRAINING_MATERIALIZED"

@@ -1,17 +1,25 @@
 # -*- coding: utf-8 -*-
 """
 Real HDFS Raw Data Adapter & Materialization Engine (Rule-Based Template Canonicalizer v1)
-Parses official raw HDFS_1.tar.gz archive (11,175,629 lines) and anomaly_label.csv to produce authentic
-Chapter 2 Multi-Task SSL inputs without synthetic proxies:
-  - Real Timestamp: Extracted from YYMMDD HHMMSS ms headers with deterministic UTC epoch conversion.
-  - Real L_MEP Target: Parser-derived template classes (RULE_BASED_TEMPLATE_CANONICALIZER_V1, fitted Train-only).
-  - Real L_MPP Target: Exact RFC1918 IP classifications (10/8, 172.16/12, 192.168/16), size buckets, port classes.
-  - Multi-Parameter Policy: Primary parameter selection + full structured parameter token retention (0 discarded).
-  - Real L_time Target: log(1 + real adjacent event-time delta).
-  - True Deterministic Causal Split: Sorted by (session_start_time, block_id).
-    Guarantees max(Train) <= min(Val) <= min(Test).
-  - Block ID Leakage Firewall: Block ID used strictly for causal trace grouping; excluded from feature space.
-  - Strict Test Firewall: Test partition metadata indexed, but 0 feature tensors exposed to trainer.
+Enforces strict interval-causal time partitioning and Test label vaulting:
+  1. Interval-Causal Partitioning:
+     - Purges any boundary-crossing sessions:
+       max(end_ts of Train) < min(start_ts of Validation)
+       max(end_ts of Validation) < min(start_ts of Test)
+     - TRAIN/VAL EVENT-TIME OVERLAP == 0, VAL/TEST EVENT-TIME OVERLAP == 0.
+  2. Test Label Vault:
+     - Phase A (Split Authority): Derives session intervals and split partitions WITHOUT reading anomaly labels.
+     - Phase B (Label Materialization): Reads anomaly_label.csv ONLY for Train and Val block IDs.
+     - Test labels are strictly vaulted (0 Test labels read, 0 Test distribution exposed to trainer).
+  3. Exact RFC1918 IP Classification:
+     - Strict membership in 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 via ipaddress.ip_network.
+     - Disjoint classes for LOOPBACK, LINK_LOCAL, SHARED_ADDRESS, SPECIAL_USE, PUBLIC.
+  4. Real Multi-Task SSL Targets:
+     - Real LogHub template targets (RULE_BASED_TEMPLATE_CANONICALIZER_V1, fitted strictly on Train).
+     - Multi-parameter retention with deterministic primary parameter policy.
+     - Real L_time targets: log(1 + delta_t).
+  5. Capped Compute Budget Subset:
+     - EARLIEST_CAUSAL_SESSION_BUDGET_CAP (Train <= 35000, Val <= 7500).
 """
 
 import os
@@ -20,6 +28,7 @@ import tarfile
 import hashlib
 import json
 import ipaddress
+import calendar
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple, Set
@@ -30,8 +39,18 @@ import torch
 from research_agent.experiments.data.data_contract import RealDataContract, RealTrainingDataViolation
 
 class TestSetSealedError(Exception):
-    """Raised when any code attempts to access the sealed Test split."""
+    """Raised when any code attempts to access the sealed Test split or test labels."""
     __test__ = False
+
+# Explicit RFC1918 and Special Network Definitions
+NET_10 = ipaddress.ip_network("10.0.0.0/8")
+NET_172 = ipaddress.ip_network("172.16.0.0/12")
+NET_192 = ipaddress.ip_network("192.168.0.0/16")
+
+NET_LOOPBACK = ipaddress.ip_network("127.0.0.0/8")
+NET_LINK_LOCAL = ipaddress.ip_network("169.254.0.0/16")
+NET_SHARED = ipaddress.ip_network("100.64.0.0/10")
+NET_SPECIAL = ipaddress.ip_network("192.0.0.0/24")
 
 # Canonical Rule-Based Template Patterns for HDFS (RULE_BASED_TEMPLATE_CANONICALIZER_V1)
 HDFS_TEMPLATES = [
@@ -53,7 +72,7 @@ HDFS_TEMPLATES = [
 
 class HDFSRealDataAdapter:
     """
-    Streaming adapter for raw HDFS logs with true causal time partitioning.
+    Streaming adapter for raw HDFS logs with true interval-causal partitioning.
     """
     def __init__(
         self,
@@ -86,26 +105,41 @@ class HDFSRealDataAdapter:
 
     def parse_line_timestamp(self, date_str: str, time_str: str, ms_str: str) -> Optional[float]:
         """
-        Cross-platform timezone-independent timestamp conversion.
-        Interprets dataset local time deterministically as UTC epoch numerical seconds.
+        Fast, deterministic, cross-platform UTC numerical epoch conversion.
         """
         try:
-            # Format: YYMMDD HHMMSS (e.g. 081109 203518 143)
-            dt = datetime.strptime(f"20{date_str} {time_str}", "%Y%m%d %H%M%S").replace(tzinfo=timezone.utc)
-            return dt.timestamp() + (float(ms_str) / 1000.0)
+            year = 2000 + int(date_str[:2])
+            month = int(date_str[2:4])
+            day = int(date_str[4:6])
+            hour = int(time_str[:2])
+            minute = int(time_str[2:4])
+            sec = int(time_str[4:6])
+            ms = int(ms_str)
+            base_epoch = calendar.timegm((year, month, day, hour, minute, sec, 0, 0, 0))
+            return float(base_epoch) + (float(ms) / 1000.0)
         except Exception:
             return None
 
     def classify_ip(self, ip_str: str) -> str:
         """
-        Exact RFC1918 classification (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16).
+        Exact RFC1918 network membership testing.
+        Explicitly distinguishes RFC1918 from Loopback, Link-Local, Shared, and Special-Use.
         """
         clean_ip = ip_str.lstrip("/").split(":")[0].strip()
         try:
             ip_obj = ipaddress.ip_address(clean_ip)
-            if ip_obj.is_private:
+            if ip_obj in NET_10 or ip_obj in NET_172 or ip_obj in NET_192:
                 return "PARAM_IP_RFC1918_PRIVATE"
-            return "PARAM_IP_PUBLIC"
+            elif ip_obj in NET_LOOPBACK:
+                return "PARAM_IP_LOOPBACK"
+            elif ip_obj in NET_LINK_LOCAL:
+                return "PARAM_IP_LINK_LOCAL"
+            elif ip_obj in NET_SHARED:
+                return "PARAM_IP_SHARED_ADDRESS"
+            elif ip_obj in NET_SPECIAL:
+                return "PARAM_IP_SPECIAL_USE"
+            else:
+                return "PARAM_IP_PUBLIC"
         except ValueError:
             return "PARAM_STR_GENERIC"
 
@@ -157,18 +191,6 @@ class HDFSRealDataAdapter:
                 return p
         return params[0]
 
-    def load_anomaly_labels(self) -> Dict[str, int]:
-        labels = {}
-        if not self.raw_label_path.exists():
-            return labels
-        with open(self.raw_label_path, "r", encoding="utf-8") as f:
-            for line in f:
-                parts = line.strip().split(",")
-                if len(parts) >= 2:
-                    blk_id, label_str = parts[0].strip(), parts[1].strip()
-                    labels[blk_id] = 1 if label_str.lower() == "anomaly" else 0
-        return labels
-
     def stream_and_materialize(
         self,
         output_dir: Optional[Path] = None,
@@ -182,8 +204,10 @@ class HDFSRealDataAdapter:
             raise FileNotFoundError(f"Missing raw HDFS archive at {self.raw_tar_path}")
 
         raw_tar_sha256 = self._compute_sha256(self.raw_tar_path)
-        labels_map = self.load_anomaly_labels()
 
+        # ---------------------------------------------------------------------
+        # PHASE A: SPLIT AUTHORITY (PARSE RAW LOGS WITHOUT ACCESSING LABELS)
+        # ---------------------------------------------------------------------
         raw_total_line_count = 0
         block_associated_event_count = 0
         no_block_id_count = 0
@@ -194,7 +218,6 @@ class HDFSRealDataAdapter:
 
         sessions_events: Dict[str, List[Dict[str, Any]]] = {}
 
-        # Stream HDFS.log directly from tar.gz
         with tarfile.open(self.raw_tar_path, "r:gz") as tar:
             log_member = None
             for m in tar.getmembers():
@@ -259,43 +282,98 @@ class HDFSRealDataAdapter:
         # Conservation equation check
         assert raw_total_line_count == block_associated_event_count + no_block_id_count + malformed_line_count
 
-        # ---------------------------------------------------------------------
-        # TRUE DETERMINISTIC CAUSAL SPLIT (SORT BY session_start_time, block_id)
-        # ---------------------------------------------------------------------
-        session_list = []
+        # Build raw session list with interval boundaries
+        raw_session_list = []
         for blk_id, ev_list in sessions_events.items():
             if not ev_list:
                 continue
             sorted_evs = sorted(ev_list, key=lambda x: x["timestamp"])
-            lbl = labels_map.get(blk_id, 0)
             start_ts = sorted_evs[0]["timestamp"]
             end_ts = sorted_evs[-1]["timestamp"]
-            session_list.append((blk_id, sorted_evs, lbl, start_ts, end_ts))
+            raw_session_list.append((blk_id, sorted_evs, start_ts, end_ts))
 
-        # Sort all sessions deterministically by start_ts, with stable block_id tie-break
-        session_list.sort(key=lambda x: (x[3], x[0]))
+        # Deterministic sort by (start_ts, blk_id)
+        raw_session_list.sort(key=lambda x: (x[2], x[0]))
 
-        n_total_sessions = len(session_list)
-        n_train_sessions = int(n_total_sessions * 0.70)
-        n_val_sessions = int(n_total_sessions * 0.15)
-        n_test_sessions = n_total_sessions - n_train_sessions - n_val_sessions
+        n_total_sessions = len(raw_session_list)
+        n_train_tentative = int(n_total_sessions * 0.70)
+        n_val_tentative = int(n_total_sessions * 0.15)
 
-        train_session_units = session_list[:n_train_sessions]
-        val_session_units = session_list[n_train_sessions:n_train_sessions + n_val_sessions]
-        test_session_units = session_list[n_train_sessions + n_val_sessions:]  # SEALED
+        # ---------------------------------------------------------------------
+        # TRUE INTERVAL-CAUSAL PARTITIONING & BOUNDARY PURGE
+        # ---------------------------------------------------------------------
+        # Tentative boundary timestamps derived from earliest start times of next splits
+        val_start_cutoff = raw_session_list[n_train_tentative][2]
+        test_start_cutoff = raw_session_list[n_train_tentative + n_val_tentative][2]
 
-        # Validate strict causal temporal boundary ordering
-        max_train_start = max(s[3] for s in train_session_units) if train_session_units else 0.0
-        min_val_start = min(s[3] for s in val_session_units) if val_session_units else 0.0
-        max_val_start = max(s[3] for s in val_session_units) if val_session_units else 0.0
-        min_test_start = min(s[3] for s in test_session_units) if test_session_units else 0.0
+        train_candidates = []
+        purged_train_val_candidates = []
+        val_candidates = []
+        purged_val_test_candidates = []
+        test_candidates = []
 
-        assert max_train_start <= min_val_start, f"Causal violation: max_train_start {max_train_start} > min_val_start {min_val_start}"
-        assert max_val_start <= min_test_start, f"Causal violation: max_val_start {max_val_start} > min_test_start {min_test_start}"
+        for s in raw_session_list:
+            blk_id, evs, start_ts, end_ts = s
+            # Case 1: Session starts in Train region
+            if start_ts < val_start_cutoff:
+                if end_ts < val_start_cutoff:
+                    train_candidates.append(s)
+                else:
+                    # Crosses Train/Val boundary
+                    purged_train_val_candidates.append(s)
+            # Case 2: Session starts in Val region
+            elif start_ts < test_start_cutoff:
+                if end_ts < test_start_cutoff:
+                    val_candidates.append(s)
+                else:
+                    # Crosses Val/Test boundary
+                    purged_val_test_candidates.append(s)
+            # Case 3: Session starts in Test region
+            else:
+                test_candidates.append(s)
+
+        # Compute strictly non-overlapping interval boundaries
+        train_min_start = min(s[2] for s in train_candidates) if train_candidates else 0.0
+        train_max_end = max(s[3] for s in train_candidates) if train_candidates else 0.0
+        val_min_start = min(s[2] for s in val_candidates) if val_candidates else 0.0
+        val_max_end = max(s[3] for s in val_candidates) if val_candidates else 0.0
+        test_min_start = min(s[2] for s in test_candidates) if test_candidates else 0.0
+        test_max_end = max(s[3] for s in test_candidates) if test_candidates else 0.0
+
+        # Enforce strict interval-causal invariant
+        assert train_max_end < val_min_start, (
+            f"Interval causal violation: train_max_end {train_max_end} >= val_min_start {val_min_start}"
+        )
+        assert val_max_end < test_min_start, (
+            f"Interval causal violation: val_max_end {val_max_end} >= test_min_start {test_min_start}"
+        )
+
+        train_block_ids = {s[0] for s in train_candidates}
+        val_block_ids = {s[0] for s in val_candidates}
+        test_block_ids = {s[0] for s in test_candidates}
+
+        # ---------------------------------------------------------------------
+        # PHASE B: TRAIN & VALIDATION LABEL MATERIALIZATION (TEST VAULT SEALED)
+        # ---------------------------------------------------------------------
+        train_labels_map: Dict[str, int] = {}
+        val_labels_map: Dict[str, int] = {}
+
+        if self.raw_label_path.exists():
+            with open(self.raw_label_path, "r", encoding="utf-8") as f:
+                for line in f:
+                    parts = line.strip().split(",")
+                    if len(parts) >= 2:
+                        blk_id, label_str = parts[0].strip(), parts[1].strip()
+                        lbl = 1 if label_str.lower() == "anomaly" else 0
+                        if blk_id in train_block_ids:
+                            train_labels_map[blk_id] = lbl
+                        elif blk_id in val_block_ids:
+                            val_labels_map[blk_id] = lbl
+                        # TEST BLOCK LABELS ARE NEVER READ, STORED, OR EXPOSED!
 
         # 1. FIT VOCABULARY STRICTLY ON TRAIN SPLIT
-        for unit in train_session_units:
-            _, evs, _, _, _ = unit
+        for unit in train_candidates:
+            _, evs, _, _ = unit
             for ev in evs:
                 tmpl = ev["template"]
                 if tmpl not in self.train_template_to_id:
@@ -304,8 +382,8 @@ class HDFSRealDataAdapter:
                     if p not in self.train_param_to_id:
                         self.train_param_to_id[p] = len(self.train_param_to_id)
 
-        # 2. Materialize Train Split (Capped to max_train_sessions for compute budget)
-        selected_train_units = train_session_units[:self.max_train_sessions]
+        # 2. Materialize Train Split (Capped to max_train_sessions budget)
+        selected_train_units = train_candidates[:self.max_train_sessions]
         train_sequences = []
         train_labels = []
         train_session_ids = []
@@ -313,7 +391,7 @@ class HDFSRealDataAdapter:
         train_param_targets = []
 
         for unit in selected_train_units:
-            blk_id, evs, lbl, _, _ = unit
+            blk_id, evs, _, _ = unit
             seq_t = torch.tensor([self.train_template_to_id.get(e["template"], 0) for e in evs], dtype=torch.long)
             p_t = torch.tensor([self.train_param_to_id.get(e["primary_param"], 0) for e in evs], dtype=torch.long)
             
@@ -323,6 +401,7 @@ class HDFSRealDataAdapter:
                 gaps.append(float(np.log1p(dt)))
             gaps_t = torch.tensor(gaps, dtype=torch.float32)
 
+            lbl = train_labels_map.get(blk_id, 0)
             train_sequences.append(seq_t)
             train_param_targets.append(p_t)
             train_time_gaps.append(gaps_t)
@@ -330,7 +409,7 @@ class HDFSRealDataAdapter:
             train_session_ids.append(blk_id)
 
         # 3. Materialize Validation Split (Capped to max_val_sessions, UNK Safe)
-        selected_val_units = val_session_units[:self.max_val_sessions]
+        selected_val_units = val_candidates[:self.max_val_sessions]
         val_sequences = []
         val_labels = []
         val_session_ids = []
@@ -340,7 +419,7 @@ class HDFSRealDataAdapter:
         val_total_events = 0
 
         for unit in selected_val_units:
-            blk_id, evs, lbl, _, _ = unit
+            blk_id, evs, _, _ = unit
             seq_t_list = []
             p_t_list = []
             for e in evs:
@@ -357,22 +436,24 @@ class HDFSRealDataAdapter:
                 dt = max(0.0, evs[i]["timestamp"] - evs[i - 1]["timestamp"])
                 gaps.append(float(np.log1p(dt)))
 
+            lbl = val_labels_map.get(blk_id, 0)
             val_sequences.append(torch.tensor(seq_t_list, dtype=torch.long))
             val_param_targets.append(torch.tensor(p_t_list, dtype=torch.long))
             val_time_gaps.append(torch.tensor(gaps, dtype=torch.float32))
             val_labels.append(lbl)
             val_session_ids.append(blk_id)
 
-        # 4. Sealed Test Metadata Manifest (METADATA ONLY, NO FEATURE EXTRACTION)
-        test_session_ids = [u[0] for u in test_session_units]
+        # 4. Sealed Test Metadata Manifest (METADATA ONLY, NO LABELS, NO FEATURES)
+        sorted_test_ids = sorted(list(test_block_ids))
         test_metadata_manifest = {
             "test_status": "SEALED",
-            "test_session_count": len(test_session_units),
-            "test_session_ids_sha256": hashlib.sha256("".join(test_session_ids).encode()).hexdigest(),
-            "test_min_start_time": min_test_start,
-            "test_max_end_time": max(u[4] for u in test_session_units) if test_session_units else 0.0,
+            "test_session_count": len(test_candidates),
+            "test_session_ids_sha256": hashlib.sha256("".join(sorted_test_ids).encode()).hexdigest(),
+            "test_min_start_time": test_min_start,
+            "test_max_end_time": test_max_end,
             "test_features_materialized": False,
-            "test_labels_exposed_to_trainer": False
+            "test_labels_exposed_to_trainer": False,
+            "test_label_distribution": "VAULT_LOCKED"
         }
 
         # Save Materialized Tensors
@@ -425,7 +506,10 @@ class HDFSRealDataAdapter:
             malformed_count=malformed_line_count,
             event_time_coverage=1.0 - (malformed_line_count / max(1, raw_total_line_count)),
             template_vocabulary_size=len(self.train_template_to_id),
-            dynamic_parameter_types=["IP_RFC1918_PRIVATE", "IP_PUBLIC", "NUMERIC_SMALL", "BYTE_SIZE_BUCKET"],
+            dynamic_parameter_types=[
+                "IP_RFC1918_PRIVATE", "IP_LOOPBACK", "IP_LINK_LOCAL", "IP_SHARED_ADDRESS",
+                "IP_SPECIAL_USE", "IP_PUBLIC", "NUMERIC_SMALL", "BYTE_SIZE_BUCKET"
+            ],
             excluded_shortcut_fields=["block_id", "session_id"],
             train_hash=train_hash,
             validation_hash=val_hash,
@@ -442,11 +526,19 @@ class HDFSRealDataAdapter:
         # Write SUBSET-MANIFEST-HDFS.json
         subset_manifest = {
             "dataset_id": "DATA-HDFS-001",
-            "eligible_population_train_sessions": n_train_sessions,
-            "eligible_population_val_sessions": n_val_sessions,
+            "eligible_population_train_sessions": len(train_candidates),
+            "eligible_population_val_sessions": len(val_candidates),
             "selected_train_sessions": len(train_sequences),
             "selected_val_sessions": len(val_sequences),
+            "purged_train_val_crossing_sessions": len(purged_train_val_candidates),
+            "purged_val_test_crossing_sessions": len(purged_val_test_candidates),
             "selection_rule": "EARLIEST_CAUSAL_SESSION_BUDGET_CAP",
+            "train_min_start": train_min_start,
+            "train_max_end": train_max_end,
+            "val_min_start": val_min_start,
+            "val_max_end": val_max_end,
+            "test_min_start": test_min_start,
+            "test_max_end": test_max_end,
             "train_split_hash": train_hash,
             "val_split_hash": val_hash,
             "selection_hash": hashlib.sha256(f"{train_hash}_{val_hash}".encode()).hexdigest(),
@@ -461,6 +553,17 @@ class HDFSRealDataAdapter:
             "no_block_id_count": no_block_id_count,
             "malformed_line_count": malformed_line_count,
             "total_eligible_sessions": n_total_sessions,
+            "train_session_count": len(train_candidates),
+            "val_session_count": len(val_candidates),
+            "test_session_count": len(test_candidates),
+            "purged_train_val_count": len(purged_train_val_candidates),
+            "purged_val_test_count": len(purged_val_test_candidates),
+            "train_min_start": train_min_start,
+            "train_max_end": train_max_end,
+            "val_min_start": val_min_start,
+            "val_max_end": val_max_end,
+            "test_min_start": test_min_start,
+            "test_max_end": test_max_end,
             "train_sessions": len(train_sequences),
             "val_sessions": len(val_sequences),
             "template_vocab_size": len(self.train_template_to_id),
@@ -469,10 +572,6 @@ class HDFSRealDataAdapter:
             "typed_parameter_coverage": float(total_typed_parameters / max(1, total_typed_parameters + total_generic_parameters)),
             "events_with_multiple_parameters": events_with_multiple_parameters,
             "parameters_discarded_count": 0,
-            "max_train_start_time": max_train_start,
-            "min_val_start_time": min_val_start,
-            "max_val_start_time": max_val_start,
-            "min_test_start_time": min_test_start,
             "contract": data_contract.to_dict(),
             "subset_manifest": subset_manifest
         }
