@@ -1,7 +1,26 @@
 {
-  "lock_identifier": "LOCK-STAGE-A1-20260822-CANONICAL",
+  "lock_identifier": "LOCK-STAGE-A1-20260822-FINAL",
   "status": "FROZEN_PRE_EXECUTION",
-  "source_commit": "1d7d1b8094926354d48ba46fd2354bd5cb79e0c7",
+  "source_commit": "2325923b4ad724d7846cbe3db5c7b9c2dd6bedc9",
+  "contract_sha256": "151ddcca8d165cd50f3ee6258c002c5dab441ae8149235ec168bd471b654bfff",
+  "dataset_hashes": {
+    "HDFS": {
+      "raw_sha256": "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169",
+      "train_split_hash": "0422677f5357494fbc587cac4b6de2004781e71d9b8087b4c8f9f0cd160f3363",
+      "val_split_hash": "96bdab531c3545f4a0f0ed7f87e47cba985c2bc4cac7a3e6c04245b5c712fbe9",
+      "selection_hash": "4371b22a7c29cddc41f573d5b2a23e4b298f80be344703a32c487cde9ce0a4bb",
+      "train_budget_sessions": 35000,
+      "val_budget_sessions": 7500
+    },
+    "BGL": {
+      "raw_sha256": "0a58be959cef101bbe5c053e60bd8a49673e9c942b164f4d969bb109e99fce95",
+      "train_split_hash": "f92ddd8f6da011c61ea730d59b6aea7673ffc0c16084ca72071b59c36b7bf078",
+      "val_split_hash": "dd6255239edb4a3068a8d87d7e0a97e4eb17a2a4b1453a6251d46da667aeb1ea",
+      "selection_hash": "096cbf5865f02823a2c6c2ed8af53f07bec0bc48c7d60a769c6a88d357f344e3",
+      "train_budget_windows": 20000,
+      "val_budget_windows": 5000
+    }
+  },
   "architecture": {
     "family": "Bidirectional Transformer Encoder",
     "layers": 4,
@@ -17,10 +36,18 @@
     "lambda_MEP": 1.0,
     "lambda_MPP": 1.0,
     "lambda_time": 0.1,
-    "masking_probability": 0.15,
-    "mep_mask_ratio": 0.80,
-    "mep_random_ratio": 0.10,
-    "mep_unchanged_ratio": 0.10
+    "mep_masking_probability": 0.15,
+    "mep_corruption_rule": {
+      "mask_ratio": 0.80,
+      "random_ratio": 0.10,
+      "unchanged_ratio": 0.10
+    },
+    "mpp_masking_probability": 0.15,
+    "mpp_slot_rule": {
+      "active_slots_only": true,
+      "exclude_pad_param": true,
+      "loss_average_on_active_masked_only": true
+    }
   },
   "optimization": {
     "optimizer": "AdamW",
@@ -48,24 +75,6 @@
     7,
     999
   ],
-  "dataset_roles": {
-    "HDFS": {
-      "tier": "Tier A",
-      "model_id": "MODEL-A1-HDFS",
-      "vocab_fit_scope": "FULL_TRAIN_PARTITION",
-      "train_budget_sessions": 35000,
-      "val_budget_sessions": 7500,
-      "test_status": "SEALED"
-    },
-    "BGL": {
-      "tier": "Tier A",
-      "model_id": "MODEL-A1-BGL",
-      "vocab_fit_scope": "FULL_TRAIN_PARTITION",
-      "train_budget_windows": 20000,
-      "val_budget_windows": 5000,
-      "test_status": "SEALED"
-    }
-  },
   "test_status": "SEALED",
   "execution_state": {
     "optimizer_steps": 0,

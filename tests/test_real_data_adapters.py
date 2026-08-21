@@ -186,7 +186,7 @@ def test_07_stage_a1_preexecution_lock_file():
     assert lock_path.exists()
     lock_data = json.loads(lock_path.read_text(encoding="utf-8"))
 
-    assert lock_data["lock_identifier"] == "LOCK-STAGE-A1-20260822-CANONICAL"
+    assert lock_data["lock_identifier"] == "LOCK-STAGE-A1-20260822-FINAL"
     assert lock_data["architecture"]["layers"] == 4
     assert lock_data["architecture"]["d_model"] == 128
     assert lock_data["architecture"]["n_heads"] == 4

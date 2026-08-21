@@ -49,3 +49,15 @@
   2. **LANL Cyber 1:** Split boundaries are formally locked as **`PENDING_ACQUISITION`** (the official LANL Cyber 1 dataset comprises 58 days total, removing the invalid 89-day specification).
   3. **HDFS Provenance & Causal Split:** Corrects official raw HDFS count to exact empirical value **`11,175,629`** lines (satisfying exact conservation $11175629 = 11175629 + 0 + 0$). Replaces random session shuffling with strictly deterministic causal sorting by `(session_start_time, block_id_tiebreak)` where $\max(\text{Train}) \le \min(\text{Val}) \le \min(\text{Test})$.
   4. **BGL Provenance:** Reconciles official raw record count **`4,747,963`** lines and observed minimum timestamp **`1117838570`** across temporal partitions (Days 1-150 Train, Days 151-180 Val, Days 181-215 Sealed Test).
+
+---
+
+### Amendment 6: Stage A1 Pre-Execution Final Consistency & Disambiguated MPP Masking Contract
+- **Timestamp:** 2026-08-22T04:50:00+07:00
+- **Execution State:** `TEST_OPENED = NO`, `RESULTS_SEEN = NO`, `OPTIMIZER_STEPS_BEFORE_AMENDMENT = 0`
+- **Reason:** Consistency correction prior to the first optimizer step.
+- **Amended Specifications:**
+  1. **Tri-State Falsification Alignment:** Corrected `CH3-PRE-REGISTRATION.md` H1/H2 falsification text to align with canonical tri-state semantics (`SUPPORTED`, `INCONCLUSIVE`, `FALSIFIED`) where $p > \alpha$ or confidence intervals spanning zero indicate `INCONCLUSIVE`, not automatic falsification. Removed stale Hedges' $g$ criterion.
+  2. **Disambiguated Masking Policies:** Formally separated Masked Event Prediction ($p_{\text{MEP}} = 0.15$, 80/10/10 rule) from Masked Parameter Prediction ($p_{\text{MPP}} = 0.15$ applied independently per active slot, `<PAD_PARAM>` excluded as target, loss computed strictly over active masked slots).
+  3. **Batch & Optimization Regime:** Formally locked canonical batch parameters across all specifications: `micro_batch_size = 16`, `gradient_accumulation_steps = 4`, `effective_batch_size = 64`.
+  4. **Five-Seed Stability Role:** Clarified that the $K=5$ canonical seeds evaluate stochastic training stability ($\text{Mean} \pm \text{SD}$) and do not serve as a bootstrap sampling population.

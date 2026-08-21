@@ -46,7 +46,9 @@ $$L_{\text{seq}} = \lambda_{\text{MEP}} L_{\text{MEP}} + \lambda_{\text{MPP}} L_
 | **Max Sequence Length ($T_{\max}$)** | $128$ tokens |
 | **Parameter Representation Mode** | `BOUNDED_MULTI_SLOT_TYPED_PARAMETER_SET_K4` |
 | **Max Parameter Slots / Event** | $4$ slots |
-| **Masking Probability** | $15\%$ Bernoulli masking ($80\%$ `[MASK]`, $10\%$ random, $10\%$ unchanged) |
+| **MEP Masking Probability ($p_{\text{MEP}}$)** | $15\%$ Bernoulli masking ($80\%$ `[MASK]`, $10\%$ random token, $10\%$ unchanged) |
+| **MPP Masking Probability ($p_{\text{MPP}}$)** | $15\%$ Bernoulli masking per active parameter slot (excludes `<PAD_PARAM>`; loss averages strictly over masked active slots) |
+| **Parameter Target Privacy Rule** | Non-padding privacy-safe slot tokens only; zero raw identifier reconstruction |
 
 ---
 
