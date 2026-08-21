@@ -2748,9 +2748,10 @@ class ResearchRepository:
             conn.execute(
                 """
                 INSERT OR REPLACE INTO equations (
-                    equation_id, latex, description, equation_type, ownership, is_verified,
-                    roadmap_nodes_json, symbols_json, created_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    equation_id, latex, description, equation_type, ownership, source_id,
+                    is_verified, verification_status, roadmap_nodes_json, symbols_json,
+                    created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     eq.equation_id,
@@ -2758,10 +2759,13 @@ class ResearchRepository:
                     eq.description,
                     eq.equation_type.value if hasattr(eq.equation_type, "value") else str(eq.equation_type),
                     eq.ownership.value if hasattr(eq.ownership, "value") else str(eq.ownership),
+                    eq.source_id,
                     1 if eq.is_verified else 0,
+                    "VERIFIED" if eq.is_verified else "UNVERIFIED",
                     json.dumps(eq.roadmap_nodes),
-                    json.dumps(eq.symbols),
+                    json.dumps([s.model_dump(mode="json") if hasattr(s, "model_dump") else s for s in eq.symbols]),
                     eq.created_at.isoformat(),
+                    datetime.now(timezone.utc).isoformat(),
                 )
             )
         return eq
@@ -2775,7 +2779,9 @@ class ResearchRepository:
                 equation_id=row["equation_id"],
                 latex=row["latex"],
                 description=row["description"] or "",
+                equation_type=EquationType(row["equation_type"]),
                 ownership=IntellectualOwnership(row["ownership"]),
+                source_id=row["source_id"],
                 is_verified=bool(row["is_verified"]),
                 roadmap_nodes=json.loads(row["roadmap_nodes_json"] or "[]"),
                 symbols=json.loads(row["symbols_json"] or "[]"),
@@ -2790,7 +2796,9 @@ class ResearchRepository:
                     equation_id=r["equation_id"],
                     latex=r["latex"],
                     description=r["description"] or "",
+                    equation_type=EquationType(r["equation_type"]),
                     ownership=IntellectualOwnership(r["ownership"]),
+                    source_id=r["source_id"],
                     is_verified=bool(r["is_verified"]),
                     roadmap_nodes=json.loads(r["roadmap_nodes_json"] or "[]"),
                     symbols=json.loads(r["symbols_json"] or "[]"),

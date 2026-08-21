@@ -1,0 +1,34 @@
+{
+  "acquisition_requirements": [
+    "Verify official DARPA CDM18 (E3) and CDM20 (E5) checksums",
+    "Extract attack ground truth matching official engagement reports",
+    "Verify zero test ground-truth leakage into train plane"
+  ],
+  "dataset_id": "DATA-DTC-001",
+  "dataset_name": "DARPA Transparent Computing E3/E5",
+  "ground_truth_mapping_status": "PENDING_ARTIFACT_PARSE",
+  "official_performer_universe": [
+    "CADETS",
+    "ClearScope",
+    "FiveDirections",
+    "MARPLE",
+    "THEIA",
+    "TRACE"
+  ],
+  "official_schemas": {
+    "engagement_3": "CDM18",
+    "engagement_5": "CDM20"
+  },
+  "partition_strategy": "CAUSAL_SCENARIO_HOST_HOLDOUT",
+  "pre_registered_experimental_subset": [
+    "THEIA",
+    "CADETS",
+    "FiveDirections"
+  ],
+  "raw_dataset_acquired": false,
+  "seed": 42,
+  "specification_sha256": "cc6e36af5be6c434d74bf27f78940010b1eee06b0c89330d028de25504b7dfbd",
+  "split_id": "SPL-DTC-001",
+  "status": "PLANNED",
+  "version": "v1.1"
+}

@@ -1,0 +1,24 @@
+{
+  "acquisition_requirements": [
+    "Verify LogHub HDFS raw log archive checksum",
+    "Fit Drain/Spell template parser strictly on Train split",
+    "Extract session IDs and compute causal timestamp bounds"
+  ],
+  "dataset_id": "DATA-HDFS-001",
+  "dataset_name": "HDFS LogHub Benchmark",
+  "holdout_specification": {
+    "oov_anomaly_template_ratio": 0.1
+  },
+  "partition_strategy": "STRICT_CAUSAL_TIME",
+  "planned_ratios": {
+    "test": 0.15,
+    "train": 0.7,
+    "val": 0.15
+  },
+  "raw_dataset_acquired": false,
+  "seed": 42,
+  "specification_sha256": "4492d3f6a0c8071b46e7b17f86dbf1cb0e8e70a0c7daf8a4bac6c598066bcb81",
+  "split_id": "SPL-HDFS-001",
+  "status": "PLANNED",
+  "version": "v1.0"
+}

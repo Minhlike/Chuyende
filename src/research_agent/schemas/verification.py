@@ -36,7 +36,7 @@ class Equation(BaseModel):
     derivation_steps: List[str] = Field(default_factory=list, description="Mandatory for DERIVED_EQUATION")
     is_verified: bool = Field(default=True)
     roadmap_nodes: List[str] = Field(default_factory=list)
-    symbols: List[str] = Field(default_factory=list)
+    symbols: List[Any] = Field(default_factory=list)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
     @model_validator(mode="after")

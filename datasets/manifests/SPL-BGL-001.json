@@ -1,0 +1,30 @@
+{
+  "acquisition_requirements": [
+    "Verify LLNL BGL raw log checksum",
+    "Validate 214.7 day timestamp monotonic sequence",
+    "Isolate Days 181+ failure codes for template drift evaluation"
+  ],
+  "dataset_id": "DATA-BGL-001",
+  "dataset_name": "BGL Supercomputer Log",
+  "partition_strategy": "STRICT_CAUSAL_TIME",
+  "planned_temporal_partitions": {
+    "test_days": [
+      181,
+      215
+    ],
+    "train_days": [
+      1,
+      150
+    ],
+    "val_days": [
+      151,
+      180
+    ]
+  },
+  "raw_dataset_acquired": false,
+  "seed": 42,
+  "specification_sha256": "874bf7a2bfdf8df378ec1ec8fe7d7c8aacb47d18dc9be1f22fa2637a2ede8ef2",
+  "split_id": "SPL-BGL-001",
+  "status": "PLANNED",
+  "version": "v1.0"
+}

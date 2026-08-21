@@ -43,6 +43,12 @@ from research_agent.skills.implementations import (
     Skill36ConclusionBuilder,
     Skill37CitationAuditor,
     Skill38ThesisAuditor,
+    SkillWordDiagramBuilder,
+    SkillWordTableBuilder,
+    SkillScientificFigureInserter,
+    SkillWordCaptionManager,
+    SkillWordCrossReferenceManager,
+    SkillVisualQA,
 )
 
 
@@ -95,6 +101,12 @@ class ResearchSkillRegistry:
             Skill36ConclusionBuilder(),
             Skill37CitationAuditor(),
             Skill38ThesisAuditor(),
+            SkillWordDiagramBuilder(),
+            SkillWordTableBuilder(),
+            SkillScientificFigureInserter(),
+            SkillWordCaptionManager(),
+            SkillWordCrossReferenceManager(),
+            SkillVisualQA(),
         ]
         for s in skills:
             self._skills[s.metadata.skill_id] = s

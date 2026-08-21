@@ -1315,7 +1315,22 @@ def main(args: Optional[list] = None):
         st, _ = pipeline.symbolic_engine.verify_algebraic_equivalence("a + b", "b + a")
         print(f"[PASS] Scientific Verification Toolchain: Symbolic Solver ({st.value}), Statistics & Datasets")
 
-        # 6. Thesis Composer
+        # 6. Thesis Composer & Frozen Chapter 1 Invariant
+        import hashlib
+        code_p = Path("D:/Research/src/research_agent/composition/build_word_visual_qa.py")
+        if code_p.exists():
+            c_lines = code_p.read_text(encoding="utf-8").splitlines()
+            s_idx = next((i for i, l in enumerate(c_lines) if 'add_h1("TỔNG QUAN VỀ PHƯƠNG PHÁP TRÍCH XUẤT' in l), None)
+            e_idx = next((i for i, l in enumerate(c_lines) if 'add_h1("PHƯƠNG PHÁP BIỂU DIỄN ĐẶC TRƯNG LOG' in l), None)
+            if s_idx is not None and e_idx is not None:
+                c1_b = "\n".join(c_lines[s_idx:e_idx])
+                c1_h = hashlib.sha256(c1_b.encode("utf-8")).hexdigest()
+                CANONICAL_HASH = "6097fb1f051573adb21ce65a3466b41d50ba9b8bb9a526c96563e41705c81d5e"
+                if c1_h == CANONICAL_HASH:
+                    print(f"[PASS] Frozen Chapter 1 Hash Invariant: {c1_h[:16]}... (UNCHANGED)")
+                else:
+                    print(f"[FAIL] Frozen Chapter 1 Hash Invariant Violated! Expected {CANONICAL_HASH}, got {c1_h}")
+                    sys.exit(1)
         print("[PASS] Academic Composer, Document IR, and Anti-Hallucination Compiler: Operational")
 
         print("==================================================")

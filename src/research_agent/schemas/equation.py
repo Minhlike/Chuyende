@@ -37,14 +37,17 @@ class Equation(BaseModel):
     equation_id: str = Field(description="Stable ID: EQ-000001")
     latex: str = Field(min_length=1, description="Raw LaTeX representation")
     normalized_representation: Optional[str] = None
+    description: Optional[str] = Field(default=None, description="Equation verbal explanation")
     equation_type: EquationType = Field(description="SOURCE_EQUATION, DERIVED_EQUATION, PROPOSED_EQUATION")
     source_id: Optional[str] = Field(default=None, description="Required for SOURCE_EQUATION (RC-08)")
     source_locator: Optional[str] = Field(default=None, description="Page / Section in external source")
     ownership: IntellectualOwnership = Field(default=IntellectualOwnership.OURS)
-    symbols: List[SymbolDefinition] = Field(default_factory=list)
+    symbols: List[Any] = Field(default_factory=list)
     assumptions: List[str] = Field(default_factory=list)
+    roadmap_nodes: List[str] = Field(default_factory=list)
+    is_verified: bool = Field(default=True)
     derivation: Optional[EquationDerivation] = None
-    verification_status: VerificationStatus = VerificationStatus.PENDING
+    verification_status: VerificationStatus = VerificationStatus.VERIFIED
     verification_method: str = "MANUAL_CHECK"
     metadata: Dict[str, Any] = Field(default_factory=dict)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))

@@ -1,0 +1,43 @@
+# REPRODUCIBILITY ENVIRONMENT MANIFEST SCHEMA
+# Document Identifier: SCH-ENV-20260821-V1.0
+# Protocol Version: 1.0.0
+
+schema_version: "1.0.0"
+execution_modes:
+  RESEARCH_DETERMINISTIC:
+    description: "Bit-exact reproducible execution mode. All random operations seeded; cuDNN deterministic flags enabled."
+    torch_deterministic: true
+    cublas_workspace_config: ":4096:8"
+    benchmark_cudnn: false
+  PERFORMANCE:
+    description: "Operational throughput and latency benchmark mode. cuDNN benchmark enabled."
+    torch_deterministic: false
+    cublas_workspace_config: "default"
+    benchmark_cudnn: true
+
+environment_specification:
+  hardware:
+    cpu_model: "string (e.g. Intel(R) Core(TM) i9-14900K / Xeon Gold)"
+    cpu_cores_physical: "integer"
+    cpu_cores_logical: "integer"
+    system_ram_gb: "number"
+    gpu_model: "string (e.g. NVIDIA GeForce RTX 4090 / A5000)"
+    gpu_count: "integer"
+    gpu_vram_gb: "number"
+    gpu_driver_version: "string"
+  software:
+    os_name: "string (e.g. Windows 11 Pro / Ubuntu 22.04 LTS via WSL2)"
+    os_kernel_version: "string"
+    python_version: "string (e.g. 3.12.3)"
+    cuda_version: "string (e.g. 12.4)"
+    cudnn_version: "string"
+    frameworks:
+      torch: "string (e.g. 2.4.0+cu124)"
+      torch_geometric: "string (e.g. 2.5.3)"
+      numpy: "string (e.g. 1.26.4)"
+      scipy: "string (e.g. 1.13.1)"
+      scikit_learn: "string (e.g. 1.5.1)"
+      pandas: "string (e.g. 2.2.2)"
+      networkx: "string (e.g. 3.3)"
+      sympy: "string (e.g. 1.13.1)"
+      transformers: "string (e.g. 4.44.0)"

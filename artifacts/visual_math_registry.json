@@ -1,0 +1,318 @@
+{
+  "title": "Canonical Visual Symbol Registry",
+  "description": "Source of truth for all mathematical symbols, variable names, vectors, matrices, sets, and operators across thesis text and technical diagrams.",
+  "version": "1.0.0",
+  "symbols": {
+    "z_seq": {
+      "canonical_text": "\\mathbf{z}_{\\text{seq}}",
+      "semantic_role": "Sequential representation vector extracted by Transformer Encoder",
+      "exact_case": "lowercase",
+      "type": "vector",
+      "base_symbol": "z",
+      "subscript": "seq",
+      "superscript": null,
+      "font_style": "bold_italic_math",
+      "source_section": "2.3.1.3",
+      "permitted_visual_forms": [
+        "\\mathbf{z}_{\\mathrm{seq}}",
+        "z_{\\mathrm{seq}}",
+        "z_seq",
+        "Vector đặc trưng chuỗi z_seq"
+      ]
+    },
+    "z_graph": {
+      "canonical_text": "\\mathbf{z}_{\\text{graph}}",
+      "semantic_role": "Graph representation vector aggregated across provenance graph window",
+      "exact_case": "lowercase",
+      "type": "vector",
+      "base_symbol": "z",
+      "subscript": "graph",
+      "superscript": null,
+      "font_style": "bold_italic_math",
+      "source_section": "2.3.3.4",
+      "permitted_visual_forms": [
+        "\\mathbf{z}_{\\mathrm{graph}}",
+        "z_{\\mathrm{graph}}",
+        "z_graph",
+        "Vector đặc trưng đồ thị z_graph"
+      ]
+    },
+    "z_mv": {
+      "canonical_text": "\\mathbf{z}_{\\text{mv}}",
+      "semantic_role": "Unified multi-view representation vector after gated fusion",
+      "exact_case": "lowercase",
+      "type": "vector",
+      "base_symbol": "z",
+      "subscript": "mv",
+      "superscript": null,
+      "font_style": "bold_italic_math",
+      "source_section": "2.4.2",
+      "permitted_visual_forms": [
+        "\\mathbf{z}_{\\mathrm{mv}}",
+        "z_{\\mathrm{mv}}",
+        "z_mv",
+        "Vector đa góc nhìn z_mv"
+      ]
+    },
+    "p_seq": {
+      "canonical_text": "\\mathbf{p}_{\\text{seq}}",
+      "semantic_role": "Projected sequential representation in common alignment space",
+      "exact_case": "lowercase",
+      "type": "vector",
+      "base_symbol": "p",
+      "subscript": "seq",
+      "superscript": null,
+      "font_style": "bold_italic_math",
+      "source_section": "2.4.1.1",
+      "permitted_visual_forms": [
+        "\\mathbf{p}_{\\mathrm{seq}}",
+        "p_{\\mathrm{seq}}",
+        "p_seq"
+      ]
+    },
+    "p_graph": {
+      "canonical_text": "\\mathbf{p}_{\\text{graph}}",
+      "semantic_role": "Projected graph representation in common alignment space",
+      "exact_case": "lowercase",
+      "type": "vector",
+      "base_symbol": "p",
+      "subscript": "graph",
+      "superscript": null,
+      "font_style": "bold_italic_math",
+      "source_section": "2.4.1.1",
+      "permitted_visual_forms": [
+        "\\mathbf{p}_{\\mathrm{graph}}",
+        "p_{\\mathrm{graph}}",
+        "p_graph"
+      ]
+    },
+    "h_u": {
+      "canonical_text": "\\mathbf{h}_u(t)",
+      "semantic_role": "Memory state vector of node u at time t in Temporal GNN",
+      "exact_case": "lowercase",
+      "type": "vector",
+      "base_symbol": "h",
+      "subscript": "u",
+      "superscript": null,
+      "font_style": "bold_italic_math",
+      "source_section": "2.3.3.1",
+      "permitted_visual_forms": [
+        "\\mathbf{h}_u(t)",
+        "h_u(t)",
+        "Trạng thái bộ nhớ h_u(t)"
+      ]
+    },
+    "h_v_pre": {
+      "canonical_text": "\\mathbf{h}_{v,\\text{pre}}",
+      "semantic_role": "Pre-event memory state of source node v immediately prior to event time t",
+      "exact_case": "lowercase",
+      "type": "vector",
+      "base_symbol": "h",
+      "subscript": "v,pre",
+      "superscript": null,
+      "font_style": "bold_italic_math",
+      "source_section": "2.3.3.1",
+      "permitted_visual_forms": [
+        "\\mathbf{h}_{v,\\mathrm{pre}}",
+        "h_{v,\\mathrm{pre}}",
+        "h_v,pre"
+      ]
+    },
+    "m_vu": {
+      "canonical_text": "\\mathbf{m}_{v \\to u}(t)",
+      "semantic_role": "Typed temporal message transmitted from source v to destination u",
+      "exact_case": "lowercase",
+      "type": "vector",
+      "base_symbol": "m",
+      "subscript": "v->u",
+      "superscript": null,
+      "font_style": "bold_italic_math",
+      "source_section": "2.3.3.1",
+      "permitted_visual_forms": [
+        "\\mathbf{m}_{v \\to u}(t)",
+        "m_{v \\to u}(t)",
+        "m_v→u(t)"
+      ]
+    },
+    "m_u_agg": {
+      "canonical_text": "\\mathbf{m}_{u,\\text{agg}}(t)",
+      "semantic_role": "Aggregated neighborhood message for node u",
+      "exact_case": "lowercase",
+      "type": "vector",
+      "base_symbol": "m",
+      "subscript": "u,agg",
+      "superscript": null,
+      "font_style": "bold_italic_math",
+      "source_section": "2.3.3.1",
+      "permitted_visual_forms": [
+        "\\mathbf{m}_{u,\\mathrm{agg}}(t)",
+        "m_{u,\\mathrm{agg}}(t)",
+        "m_u,agg(t)"
+      ]
+    },
+    "G_t": {
+      "canonical_text": "\\mathcal{G}_t",
+      "semantic_role": "Dynamic provenance graph at time t",
+      "exact_case": "uppercase",
+      "type": "graph_set",
+      "base_symbol": "G",
+      "subscript": "t",
+      "superscript": null,
+      "font_style": "calligraphic_or_italic",
+      "source_section": "2.1.1",
+      "permitted_visual_forms": [
+        "\\mathcal{G}_t",
+        "G_t",
+        "Đồ thị nguồn gốc G_t"
+      ]
+    },
+    "V_t": {
+      "canonical_text": "\\mathcal{V}_t",
+      "semantic_role": "Active node set of provenance graph at time t",
+      "exact_case": "uppercase",
+      "type": "set",
+      "base_symbol": "V",
+      "subscript": "t",
+      "superscript": null,
+      "font_style": "calligraphic_or_italic",
+      "source_section": "2.1.1",
+      "permitted_visual_forms": [
+        "\\mathcal{V}_t",
+        "V_t",
+        "Tập đỉnh V_t"
+      ]
+    },
+    "E_t": {
+      "canonical_text": "\\mathcal{E}_t",
+      "semantic_role": "Active edge set of provenance graph at time t",
+      "exact_case": "uppercase",
+      "type": "set",
+      "base_symbol": "E",
+      "subscript": "t",
+      "superscript": null,
+      "font_style": "calligraphic_or_italic",
+      "source_section": "2.1.1",
+      "permitted_visual_forms": [
+        "\\mathcal{E}_t",
+        "E_t",
+        "Tập cạnh E_t"
+      ]
+    },
+    "theta": {
+      "canonical_text": "\\theta",
+      "semantic_role": "Trainable parameters of neural feature extractors",
+      "exact_case": "lowercase_greek",
+      "type": "parameter",
+      "base_symbol": "theta",
+      "subscript": null,
+      "superscript": null,
+      "font_style": "italic_greek",
+      "source_section": "2.1.2",
+      "permitted_visual_forms": [
+        "\\theta",
+        "\\theta^*",
+        "θ",
+        "θ*"
+      ]
+    },
+    "Theta_PCGrad": {
+      "canonical_text": "\\Theta_{\\text{PCGrad}}",
+      "semantic_role": "Shared parameter subset subject to gradient projection surgery",
+      "exact_case": "uppercase_greek",
+      "type": "parameter_set",
+      "base_symbol": "Theta",
+      "subscript": "PCGrad",
+      "superscript": null,
+      "font_style": "upright_greek",
+      "source_section": "2.4.4.1",
+      "permitted_visual_forms": [
+        "\\Theta_{\\mathrm{PCGrad}}",
+        "Θ_PCGrad",
+        "Tập tham số chung Θ_PCGrad"
+      ]
+    },
+    "R_dim": {
+      "canonical_text": "\\mathbb{R}^d",
+      "semantic_role": "d-dimensional real Euclidean vector space",
+      "exact_case": "double_struck",
+      "type": "vector_space",
+      "base_symbol": "R",
+      "subscript": null,
+      "superscript": "d",
+      "font_style": "double_struck",
+      "source_section": "2.1.1",
+      "permitted_visual_forms": [
+        "\\mathbb{R}^d",
+        "\\mathbb{R}^{d_{\\mathrm{seq}}}",
+        "\\mathbb{R}^{d_{\\mathrm{graph}}}",
+        "\\mathbb{R}^{d_{\\mathrm{mv}}}",
+        "ℝᵈ",
+        "ℝ"
+      ]
+    },
+    "L_inv": {
+      "canonical_text": "\\mathcal{L}_{\\text{inv}}",
+      "semantic_role": "Invariance loss term between projected sequential and graph representations",
+      "exact_case": "uppercase_calligraphic",
+      "type": "loss_function",
+      "base_symbol": "L",
+      "subscript": "inv",
+      "superscript": null,
+      "font_style": "calligraphic_math",
+      "source_section": "2.4.1.1",
+      "permitted_visual_forms": [
+        "\\mathcal{L}_{\\mathrm{inv}}",
+        "L_inv",
+        "Mất mát bất biến L_inv"
+      ]
+    },
+    "L_preserv": {
+      "canonical_text": "\\mathcal{L}_{\\text{preserv}}",
+      "semantic_role": "Symmetric multi-view representation preservation loss",
+      "exact_case": "uppercase_calligraphic",
+      "type": "loss_function",
+      "base_symbol": "L",
+      "subscript": "preserv",
+      "superscript": null,
+      "font_style": "calligraphic_math",
+      "source_section": "2.4.3.2",
+      "permitted_visual_forms": [
+        "\\mathcal{L}_{\\mathrm{preserv}}",
+        "L_preserv",
+        "Mất mát bảo toàn đối xứng L_preserv"
+      ]
+    },
+    "C_fuse": {
+      "canonical_text": "\\mathcal{C}_{\\text{fuse}}",
+      "semantic_role": "Streaming incremental multi-view fusion computational cost",
+      "exact_case": "uppercase_calligraphic",
+      "type": "complexity",
+      "base_symbol": "C",
+      "subscript": "fuse",
+      "superscript": null,
+      "font_style": "calligraphic_math",
+      "source_section": "2.4.4.2",
+      "permitted_visual_forms": [
+        "\\mathcal{C}_{\\mathrm{fuse}}",
+        "C_fuse",
+        "Chi phí dung hợp C_fuse"
+      ]
+    },
+    "hadamard": {
+      "canonical_text": "\\odot",
+      "semantic_role": "Hadamard element-wise vector product operator",
+      "exact_case": "symbol",
+      "type": "operator",
+      "base_symbol": "odot",
+      "subscript": null,
+      "superscript": null,
+      "font_style": "math_symbol",
+      "source_section": "2.4.2",
+      "permitted_visual_forms": [
+        "\\odot",
+        "⊙",
+        "Tích Hadamard (⊙)"
+      ]
+    }
+  }
+}
