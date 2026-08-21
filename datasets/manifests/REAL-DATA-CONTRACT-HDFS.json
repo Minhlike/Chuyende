@@ -1,0 +1,27 @@
+{
+  "dataset_id": "DATA-HDFS-001",
+  "dataset_name": "HDFS LogHub Benchmark",
+  "dataset_tier": "Tier A (Representation / Anomaly Context Stress Test)",
+  "raw_artifact_sha256": "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169",
+  "parser_version_hash": "0ab3ffa56131c9d42190eff8a9a62572239af9008752346504fa29b140d3db5d",
+  "source_record_count": 11175629,
+  "valid_record_count": 11175629,
+  "malformed_count": 0,
+  "event_time_coverage": 1.0,
+  "template_vocabulary_size": 55,
+  "dynamic_parameter_types": [
+    "IP_RFC1918_PRIVATE",
+    "IP_PUBLIC",
+    "NUMERIC_SMALL",
+    "BYTE_SIZE_BUCKET"
+  ],
+  "excluded_shortcut_fields": [
+    "block_id",
+    "session_id"
+  ],
+  "train_hash": "ef7df2e62b17fb1efd33599e4a8d47e1fb5b669ce9e2803a16471e918ad06df3",
+  "validation_hash": "bb0820e3975fd05cb82b0a508ce922c8795a0f8c0ad01b3aaf1b675d8b436aa3",
+  "test_status": "SEALED",
+  "synthetic_proxy_count": 0,
+  "data_classification": "REAL_TRAINING_MATERIALIZED"
+}
