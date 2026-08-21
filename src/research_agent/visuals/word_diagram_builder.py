@@ -6,7 +6,13 @@ Enforces: Rectangle/Rounded Rectangle, Black connector arrows, White fill, Black
 
 import os
 from typing import Any, Dict, List, Optional
-import win32com.client as win32
+
+try:
+    import win32com.client as win32
+    HAS_WIN32COM = True
+except ImportError:
+    win32 = None
+    HAS_WIN32COM = False
 from research_agent.visuals.schemas import (
     DiagramSpecification,
     ShapeNodeSpec,

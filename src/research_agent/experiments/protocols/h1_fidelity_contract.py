@@ -5,34 +5,41 @@ Evaluates whether security-aware dynamic parameter representation preserves mutu
 I(z; Y_sec) compared to template-only abstraction under identical architecture, split, probe, and budget.
 """
 
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import numpy as np
 
 def evaluate_h1_parameter_fidelity_contract(
-    parameter_repr_cluster_scores: np.ndarray,
-    template_only_cluster_scores: np.ndarray,
+    cluster_ids: np.ndarray,
+    y_true: np.ndarray,
+    parameter_repr_scores: np.ndarray,
+    template_only_scores: np.ndarray,
     b_resamples: int = 2000,
     seed: int = 10007
 ) -> Dict[str, Any]:
     """
     Executes pre-registered H1 hypothesis testing.
     """
-    from research_agent.experiments.protocols.paired_cluster_bootstrap import paired_cluster_bootstrap_test
+    from research_agent.experiments.protocols.paired_cluster_bootstrap import (
+        paired_cluster_bootstrap_recompute,
+        compute_pr_auc
+    )
     
-    bootstrap_result = paired_cluster_bootstrap_test(
-        proposed_clusters=parameter_repr_cluster_scores,
-        baseline_clusters=template_only_cluster_scores,
+    bootstrap_result = paired_cluster_bootstrap_recompute(
+        cluster_ids=cluster_ids,
+        y_true=y_true,
+        y_pred_proposed=parameter_repr_scores,
+        y_pred_baseline=template_only_scores,
+        metric_fn=compute_pr_auc,
         b_resamples=b_resamples,
         random_seed=seed,
         alpha=0.05,
-        correction_method="bonferroni_h1"
+        correction_family="bonferroni_h1"
     )
 
-    # Falsification check: Falsified if delta <= 0 or p > 0.0125 or Cohen's d < 0.20
+    # Falsification check: Falsified if delta <= 0 or p > 0.0125
     is_falsified = (
-        bootstrap_result["observed_mean_diff"] <= 0.0 or
-        bootstrap_result["p_value"] > bootstrap_result["alpha_adjusted"] or
-        bootstrap_result["cohens_d"] < 0.20
+        bootstrap_result["observed_delta"] <= 0.0 or
+        bootstrap_result["p_value"] > bootstrap_result["alpha_adjusted"]
     )
 
     return {

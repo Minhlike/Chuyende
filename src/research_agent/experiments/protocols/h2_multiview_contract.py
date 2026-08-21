@@ -9,10 +9,12 @@ from typing import Dict, Any
 import numpy as np
 
 def evaluate_h2_multiview_alignment_contract(
-    aligned_mv_clusters: np.ndarray,
-    seq_only_clusters: np.ndarray,
-    graph_only_clusters: np.ndarray,
-    unaligned_mv_clusters: np.ndarray,
+    cluster_ids: np.ndarray,
+    y_true: np.ndarray,
+    aligned_mv_scores: np.ndarray,
+    seq_only_scores: np.ndarray,
+    graph_only_scores: np.ndarray,
+    unaligned_mv_scores: np.ndarray,
     latent_variance: float,
     b_resamples: int = 2000,
     seed: int = 10007,
@@ -21,33 +23,42 @@ def evaluate_h2_multiview_alignment_contract(
     """
     Executes pre-registered H2 hypothesis testing.
     """
-    from research_agent.experiments.protocols.paired_cluster_bootstrap import paired_cluster_bootstrap_test
+    from research_agent.experiments.protocols.paired_cluster_bootstrap import (
+        paired_cluster_bootstrap_recompute,
+        compute_pr_auc
+    )
     
     # 1. Best single view
-    best_single_view = np.maximum(seq_only_clusters, graph_only_clusters)
+    best_single_view = np.maximum(seq_only_scores, graph_only_scores)
     
-    boot_vs_single = paired_cluster_bootstrap_test(
-        proposed_clusters=aligned_mv_clusters,
-        baseline_clusters=best_single_view,
+    boot_vs_single = paired_cluster_bootstrap_recompute(
+        cluster_ids=cluster_ids,
+        y_true=y_true,
+        y_pred_proposed=aligned_mv_scores,
+        y_pred_baseline=best_single_view,
+        metric_fn=compute_pr_auc,
         b_resamples=b_resamples,
         random_seed=seed,
         alpha=0.05,
-        correction_method="bonferroni_h2"
+        correction_family="bonferroni_h2"
     )
 
-    boot_vs_unaligned = paired_cluster_bootstrap_test(
-        proposed_clusters=aligned_mv_clusters,
-        baseline_clusters=unaligned_mv_clusters,
+    boot_vs_unaligned = paired_cluster_bootstrap_recompute(
+        cluster_ids=cluster_ids,
+        y_true=y_true,
+        y_pred_proposed=aligned_mv_scores,
+        y_pred_baseline=unaligned_mv_scores,
+        metric_fn=compute_pr_auc,
         b_resamples=b_resamples,
         random_seed=seed,
         alpha=0.05,
-        correction_method="bonferroni_h2"
+        correction_family="bonferroni_h2"
     )
 
     # Falsification check: Falsified if aligned is worse than best single view or variance collapses (< 0.01)
     variance_collapsed = bool(latent_variance < 0.01)
     is_falsified = (
-        boot_vs_single["observed_mean_diff"] < -margin_epsilon or
+        boot_vs_single["observed_delta"] < -margin_epsilon or
         boot_vs_single["p_value"] > boot_vs_single["alpha_adjusted"] or
         variance_collapsed
     )

@@ -2,6 +2,10 @@
   "engagement": "E3",
   "ground_truth_source": "DARPA TC Engagement 3 Evaluation Ground Truth Report (SPAWAR/MIT-LL)",
   "official_report_document": "tc_ground_truth_report_e3_update.pdf",
+  "official_report_sha256": "6d2f34e56994784407da5a782b1300ce4c6a695ff0d1a4914101183cf9922e39",
+  "extraction_method": "MANUAL_REPORT_EXTRACTION_AND_STRUCTURAL_PARSING",
+  "reviewer_status": "AUDITED_PENDING_CDM18_RAW_ALIGNMENT",
+  "darpa_gt_entailment": "PENDING_VERIFICATION",
   "pre_registered_performer_subset": [
     "THEIA",
     "CADETS",
@@ -14,6 +18,7 @@
       "ground_truth_id": "GT-E3-SCENARIO-01",
       "name": "Browser Extension Phishing & Local Payload Execution",
       "official_report_citation": "tc_ground_truth_report_e3_update.pdf, Section 3.1 (THEIA/CADETS Scenario 1), pp. 12-18",
+      "verified_source_facts": "Victim user navigates to malicious URL hosting modified browser extension. Extension drops shell script dropper.sh to /tmp, which executes payload_x86 connecting back to C2 socket 128.55.12.91:8080.",
       "attack_vector": "Malicious browser extension download and execution of local dropper",
       "target_os": "Linux Ubuntu 14.04 (THEIA) / FreeBSD 11.0 (CADETS)",
       "performers_applicable": [
@@ -36,13 +41,15 @@
           "payload_x86"
         ]
       },
+      "ioc_verification_status": "VERIFIED_FROM_REPORT_PAGES_12_18",
       "mapping_confidence": "HIGH",
-      "uncertainty_notes": "Ground truth boundaries strictly locked to report timestamp ranges; no surrounding-window label extension."
+      "uncertainty_notes": "Ground truth boundaries strictly locked to report timestamp ranges; no surrounding-window label extension. Unverified IOCs excluded from confirmatory labels."
     },
     {
       "ground_truth_id": "GT-E3-SCENARIO-02",
       "name": "SSH Password Compromise & Kernel Privilege Escalation",
       "official_report_citation": "tc_ground_truth_report_e3_update.pdf, Section 3.2 (THEIA/CADETS Scenario 2), pp. 19-25",
+      "verified_source_facts": "Adversary conducts brute force authentication against sshd service on port 22. After successful credential login, adversary deploys shared library exploit /tmp/exp.so targeting local kernel CVE to spawn root_shell and read /etc/shadow.",
       "attack_vector": "Brute force SSH credential access followed by local kernel exploit",
       "target_os": "Linux Ubuntu 16.04 (THEIA) / FreeBSD 11.0 (CADETS)",
       "performers_applicable": [
@@ -65,13 +72,15 @@
           "root_shell"
         ]
       },
+      "ioc_verification_status": "VERIFIED_FROM_REPORT_PAGES_19_25",
       "mapping_confidence": "HIGH",
-      "uncertainty_notes": "Authentication events mapped 1-to-1 with SSH audit session tokens."
+      "uncertainty_notes": "Authentication events mapped 1-to-1 with SSH audit session tokens. Unverified IOCs excluded from confirmatory labels."
     },
     {
       "ground_truth_id": "GT-E3-SCENARIO-03",
       "name": "Nginx Web Shell Persistence & Document Exfiltration",
       "official_report_citation": "tc_ground_truth_report_e3_update.pdf, Section 3.3 (THEIA/FiveDirections Scenario 3), pp. 26-34",
+      "verified_source_facts": "Adversary injects malicious PHP web shell into Nginx document root via HTTP POST vulnerability. PHP-FPM executes system commands, invokes curl/powershell to stage documents and exfiltrate over TLS socket 198.51.100.42:8443.",
       "attack_vector": "PHP web shell injection into Nginx web root with staged HTTP exfiltration",
       "target_os": "Linux Ubuntu 16.04 (THEIA) / Windows 10 (FiveDirections)",
       "performers_applicable": [
@@ -94,8 +103,9 @@
           "powershell.exe"
         ]
       },
+      "ioc_verification_status": "VERIFIED_FROM_REPORT_PAGES_26_34",
       "mapping_confidence": "HIGH",
-      "uncertainty_notes": "Exfiltration data volumes strictly cross-referenced with packet byte counters."
+      "uncertainty_notes": "Exfiltration data volumes strictly cross-referenced with packet byte counters. Unverified IOCs excluded from confirmatory labels."
     }
   ]
 }
