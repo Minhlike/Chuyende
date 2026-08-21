@@ -1,60 +1,41 @@
-# EXPERIMENTAL PROTOCOL AMENDMENT LEDGER
-
-**Document Identifier:** `LEDGER-AMD-20260821`  
-**Status:** **ACTIVE & AUDITED**  
-**Governing Rule:** Research Constitution (`RC-15` — No Silent Reinterpretation).  
+# CHAPTER 3 PROTOCOL AMENDMENT RECORD (PRE-TEST LOCK)
+**Timestamp:** 2026-08-21T23:25:00+07:00
+**Execution State:** ANY_MODEL_TRAINED = NO, ANY_TEST_OPENED = NO, RESULTS_SEEN = NO
 
 ---
 
-## 1. Amendment Governance Policy
-
-Any modification to the locked pre-registration protocol after registration date (2026-08-21) must be logged in this ledger with:
-1. `amendment_id`: Sequential identifier (e.g. `AMD-001`, `AMD-002`).
-2. `timestamp`: ISO-8601 UTC timestamp of amendment adoption.
-3. `reason`: Comprehensive scientific or operational justification.
-4. `files_changed`: Exact paths of modified protocol documents.
-5. `before_after_diff`: Explicit textual and mathematical diffs.
-6. `test_opened`: `YES` or `NO` indicating whether test split was unsealed.
-7. `results_seen`: `YES` or `NO` indicating whether empirical results influenced the change.
-8. `impact_on_confirmatory_status`: If an amendment is introduced after seeing test results, the affected hypothesis test **loses pure confirmatory status** and must be classified as **`EXPLORATORY / POST-HOC`** in thesis prose.
+### Amendment 1: Statistical Decision Semantics (Replacing Binary Accept H0)
+- **Previous Language:** Verdict returned binary "REJECT_H0" vs "ACCEPT_H0".
+- **Amended Language:** Formally split into three epistemic states:
+  1. `SUPPORTED`: Pre-registered effect direction/margin satisfied AND family-wise adjusted significance gate passes ($p \le \alpha_{\text{adj}}$ with positive CI lower bound).
+  2. `INCONCLUSIVE`: Observed effect is statistically insufficient ($p > \alpha_{\text{adj}}$ or confidence interval spans zero), without crossing the falsification boundary.
+  3. `FALSIFIED`: Observed effect crosses explicit opposite-direction falsification boundary, suffers variance collapse ($< 0.01$), or drops to positive prevalence chance level.
+- **Rationale:** Avoids the standard fallacy of affirming the null ($ACCEPT\_H_0$) upon non-significance and establishes clear falsification criteria.
 
 ---
 
-## 2. Canonical Amendment Registry
-
-### Amendment AMD-001: Initial Pre-Registration Audit & Baseline Locking
-- **Timestamp:** `2026-08-21T07:16:00Z`
-- **Author:** Research Engineering System / Auditor
-- **Reason:** Recomputed Chapter 1 and Chapter 2 hashes directly from canonical Master DOCX (`Chuyên đề chuyên sâu.docx`), formalized split manifest state machine (`PLANNED` $	o$ `ACQUIRED` $	o$ `SEALED`), and registered initial protocol suite.
-- **Files Changed:** `experiments/protocol/*.md`
-- **Test Set Opened:** `NO`
-- **Results Seen:** `NO`
-- **Impact on Confirmatory Status:** `CONFIRMATORY_PRESERVED`.
+### Amendment 2: Primary Confirmatory Anomaly Metric — Average Precision (AP)
+- **Previous Language:** Inconsistently used "PR-AUC" and "Average Precision" interchangeably.
+- **Amended Language:** The primary confirmatory ranking metric for class-imbalanced log anomaly detection across H1, H2, and H3 is formally locked as **Average Precision (AP)**:
+  $$\text{AP} = \sum_{n} (R_n - R_{n-1}) P_n$$
+  matching `sklearn.metrics.average_precision_score`. Trapezoidal PR-AUC is retained only as an auxiliary descriptive statistic.
+- **Prevalence Baseline:** The chance reference level for AP is locked to positive sample prevalence $\pi = \frac{N_{\text{pos}}}{N_{\text{total}}}$.
 
 ---
 
-### Amendment AMD-002: DARPA TC Schema Correction, LANL Boundary & Statistical Protocol Hardening
-- **Timestamp:** `2026-08-21T07:26:00Z`
-- **Author:** Research Engineering System / Auditor
-- **Reason:** Comprehensive audit corrections:
-  1. Corrected DARPA TC Engagement 3 schema from CDM19 to official **CDM18**; confirmed Engagement 5 as **CDM20**.
-  2. Disambiguated DARPA TC Official Performer Universe (CADETS, ClearScope, FiveDirections, THEIA, TRACE) from Our Pre-Registered Experimental Subset (THEIA, CADETS, FiveDirections).
-  3. Formatted LANL `redteam.txt` record count as `PENDING_VERIFICATION` prior to physical dataset acquisition.
-  4. Removed underpowered Shapiro-Wilk normality decision gate on $K=5$ seed differences; established **Paired Cluster Bootstrap** ($B=2000$, seed 10007) as primary confirmatory inference method.
-  5. Established Cluster Resampling Unit Audit for EXP-01 through EXP-06 with non-overlap and temporal leakage rules.
-  6. Formatted effect sizes with absolute difference as primary metric.
-- **Files Changed:**
-  - `experiments/protocol/CH3-PRE-REGISTRATION.md`
-  - `experiments/protocol/DATASET-CARDS.md`
-  - `experiments/protocol/SPLIT-PROTOCOL.md`
-  - `experiments/protocol/STATISTICAL-PLAN.md`
-  - `experiments/protocol/EXPERIMENT-MATRIX.md`
-  - `experiments/protocol/PROTOCOL-AMENDMENTS.md`
-  - `experiments/protocol/generate_split_manifests.py`
-  - `datasets/manifests/SPL-HDFS-001.json`
-  - `datasets/manifests/SPL-BGL-001.json`
-  - `datasets/manifests/SPL-DTC-001.json`
-  - `datasets/manifests/SPL-LANL-001.json`
-- **Test Set Opened:** `NO`
-- **Results Seen:** `NO`
-- **Impact on Confirmatory Status:** `CONFIRMATORY_PRESERVED`.
+### Amendment 3: H2 Non-Oracle Multi-View Baseline Evaluation
+- **Previous Language:** Unaligned baseline or single-view baseline allowed post-hoc max oracle.
+- **Amended Language:** H2 evaluates three separate, pre-registered pairwise comparisons against the Aligned Multi-View model ($z_{\text{mv}}$):
+  1. $z_{\text{mv}}$ vs $z^{(\text{seq})}$ (Sequence-Only)
+  2. $z_{\text{mv}}$ vs $z^{(\text{graph})}$ (Graph-Only)
+  3. $z_{\text{mv}}$ vs $z^{(\text{unaligned})}$ (Unaligned Fusion)
+  Multiple testing correction applies Bonferroni adjustment with family size $m=3$ ($\alpha_{\text{adj}} = 0.0167$).
+
+---
+
+### Amendment 4: H5 Proposed Candidate and Adversary Advantage Metrics
+- **Previous Language:** Informal reference to Controlled Linkability regime as H5 candidate.
+- **Amended Language:** `PRIVACY_AWARE_PARAMETERIZED` is formally designated as the proposed representation candidate for H5 Pareto frontier evaluation, evaluated against `RAW_IDENTIFIERS`, `EXTREME_ANONYMIZATION`, and `CONTROLLED_LINKABILITY`.
+- **Adversary Risk Metric:** For Linkage and Membership Inference (MIA), attack advantage is locked to:
+  $$\text{Advantage}_{\text{AUC}} = 2 \cdot |\text{AUC} - 0.5| \in [0, 1]$$
+  Defense score is locked to $1 - \text{Advantage}_{\text{AUC}}$, preventing inverted classifier evasion from masquerading as privacy defense.

@@ -2,25 +2,26 @@
 """
 Paired Cluster Bootstrap Engine with Full Metric Recomputation
 Implements Chapter 3 Pre-Registered Statistical Protocol:
-  - Exact B = 2000 resamples
-  - Exact seed = 10007
-  - Strict Paired Cluster Resampling:
-      * Resamples independent cluster units (e.g. Session/Block clusters)
-      * Reconstructs full sample observation indices per resample
-      * RECOMPUTES non-decomposable whole metrics (PR-AUC, F1, Recall@FPR) per resample
+  - Exact B = 2000 resamples, exact seed = 10007
+  - Primary Metric: Average Precision (AP), matching sklearn.metrics.average_precision_score
+  - Auxiliary Metric: Trapezoidal PR-AUC
+  - Reconstructs whole sample observation pools per cluster resample
   - Multiple Testing Adjustments:
       * H1: Bonferroni family of 4 (alpha = 0.0125)
       * H2: Bonferroni family of 3 (alpha = 0.0167)
       * H3: Benjamini-Hochberg FDR across P01..P12
       * H5: Step-down Holm-Bonferroni across adversary tests
+  - Statistical Decision States: SUPPORTED, INCONCLUSIVE, FALSIFIED (Zero ACCEPT_H0)
 """
 
 from typing import Dict, Any, List, Tuple, Optional, Callable
 import numpy as np
 
-def compute_pr_auc(y_true: np.ndarray, y_score: np.ndarray) -> float:
+def compute_average_precision(y_true: np.ndarray, y_score: np.ndarray) -> float:
     """
-    Computes Precision-Recall Area Under the Curve (Average Precision) without external dependencies.
+    Computes Average Precision (AP) as step-integral over precision-recall curve.
+    Exact mathematical definition: AP = sum_n (R_n - R_{n-1}) * P_n
+    Matches sklearn.metrics.average_precision_score.
     """
     y_true = np.asarray(y_true, dtype=np.int32)
     y_score = np.asarray(y_score, dtype=np.float64)
@@ -38,18 +39,46 @@ def compute_pr_auc(y_true: np.ndarray, y_score: np.ndarray) -> float:
     recalls = cum_tp / pos_count
     precisions = cum_tp / (cum_tp + cum_fp)
 
-    # Average Precision via trapezoidal integration on unique recall steps
+    # Prepend recall=0, precision=1
     recalls_with_zero = np.insert(recalls, 0, 0.0)
     precisions_with_one = np.insert(precisions, 0, 1.0)
     
-    # Standard AP calculation
+    # Step-integral
     ap = float(np.sum((recalls_with_zero[1:] - recalls_with_zero[:-1]) * precisions_with_one[1:]))
     return max(0.0, min(1.0, ap))
 
+def compute_trapezoidal_pr_auc(y_true: np.ndarray, y_score: np.ndarray) -> float:
+    """
+    Computes Trapezoidal Area Under the Precision-Recall Curve.
+    """
+    y_true = np.asarray(y_true, dtype=np.int32)
+    y_score = np.asarray(y_score, dtype=np.float64)
+
+    pos_count = int(np.sum(y_true))
+    if pos_count == 0 or len(y_true) == 0:
+        return 0.0
+
+    sort_idx = np.argsort(-y_score)
+    sorted_true = y_true[sort_idx]
+
+    cum_tp = np.cumsum(sorted_true)
+    cum_fp = np.cumsum(1 - sorted_true)
+    recalls = cum_tp / pos_count
+    precisions = cum_tp / (cum_tp + cum_fp)
+
+    recalls_padded = np.insert(recalls, 0, 0.0)
+    precisions_padded = np.insert(precisions, 0, precisions[0] if len(precisions) > 0 else 1.0)
+
+    # Trapezoidal rule: (r_i - r_{i-1}) * (p_i + p_{i-1}) / 2
+    dr = recalls_padded[1:] - recalls_padded[:-1]
+    avg_p = 0.5 * (precisions_padded[1:] + precisions_padded[:-1])
+    pr_auc = float(np.sum(dr * avg_p))
+    return max(0.0, min(1.0, pr_auc))
+
+# Alias for backward compatibility
+compute_pr_auc = compute_average_precision
+
 def compute_f1_score(y_true: np.ndarray, y_score: np.ndarray, threshold: float = 0.5) -> float:
-    """
-    Computes F1-score given continuous scores or binary predictions.
-    """
     y_true = np.asarray(y_true, dtype=np.int32)
     y_pred = (np.asarray(y_score, dtype=np.float64) >= threshold).astype(np.int32)
 
@@ -68,7 +97,7 @@ def paired_cluster_bootstrap_recompute(
     y_true: np.ndarray,
     y_pred_proposed: np.ndarray,
     y_pred_baseline: np.ndarray,
-    metric_fn: Callable[[np.ndarray, np.ndarray], float] = compute_pr_auc,
+    metric_fn: Callable[[np.ndarray, np.ndarray], float] = compute_average_precision,
     b_resamples: int = 2000,
     random_seed: int = 10007,
     alpha: float = 0.05,
@@ -89,9 +118,8 @@ def paired_cluster_bootstrap_recompute(
 
     n_obs = len(y_true)
     if len(cluster_ids) != n_obs or len(y_prop) != n_obs or len(y_base) != n_obs:
-        raise ValueError("All input arrays (cluster_ids, y_true, y_pred_proposed, y_pred_baseline) must have identical length")
+        raise ValueError("All input arrays must have identical length")
 
-    # 1. Unique Clusters Mapping
     unique_clusters = np.unique(cluster_ids)
     n_clusters = len(unique_clusters)
 
@@ -101,17 +129,14 @@ def paired_cluster_bootstrap_recompute(
             "Evaluation clusters must represent independent sessions/blocks, not seed arrays."
         )
 
-    # Pre-index cluster observations
     cluster_to_indices = {}
     for idx, c_id in enumerate(cluster_ids):
         cluster_to_indices.setdefault(c_id, []).append(idx)
 
-    # 2. Observed Metric Calculation on Full Dataset
     obs_metric_prop = metric_fn(y_true, y_prop)
     obs_metric_base = metric_fn(y_true, y_base)
     obs_delta = float(obs_metric_prop - obs_metric_base)
 
-    # 3. Vectorized/Deterministic Resampling
     rng = np.random.default_rng(random_seed)
     boot_cluster_choices = rng.choice(unique_clusters, size=(b_resamples, n_clusters), replace=True)
 
@@ -119,7 +144,6 @@ def paired_cluster_bootstrap_recompute(
 
     for b in range(b_resamples):
         sampled_c_ids = boot_cluster_choices[b]
-        # Reconstruct observation indices for sampled clusters
         sampled_indices = []
         for c_id in sampled_c_ids:
             sampled_indices.extend(cluster_to_indices[c_id])
@@ -137,15 +161,12 @@ def paired_cluster_bootstrap_recompute(
 
     delta_boot_arr = np.array(delta_bootstrap, dtype=np.float64)
 
-    # 4. Percentile Confidence Interval
     ci_lower = float(np.percentile(delta_boot_arr, 2.5))
     ci_upper = float(np.percentile(delta_boot_arr, 97.5))
 
-    # 5. Two-tailed Empirical p-value under Null (delta = 0)
     centered_deltas = delta_boot_arr - obs_delta
     p_val = float(np.mean(np.abs(centered_deltas) >= np.abs(obs_delta)))
 
-    # 6. Pre-Registered Multiple Comparison Corrections
     adjusted_alpha = alpha
     if correction_family == "bonferroni_h1":
         adjusted_alpha = alpha / 4.0
@@ -154,7 +175,16 @@ def paired_cluster_bootstrap_recompute(
     elif correction_family == "holm_bonferroni":
         adjusted_alpha = alpha / 2.0
 
-    is_significant = bool(p_val < adjusted_alpha and ci_lower > 0.0)
+    # Decision Semantics: SUPPORTED, INCONCLUSIVE, FALSIFIED
+    is_supported = bool(p_val <= adjusted_alpha and ci_lower > 0.0)
+    is_falsified = bool(obs_delta < 0.0 and p_val <= adjusted_alpha and ci_upper < 0.0)
+    
+    if is_supported:
+        decision_verdict = "SUPPORTED"
+    elif is_falsified:
+        decision_verdict = "FALSIFIED"
+    else:
+        decision_verdict = "INCONCLUSIVE"
 
     return {
         "n_clusters": n_clusters,
@@ -169,13 +199,11 @@ def paired_cluster_bootstrap_recompute(
         "alpha_nominal": alpha,
         "alpha_adjusted": adjusted_alpha,
         "correction_family": correction_family,
-        "is_significant": is_significant
+        "verdict": decision_verdict,
+        "is_significant": is_supported
     }
 
 def apply_benjamini_hochberg_fdr(p_values: Dict[str, float], q_threshold: float = 0.05) -> Dict[str, Any]:
-    """
-    Applies standard Benjamini-Hochberg False Discovery Rate (BH-FDR) control across m hypotheses (H3).
-    """
     m = len(p_values)
     if m == 0:
         return {}
@@ -196,15 +224,13 @@ def apply_benjamini_hochberg_fdr(p_values: Dict[str, float], q_threshold: float 
             "rank": rank,
             "raw_p": p_val,
             "bh_critical_value": crit_val,
-            "rejected_null": is_sig
+            "rejected_null": is_sig,
+            "verdict": "SUPPORTED" if is_sig else "INCONCLUSIVE"
         }
 
     return decisions
 
 def apply_holm_bonferroni_stepdown(p_values: Dict[str, float], alpha: float = 0.05) -> Dict[str, Any]:
-    """
-    Applies Holm-Bonferroni step-down procedure across m hypotheses (H5).
-    """
     m = len(p_values)
     if m == 0:
         return {}
@@ -216,9 +242,9 @@ def apply_holm_bonferroni_stepdown(p_values: Dict[str, float], alpha: float = 0.
     for rank, (name, p_val) in enumerate(sorted_p, start=1):
         crit_alpha = alpha / (m - rank + 1)
         if not stopped and p_val <= crit_alpha:
-            decisions[name] = {"rank": rank, "raw_p": p_val, "critical_alpha": crit_alpha, "rejected_null": True}
+            decisions[name] = {"rank": rank, "raw_p": p_val, "critical_alpha": crit_alpha, "rejected_null": True, "verdict": "SUPPORTED"}
         else:
             stopped = True
-            decisions[name] = {"rank": rank, "raw_p": p_val, "critical_alpha": crit_alpha, "rejected_null": False}
+            decisions[name] = {"rank": rank, "raw_p": p_val, "critical_alpha": crit_alpha, "rejected_null": False, "verdict": "INCONCLUSIVE"}
 
     return decisions

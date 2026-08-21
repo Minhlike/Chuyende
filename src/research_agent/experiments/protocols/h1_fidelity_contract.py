@@ -17,11 +17,11 @@ def evaluate_h1_parameter_fidelity_contract(
     seed: int = 10007
 ) -> Dict[str, Any]:
     """
-    Executes pre-registered H1 hypothesis testing.
+    Executes pre-registered H1 hypothesis testing using Average Precision (AP).
     """
     from research_agent.experiments.protocols.paired_cluster_bootstrap import (
         paired_cluster_bootstrap_recompute,
-        compute_pr_auc
+        compute_average_precision
     )
     
     bootstrap_result = paired_cluster_bootstrap_recompute(
@@ -29,24 +29,20 @@ def evaluate_h1_parameter_fidelity_contract(
         y_true=y_true,
         y_pred_proposed=parameter_repr_scores,
         y_pred_baseline=template_only_scores,
-        metric_fn=compute_pr_auc,
+        metric_fn=compute_average_precision,
         b_resamples=b_resamples,
         random_seed=seed,
         alpha=0.05,
         correction_family="bonferroni_h1"
     )
 
-    # Falsification check: Falsified if delta <= 0 or p > 0.0125
-    is_falsified = (
-        bootstrap_result["observed_delta"] <= 0.0 or
-        bootstrap_result["p_value"] > bootstrap_result["alpha_adjusted"]
-    )
+    verdict = bootstrap_result["verdict"]
 
     return {
         "hypothesis_id": "H1_Parameter_Semantic_Fidelity",
         "description": "Security-aware parameter representation vs Template-only abstraction",
-        "primary_metric": "PR-AUC Difference over Clusters",
+        "primary_metric": "Average Precision (AP) Difference over Clusters",
         "bootstrap_results": bootstrap_result,
-        "falsification_status": "FALSIFIED" if is_falsified else "NOT_FALSIFIED",
-        "verdict": "REJECT_H0" if not is_falsified else "ACCEPT_H0_OR_FALSIFIED"
+        "falsification_status": "FALSIFIED" if verdict == "FALSIFIED" else ("NOT_FALSIFIED" if verdict == "SUPPORTED" else "INCONCLUSIVE"),
+        "verdict": verdict
     }

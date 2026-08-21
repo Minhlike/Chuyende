@@ -25,7 +25,10 @@ except ImportError:
     HAS_TORCH = False
 
 from research_agent.experiments.extractor.tokenizer import PrivacyAwareLogTokenizer
-from research_agent.experiments.protocols.paired_cluster_bootstrap import paired_cluster_bootstrap_recompute, compute_pr_auc
+from research_agent.experiments.protocols.paired_cluster_bootstrap import (
+    paired_cluster_bootstrap_recompute,
+    compute_average_precision
+)
 from research_agent.experiments.protocols.weak_attribution_evaluator import evaluate_weak_attribution_accuracy
 from research_agent.experiments.protocols.provenance_guard import ResultProvenanceFirewall
 from research_agent.experiments.protocols.h1_fidelity_contract import evaluate_h1_parameter_fidelity_contract
@@ -97,7 +100,6 @@ def test_04_bootstrap_parameters_match_protocol():
         paired_cluster_bootstrap_recompute(cluster_ids, y_t, scores_a, scores_b, b_resamples=2000, random_seed=42)
 
 def test_05_seed_arrays_cannot_masquerade_as_clusters():
-    # 5 seeds array must be rejected as clusters
     small_clusters = np.arange(5)
     y_t = np.array([1, 0, 1, 0, 1])
     scores_a = np.array([0.91, 0.92, 0.93, 0.90, 0.92])
@@ -126,11 +128,10 @@ def test_08_graph_and_sequence_views_for_multiview():
     from research_agent.experiments.extractor.multi_view import MultiViewRepresentationModel
     
     mv = MultiViewRepresentationModel(seq_vocab_size=20, graph_vocab_size=10, embed_dim=16, mode="aligned")
-    
     seq_in = torch.randint(0, 10, (2, 8))
-    graph_events = [{"timestamp": 1.0, "src": 1, "dst": 2, "relation_type": 0, "src_type": 1, "dst_type": 2}]
+    graph_events = [[{"timestamp": 1.0, "src": 1, "dst": 2, "relation_type": 0}], [{"timestamp": 2.0, "src": 2, "dst": 3, "relation_type": 1}]]
 
-    z_mv = mv.extract_representation(seq_in, graph_events=graph_events)
+    z_mv = mv.extract_representation(seq_in, graph_events_batch=graph_events)
     assert z_mv.shape == (2, 16)
 
 def test_09_four_privacy_regimes_defined():

@@ -2,12 +2,10 @@
 """
 Multi-View Extractor & Optimization Engine
 Implements Chapter 2 Frozen Multi-View Representation Contract (Section 2.4 & Bang 2.4):
-  - Sequence View Extractor (Transformer) + Temporal Graph View Extractor (Temporal GNN)
-  - Explicit Correspondence Contract: MultiViewCorrespondence metadata
-  - Missing-View Handling via Availability Masks & Learned Missing-View Token (Zero silent zeros substitution)
-  - Stage A Multi-View Loss in Real Optimization Graph:
-      L_StageA = L_seq_ssl + L_graph_ssl + lambda_align * L_VICReg
-  - VICReg Anti-Collapse Regularization: Invariance, Variance, Covariance
+  - True Per-Sample Correspondence: Each sample i has its own sequence input and graph event list
+  - Zero canonical z_graph.repeat(batch_size, 1) broadcast
+  - Real Batch VICReg Anti-Collapse Optimization over paired representations [z_seq, z_graph]
+  - Explicit Availability Masks & Learned Missing-View Token per sample
   - Gated Fusion Mechanism: z_mv = alpha * z^(seq) + (1 - alpha) * z^(graph)
   - Supports 4 canonical H2 modes: "sequence_only", "graph_only", "unaligned", "aligned"
 """
@@ -24,7 +22,7 @@ from research_agent.experiments.extractor.graph_view import TemporalGraphViewExt
 @dataclass
 class MultiViewCorrespondence:
     """
-    Explicit correspondence metadata contract linking Sequence and Graph view telemetry.
+    Explicit correspondence metadata contract linking Sequence and Graph view telemetry per sample.
     """
     correspondence_id: str
     time_interval: Tuple[float, float]
@@ -69,7 +67,6 @@ class VICRegLoss(nn.Module):
 
         N, D = z_seq.size()
         if N < 2:
-            # Cannot compute covariance on N < 2
             sim_loss = F.mse_loss(z_seq, z_graph)
             return self.sim_coeff * sim_loss, {"sim_loss": float(sim_loss.item()), "var_loss": 0.0, "cov_loss": 0.0}
 
@@ -171,17 +168,52 @@ class MultiViewRepresentationModel(nn.Module):
         self.vicreg = VICRegLoss()
         self.fusion = GatedMultiViewFusion(embed_dim=embed_dim)
         
-        # Missing View Learned Fallback Token (Registered parameter)
+        # Missing View Learned Fallback Token
         self.missing_graph_token = nn.Parameter(torch.zeros(1, embed_dim))
         nn.init.normal_(self.missing_graph_token, std=0.02)
         
         self.unaligned_proj = nn.Linear(embed_dim * 2, embed_dim)
 
+    def extract_per_sample_graph_embeddings(
+        self,
+        graph_events_batch: Optional[List[List[Dict[str, Any]]]],
+        batch_size: int,
+        correspondence_list: Optional[List[MultiViewCorrespondence]],
+        device: torch.device
+    ) -> Tuple[torch.Tensor, torch.Tensor]:
+        """
+        Extracts genuine per-sample graph embeddings for each item in the batch.
+        Returns:
+            z_graph_batch: [B, embed_dim]
+            valid_mask: [B] bool tensor
+        """
+        z_graph_list = []
+        valid_flags = []
+
+        for i in range(batch_size):
+            events_i = graph_events_batch[i] if (graph_events_batch and i < len(graph_events_batch)) else None
+            corr_i = correspondence_list[i] if (correspondence_list and i < len(correspondence_list)) else None
+            
+            is_avail = (corr_i is None or corr_i.graph_available) and bool(events_i)
+            if is_avail and events_i:
+                # Fresh memory or scoped entity state for item i
+                z_g_i = self.graph_extractor.forward(events_i, device=device)
+                z_graph_list.append(z_g_i.squeeze(0))
+                valid_flags.append(corr_i.is_valid_for_alignment() if corr_i else True)
+            else:
+                # Learned missing-graph token
+                z_graph_list.append(self.missing_graph_token.squeeze(0))
+                valid_flags.append(False)
+
+        z_graph_batch = torch.stack(z_graph_list, dim=0)
+        valid_mask = torch.tensor(valid_flags, dtype=torch.bool, device=device)
+        return z_graph_batch, valid_mask
+
     def extract_representation(
         self,
         seq_inputs: torch.Tensor,
-        graph_events: Optional[List[Dict[str, Any]]] = None,
-        correspondence: Optional[MultiViewCorrespondence] = None,
+        graph_events_batch: Optional[List[List[Dict[str, Any]]]] = None,
+        correspondence_list: Optional[List[MultiViewCorrespondence]] = None,
         device: Optional[torch.device] = None
     ) -> torch.Tensor:
         """
@@ -190,33 +222,29 @@ class MultiViewRepresentationModel(nn.Module):
         if device is None:
             device = seq_inputs.device
 
+        batch_size = seq_inputs.size(0)
+
         if self.mode == "sequence_only":
             return self.seq_extractor.forward_pool(seq_inputs)
         
+        z_graph_batch, _ = self.extract_per_sample_graph_embeddings(
+            graph_events_batch=graph_events_batch,
+            batch_size=batch_size,
+            correspondence_list=correspondence_list,
+            device=device
+        )
+
         if self.mode == "graph_only":
-            if not graph_events:
-                raise ValueError("Graph events required for graph_only mode")
-            return self.graph_extractor.forward(graph_events, device=device)
+            return z_graph_batch
 
         z_seq = self.seq_extractor.forward_pool(seq_inputs)
-        
-        # Check graph view availability via correspondence contract
-        graph_available = (correspondence is None or correspondence.graph_available) and bool(graph_events)
-        if graph_available and graph_events:
-            z_graph = self.graph_extractor.forward(graph_events, device=device)
-            # Expand to batch dimension if single graph summary
-            if z_graph.size(0) != z_seq.size(0):
-                z_graph = z_graph.repeat(z_seq.size(0), 1)
-        else:
-            # Explicit learned missing-view fallback
-            z_graph = self.missing_graph_token.repeat(z_seq.size(0), 1)
 
         if self.mode == "unaligned":
-            concat = torch.cat([z_seq, z_graph], dim=-1)
+            concat = torch.cat([z_seq, z_graph_batch], dim=-1)
             return self.unaligned_proj(concat)
         
         elif self.mode == "aligned":
-            z_mv, _ = self.fusion(z_seq, z_graph)
+            z_mv, _ = self.fusion(z_seq, z_graph_batch)
             return z_mv
 
         return z_seq
@@ -225,53 +253,67 @@ class MultiViewRepresentationModel(nn.Module):
         self,
         seq_inputs: torch.Tensor,
         true_event_targets: torch.Tensor,
+        mep_mask: Optional[torch.Tensor] = None,
         param_targets: Optional[torch.Tensor] = None,
+        mpp_mask: Optional[torch.Tensor] = None,
         time_gap_targets: Optional[torch.Tensor] = None,
-        graph_events: Optional[List[Dict[str, Any]]] = None,
-        correspondence: Optional[MultiViewCorrespondence] = None,
+        graph_events_batch: Optional[List[List[Dict[str, Any]]]] = None,
+        correspondence_list: Optional[List[MultiViewCorrespondence]] = None,
         device: Optional[torch.device] = None
     ) -> Tuple[torch.Tensor, Dict[str, float]]:
         """
-        Computes complete Stage A Self-Supervised Objective:
+        Computes Stage A objective over real per-sample paired representations:
           L_StageA = L_seq_ssl + L_graph_ssl + lambda_align * L_VICReg
         """
         if device is None:
             device = seq_inputs.device
 
-        # 1. Sequence View SSL Losses
+        batch_size = seq_inputs.size(0)
+
+        # 1. Sequence SSL Losses
         seq_losses = self.seq_extractor.compute_sequence_ssl_losses(
             masked_events=seq_inputs,
             true_event_targets=true_event_targets,
+            mep_mask=mep_mask,
             param_targets=param_targets,
-            true_time_gaps=time_gap_targets
+            mpp_mask=mpp_mask,
+            true_adjacent_time_gaps=time_gap_targets
         )
         l_seq_total = sum(seq_losses.values())
 
-        # 2. Graph View SSL Losses
-        l_graph_total = torch.tensor(0.0, device=device, requires_grad=True)
-        graph_losses = {}
-        if graph_events:
-            z_graph_raw, graph_losses = self.graph_extractor.process_causal_events(graph_events, device=device)
-            if graph_losses:
-                l_graph_total = sum(graph_losses.values())
-        else:
-            z_graph_raw = self.missing_graph_token
+        # 2. Graph SSL Losses and Per-Sample Extraction
+        z_graph_list = []
+        graph_loss_list = []
+        valid_align_flags = []
 
-        # 3. VICReg Multi-View Alignment Loss (Real Optimization Graph)
+        for i in range(batch_size):
+            events_i = graph_events_batch[i] if (graph_events_batch and i < len(graph_events_batch)) else None
+            corr_i = correspondence_list[i] if (correspondence_list and i < len(correspondence_list)) else None
+
+            is_avail = (corr_i is None or corr_i.graph_available) and bool(events_i)
+            if is_avail and events_i:
+                z_g_i, ssl_g_i = self.graph_extractor.process_causal_events(events_i, device=device)
+                z_graph_list.append(z_g_i.squeeze(0))
+                if ssl_g_i:
+                    graph_loss_list.append(sum(ssl_g_i.values()))
+                valid_align_flags.append(corr_i.is_valid_for_alignment() if corr_i else True)
+            else:
+                z_graph_list.append(self.missing_graph_token.squeeze(0))
+                valid_align_flags.append(False)
+
+        z_graph_batch = torch.stack(z_graph_list, dim=0)
+        valid_mask = torch.tensor(valid_align_flags, dtype=torch.bool, device=device)
+
+        if graph_loss_list:
+            l_graph_total = torch.stack(graph_loss_list).mean()
+        else:
+            l_graph_total = torch.tensor(0.0, device=device, requires_grad=True)
+
+        # 3. Real Batch VICReg Alignment Loss
         z_seq_pool = self.seq_extractor.forward_pool(seq_inputs)
-        
-        # Project through dedicated alignment heads
         p_seq = self.seq_proj_align(z_seq_pool)
-        
-        if z_graph_raw.size(0) != p_seq.size(0):
-            z_graph_expanded = z_graph_raw.repeat(p_seq.size(0), 1)
-        else:
-            z_graph_expanded = z_graph_raw
-        p_graph = self.graph_proj_align(z_graph_expanded)
+        p_graph = self.graph_proj_align(z_graph_batch)
 
-        valid_align = bool(correspondence is None or correspondence.is_valid_for_alignment())
-        valid_mask = torch.tensor([valid_align] * p_seq.size(0), dtype=torch.bool, device=device)
-        
         l_vicreg, vicreg_metrics = self.vicreg(p_seq, p_graph, valid_mask=valid_mask)
 
         # 4. Total Combined Stage A Loss
@@ -285,8 +327,6 @@ class MultiViewRepresentationModel(nn.Module):
         }
         for k, v in seq_losses.items():
             metrics_summary[f"seq_{k}"] = float(v.item())
-        for k, v in graph_losses.items():
-            metrics_summary[f"graph_{k}"] = float(v.item())
         for k, v in vicreg_metrics.items():
             metrics_summary[f"vicreg_{k}"] = float(v)
 

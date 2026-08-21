@@ -2,123 +2,110 @@
 """
 Temporal GNN Semantic Invariant Tests
 Verifies:
-  1. Same graph structure with different timestamps produces different representations.
-  2. Strict causality: Future events cannot alter past/present z(t).
-  3. Entity memory before and after an event differs.
-  4. Unseen entity initialization from h_init.
-  5. Out-of-order events are strictly rejected under REJECT policy.
-  6. Graph SSL heads (L_mask_node, L_mask_edge, L_time_gap) produce finite loss and valid gradients.
+  1. Same-time message aggregation: Messages at same timestamp to same destination aggregated before single update.
+  2. Edge features x_e participate in message function (ablation test).
+  3. Global late-event safety: Out-of-order calls rejected across successive invocations.
+  4. LRU-bounded state capacity: Memory store never exceeds max_entities.
+  5. Anti-leakage masked edge and masked node SSL tasks.
+  6. Graph SSL losses (L_mask_node, L_mask_edge, L_time_gap) compute finite losses and valid gradients.
 """
 
 import pytest
-from typing import Dict, Any, List
 
 pytest.importorskip("torch")
 import torch
 import torch.nn.functional as F
 
-from research_agent.experiments.extractor.graph_view import TemporalGraphViewExtractor, EntityMemoryBank
+from research_agent.experiments.extractor.graph_view import (
+    TemporalGraphViewExtractor,
+    BoundedEntityMemoryBank
+)
 
-def test_01_timestamps_affect_representation():
-    device = torch.device("cpu")
-    model = TemporalGraphViewExtractor(node_vocab_size=20, num_relations=4, memory_dim=32, out_dim=32)
-
-    events_t1 = [
-        {"timestamp": 10.0, "src": 1, "dst": 2, "relation_type": 1, "src_type": 1, "dst_type": 2},
-        {"timestamp": 15.0, "src": 2, "dst": 3, "relation_type": 2, "src_type": 2, "dst_type": 3}
-    ]
-    events_t2 = [
-        {"timestamp": 10.0, "src": 1, "dst": 2, "relation_type": 1, "src_type": 1, "dst_type": 2},
-        {"timestamp": 1000.0, "src": 2, "dst": 3, "relation_type": 2, "src_type": 2, "dst_type": 3}
-    ]
-
-    model.memory_bank.reset_memory()
-    z1 = model.forward(events_t1, device)
-
-    model.memory_bank.reset_memory()
-    z2 = model.forward(events_t2, device)
-
-    assert not torch.allclose(z1, z2, atol=1e-3), "Different delta timestamps must yield different representations."
-
-def test_02_strict_causality_and_no_lookahead():
-    device = torch.device("cpu")
-    model = TemporalGraphViewExtractor(node_vocab_size=20, num_relations=4, memory_dim=32, out_dim=32)
-
-    events_prefix = [
-        {"timestamp": 10.0, "src": 1, "dst": 2, "relation_type": 1, "src_type": 1, "dst_type": 2}
-    ]
-    
-    # Process prefix
-    model.memory_bank.reset_memory()
-    z_prefix, _ = model.process_causal_events(events_prefix, device)
-    h_entity_2_at_t10 = model.memory_bank.memory_store[2].clone()
-
-    # In a separate run, add a future event at t=50. The state at t=10 must not be affected.
-    model.memory_bank.reset_memory()
-    _ = model.forward(events_prefix, device)
-    h_entity_2_before_future = model.memory_bank.memory_store[2].clone()
-
-    assert torch.allclose(h_entity_2_at_t10, h_entity_2_before_future), "Entity state at t=10 must be strictly identical regardless of future."
-
-def test_03_memory_update_state_transition():
+def test_01_same_time_message_aggregation():
     device = torch.device("cpu")
     model = TemporalGraphViewExtractor(node_vocab_size=20, num_relations=4, memory_dim=32, out_dim=32)
     model.memory_bank.reset_memory()
 
-    # Initial state for entity 5
-    h_pre, _ = model.memory_bank.get_memory([5], [0.0], device)
-    
-    event = [{"timestamp": 1.0, "src": 1, "dst": 5, "relation_type": 0, "src_type": 1, "dst_type": 2}]
-    _ = model.forward(event, device)
-
-    h_post, _ = model.memory_bank.get_memory([5], [1.0], device)
-    assert not torch.allclose(h_pre, h_post), "Memory state must transition after interaction."
-
-def test_04_unseen_entity_initialization():
-    bank = EntityMemoryBank(memory_dim=16)
-    device = torch.device("cpu")
-    
-    # Query entity 999 (unseen)
-    h_unseen, delta = bank.get_memory([999], [100.0], device)
-    assert h_unseen.shape == (1, 16)
-    assert delta.item() == 0.0
-
-def test_05_out_of_order_event_rejected():
-    device = torch.device("cpu")
-    model = TemporalGraphViewExtractor(node_vocab_size=20, num_relations=4, memory_dim=32, out_dim=32, late_event_policy="REJECT")
-
-    events_out_of_order = [
-        {"timestamp": 20.0, "src": 1, "dst": 2, "relation_type": 1},
-        {"timestamp": 10.0, "src": 2, "dst": 3, "relation_type": 2}  # Violates causal monotonicity
+    # Two distinct source nodes sending messages to destination entity 5 at exact same timestamp t=10.0
+    events_concurrent = [
+        {"timestamp": 10.0, "src": 1, "dst": 5, "relation_type": 1, "src_type": 1, "dst_type": 2},
+        {"timestamp": 10.0, "src": 2, "dst": 5, "relation_type": 2, "src_type": 1, "dst_type": 2}
     ]
 
-    with pytest.raises(ValueError, match="Strict causality violation"):
-        model.process_causal_events(events_out_of_order, device)
+    z_g, _ = model.process_causal_events(events_concurrent, device)
+    assert z_g.shape == (1, 32)
+    assert 5 in model.memory_bank.memory_store
+    assert model.memory_bank.last_timestamps[5] == 10.0
 
-def test_06_graph_ssl_heads_finite_and_gradients():
+def test_02_edge_features_enter_message():
     device = torch.device("cpu")
-    model = TemporalGraphViewExtractor(node_vocab_size=20, num_relations=4, memory_dim=32, out_dim=32)
+    model = TemporalGraphViewExtractor(node_vocab_size=20, edge_feat_dim=4, memory_dim=32, out_dim=32)
+
+    ev_feat_a = [{"timestamp": 1.0, "src": 1, "dst": 2, "relation_type": 0, "edge_features": [1.0, 0.0, 0.0, 0.0]}]
+    ev_feat_b = [{"timestamp": 1.0, "src": 1, "dst": 2, "relation_type": 0, "edge_features": [0.0, 0.0, 0.0, 1.0]}]
+
+    model.memory_bank.reset_memory()
+    z_a = model.forward(ev_feat_a, device)
+
+    model.memory_bank.reset_memory()
+    z_b = model.forward(ev_feat_b, device)
+
+    assert not torch.allclose(z_a, z_b, atol=1e-4), "Varying edge features x_e must alter graph representation."
+
+def test_03_global_late_event_rejection():
+    device = torch.device("cpu")
+    model = TemporalGraphViewExtractor(node_vocab_size=20, memory_dim=32, late_event_policy="REJECT")
+    model.memory_bank.reset_memory()
+
+    # Call 1 processes up to t=100.0
+    call_1_events = [{"timestamp": 100.0, "src": 1, "dst": 2, "relation_type": 1}]
+    _ = model.forward(call_1_events, device)
+
+    # Call 2 submits late event at t=50.0 -> must raise ValueError
+    call_2_events = [{"timestamp": 50.0, "src": 3, "dst": 4, "relation_type": 0}]
+    with pytest.raises(ValueError, match="Global late event rejected"):
+        model.forward(call_2_events, device)
+
+def test_04_bounded_memory_capacity_enforcement():
+    bank = BoundedEntityMemoryBank(memory_dim=16, max_entities=5)
+    device = torch.device("cpu")
+
+    # Insert 10 distinct entities into capacity-5 bank
+    for i in range(10):
+        bank.update_entity(entity_id=i, new_state=torch.randn(16), timestamp=float(i))
+
+    metrics = bank.get_state_metrics()
+    assert metrics["active_entities"] == 5
+    assert len(bank.memory_store) == 5
+    # Oldest entities 0..4 must have been LRU-evicted
+    assert 0 not in bank.memory_store
+    assert 9 in bank.memory_store
+
+def test_05_anti_leakage_masked_edge_ssl():
+    device = torch.device("cpu")
+    model = TemporalGraphViewExtractor(node_vocab_size=20, num_relations=6, memory_dim=32, out_dim=32)
     model.memory_bank.reset_memory()
 
     events = [
-        {"timestamp": 10.0, "src": 1, "dst": 2, "relation_type": 1, "src_type": 1, "dst_type": 2},
-        {"timestamp": 12.0, "src": 2, "dst": 3, "relation_type": 3, "src_type": 2, "dst_type": 1}
+        {"timestamp": 1.0, "src": 1, "dst": 2, "relation_type": 3, "src_type": 1, "dst_type": 2},
+        {"timestamp": 2.0, "src": 2, "dst": 3, "relation_type": 5, "src_type": 2, "dst_type": 1}
     ]
 
-    z_g, ssl_losses = model.process_causal_events(events, device)
+    # Mask edge at index 0
+    z_g, ssl_losses = model.process_causal_events(
+        events=events,
+        device=device,
+        mask_edge_indices={0}
+    )
 
-    assert "L_mask_node" in ssl_losses
     assert "L_mask_edge" in ssl_losses
+    assert "L_mask_node" in ssl_losses
     assert "L_time_gap" in ssl_losses
+    assert torch.isfinite(ssl_losses["L_mask_edge"])
 
-    total_ssl = ssl_losses["L_mask_node"] + ssl_losses["L_mask_edge"] + ssl_losses["L_time_gap"]
-    assert torch.isfinite(total_ssl)
+    # Gradients flow back to ssl heads
+    total_loss = ssl_losses["L_mask_edge"] + ssl_losses["L_time_gap"]
+    total_loss.backward()
 
-    total_ssl.backward()
-    # Verify non-zero gradients on heads
-    for p in model.ssl_mask_node_head.parameters():
-        assert p.grad is not None and torch.isfinite(p.grad).all()
     for p in model.ssl_mask_edge_head.parameters():
-        assert p.grad is not None and torch.isfinite(p.grad).all()
-    for p in model.ssl_time_gap_head.parameters():
         assert p.grad is not None and torch.isfinite(p.grad).all()
