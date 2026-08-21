@@ -1,33 +1,22 @@
 {
-  "acquisition_requirements": [
-    "Verify LANL auth.txt.gz and redteam.txt.gz official checksums",
-    "Enforce strict non-propagation of redteam labels to proc/flow",
-    "Build host-day authentication bags for Stage B MIL"
-  ],
   "dataset_id": "DATA-LANL-001",
   "dataset_name": "LANL Cyber Security Data Set 2015",
-  "official_access_instruction": "User must download official LANL 2015 archive (auth.txt.gz, proc.txt.gz, redteam.txt.gz) from https://csr.lanl.gov/data/cyber1/ directly into D:\\Research\\datasets\\raw\\lanl\\",
+  "split_id": "SPL-LANL-001",
+  "version": "v1.2",
+  "status": "USER_ACTION_REQUIRED",
   "partition_strategy": "STRICT_CAUSAL_TIME",
+  "dataset_temporal_span_days": 58,
   "planned_temporal_partitions": {
-    "test_seconds": [
-      6393601,
-      7776000
-    ],
-    "train_seconds": [
-      1,
-      5184000
-    ],
-    "val_seconds": [
-      5184001,
-      6393600
-    ]
+    "status": "PENDING_ACQUISITION",
+    "note": "Split boundaries to be locked upon physical acquisition and verification of 58-day raw telemetry"
   },
   "raw_dataset_acquired": false,
   "redteam_label_boundary": "AUTH_EVENT_EXACT_MATCH_ONLY",
   "redteam_record_count": "PENDING_VERIFICATION",
-  "seed": 42,
-  "specification_sha256": "ebf5a3f65b9dd7e1249486a4da8f827954529a7fc28fa41ce001139395fc3446",
-  "split_id": "SPL-LANL-001",
-  "status": "USER_ACTION_REQUIRED",
-  "version": "v1.1"
+  "official_access_instruction": "User must download official LANL 2015 archive (auth.txt.gz, proc.txt.gz, redteam.txt.gz) from https://csr.lanl.gov/data/cyber1/ directly into D:\\Research\\datasets\\raw\\lanl\\",
+  "acquisition_requirements": [
+    "Verify LANL auth.txt.gz and redteam.txt.gz official checksums",
+    "Enforce strict non-propagation of redteam labels to proc/flow",
+    "Lock deterministic causal split over verified 58-day timeline"
+  ]
 }

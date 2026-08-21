@@ -1,0 +1,14 @@
+{
+  "dataset_id": "DATA-BGL-001",
+  "eligible_population_train_windows": 34753,
+  "eligible_population_val_windows": 5250,
+  "selected_train_windows": 20000,
+  "selected_val_windows": 5000,
+  "selection_rule": "STRATIFIED_NODE_TEMPORAL_BUDGET_CAP",
+  "train_split_hash": "107eb95d833e659dbe88bc77e11a70199086821b59ac4872c9651c6420b6c8f2",
+  "val_split_hash": "54f8ebdfb81563809e82b7955ef551bceb4c1623b653ae3fad2c2fdb0f125272",
+  "selection_hash": "d7cd6598dc0741ed5367ea5aacf3206ab948e6005851f91cc727910f67eb93d7",
+  "raw_total_record_count": 4747963,
+  "pretest_scanned_record_count": 4318481,
+  "test_status": "SEALED_DAYS_181_TO_215"
+}

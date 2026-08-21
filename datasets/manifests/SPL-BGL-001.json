@@ -1,42 +1,37 @@
 {
-  "acquisition_requirements": [
-    "Verify LLNL BGL raw log checksum",
-    "Validate 214.7 day timestamp monotonic sequence",
-    "Isolate Days 181+ failure codes for template drift evaluation"
-  ],
   "dataset_id": "DATA-BGL-001",
   "dataset_name": "BGL Supercomputer Log",
-  "partition_strategy": "STRICT_CAUSAL_TIME",
-  "planned_temporal_partitions": {
-    "test_days": [
-      181,
-      215
-    ],
-    "train_days": [
-      1,
-      150
-    ],
-    "val_days": [
-      151,
-      180
-    ]
-  },
-  "raw_dataset_acquired": true,
-  "seed": 42,
-  "specification_sha256": "874bf7a2bfdf8df378ec1ec8fe7d7c8aacb47d18dc9be1f22fa2637a2ede8ef2",
   "split_id": "SPL-BGL-001",
+  "version": "v1.2",
   "status": "VALIDATED",
+  "partition_strategy": "STRICT_CAUSAL_TIME",
+  "raw_dataset_acquired": true,
+  "observed_min_timestamp": 1117838570,
+  "observed_max_timestamp": 1136390405,
+  "planned_temporal_partitions": {
+    "train_days": [1, 150],
+    "train_timestamp_range": [1117838570, 1130798570],
+    "val_days": [151, 180],
+    "val_timestamp_range": [1130798570, 1133390570],
+    "test_days": [181, 215],
+    "test_timestamp_range": [1133390570, 1136390405]
+  },
   "verified_raw_artifacts": [
     {
-      "alert_records": 348461,
-      "byte_count": 62936967,
       "file_name": "BGL.tar.gz",
-      "max_timestamp": 1136390405,
-      "min_timestamp": 1117838570,
-      "non_alert_records": 4399502,
+      "byte_count": 62936967,
       "sha256": "0a58be959cef101bbe5c053e60bd8a49673e9c942b164f4d969bb109e99fce95",
-      "valid_records_streamed": 4747963
+      "raw_total_record_count": 4747963,
+      "alert_records": 348461,
+      "non_alert_records": 4399502,
+      "min_timestamp": 1117838570,
+      "max_timestamp": 1136390405
     }
   ],
-  "version": "v1.0"
+  "acquisition_requirements": [
+    "Verify LLNL BGL raw log checksum",
+    "Validate observed min timestamp 1117838570 against raw stream",
+    "Enforce strict causal temporal partition boundaries",
+    "Keep Test days 181-215 strictly sealed (0 feature records exposed to trainer)"
+  ]
 }

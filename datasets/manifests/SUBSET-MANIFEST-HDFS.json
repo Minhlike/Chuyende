@@ -1,0 +1,20 @@
+{
+  "dataset_id": "DATA-HDFS-001",
+  "eligible_population_train_sessions": 402542,
+  "eligible_population_val_sessions": 86259,
+  "selected_train_sessions": 35000,
+  "selected_val_sessions": 7500,
+  "selection_rule": "EARLIEST_CAUSAL_SESSION_BUDGET_CAP",
+  "train_split_hash": "201188905848c04f6eea2850e60bdf9fa57471d9b9c672d16a47423bb6e73b86",
+  "val_split_hash": "1918deb2ff1bf05125cc74f6f6af66ab4df897136bddb537d155a93be4929667",
+  "selection_hash": "6868d46d63e89bcd0dd14a8d28a41bcb65d008c923cdb6a1174f7727b76b24ab",
+  "test_metadata": {
+    "test_status": "SEALED",
+    "test_session_count": 86260,
+    "test_session_ids_sha256": "44e722d02b79d16082dfb02da036acd007a4fca50ad0a1d7a6ed0be65f09b616",
+    "test_min_start_time": 1226392390.034,
+    "test_max_end_time": 1226402157.013,
+    "test_features_materialized": false,
+    "test_labels_exposed_to_trainer": false
+  }
+}
