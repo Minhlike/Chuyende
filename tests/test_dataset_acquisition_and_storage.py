@@ -77,7 +77,7 @@ def test_06_split_manifests_lifecycle_states(workspace_root):
     
     assert spl_hdfs["status"] == "VALIDATED"
     assert spl_bgl["status"] == "VALIDATED"
-    assert spl_dtc["status"] == "PLANNED"
+    assert spl_dtc["status"] in ["PLANNED", "METADATA_ACQUIRED"]
     assert spl_lanl["status"] == "USER_ACTION_REQUIRED"
     assert spl_lanl["redteam_record_count"] == "PENDING_VERIFICATION"
 

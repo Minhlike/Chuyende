@@ -29,6 +29,6 @@
   "seed": 42,
   "specification_sha256": "cc6e36af5be6c434d74bf27f78940010b1eee06b0c89330d028de25504b7dfbd",
   "split_id": "SPL-DTC-001",
-  "status": "PLANNED",
+  "status": "METADATA_ACQUIRED",
   "version": "v1.1"
 }
