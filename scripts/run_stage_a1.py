@@ -64,6 +64,18 @@ def run_dataset_pretraining(dataset: str, seeds: list, base_dir: Path, device: t
     results = []
 
     for seed in seeds:
+        manifest_path = base_dir / "experiments" / "runs" / "stage-a1" / dataset / f"seed-{seed}" / "RUN-MANIFEST.json"
+        if manifest_path.exists():
+            print(f"\n>>> Seed {seed} already completed. Loading existing manifest from {manifest_path}...")
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            results.append(manifest)
+            print(f">>> [CACHED] {dataset} [Seed {seed}]: "
+                  f"Best Val Loss = {manifest['best_val_loss']:.4f} | "
+                  f"Stopped Epoch = {manifest['stopped_epoch']} | "
+                  f"Total Steps = {manifest['total_optimizer_steps']} | "
+                  f"Duration = {manifest['total_duration_sec']:.1f}s")
+            continue
+
         print(f"\n>>> Running {dataset} Pretraining [Seed {seed}] on {device}...")
         trainer = StageA1Trainer(
             dataset_name=dataset,
