@@ -30,13 +30,13 @@
     },
     {
       "path": "experiments/evidence/EXPERIMENTAL-SOURCE-CONTRACT.md",
-      "sha256": "f73e21a9fa3855268126d89cd16c5bb356321dfac605088f947353ff3ffb9ac8",
+      "sha256": "f85a16c17c0467a105993a11113d9d4ea275b7226b8f4c972feb860dfed42383",
       "evidence_class": "PREEXECUTION_AUDIT",
       "claim_ids": ["CLAIM-STAGE-A2-EXPERIMENTAL-SOURCE-CONTRACT"]
     },
     {
       "path": "experiments/evidence/EXPERIMENTAL-SOURCE-SCHEMA.json",
-      "sha256": "7e7bdea19f417bd03103ebc5a25fa115f887be36e72a976bd76ebc6da34a708e",
+      "sha256": "11a239271a6cf2519d6aaaed9e9d455073950a8593a88ddf06ccb2cdcd961353",
       "evidence_class": "PREEXECUTION_AUDIT",
       "claim_ids": ["CLAIM-STAGE-A2-EXPERIMENTAL-SOURCE-SCHEMA"]
     },

@@ -172,7 +172,7 @@ def test_checkpoint_at_optimizer_boundary(base_dir):
 def test_experimental_source_schema_requires_commit(base_dir):
     schema_path = base_dir / "experiments" / "evidence" / "EXPERIMENTAL-SOURCE-SCHEMA.json"
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
-    assert "git_commit_sha" in schema["required"]
+    assert "execution_code_commit_sha" in schema["required"]
 
 def test_experimental_source_schema_requires_artifact_hash(base_dir):
     schema_path = base_dir / "experiments" / "evidence" / "EXPERIMENTAL-SOURCE-SCHEMA.json"

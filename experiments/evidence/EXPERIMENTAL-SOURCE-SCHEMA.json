@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "contract_id": "SCHEMA-EXPERIMENTAL-SOURCE-V1.0",
-  "version": "1.0.0",
-  "title": "Experimental Source and Empirical Evidence Provenance JSON Schema",
+  "contract_id": "SCHEMA-EXPERIMENTAL-SOURCE-V1.1",
+  "version": "1.1.0",
+  "title": "Experimental Source and Evidence Provenance JSON Schema (Amended V1.1)",
   "type": "object",
   "required": [
     "claim_id",
@@ -10,7 +10,9 @@
     "run_id",
     "dataset",
     "split_id",
-    "git_commit_sha",
+    "execution_code_commit_sha",
+    "execution_code_branch",
+    "execution_code_dirty",
     "protocol_version",
     "protocol_sha256",
     "command_executed",
@@ -18,7 +20,8 @@
     "metrics_artifact_path",
     "metrics_artifact_sha256",
     "test_firewall_state",
-    "evidence_class"
+    "evidence_class",
+    "claim_scope"
   ],
   "properties": {
     "claim_id": { "type": "string" },
@@ -27,16 +30,16 @@
     "dataset": { "type": "string" },
     "split_id": { "type": "string" },
     "seed": { "type": ["integer", "null"] },
-    "git_commit_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
-    "git_branch": { "type": "string" },
-    "git_dirty": { "type": "boolean" },
+    "execution_code_commit_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "execution_code_branch": { "type": "string" },
+    "execution_code_dirty": { "type": "boolean" },
     "protocol_version": { "type": "string" },
     "protocol_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-    "graph_contract_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-    "raw_to_graph_mapping_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-    "raw_dataset_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-    "selected_train_membership_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-    "selected_val_membership_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "graph_contract_sha256": { "type": ["string", "null"] },
+    "raw_to_graph_mapping_sha256": { "type": ["string", "null"] },
+    "raw_dataset_sha256": { "type": ["string", "null"] },
+    "selected_train_membership_sha256": { "type": ["string", "null"] },
+    "selected_val_membership_sha256": { "type": ["string", "null"] },
     "command_executed": { "type": "string" },
     "working_directory": { "type": "string" },
     "timestamp_start": { "type": "string" },
@@ -46,9 +49,9 @@
       "required": ["python_version", "platform"],
       "properties": {
         "python_version": { "type": "string" },
-        "pytorch_version": { "type": "string" },
-        "cuda_version": { "type": "string" },
-        "device_name": { "type": "string" },
+        "pytorch_version": { "type": ["string", "null"] },
+        "cuda_version": { "type": ["string", "null"] },
+        "device_name": { "type": ["string", "null"] },
         "platform": { "type": "string" }
       }
     },
@@ -56,8 +59,8 @@
     "stdout_log_sha256": { "type": "string" },
     "metrics_artifact_path": { "type": "string" },
     "metrics_artifact_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-    "checkpoint_path": { "type": "string" },
-    "checkpoint_sha256": { "type": "string" },
+    "checkpoint_path": { "type": ["string", "null"] },
+    "checkpoint_sha256": { "type": ["string", "null"] },
     "test_firewall_state": {
       "type": "object",
       "required": ["test_opened", "test_feature_reads", "test_label_reads", "test_metrics"],
@@ -71,6 +74,16 @@
     "evidence_class": {
       "type": "string",
       "enum": ["REAL_EMPIRICAL", "PREEXECUTION_AUDIT", "NON_EMPIRICAL_TEST_FIXTURE"]
+    },
+    "claim_scope": {
+      "type": "string",
+      "enum": [
+        "PRETRAINING_EMPIRICAL",
+        "DOWNSTREAM_EXPLORATORY",
+        "CONFIRMATORY_EVALUATION",
+        "PREEXECUTION_AUDIT",
+        "NON_EMPIRICAL_TEST_FIXTURE"
+      ]
     }
   }
 }
