@@ -65,6 +65,10 @@ RAW_HDFS_TAR_SHA = "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e9
 TRAIN_MEMBERSHIP_SHA = "65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc"
 VAL_MEMBERSHIP_SHA = "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407b0609a"
 
+class LaunchAuthorizationMissingError(FileNotFoundError):
+    """Raised when the mandatory launch authorization artifact is missing for real empirical execution."""
+    pass
+
 class ExistingRunArtifactError(RuntimeError):
     """Raised when an attempt is made to start a new real run in an existing non-empty directory."""
     pass
@@ -186,25 +190,88 @@ def verify_preflight(base_dir: Path, target_seed: int, is_dry_run: bool = False,
         raise ValueError(f"FATAL: Seed {target_seed} is NOT in canonical list: {CANONICAL_SEEDS}")
 
     commit_sha, branch, is_dirty = get_git_info()
-    if is_dirty and not is_dry_run and not fixture_mode:
-        raise RuntimeError("FATAL: Execution source tree has uncommitted changes! Aborting pre-flight.")
 
-    # 1. Read Expected Execution Code Commit from Authorization Artifact or Plan
+    # 1. Read Expected Execution Code Commit from Authorization Artifact & Plan Binding
     auth_p = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / f"SEED{target_seed}-LAUNCH-AUTHORIZATION.json"
     plan_p = base_dir / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN.json"
     
-    expected_code_commit = None
-    if auth_p.exists():
-        auth_data = json.loads(auth_p.read_text(encoding="utf-8"))
-        expected_code_commit = auth_data.get("expected_execution_code_commit_sha")
-    elif plan_p.exists():
-        plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
-        expected_code_commit = plan_data.get("execution_code_commit_sha")
+    if not plan_p.exists():
+        raise FileNotFoundError(f"Execution plan file missing at {plan_p}")
+    plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
 
-    if not fixture_mode and expected_code_commit and expected_code_commit != "UNKNOWN":
+    if not fixture_mode:
+        if not auth_p.exists():
+            raise LaunchAuthorizationMissingError(
+                f"FATAL: Mandatory Launch Authorization Artifact missing at {auth_p}! "
+                f"Real empirical execution for seed {target_seed} cannot proceed without explicit authorization artifact."
+            )
+        
+        if is_dirty and not is_dry_run:
+            raise RuntimeError("FATAL: Execution source tree has uncommitted changes! Aborting pre-flight.")
+        
+        # Validate Authorization Content
+        auth_data = json.loads(auth_p.read_text(encoding="utf-8"))
+        
+        if not auth_data.get("authorization_id"):
+            raise ValueError("FATAL: authorization_id missing from authorization artifact!")
+        if auth_data.get("stage") != "STAGE_A2":
+            raise ValueError(f"FATAL: Authorization stage {auth_data.get('stage')} != STAGE_A2")
+        if auth_data.get("dataset") != "HDFS":
+            raise ValueError(f"FATAL: Authorization dataset {auth_data.get('dataset')} != HDFS")
+        if auth_data.get("split_id") != "SPL-HDFS-001":
+            raise ValueError(f"FATAL: Authorization split_id {auth_data.get('split_id')} != SPL-HDFS-001")
+        if auth_data.get("seed") != target_seed:
+            raise ValueError(f"FATAL: Authorization seed {auth_data.get('seed')} != target_seed {target_seed}")
+        if auth_data.get("authorization_status") != "AUTHORIZED_PENDING_REAL_LAUNCH":
+            raise ValueError(f"FATAL: Authorization status {auth_data.get('authorization_status')} != AUTHORIZED_PENDING_REAL_LAUNCH")
+        if auth_data.get("effective_protocol_version") != "1.4.1":
+            raise ValueError(f"FATAL: Authorization protocol version {auth_data.get('effective_protocol_version')} != 1.4.1")
+        if auth_data.get("protocol_lock_sha256") != PROTOCOL_LOCK_SHA:
+            raise ValueError(f"FATAL: Authorization protocol lock SHA mismatch: {auth_data.get('protocol_lock_sha256')} != {PROTOCOL_LOCK_SHA}")
+        if auth_data.get("environment_lock_sha256") != ENV_LOCK_SHA:
+            raise ValueError(f"FATAL: Authorization environment lock SHA mismatch: {auth_data.get('environment_lock_sha256')} != {ENV_LOCK_SHA}")
+        if auth_data.get("raw_hdfs_sha256") != RAW_HDFS_TAR_SHA:
+            raise ValueError(f"FATAL: Authorization raw HDFS SHA mismatch: {auth_data.get('raw_hdfs_sha256')} != {RAW_HDFS_TAR_SHA}")
+        if auth_data.get("train_membership_sha256") != TRAIN_MEMBERSHIP_SHA:
+            raise ValueError(f"FATAL: Authorization train membership SHA mismatch: {auth_data.get('train_membership_sha256')} != {TRAIN_MEMBERSHIP_SHA}")
+        if auth_data.get("val_membership_sha256") != VAL_MEMBERSHIP_SHA:
+            raise ValueError(f"FATAL: Authorization val membership SHA mismatch: {auth_data.get('val_membership_sha256')} != {VAL_MEMBERSHIP_SHA}")
+        if auth_data.get("train_sessions_count") != 35000:
+            raise ValueError(f"FATAL: Authorization train sessions count {auth_data.get('train_sessions_count')} != 35000")
+        if auth_data.get("val_sessions_count") != 7500:
+            raise ValueError(f"FATAL: Authorization val sessions count {auth_data.get('val_sessions_count')} != 7500")
+        if auth_data.get("train_events_count") != 586577:
+            raise ValueError(f"FATAL: Authorization train events count {auth_data.get('train_events_count')} != 586577")
+        if auth_data.get("val_events_count") != 119531:
+            raise ValueError(f"FATAL: Authorization val events count {auth_data.get('val_events_count')} != 119531")
+        if auth_data.get("train_windows_count") != 2292:
+            raise ValueError(f"FATAL: Authorization train windows count {auth_data.get('train_windows_count')} != 2292")
+        if auth_data.get("val_windows_count") != 467:
+            raise ValueError(f"FATAL: Authorization val windows count {auth_data.get('val_windows_count')} != 467")
+        if auth_data.get("optimizer_steps_per_epoch") != 573:
+            raise ValueError(f"FATAL: Authorization optimizer steps per epoch {auth_data.get('optimizer_steps_per_epoch')} != 573")
+        if auth_data.get("real_hdfs_runs_at_authorization") != 0:
+            raise ValueError(f"FATAL: Authorization real HDFS runs {auth_data.get('real_hdfs_runs_at_authorization')} != 0")
+        if auth_data.get("real_hdfs_optimizer_steps_at_authorization") != 0:
+            raise ValueError(f"FATAL: Authorization real HDFS optimizer steps {auth_data.get('real_hdfs_optimizer_steps_at_authorization')} != 0")
+        if auth_data.get("test_opened") is not False:
+            raise ValueError(f"FATAL: Authorization test_opened must be False!")
+
+        # Cryptographic Binding to Plan
+        expected_code_commit = auth_data.get("expected_execution_code_commit_sha")
+        plan_code_commit = plan_data.get("execution_code_commit_sha")
+        if expected_code_commit != plan_code_commit:
+            raise ValueError(f"FATAL: Authorization expected code commit ({expected_code_commit}) != Plan code commit ({plan_code_commit})")
+        
+        act_auth_sha = compute_sha256(auth_p)
+        plan_auth_sha = plan_data.get(f"seed{target_seed}_launch_authorization_sha256")
+        if act_auth_sha != plan_auth_sha:
+            raise ValueError(f"FATAL: Authorization file SHA ({act_auth_sha}) != Plan authorization SHA ({plan_auth_sha})")
+
         verify_frozen_execution_source(base_dir, expected_code_commit)
         print(f"[PRE-FLIGHT 1] Frozen Source Match: PASS (Byte-identical to {expected_code_commit[:16]}...) [HEAD={commit_sha[:16]}...]")
     else:
+        expected_code_commit = plan_data.get("execution_code_commit_sha") if plan_p.exists() else None
         print(f"[PRE-FLIGHT 1] Execution Code Commit / HEAD: {commit_sha} (dirty={is_dirty})")
 
     # 2. Protocol Lock Verification

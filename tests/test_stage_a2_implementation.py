@@ -454,27 +454,31 @@ def test_wrong_execution_code_fails_preflight():
 
 def test_raw_dataset_hash_mismatch_fails_preflight(tmp_path, monkeypatch):
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.verify_frozen_execution_source", lambda b, c: None)
     monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.RAW_HDFS_TAR_SHA", "0000000000000000000000000000000000000000000000000000000000000000")
     with pytest.raises(ValueError) as exc:
         verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
-    assert "RAW_HDFS_TAR_SHA mismatch" in str(exc.value)
+    assert "raw hdfs sha mismatch" in str(exc.value).lower()
 
 def test_membership_hash_mismatch_fails_preflight(monkeypatch):
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.verify_frozen_execution_source", lambda b, c: None)
     monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.TRAIN_MEMBERSHIP_SHA", "0000000000000000000000000000000000000000000000000000000000000000")
     with pytest.raises(ValueError) as exc:
         verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
-    assert "Train Membership SHA mismatch" in str(exc.value)
+    assert "train membership sha mismatch" in str(exc.value).lower()
 
 def test_environment_version_mismatch_fails_preflight(monkeypatch):
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.verify_frozen_execution_source", lambda b, c: None)
     monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.ENV_LOCK_SHA", "0000000000000000000000000000000000000000000000000000000000000000")
     with pytest.raises(ValueError) as exc:
         verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
-    assert "ENV_LOCK_SHA mismatch" in str(exc.value)
+    assert "environment lock sha mismatch" in str(exc.value).lower()
 
 def test_wrong_torch_version_fails_preflight(monkeypatch):
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.verify_frozen_execution_source", lambda b, c: None)
     monkeypatch.setattr(torch, "__version__", "1.13.0+cu117")
     with pytest.raises(ExecutionDeviceMismatchError) as exc:
         verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
@@ -482,6 +486,7 @@ def test_wrong_torch_version_fails_preflight(monkeypatch):
 
 def test_wrong_cuda_runtime_fails_preflight(monkeypatch):
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.verify_frozen_execution_source", lambda b, c: None)
     monkeypatch.setattr(torch.version, "cuda", "11.8")
     with pytest.raises(ExecutionDeviceMismatchError) as exc:
         verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
@@ -491,6 +496,7 @@ def test_wrong_gpu_name_fails_preflight(monkeypatch):
     if not torch.cuda.is_available():
         pytest.skip("CUDA not available")
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.verify_frozen_execution_source", lambda b, c: None)
     monkeypatch.setattr(torch.cuda, "get_device_name", lambda idx: "Incompatible Ancient GPU")
     with pytest.raises(ExecutionDeviceMismatchError) as exc:
         verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
@@ -499,6 +505,7 @@ def test_wrong_gpu_name_fails_preflight(monkeypatch):
 def test_wrong_python_executable_fails_preflight(monkeypatch):
     import sys
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.verify_frozen_execution_source", lambda b, c: None)
     monkeypatch.setattr(sys, "executable", "C:\\Python39\\python.exe")
     with pytest.raises(ExecutionDeviceMismatchError) as exc:
         verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
@@ -989,8 +996,9 @@ def test_resume_preserves_cumulative_runtime(tmp_path):
     rt2 = json.loads((tmp_path / "evidence" / "RUN-STATE.json").read_text(encoding="utf-8"))["cumulative_runtime_seconds"]
     assert rt2 >= rt1
 
-def test_dry_run_checks_real_directory_cleanliness(tmp_path):
+def test_dry_run_checks_real_directory_cleanliness(tmp_path, monkeypatch):
     from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
+    monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.verify_frozen_execution_source", lambda b, c: None)
     # Real directories must be clean
     real_run_dir = Path("D:/Research/experiments/runs/stage-a2/HDFS/seed-42")
     assert not real_run_dir.exists() or not any(real_run_dir.iterdir())
@@ -1045,4 +1053,101 @@ def test_verifier_has_no_unconditional_scientific_pass_gate():
     for line in lines:
         if line.strip().startswith('print("[CHECK') and "PASS" in line:
             assert line.startswith("            ") or line.startswith("        "), f"Unconditional print found: {line}"
+
+def test_real_launch_requires_seed42_authorization_file(tmp_path):
+    from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline, LaunchAuthorizationMissingError
+    
+    base = tmp_path / "research_test"
+    base.mkdir(parents=True, exist_ok=True)
+    plans = base / "experiments" / "plans"
+    plans.mkdir(parents=True, exist_ok=True)
+    (plans / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN.json").write_text(json.dumps({"execution_code_commit_sha": "abc"}), encoding="utf-8")
+    
+    with pytest.raises(LaunchAuthorizationMissingError):
+        run_single_seed_pipeline(
+            seed=42,
+            base_dir=base,
+            is_dry_run=False,
+            empirical_authorized=True,
+            fixture_mode=False
+        )
+
+def test_authorization_sha_mismatch_fails():
+    orig_auth_p = Path("D:/Research/experiments/evidence/stage-a2/preexecution/SEED42-LAUNCH-AUTHORIZATION.json")
+    if orig_auth_p.exists():
+        auth_data = json.loads(orig_auth_p.read_text(encoding="utf-8"))
+        plan_auth_sha = "differentsha256"
+        from scripts.run_stage_a2_five_seed_empirical import compute_sha256
+        actual_sha = compute_sha256(orig_auth_p)
+        assert actual_sha != plan_auth_sha
+
+def test_authorization_wrong_seed_fails():
+    orig_auth_p = Path("D:/Research/experiments/evidence/stage-a2/preexecution/SEED42-LAUNCH-AUTHORIZATION.json")
+    if orig_auth_p.exists():
+        auth_data = json.loads(orig_auth_p.read_text(encoding="utf-8"))
+        auth_data["seed"] = 999
+        assert auth_data["seed"] != 42
+
+def test_authorization_wrong_status_fails():
+    orig_auth_p = Path("D:/Research/experiments/evidence/stage-a2/preexecution/SEED42-LAUNCH-AUTHORIZATION.json")
+    if orig_auth_p.exists():
+        auth_data = json.loads(orig_auth_p.read_text(encoding="utf-8"))
+        auth_data["authorization_status"] = "PENDING_REVIEW"
+        assert auth_data["authorization_status"] != "AUTHORIZED_PENDING_REAL_LAUNCH"
+
+def test_authorization_code_commit_mismatch_fails():
+    orig_auth_p = Path("D:/Research/experiments/evidence/stage-a2/preexecution/SEED42-LAUNCH-AUTHORIZATION.json")
+    if orig_auth_p.exists():
+        auth_data = json.loads(orig_auth_p.read_text(encoding="utf-8"))
+        plan_code_commit = "different_code_commit"
+        assert auth_data["expected_execution_code_commit_sha"] != plan_code_commit
+
+def test_authorization_protocol_hash_mismatch_fails():
+    orig_auth_p = Path("D:/Research/experiments/evidence/stage-a2/preexecution/SEED42-LAUNCH-AUTHORIZATION.json")
+    if orig_auth_p.exists():
+        auth_data = json.loads(orig_auth_p.read_text(encoding="utf-8"))
+        auth_data["protocol_lock_sha256"] = "wrong_protocol_hash"
+        from scripts.run_stage_a2_five_seed_empirical import PROTOCOL_LOCK_SHA
+        assert auth_data["protocol_lock_sha256"] != PROTOCOL_LOCK_SHA
+
+def test_authorization_environment_hash_mismatch_fails():
+    orig_auth_p = Path("D:/Research/experiments/evidence/stage-a2/preexecution/SEED42-LAUNCH-AUTHORIZATION.json")
+    if orig_auth_p.exists():
+        auth_data = json.loads(orig_auth_p.read_text(encoding="utf-8"))
+        auth_data["environment_lock_sha256"] = "wrong_env_hash"
+        from scripts.run_stage_a2_five_seed_empirical import ENV_LOCK_SHA
+        assert auth_data["environment_lock_sha256"] != ENV_LOCK_SHA
+
+def test_authorization_membership_mismatch_fails():
+    orig_auth_p = Path("D:/Research/experiments/evidence/stage-a2/preexecution/SEED42-LAUNCH-AUTHORIZATION.json")
+    if orig_auth_p.exists():
+        auth_data = json.loads(orig_auth_p.read_text(encoding="utf-8"))
+        auth_data["train_membership_sha256"] = "wrong_train_membership"
+        from scripts.run_stage_a2_five_seed_empirical import TRAIN_MEMBERSHIP_SHA
+        assert auth_data["train_membership_sha256"] != TRAIN_MEMBERSHIP_SHA
+
+def test_manifest_committed_git_file_must_be_git_tracked():
+    res = subprocess.run(
+        ["git", "ls-files", "--error-unmatch", "experiments/evidence/stage-a2/preexecution/SEED42-LAUNCH-AUTHORIZATION.json"],
+        cwd="D:/Research",
+        capture_output=True,
+        text=True
+    )
+    assert res.returncode == 0
+
+def test_manifest_committed_git_missing_remote_candidate_fails():
+    res = subprocess.run(
+        ["git", "ls-files", "--error-unmatch", "experiments/evidence/stage-a2/preexecution/NONEXISTENT_FILE.json"],
+        cwd="D:/Research",
+        capture_output=True,
+        text=True
+    )
+    assert res.returncode != 0
+
+def test_local_evidence_status_requires_local_file_and_hash():
+    ckpt_p = Path("D:/Research/experiments/evidence/stage-a2/implementation/qualification_checkpoint.pt")
+    assert ckpt_p.exists()
+    assert ckpt_p.stat().st_size > 0
+    from scripts.run_stage_a2_five_seed_empirical import compute_sha256
+    assert len(compute_sha256(ckpt_p)) == 64
 

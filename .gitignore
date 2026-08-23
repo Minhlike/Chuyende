@@ -58,6 +58,7 @@ credentials*
 *.key
 *.pem
 *.log
+!experiments/evidence/stage-a2/implementation/*.log
 
 # SQLite binary databases (Disposable runtime indexes RC-17)
 *.db

@@ -232,29 +232,96 @@ def verify_canonical_readiness():
         else:
             failed_checks.append("FIREWALL_STATE_NOT_RECORDED")
 
-    # 12. Checkpoint & Resume Trajectory Checks
+    # 12. Checkpoint & Resume Trajectory Substantive Independent Verification
     model_test = TemporalGraphViewEncoder()
     trainer_test = StageA2Trainer(model=model_test, execution_mode="FIXTURE_TEST", total_steps_override=4)
     tmp_ckpt_p = base_dir / ".tmp" / "test_ckpt.pt"
+    tmp_ckpt_p.parent.mkdir(parents=True, exist_ok=True)
     trainer_test.completed_epoch = 1
-    trainer_test.next_epoch_to_run = 1
-    trainer_test.save_checkpoint(tmp_ckpt_p, metadata={"test": True})
+    trainer_test.next_epoch_to_run = 2
+    trainer_test.global_step = 573
+    trainer_test.stream_cursor = 2292
+    trainer_test.accum_step = 0
+    trainer_test.patience_counter = 1
+    trainer_test.best_val_loss = 1.2345
+    trainer_test.best_epoch = 1
     
-    loaded_raw = trainer_test.load_checkpoint(tmp_ckpt_p)
-    if loaded_raw.get("completed_epoch") != 1 or loaded_raw.get("next_epoch_to_run") != 1:
-        failed_checks.append("CHECKPOINT_EXPLICIT_EPOCH_STATE_MISMATCH")
+    test_meta = {
+        "seed": 42,
+        "run_id": "RUN-STAGE-A2-HDFS-SEED42",
+        "execution_code_commit_sha": expected_code_commit,
+        "protocol_lock_sha256": PROTOCOL_LOCK_SHA,
+        "environment_lock_sha256": ENV_LOCK_SHA,
+        "raw_dataset_sha256": RAW_HDFS_TAR_SHA,
+        "train_membership_sha256": TRAIN_MEMBERSHIP_SHA,
+        "val_membership_sha256": VAL_MEMBERSHIP_SHA
+    }
+    trainer_test.save_checkpoint(tmp_ckpt_p, metadata=test_meta)
+    
+    # Load into fresh instance
+    trainer_fresh = StageA2Trainer(model=TemporalGraphViewEncoder(), execution_mode="FIXTURE_TEST", total_steps_override=4)
+    loaded_raw = trainer_fresh.load_checkpoint(tmp_ckpt_p)
+    
+    # Check 20: END_OF_EPOCH_CHECKPOINT_STATE
+    required_ckpt_keys = {
+        "model_state_dict", "optimizer_state_dict", "scheduler_state_dict",
+        "global_step", "stream_cursor", "accum_step", "current_epoch",
+        "completed_epoch", "next_epoch_to_run", "patience_counter",
+        "best_val_loss", "best_epoch", "node_memory_states", "checkpoint_metadata"
+    }
+    if not required_ckpt_keys.issubset(loaded_raw.keys()) or loaded_raw.get("accum_step") != 0:
+        failed_checks.append("CHECKPOINT_EXPLICIT_EPOCH_STATE_MISSING_KEYS_OR_NON_ZERO_ACCUM")
     else:
         print("[CHECK 20] END_OF_EPOCH_CHECKPOINT_STATE = PASS")
+    
+    # Check 21: NEXT_EPOCH_RESUME
+    if trainer_fresh.next_epoch_to_run != 2 or trainer_fresh.stream_cursor != 2292 or trainer_fresh.global_step != 573:
+        failed_checks.append(f"NEXT_EPOCH_RESUME_INCORRECT: next_epoch={trainer_fresh.next_epoch_to_run}, cursor={trainer_fresh.stream_cursor}")
+    else:
         print("[CHECK 21] NEXT_EPOCH_RESUME = PASS")
+        
+    # Check 22: NO_EPOCH_REPLAY
+    # Range of epochs executed starting from next_epoch_to_run (2) up to max_epochs (4) excludes completed epochs 0 and 1
+    unexecuted_epochs = list(range(0, trainer_fresh.next_epoch_to_run))
+    remaining_epochs = list(range(trainer_fresh.next_epoch_to_run, 4))
+    if 0 in remaining_epochs or 1 in remaining_epochs or unexecuted_epochs != [0, 1]:
+        failed_checks.append("EPOCH_REPLAY_DETECTED_IN_RESUME_RANGE")
+    else:
         print("[CHECK 22] NO_EPOCH_REPLAY = PASS")
+        
+    # Check 23: NO_EPOCH_SKIP
+    if trainer_fresh.next_epoch_to_run != loaded_raw.get("completed_epoch") + 1:
+        failed_checks.append(f"EPOCH_SKIP_OR_GAP_DETECTED: completed={loaded_raw.get('completed_epoch')}, next={trainer_fresh.next_epoch_to_run}")
+    else:
         print("[CHECK 23] NO_EPOCH_SKIP = PASS")
+        
+    # Check 24: EARLY_STOP_STATE_RESUME
+    if trainer_fresh.patience_counter != 1 or trainer_fresh.best_val_loss != 1.2345 or trainer_fresh.best_epoch != 1:
+        failed_checks.append(f"EARLY_STOP_STATE_MISMATCH: patience={trainer_fresh.patience_counter}, best_val={trainer_fresh.best_val_loss}")
+    else:
         print("[CHECK 24] EARLY_STOP_STATE_RESUME = PASS")
+        
+    # Check 25: BEST_CHECKPOINT_METADATA
+    ckpt_meta = loaded_raw.get("checkpoint_metadata", {})
+    meta_valid = (
+        ckpt_meta.get("seed") == 42 and
+        ckpt_meta.get("run_id") == "RUN-STAGE-A2-HDFS-SEED42" and
+        ckpt_meta.get("execution_code_commit_sha") == expected_code_commit and
+        ckpt_meta.get("protocol_lock_sha256") == PROTOCOL_LOCK_SHA and
+        ckpt_meta.get("environment_lock_sha256") == ENV_LOCK_SHA and
+        ckpt_meta.get("raw_dataset_sha256") == RAW_HDFS_TAR_SHA and
+        ckpt_meta.get("train_membership_sha256") == TRAIN_MEMBERSHIP_SHA and
+        ckpt_meta.get("val_membership_sha256") == VAL_MEMBERSHIP_SHA
+    )
+    if not meta_valid:
+        failed_checks.append("CHECKPOINT_METADATA_FIELDS_INVALID")
+    else:
         print("[CHECK 25] BEST_CHECKPOINT_METADATA = PASS")
     
     if tmp_ckpt_p.exists():
         tmp_ckpt_p.unlink()
 
-    # 13. Evidence Storage Revalidation
+    # 13. Evidence Storage Revalidation with Strict Git Tracking Verification
     manifest_p = impl_dir / "EVIDENCE-MANIFEST.json"
     if not manifest_p.exists():
         failed_checks.append("MISSING_EVIDENCE_MANIFEST_JSON")
@@ -263,14 +330,32 @@ def verify_canonical_readiness():
         storage_reval_pass = True
         for entry in manifest_data.get("artifacts", []):
             art_p = base_dir / entry["path"]
+            rel_path = entry["path"]
             if entry["storage_status"] == "COMMITTED_GIT":
+                # Check local existence & hash
                 if not art_p.exists() or compute_sha256(art_p) != entry["sha256"]:
                     storage_reval_pass = False
-                    failed_checks.append(f"COMMITTED_GIT_ARTIFACT_INVALID: {entry['path']}")
+                    failed_checks.append(f"COMMITTED_GIT_ARTIFACT_INVALID: {rel_path}")
+                    continue
+                # Check Git tracking
+                try:
+                    res_ls = subprocess.run(
+                        ["git", "ls-files", "--error-unmatch", rel_path],
+                        cwd=str(base_dir),
+                        capture_output=True,
+                        text=True,
+                        check=True
+                    )
+                except subprocess.CalledProcessError:
+                    storage_reval_pass = False
+                    failed_checks.append(f"COMMITTED_GIT_NOT_TRACKED_IN_GIT: {rel_path}")
             elif entry["storage_status"] == "LOCAL_D_DRIVE_NOT_COMMITTED":
                 if not art_p.exists() or compute_sha256(art_p) != entry["sha256"]:
                     storage_reval_pass = False
-                    failed_checks.append(f"LOCAL_ARTIFACT_INVALID: {entry['path']}")
+                    failed_checks.append(f"LOCAL_ARTIFACT_INVALID: {rel_path}")
+                elif "size_bytes" in entry and art_p.stat().st_size != entry["size_bytes"]:
+                    storage_reval_pass = False
+                    failed_checks.append(f"LOCAL_ARTIFACT_SIZE_MISMATCH: {rel_path}")
         if storage_reval_pass:
             print("[CHECK 26] EVIDENCE_STORAGE_REVALIDATION = PASS")
 
