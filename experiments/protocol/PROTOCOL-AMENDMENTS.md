@@ -75,3 +75,17 @@
   4. **Non-Learnable Fixed Node Target:** Defined $x_v^{\text{fixed\_priv}} \in \mathbb{R}^6$ as a fixed observable target (4-dim one-hot type + 2-dim log1p causal in/out degrees fit on Train only), eliminating learnable parameter leakage in the reconstruction target.
   5. **Exact Multi-Edge & Conservation Policy:** Enforced exact conservation $\text{raw\_scanned} = \text{materialized\_events} + \text{explicitly\_rejected\_events}$ and locked `PRESERVE_ALL_TEMPORAL_EVENTS_FIFO_CAUSAL` with `max_node_history = 64`.
 
+---
+
+### Amendment 8: Stage A2 Pre-Execution Split Authority Binding & Millisecond Temporal Fidelity (V1.2)
+- **Timestamp:** 2026-08-23T21:24:00+07:00
+- **Execution State:** `TEST_OPENED = NO`, `RESULTS_SEEN = NO`, `OPTIMIZER_STEPS_BEFORE_AMENDMENT = 0`, `MODELS_TRAINED_BEFORE_AMENDMENT = 0`
+- **Amends Commit:** `cc305041023acd855eacfd39d2befa6f2a30e322`
+- **Reason:** Binds Stage A2 graph builder directly to canonical `SPL-HDFS-001` split authority, eliminates arbitrary line-offset partitioning in favor of causal block-session membership, restores exact millisecond precision to timestamps, re-audits all 8 relation triggers from raw Train logs, and locks empirical materialization and grounding evidence manifests prior to model training.
+- **Amended Specifications:**
+  1. **Canonical Split Authority Binding:** Shared `HDFSSplitAuthority` module binds graph materialization directly to `SPL-HDFS-001`. Guaranteed disjointness ($\text{Train} \cap \text{Val} = \emptyset, \text{Train} \cap \text{Test} = \emptyset, \text{Val} \cap \text{Test} = \emptyset$), boundary purges (45,406 T$\to$V sessions, 36,057 V$\to$T sessions purged), and causal time ordering ($\text{train\_max\_end} < \text{val\_min\_start} < \text{val\_max\_end} < \text{test\_min\_start}$).
+  2. **Millisecond Timestamp Fidelity & Parity:** Parsed raw millisecond components into exact continuous fractional seconds (`epoch + ms/1000.0`). Verified exact parity between `HDFSRealDataAdapter` and `HDFSGraphBuilder` ($\Delta t = 0.0$).
+  3. **Full Train/Val Conservation Manifests:** Materialized full empirical streaming audit manifests (`HDFS-GRAPH-MATERIALIZATION-AUDIT.json` with 5,998,764 Train events and 735,091 Val events with 100% conservation; `RELATION-GROUNDING-AUDIT.json` confirming non-zero Train matches for all 8 relations).
+  4. **Strict Causal Node Target & Temporal Gap:** Locked $x_v^{\text{fixed\_priv}} \in \mathbb{R}^6$ (4-dim one-hot type + $\log(1 + d_{\text{in}}(v, t-))$ + $\log(1 + d_{\text{out}}(v, t-))$) and $\Delta t_{uv} = t_{\text{curr}} - t_{\text{last\_interaction}}(v, u)$ with boundary reset on Validation transition.
+
+

@@ -1,0 +1,144 @@
+{
+  "audit_version": "1.2.0",
+  "split_id": "SPL-HDFS-001",
+  "total_relations": 8,
+  "all_relations_grounded": true,
+  "relations": {
+    "RECEIVES_BLOCK": {
+      "relation_id": 1,
+      "relation_name": "RECEIVES_BLOCK",
+      "rule_type": "RECEIVES",
+      "train_match_count": 1067842,
+      "grounding_pass": true,
+      "sample_event_evidence": {
+        "raw_line_index": 1,
+        "event_timestamp_utc_exact": 1226262918.143,
+        "source_node": "10.250.19.102:50010",
+        "source_type": 1,
+        "dest_node": "blk_-1608999687919862906",
+        "dest_type": 0,
+        "block_id": "blk_-1608999687919862906",
+        "size_bytes": 0.0
+      }
+    },
+    "TRANSMITS_BLOCK": {
+      "relation_id": 2,
+      "relation_name": "TRANSMITS_BLOCK",
+      "rule_type": "TRANSMITS",
+      "train_match_count": 1057271,
+      "grounding_pass": true,
+      "sample_event_evidence": {
+        "raw_line_index": 7,
+        "event_timestamp_utc_exact": 1226262919.145,
+        "source_node": "10.250.10.6",
+        "source_type": 1,
+        "dest_node": "blk_-1608999687919862906",
+        "dest_type": 0,
+        "block_id": "blk_-1608999687919862906",
+        "size_bytes": 91178.0
+      }
+    },
+    "ALLOCATES_BLOCK": {
+      "relation_id": 3,
+      "relation_name": "ALLOCATES_BLOCK",
+      "rule_type": "ALLOCATES",
+      "train_match_count": 357133,
+      "grounding_pass": true,
+      "sample_event_evidence": {
+        "raw_line_index": 2,
+        "event_timestamp_utc_exact": 1226262918.035,
+        "source_node": "FSNamesystem",
+        "source_type": 2,
+        "dest_node": "blk_-1608999687919862906",
+        "dest_type": 0,
+        "block_id": "blk_-1608999687919862906",
+        "size_bytes": 0.0
+      }
+    },
+    "MONITORS_BLOCK": {
+      "relation_id": 4,
+      "relation_name": "MONITORS_BLOCK",
+      "rule_type": "MONITORS",
+      "train_match_count": 1057349,
+      "grounding_pass": true,
+      "sample_event_evidence": {
+        "raw_line_index": 5,
+        "event_timestamp_utc_exact": 1226262919.145,
+        "source_node": "PacketResponder_1",
+        "source_type": 3,
+        "dest_node": "blk_-1608999687919862906",
+        "dest_type": 0,
+        "block_id": "blk_-1608999687919862906",
+        "size_bytes": 0.0
+      }
+    },
+    "SERVES_BLOCK": {
+      "relation_id": 5,
+      "relation_name": "SERVES_BLOCK",
+      "rule_type": "SERVES",
+      "train_match_count": 426691,
+      "grounding_pass": true,
+      "sample_event_evidence": {
+        "raw_line_index": 47,
+        "event_timestamp_utc_exact": 1226262923.148,
+        "source_node": "10.250.11.100:50010",
+        "source_type": 1,
+        "dest_node": "blk_-3544583377289625738",
+        "dest_type": 0,
+        "block_id": "blk_-3544583377289625738",
+        "size_bytes": 0.0
+      }
+    },
+    "UPDATES_BLOCK_MAP": {
+      "relation_id": 6,
+      "relation_name": "UPDATES_BLOCK_MAP",
+      "rule_type": "UPDATES_MAP",
+      "train_match_count": 1063882,
+      "grounding_pass": true,
+      "sample_event_evidence": {
+        "raw_line_index": 11,
+        "event_timestamp_utc_exact": 1226262919.029,
+        "source_node": "10.250.10.6:50010",
+        "source_type": 1,
+        "dest_node": "blk_-1608999687919862906",
+        "dest_type": 0,
+        "block_id": "blk_-1608999687919862906",
+        "size_bytes": 91178.0
+      }
+    },
+    "COMMANDS_REPLICATION": {
+      "relation_id": 7,
+      "relation_name": "COMMANDS_REPLICATION",
+      "rule_type": "REPLICATES",
+      "train_match_count": 3277,
+      "grounding_pass": true,
+      "sample_event_evidence": {
+        "raw_line_index": 31,
+        "event_timestamp_utc_exact": 1226262921.019,
+        "source_node": "FSNamesystem",
+        "source_type": 2,
+        "dest_node": "blk_-1608999687919862906",
+        "dest_type": 0,
+        "block_id": "blk_-1608999687919862906",
+        "size_bytes": 0.0
+      }
+    },
+    "DELETES_BLOCK": {
+      "relation_id": 8,
+      "relation_name": "DELETES_BLOCK",
+      "rule_type": "DELETES",
+      "train_match_count": 965319,
+      "grounding_pass": true,
+      "sample_event_evidence": {
+        "raw_line_index": 72694,
+        "event_timestamp_utc_exact": 1226263524.019,
+        "source_node": "FSNamesystem",
+        "source_type": 2,
+        "dest_node": "blk_-8213344449220111733",
+        "dest_type": 0,
+        "block_id": "blk_-8213344449220111733",
+        "size_bytes": 0.0
+      }
+    }
+  }
+}

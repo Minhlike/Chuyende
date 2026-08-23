@@ -1,27 +1,24 @@
-# CHAPTER 3 — STAGE A2 PRE-REGISTRATION PROTOCOL & SPECIFICATION (AMENDMENT V1.1)
+# CHAPTER 3 — STAGE A2 PRE-REGISTRATION PROTOCOL & SPECIFICATION (AMENDMENT V1.2)
 
-**Document Identifier:** `REG-CH3-STAGE-A2-20260823-V1.1`  
+**Document Identifier:** `REG-CH3-STAGE-A2-20260823-V1.2`  
 **Registration Date:** 2026-08-23  
-**Status:** **FROZEN & LOCKED PRE-EXECUTION (AMENDED V1.1)**  
+**Status:** **FROZEN & LOCKED PRE-EXECUTION (AMENDED V1.2)**  
 **Execution Branch:** `train/ch3-stage-a2-preregistration`  
 **Base Frozen Commit:** `9a707025ed5899c524962558732218ff48e8b212` (Tagged: `ch3-stage-a1-final`)  
-**Previous Preregistration Commit:** `7b0feb788bf242456ab801e062caf6b1f06b8474`  
-**Amendment Justification:** Pre-execution audit resolved raw-to-graph grounding consistency, designated HDFS as the authorized dataset for Stage A2 graph pretraining, excluded BGL due to absence of inter-entity interaction destinations in raw logs, removed unused negative destination sampling from $L_{\text{graph}}$, and fixed the node reconstruction target $x_v^{\text{fixed\_priv}}$ to a non-learnable 6-dimensional observable vector.  
+**Previous Preregistration Commits:** `7b0feb788bf242456ab801e062caf6b1f06b8474` (V1.0), `cc305041023acd855eacfd39d2befa6f2a30e322` (V1.1)  
+**Amendment Justification (V1.2):** Binds Stage A2 graph construction to canonical `SPL-HDFS-001` split authority (`HDFSSplitAuthority`), replaces line-offset splitting with causal block-session membership, restores millisecond resolution to timestamps (`UTC epoch + ms/1000.0`), re-audits all 8 relation triggers and component constraints from raw Train records, and locks exact temporal gap target $\Delta t_{uv}$ and non-learnable node reconstruction target $x_v^{\text{fixed\_priv}} \in \mathbb{R}^6$.  
 
 ---
 
 ## 1. Executive Scientific Scope & Boundaries
 
-Stage A2 executes real self-supervised pretraining for the Chapter 2 Temporal Graph View Encoder (`TemporalGraphViewEncoder`) on the causal event-entity temporal graph derived from HDFS logs.
+Stage A2 executes real self-supervised pretraining for the Chapter 2 Temporal Graph View Encoder (`TemporalGraphViewEncoder`) on the causal event-entity temporal graph derived from HDFS logs under canonical split `SPL-HDFS-001`.
 
 ### Inviolable Pre-Execution Boundaries:
-1. **Zero Pre-Execution Optimizer Steps:** At the time of locking, `STAGE_A2_OPTIMIZER_STEPS = 0`, `STAGE_A2_MODELS_TRAINED = 0`.
-2. **Zero Test Split Access:** The Test split is strictly sealed (`TEST_OPENED = false`, `TEST_FEATURE_READ_COUNT = 0`, `TEST_LABEL_READ_COUNT = 0`, `TEST_METRIC_COUNT = 0`).
+1. **Zero Pre-Execution Optimizer Steps:** `STAGE_A2_OPTIMIZER_STEPS = 0`, `STAGE_A2_MODELS_TRAINED = 0`.
+2. **Zero Test Split Access:** `TEST_OPENED = false`, `TEST_FEATURE_READ_COUNT = 0`, `TEST_LABEL_READ_COUNT = 0`, `TEST_METRIC_COUNT = 0`, `TEST_GRAPH_EVENTS_MATERIALIZED = 0`, `TEST_RELATION_PARSE_COUNT = 0`.
 3. **Pure Self-Supervision:** Zero downstream anomaly labels, attack types, or security alerts are loaded or exposed to the model (`enforce_ssl_package_label_free`).
-4. **Dataset Eligibility Audit:**
-   - **HDFS:** `AUTHORIZED` — Causal event-entity temporal graph derived from raw HDFS block interactions.
-   - **BGL:** `INELIGIBLE` — Single-node localized alert telemetry without extractable inter-entity destination nodes.
-   - **DARPA TC E3 & LANL:** `PENDING_ACQUISITION` — Reserved for post-acquisition execution.
+4. **Canonical Split Authority:** Materialization uses `HDFSSplitAuthority` ensuring `train_max_end < val_min_start < val_max_end < test_min_start` with zero purged-session contamination.
 
 ---
 
@@ -66,10 +63,10 @@ Where:
 2. **$L_{\text{node}}$ (Masked Node Attribute Reconstruction):**
    $$\mathcal{L}_{\text{node}} = \frac{1}{|\mathcal{V}_{\text{mask}}|} \sum_{v \in \mathcal{V}_{\text{mask}}} \| g_{\text{node}}(h_v(t-)) - x_v^{\text{fixed\_priv}} \|_2^2$$
    - 15% Bernoulli masking on active entity nodes.
-   - Mean Squared Error between predicted continuous vector and true non-learnable feature $x_v^{\text{fixed\_priv}} \in \mathbb{R}^6$ (4-dim fixed one-hot type + 2-dim log1p causal in/out degrees).
+   - Mean Squared Error between predicted continuous vector and true non-learnable feature $x_v^{\text{fixed\_priv}} \in \mathbb{R}^6$ (4-dim fixed one-hot type + $\log(1 + d_{\text{in}}(v, t-))$ + $\log(1 + d_{\text{out}}(v, t-))$).
 3. **$L_{\text{time}}$ (Relative Temporal Gap Prediction):**
    $$\mathcal{L}_{\text{time}} = \frac{1}{|\mathcal{E}_t|} \sum_{e=(v,u) \in \mathcal{E}_t} \text{Smooth}_{L1}\left( g_{\text{time}}(h_v(t-), h_u(t-)) - \log(1 + \Delta t_{uv}) \right)$$
-   - Smooth L1 loss ($\beta = 1.0$) between predicted log-gap and ground-truth inter-event time difference.
+   - Smooth L1 loss ($\beta = 1.0$) on $\log(1 + \Delta t_{uv})$ where $\Delta t_{uv} = t_{\text{curr}} - t_{\text{last\_interaction}}(v, u)$ in seconds with millisecond resolution.
 
 **Canonical Loss Weights:**
 $$\lambda_{\text{rel}} = 1.0, \quad \lambda_{\text{node}} = 1.0, \quad \lambda_{\text{time}} = 0.1$$
@@ -96,9 +93,10 @@ All checkpoints (`best_val_loss.pt`, `checkpoint_last.pt`) must atomically seria
 2. Optimizer state dict (`optimizer_state_dict`)
 3. Scheduler state dict (`scheduler_state_dict`)
 4. Node memory states (`node_memory_states`)
-5. Full 4-state RNG tuple: Python, NumPy, PyTorch CPU, PyTorch CUDA
-6. Stream iterator state (`stream_iterator_state`)
-7. Global step and epoch counters
+5. Node last interaction timestamp table (`node_last_interaction_timestamps`)
+6. Full 4-state RNG tuple: Python, NumPy, PyTorch CPU, PyTorch CUDA
+7. Stream iterator state (`stream_iterator_state`)
+8. Global step and epoch counters
 
 **Acceptance Criteria for Checkpoint Resumption:**
 $$\text{Max Parameter Divergence between Continuous Run and Resumed Run} < 1.0 \times 10^{-6} \quad (\text{Target: } 0.0)$$

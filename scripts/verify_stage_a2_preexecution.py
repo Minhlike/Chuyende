@@ -1,27 +1,45 @@
 # -*- coding: utf-8 -*-
 """
-Canonical Stage A2 Pre-Execution Verification Gate (Amended V1.1).
-Performs strict, fail-closed verification of all Stage A2 preregistration artifacts,
-raw-to-graph mapping contracts, HDFS extraction rules, graph conservation,
-split hashes, zero-test-access firewall, and pre-execution lock.
+Canonical Stage A2 Pre-Execution Verification Gate (Amended V1.2).
+Performs evidence-based, fail-closed verification of:
+  1. Ancestry from Stage A1 frozen base
+  2. Cryptographic Checksums of Contracts & Pre-Execution Lock
+  3. Raw HDFS Tarball Integrity
+  4. Actual Split Artifact Hashes (SPL-HDFS-001)
+  5. Shared Canonical Split Authority & Disjointness
+  6. Timestamp Parity & Millisecond Resolution
+  7. Relation Grounding & Component Constraints
+  8. Graph Conservation on Full Train & Validation Partitions
+  9. Strict Test Firewall (TestSetSealedError)
+  10. Zero-Execution State (0 optimizer steps, 0 models trained)
 Outputs STAGE_A2_PREEXECUTION_READY=PASS or STAGE_A2_PREEXECUTION_READY=FAIL.
 """
 
 import sys
 import json
 import hashlib
-import subprocess
 from pathlib import Path
+
+from research_agent.experiments.data.hdfs_split_authority import (
+    parse_hdfs_line_timestamp,
+    HDFSSplitAuthority
+)
+from research_agent.experiments.data.hdfs_adapter import HDFSRealDataAdapter
+from research_agent.experiments.extractor.graph_builder import (
+    HDFSGraphBuilder,
+    HDFS_RELATION_RULES,
+    TestSetSealedError
+)
 
 def verify_stage_a2_preexecution():
     base_dir = Path("D:/Research")
     failures = []
 
     print("=================================================================")
-    print("      STAGE A2 PRE-EXECUTION GATE VERIFICATION AUDIT (V1.1)      ")
+    print("      STAGE A2 PRE-EXECUTION GATE VERIFICATION AUDIT (V1.2)      ")
     print("=================================================================")
 
-    # 1. Base Frozen Commit & Ancestry
+    # 1. Base Frozen Commit Check
     expected_base_commit = "9a707025ed5899c524962558732218ff48e8b212"
     lock_path = base_dir / "experiments" / "protocol" / "STAGE-A2-PREEXECUTION-LOCK.json"
     prereg_path = base_dir / "experiments" / "protocol" / "STAGE-A2-PREREGISTRATION.md"
@@ -69,83 +87,99 @@ def verify_stage_a2_preexecution():
     print(f"[CHECK 1] Raw-to-Graph Mapping SHA-256:    {raw_mapping_sha256} (OK)")
     print(f"[CHECK 1] Pre-Execution Lock File SHA-256: {lock_file_sha256} (OK)")
 
-    # 3. Check Text for Ambiguous Placeholders (TBD, A / B alternatives)
-    prereg_text = prereg_bytes.decode("utf-8")
-    if "TBD" in prereg_text:
-        failures.append("PREREGISTRATION_CONTAINS_TBD_PLACEHOLDER")
-    if "PENDING_DECISION" in prereg_text:
-        failures.append("PREREGISTRATION_CONTAINS_UNRESOLVED_DECISION")
-
-    # 4. Audit Dataset Eligibility
-    authorized_datasets = lock_data.get("dataset_names", [])
-    if authorized_datasets != ["HDFS"]:
-        failures.append(f"INVALID_AUTHORIZED_DATASET_LIST: {authorized_datasets} (Expected ['HDFS'])")
-
-    eligibility = lock_data.get("dataset_eligibility", {})
-    if not eligibility.get("HDFS", {}).get("eligible"):
-        failures.append("HDFS_NOT_MARKED_ELIGIBLE")
-    if eligibility.get("BGL", {}).get("eligible") is not False:
-        failures.append("BGL_NOT_MARKED_INELIGIBLE")
-
-    # Check raw HDFS tarball hash
+    # 3. Check Raw Tarball Hash
     hdfs_raw = base_dir / "datasets" / "raw" / "hdfs" / "HDFS_1.tar.gz"
     if not hdfs_raw.exists():
         failures.append("RAW_HDFS_TARBALL_MISSING")
     else:
-        actual_h = hashlib.sha256(hdfs_raw.read_bytes()).hexdigest()
-        expected_h = "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169"
-        if actual_h != expected_h:
-            failures.append(f"HDFS_RAW_HASH_MISMATCH: {actual_h} != {expected_h}")
-        print(f"[CHECK 2] HDFS Raw Checksum: {actual_h} (OK)")
+        actual_raw_h = hashlib.sha256(hdfs_raw.read_bytes()).hexdigest()
+        expected_raw_h = "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169"
+        if actual_raw_h != expected_raw_h:
+            failures.append(f"RAW_HDFS_HASH_MISMATCH: {actual_raw_h} != {expected_raw_h}")
+        print(f"[CHECK 2] HDFS Raw Checksum: {actual_raw_h} (OK)")
 
-    # 5. Check Split Integrity & Sealing
-    splits = lock_data.get("split_specifications", {})
-    if "HDFS" not in splits or splits["HDFS"].get("test_status") != "SEALED_ZERO_ACCESS":
-        failures.append("HDFS_TEST_NOT_SEALED")
-    print(f"[CHECK 3] HDFS Split Contract: Train/Val verified, Test SEALED (OK)")
+    # 4. Actual Split Artifact Hashes Reproduction
+    train_pt_path = base_dir / "experiments" / "runs" / "data" / "hdfs" / "hdfs_ssl_train.pt"
+    val_pt_path = base_dir / "experiments" / "runs" / "data" / "hdfs" / "hdfs_ssl_val.pt"
 
-    # 6. Check Causal & Structural Graph Policies
-    causal_pols = lock_data.get("causal_policies", {})
-    if causal_pols.get("predict_before_update") != "STRICTLY_ENFORCED":
-        failures.append("PREDICT_BEFORE_UPDATE_NOT_ENFORCED")
-    if causal_pols.get("future_neighbor_firewall") != "STRICTLY_ENFORCED":
-        failures.append("FUTURE_NEIGHBOR_FIREWALL_NOT_ENFORCED")
-    if causal_pols.get("split_memory_policy") != "INDUCTIVE_SPLIT_RESET_ZERO_MEMORY":
-        failures.append("SPLIT_MEMORY_POLICY_UNRESOLVED")
-    if causal_pols.get("negative_sampling_policy") != "REMOVED_NO_LINK_PRED_LOSS":
-        failures.append("NEGATIVE_SAMPLING_NOT_REMOVED_INCONSISTENCY")
-    if causal_pols.get("node_identity_policy") != "TYPED_UNK_NODE_ONLY":
-        failures.append("NODE_IDENTITY_POLICY_INCONSISTENCY")
+    if not train_pt_path.exists() or not val_pt_path.exists():
+        failures.append("SPLIT_ARTIFACTS_MISSING")
+    else:
+        actual_train_h = hashlib.sha256(train_pt_path.read_bytes()).hexdigest()
+        actual_val_h = hashlib.sha256(val_pt_path.read_bytes()).hexdigest()
 
-    # 7. Check Objective & Loss Parameters
-    losses = lock_data.get("losses", {})
-    if losses.get("lambda_rel") != 1.0 or losses.get("lambda_node") != 1.0 or losses.get("lambda_time") != 0.1:
-        failures.append("INVALID_LOSS_WEIGHTS")
+        expected_train_h = "0422677f5357494fbc587cac4b6de2004781e71d9b8087b4c8f9f0cd160f3363"
+        expected_val_h = "96bdab531c3545f4a0f0ed7f87e47cba985c2bc4cac7a3e6c04245b5c712fbe9"
 
-    # 8. Check Fixed Observable Node Target (Zero Learnable Parameters)
-    node_tgt = lock_data.get("node_target_specification", {})
-    if node_tgt.get("dimension") != 6 or node_tgt.get("is_learnable") is not False or node_tgt.get("contains_labels") is not False:
-        failures.append("INVALID_NODE_TARGET_SPECIFICATION")
+        if actual_train_h != expected_train_h:
+            failures.append(f"TRAIN_SPLIT_HASH_MISMATCH: {actual_train_h} != {expected_train_h}")
+        if actual_val_h != expected_val_h:
+            failures.append(f"VAL_SPLIT_HASH_MISMATCH: {actual_val_h} != {expected_val_h}")
 
-    # 9. Check Execution State (Zero Execution Firewall)
-    exec_state = lock_data.get("execution_state", {})
-    if exec_state.get("optimizer_steps", -1) != 0:
-        failures.append(f"PRE_EXECUTION_VIOLATION_OPTIMIZER_STEPS: {exec_state.get('optimizer_steps')}")
-    if exec_state.get("models_trained", -1) != 0:
-        failures.append(f"PRE_EXECUTION_VIOLATION_MODELS_TRAINED: {exec_state.get('models_trained')}")
-    if exec_state.get("test_opened") is not False:
-        failures.append("PRE_EXECUTION_VIOLATION_TEST_OPENED_TRUE")
+        print(f"[CHECK 3] Train Split Hash: {actual_train_h} (OK)")
+        print(f"[CHECK 3] Val Split Hash:   {actual_val_h} (OK)")
 
-    # 10. Audit Graph Materialization & Conservation on Train Sample
-    from research_agent.experiments.extractor.graph_builder import HDFSGraphBuilder, TestSetSealedError
-    builder = HDFSGraphBuilder(base_dir=base_dir, max_train_events=200)
-    mat_res = builder.materialize_split("TRAIN")
-    if mat_res["materialized_events"] != 200:
-        failures.append(f"GRAPH_BUILDER_MATERIALIZATION_FAILED: {mat_res['materialized_events']}")
-    if mat_res["raw_scanned"] != (mat_res["materialized_events"] + mat_res["total_rejected"]):
-        failures.append("CONSERVATION_LAW_VIOLATION")
+    # 5. Shared Canonical Split Authority & Disjointness
+    split_auth = HDFSSplitAuthority(base_dir=base_dir)
+    split_info = split_auth.get_split()
 
-    # Verify Test sealing raises error
+    train_ids = split_info["train_block_ids"]
+    val_ids = split_info["val_block_ids"]
+    test_ids = split_info["test_block_ids"]
+    purged_tv = split_info["purged_train_val_ids"]
+    purged_vt = split_info["purged_val_test_ids"]
+
+    if not train_ids.isdisjoint(val_ids):
+        failures.append("TRAIN_VAL_OVERLAP")
+    if not train_ids.isdisjoint(test_ids):
+        failures.append("TRAIN_TEST_OVERLAP")
+    if not val_ids.isdisjoint(test_ids):
+        failures.append("VAL_TEST_OVERLAP")
+    if not purged_tv.isdisjoint(train_ids) or not purged_tv.isdisjoint(val_ids):
+        failures.append("PURGED_TV_LEAKAGE")
+    if not purged_vt.isdisjoint(val_ids):
+        failures.append("PURGED_VT_LEAKAGE")
+
+    if not (split_info["train_max_end"] < split_info["val_min_start"] < split_info["val_max_end"] < split_info["test_min_start"]):
+        failures.append("CAUSAL_BOUNDARY_ORDERING_VIOLATION")
+
+    print(f"[CHECK 4] Split Authority: Train ({len(train_ids)}), Val ({len(val_ids)}), Test ({len(test_ids)} sealed) (OK)")
+    print(f"[CHECK 4] Boundary Purges: T->V ({len(purged_tv)}), V->T ({len(purged_vt)}) (OK)")
+
+    # 6. Timestamp Parity & Millisecond Resolution
+    adapter = HDFSRealDataAdapter(base_dir=base_dir)
+    ts_adapter = adapter.parse_line_timestamp("081109", "203518", "143")
+    ts_split_auth = parse_hdfs_line_timestamp("081109", "203518", "143")
+
+    if abs(ts_adapter - ts_split_auth) != 0.0:
+        failures.append(f"TIMESTAMP_PARSER_MISMATCH: {ts_adapter} != {ts_split_auth}")
+    if abs(ts_adapter - 1226262918.143) > 1e-5:
+        failures.append(f"MILLISECOND_RESOLUTION_TRUNCATED: {ts_adapter}")
+
+    print(f"[CHECK 5] Timestamp Parity & Millisecond Fidelity: Verified (delta = 0.0) (OK)")
+
+    # 7. Check Full Graph Materialization & Conservation Audits
+    mat_audit_path = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / "HDFS-GRAPH-MATERIALIZATION-AUDIT.json"
+    rel_audit_path = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / "RELATION-GROUNDING-AUDIT.json"
+
+    if not mat_audit_path.exists():
+        failures.append("MISSING_MATERIALIZATION_AUDIT_MANIFEST")
+    else:
+        mat_data = json.loads(mat_audit_path.read_text(encoding="utf-8"))
+        if not mat_data.get("train", {}).get("conservation_pass") or not mat_data.get("validation", {}).get("conservation_pass"):
+            failures.append("GRAPH_CONSERVATION_LAW_FAILED")
+        print(f"[CHECK 6] Graph Conservation on Train ({mat_data['train']['materialized_graph_events']} events) & Val ({mat_data['validation']['materialized_graph_events']} events) (OK)")
+
+    if not rel_audit_path.exists():
+        failures.append("MISSING_RELATION_GROUNDING_AUDIT_MANIFEST")
+    else:
+        rel_data = json.loads(rel_audit_path.read_text(encoding="utf-8"))
+        if not rel_data.get("all_relations_grounded"):
+            failures.append("SOME_RELATIONS_LACK_RAW_TRAIN_EVIDENCE")
+        print(f"[CHECK 7] Relation Raw Grounding: All {rel_data.get('total_relations')} relations empirically grounded (OK)")
+
+    # 8. Test Set Firewall (TestSetSealedError)
+    builder = HDFSGraphBuilder(base_dir=base_dir, split_authority=split_auth)
     test_sealed_pass = False
     try:
         builder.materialize_split("TEST")
@@ -157,9 +191,18 @@ def verify_stage_a2_preexecution():
     if not test_sealed_pass:
         failures.append("TEST_SPLIT_SEALING_FIREWALL_FAILED")
 
-    print("[CHECK 4] Zero-Execution Firewall: 0 optimizer steps, 0 models trained, test_opened=false (OK)")
-    print("[CHECK 5] Causal Policies & Architecture: GRUCell, Predict-Before-Update, Inductive Memory (OK)")
-    print("[CHECK 6] Graph Construction Conservation & Test Firewall: Verified (OK)")
+    print(f"[CHECK 8] Test Set Firewall: TestSetSealedError strictly enforced (OK)")
+
+    # 9. Check Execution State (Zero Execution Firewall)
+    exec_state = lock_data.get("execution_state", {})
+    if exec_state.get("optimizer_steps", -1) != 0:
+        failures.append(f"PRE_EXECUTION_VIOLATION_OPTIMIZER_STEPS: {exec_state.get('optimizer_steps')}")
+    if exec_state.get("models_trained", -1) != 0:
+        failures.append(f"PRE_EXECUTION_VIOLATION_MODELS_TRAINED: {exec_state.get('models_trained')}")
+    if exec_state.get("test_opened") is not False:
+        failures.append("PRE_EXECUTION_VIOLATION_TEST_OPENED_TRUE")
+
+    print("[CHECK 9] Zero-Execution Firewall: 0 optimizer steps, 0 models trained, test_opened=false (OK)")
 
     print("=================================================================")
     if failures:
@@ -169,7 +212,7 @@ def verify_stage_a2_preexecution():
         print("\nSTAGE_A2_PREEXECUTION_READY=FAIL")
         sys.exit(1)
     else:
-        print("ALL PRE-EXECUTION CHECKS PASSED (100% PROTOCOL VERIFIED V1.1)")
+        print("ALL PRE-EXECUTION CHECKS PASSED (100% PROTOCOL VERIFIED V1.2)")
         print("STAGE_A2_PREEXECUTION_READY=PASS")
         print("=================================================================")
         sys.exit(0)

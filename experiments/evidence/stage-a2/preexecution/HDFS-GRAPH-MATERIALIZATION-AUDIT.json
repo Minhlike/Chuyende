@@ -1,0 +1,61 @@
+{
+  "audit_version": "1.2.0",
+  "split_id": "SPL-HDFS-001",
+  "train": {
+    "eligible_records_scanned": 7447591,
+    "materialized_graph_events": 5998764,
+    "explicitly_rejected_events": 1448827,
+    "conservation_pass": true,
+    "rejection_counts": {
+      "UNMATCHED_RELATION_TEMPLATE": 1448827
+    },
+    "relation_counts": {
+      "RECEIVES_BLOCK": 1067842,
+      "ALLOCATES_BLOCK": 357133,
+      "MONITORS_BLOCK": 1057349,
+      "TRANSMITS_BLOCK": 1057271,
+      "UPDATES_BLOCK_MAP": 1063882,
+      "COMMANDS_REPLICATION": 3277,
+      "SERVES_BLOCK": 426691,
+      "DELETES_BLOCK": 965319
+    },
+    "unique_nodes": 357543,
+    "nodes_by_type": {
+      "DATA_BLOCK": 5998764,
+      "STORAGE_NODE": 3615686,
+      "MANAGEMENT_SYSTEM": 1325729,
+      "EXECUTION_THREAD": 1057349
+    },
+    "min_timestamp_utc": 1226262918.035,
+    "max_timestamp_utc": 1226383243.746
+  },
+  "validation": {
+    "eligible_records_scanned": 825616,
+    "materialized_graph_events": 735091,
+    "explicitly_rejected_events": 90525,
+    "conservation_pass": true,
+    "rejection_counts": {
+      "UNMATCHED_RELATION_TEMPLATE": 90525
+    },
+    "relation_counts": {
+      "RECEIVES_BLOCK": 149647,
+      "ALLOCATES_BLOCK": 50204,
+      "MONITORS_BLOCK": 148461,
+      "TRANSMITS_BLOCK": 148448,
+      "UPDATES_BLOCK_MAP": 148522,
+      "COMMANDS_REPLICATION": 70,
+      "DELETES_BLOCK": 89332,
+      "SERVES_BLOCK": 407
+    },
+    "min_timestamp_utc": 1226383246.031,
+    "max_timestamp_utc": 1226392389.697
+  },
+  "test_firewall": {
+    "test_opened": false,
+    "test_feature_read_count": 0,
+    "test_label_read_count": 0,
+    "test_metric_count": 0,
+    "test_graph_events_materialized": 0,
+    "test_relation_parse_count": 0
+  }
+}

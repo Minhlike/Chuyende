@@ -31,14 +31,20 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple, Set
 
-import numpy as np
-import torch
+try:
+    import torch
+except ImportError:
+    torch = None
 
 from research_agent.experiments.data.data_contract import (
     RealDataContract,
     RealTrainingDataViolation,
     LabelLeakageError,
     enforce_ssl_package_label_free
+)
+from research_agent.experiments.data.hdfs_split_authority import (
+    parse_hdfs_line_timestamp,
+    HDFSSplitAuthority
 )
 
 class TestSetSealedError(Exception):
@@ -110,20 +116,9 @@ class HDFSRealDataAdapter:
 
     def parse_line_timestamp(self, date_str: str, time_str: str, ms_str: str) -> Optional[float]:
         """
-        Fast, deterministic, cross-platform UTC numerical epoch conversion.
+        Fast, deterministic, cross-platform UTC numerical epoch conversion preserving millisecond precision.
         """
-        try:
-            year = 2000 + int(date_str[:2])
-            month = int(date_str[2:4])
-            day = int(date_str[4:6])
-            hour = int(time_str[:2])
-            minute = int(time_str[2:4])
-            sec = int(time_str[4:6])
-            ms = int(ms_str)
-            base_epoch = calendar.timegm((year, month, day, hour, minute, sec, 0, 0, 0))
-            return float(base_epoch) + (float(ms) / 1000.0)
-        except Exception:
-            return None
+        return parse_hdfs_line_timestamp(date_str, time_str, ms_str)
 
     def classify_ip(self, ip_str: str) -> str:
         """

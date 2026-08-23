@@ -1,13 +1,23 @@
 # -*- coding: utf-8 -*-
 """
-Canonical HDFS Causal Event-Entity Graph Builder & Parser (Contract V1.1)
-Constructs causal temporal graph streams strictly grounded in raw HDFS audit logs:
-  - Extractable entities: DATA_BLOCK, STORAGE_NODE, MANAGEMENT_SYSTEM, EXECUTION_THREAD
-  - Extractable relations: RECEIVES_BLOCK, STORES_BLOCK, ALLOCATES_BLOCK, MONITORS_BLOCK,
-                           SERVES_BLOCK, UPDATES_BLOCK_MAP, REPLICATES_BLOCK, DELETES_BLOCK
-  - Fixed node targets: x_v_fixed_priv (6-dim: 4-dim one-hot type + 2-dim log1p causal in/out degrees)
-  - Strict Test Firewall: TestSetSealedError enforced on test partition requests.
-  - Conservation Law: raw_eligible_events = materialized_graph_events + explicitly_rejected_events
+Canonical HDFS Causal Event-Entity Graph Builder & Materialization Engine (Contract V1.2).
+Strictly bound to SPL-HDFS-001 Canonical Split Authority and Millisecond-Accurate Temporal Semantics:
+  - Single Source of Truth Split Authority: HDFSSplitAuthority
+  - Millisecond Preservation: parse_hdfs_line_timestamp (UTC epoch + ms / 1000.0)
+  - Canonical Sort Key: (event_timestamp_utc_exact, raw_line_index)
+  - Extractable Entities: DATA_BLOCK (0), STORAGE_NODE (1), MANAGEMENT_SYSTEM (2), EXECUTION_THREAD (3)
+  - Grounded Relations:
+      1. RECEIVES_BLOCK (dfs.DataNode$DataXceiver)
+      2. TRANSMITS_BLOCK (dfs.DataNode$PacketResponder)
+      3. ALLOCATES_BLOCK (dfs.FSNamesystem)
+      4. MONITORS_BLOCK (dfs.DataNode$PacketResponder)
+      5. SERVES_BLOCK (dfs.DataNode$DataXceiver)
+      6. UPDATES_BLOCK_MAP (dfs.FSNamesystem)
+      7. COMMANDS_REPLICATION (dfs.FSNamesystem)
+      8. DELETES_BLOCK (dfs.FSNamesystem / dfs.FSDataset)
+  - Fixed Node Target: x_v_fixed_priv in R^6 (4-dim one-hot type + 2-dim log1p causal in/out degrees)
+  - Strict Test Firewall: TestSetSealedError raised on any Test materialization or feature extraction.
+  - Conservation Law: eligible_split_records = materialized_graph_records + explicitly_rejected_records
 """
 
 import os
@@ -15,151 +25,235 @@ import re
 import tarfile
 import json
 import math
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple, Set
 
+from research_agent.experiments.data.hdfs_split_authority import (
+    parse_hdfs_line_timestamp,
+    HDFSSplitAuthority
+)
+
+
 class TestSetSealedError(Exception):
-    """Raised when any code attempts to access the sealed Test split."""
+    """Raised when any code attempts to access the sealed Test split or test labels."""
     __test__ = False
 
-HDFS_GRAPH_EXTRACTION_RULES = [
+
+# Canonical Component-Constrained Extraction Rules for HDFS
+HDFS_RELATION_RULES = [
     # 1. RECEIVES_BLOCK: StorageNode (dest) -> DataBlock
-    (re.compile(r"Receiving block (blk_[-0-9]+) src: (/?[0-9\.:]+) dest: (/?[0-9\.:]+)"), "RECEIVES_BLOCK", 1),
-    # 2. STORES_BLOCK: StorageNode (src) -> DataBlock (with block size)
-    (re.compile(r"Received block (blk_[-0-9]+) of size (\d+) from (/?[0-9\.:]+)"), "STORES_BLOCK", 2),
+    {
+        "relation_id": 1,
+        "relation_name": "RECEIVES_BLOCK",
+        "component_regex": re.compile(r"DataNode|DataXceiver", re.IGNORECASE),
+        "message_regex": re.compile(r"Receiving block (blk_[-0-9]+) src: (/?[0-9\.:]+) dest: (/?[0-9\.:]+)"),
+        "rule_type": "RECEIVES"
+    },
+    # 2. TRANSMITS_BLOCK: StorageNode (src) -> DataBlock (with block size)
+    {
+        "relation_id": 2,
+        "relation_name": "TRANSMITS_BLOCK",
+        "component_regex": re.compile(r"DataNode|PacketResponder", re.IGNORECASE),
+        "message_regex": re.compile(r"Received block (blk_[-0-9]+) of size (\d+) from (/?[0-9\.:]+)"),
+        "rule_type": "TRANSMITS"
+    },
     # 3. ALLOCATES_BLOCK: FSNamesystem -> DataBlock
-    (re.compile(r"BLOCK\* NameSystem\.allocateBlock: (.*)\. (blk_[-0-9]+)"), "ALLOCATES_BLOCK", 3),
+    {
+        "relation_id": 3,
+        "relation_name": "ALLOCATES_BLOCK",
+        "component_regex": re.compile(r"FSNamesystem|NameSystem", re.IGNORECASE),
+        "message_regex": re.compile(r"BLOCK\* NameSystem\.allocateBlock: (.*)\. (blk_[-0-9]+)"),
+        "rule_type": "ALLOCATES"
+    },
     # 4. MONITORS_BLOCK: PacketResponder -> DataBlock
-    (re.compile(r"PacketResponder (\d+) for block (blk_[-0-9]+) terminating"), "MONITORS_BLOCK", 4),
-    # 5. SERVES_BLOCK: StorageNode -> DataBlock
-    (re.compile(r"Served block (blk_[-0-9]+) to (/?[0-9\.:]+)"), "SERVES_BLOCK", 5),
+    {
+        "relation_id": 4,
+        "relation_name": "MONITORS_BLOCK",
+        "component_regex": re.compile(r"DataNode|PacketResponder", re.IGNORECASE),
+        "message_regex": re.compile(r"PacketResponder (\d+) for block (blk_[-0-9]+) terminating"),
+        "rule_type": "MONITORS"
+    },
+    # 5. SERVES_BLOCK: StorageNode (server) -> DataBlock
+    {
+        "relation_id": 5,
+        "relation_name": "SERVES_BLOCK",
+        "component_regex": re.compile(r"DataNode|DataXceiver", re.IGNORECASE),
+        "message_regex": re.compile(r"(?:([0-9\.:]+) )?Served block (blk_[-0-9]+) to (/?[0-9\.:]+)"),
+        "rule_type": "SERVES"
+    },
     # 6. UPDATES_BLOCK_MAP: StorageNode -> DataBlock (with block size)
-    (re.compile(r"BLOCK\* NameSystem\.addStoredBlock: blockMap updated: ([0-9\.:]+) is added to (blk_[-0-9]+) size (\d+)"), "UPDATES_BLOCK_MAP", 6),
-    # 7. REPLICATES_BLOCK: StorageNode -> DataBlock
-    (re.compile(r"BLOCK\* ask ([0-9\.:]+) to replicate (blk_[-0-9]+) to datanode\(s\) (.*)"), "REPLICATES_BLOCK", 7),
+    {
+        "relation_id": 6,
+        "relation_name": "UPDATES_BLOCK_MAP",
+        "component_regex": re.compile(r"FSNamesystem|NameSystem", re.IGNORECASE),
+        "message_regex": re.compile(r"BLOCK\* NameSystem\.addStoredBlock: blockMap updated: ([0-9\.:]+) is added to (blk_[-0-9]+) size (\d+)"),
+        "rule_type": "UPDATES_MAP"
+    },
+    # 7. COMMANDS_REPLICATION: FSNamesystem -> DataBlock
+    {
+        "relation_id": 7,
+        "relation_name": "COMMANDS_REPLICATION",
+        "component_regex": re.compile(r"FSNamesystem|NameSystem", re.IGNORECASE),
+        "message_regex": re.compile(r"BLOCK\* ask ([0-9\.:]+) to replicate (blk_[-0-9]+) to datanode\(s\) (.*)"),
+        "rule_type": "REPLICATES"
+    },
     # 8. DELETES_BLOCK: FSNamesystem -> DataBlock
-    (re.compile(r"(?:BLOCK\* ask ([0-9\.:]+) to delete (blk_[-0-9]+)|Deleting block (blk_[-0-9]+) file (.*))"), "DELETES_BLOCK", 8),
+    {
+        "relation_id": 8,
+        "relation_name": "DELETES_BLOCK",
+        "component_regex": re.compile(r"FSNamesystem|FSDataset|DataNode", re.IGNORECASE),
+        "message_regex": re.compile(r"(?:BLOCK\* ask ([0-9\.:]+) to delete (blk_[-0-9]+)|Deleting block (blk_[-0-9]+) file (.*))"),
+        "rule_type": "DELETES"
+    }
 ]
 
 
 class HDFSGraphBuilder:
-    def __init__(self, base_dir: Path, max_train_events: int = 100000, max_val_events: int = 20000):
+    def __init__(
+        self,
+        base_dir: Path,
+        split_authority: Optional[HDFSSplitAuthority] = None,
+        max_audit_events: Optional[int] = None
+    ):
         self.base_dir = base_dir
         self.raw_tar_path = self.base_dir / "datasets" / "raw" / "hdfs" / "HDFS_1.tar.gz"
-        self.max_train_events = max_train_events
-        self.max_val_events = max_val_events
+        self.split_authority = split_authority or HDFSSplitAuthority(base_dir=self.base_dir)
+        self.max_audit_events = max_audit_events
 
         self.node_to_id: Dict[str, int] = {"<UNK_NODE>": 0}
         self.node_to_type: Dict[str, int] = {"<UNK_NODE>": 0}
-        self.train_max_in_degree = 1.0
-        self.train_max_out_degree = 1.0
-        self.train_mean_size_bytes = 1.0
 
-    def parse_raw_line(self, line_str: str, line_idx: int) -> Tuple[Optional[Dict[str, Any]], Optional[str]]:
-        """Parses a single raw HDFS log line into a typed graph event."""
-        # Format: Date Time Pid Level Component: Message
-        # E.g.: 081109 203518 143 INFO dfs.DataNode$DataXceiver: Receiving block blk_-1608961267986555555 src: /10.250.19.102:54106 dest: /10.250.19.102:50010
+    def parse_raw_line(self, line_str: str, line_idx: int) -> Tuple[Optional[Dict[str, Any]], Optional[str], Optional[str]]:
+        """
+        Parses a single raw HDFS log line into a typed graph event using millisecond-accurate timestamps
+        and component-constrained relation extraction.
+        Returns (event_dict, reject_reason, block_id).
+        """
         parts = line_str.strip().split(" ", 5)
         if len(parts) < 6:
-            return None, "MALFORMED_HEADER"
+            return None, "MALFORMED_HEADER", None
 
-        d_str, t_str, pid, level, comp, msg = parts
-        try:
-            # Parse timestamp to UTC epoch
-            # Year is 2008 (08)
-            dt = datetime.strptime(f"20{d_str} {t_str}", "%Y%m%d %H%M%S")
-            ts_epoch = float(dt.replace(tzinfo=timezone.utc).timestamp())
-        except Exception:
-            return None, "TIMESTAMP_PARSE_ERROR"
+        d_str, t_str, ms_str, level, comp, msg = parts
+        ts_epoch = parse_hdfs_line_timestamp(d_str, t_str, ms_str)
+        if ts_epoch is None:
+            return None, "TIMESTAMP_PARSE_ERROR", None
 
-        for pattern, rel_name, rel_id in HDFS_GRAPH_EXTRACTION_RULES:
-            m = pattern.search(msg)
-            if m:
-                # Extract source and destination depending on relation
-                size_bytes = 0.0
-                if rel_name == "RECEIVES_BLOCK":
-                    blk_id = m.group(1)
-                    src_node = m.group(3).lstrip("/")  # Dest storage node receives
-                    dest_node = blk_id
-                    src_type = 1  # STORAGE_NODE
-                    dest_type = 0  # DATA_BLOCK
-                elif rel_name == "STORES_BLOCK":
-                    blk_id = m.group(1)
-                    size_bytes = float(m.group(2))
-                    src_node = m.group(3).lstrip("/")
-                    dest_node = blk_id
-                    src_type = 1
-                    dest_type = 0
-                elif rel_name == "ALLOCATES_BLOCK":
-                    blk_id = m.group(2)
-                    src_node = "FSNamesystem"
-                    dest_node = blk_id
-                    src_type = 2  # MANAGEMENT_SYSTEM
-                    dest_type = 0
-                elif rel_name == "MONITORS_BLOCK":
-                    thread_id = m.group(1)
-                    blk_id = m.group(2)
-                    src_node = f"PacketResponder_{thread_id}"
-                    dest_node = blk_id
-                    src_type = 3  # EXECUTION_THREAD
-                    dest_type = 0
-                elif rel_name == "SERVES_BLOCK":
-                    blk_id = m.group(1)
-                    src_node = m.group(2).lstrip("/")
-                    dest_node = blk_id
-                    src_type = 1
-                    dest_type = 0
-                elif rel_name == "UPDATES_BLOCK_MAP":
-                    src_node = m.group(1).lstrip("/")
-                    blk_id = m.group(2)
-                    size_bytes = float(m.group(3))
-                    dest_node = blk_id
-                    src_type = 1
-                    dest_type = 0
-                elif rel_name == "REPLICATES_BLOCK":
-                    src_node = m.group(1).lstrip("/")
-                    blk_id = m.group(2)
-                    dest_node = blk_id
-                    src_type = 1
-                    dest_type = 0
-                elif rel_name == "DELETES_BLOCK":
-                    src_node = "FSNamesystem"
-                    blk_id = m.group(2) if m.group(2) else m.group(3)
-                    dest_node = blk_id
-                    src_type = 2
-                    dest_type = 0
-                else:
-                    return None, "UNMAPPED_RELATION"
+        # Extract block_id
+        blk_m = re.search(r"(blk_[-0-9]+)", msg)
+        if not blk_m:
+            return None, "NO_BLOCK_ID_IN_MESSAGE", None
+        blk_id = blk_m.group(1)
 
-                event = {
-                    "raw_line_index": line_idx,
-                    "event_timestamp_utc": ts_epoch,
-                    "relation_id": rel_id,
-                    "relation_name": rel_name,
-                    "source_node": src_node,
-                    "source_type": src_type,
-                    "dest_node": dest_node,
-                    "dest_type": dest_type,
-                    "size_bytes": size_bytes
-                }
-                return event, None
+        # Match against component-constrained relation rules
+        for rule in HDFS_RELATION_RULES:
+            if not rule["component_regex"].search(comp):
+                continue
+            
+            m = rule["message_regex"].search(msg)
+            if not m:
+                continue
 
-        return None, "NO_BLOCK_ID_MATCH"
+            rel_id = rule["relation_id"]
+            rel_name = rule["relation_name"]
+            rule_type = rule["rule_type"]
+            size_bytes = 0.0
+
+            if rule_type == "RECEIVES":
+                # StorageNode (dest) -> DataBlock
+                dest_storage = m.group(3).lstrip("/")
+                src_node = dest_storage
+                src_type = 1  # STORAGE_NODE
+                dest_node = blk_id
+                dest_type = 0  # DATA_BLOCK
+            elif rule_type == "TRANSMITS":
+                # StorageNode (src) -> DataBlock
+                src_storage = m.group(3).lstrip("/")
+                size_bytes = float(m.group(2))
+                src_node = src_storage
+                src_type = 1  # STORAGE_NODE
+                dest_node = blk_id
+                dest_type = 0  # DATA_BLOCK
+            elif rule_type == "ALLOCATES":
+                # FSNamesystem -> DataBlock
+                src_node = "FSNamesystem"
+                src_type = 2  # MANAGEMENT_SYSTEM
+                dest_node = blk_id
+                dest_type = 0  # DATA_BLOCK
+            elif rule_type == "MONITORS":
+                # PacketResponder_<ID> -> DataBlock
+                thread_id = m.group(1)
+                src_node = f"PacketResponder_{thread_id}"
+                src_type = 3  # EXECUTION_THREAD
+                dest_node = blk_id
+                dest_type = 0  # DATA_BLOCK
+            elif rule_type == "SERVES":
+                # Server StorageNode -> DataBlock
+                server_ip = m.group(1)
+                src_node = server_ip.lstrip("/") if server_ip else "10.250.0.1:50010"
+                src_type = 1  # STORAGE_NODE
+                dest_node = blk_id
+                dest_type = 0  # DATA_BLOCK
+            elif rule_type == "UPDATES_MAP":
+                # StorageNode -> DataBlock
+                storage_ip = m.group(1).lstrip("/")
+                size_bytes = float(m.group(3))
+                src_node = storage_ip
+                src_type = 1  # STORAGE_NODE
+                dest_node = blk_id
+                dest_type = 0  # DATA_BLOCK
+            elif rule_type == "REPLICATES":
+                # FSNamesystem -> DataBlock
+                src_node = "FSNamesystem"
+                src_type = 2  # MANAGEMENT_SYSTEM
+                dest_node = blk_id
+                dest_type = 0  # DATA_BLOCK
+            elif rule_type == "DELETES":
+                # FSNamesystem -> DataBlock
+                src_node = "FSNamesystem"
+                src_type = 2  # MANAGEMENT_SYSTEM
+                dest_node = blk_id
+                dest_type = 0  # DATA_BLOCK
+            else:
+                return None, "UNSUPPORTED_RULE_TYPE", blk_id
+
+            event = {
+                "raw_line_index": line_idx,
+                "event_timestamp_utc_exact": ts_epoch,
+                "relation_id": rel_id,
+                "relation_name": rel_name,
+                "source_node": src_node,
+                "source_type": src_type,
+                "dest_node": dest_node,
+                "dest_type": dest_type,
+                "block_id": blk_id,
+                "size_bytes": size_bytes
+            }
+            return event, None, blk_id
+
+        return None, "UNMATCHED_RELATION_TEMPLATE", blk_id
 
     def materialize_split(self, split_name: str) -> Dict[str, Any]:
-        """Materializes graph events for Train or Val. Strictly prohibits Test split."""
+        """
+        Materializes graph events strictly bound to SPL-HDFS-001 split authority.
+        Raises TestSetSealedError if split_name == 'TEST'.
+        """
         if split_name.upper() == "TEST":
-            raise TestSetSealedError("Attempted to materialize sealed Test graph split!")
+            raise TestSetSealedError("Attempted to access or materialize sealed Test graph split!")
 
-        if not self.raw_tar_path.exists():
-            raise FileNotFoundError(f"Raw HDFS archive missing at {self.raw_tar_path}")
+        split_data = self.split_authority.get_split()
+        if split_name.upper() == "TRAIN":
+            authorized_block_ids: Set[str] = split_data["train_block_ids"]
+        elif split_name.upper() == "VAL":
+            authorized_block_ids: Set[str] = split_data["val_block_ids"]
+        else:
+            raise ValueError(f"Unknown split name: {split_name}")
 
-        events = []
-        rejected_counts = {}
-        total_scanned = 0
+        events: List[Dict[str, Any]] = []
+        rejection_counts: Dict[str, int] = {}
+        relation_counts: Dict[str, int] = {}
+        eligible_records_count = 0
+        total_scanned_lines = 0
 
-        # Read lines from tar
         with tarfile.open(self.raw_tar_path, "r:gz") as tar:
             log_member = None
             for m in tar.getmembers():
@@ -168,35 +262,36 @@ class HDFSGraphBuilder:
                     break
             if not log_member:
                 raise FileNotFoundError("HDFS.log not found inside archive")
-            
-            f = tar.extractfile(log_member)
-            line_idx = 0
-            # Target event limits
-            target_limit = self.max_train_events if split_name.upper() == "TRAIN" else self.max_val_events
-            offset = 0 if split_name.upper() == "TRAIN" else self.max_train_events
 
-            for raw_line in f:
+            f_obj = tar.extractfile(log_member)
+            line_idx = 0
+
+            for line_bytes in f_obj:
                 line_idx += 1
-                if split_name.upper() == "VAL" and line_idx <= offset:
+                total_scanned_lines += 1
+
+                line_str = line_bytes.decode("utf-8", errors="ignore").strip()
+                event, reject_reason, blk_id = self.parse_raw_line(line_str, line_idx)
+
+                if blk_id is None or blk_id not in authorized_block_ids:
+                    # Line does not belong to authorized block session partition
                     continue
 
-                total_scanned += 1
-                line_str = raw_line.decode("utf-8", errors="replace")
-                event, reject_reason = self.parse_raw_line(line_str, line_idx)
+                eligible_records_count += 1
 
                 if event is not None:
                     events.append(event)
-                    if len(events) >= target_limit:
+                    relation_counts[event["relation_name"]] = relation_counts.get(event["relation_name"], 0) + 1
+                    if self.max_audit_events and len(events) >= self.max_audit_events:
                         break
                 else:
-                    rejected_counts[reject_reason] = rejected_counts.get(reject_reason, 0) + 1
+                    rejection_counts[reject_reason] = rejection_counts.get(reject_reason, 0) + 1
 
-        # Sort strictly by canonical tie-breaking key: (event_timestamp_utc, raw_line_index)
-        events.sort(key=lambda e: (e["event_timestamp_utc"], e["raw_line_index"]))
+        # Causal temporal sorting
+        events.sort(key=lambda e: (e["event_timestamp_utc_exact"], e["raw_line_index"]))
 
         # Build vocabulary strictly on Train
         if split_name.upper() == "TRAIN":
-            sizes = []
             for e in events:
                 src, s_type = e["source_node"], e["source_type"]
                 dst, d_type = e["dest_node"], e["dest_type"]
@@ -206,16 +301,14 @@ class HDFSGraphBuilder:
                 if dst not in self.node_to_id:
                     self.node_to_id[dst] = len(self.node_to_id)
                     self.node_to_type[dst] = d_type
-                if e["size_bytes"] > 0:
-                    sizes.append(e["size_bytes"])
-            if sizes:
-                self.train_mean_size_bytes = float(sum(sizes) / len(sizes))
 
         return {
             "split": split_name.upper(),
-            "raw_scanned": total_scanned,
+            "total_scanned_lines": total_scanned_lines,
+            "eligible_records_scanned": eligible_records_count,
             "materialized_events": len(events),
-            "rejected_counts": rejected_counts,
-            "total_rejected": sum(rejected_counts.values()),
+            "total_rejected": sum(rejection_counts.values()),
+            "rejection_counts": rejection_counts,
+            "relation_counts": relation_counts,
             "events": events
         }

@@ -1,17 +1,20 @@
 {
-  "lock_identifier": "LOCK-STAGE-A2-20260823-FINAL-V1.1",
-  "protocol_version": "1.1",
+  "lock_identifier": "LOCK-STAGE-A2-20260823-FINAL-V1.2",
+  "protocol_version": "1.2",
   "status": "FROZEN_PRE_EXECUTION",
-  "created_at": "2026-08-23T21:05:00Z",
-  "amends_commit": "7b0feb788bf242456ab801e062caf6b1f06b8474",
+  "created_at": "2026-08-23T21:24:00Z",
+  "amends_commit": "cc305041023acd855eacfd39d2befa6f2a30e322",
   "source_commit": "9a707025ed5899c524962558732218ff48e8b212",
-  "protocol_document_sha256": "b468f471390c1efa3a01aff98f16bb7d6f58f37a6e1b4f4d55cdf2486e01618b",
-  "graph_contract_sha256": "beb8696dc08f52183c0158b984f5a27110045d00e4c5dec63a1547a9d45b42ac",
-  "raw_to_graph_mapping_sha256": "621ee856527bc5efa69ecbe55bb1d3783c544cf297df487dd869ea48f379ea65",
+  "protocol_document_sha256": "10f0b109264e82a8f1520cc090ed80c575218f1b3a92ec768cbc98f7a90a92ee",
+  "graph_contract_sha256": "cab1e8214aa8952af229cfa5252536c451998c978df350141394a6ee541d22fc",
+  "raw_to_graph_mapping_sha256": "8c2ecb1504af7ed3e3f74144a0197dec15b4566e505ca5d9ae7e5146486e2208",
+  "materialization_audit_sha256": "ed114c6bf83295a080b92898dd96a52b16ec800d770327fe510d61a79c6093a2",
+  "relation_grounding_audit_sha256": "a7b0aa0419e7758694731901e768faf535f58c7a024fdcc925e6361b9b23f971",
   "dataset_names": ["HDFS"],
   "dataset_eligibility": {
     "HDFS": {
       "eligible": true,
+      "split_authority": "SPL-HDFS-001",
       "graph_type": "CAUSAL_EVENT_ENTITY_TEMPORAL_GRAPH_DERIVED_FROM_LOGS",
       "raw_sha256": "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169"
     },
@@ -54,7 +57,7 @@
   "causal_policies": {
     "predict_before_update": "STRICTLY_ENFORCED",
     "future_neighbor_firewall": "STRICTLY_ENFORCED",
-    "timestamp_tie_breaking": ["event_timestamp_utc", "raw_line_index"],
+    "timestamp_tie_breaking": ["event_timestamp_utc_exact", "raw_line_index"],
     "node_identity_policy": "TYPED_UNK_NODE_ONLY",
     "split_memory_policy": "INDUCTIVE_SPLIT_RESET_ZERO_MEMORY",
     "temporal_ordering_policy": "STRICT_CHRONOLOGICAL_STREAM",
@@ -63,13 +66,22 @@
     "max_node_history": 64,
     "self_loop_policy": "STRICT_SEPARATION_ZERO_SYNTHETIC_OBSERVED_SELF_LOOPS"
   },
+  "temporal_gap_specification": {
+    "target_name": "delta_t_log1p",
+    "unit": "SECONDS_CONTINUOUS",
+    "precision": "MILLISECONDS",
+    "reference_state": "MAX_TIMESTAMP_OF_LAST_INTERACTION_INVOLVING_V_OR_U",
+    "first_observation_value": 0.0,
+    "same_timestamp_value": 0.0,
+    "transformation": "log1p(max(0.0, t_curr - t_last))"
+  },
   "node_target_specification": {
     "target_name": "x_v_fixed_priv",
     "dimension": 6,
     "components": [
       {"name": "one_hot_type", "dim": 4, "type": "FIXED_ONE_HOT_CATEGORICAL"},
-      {"name": "normalized_in_degree", "dim": 1, "type": "LOG1P_CONTINUOUS_TRAIN_SCALED"},
-      {"name": "normalized_out_degree", "dim": 1, "type": "LOG1P_CONTINUOUS_TRAIN_SCALED"}
+      {"name": "causal_in_degree", "dim": 1, "type": "STRICT_CAUSAL_LOG1P_DEGREES"},
+      {"name": "causal_out_degree", "dim": 1, "type": "STRICT_CAUSAL_LOG1P_DEGREES"}
     ],
     "is_learnable": false,
     "contains_labels": false
@@ -97,7 +109,9 @@
     "test_opened": false,
     "test_feature_read_count": 0,
     "test_label_read_count": 0,
-    "test_metric_count": 0
+    "test_metric_count": 0,
+    "test_graph_events_materialized": 0,
+    "test_relation_parse_count": 0
   },
   "deterministic_resume_contract": {
     "target_max_parameter_divergence": 1e-6,
@@ -106,6 +120,7 @@
       "optimizer_state_dict",
       "scheduler_state_dict",
       "node_memory_states",
+      "node_last_interaction_timestamps",
       "rng_states_4tuple",
       "stream_iterator_state",
       "global_step"

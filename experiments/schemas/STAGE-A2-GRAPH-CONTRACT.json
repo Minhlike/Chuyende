@@ -1,11 +1,12 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "contract_id": "SCHEMA-STAGE-A2-GRAPH-CONTRACT-V1.1",
-  "version": "1.1.0",
-  "title": "Stage A2 Dependency-Temporal Provenance Graph & Temporal Message Passing Contract (Amended V1.1)",
-  "description": "Strict, raw-grounded specification for causal temporal graph construction, entity typing, message passing, and privacy safeguards in Stage A2.",
+  "contract_id": "SCHEMA-STAGE-A2-GRAPH-CONTRACT-V1.2",
+  "version": "1.2.0",
+  "title": "Stage A2 Dependency-Temporal Graph & Temporal Message Passing Contract (Amended V1.2)",
+  "description": "Strict, raw-grounded specification for causal temporal graph construction, entity typing, message passing, and privacy safeguards in Stage A2 bound to SPL-HDFS-001 split authority and millisecond timestamps.",
   "dataset_authorization": {
     "authorized_datasets": ["HDFS"],
+    "split_authority": "SPL-HDFS-001",
     "ineligible_datasets": [
       {
         "dataset": "BGL",
@@ -25,13 +26,13 @@
     },
     "timestamp_tie_breaking": {
       "enforced": true,
-      "canonical_sort_key": ["event_timestamp_utc", "raw_line_index"],
-      "rule": "Events with identical timestamps are ordered strictly and deterministically by their physical occurrence sequence in the raw audit stream."
+      "canonical_sort_key": ["event_timestamp_utc_exact", "raw_line_index"],
+      "rule": "Events are ordered strictly by exact UTC epoch timestamp (with millisecond precision) followed deterministically by raw_line_index in the raw audit stream."
     },
     "split_memory_boundary_policy": {
       "canonical_policy": "INDUCTIVE_SPLIT_RESET_ZERO_MEMORY",
       "allowed_policies": ["INDUCTIVE_SPLIT_RESET_ZERO_MEMORY"],
-      "rule": "Upon transitioning from Train to Validation, all node dynamic memory states are strictly reset to h_init = 0, ensuring zero cross-split hidden state leakage."
+      "rule": "Upon transitioning from Train to Validation, all node dynamic memory states and last interaction timestamps are strictly reset to h_init = 0 and None, ensuring zero cross-split hidden state leakage."
     },
     "entity_vocabulary_scope": {
       "fit_split": "TRAIN_ONLY",
@@ -49,17 +50,17 @@
       {"type_id": 0, "type_name": "DATA_BLOCK", "description": "HDFS Block ID (e.g. blk_-12345)"},
       {"type_id": 1, "type_name": "STORAGE_NODE", "description": "DataNode IP / port instance"},
       {"type_id": 2, "type_name": "MANAGEMENT_SYSTEM", "description": "FSNamesystem / NameNode coordinator"},
-      {"type_id": 3, "type_name": "EXECUTION_THREAD", "description": "PacketResponder / DataXceiver thread"}
+      {"type_id": 3, "type_name": "EXECUTION_THREAD", "description": "PacketResponder execution thread"}
     ],
     "edge_relations": [
-      {"relation_id": 1, "relation_name": "RECEIVES_BLOCK", "source_type": "STORAGE_NODE", "dest_type": "DATA_BLOCK"},
-      {"relation_id": 2, "relation_name": "STORES_BLOCK", "source_node_type": "STORAGE_NODE", "dest_type": "DATA_BLOCK"},
-      {"relation_id": 3, "relation_name": "ALLOCATES_BLOCK", "source_type": "MANAGEMENT_SYSTEM", "dest_type": "DATA_BLOCK"},
-      {"relation_id": 4, "relation_name": "MONITORS_BLOCK", "source_type": "EXECUTION_THREAD", "dest_type": "DATA_BLOCK"},
-      {"relation_id": 5, "relation_name": "SERVES_BLOCK", "source_type": "STORAGE_NODE", "dest_type": "DATA_BLOCK"},
-      {"relation_id": 6, "relation_name": "UPDATES_BLOCK_MAP", "source_type": "STORAGE_NODE", "dest_type": "DATA_BLOCK"},
-      {"relation_id": 7, "relation_name": "REPLICATES_BLOCK", "source_type": "STORAGE_NODE", "dest_type": "DATA_BLOCK"},
-      {"relation_id": 8, "relation_name": "DELETES_BLOCK", "source_type": "MANAGEMENT_SYSTEM", "dest_type": "DATA_BLOCK"}
+      {"relation_id": 1, "relation_name": "RECEIVES_BLOCK", "source_type": "STORAGE_NODE", "dest_type": "DATA_BLOCK", "component": "dfs.DataNode$DataXceiver"},
+      {"relation_id": 2, "relation_name": "TRANSMITS_BLOCK", "source_type": "STORAGE_NODE", "dest_type": "DATA_BLOCK", "component": "dfs.DataNode$PacketResponder"},
+      {"relation_id": 3, "relation_name": "ALLOCATES_BLOCK", "source_type": "MANAGEMENT_SYSTEM", "dest_type": "DATA_BLOCK", "component": "dfs.FSNamesystem"},
+      {"relation_id": 4, "relation_name": "MONITORS_BLOCK", "source_type": "EXECUTION_THREAD", "dest_type": "DATA_BLOCK", "component": "dfs.DataNode$PacketResponder"},
+      {"relation_id": 5, "relation_name": "SERVES_BLOCK", "source_type": "STORAGE_NODE", "dest_type": "DATA_BLOCK", "component": "dfs.DataNode$DataXceiver"},
+      {"relation_id": 6, "relation_name": "UPDATES_BLOCK_MAP", "source_type": "STORAGE_NODE", "dest_type": "DATA_BLOCK", "component": "dfs.FSNamesystem"},
+      {"relation_id": 7, "relation_name": "COMMANDS_REPLICATION", "source_type": "MANAGEMENT_SYSTEM", "dest_type": "DATA_BLOCK", "component": "dfs.FSNamesystem"},
+      {"relation_id": 8, "relation_name": "DELETES_BLOCK", "source_type": "MANAGEMENT_SYSTEM", "dest_type": "DATA_BLOCK", "component": "dfs.FSNamesystem"}
     ],
     "multi_edge_policy": {
       "policy_name": "PRESERVE_ALL_TEMPORAL_EVENTS_FIFO_CAUSAL",
@@ -73,16 +74,25 @@
     },
     "dynamic_attributes": {
       "edge_features": ["event_type_id", "normalized_block_size_log1p"],
-      "node_features": ["one_hot_node_type_4d", "normalized_in_degree_causal", "normalized_out_degree_causal"]
+      "node_features": ["one_hot_node_type_4d", "causal_in_degree_log1p", "causal_out_degree_log1p"]
     }
+  },
+  "temporal_gap_specification": {
+    "target_name": "delta_t_log1p",
+    "unit": "SECONDS_CONTINUOUS",
+    "precision": "MILLISECONDS",
+    "reference_state": "MAX_TIMESTAMP_OF_LAST_INTERACTION_INVOLVING_V_OR_U",
+    "first_observation_value": 0.0,
+    "same_timestamp_value": 0.0,
+    "transformation": "log1p(max(0.0, t_curr - t_last))"
   },
   "node_target_specification": {
     "target_name": "x_v_fixed_priv",
     "dimension": 6,
     "components": [
       {"name": "one_hot_type", "dim": 4, "type": "FIXED_ONE_HOT_CATEGORICAL"},
-      {"name": "normalized_in_degree", "dim": 1, "type": "LOG1P_CONTINUOUS_TRAIN_SCALED"},
-      {"name": "normalized_out_degree", "dim": 1, "type": "LOG1P_CONTINUOUS_TRAIN_SCALED"}
+      {"name": "causal_in_degree", "dim": 1, "type": "STRICT_CAUSAL_LOG1P_DEGREES"},
+      {"name": "causal_out_degree", "dim": 1, "type": "STRICT_CAUSAL_LOG1P_DEGREES"}
     ],
     "is_learnable": false,
     "contains_labels": false
@@ -94,6 +104,8 @@
     "test_opened_invariant": false,
     "test_feature_read_count_invariant": 0,
     "test_label_read_count_invariant": 0,
-    "test_metric_count_invariant": 0
+    "test_metric_count_invariant": 0,
+    "test_graph_events_materialized_invariant": 0,
+    "test_relation_parse_count_invariant": 0
   }
 }
