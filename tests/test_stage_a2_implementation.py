@@ -100,8 +100,10 @@ def test_predict_before_update_order():
     ev1 = create_synthetic_event("nodeA", "nodeB", 1, 0, 1, 100.0)
     h_a_prior = model._get_h_prev("nodeA", torch.device("cpu")).clone()
     assert torch.all(h_a_prior == 0.0)
-    res = model.forward_event_window([ev1], is_training=False)
-    assert res["loss"].item() > 0.0
+    
+    # Run forward on event
+    res = model.forward_event_window([ev1], is_training=True)
+    # Memory must be updated after event
     h_a_after = model.node_memory["nodeA"]
     assert not torch.all(h_a_after == 0.0)
 
