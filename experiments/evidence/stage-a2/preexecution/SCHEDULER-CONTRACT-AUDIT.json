@@ -1,0 +1,38 @@
+{
+  "audit_version": "1.3.0",
+  "audit_id": "AUDIT-STAGE-A2-SCHEDULER-CONTRACT-V1.3",
+  "created_at": "2026-08-23T22:20:00Z",
+  "dataset": "HDFS",
+  "split_id": "SPL-HDFS-001",
+  "execution_scope": {
+    "authorized_train_sessions": 35000,
+    "authorized_train_graph_events": 586577,
+    "authorized_val_sessions": 7500,
+    "authorized_val_graph_events": 119531,
+    "temporal_window_size": 256,
+    "gradient_accumulation_steps": 4,
+    "effective_batch_size_events": 1024
+  },
+  "scheduler_derivation": {
+    "train_windows_per_epoch": 2292,
+    "exact_calculation": "ceil(586577 / 256) = 2292",
+    "optimizer_steps_per_epoch": 573,
+    "steps_calculation": "2292 // 4 = 573 (exact integer division, 2292 % 4 == 0)",
+    "max_epochs": 20,
+    "max_optimizer_steps": 11460,
+    "warmup_ratio": 0.05,
+    "warmup_steps": 573,
+    "learning_rate": 0.0005,
+    "min_lr": 0.00001,
+    "min_lr_ratio": 0.02
+  },
+  "boundary_policies": {
+    "partial_window_policy": "FINAL_WINDOW_81_EVENTS_INCLUDED_IN_EPOCH",
+    "epoch_end_gradient_accumulation": "FLUSH_STEP_IF_RESIDUAL_OTHERWISE_ZERO_RESIDUAL",
+    "checkpoint_boundary_policy": "CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY_GRAD_ACCUM_ZERO"
+  },
+  "source_document_hashes": {
+    "execution_subset_audit_sha256": "9eedf3092b8da1c1b5ad3b53639483398c2747e422b5e1841408f8a3de0f3889",
+    "execution_membership_sha256": "e11f79515dec60240c6b71dc346033c4bdd712afcae04cfc9a2383d70a68ad4c"
+  }
+}

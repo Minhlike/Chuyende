@@ -1,20 +1,25 @@
 # -*- coding: utf-8 -*-
 """
-StageA2Trainer: Deterministic Causal Temporal Graph Pretraining Runner (Contract V1.3).
+StageA2Trainer: Deterministic Causal Temporal Graph Pretraining Runner (Contract V1.3 Amended).
 
 Features:
   1. Execution Guard: Mode FIXTURE_TEST vs REAL_EMPIRICAL. Raises EmpiricalExecutionNotAuthorizedError
      if real empirical execution is triggered without explicit gate authorization.
-  2. Optimizer Boundary Policy: Checkpoint strictly at optimizer step boundaries (gradient_accumulation_position == 0).
-  3. 14 Mandatory Mutable States: Full state serialization and exact restoration.
+  2. Operational Stream Cursor: stream_cursor advances on every window; checkpoints serialize
+     exact next-window position; resume uses stream_cursor directly.
+  3. Dynamic Scope-Bound Scheduler: Exact calculation from authorized execution subset (586,577 events).
   4. Inductive Split Boundary Reset: Clears dynamic node memory on validation transition.
+  5. NaN / Inf Fail-Closed Protection: Detects floating point anomalies and aborts immediately.
+  6. Checkpoint Boundary Policy: CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY (grad_accum_position == 0).
+  7. 14 Mandatory Mutable States: Full state serialization and exact restoration.
 """
 
 import os
+import time
 import random
 import math
 from pathlib import Path
-from typing import Dict, Any, List, Optional, Tuple
+from typing import Dict, Any, List, Optional, Tuple, Iterable
 
 import numpy as np
 import torch
@@ -30,6 +35,10 @@ class EmpiricalExecutionNotAuthorizedError(RuntimeError):
 
 class CheckpointBoundaryViolationError(RuntimeError):
     """Raised when checkpoint save is attempted mid-gradient-accumulation."""
+    pass
+
+class FloatingPointAnomalyError(FloatingPointError):
+    """Raised when NaN or Inf is encountered in loss or gradients (Fail-Closed)."""
     pass
 
 def get_cosine_schedule_with_warmup(
@@ -66,7 +75,8 @@ class StageA2Trainer:
         seed: int = 42,
         device: Optional[torch.device] = None,
         execution_mode: str = "FIXTURE_TEST", # "FIXTURE_TEST" or "REAL_EMPIRICAL"
-        empirical_authorized: bool = False
+        empirical_authorized: bool = False,
+        total_steps_override: Optional[int] = None
     ):
         self.model = model
         self.learning_rate = learning_rate
@@ -94,9 +104,13 @@ class StageA2Trainer:
             weight_decay=self.weight_decay
         )
 
-        # Default schedule (will be configured properly on dataset sizing)
-        self.total_steps = 1000
-        self.warmup_steps = int(self.total_steps * self.warmup_ratio)
+        # Schedule configuration
+        if total_steps_override is not None:
+            self.total_steps = total_steps_override
+            self.warmup_steps = max(1, int(self.total_steps * self.warmup_ratio))
+        else:
+            self.configure_empirical_schedule(train_events_count=586577)
+
         min_ratio = self.min_lr / self.learning_rate
         self.scheduler = get_cosine_schedule_with_warmup(
             self.optimizer,
@@ -113,7 +127,7 @@ class StageA2Trainer:
         self.current_epoch = 0
         self.global_step = 0
         self.grad_accum_position = 0 # 0..gradient_accumulation_steps-1
-        self.stream_cursor = 0
+        self.stream_cursor = 0        # Operational cursor indexing next window to process
         self.current_split = "TRAIN"
 
         # Early Stopping State
@@ -124,15 +138,39 @@ class StageA2Trainer:
         # Guard
         if self.execution_mode == "REAL_EMPIRICAL" and not self.empirical_authorized:
             raise EmpiricalExecutionNotAuthorizedError(
-                "Real empirical HDFS execution is NOT authorized in this qualification session."
+                "Real empirical HDFS execution is NOT authorized in this session."
             )
+
+    def configure_empirical_schedule(self, train_events_count: int = 586577):
+        """
+        Derives exact scheduler parameters from authorized execution subset:
+          - Train graph events: 586,577
+          - Window size: 256
+          - Windows per epoch: ceil(586577 / 256) = 2292
+          - Grad accum: 4
+          - Optimizer steps per epoch: 2292 // 4 = 573
+          - Max epochs: 20
+          - Max optimizer steps: 20 * 573 = 11,460
+          - Warmup steps: 11,460 * 0.05 = 573
+        """
+        self.train_windows_per_epoch = math.ceil(train_events_count / self.temporal_window_size)
+        self.optimizer_steps_per_epoch = self.train_windows_per_epoch // self.gradient_accumulation_steps
+        self.total_steps = self.max_epochs * self.optimizer_steps_per_epoch
+        self.warmup_steps = int(self.total_steps * self.warmup_ratio)
 
     def process_window(
         self,
         window_events: List[Dict[str, Any]],
         is_training: bool = True
     ) -> Dict[str, Any]:
-        """Processes a single micro-batch window."""
+        """
+        Processes a single micro-batch window:
+          1. Forward pass & predict-before-update
+          2. NaN/Inf check on loss (Fail-Closed)
+          3. Backward pass & NaN/Inf check on gradients
+          4. Optimizer & scheduler step at accumulation boundary
+          5. Operational stream cursor advance
+        """
         self.model.train() if is_training else self.model.eval()
 
         res = self.model.forward_event_window(
@@ -143,10 +181,25 @@ class StageA2Trainer:
 
         loss = res["loss"]
 
+        # NaN / Inf Fail-Closed Check on Loss
+        loss_val = loss.item()
+        if math.isnan(loss_val) or math.isinf(loss_val):
+            raise FloatingPointAnomalyError(
+                f"FATAL: NaN/Inf detected in loss value ({loss_val}) at global_step={self.global_step}, cursor={self.stream_cursor}!"
+            )
+
         if is_training:
             scaled_loss = loss / self.gradient_accumulation_steps
             scaled_loss.backward()
             self.grad_accum_position += 1
+
+            # Check for NaN / Inf in parameter gradients
+            for name, param in self.model.named_parameters():
+                if param.grad is not None:
+                    if torch.isnan(param.grad).any() or torch.isinf(param.grad).any():
+                        raise FloatingPointAnomalyError(
+                            f"FATAL: NaN/Inf detected in gradients for parameter '{name}' at step {self.global_step}!"
+                        )
 
             # Optimizer Step at Boundary
             if self.grad_accum_position >= self.gradient_accumulation_steps:
@@ -158,19 +211,136 @@ class StageA2Trainer:
                 self.global_step += 1
                 self.grad_accum_position = 0
 
+        # Operationally advance the stream cursor
+        self.stream_cursor += 1
+
         return {
-            "loss": loss.item(),
+            "loss": loss_val,
             "loss_rel": res["loss_rel"].item() if isinstance(res["loss_rel"], torch.Tensor) else res["loss_rel"],
             "loss_node": res["loss_node"].item() if isinstance(res["loss_node"], torch.Tensor) else res["loss_node"],
             "loss_time": res["loss_time"].item() if isinstance(res["loss_time"], torch.Tensor) else res["loss_time"],
             "global_step": self.global_step,
-            "grad_accum_position": self.grad_accum_position
+            "grad_accum_position": self.grad_accum_position,
+            "stream_cursor": self.stream_cursor,
+            "masked_rel_count": res.get("masked_rel_count", 0),
+            "masked_node_count": res.get("masked_node_count", 0),
+            "num_events": res.get("num_events", len(window_events))
+        }
+
+    def train_one_epoch(self, window_stream: Iterable[List[Dict[str, Any]]]) -> Dict[str, Any]:
+        """Executes one full training epoch over chronological windows."""
+        self.current_split = "TRAIN"
+        self.model.train()
+
+        total_loss = 0.0
+        total_rel = 0.0
+        total_node = 0.0
+        total_time = 0.0
+        total_events = 0
+        total_masked_rel = 0
+        total_masked_node = 0
+        windows_count = 0
+
+        t0 = time.time()
+        for window in window_stream:
+            stats = self.process_window(window, is_training=True)
+            total_loss += stats["loss"]
+            total_rel += stats["loss_rel"]
+            total_node += stats["loss_node"]
+            total_time += stats["loss_time"]
+            total_events += stats["num_events"]
+            total_masked_rel += stats["masked_rel_count"]
+            total_masked_node += stats["masked_node_count"]
+            windows_count += 1
+
+        # Epoch-End Policy: If pending gradients remain, flush step
+        if self.grad_accum_position > 0:
+            if self.clip_norm > 0:
+                torch.nn.utils.clip_grad_norm_(self.model.parameters(), self.clip_norm)
+            self.optimizer.step()
+            self.scheduler.step()
+            self.optimizer.zero_grad()
+            self.global_step += 1
+            self.grad_accum_position = 0
+
+        epoch_runtime = time.time() - t0
+        curr_lr = self.optimizer.param_groups[0]["lr"]
+
+        return {
+            "epoch": self.current_epoch,
+            "split": "TRAIN",
+            "train_L_graph": total_loss / max(1, windows_count),
+            "train_L_rel": total_rel / max(1, windows_count),
+            "train_L_node": total_node / max(1, windows_count),
+            "train_L_time": total_time / max(1, windows_count),
+            "windows_count": windows_count,
+            "events_count": total_events,
+            "masked_rel_count": total_masked_rel,
+            "masked_node_count": total_masked_node,
+            "optimizer_steps": self.global_step,
+            "learning_rate": curr_lr,
+            "epoch_runtime_sec": epoch_runtime,
+            "nan_inf_count": 0
+        }
+
+    def validate_one_epoch(self, window_stream: Iterable[List[Dict[str, Any]]]) -> Dict[str, Any]:
+        """
+        Executes one full validation epoch:
+          - Applies INDUCTIVE_SPLIT_RESET_ZERO_MEMORY before validation
+          - Zero gradients, no optimizer/scheduler updates
+          - Applies INDUCTIVE_SPLIT_RESET_ZERO_MEMORY after validation before returning to train
+        """
+        self.current_split = "VAL"
+        self.model.eval()
+
+        # Split Boundary Reset: Inductive evaluation requires zero initial memory
+        self.model.reset_node_states()
+
+        total_loss = 0.0
+        total_rel = 0.0
+        total_node = 0.0
+        total_time = 0.0
+        total_events = 0
+        total_masked_rel = 0
+        total_masked_node = 0
+        windows_count = 0
+
+        t0 = time.time()
+        with torch.no_grad():
+            for window in window_stream:
+                stats = self.process_window(window, is_training=False)
+                total_loss += stats["loss"]
+                total_rel += stats["loss_rel"]
+                total_node += stats["loss_node"]
+                total_time += stats["loss_time"]
+                total_events += stats["num_events"]
+                total_masked_rel += stats["masked_rel_count"]
+                total_masked_node += stats["masked_node_count"]
+                windows_count += 1
+
+        # Post-Validation Split Boundary Reset: Do not carry validation interactions into next Train epoch
+        self.model.reset_node_states()
+
+        epoch_runtime = time.time() - t0
+        return {
+            "epoch": self.current_epoch,
+            "split": "VAL",
+            "val_L_graph": total_loss / max(1, windows_count),
+            "val_L_rel": total_rel / max(1, windows_count),
+            "val_L_node": total_node / max(1, windows_count),
+            "val_L_time": total_time / max(1, windows_count),
+            "windows_count": windows_count,
+            "events_count": total_events,
+            "masked_rel_count": total_masked_rel,
+            "masked_node_count": total_masked_node,
+            "epoch_runtime_sec": epoch_runtime,
+            "nan_inf_count": 0
         }
 
     def save_checkpoint(self, path: Path):
         """
         Atomically saves the complete 14-element mutable checkpoint state.
-        Enforces CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY.
+        Enforces CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY (grad_accum_position == 0).
         """
         if self.grad_accum_position != 0:
             raise CheckpointBoundaryViolationError(
@@ -203,7 +373,7 @@ class StageA2Trainer:
             "stream_iterator_state": {
                 "current_split": self.current_split,
                 "current_epoch": self.current_epoch,
-                "stream_cursor": self.stream_cursor,
+                "stream_cursor": self.stream_cursor, # Points to exact NEXT window to process
                 "grad_accum_position": self.grad_accum_position
             },
             "masking_rng_state": self.mask_generator.get_state(),
