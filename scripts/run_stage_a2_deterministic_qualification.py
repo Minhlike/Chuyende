@@ -38,11 +38,11 @@ from research_agent.experiments.training.stage_a2_trainer import StageA2Trainer
 NON_EMPIRICAL_TEST_FIXTURE = True
 
 def get_git_commit_info() -> Tuple[str, str, bool]:
-    """Retrieves current git commit, branch, and dirty status."""
+    """Retrieves current git commit, branch, and dirty status of execution code."""
     try:
         commit_sha = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
         branch = subprocess.check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"], text=True).strip()
-        status = subprocess.check_output(["git", "status", "--porcelain"], text=True).strip()
+        status = subprocess.check_output(["git", "status", "--porcelain", "src", "tests", "scripts"], text=True).strip()
         is_dirty = len(status) > 0
         return commit_sha, branch, is_dirty
     except Exception as e:
