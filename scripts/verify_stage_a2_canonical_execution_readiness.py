@@ -265,12 +265,14 @@ def verify_canonical_readiness():
     # Check 20: END_OF_EPOCH_CHECKPOINT_STATE
     required_ckpt_keys = {
         "model_state_dict", "optimizer_state_dict", "scheduler_state_dict",
-        "global_step", "stream_cursor", "accum_step", "current_epoch",
-        "completed_epoch", "next_epoch_to_run", "patience_counter",
-        "best_val_loss", "best_epoch", "node_memory_states", "checkpoint_metadata"
+        "global_step", "stream_iterator_state", "current_epoch",
+        "completed_epoch", "next_epoch_to_run", "early_stopping_state",
+        "node_memory_states", "node_causal_in_degrees", "node_causal_out_degrees",
+        "node_temporal_history_buffers", "checkpoint_metadata"
     }
-    if not required_ckpt_keys.issubset(loaded_raw.keys()) or loaded_raw.get("accum_step") != 0:
-        failed_checks.append("CHECKPOINT_EXPLICIT_EPOCH_STATE_MISSING_KEYS_OR_NON_ZERO_ACCUM")
+    accum_pos = loaded_raw.get("stream_iterator_state", {}).get("accum_step", -1)
+    if not required_ckpt_keys.issubset(loaded_raw.keys()) or accum_pos != 0:
+        failed_checks.append(f"CHECKPOINT_EXPLICIT_EPOCH_STATE_MISSING_KEYS_OR_NON_ZERO_ACCUM: accum_pos={accum_pos}")
     else:
         print("[CHECK 20] END_OF_EPOCH_CHECKPOINT_STATE = PASS")
     
