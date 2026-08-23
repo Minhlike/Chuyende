@@ -8,11 +8,16 @@ Output: STAGE_A2_SEED42_LAUNCH_AUTHORIZED=PASS or FAIL.
 
 import os
 import sys
+from pathlib import Path
+
+# Ensure root directory is in python path
+if "D:/Research" not in sys.path:
+    sys.path.insert(0, "D:/Research")
+
 import json
 import hashlib
 import platform
 import subprocess
-from pathlib import Path
 
 import torch
 import torch.nn as nn
