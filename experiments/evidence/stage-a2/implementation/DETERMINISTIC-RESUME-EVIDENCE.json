@@ -1,7 +1,7 @@
 {
   "qualification_id": "QUAL-STAGE-A2-RESUME-DETERMINISM-003",
   "timestamp": "2026-08-23T23:15:00Z",
-  "execution_code_commit_sha": "8e6206970141033024fc5e7d831d1767a0b17c42",
+  "execution_code_commit_sha": "6a199ca5d81253baa2412ebc7c8da5228a990f09",
   "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE",
   "claim_scope": "NON_EMPIRICAL_TEST_FIXTURE",
   "storage_status": "COMMITTED_GIT",

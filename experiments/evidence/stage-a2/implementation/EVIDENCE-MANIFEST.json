@@ -1,17 +1,17 @@
 {
   "manifest_id": "MANIFEST-STAGE-A2-IMPLEMENTATION-EVIDENCE-V2.1",
-  "created_at": "2026-08-23T23:15:00Z",
-  "execution_code_commit_sha": "8e6206970141033024fc5e7d831d1767a0b17c42",
+  "created_at": "2026-08-23T19:35:22.042535+00:00",
+  "execution_code_commit_sha": "6a199ca5d81253baa2412ebc7c8da5228a990f09",
   "artifacts": [
     {
       "path": "experiments/evidence/stage-a2/implementation/IMPLEMENTATION-QUALIFICATION.json",
-      "sha256": "99d04a3372931ffa1872b381aad94f5e9cfe14263cf6759553fa1868bc19073e",
+      "sha256": "3a7261b4fbed45f9427bc73b62041fcdacb50974e0070ce744b42b6867ae65aa",
       "storage_status": "COMMITTED_GIT",
       "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
     },
     {
       "path": "experiments/evidence/stage-a2/implementation/DETERMINISTIC-RESUME-EVIDENCE.json",
-      "sha256": "19b5d8e011f1bd8ff0e5a63a2ca9b5fc6e74890b1021f2c2f55e381bc03c2964",
+      "sha256": "cad97b3e12a0a0b7e1a883bbd25cfa16118b2d939ea3b79936c2f19a150b3025",
       "storage_status": "COMMITTED_GIT",
       "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
     },
@@ -23,25 +23,25 @@
     },
     {
       "path": "experiments/evidence/stage-a2/implementation/EXPERIMENTAL-SOURCE.json",
-      "sha256": "f0937f8fc4bc3f5cb3410b9f61d3fc87a7f5eeeed02567d97e3d8eb10fd0bfa9",
+      "sha256": "9a69ca9b993cb530046ef0a613de363b7d0abc3b079249ec85065d93487ed2c3",
       "storage_status": "COMMITTED_GIT",
       "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
     },
     {
       "path": "experiments/evidence/stage-a2/implementation/deterministic_resume.log",
-      "sha256": "ea6f336f6a3d6a2e84751a76ce2b2622def1649214b5c3079c4a4a81c74a2d1e",
+      "sha256": "acd65454b9018117ec5f285117c49eb83fc735808debe3612e9407b1d5745bbb",
       "storage_status": "COMMITTED_GIT",
       "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
     },
     {
       "path": "experiments/evidence/stage-a2/implementation/qualification_checkpoint.pt",
-      "sha256": "e3e62eecf1e794fdda1cab1839be86059d913ccfed912c1b9aa5fa631445a859",
+      "sha256": "ec16d19deefe0507203715dfc9f4a3eef02591cd2be37a26959b0a8bd72831ac",
       "storage_status": "COMMITTED_GIT",
       "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
     },
     {
       "path": "experiments/evidence/stage-a2/implementation/pytest_implementation.log",
-      "sha256": "a5b44a66d5d4429afe58c0741fbddf739eead31f9cf93caab4539ff08441fc2e",
+      "sha256": "a725cb4efafb8ee767c113af02f93ce1d80e26b612b3165566a59f584b462ced",
       "storage_status": "COMMITTED_GIT",
       "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
     }
