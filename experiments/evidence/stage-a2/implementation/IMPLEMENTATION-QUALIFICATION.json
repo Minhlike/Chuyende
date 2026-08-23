@@ -1,0 +1,17 @@
+{
+  "model_architecture": "TemporalGraphViewEncoder",
+  "model_parameter_count": 296048,
+  "trainer": "StageA2Trainer",
+  "device_used": "cpu",
+  "optimizer": "AdamW",
+  "learning_rate": 0.0005,
+  "gradient_accumulation_steps": 2,
+  "checkpoint_boundary_policy": "CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY",
+  "mutable_states_count": 14,
+  "predict_before_update": true,
+  "relation_target_withheld": true,
+  "node_target_withheld": true,
+  "temporal_gap_precision": "MILLISECONDS",
+  "max_node_history": 64,
+  "qualification_status": "PASS"
+}

@@ -1,0 +1,17 @@
+{
+  "qualification_id": "QUAL-STAGE-A2-RESUME-DETERMINISM-001",
+  "timestamp": "2026-08-23T21:50:00Z",
+  "execution_code_commit_sha": "e3726171bf0e2bbfd2ed1af5a3e07a37b2b50c39",
+  "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE",
+  "claim_scope": "NON_EMPIRICAL_TEST_FIXTURE",
+  "max_parameter_divergence": 0.0,
+  "max_loss_delta": 0.0,
+  "max_node_memory_diff": 0.0,
+  "causal_in_degree_match": true,
+  "causal_out_degree_match": true,
+  "last_timestamp_match": true,
+  "history_buffer_match": true,
+  "final_global_step": 4,
+  "optimizer_steps_executed": 4,
+  "qualification_pass": true
+}

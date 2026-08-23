@@ -1,0 +1,27 @@
+{
+  "manifest_id": "MANIFEST-STAGE-A2-IMPLEMENTATION-EVIDENCE-V1.0",
+  "created_at": "2026-08-23T21:50:00Z",
+  "execution_code_commit_sha": "e3726171bf0e2bbfd2ed1af5a3e07a37b2b50c39",
+  "artifacts": [
+    {
+      "path": "experiments/evidence/stage-a2/implementation/IMPLEMENTATION-QUALIFICATION.json",
+      "sha256": "419264119da06ffc8271228193d2fe12b9ba8d579a265662dc89f1f496b16b92",
+      "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
+    },
+    {
+      "path": "experiments/evidence/stage-a2/implementation/DETERMINISTIC-RESUME-EVIDENCE.json",
+      "sha256": "236aa6bb90a7e3ff6623df750a05ea0103ac1ec233c636f6c75b5dca482c042e",
+      "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
+    },
+    {
+      "path": "experiments/evidence/stage-a2/implementation/ENVIRONMENT.json",
+      "sha256": "f70a76167cbb6416ddc6fc6f39405b5247233bb3193397339cec210072b93dca",
+      "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
+    },
+    {
+      "path": "experiments/evidence/stage-a2/implementation/deterministic_resume.log",
+      "sha256": "9f166ac62dc52f4cec9798de4de77b793eaf1500542502b5cb3a98c431c9a1cb",
+      "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
+    }
+  ]
+}

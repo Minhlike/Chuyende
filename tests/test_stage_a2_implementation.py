@@ -70,8 +70,8 @@ def test_predict_before_update_order():
     h_a_prior = model._get_h_prev("nodeA", torch.device("cpu")).clone()
     assert torch.all(h_a_prior == 0.0)
     
-    # Run forward on event
-    res = model.forward_event_window([ev1])
+    # Run forward on event in eval mode (where mask is forced to 1.0)
+    res = model.forward_event_window([ev1], is_training=False)
     assert res["loss"].item() > 0.0
     
     # After forward, node memory must be updated
