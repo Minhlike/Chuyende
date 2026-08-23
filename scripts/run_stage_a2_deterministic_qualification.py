@@ -30,6 +30,7 @@ import hashlib
 import platform
 import argparse
 import subprocess
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Any, List, Tuple, Optional
 
@@ -108,6 +109,8 @@ def run_qualification(device_arg: Optional[str] = None):
     log_path = evidence_dir / "deterministic_resume.log"
 
     commit_sha, branch_name, is_dirty = get_git_commit_info()
+    t_start = time.time()
+    t_start_iso = datetime.now(timezone.utc).isoformat()
 
     # Determine execution device
     req_device = device_arg or ("cuda" if torch.cuda.is_available() else "cpu")
@@ -370,7 +373,14 @@ def run_qualification(device_arg: Optional[str] = None):
     resume_path = evidence_dir / "DETERMINISTIC-RESUME-EVIDENCE.json"
     resume_path.write_text(json.dumps(resume_evidence, indent=2) + "\n", encoding="utf-8")
 
+    t_end = time.time()
+    t_end_iso = datetime.now(timezone.utc).isoformat()
+    qual_run_id = f"QUAL-STAGE-A2-SEED42-HARDENED-CUDA"
+
     qual_summary = {
+        "qualification_run_id": qual_run_id,
+        "timestamp_start": t_start_iso,
+        "timestamp_end": t_end_iso,
         "model_architecture": "TemporalGraphViewEncoder",
         "model_parameter_count": param_count,
         "trainer": "StageA2Trainer",
@@ -409,21 +419,21 @@ def run_qualification(device_arg: Optional[str] = None):
     exp_source = {
         "claim_id": "CLAIM-STAGE-A2-IMPLEMENTATION-QUALIFICATION",
         "stage": "STAGE_A2",
-        "run_id": "RUN-QUAL-STAGE-A2-RESUME-003",
+        "run_id": qual_run_id,
         "dataset": "SYNTHETIC_FIXTURE",
         "split_id": "SPL-FIXTURE-001",
         "seed": 42,
         "execution_code_commit_sha": commit_sha,
         "execution_code_branch": branch_name,
         "execution_code_dirty": is_dirty,
-        "protocol_version": "1.4",
-        "protocol_sha256": "87a783618c90c85129991e7694632172b26a43ce64f452d0f266f7db70597dfa",
+        "protocol_version": "1.4.1",
+        "protocol_sha256": "41d0c54153d7e988acaba64cf7478037220257be3051fe831d082e3f4c1e4831",
         "graph_contract_sha256": "05f5ab38c4c02e14292b510ac518dd98171732551d032ec0ed09fc96848f5837",
         "raw_to_graph_mapping_sha256": "8c2ecb1504af7ed3e3f74144a0197dec15b4566e505ca5d9ae7e5146486e2208",
         "command_executed": f"python scripts/run_stage_a2_deterministic_qualification.py --device {req_device}",
         "working_directory": "D:/Research",
-        "timestamp_start": "2026-08-23T23:15:00Z",
-        "timestamp_end": "2026-08-23T23:15:05Z",
+        "timestamp_start": t_start_iso,
+        "timestamp_end": t_end_iso,
         "environment": env_data,
         "stdout_log_path": "experiments/evidence/stage-a2/implementation/deterministic_resume.log",
         "stdout_log_sha256": stdout_log_sha256,
@@ -497,7 +507,7 @@ def run_qualification(device_arg: Optional[str] = None):
 
     manifest = {
         "manifest_id": "MANIFEST-STAGE-A2-IMPLEMENTATION-EVIDENCE-V2.1",
-        "created_at": "2026-08-23T23:15:00Z",
+        "created_at": t_end_iso,
         "execution_code_commit_sha": commit_sha,
         "artifacts": artifacts_list
     }
