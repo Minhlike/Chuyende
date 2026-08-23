@@ -1,17 +1,17 @@
 {
   "manifest_id": "MANIFEST-STAGE-A2-IMPLEMENTATION-EVIDENCE-V2.1",
-  "created_at": "2026-08-23T20:36:00.646224+00:00",
-  "execution_code_commit_sha": "b1310c3675c51e0ddc562e040d70839db38f0745",
+  "created_at": "2026-08-23T20:42:16.937082+00:00",
+  "execution_code_commit_sha": "f26b963f8d8951c40bdd7eec66855104bcea6c4a",
   "artifacts": [
     {
       "path": "experiments/evidence/stage-a2/implementation/IMPLEMENTATION-QUALIFICATION.json",
-      "sha256": "b06f2528912021443d64e51ea58107acfe72cee8e1425038c84cc7439a5b9402",
+      "sha256": "0cb7deb71fb14efef504174cb8ade0b0ef8356ab5c0183ba54ae669e53ff04de",
       "storage_status": "COMMITTED_GIT",
       "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
     },
     {
       "path": "experiments/evidence/stage-a2/implementation/DETERMINISTIC-RESUME-EVIDENCE.json",
-      "sha256": "e8ce511cd73aeacac8b69bc8df111aa0fb95681388693a186ec80498b938a717",
+      "sha256": "d8d02b74d39321bd06923f2e047f07424aaa6e44faaae7386f599cf4e6209166",
       "storage_status": "COMMITTED_GIT",
       "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
     },
@@ -23,13 +23,13 @@
     },
     {
       "path": "experiments/evidence/stage-a2/implementation/EXPERIMENTAL-SOURCE.json",
-      "sha256": "f09e2c98b77421e3eb73f977754e5238b86c76de3a8aeaec520df3607af7d65e",
+      "sha256": "f0af53d2a90d2ffe9bb4f9446d080f5e95faa9cb9a4231c7bca276466b4df2ec",
       "storage_status": "COMMITTED_GIT",
       "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
     },
     {
       "path": "experiments/evidence/stage-a2/implementation/deterministic_resume.log",
-      "sha256": "cf81d5f9ec830b60e044cca4c8b1f2d6536986b8c9d91ed34fcf655eeabe950e",
+      "sha256": "96b9285430f022f02f9c39769139def8f9ee66311b9dad71b8a8d0a14feffdba",
       "storage_status": "COMMITTED_GIT",
       "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
     },
@@ -43,7 +43,7 @@
     },
     {
       "path": "experiments/evidence/stage-a2/implementation/pytest_implementation.log",
-      "sha256": "29c96e141f3fdddd584166fa74d5a50c00aa9ad1e241c6f869883a7aff19c41a",
+      "sha256": "bfd64ecd5f1ce738ada7f528f8f89dc3314a05e1c1cb05e2f657fcfd5dfc91e6",
       "storage_status": "COMMITTED_GIT",
       "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
     }

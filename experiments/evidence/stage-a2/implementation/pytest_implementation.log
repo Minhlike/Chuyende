@@ -111,5 +111,5 @@ tests/test_stage_a2_graph_contract.py::test_experimental_source_schema_requires_
 tests/test_stage_a2_graph_contract.py::test_experimental_source_schema_requires_test_firewall PASSED [ 99%]
 tests/test_stage_a2_graph_contract.py::test_implementation_readiness_verifier_passes PASSED [100%]
 
-======================= 105 passed in 259.05s (0:04:19) =======================
+======================= 105 passed in 262.52s (0:04:22) =======================
 

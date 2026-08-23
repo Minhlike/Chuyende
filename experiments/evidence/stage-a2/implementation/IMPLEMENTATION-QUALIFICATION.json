@@ -1,7 +1,7 @@
 {
   "qualification_run_id": "QUAL-STAGE-A2-SEED42-HARDENED-CUDA",
-  "timestamp_start": "2026-08-23T20:35:50.853415+00:00",
-  "timestamp_end": "2026-08-23T20:36:00.646224+00:00",
+  "timestamp_start": "2026-08-23T20:42:07.118258+00:00",
+  "timestamp_end": "2026-08-23T20:42:16.937082+00:00",
   "model_architecture": "TemporalGraphViewEncoder",
   "model_parameter_count": 304111,
   "trainer": "StageA2Trainer",
