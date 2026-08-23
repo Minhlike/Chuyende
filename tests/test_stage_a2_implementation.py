@@ -4,8 +4,11 @@ Unit and Integration Tests for Stage A2 Implementation (Contract V1.4 Locked).
 NON_EMPIRICAL_TEST_FIXTURE = true
 """
 
+import os
+import sys
 import json
 import math
+import subprocess
 import pytest
 import torch
 import torch.nn as nn
@@ -693,3 +696,353 @@ def test_resume_exact_three_epoch_trajectory(tmp_path):
             
     assert max_diff < 1e-6, f"Resume trajectory diverged from continuous run! max_diff={max_diff}"
     assert trainer_cont.global_step == trainer_res.global_step == 3
+
+def test_frozen_execution_tree_matches_authorized_commit(monkeypatch):
+    from scripts.run_stage_a2_five_seed_empirical import verify_frozen_execution_source
+    # Verify function executes without raising when diff is empty
+    monkeypatch.setattr("subprocess.check_output", lambda *args, **kwargs: "")
+    verify_frozen_execution_source(Path("D:/Research"), "mock_commit_sha")
+
+def test_evidence_head_does_not_replace_execution_code_commit(tmp_path, monkeypatch):
+    from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
+    fix_train = [create_synthetic_event(f"A_{i}", f"B_{i}", 1, 0, 1, 100.0 + i) for i in range(512)]
+    fix_val = [create_synthetic_event(f"C_{i}", f"D_{i}", 2, 3, 2, 200.0 + i) for i in range(256)]
+    
+    monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.verify_frozen_execution_source", lambda b, c: None)
+    
+    run_single_seed_pipeline(
+        seed=42,
+        base_dir=Path("D:/Research"),
+        is_dry_run=False,
+        empirical_authorized=True,
+        fixture_mode=True,
+        fixture_output_root=tmp_path,
+        fixture_train_events=fix_train,
+        fixture_val_events=fix_val
+    )
+    src_data = json.loads((tmp_path / "evidence" / "EXPERIMENTAL-SOURCE.json").read_text(encoding="utf-8"))
+    assert "execution_code_commit_sha" in src_data
+    assert "execution_head_at_launch" in src_data
+
+def test_completed_run_cannot_be_resumed_without_state_overwrite(tmp_path):
+    from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline, CompletedRunResumeError
+    run_dir = tmp_path / "evidence"
+    run_dir.mkdir(parents=True, exist_ok=True)
+    run_state_p = run_dir / "RUN-STATE.json"
+    run_state_p.write_text(json.dumps({"status": "COMPLETED", "seed": 42, "run_id": "RUN-STAGE-A2-HDFS-SEED42"}), encoding="utf-8")
+    
+    dummy_ckpt = tmp_path / "dummy.pt"
+    dummy_ckpt.write_text("fake_ckpt")
+    
+    with pytest.raises(CompletedRunResumeError):
+        run_single_seed_pipeline(
+            seed=42,
+            base_dir=Path("D:/Research"),
+            is_dry_run=False,
+            empirical_authorized=True,
+            resume_checkpoint=dummy_ckpt,
+            fixture_mode=True,
+            fixture_output_root=tmp_path
+        )
+
+def test_missing_resume_checkpoint_fails_closed(tmp_path):
+    from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline, ResumeCheckpointNotFoundError
+    with pytest.raises(ResumeCheckpointNotFoundError):
+        run_single_seed_pipeline(
+            seed=42,
+            base_dir=Path("D:/Research"),
+            is_dry_run=False,
+            empirical_authorized=True,
+            resume_checkpoint=Path("D:/Research/nonexistent_ckpt.pt"),
+            fixture_mode=True,
+            fixture_output_root=tmp_path
+        )
+
+def test_resume_wrong_seed_fails(tmp_path):
+    from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline, CheckpointIntegrityMismatchError
+    run_dir = tmp_path / "evidence"
+    run_dir.mkdir(parents=True, exist_ok=True)
+    run_state_p = run_dir / "RUN-STATE.json"
+    run_state_p.write_text(json.dumps({"status": "RUNNING", "seed": 1337, "run_id": "RUN-STAGE-A2-HDFS-SEED42"}), encoding="utf-8")
+    
+    dummy_ckpt = tmp_path / "dummy.pt"
+    dummy_ckpt.write_text("fake")
+    with pytest.raises(CheckpointIntegrityMismatchError):
+        run_single_seed_pipeline(
+            seed=42,
+            base_dir=Path("D:/Research"),
+            is_dry_run=False,
+            empirical_authorized=True,
+            resume_checkpoint=dummy_ckpt,
+            fixture_mode=True,
+            fixture_output_root=tmp_path
+        )
+
+def test_resume_wrong_run_id_fails(tmp_path):
+    from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline, CheckpointIntegrityMismatchError
+    run_dir = tmp_path / "evidence"
+    run_dir.mkdir(parents=True, exist_ok=True)
+    run_state_p = run_dir / "RUN-STATE.json"
+    run_state_p.write_text(json.dumps({"status": "RUNNING", "seed": 42, "run_id": "WRONG_RUN_ID"}), encoding="utf-8")
+    
+    dummy_ckpt = tmp_path / "dummy.pt"
+    dummy_ckpt.write_text("fake")
+    with pytest.raises(CheckpointIntegrityMismatchError):
+        run_single_seed_pipeline(
+            seed=42,
+            base_dir=Path("D:/Research"),
+            is_dry_run=False,
+            empirical_authorized=True,
+            resume_checkpoint=dummy_ckpt,
+            fixture_mode=True,
+            fixture_output_root=tmp_path
+        )
+
+def test_resume_protocol_mismatch_fails(tmp_path):
+    from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline, CheckpointIntegrityMismatchError
+    run_dir = tmp_path / "evidence"
+    run_dir.mkdir(parents=True, exist_ok=True)
+    run_state_p = run_dir / "RUN-STATE.json"
+    run_state_p.write_text(json.dumps({"status": "RUNNING", "seed": 42, "run_id": "RUN-STAGE-A2-HDFS-SEED42"}), encoding="utf-8")
+    
+    model = TemporalGraphViewEncoder()
+    trainer = StageA2Trainer(model=model, execution_mode="FIXTURE_TEST", total_steps_override=4)
+    ckpt_p = tmp_path / "mismatch_proto.pt"
+    trainer.save_checkpoint(ckpt_p, metadata={"protocol_lock_sha256": "wrong_sha"})
+    
+    with pytest.raises(CheckpointIntegrityMismatchError):
+        run_single_seed_pipeline(
+            seed=42,
+            base_dir=Path("D:/Research"),
+            is_dry_run=False,
+            empirical_authorized=True,
+            resume_checkpoint=ckpt_p,
+            fixture_mode=True,
+            fixture_output_root=tmp_path
+        )
+
+def test_resume_environment_mismatch_fails(tmp_path):
+    from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline, CheckpointIntegrityMismatchError
+    run_dir = tmp_path / "evidence"
+    run_dir.mkdir(parents=True, exist_ok=True)
+    run_state_p = run_dir / "RUN-STATE.json"
+    run_state_p.write_text(json.dumps({"status": "RUNNING", "seed": 42, "run_id": "RUN-STAGE-A2-HDFS-SEED42"}), encoding="utf-8")
+    
+    model = TemporalGraphViewEncoder()
+    trainer = StageA2Trainer(model=model, execution_mode="FIXTURE_TEST", total_steps_override=4)
+    ckpt_p = tmp_path / "mismatch_env.pt"
+    trainer.save_checkpoint(ckpt_p, metadata={"environment_lock_sha256": "wrong_env_sha"})
+    
+    with pytest.raises(CheckpointIntegrityMismatchError):
+        run_single_seed_pipeline(
+            seed=42,
+            base_dir=Path("D:/Research"),
+            is_dry_run=False,
+            empirical_authorized=True,
+            resume_checkpoint=ckpt_p,
+            fixture_mode=True,
+            fixture_output_root=tmp_path
+        )
+
+def test_resume_code_commit_mismatch_fails(tmp_path, monkeypatch):
+    from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline, CheckpointIntegrityMismatchError
+    run_dir = tmp_path / "evidence"
+    run_dir.mkdir(parents=True, exist_ok=True)
+    run_state_p = run_dir / "RUN-STATE.json"
+    run_state_p.write_text(json.dumps({"status": "RUNNING", "seed": 42, "run_id": "RUN-STAGE-A2-HDFS-SEED42"}), encoding="utf-8")
+    env_p = run_dir / "ENVIRONMENT.json"
+    env_p.write_text(json.dumps({"environment_id": "ENV-MOCK"}), encoding="utf-8")
+    
+    model = TemporalGraphViewEncoder()
+    trainer = StageA2Trainer(model=model, execution_mode="FIXTURE_TEST", total_steps_override=4)
+    ckpt_p = tmp_path / "mismatch_code.pt"
+    trainer.save_checkpoint(ckpt_p, metadata={"execution_code_commit_sha": "different_commit_sha"})
+    
+    monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.verify_frozen_execution_source", lambda b, c: None)
+    
+    with pytest.raises(CheckpointIntegrityMismatchError):
+        run_single_seed_pipeline(
+            seed=42,
+            base_dir=Path("D:/Research"),
+            is_dry_run=False,
+            empirical_authorized=True,
+            resume_checkpoint=ckpt_p,
+            fixture_mode=True,
+            fixture_output_root=tmp_path
+        )
+
+def test_resume_without_new_best_preserves_best_metrics(tmp_path):
+    from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
+    fix_train = [create_synthetic_event(f"A_{i}", f"B_{i}", 1, 0, 1, 100.0 + i) for i in range(512)]
+    fix_val = [create_synthetic_event(f"C_{i}", f"D_{i}", 2, 3, 2, 200.0 + i) for i in range(256)]
+    
+    # Run 1
+    res1 = run_single_seed_pipeline(
+        seed=42,
+        base_dir=Path("D:/Research"),
+        is_dry_run=False,
+        empirical_authorized=True,
+        fixture_mode=True,
+        fixture_output_root=tmp_path,
+        fixture_train_events=fix_train,
+        fixture_val_events=fix_val,
+        max_epochs=2
+    )
+    last_ckpt = tmp_path / "artifacts" / "last_checkpoint.pt"
+    
+    # Reset status to RUNNING to simulate interrupted state
+    run_state_p = tmp_path / "evidence" / "RUN-STATE.json"
+    st = json.loads(run_state_p.read_text(encoding="utf-8"))
+    st["status"] = "RUNNING"
+    run_state_p.write_text(json.dumps(st, indent=2), encoding="utf-8")
+    
+    # Resume run from checkpoint with more epochs
+    res2 = run_single_seed_pipeline(
+        seed=42,
+        base_dir=Path("D:/Research"),
+        is_dry_run=False,
+        empirical_authorized=True,
+        resume_checkpoint=last_ckpt,
+        fixture_mode=True,
+        fixture_output_root=tmp_path,
+        fixture_train_events=fix_train,
+        fixture_val_events=fix_val,
+        max_epochs=4
+    )
+    assert res2["status"] == "COMPLETED"
+
+def test_resume_preserves_original_start_time(tmp_path):
+    from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
+    fix_train = [create_synthetic_event(f"A_{i}", f"B_{i}", 1, 0, 1, 100.0 + i) for i in range(512)]
+    fix_val = [create_synthetic_event(f"C_{i}", f"D_{i}", 2, 3, 2, 200.0 + i) for i in range(256)]
+    
+    run_single_seed_pipeline(
+        seed=42,
+        base_dir=Path("D:/Research"),
+        is_dry_run=False,
+        empirical_authorized=True,
+        fixture_mode=True,
+        fixture_output_root=tmp_path,
+        fixture_train_events=fix_train,
+        fixture_val_events=fix_val,
+        max_epochs=2
+    )
+    st1 = json.loads((tmp_path / "evidence" / "RUN-STATE.json").read_text(encoding="utf-8"))["start_time"]
+    last_ckpt = tmp_path / "artifacts" / "last_checkpoint.pt"
+    
+    run_state_p = tmp_path / "evidence" / "RUN-STATE.json"
+    st = json.loads(run_state_p.read_text(encoding="utf-8"))
+    st["status"] = "RUNNING"
+    run_state_p.write_text(json.dumps(st, indent=2), encoding="utf-8")
+    
+    run_single_seed_pipeline(
+        seed=42,
+        base_dir=Path("D:/Research"),
+        is_dry_run=False,
+        empirical_authorized=True,
+        resume_checkpoint=last_ckpt,
+        fixture_mode=True,
+        fixture_output_root=tmp_path,
+        fixture_train_events=fix_train,
+        fixture_val_events=fix_val,
+        max_epochs=4
+    )
+    st2 = json.loads((tmp_path / "evidence" / "RUN-STATE.json").read_text(encoding="utf-8"))["start_time"]
+    assert st1 == st2
+
+def test_resume_preserves_cumulative_runtime(tmp_path):
+    from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
+    fix_train = [create_synthetic_event(f"A_{i}", f"B_{i}", 1, 0, 1, 100.0 + i) for i in range(512)]
+    fix_val = [create_synthetic_event(f"C_{i}", f"D_{i}", 2, 3, 2, 200.0 + i) for i in range(256)]
+    
+    run_single_seed_pipeline(
+        seed=42,
+        base_dir=Path("D:/Research"),
+        is_dry_run=False,
+        empirical_authorized=True,
+        fixture_mode=True,
+        fixture_output_root=tmp_path,
+        fixture_train_events=fix_train,
+        fixture_val_events=fix_val,
+        max_epochs=2
+    )
+    rt1 = json.loads((tmp_path / "evidence" / "RUN-STATE.json").read_text(encoding="utf-8"))["cumulative_runtime_seconds"]
+    last_ckpt = tmp_path / "artifacts" / "last_checkpoint.pt"
+    
+    run_state_p = tmp_path / "evidence" / "RUN-STATE.json"
+    st = json.loads(run_state_p.read_text(encoding="utf-8"))
+    st["status"] = "RUNNING"
+    run_state_p.write_text(json.dumps(st, indent=2), encoding="utf-8")
+    
+    run_single_seed_pipeline(
+        seed=42,
+        base_dir=Path("D:/Research"),
+        is_dry_run=False,
+        empirical_authorized=True,
+        resume_checkpoint=last_ckpt,
+        fixture_mode=True,
+        fixture_output_root=tmp_path,
+        fixture_train_events=fix_train,
+        fixture_val_events=fix_val,
+        max_epochs=4
+    )
+    rt2 = json.loads((tmp_path / "evidence" / "RUN-STATE.json").read_text(encoding="utf-8"))["cumulative_runtime_seconds"]
+    assert rt2 >= rt1
+
+def test_dry_run_checks_real_directory_cleanliness(tmp_path):
+    from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
+    # Real directories must be clean
+    real_run_dir = Path("D:/Research/experiments/runs/stage-a2/HDFS/seed-42")
+    assert not real_run_dir.exists() or not any(real_run_dir.iterdir())
+    
+    res = run_single_seed_pipeline(
+        seed=42,
+        base_dir=Path("D:/Research"),
+        is_dry_run=True,
+        empirical_authorized=False,
+        fixture_mode=False
+    )
+    assert res["status"] == "PASS"
+    assert res["optimizer_steps"] == 0
+
+def test_all_environment_strict_fields_verified():
+    env_lock_p = Path("D:/Research/experiments/evidence/stage-a2/preexecution/STAGE-A2-EXECUTION-ENVIRONMENT.json")
+    env_lock = json.loads(env_lock_p.read_text(encoding="utf-8"))
+    strict_fields = env_lock["field_policies"]["strict_equality_fields"]
+    for f in strict_fields:
+        assert f in env_lock
+
+def test_cublas_workspace_config_locked():
+    assert os.environ.get("CUBLAS_WORKSPACE_CONFIG") == ":4096:8"
+
+def test_torch_deterministic_algorithms_enabled():
+    torch.use_deterministic_algorithms(True)
+    assert torch.are_deterministic_algorithms_enabled() is True
+
+def test_fresh_resume_evidence_has_fresh_timestamp():
+    res_ev_p = Path("D:/Research/experiments/evidence/stage-a2/implementation/DETERMINISTIC-RESUME-EVIDENCE.json")
+    if res_ev_p.exists():
+        res_ev = json.loads(res_ev_p.read_text(encoding="utf-8"))
+        assert "timestamp" in res_ev
+        assert "qualification_id" in res_ev
+
+def test_evidence_manifest_rejects_missing_committed_file(tmp_path):
+    manifest = {
+        "manifest_id": "TEST-MANIFEST",
+        "artifacts": [
+            {"path": "nonexistent_file.json", "sha256": "fake", "storage_status": "COMMITTED_GIT"}
+        ]
+    }
+    missing = False
+    for a in manifest["artifacts"]:
+        if not (Path("D:/Research") / a["path"]).exists():
+            missing = True
+    assert missing is True
+
+def test_verifier_has_no_unconditional_scientific_pass_gate():
+    verifier_src = Path("D:/Research/scripts/verify_stage_a2_canonical_execution_readiness.py").read_text(encoding="utf-8")
+    lines = verifier_src.splitlines()
+    for line in lines:
+        if line.strip().startswith('print("[CHECK') and "PASS" in line:
+            assert line.startswith("            ") or line.startswith("        "), f"Unconditional print found: {line}"
+

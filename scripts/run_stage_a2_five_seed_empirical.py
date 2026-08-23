@@ -20,6 +20,9 @@ Usage:
 """
 
 import os
+# Enforce deterministic CUBLAS configuration before any CUDA context is created
+os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
+
 import gc
 import sys
 import json
@@ -64,6 +67,22 @@ VAL_MEMBERSHIP_SHA = "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407
 
 class ExistingRunArtifactError(RuntimeError):
     """Raised when an attempt is made to start a new real run in an existing non-empty directory."""
+    pass
+
+class ResumeCheckpointNotFoundError(FileNotFoundError):
+    """Raised when a specified resume checkpoint file does not exist."""
+    pass
+
+class CompletedRunResumeError(RuntimeError):
+    """Raised when attempting to resume a run that has already completed."""
+    pass
+
+class CheckpointIntegrityMismatchError(ValueError):
+    """Raised when a resume checkpoint fails cryptographic or semantic binding checks."""
+    pass
+
+class FrozenSourceMismatchError(RuntimeError):
+    """Raised when execution source files differ from the authorized frozen code commit."""
     pass
 
 class RuntimeTestFirewallGuard:
@@ -115,7 +134,6 @@ def get_git_info() -> Tuple[str, str, bool]:
     try:
         commit_sha = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
         branch = subprocess.check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"], text=True).strip()
-        # Check source paths
         status = subprocess.check_output([
             "git", "status", "--porcelain", "src", "tests", "scripts",
             "experiments/protocol", "experiments/schemas", "experiments/plans"
@@ -124,6 +142,29 @@ def get_git_info() -> Tuple[str, str, bool]:
         return commit_sha, branch, is_dirty
     except Exception:
         return "UNKNOWN_COMMIT", "UNKNOWN_BRANCH", True
+
+def verify_frozen_execution_source(base_dir: Path, expected_commit_sha: str) -> None:
+    """
+    Verifies that all execution-relevant source code files are byte-identical
+    to the expected frozen execution code commit.
+    """
+    source_paths = [
+        "src/research_agent/experiments",
+        "scripts/run_stage_a2_five_seed_empirical.py"
+    ]
+    try:
+        diff_out = subprocess.check_output(
+            ["git", "diff", expected_commit_sha, "--"] + source_paths,
+            cwd=str(base_dir),
+            text=True
+        ).strip()
+        if diff_out:
+            raise FrozenSourceMismatchError(
+                f"FATAL: Execution source tree has modified files relative to authorized code commit {expected_commit_sha}!\n"
+                f"Diff excerpt:\n{diff_out[:500]}"
+            )
+    except subprocess.CalledProcessError as e:
+        raise FrozenSourceMismatchError(f"FATAL: Failed to execute git diff against {expected_commit_sha}: {e}")
 
 def verify_preflight(base_dir: Path, target_seed: int, is_dry_run: bool = False, fixture_mode: bool = False) -> Dict[str, Any]:
     """
@@ -147,9 +188,26 @@ def verify_preflight(base_dir: Path, target_seed: int, is_dry_run: bool = False,
     commit_sha, branch, is_dirty = get_git_info()
     if is_dirty and not is_dry_run and not fixture_mode:
         raise RuntimeError("FATAL: Execution source tree has uncommitted changes! Aborting pre-flight.")
-    print(f"[PRE-FLIGHT 1] Execution Code Commit / HEAD: {commit_sha} (dirty={is_dirty})")
 
-    # 1. Protocol Lock Verification
+    # 1. Read Expected Execution Code Commit from Authorization Artifact or Plan
+    auth_p = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / f"SEED{target_seed}-LAUNCH-AUTHORIZATION.json"
+    plan_p = base_dir / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN.json"
+    
+    expected_code_commit = None
+    if auth_p.exists():
+        auth_data = json.loads(auth_p.read_text(encoding="utf-8"))
+        expected_code_commit = auth_data.get("expected_execution_code_commit_sha")
+    elif plan_p.exists():
+        plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
+        expected_code_commit = plan_data.get("execution_code_commit_sha")
+
+    if not fixture_mode and expected_code_commit and expected_code_commit != "UNKNOWN":
+        verify_frozen_execution_source(base_dir, expected_code_commit)
+        print(f"[PRE-FLIGHT 1] Frozen Source Match: PASS (Byte-identical to {expected_code_commit[:16]}...) [HEAD={commit_sha[:16]}...]")
+    else:
+        print(f"[PRE-FLIGHT 1] Execution Code Commit / HEAD: {commit_sha} (dirty={is_dirty})")
+
+    # 2. Protocol Lock Verification
     protocol_lock_p = base_dir / "experiments" / "protocol" / "STAGE-A2-EXECUTION-LOCK-V1.4.json"
     if not protocol_lock_p.exists():
         raise FileNotFoundError(f"Protocol lock file missing at {protocol_lock_p}")
@@ -158,7 +216,7 @@ def verify_preflight(base_dir: Path, target_seed: int, is_dry_run: bool = False,
         raise ValueError(f"PROTOCOL_LOCK_SHA mismatch: {actual_proto_sha} != {PROTOCOL_LOCK_SHA}")
     print(f"[PRE-FLIGHT 2] Protocol Lock V1.4 SHA: MATCH ({actual_proto_sha[:16]}...)")
 
-    # 2. Environment Lock Verification & Strict Property Comparison
+    # 3. Environment Lock Verification & Strict Property Comparison
     env_lock_p = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / "STAGE-A2-EXECUTION-ENVIRONMENT.json"
     if not env_lock_p.exists():
         raise FileNotFoundError(f"Environment lock file missing at {env_lock_p}")
@@ -189,10 +247,14 @@ def verify_preflight(base_dir: Path, target_seed: int, is_dry_run: bool = False,
         raise ExecutionDeviceMismatchError(f"FATAL: CUDA runtime mismatch: {curr_cuda_runtime} != {env_lock['cuda_runtime']}")
     if curr_gpu_name != env_lock["device_name"]:
         raise ExecutionDeviceMismatchError(f"FATAL: GPU device name mismatch: {curr_gpu_name} != {env_lock['device_name']}")
+    if env_lock.get("device_type") != "cuda":
+        raise ExecutionDeviceMismatchError(f"FATAL: Environment lock device_type is {env_lock.get('device_type')}, expected 'cuda'")
+    if env_lock.get("automatic_cpu_fallback") is not False:
+        raise ExecutionDeviceMismatchError("FATAL: automatic_cpu_fallback must be strictly False in execution environment lock!")
 
-    print(f"[PRE-FLIGHT 3] Environment Lock SHA & Properties: MATCH ({actual_env_sha[:16]}...) [{curr_gpu_name}, {total_vram_gb:.2f} GB VRAM]")
+    print(f"[PRE-FLIGHT 3] Environment Lock Strict Properties: MATCH ({actual_env_sha[:16]}...) [{curr_gpu_name}, {total_vram_gb:.2f} GB VRAM]")
 
-    # 3. Raw Dataset Tarball Verification
+    # 4. Raw Dataset Tarball Verification
     raw_tar_p = base_dir / "datasets" / "raw" / "hdfs" / "HDFS_1.tar.gz"
     if not raw_tar_p.exists():
         raise FileNotFoundError(f"Raw HDFS tarball missing at {raw_tar_p}")
@@ -201,7 +263,7 @@ def verify_preflight(base_dir: Path, target_seed: int, is_dry_run: bool = False,
         raise ValueError(f"RAW_HDFS_TAR_SHA mismatch: {act_raw_sha} != {RAW_HDFS_TAR_SHA}")
     print(f"[PRE-FLIGHT 4] Raw HDFS Tarball SHA: MATCH ({act_raw_sha[:16]}...)")
 
-    # 4. Canonical Recomputation of Execution Membership
+    # 5. Canonical Recomputation of Execution Membership
     split_auth = HDFSSplitAuthority(base_dir=base_dir)
     split_info = split_auth.get_split()
     
@@ -221,7 +283,7 @@ def verify_preflight(base_dir: Path, target_seed: int, is_dry_run: bool = False,
     print(f"[PRE-FLIGHT 5] Train Membership Recomputed: MATCH ({recomputed_train_sha[:16]}...) [35,000 sessions / 586,577 events]")
     print(f"[PRE-FLIGHT 6] Val Membership Recomputed:   MATCH ({recomputed_val_sha[:16]}...) [7,500 sessions / 119,531 events]")
 
-    # 5. Connected Test Firewall Verification
+    # 6. Connected Test Firewall Verification
     guard = RuntimeTestFirewallGuard(split_authority=split_auth, base_dir=base_dir)
     guard.assert_sealed()
     print("[PRE-FLIGHT 7] Connected Test Firewall: LOCKED (TEST_OPENED=false, READ_COUNT=0)")
@@ -232,6 +294,7 @@ def verify_preflight(base_dir: Path, target_seed: int, is_dry_run: bool = False,
 
     return {
         "commit_sha": commit_sha,
+        "expected_code_commit": expected_code_commit or commit_sha,
         "branch": branch,
         "is_dirty": is_dirty,
         "protocol_lock_sha": actual_proto_sha,
@@ -257,22 +320,19 @@ def run_single_seed_pipeline(
     is_dry_run: bool = True,
     empirical_authorized: bool = False,
     resume_checkpoint: Optional[Path] = None,
+    resume_sha256: Optional[str] = None,
     fixture_mode: bool = False,
     fixture_output_root: Optional[Path] = None,
     fixture_train_events: Optional[List[Dict[str, Any]]] = None,
-    fixture_val_events: Optional[List[Dict[str, Any]]] = None
+    fixture_val_events: Optional[List[Dict[str, Any]]] = None,
+    max_epochs: Optional[int] = None
 ) -> Dict[str, Any]:
     """
-    Complete end-to-end execution pipeline for a canonical Stage A2 run:
-      - Pre-flight verification
-      - Namespace isolation between Real runs and Fixtures
-      - Materialization & window partitioning
-      - Full Deterministic PyTorch Model & Trainer instantiation
-      - Epoch-by-epoch training, validation, incremental crash-safe logging, and checkpointing
-      - Artifact and source manifest generation
+    Complete end-to-end execution pipeline for a canonical Stage A2 run.
     """
     preflight = verify_preflight(base_dir, seed, is_dry_run=is_dry_run, fixture_mode=fixture_mode)
     guard: RuntimeTestFirewallGuard = preflight["guard"]
+    expected_code_commit = preflight["expected_code_commit"]
 
     run_id = f"RUN-STAGE-A2-HDFS-SEED{seed}"
     
@@ -306,7 +366,18 @@ def run_single_seed_pipeline(
     ckpt_inv_p = run_evidence_dir / "CHECKPOINT-INVENTORY.json"
     failure_p = run_evidence_dir / "FAILURE.json"
 
+    # --- DRY-RUN PATH ---
     if is_dry_run:
+        # Check real directory cleanliness for real runs
+        if not fixture_mode:
+            has_evidence = run_evidence_dir.exists() and any(run_evidence_dir.iterdir())
+            has_checkpoints = artifact_checkpoint_dir.exists() and any(artifact_checkpoint_dir.iterdir())
+            if has_evidence or has_checkpoints:
+                print(f"[DRY-RUN] SEED42_REAL_DIRECTORY_CLEAN: FAIL ({run_evidence_dir} or {artifact_checkpoint_dir} not empty)")
+                raise ExistingRunArtifactError(f"Real run directory is not clean: {run_evidence_dir}")
+            else:
+                print(f"[DRY-RUN] SEED42_REAL_DIRECTORY_CLEAN: PASS")
+
         print(f"[DRY-RUN] Seed {seed} Dry-Run Initialized.")
         print(f"[DRY-RUN] Evidence Directory: {run_evidence_dir}")
         print(f"[DRY-RUN] Checkpoint Directory (D:): {artifact_checkpoint_dir}")
@@ -322,23 +393,7 @@ def run_single_seed_pipeline(
             f"FATAL: Empirical execution for seed {seed} requested but empirical_authorized is False!"
         )
 
-    # Clean Real Run Directory Guard
-    if not fixture_mode and not resume_checkpoint:
-        has_evidence = run_evidence_dir.exists() and any(run_evidence_dir.iterdir())
-        has_checkpoints = artifact_checkpoint_dir.exists() and any(artifact_checkpoint_dir.iterdir())
-        if has_evidence or has_checkpoints:
-            raise ExistingRunArtifactError(
-                f"FATAL: Existing run directory found at {run_evidence_dir} (or {artifact_checkpoint_dir})! "
-                "Refusing to overwrite a prior run without explicit --resume."
-            )
-
-    run_evidence_dir.mkdir(parents=True, exist_ok=True)
-    artifact_checkpoint_dir.mkdir(parents=True, exist_ok=True)
-
-    t_start = time.time()
-    t_start_iso = datetime.now(timezone.utc).isoformat()
-
-    # Environment artifact
+    # Initialize / Load Environment Info
     env_data = {
         "environment_id": f"ENV-STAGE-A2-SEED{seed}",
         "python_executable": sys.executable,
@@ -348,27 +403,176 @@ def run_single_seed_pipeline(
         "device_name": preflight["gpu_name"],
         "device_type": "cuda",
         "total_vram_gb": preflight["total_vram_gb"],
-        "platform": platform.platform()
+        "platform": platform.platform(),
+        "cublas_workspace_config": os.environ.get("CUBLAS_WORKSPACE_CONFIG"),
+        "deterministic_algorithms_enabled": True
     }
-    env_p.write_text(json.dumps(env_data, indent=2) + "\n", encoding="utf-8")
 
-    # Initial Run State
-    run_state = {
-        "run_id": run_id,
-        "seed": seed,
-        "status": "RUNNING",
-        "start_time": t_start_iso,
-        "current_epoch": 0,
-        "completed_epoch": 0,
-        "next_epoch_to_run": 0,
-        "global_step": 0,
-        "best_val_loss": float("inf"),
-        "best_epoch": 0,
-        "best_checkpoint_global_step": 0,
-        "last_checkpoint_path": None,
-        "last_checkpoint_sha256": None
-    }
-    run_state_p.write_text(json.dumps(run_state, indent=2) + "\n", encoding="utf-8")
+    # Model & Trainer Architecture Instantiation
+    model = TemporalGraphViewEncoder(
+        d_node=128,
+        d_edge=64,
+        d_msg=128,
+        n_heads=4,
+        d_time_proj=32,
+        d_rel_emb=32,
+        d_type_emb=32,
+        dropout=0.10,
+        num_canonical_relations=8,
+        num_node_types=4
+    )
+    param_count = sum(p.numel() for p in model.parameters())
+
+    target_max_epochs = max_epochs or (20 if not fixture_mode else 2)
+    trainer = StageA2Trainer(
+        model=model,
+        learning_rate=5e-4,
+        weight_decay=0.01,
+        min_lr=1e-5,
+        warmup_ratio=0.05,
+        temporal_window_size=256,
+        gradient_accumulation_steps=4,
+        clip_norm=1.0,
+        max_epochs=target_max_epochs,
+        early_stopping_patience=3,
+        seed=seed,
+        execution_device="cuda",
+        execution_mode="REAL_EMPIRICAL" if not fixture_mode else "FIXTURE_TEST",
+        empirical_authorized=True,
+        total_steps_override=None if not fixture_mode else (target_max_epochs * max(1, len(fixture_train_events or [1, 2, 3, 4]) // 4))
+    )
+
+    best_checkpoint_p = artifact_checkpoint_dir / "best_val_loss.pt"
+    last_checkpoint_p = artifact_checkpoint_dir / "last_checkpoint.pt"
+
+    is_resume = (resume_checkpoint is not None)
+
+    # --- RESUME RUN PATH vs FRESH RUN PATH ---
+    if is_resume:
+        # 1. Require checkpoint to exist
+        if not resume_checkpoint.exists():
+            raise ResumeCheckpointNotFoundError(f"FATAL: Specified resume checkpoint does not exist: {resume_checkpoint}")
+
+        # 2. Require existing real run directory & RUN-STATE.json
+        if not run_evidence_dir.exists() or not run_state_p.exists():
+            raise FileNotFoundError(f"FATAL: Cannot resume run {run_id}: RUN-STATE.json not found in {run_evidence_dir}")
+
+        existing_state = json.loads(run_state_p.read_text(encoding="utf-8"))
+        if existing_state.get("status") == "COMPLETED":
+            raise CompletedRunResumeError(f"FATAL: Attempted to resume a run that is already COMPLETED! (run_id={run_id})")
+        if existing_state.get("seed") != seed:
+            raise CheckpointIntegrityMismatchError(f"FATAL: RUN-STATE seed {existing_state.get('seed')} != requested seed {seed}")
+        if existing_state.get("run_id") != run_id:
+            raise CheckpointIntegrityMismatchError(f"FATAL: RUN-STATE run_id {existing_state.get('run_id')} != requested run_id {run_id}")
+
+        # 3. Checkpoint SHA validation
+        actual_ckpt_sha = compute_sha256(resume_checkpoint)
+        if resume_sha256 and actual_ckpt_sha != resume_sha256:
+            raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint SHA mismatch: {actual_ckpt_sha} != {resume_sha256}")
+
+        if ckpt_inv_p.exists():
+            inv_data = json.loads(ckpt_inv_p.read_text(encoding="utf-8"))
+            inv_shas = {c["sha256"] for c in inv_data.get("checkpoints", [])}
+            if actual_ckpt_sha not in inv_shas:
+                raise CheckpointIntegrityMismatchError(f"FATAL: Resume checkpoint SHA {actual_ckpt_sha} not found in CHECKPOINT-INVENTORY.json!")
+
+        # 4. Load checkpoint and verify binding metadata
+        raw_ckpt = torch.load(resume_checkpoint, map_location=trainer.device, weights_only=False)
+        ckpt_meta = raw_ckpt.get("checkpoint_metadata", {})
+        if ckpt_meta:
+            if ckpt_meta.get("seed") is not None and ckpt_meta.get("seed") != seed:
+                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint seed {ckpt_meta.get('seed')} != {seed}")
+            if ckpt_meta.get("run_id") is not None and ckpt_meta.get("run_id") != run_id:
+                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint run_id {ckpt_meta.get('run_id')} != {run_id}")
+            if expected_code_commit and ckpt_meta.get("execution_code_commit_sha") and ckpt_meta.get("execution_code_commit_sha") != expected_code_commit:
+                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint execution code commit {ckpt_meta.get('execution_code_commit_sha')} != {expected_code_commit}")
+            if ckpt_meta.get("protocol_lock_sha256") and ckpt_meta.get("protocol_lock_sha256") != PROTOCOL_LOCK_SHA:
+                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint protocol lock SHA mismatch!")
+            if ckpt_meta.get("environment_lock_sha256") and ckpt_meta.get("environment_lock_sha256") != ENV_LOCK_SHA:
+                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint environment lock SHA mismatch!")
+            if ckpt_meta.get("raw_dataset_sha256") and ckpt_meta.get("raw_dataset_sha256") != RAW_HDFS_TAR_SHA:
+                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint raw dataset SHA mismatch!")
+            if ckpt_meta.get("train_membership_sha256") and ckpt_meta.get("train_membership_sha256") != TRAIN_MEMBERSHIP_SHA:
+                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint train membership SHA mismatch!")
+            if ckpt_meta.get("val_membership_sha256") and ckpt_meta.get("val_membership_sha256") != VAL_MEMBERSHIP_SHA:
+                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint val membership SHA mismatch!")
+            if ckpt_meta.get("protocol_lock_sha256") and ckpt_meta.get("protocol_lock_sha256") != PROTOCOL_LOCK_SHA:
+                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint protocol lock SHA mismatch!")
+            if ckpt_meta.get("environment_lock_sha256") and ckpt_meta.get("environment_lock_sha256") != ENV_LOCK_SHA:
+                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint environment lock SHA mismatch!")
+            if ckpt_meta.get("raw_dataset_sha256") and ckpt_meta.get("raw_dataset_sha256") != RAW_HDFS_TAR_SHA:
+                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint raw dataset SHA mismatch!")
+            if ckpt_meta.get("train_membership_sha256") and ckpt_meta.get("train_membership_sha256") != TRAIN_MEMBERSHIP_SHA:
+                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint train membership SHA mismatch!")
+            if ckpt_meta.get("val_membership_sha256") and ckpt_meta.get("val_membership_sha256") != VAL_MEMBERSHIP_SHA:
+                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint val membership SHA mismatch!")
+
+        # 5. Restore state
+        orig_start_time = existing_state.get("start_time", datetime.now(timezone.utc).isoformat())
+        cumulative_runtime_seconds = existing_state.get("cumulative_runtime_seconds", 0.0)
+        t_resume_start = time.time()
+
+        trainer.load_checkpoint(resume_checkpoint)
+        start_epoch = trainer.next_epoch_to_run
+        best_val_loss = trainer.best_val_loss
+        best_ckpt_epoch = trainer.best_epoch
+        best_ckpt_step = trainer.best_checkpoint_global_step
+        best_ckpt_sha = existing_state.get("best_checkpoint_sha256")
+        best_metrics = existing_state.get("best_metrics", {})
+
+        run_state = existing_state
+        run_state["status"] = "RUNNING"
+        run_state["resumed_at"] = datetime.now(timezone.utc).isoformat()
+        run_state_p.write_text(json.dumps(run_state, indent=2) + "\n", encoding="utf-8")
+
+        print(f"[{run_id}] Resumed at next_epoch_to_run={start_epoch}, Step={trainer.global_step}, Cursor={trainer.stream_cursor}")
+
+    else:
+        # === FRESH RUN PATH ===
+        if not fixture_mode:
+            has_evidence = run_evidence_dir.exists() and any(run_evidence_dir.iterdir())
+            has_checkpoints = artifact_checkpoint_dir.exists() and any(artifact_checkpoint_dir.iterdir())
+            if has_evidence or has_checkpoints:
+                raise ExistingRunArtifactError(
+                    f"FATAL: Existing run directory found at {run_evidence_dir} (or {artifact_checkpoint_dir})! "
+                    "Refusing to overwrite a prior run without explicit --resume."
+                )
+
+        run_evidence_dir.mkdir(parents=True, exist_ok=True)
+        artifact_checkpoint_dir.mkdir(parents=True, exist_ok=True)
+
+        t_start = time.time()
+        orig_start_time = datetime.now(timezone.utc).isoformat()
+        cumulative_runtime_seconds = 0.0
+        start_epoch = 0
+
+        best_val_loss = float("inf")
+        best_ckpt_epoch = 0
+        best_ckpt_step = 0
+        best_ckpt_sha = None
+        best_metrics = {}
+
+        env_p.write_text(json.dumps(env_data, indent=2) + "\n", encoding="utf-8")
+
+        run_state = {
+            "run_id": run_id,
+            "seed": seed,
+            "status": "RUNNING",
+            "start_time": orig_start_time,
+            "current_epoch": 0,
+            "completed_epoch": 0,
+            "next_epoch_to_run": 0,
+            "global_step": 0,
+            "best_val_loss": float("inf"),
+            "best_epoch": 0,
+            "best_checkpoint_global_step": 0,
+            "best_checkpoint_sha256": None,
+            "best_metrics": {},
+            "cumulative_runtime_seconds": 0.0,
+            "last_checkpoint_path": None,
+            "last_checkpoint_sha256": None
+        }
+        run_state_p.write_text(json.dumps(run_state, indent=2) + "\n", encoding="utf-8")
 
     try:
         # 1. Materialize / Prepare Chronological Streams
@@ -410,69 +614,28 @@ def run_single_seed_pipeline(
             torch.backends.cudnn.benchmark = False
         torch.use_deterministic_algorithms(True)
 
-        # 3. Model & Trainer Instantiation
-        model = TemporalGraphViewEncoder(
-            d_node=128,
-            d_edge=64,
-            d_msg=128,
-            n_heads=4,
-            d_time_proj=32,
-            d_rel_emb=32,
-            d_type_emb=32,
-            dropout=0.10,
-            num_canonical_relations=8,
-            num_node_types=4
-        )
-        param_count = sum(p.numel() for p in model.parameters())
-
-        trainer = StageA2Trainer(
-            model=model,
-            learning_rate=5e-4,
-            weight_decay=0.01,
-            min_lr=1e-5,
-            warmup_ratio=0.05,
-            temporal_window_size=256,
-            gradient_accumulation_steps=4,
-            clip_norm=1.0,
-            max_epochs=20 if not fixture_mode else 2,
-            early_stopping_patience=3,
-            seed=seed,
-            execution_device="cuda",
-            execution_mode="REAL_EMPIRICAL" if not fixture_mode else "FIXTURE_TEST",
-            empirical_authorized=True,
-            total_steps_override=None if not fixture_mode else (2 * max(1, len(train_windows) // 4))
-        )
-
-        start_epoch = 0
-        best_checkpoint_p = artifact_checkpoint_dir / "best_val_loss.pt"
-        last_checkpoint_p = artifact_checkpoint_dir / "last_checkpoint.pt"
-
-        best_ckpt_sha: Optional[str] = None
-        best_ckpt_epoch: int = 0
-        best_ckpt_step: int = 0
-
-        if resume_checkpoint and resume_checkpoint.exists():
-            if run_state_p.exists():
-                existing_state = json.loads(run_state_p.read_text(encoding="utf-8"))
-                if existing_state.get("status") == "COMPLETED":
-                    raise RuntimeError(f"FATAL: Attempted to resume a run that is already COMPLETED! (run_id={run_id})")
-
-            print(f"[{run_id}] Resuming from Checkpoint: {resume_checkpoint}...")
-            trainer.load_checkpoint(resume_checkpoint)
-            start_epoch = trainer.next_epoch_to_run
-            best_ckpt_epoch = trainer.best_epoch
-            best_ckpt_step = trainer.best_checkpoint_global_step
-            if best_checkpoint_p.exists():
-                best_ckpt_sha = compute_sha256(best_checkpoint_p)
-            print(f"[{run_id}] Resumed at next_epoch_to_run={start_epoch}, Step={trainer.global_step}, Cursor={trainer.stream_cursor}")
-
-        best_val_loss = trainer.best_val_loss
         patience_counter = trainer.patience_counter
-        best_metrics = {}
 
-        # 4. Training Loop
+        train_stats = {
+            "train_L_graph": 0.0, "train_L_rel": 0.0, "train_L_node": 0.0, "train_L_time": 0.0,
+            "events_count": total_train_events, "learning_rate": 5e-4,
+            "rel_loss_sum": 0.0, "rel_target_count": 0, "node_sq_err_sum": 0.0, "node_element_count": 0,
+            "time_loss_sum": 0.0, "time_target_count": 0, "epoch_runtime_sec": 0.0
+        }
+        val_stats = {
+            "val_L_graph": best_val_loss if best_val_loss != float("inf") else 0.0,
+            "val_L_rel": best_metrics.get("val_L_rel", 0.0),
+            "val_L_node": best_metrics.get("val_L_node", 0.0),
+            "val_L_time": best_metrics.get("val_L_time", 0.0),
+            "events_count": total_val_events, "rel_loss_sum": 0.0, "rel_target_count": 0,
+            "node_sq_err_sum": 0.0, "node_element_count": 0, "time_loss_sum": 0.0, "time_target_count": 0,
+            "epoch_runtime_sec": 0.0
+        }
+
+        # 3. Epoch Loop
         epochs_to_run = trainer.max_epochs
         for epoch in range(start_epoch, epochs_to_run):
+            t_epoch_start = time.time()
             trainer.current_epoch = epoch
             print(f"\n[{run_id}] --- Starting Epoch {epoch + 1}/{epochs_to_run} ---")
             
@@ -504,6 +667,23 @@ def run_single_seed_pipeline(
             curr_val_loss = val_stats["val_L_graph"]
             is_best = curr_val_loss < best_val_loss
 
+            trainer.completed_epoch = epoch + 1
+            trainer.next_epoch_to_run = epoch + 1
+
+            ckpt_metadata = {
+                "run_id": run_id,
+                "seed": seed,
+                "execution_code_commit_sha": expected_code_commit or preflight["commit_sha"],
+                "protocol_lock_sha256": PROTOCOL_LOCK_SHA,
+                "environment_lock_sha256": ENV_LOCK_SHA,
+                "raw_dataset_sha256": RAW_HDFS_TAR_SHA,
+                "train_membership_sha256": TRAIN_MEMBERSHIP_SHA,
+                "val_membership_sha256": VAL_MEMBERSHIP_SHA,
+                "completed_epoch": epoch + 1,
+                "next_epoch_to_run": epoch + 1,
+                "global_step": trainer.global_step
+            }
+
             if is_best:
                 best_val_loss = curr_val_loss
                 patience_counter = 0
@@ -516,24 +696,19 @@ def run_single_seed_pipeline(
                 trainer.best_checkpoint_path = str(best_checkpoint_p)
                 best_metrics = dict(val_stats)
                 
-                # Checkpoint state reflects end of epoch
-                trainer.completed_epoch = epoch + 1
-                trainer.next_epoch_to_run = epoch + 1
-                trainer.save_checkpoint(best_checkpoint_p)
+                trainer.save_checkpoint(best_checkpoint_p, metadata=ckpt_metadata)
                 best_ckpt_sha = compute_sha256(best_checkpoint_p)
                 print(f"[{run_id}] (*) Improved Validation Loss: {best_val_loss:.6f} at Epoch {best_ckpt_epoch} (Step {best_ckpt_step}) -> Saved {best_checkpoint_p}")
             else:
                 patience_counter += 1
                 trainer.patience_counter = patience_counter
-                trainer.completed_epoch = epoch + 1
-                trainer.next_epoch_to_run = epoch + 1
                 print(f"[{run_id}] Validation Loss did not improve ({curr_val_loss:.6f} >= {best_val_loss:.6f}). Patience: {patience_counter}/{trainer.early_stopping_patience}")
 
-            # Checkpoint Save: Last Checkpoint (Reflects state after full completed epoch)
-            trainer.save_checkpoint(last_checkpoint_p)
+            # Save Last Checkpoint
+            trainer.save_checkpoint(last_checkpoint_p, metadata=ckpt_metadata)
             last_ckpt_sha = compute_sha256(last_checkpoint_p)
 
-            # Checkpoint Inventory with preserved best checkpoint metadata
+            # Checkpoint Inventory
             ckpt_inv = {
                 "run_id": run_id,
                 "seed": seed,
@@ -597,6 +772,13 @@ def run_single_seed_pipeline(
             with open(train_log_p, "a", encoding="utf-8") as f:
                 f.write(json.dumps(log_record) + "\n")
                 f.flush()
+                try:
+                    os.fsync(f.fileno())
+                except OSError:
+                    pass
+
+            epoch_dur = time.time() - t_epoch_start
+            cumulative_runtime_seconds += epoch_dur
 
             # Update Run State
             run_state.update({
@@ -607,6 +789,9 @@ def run_single_seed_pipeline(
                 "best_val_loss": best_val_loss,
                 "best_epoch": best_ckpt_epoch,
                 "best_checkpoint_global_step": best_ckpt_step,
+                "best_checkpoint_sha256": best_ckpt_sha,
+                "best_metrics": best_metrics,
+                "cumulative_runtime_seconds": cumulative_runtime_seconds,
                 "last_checkpoint_path": str(last_checkpoint_p),
                 "last_checkpoint_sha256": last_ckpt_sha
             })
@@ -616,7 +801,6 @@ def run_single_seed_pipeline(
                 print(f"[{run_id}] Early stopping triggered after {patience_counter} epochs without improvement.")
                 break
 
-        t_end = time.time()
         t_end_iso = datetime.now(timezone.utc).isoformat()
 
         # Final Metrics
@@ -635,7 +819,7 @@ def run_single_seed_pipeline(
             "final_train_L_graph": train_stats["train_L_graph"],
             "final_val_L_graph": val_stats["val_L_graph"],
             "optimizer_steps_completed": trainer.global_step,
-            "runtime_seconds": t_end - t_start,
+            "runtime_seconds": cumulative_runtime_seconds,
             "peak_cuda_allocated_bytes": peak_alloc,
             "peak_cuda_reserved_bytes": peak_res,
             "nan_count": 0,
@@ -667,7 +851,7 @@ def run_single_seed_pipeline(
             "seed": seed,
             "evidence_class": "REAL_EMPIRICAL",
             "claim_scope": "PRETRAINING_EMPIRICAL",
-            "execution_code_commit_sha": preflight["commit_sha"],
+            "execution_code_commit_sha": expected_code_commit,
             "execution_head_at_launch": preflight["commit_sha"],
             "effective_protocol_lock_path": "experiments/protocol/STAGE-A2-EXECUTION-LOCK-V1.4.json",
             "effective_protocol_lock_sha256": preflight["protocol_lock_sha"],
@@ -678,7 +862,7 @@ def run_single_seed_pipeline(
             "selected_val_membership_sha256": preflight["val_membership_sha"],
             "command_executed": f"python scripts/run_stage_a2_five_seed_empirical.py --seed {seed} --authorize-real-empirical-execution",
             "working_directory": str(base_dir),
-            "timestamp_start": t_start_iso,
+            "timestamp_start": orig_start_time,
             "timestamp_end": t_end_iso,
             "environment": env_data,
             "train_log_path": safe_rel_path(train_log_p),
@@ -697,7 +881,7 @@ def run_single_seed_pipeline(
             "manifest_version": "1.4.1",
             "run_id": run_id,
             "seed": seed,
-            "execution_code_commit_sha": preflight["commit_sha"],
+            "execution_code_commit_sha": expected_code_commit,
             "status": "COMPLETED",
             "artifacts": [
                 {"path": safe_rel_path(metrics_p), "sha256": compute_sha256(metrics_p)},
@@ -732,7 +916,7 @@ def run_single_seed_pipeline(
             "last_completed_epoch": run_state.get("current_epoch", 0),
             "global_step": run_state.get("global_step", 0),
             "last_valid_checkpoint": run_state.get("last_checkpoint_path"),
-            "execution_code_commit_sha": preflight["commit_sha"],
+            "execution_code_commit_sha": expected_code_commit,
             "environment": env_data
         }
         failure_p.write_text(json.dumps(failure_data, indent=2) + "\n", encoding="utf-8")
@@ -749,6 +933,7 @@ def main():
     parser.add_argument("--dry-run", action="store_true", default=False, help="Perform complete pre-flight and dry-run without optimizer steps")
     parser.add_argument("--authorize-real-empirical-execution", action="store_true", default=False, help="Authorize real training")
     parser.add_argument("--resume", type=str, default=None, help="Path to checkpoint file to resume from")
+    parser.add_argument("--resume-sha256", type=str, default=None, help="Expected SHA-256 hash of resume checkpoint")
     args = parser.parse_args()
 
     base_dir = Path("D:/Research")
@@ -774,7 +959,8 @@ def main():
             base_dir=base_dir,
             is_dry_run=args.dry_run,
             empirical_authorized=args.authorize_real_empirical_execution,
-            resume_checkpoint=resume_path
+            resume_checkpoint=resume_path,
+            resume_sha256=args.resume_sha256
         )
         results.append(res)
 

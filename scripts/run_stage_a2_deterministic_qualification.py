@@ -347,12 +347,16 @@ def run_qualification(device_arg: Optional[str] = None):
         "total_vram_gb": (torch.cuda.get_device_properties(0).total_memory / (1024**3)) if torch.cuda.is_available() else None,
         "platform": platform.platform()
     }
-    env_path = evidence_dir / "ENVIRONMENT.json"
-    env_path.write_text(json.dumps(env_data, indent=2) + "\n", encoding="utf-8")
+    t_end = time.time()
+    t_end_iso = datetime.now(timezone.utc).isoformat()
+    qual_run_id = f"QUAL-STAGE-A2-SEED42-HARDENED-CUDA"
 
     resume_evidence = {
-        "qualification_id": "QUAL-STAGE-A2-RESUME-DETERMINISM-003",
-        "timestamp": "2026-08-23T23:15:00Z",
+        "qualification_id": qual_run_id,
+        "qualification_run_id": qual_run_id,
+        "timestamp": t_end_iso,
+        "timestamp_start": t_start_iso,
+        "timestamp_end": t_end_iso,
         "execution_code_commit_sha": commit_sha,
         "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE",
         "claim_scope": "NON_EMPIRICAL_TEST_FIXTURE",
@@ -372,10 +376,6 @@ def run_qualification(device_arg: Optional[str] = None):
     }
     resume_path = evidence_dir / "DETERMINISTIC-RESUME-EVIDENCE.json"
     resume_path.write_text(json.dumps(resume_evidence, indent=2) + "\n", encoding="utf-8")
-
-    t_end = time.time()
-    t_end_iso = datetime.now(timezone.utc).isoformat()
-    qual_run_id = f"QUAL-STAGE-A2-SEED42-HARDENED-CUDA"
 
     qual_summary = {
         "qualification_run_id": qual_run_id,
@@ -441,7 +441,7 @@ def run_qualification(device_arg: Optional[str] = None):
         "metrics_artifact_sha256": qual_sha256,
         "checkpoint_path": "experiments/evidence/stage-a2/implementation/qualification_checkpoint.pt",
         "checkpoint_sha256": ckpt_sha256,
-        "checkpoint_storage": "COMMITTED_GIT",
+        "checkpoint_storage": "LOCAL_D_DRIVE_NOT_COMMITTED",
         "test_firewall_state": {
             "test_opened": False,
             "test_feature_reads": 0,
@@ -492,7 +492,9 @@ def run_qualification(device_arg: Optional[str] = None):
         {
             "path": "experiments/evidence/stage-a2/implementation/qualification_checkpoint.pt",
             "sha256": ckpt_sha256,
-            "storage_status": "COMMITTED_GIT",
+            "size_bytes": checkpoint_path.stat().st_size,
+            "local_path": str(checkpoint_path),
+            "storage_status": "LOCAL_D_DRIVE_NOT_COMMITTED",
             "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
         }
     ]

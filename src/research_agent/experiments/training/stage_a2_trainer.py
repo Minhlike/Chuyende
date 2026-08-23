@@ -469,7 +469,7 @@ class StageA2Trainer:
             "nan_inf_count": 0
         }
 
-    def save_checkpoint(self, path: Path):
+    def save_checkpoint(self, path: Path, metadata: Optional[Dict[str, Any]] = None):
         """
         Atomically saves the complete 14-element mutable checkpoint state.
         Enforces CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY (grad_accum_position == 0).
@@ -522,7 +522,8 @@ class StageA2Trainer:
             "next_epoch_to_run": self.next_epoch_to_run,
             "global_step": self.global_step,
             "current_epoch": self.current_epoch,
-            "checkpoint_boundary_policy": "CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY"
+            "checkpoint_boundary_policy": "CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY",
+            "checkpoint_metadata": metadata or {}
         }
 
         torch.save(state_dict, path)
@@ -583,3 +584,4 @@ class StageA2Trainer:
         self.best_epoch = es_st.get("best_epoch", 0)
         self.best_checkpoint_global_step = es_st.get("best_checkpoint_global_step", 0)
         self.best_checkpoint_path = es_st.get("best_checkpoint_path")
+        return checkpoint
