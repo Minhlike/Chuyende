@@ -1,7 +1,9 @@
 {
-  "audit_version": "1.2.0",
+  "audit_version": "1.3.0",
+  "audit_scope": "FULL_ELIGIBLE_POPULATION_AUDIT",
   "split_id": "SPL-HDFS-001",
   "train": {
+    "eligible_sessions": 357133,
     "eligible_records_scanned": 7447591,
     "materialized_graph_events": 5998764,
     "explicitly_rejected_events": 1448827,
@@ -20,7 +22,7 @@
       "DELETES_BLOCK": 965319
     },
     "unique_nodes": 357543,
-    "nodes_by_type": {
+    "node_endpoint_occurrences_by_type": {
       "DATA_BLOCK": 5998764,
       "STORAGE_NODE": 3615686,
       "MANAGEMENT_SYSTEM": 1325729,
@@ -30,6 +32,7 @@
     "max_timestamp_utc": 1226383243.746
   },
   "validation": {
+    "eligible_sessions": 50204,
     "eligible_records_scanned": 825616,
     "materialized_graph_events": 735091,
     "explicitly_rejected_events": 90525,

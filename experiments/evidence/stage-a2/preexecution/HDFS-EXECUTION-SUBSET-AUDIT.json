@@ -1,0 +1,70 @@
+{
+  "audit_version": "1.3.0",
+  "audit_scope": "AUTHORIZED_EXECUTION_BUDGET_SUBSET",
+  "split_id": "SPL-HDFS-001",
+  "train": {
+    "authorized_sessions": 35000,
+    "eligible_records_scanned": 826241,
+    "materialized_graph_events": 586577,
+    "explicitly_rejected_events": 239664,
+    "conservation_pass": true,
+    "rejection_counts": {
+      "UNMATCHED_RELATION_TEMPLATE": 239664
+    },
+    "relation_counts": {
+      "RECEIVES_BLOCK": 104206,
+      "ALLOCATES_BLOCK": 35000,
+      "MONITORS_BLOCK": 103098,
+      "TRANSMITS_BLOCK": 103090,
+      "UPDATES_BLOCK_MAP": 103636,
+      "COMMANDS_REPLICATION": 156,
+      "SERVES_BLOCK": 34137,
+      "DELETES_BLOCK": 103254
+    },
+    "unique_nodes": 35410,
+    "node_endpoint_occurrences_by_type": {
+      "DATA_BLOCK": 586577,
+      "STORAGE_NODE": 345069,
+      "MANAGEMENT_SYSTEM": 138410,
+      "EXECUTION_THREAD": 103098
+    },
+    "min_timestamp_utc": 1226262918.035,
+    "max_timestamp_utc": 1226314665.019
+  },
+  "validation": {
+    "authorized_sessions": 7500,
+    "eligible_records_scanned": 142114,
+    "materialized_graph_events": 119531,
+    "explicitly_rejected_events": 22583,
+    "conservation_pass": true,
+    "rejection_counts": {
+      "UNMATCHED_RELATION_TEMPLATE": 22583
+    },
+    "relation_counts": {
+      "RECEIVES_BLOCK": 22460,
+      "ALLOCATES_BLOCK": 7500,
+      "MONITORS_BLOCK": 22383,
+      "TRANSMITS_BLOCK": 22383,
+      "UPDATES_BLOCK_MAP": 22396,
+      "COMMANDS_REPLICATION": 13,
+      "DELETES_BLOCK": 22396
+    },
+    "unique_nodes": 7908,
+    "node_endpoint_occurrences_by_type": {
+      "DATA_BLOCK": 119531,
+      "STORAGE_NODE": 67239,
+      "MANAGEMENT_SYSTEM": 29909,
+      "EXECUTION_THREAD": 22383
+    },
+    "min_timestamp_utc": 1226383246.031,
+    "max_timestamp_utc": 1226388157.019
+  },
+  "test_firewall": {
+    "test_opened": false,
+    "test_feature_read_count": 0,
+    "test_label_read_count": 0,
+    "test_metric_count": 0,
+    "test_graph_events_materialized": 0,
+    "test_relation_parse_count": 0
+  }
+}

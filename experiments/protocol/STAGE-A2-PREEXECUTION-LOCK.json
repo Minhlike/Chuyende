@@ -1,15 +1,20 @@
 {
-  "lock_identifier": "LOCK-STAGE-A2-20260823-FINAL-V1.2",
-  "protocol_version": "1.2",
+  "lock_identifier": "LOCK-STAGE-A2-20260823-FINAL-V1.3",
+  "protocol_version": "1.3",
   "status": "FROZEN_PRE_EXECUTION",
-  "created_at": "2026-08-23T21:24:00Z",
-  "amends_commit": "cc305041023acd855eacfd39d2befa6f2a30e322",
+  "created_at": "2026-08-23T21:38:00Z",
+  "amends_commit": "82d6f7ed37a94efbee80352a907ee38acbe3390a",
   "source_commit": "9a707025ed5899c524962558732218ff48e8b212",
-  "protocol_document_sha256": "10f0b109264e82a8f1520cc090ed80c575218f1b3a92ec768cbc98f7a90a92ee",
-  "graph_contract_sha256": "cab1e8214aa8952af229cfa5252536c451998c978df350141394a6ee541d22fc",
+  "protocol_document_sha256": "87a783618c90c85129991e7694632172b26a43ce64f452d0f266f7db70597dfa",
+  "graph_contract_sha256": "05f5ab38c4c02e14292b510ac518dd98171732551d032ec0ed09fc96848f5837",
   "raw_to_graph_mapping_sha256": "8c2ecb1504af7ed3e3f74144a0197dec15b4566e505ca5d9ae7e5146486e2208",
-  "materialization_audit_sha256": "ed114c6bf83295a080b92898dd96a52b16ec800d770327fe510d61a79c6093a2",
-  "relation_grounding_audit_sha256": "a7b0aa0419e7758694731901e768faf535f58c7a024fdcc925e6361b9b23f971",
+  "materialization_audit_sha256": "fcf6f409e1833bc542418e75bb220b541da495666aeaab5f476136f35018cc0b",
+  "execution_subset_audit_sha256": "9eedf3092b8da1c1b5ad3b53639483398c2747e422b5e1841408f8a3de0f3889",
+  "execution_membership_sha256": "e11f79515dec60240c6b71dc346033c4bdd712afcae04cfc9a2383d70a68ad4c",
+  "relation_grounding_audit_sha256": "223347fb4ebd37cf4bfc15efd00e96c47a5c82f2d7eab9be29b522020d193274",
+  "experimental_source_contract_sha256": "f73e21a9fa3855268126d89cd16c5bb356321dfac605088f947353ff3ffb9ac8",
+  "experimental_source_schema_sha256": "7e7bdea19f417bd03103ebc5a25fa115f887be36e72a976bd76ebc6da34a708e",
+  "evidence_manifest_sha256": "1e998e1f5a67f47865360da0847d569e548814f15b078aa46075de2afa66a752",
   "dataset_names": ["HDFS"],
   "dataset_eligibility": {
     "HDFS": {
@@ -25,13 +30,21 @@
       "ineligibility_reason": "Single-node localized alert telemetry without extractable inter-entity destination nodes."
     }
   },
-  "split_specifications": {
-    "HDFS": {
-      "split_id": "SPL-HDFS-001",
-      "train_split_hash": "0422677f5357494fbc587cac4b6de2004781e71d9b8087b4c8f9f0cd160f3363",
-      "val_split_hash": "96bdab531c3545f4a0f0ed7f87e47cba985c2bc4cac7a3e6c04245b5c712fbe9",
-      "test_status": "SEALED_ZERO_ACCESS"
-    }
+  "execution_scope_specifications": {
+    "split_id": "SPL-HDFS-001",
+    "population_train_sessions": 357133,
+    "population_val_sessions": 50204,
+    "authorized_train_sessions": 35000,
+    "authorized_val_sessions": 7500,
+    "selection_algorithm": "EARLIEST_CAUSAL_SESSION_BUDGET_CAP",
+    "ordering_key": "(session_start_time, block_id)",
+    "selected_train_membership_sha256": "65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc",
+    "selected_val_membership_sha256": "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407b0609a",
+    "population_train_membership_sha256": "432dab4dadcdb56d528de7b0e5a262aa4d678be8206e2263aca7366e93fc9b40",
+    "population_val_membership_sha256": "b611cc73f15d37acaf02869b37e195d2ca9809a85a630ad22d329fbf8069cefb",
+    "canonical_train_tensor_sha256": "0422677f5357494fbc587cac4b6de2004781e71d9b8087b4c8f9f0cd160f3363",
+    "canonical_val_tensor_sha256": "96bdab531c3545f4a0f0ed7f87e47cba985c2bc4cac7a3e6c04245b5c712fbe9",
+    "test_status": "SEALED_ZERO_ACCESS"
   },
   "architecture": {
     "family": "TemporalGraphViewEncoder",
@@ -66,6 +79,12 @@
     "max_node_history": 64,
     "self_loop_policy": "STRICT_SEPARATION_ZERO_SYNTHETIC_OBSERVED_SELF_LOOPS"
   },
+  "target_masking_visibility_policies": {
+    "relation_mask_prediction_inputs": ["h_v(t-)", "h_u(t-)", "phi(delta_t)"],
+    "relation_mask_withheld_features": ["event_relation_id", "event_relation_embedding"],
+    "node_mask_prediction_inputs": ["h_v(t-)"],
+    "node_mask_withheld_features": ["x_v_fixed_priv"]
+  },
   "temporal_gap_specification": {
     "target_name": "delta_t_log1p",
     "unit": "SECONDS_CONTINUOUS",
@@ -85,6 +104,27 @@
     ],
     "is_learnable": false,
     "contains_labels": false
+  },
+  "checkpoint_boundary_contract": {
+    "checkpoint_boundary_policy": "CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY",
+    "gradient_accumulation_position": 0,
+    "pending_gradients": "NONE",
+    "mandatory_mutable_state": [
+      "model_state_dict",
+      "optimizer_state_dict",
+      "scheduler_state_dict",
+      "node_memory_states",
+      "node_last_interaction_timestamps",
+      "node_causal_in_degrees",
+      "node_causal_out_degrees",
+      "node_temporal_history_buffers",
+      "rng_states_4tuple",
+      "stream_iterator_state",
+      "masking_rng_state",
+      "early_stopping_state",
+      "global_step",
+      "current_epoch"
+    ]
   },
   "optimization": {
     "optimizer": "AdamW",
@@ -114,17 +154,7 @@
     "test_relation_parse_count": 0
   },
   "deterministic_resume_contract": {
-    "target_max_parameter_divergence": 1e-6,
-    "mandatory_state_tuple": [
-      "model_state_dict",
-      "optimizer_state_dict",
-      "scheduler_state_dict",
-      "node_memory_states",
-      "node_last_interaction_timestamps",
-      "rng_states_4tuple",
-      "stream_iterator_state",
-      "global_step"
-    ]
+    "target_max_parameter_divergence": 1e-6
   },
   "execution_state": {
     "optimizer_steps": 0,

@@ -1,0 +1,50 @@
+{
+  "manifest_id": "MANIFEST-STAGE-A2-EVIDENCE-V1.3",
+  "version": "1.3.0",
+  "stage": "STAGE_A2",
+  "created_at": "2026-08-23T21:38:00Z",
+  "artifacts": [
+    {
+      "path": "experiments/evidence/stage-a2/preexecution/HDFS-EXECUTION-MEMBERSHIP.json",
+      "sha256": "e11f79515dec60240c6b71dc346033c4bdd712afcae04cfc9a2383d70a68ad4c",
+      "evidence_class": "PREEXECUTION_AUDIT",
+      "claim_ids": ["CLAIM-STAGE-A2-HDFS-EXECUTION-MEMBERSHIP-EXACT"]
+    },
+    {
+      "path": "experiments/evidence/stage-a2/preexecution/HDFS-EXECUTION-SUBSET-AUDIT.json",
+      "sha256": "9eedf3092b8da1c1b5ad3b53639483398c2747e422b5e1841408f8a3de0f3889",
+      "evidence_class": "PREEXECUTION_AUDIT",
+      "claim_ids": ["CLAIM-STAGE-A2-HDFS-EXECUTION-SUBSET-CONSERVATION"]
+    },
+    {
+      "path": "experiments/evidence/stage-a2/preexecution/HDFS-GRAPH-MATERIALIZATION-AUDIT.json",
+      "sha256": "fcf6f409e1833bc542418e75bb220b541da495666aeaab5f476136f35018cc0b",
+      "evidence_class": "PREEXECUTION_AUDIT",
+      "claim_ids": ["CLAIM-STAGE-A2-HDFS-POPULATION-CONSERVATION"]
+    },
+    {
+      "path": "experiments/evidence/stage-a2/preexecution/RELATION-GROUNDING-AUDIT.json",
+      "sha256": "223347fb4ebd37cf4bfc15efd00e96c47a5c82f2d7eab9be29b522020d193274",
+      "evidence_class": "PREEXECUTION_AUDIT",
+      "claim_ids": ["CLAIM-STAGE-A2-HDFS-RELATION-GROUNDING"]
+    },
+    {
+      "path": "experiments/evidence/EXPERIMENTAL-SOURCE-CONTRACT.md",
+      "sha256": "f73e21a9fa3855268126d89cd16c5bb356321dfac605088f947353ff3ffb9ac8",
+      "evidence_class": "PREEXECUTION_AUDIT",
+      "claim_ids": ["CLAIM-STAGE-A2-EXPERIMENTAL-SOURCE-CONTRACT"]
+    },
+    {
+      "path": "experiments/evidence/EXPERIMENTAL-SOURCE-SCHEMA.json",
+      "sha256": "7e7bdea19f417bd03103ebc5a25fa115f887be36e72a976bd76ebc6da34a708e",
+      "evidence_class": "PREEXECUTION_AUDIT",
+      "claim_ids": ["CLAIM-STAGE-A2-EXPERIMENTAL-SOURCE-SCHEMA"]
+    },
+    {
+      "path": "experiments/evidence/WORD-EVIDENCE-INDEX.md",
+      "sha256": "f67f6e73dc552028268b8a837d60ed94959223b52bd3c7af7fc98d9232a04f4a",
+      "evidence_class": "PREEXECUTION_AUDIT",
+      "claim_ids": ["CLAIM-STAGE-A2-WORD-EVIDENCE-INDEX"]
+    }
+  ]
+}

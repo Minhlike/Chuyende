@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "contract_id": "SCHEMA-STAGE-A2-GRAPH-CONTRACT-V1.2",
-  "version": "1.2.0",
-  "title": "Stage A2 Dependency-Temporal Graph & Temporal Message Passing Contract (Amended V1.2)",
-  "description": "Strict, raw-grounded specification for causal temporal graph construction, entity typing, message passing, and privacy safeguards in Stage A2 bound to SPL-HDFS-001 split authority and millisecond timestamps.",
+  "contract_id": "SCHEMA-STAGE-A2-GRAPH-CONTRACT-V1.3",
+  "version": "1.3.0",
+  "title": "Stage A2 Dependency-Temporal Graph & Temporal Message Passing Contract (Amended V1.3)",
+  "description": "Strict, raw-grounded specification for causal temporal graph construction, entity typing, message passing, target-leakage masking semantics, and execution scope bound to SPL-HDFS-001 split authority and millisecond timestamps.",
   "dataset_authorization": {
     "authorized_datasets": ["HDFS"],
     "split_authority": "SPL-HDFS-001",
@@ -14,6 +14,18 @@
       }
     ],
     "pending_acquisition_datasets": ["DARPA_TC_E3", "LANL_CYBER1"]
+  },
+  "execution_scope": {
+    "population_train_sessions": 357133,
+    "population_val_sessions": 50204,
+    "authorized_train_sessions": 35000,
+    "authorized_val_sessions": 7500,
+    "selection_algorithm": "EARLIEST_CAUSAL_SESSION_BUDGET_CAP",
+    "ordering_key": "(session_start_time, block_id)",
+    "selected_train_membership_sha256": "65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc",
+    "selected_val_membership_sha256": "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407b0609a",
+    "selected_train_graph_events": 586577,
+    "selected_val_graph_events": 119531
   },
   "causality_invariants": {
     "predict_before_update": {
@@ -45,6 +57,44 @@
       "rule": "Canonical objective L_graph optimizes masked relation classification (L_rel) over known interaction pairs (v, u); negative destination sampling is excluded to maintain minimal, unbloated objective consistency."
     }
   },
+  "target_masking_visibility_policies": {
+    "masked_relation_prediction": {
+      "target_name": "relation_id",
+      "input_representation": ["h_v(t-)", "h_u(t-)", "phi(delta_t)"],
+      "withheld_from_prediction": ["event_relation_id", "event_relation_embedding"],
+      "memory_update_timing": "POST_LOSS_COMPUTATION_ONLY",
+      "rule": "When event relation r is masked, the relation classification head receives strictly [h_v(t-) || h_u(t-) || phi(delta_t)]. The true relation embedding is withheld until post-loss memory update."
+    },
+    "masked_node_reconstruction": {
+      "target_name": "x_v_fixed_priv",
+      "dimension": 6,
+      "components": ["4-dim one-hot type", "log1p causal in-degree", "log1p causal out-degree"],
+      "input_representation": ["h_v(t-)"],
+      "withheld_from_prediction": ["x_v_fixed_priv"],
+      "rule": "Node reconstruction head predicts x_v_fixed_priv strictly from h_v(t-). Target attributes are never passed into or concatenated with the reconstruction head input."
+    }
+  },
+  "checkpoint_state_contract": {
+    "checkpoint_boundary_policy": "CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY",
+    "gradient_accumulation_position": 0,
+    "pending_gradients": "NONE",
+    "mandatory_mutable_state": [
+      "model_state_dict",
+      "optimizer_state_dict",
+      "scheduler_state_dict",
+      "node_memory_states",
+      "node_last_interaction_timestamps",
+      "node_causal_in_degrees",
+      "node_causal_out_degrees",
+      "node_temporal_history_buffers",
+      "rng_states_4tuple",
+      "stream_iterator_state",
+      "masking_rng_state",
+      "early_stopping_state",
+      "global_step",
+      "current_epoch"
+    ]
+  },
   "graph_schema": {
     "node_types": [
       {"type_id": 0, "type_name": "DATA_BLOCK", "description": "HDFS Block ID (e.g. blk_-12345)"},
@@ -61,32 +111,18 @@
       {"relation_id": 6, "relation_name": "UPDATES_BLOCK_MAP", "source_type": "STORAGE_NODE", "dest_type": "DATA_BLOCK", "component": "dfs.FSNamesystem"},
       {"relation_id": 7, "relation_name": "COMMANDS_REPLICATION", "source_type": "MANAGEMENT_SYSTEM", "dest_type": "DATA_BLOCK", "component": "dfs.FSNamesystem"},
       {"relation_id": 8, "relation_name": "DELETES_BLOCK", "source_type": "MANAGEMENT_SYSTEM", "dest_type": "DATA_BLOCK", "component": "dfs.FSNamesystem"}
-    ],
-    "multi_edge_policy": {
-      "policy_name": "PRESERVE_ALL_TEMPORAL_EVENTS_FIFO_CAUSAL",
-      "max_node_history": 64,
-      "eviction": "FIFO_CAUSAL_OLDEST_FIRST"
-    },
-    "self_loop_policy": {
-      "policy_name": "STRICT_SEPARATION_ZERO_SYNTHETIC_OBSERVED_SELF_LOOPS",
-      "observed_graph_synthetic_self_loops": 0,
-      "model_residual_connection": true
-    },
-    "dynamic_attributes": {
-      "edge_features": ["event_type_id", "normalized_block_size_log1p"],
-      "node_features": ["one_hot_node_type_4d", "causal_in_degree_log1p", "causal_out_degree_log1p"]
-    }
+    ]
   },
-  "temporal_gap_specification": {
+  "temporal_gap_target": {
     "target_name": "delta_t_log1p",
     "unit": "SECONDS_CONTINUOUS",
     "precision": "MILLISECONDS",
-    "reference_state": "MAX_TIMESTAMP_OF_LAST_INTERACTION_INVOLVING_V_OR_U",
-    "first_observation_value": 0.0,
-    "same_timestamp_value": 0.0,
-    "transformation": "log1p(max(0.0, t_curr - t_last))"
+    "definition": "t_curr - max_interaction_time(v, u)",
+    "transformation": "log1p(max(0.0, delta_t))",
+    "unseen_pair_value": 0.0,
+    "split_boundary_reset": true
   },
-  "node_target_specification": {
+  "node_reconstruction_target": {
     "target_name": "x_v_fixed_priv",
     "dimension": 6,
     "components": [
@@ -97,15 +133,13 @@
     "is_learnable": false,
     "contains_labels": false
   },
-  "privacy_and_firewall": {
-    "raw_identifiers_in_targets": "STRICTLY_PROHIBITED",
-    "downstream_labels_in_ssl": "STRICTLY_PROHIBITED",
-    "test_split_access": "STRICTLY_PROHIBITED",
-    "test_opened_invariant": false,
-    "test_feature_read_count_invariant": 0,
-    "test_label_read_count_invariant": 0,
-    "test_metric_count_invariant": 0,
-    "test_graph_events_materialized_invariant": 0,
-    "test_relation_parse_count_invariant": 0
+  "multi_edge_policy": {
+    "policy": "PRESERVE_ALL_TEMPORAL_EVENTS_FIFO_CAUSAL",
+    "max_node_history": 64,
+    "rule": "Every timestamped interaction event between node pairs is preserved in chronological order. Node historical edge buffers maintain at most 64 most recent interaction tuples (v, r, t, e_feat) in strictly causal FIFO order."
+  },
+  "conservation_laws": {
+    "exact_accounting_equation": "raw_records_scanned = materialized_graph_events + explicitly_rejected_events",
+    "silent_drop_prohibition": "STRICTLY_PROHIBITED"
   }
 }

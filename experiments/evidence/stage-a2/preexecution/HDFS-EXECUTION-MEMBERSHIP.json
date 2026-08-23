@@ -1,0 +1,20 @@
+{
+  "manifest_version": "1.3.0",
+  "split_id": "SPL-HDFS-001",
+  "population_train_session_count": 357133,
+  "population_val_session_count": 50204,
+  "authorized_train_session_count": 35000,
+  "authorized_val_session_count": 7500,
+  "selection_algorithm": "EARLIEST_CAUSAL_SESSION_BUDGET_CAP",
+  "selection_seed_if_any": null,
+  "ordering_key": "(session_start_time, block_id)",
+  "selected_train_block_ids_sha256": "65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc",
+  "selected_val_block_ids_sha256": "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407b0609a",
+  "selected_train_event_count": 586577,
+  "selected_val_event_count": 119531,
+  "population_train_block_ids_sha256": "432dab4dadcdb56d528de7b0e5a262aa4d678be8206e2263aca7366e93fc9b40",
+  "population_val_block_ids_sha256": "b611cc73f15d37acaf02869b37e195d2ca9809a85a630ad22d329fbf8069cefb",
+  "canonical_train_artifact_sha256": "0422677f5357494fbc587cac4b6de2004781e71d9b8087b4c8f9f0cd160f3363",
+  "canonical_val_artifact_sha256": "96bdab531c3545f4a0f0ed7f87e47cba985c2bc4cac7a3e6c04245b5c712fbe9",
+  "test_membership_materialized": false
+}

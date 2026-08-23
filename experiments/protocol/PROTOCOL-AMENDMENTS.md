@@ -88,4 +88,18 @@
   3. **Full Train/Val Conservation Manifests:** Materialized full empirical streaming audit manifests (`HDFS-GRAPH-MATERIALIZATION-AUDIT.json` with 5,998,764 Train events and 735,091 Val events with 100% conservation; `RELATION-GROUNDING-AUDIT.json` confirming non-zero Train matches for all 8 relations).
   4. **Strict Causal Node Target & Temporal Gap:** Locked $x_v^{\text{fixed\_priv}} \in \mathbb{R}^6$ (4-dim one-hot type + $\log(1 + d_{\text{in}}(v, t-))$ + $\log(1 + d_{\text{out}}(v, t-))$) and $\Delta t_{uv} = t_{\text{curr}} - t_{\text{last\_interaction}}(v, u)$ with boundary reset on Validation transition.
 
+---
+
+### Amendment 9: Stage A2 Execution Scope Disambiguation & Experimental Source Contract (V1.3)
+- **Timestamp:** 2026-08-23T21:38:00+07:00
+- **Execution State:** `TEST_OPENED = NO`, `RESULTS_SEEN = NO`, `OPTIMIZER_STEPS_BEFORE_AMENDMENT = 0`, `MODELS_TRAINED_BEFORE_AMENDMENT = 0`
+- **Amends Commit:** `82d6f7ed37a94efbee80352a907ee38acbe3390a`
+- **Reason:** Disambiguates eligible population (357,133 Train / 50,204 Val) from the authorized execution budget (35,000 Train / 7,500 Val), formalizes exact target-leakage masking semantics for $L_{\text{rel}}$ and $L_{\text{node}}$, locks full mutable checkpoint state contracts at optimizer-step boundaries, and establishes the mandatory Chapter 3 Experimental Source Contract.
+- **Amended Specifications:**
+  1. **Execution Scope Disambiguation:** Formalized separate audits for Full Eligible Population (`HDFS-GRAPH-MATERIALIZATION-AUDIT.json`) and Authorized Execution Budget Subset (`HDFS-EXECUTION-SUBSET-AUDIT.json` with 586,577 Train graph events across 35,000 sessions and 119,531 Val graph events across 7,500 sessions). Materialized deterministic session membership in `HDFS-EXECUTION-MEMBERSHIP.json`.
+  2. **Target-Leakage Masking Formalism:** Formalized that when edge relation $r$ is masked for $L_{\text{rel}}$, the prediction input is strictly $[h_v(t-) \parallel h_u(t-) \parallel \phi(\Delta t_{uv})]$ with ground-truth relation embedding withheld until memory update. For $L_{\text{node}}$, reconstruction predicts $x_v^{\text{fixed\_priv}}$ strictly from $h_v(t-)$ without direct target pass-through.
+  3. **Complete Mutable Checkpoint State:** Enforced that checkpoints occur strictly at optimizer boundaries (`CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY = true`) and atomically serialize all 14 execution state elements including causal in/out degrees, last interaction timestamps, and temporal history buffers.
+  4. **Experimental Source Contract:** Established mandatory provenance standard (`EXPERIMENTAL-SOURCE-CONTRACT.md` and `EXPERIMENTAL-SOURCE-SCHEMA.json`) requiring machine-readable source manifests for every empirical claim.
+
+
 

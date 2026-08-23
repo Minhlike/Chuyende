@@ -118,6 +118,7 @@ class HDFSGraphBuilder:
         self.base_dir = base_dir
         self.raw_tar_path = self.base_dir / "datasets" / "raw" / "hdfs" / "HDFS_1.tar.gz"
         self.split_authority = split_authority or HDFSSplitAuthority(base_dir=self.base_dir)
+        self.split_id = "SPL-HDFS-001"
         self.max_audit_events = max_audit_events
 
         self.node_to_id: Dict[str, int] = {"<UNK_NODE>": 0}

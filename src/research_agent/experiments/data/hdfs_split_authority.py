@@ -182,6 +182,22 @@ class HDFSSplitAuthority:
         assert purged_train_val_ids.isdisjoint(train_block_ids), "Purged sessions leaked into Train!"
         assert purged_val_test_ids.isdisjoint(val_block_ids), "Purged sessions leaked into Val!"
 
+        # Causal budget selection (Earliest 35,000 Train sessions, Earliest 7,500 Val sessions)
+        selected_train_block_ids = sorted(
+            train_block_ids,
+            key=lambda b: (session_intervals[b][0], b)
+        )[:self.max_train_sessions]
+
+        selected_val_block_ids = sorted(
+            val_block_ids,
+            key=lambda b: (session_intervals[b][0], b)
+        )[:self.max_val_sessions]
+
+        selected_train_sha256 = hashlib.sha256("\n".join(selected_train_block_ids).encode()).hexdigest()
+        selected_val_sha256 = hashlib.sha256("\n".join(selected_val_block_ids).encode()).hexdigest()
+        population_train_sha256 = hashlib.sha256("\n".join(sorted(list(train_block_ids))).encode()).hexdigest()
+        population_val_sha256 = hashlib.sha256("\n".join(sorted(list(val_block_ids))).encode()).hexdigest()
+
         split_dict = {
             "split_id": "SPL-HDFS-001",
             "raw_total_lines": raw_total_lines,
@@ -193,17 +209,25 @@ class HDFSSplitAuthority:
             "test_session_count": len(test_block_ids),
             "purged_train_val_count": len(purged_train_val_ids),
             "purged_val_test_count": len(purged_val_test_ids),
+            "authorized_train_session_count": len(selected_train_block_ids),
+            "authorized_val_session_count": len(selected_val_block_ids),
             "train_min_start": train_min_start,
             "train_max_end": train_max_end,
             "val_min_start": val_min_start,
             "val_max_end": val_max_end,
             "test_min_start": test_min_start,
             "test_max_end": test_max_end,
+            "selected_train_block_ids_sha256": selected_train_sha256,
+            "selected_val_block_ids_sha256": selected_val_sha256,
+            "population_train_block_ids_sha256": population_train_sha256,
+            "population_val_block_ids_sha256": population_val_sha256,
             "train_block_ids": train_block_ids,
             "val_block_ids": val_block_ids,
             "test_block_ids": test_block_ids,
             "purged_train_val_ids": purged_train_val_ids,
-            "purged_val_test_ids": purged_val_test_ids
+            "purged_val_test_ids": purged_val_test_ids,
+            "selected_train_block_ids": selected_train_block_ids,
+            "selected_val_block_ids": selected_val_block_ids
         }
 
         # Cache serializable JSON
