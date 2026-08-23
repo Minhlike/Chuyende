@@ -1,0 +1,37 @@
+=================================================================
+   STAGE A2 DETERMINISTIC TRAJECTORY QUALIFICATION RUNNER (V1.4) 
+=================================================================
+Execution Code Commit: 8def7c76781b8a3ddb25d4ff7596dbd1d9185564 (train/ch3-stage-a2-implementation, dirty=False)
+Fixture Mode: NON_EMPIRICAL_TEST_FIXTURE = True
+Target Execution Device: cuda
+CUDA Device Name: NVIDIA GeForce RTX 3050 Ti Laptop GPU
+CUDA Runtime: 12.4
+CUDA Total Memory: 4.00 GB
+
+--- [RUN A] Starting Continuous Baseline Trajectory ---
+Model Parameter Count: 304111
+  [Run A] Group 1/4 (Cursor=2): Loss=2.978792, Step=1, AccumPos=0
+  [Run A] Group 2/4 (Cursor=4): Loss=3.926661, Step=2, AccumPos=0
+  [Run A] Saving Checkpoint at Optimizer Step 2 (Cursor = 4, Accum Pos = 0)...
+  [Run A] Group 3/4 (Cursor=6): Loss=4.114013, Step=3, AccumPos=0
+  [Run A] Group 4/4 (Cursor=8): Loss=4.130775, Step=4, AccumPos=0
+
+--- [RUN B] Destroying Run A Trainer & Starting Fresh Resumed Trainer ---
+  [Run B] Loading Checkpoint from D:\Research\experiments\evidence\stage-a2\implementation\qualification_checkpoint.pt...
+  [Run B] Checkpoint Loaded! Resumed Global Step = 2, Cursor = 4, Accum Pos = 0
+  [Run B] Stream continuation: processing 2 remaining groups from cursor=4...
+  [Run B] Group (Cursor=6): Loss=4.114013, Step=3, AccumPos=0
+  [Run B] Group (Cursor=8): Loss=4.130775, Step=4, AccumPos=0
+
+=== COMPARING TRAJECTORIES (RUN A vs RUN B) ===
+1. Max Model Parameter Divergence: 0.0000000000e+00
+2. Max Loss Delta:                0.0000000000e+00
+3. Max Node Memory State Diff:     0.0000000000e+00
+4. Causal In-Degree Exact Match:   True
+   Causal Out-Degree Exact Match:  True
+   Last Interaction TS Match:      True
+5. Temporal History Exact Match:   True
+6. Final Optimizer Step (4):       True
+   Final Stream Cursor (8):        True
+
+DETERMINISTIC QUALIFICATION OVERALL STATUS: PASS
