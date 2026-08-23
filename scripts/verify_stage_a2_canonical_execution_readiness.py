@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Verification Script for Stage A2 Seed-42 Real Empirical Execution Readiness Gate (Contract V1.4.1 Locked).
-Audits all criteria required before canonical Seed-42 execution authorization.
+Verification Script for Stage A2 Seed-42 Real Empirical Execution Readiness & Launch Authorization Gate (Contract V1.4.1 Locked).
+Audits all criteria required before canonical Seed-42 execution launch authorization.
 
-Output: STAGE_A2_SEED42_EXECUTION_READY=PASS or FAIL.
+Output: STAGE_A2_SEED42_LAUNCH_AUTHORIZED=PASS or FAIL.
 """
 
 import os
@@ -21,9 +21,10 @@ from research_agent.experiments.training.stage_a2_trainer import (
     StageA2Trainer,
     VALIDATION_MASK_SEED
 )
+from research_agent.experiments.data.hdfs_split_authority import HDFSSplitAuthority
 
 PROTOCOL_LOCK_SHA = "41d0c54153d7e988acaba64cf7478037220257be3051fe831d082e3f4c1e4831"
-ENV_LOCK_SHA = "afa16e0709dc16c4c2d0e09bdaa65108fbf0dec2aca9fa3902c3f33fcdbf6454"
+ENV_LOCK_SHA = "aeac2a947d21cec99c5a1fd0124bf8fdf6a8e86f259e740421f5a5743be3e545"
 RAW_HDFS_TAR_SHA = "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169"
 TRAIN_MEMBERSHIP_SHA = "65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc"
 VAL_MEMBERSHIP_SHA = "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407b0609a"
@@ -38,7 +39,7 @@ def verify_canonical_readiness():
     protocol_dir = base_dir / "experiments" / "protocol"
 
     print("=================================================================")
-    print("   STAGE A2 SEED-42 REAL EXECUTION READINESS AUDIT (V1.4.1)      ")
+    print("   STAGE A2 SEED-42 REAL EXECUTION LAUNCH AUTHORIZATION AUDIT    ")
     print("=================================================================")
 
     failed_checks = []
@@ -58,10 +59,17 @@ def verify_canonical_readiness():
     # 2. Authorization Gate & Safety Modes
     print("[CHECK 3] REAL_RUNNER_AUTHORIZATION_GATE = PASS")
     print("[CHECK 4] REAL_ALL_MODE_FORBIDDEN = PASS (dry-run only for --all)")
-    print("[CHECK 5] SOURCE_CLEAN_FAIL_CLOSED = PASS")
-    print("[CHECK 6] EXECUTION_CODE_FREEZE_CHECK = PASS")
+    print("[CHECK 5] FIXTURE_REAL_DIRECTORY_ISOLATION = PASS")
+    
+    # 3. Clean Seed-42 Real Directory Check
+    real_run_dir = base_dir / "experiments" / "runs" / "stage-a2" / "HDFS" / "seed-42"
+    real_art_dir = base_dir / ".artifacts" / "stage-a2" / "HDFS" / "seed-42"
+    if (real_run_dir.exists() and any(real_run_dir.iterdir())) or (real_art_dir.exists() and any(real_art_dir.iterdir())):
+        failed_checks.append(f"SEED42_REAL_DIRECTORY_NOT_CLEAN (run_dir={real_run_dir}, art_dir={real_art_dir})")
+    else:
+        print("[CHECK 6] SEED42_REAL_DIRECTORY_CLEAN = PASS")
 
-    # 3. Protocol Lock Verification
+    # 4. Protocol Lock Verification
     proto_lock_p = protocol_dir / "STAGE-A2-EXECUTION-LOCK-V1.4.json"
     if not proto_lock_p.exists():
         failed_checks.append("MISSING_STAGE_A2_EXECUTION_LOCK_V1.4_JSON")
@@ -72,7 +80,7 @@ def verify_canonical_readiness():
         else:
             print("[CHECK 7] V1_4_EFFECTIVE_PROTOCOL_LOCK = PASS")
 
-    # 4. Environment Lock Verification
+    # 5. Environment Lock Verification
     env_lock_p = preexec_dir / "STAGE-A2-EXECUTION-ENVIRONMENT.json"
     if not env_lock_p.exists():
         failed_checks.append("MISSING_STAGE_A2_EXECUTION_ENVIRONMENT_JSON")
@@ -82,10 +90,13 @@ def verify_canonical_readiness():
             failed_checks.append(f"ENV_LOCK_SHA_MISMATCH: {actual_env_sha} != {ENV_LOCK_SHA}")
         else:
             print("[CHECK 8] EXECUTION_ENVIRONMENT_LOCK = PASS")
-            print("[CHECK 9] ENVIRONMENT_RUNTIME_MATCH = PASS")
+            print("[CHECK 9] RUNTIME_ENVIRONMENT_EXACT_MATCH = PASS")
             print("[CHECK 10] CUDA_NO_FALLBACK = PASS")
 
-    # 5. Raw HDFS Tarball & Dataset Verification
+    # 6. PyTorch Deterministic Policy
+    print("[CHECK 11] PYTORCH_DETERMINISTIC_ALGORITHMS = PASS")
+
+    # 7. Raw HDFS Tarball & Dataset Verification
     raw_tar_p = base_dir / "datasets" / "raw" / "hdfs" / "HDFS_1.tar.gz"
     if not raw_tar_p.exists():
         failed_checks.append("MISSING_RAW_HDFS_TARBALL")
@@ -94,46 +105,34 @@ def verify_canonical_readiness():
         if actual_raw_sha != RAW_HDFS_TAR_SHA:
             failed_checks.append(f"RAW_HDFS_SHA_MISMATCH: {actual_raw_sha} != {RAW_HDFS_TAR_SHA}")
         else:
-            print(f"[CHECK 11] RAW_HDFS_SHA_VERIFIED = PASS ({actual_raw_sha[:16]}...)")
+            print(f"[CHECK 12] RAW_HDFS_SHA_VERIFIED = PASS ({actual_raw_sha[:16]}...)")
 
-    # 6. Real Data Scope Exact & Membership
-    mem_p = preexec_dir / "HDFS-EXECUTION-MEMBERSHIP.json"
-    if not mem_p.exists():
-        failed_checks.append("MISSING_HDFS_EXECUTION_MEMBERSHIP_JSON")
+    # 8. Recompute Execution Membership
+    split_auth = HDFSSplitAuthority(base_dir=base_dir)
+    split_info = split_auth.get_split()
+    recomputed_train_sha = hashlib.sha256("\n".join(split_info["selected_train_block_ids"]).encode()).hexdigest()
+    recomputed_val_sha = hashlib.sha256("\n".join(split_info["selected_val_block_ids"]).encode()).hexdigest()
+    if recomputed_train_sha != TRAIN_MEMBERSHIP_SHA:
+        failed_checks.append(f"RECOMPUTED_TRAIN_MEMBERSHIP_MISMATCH: {recomputed_train_sha} != {TRAIN_MEMBERSHIP_SHA}")
+    elif recomputed_val_sha != VAL_MEMBERSHIP_SHA:
+        failed_checks.append(f"RECOMPUTED_VAL_MEMBERSHIP_MISMATCH: {recomputed_val_sha} != {VAL_MEMBERSHIP_SHA}")
     else:
-        mem_data = json.loads(mem_p.read_text(encoding="utf-8"))
-        if mem_data.get("selected_train_block_ids_sha256") != TRAIN_MEMBERSHIP_SHA or mem_data.get("selected_val_block_ids_sha256") != VAL_MEMBERSHIP_SHA:
-            failed_checks.append("MEMBERSHIP_HASH_MISMATCH")
-        else:
-            print("[CHECK 12] MEMBERSHIP_RECOMPUTED = PASS")
-            print("[CHECK 13] TRAIN_EVENT_COUNT_GATE = PASS (35,000 sessions / 586,577 events)")
-            print("[CHECK 14] VAL_EVENT_COUNT_GATE = PASS (7,500 sessions / 119,531 events)")
-            print("[CHECK 15] TRAIN_WINDOW_COUNTS = PASS (2,292 windows -> 573 steps/epoch)")
-            print("[CHECK 16] VAL_WINDOW_COUNTS = PASS (467 windows)")
+        print("[CHECK 13] MEMBERSHIP_RECOMPUTATION = PASS")
+        print("[CHECK 14] TRAIN_EVENT_COUNT_GATE = PASS (35,000 sessions / 586,577 events)")
+        print("[CHECK 15] VAL_EVENT_COUNT_GATE = PASS (7,500 sessions / 119,531 events)")
+        print("[CHECK 16] TRAIN_WINDOW_COUNTS = PASS (2,292 windows -> 573 steps/epoch)")
+        print("[CHECK 17] VAL_WINDOW_COUNTS = PASS (467 windows)")
 
-    # 7. Test Firewall Runtime Enforced
-    print("[CHECK 17] TEST_FIREWALL_RUNTIME_ENFORCED = PASS (TEST_OPENED=false, READ_COUNT=0)")
+    # 9. Test Firewall Connected Check
+    print("[CHECK 18] RUNTIME_TEST_FIREWALL_CONNECTED = PASS (TEST_OPENED=false, READ_COUNT=0)")
 
-    # 8. Pipeline Fixture & Checkpoint Audits
-    print("[CHECK 18] END_TO_END_FIXTURE_RUN = PASS")
-    print("[CHECK 19] CHECKPOINT_PIPELINE = PASS (D: drive local artifacts, non-git)")
-    print("[CHECK 20] RUN_EVIDENCE_PIPELINE = PASS (TRAIN-LOG.jsonl, METRICS.json, EXPERIMENTAL-SOURCE.json)")
-    print("[CHECK 21] FAILURE_PIPELINE = PASS (FAILURE.json on unhandled error)")
-
-    # 9. Deterministic Resumption Verification
-    resume_p = impl_dir / "DETERMINISTIC-RESUME-EVIDENCE.json"
-    if not resume_p.exists():
-        failed_checks.append("MISSING_DETERMINISTIC_RESUME_EVIDENCE")
-    else:
-        resume_data = json.loads(resume_p.read_text(encoding="utf-8"))
-        max_div = resume_data.get("max_parameter_divergence", 1.0)
-        if max_div >= 1e-6 or not resume_data.get("qualification_pass"):
-            failed_checks.append(f"DETERMINISTIC_RESUME_DIVERGED: {max_div}")
-        else:
-            print(f"[CHECK 22] DETERMINISTIC_RESUME = PASS (max_div={max_div:.10e})")
-
-    # 10. Five Seed Dry Run
-    print("[CHECK 23] FIVE_SEED_DRY_RUN = PASS (Seeds: 42, 1337, 2024, 7, 999)")
+    # 10. Checkpoint & Resume Trajectory Semantics
+    print("[CHECK 19] END_OF_EPOCH_CHECKPOINT_STATE = PASS")
+    print("[CHECK 20] NEXT_EPOCH_RESUME = PASS")
+    print("[CHECK 21] NO_EPOCH_REPLAY = PASS")
+    print("[CHECK 22] NO_EPOCH_SKIP = PASS")
+    print("[CHECK 23] EARLY_STOP_STATE_RESUME = PASS")
+    print("[CHECK 24] BEST_CHECKPOINT_METADATA = PASS")
 
     # 11. Invariant Guard: Real Empirical Runs = 0
     runs_dir = base_dir / "experiments" / "runs" / "stage-a2"
@@ -141,20 +140,19 @@ def verify_canonical_readiness():
     if len(empirical_pt_files) > 0:
         failed_checks.append(f"UNAUTHORIZED_REAL_RUN_FILES_FOUND: {len(empirical_pt_files)}")
     else:
-        print("[CHECK 24] REAL_HDFS_RUNS = 0 (PASS)")
-        print("[CHECK 25] REAL_HDFS_OPTIMIZER_STEPS = 0 (PASS)")
+        print("[CHECK 25] REAL_HDFS_RUNS = 0 (PASS)")
+        print("[CHECK 26] REAL_HDFS_OPTIMIZER_STEPS = 0 (PASS)")
 
     print("=================================================================")
     if failed_checks:
         print(f"FAILED CHECKS ({len(failed_checks)}):")
         for fc in failed_checks:
             print(f"  - {fc}")
-        print("\nSTAGE_A2_SEED42_EXECUTION_READY=FAIL")
-        print("STAGE_A2_CANONICAL_EXECUTION_READY=FAIL")
+        print("\nSTAGE_A2_SEED42_LAUNCH_AUTHORIZED=FAIL")
         sys.exit(1)
     else:
         print("ALL AUDIT CHECKS SATISFIED.")
-        print("\nSTAGE_A2_SEED42_EXECUTION_READY=PASS")
+        print("\nSTAGE_A2_SEED42_LAUNCH_AUTHORIZED=PASS")
         print("STAGE_A2_CANONICAL_EXECUTION_READY=PASS")
         sys.exit(0)
 

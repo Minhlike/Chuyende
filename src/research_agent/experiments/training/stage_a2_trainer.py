@@ -164,6 +164,8 @@ class StageA2Trainer:
 
         # Mutable Trajectory State
         self.current_epoch = 0
+        self.completed_epoch = 0
+        self.next_epoch_to_run = 0
         self.global_step = 0
         self.grad_accum_position = 0 # 0..gradient_accumulation_steps-1
         self.stream_cursor = 0        # Operational cursor indexing next window to process
@@ -172,6 +174,8 @@ class StageA2Trainer:
         # Early Stopping State
         self.best_val_loss = float("inf")
         self.patience_counter = 0
+        self.best_epoch = 0
+        self.best_checkpoint_global_step = 0
         self.best_checkpoint_path: Optional[str] = None
 
         # Guard
@@ -501,6 +505,8 @@ class StageA2Trainer:
             "stream_iterator_state": {
                 "current_split": self.current_split,
                 "current_epoch": self.current_epoch,
+                "completed_epoch": self.completed_epoch,
+                "next_epoch_to_run": self.next_epoch_to_run,
                 "stream_cursor": self.stream_cursor, # Points to exact NEXT window to process
                 "grad_accum_position": self.grad_accum_position
             },
@@ -508,8 +514,12 @@ class StageA2Trainer:
             "early_stopping_state": {
                 "best_val_loss": self.best_val_loss,
                 "patience_counter": self.patience_counter,
+                "best_epoch": self.best_epoch,
+                "best_checkpoint_global_step": self.best_checkpoint_global_step,
                 "best_checkpoint_path": self.best_checkpoint_path
             },
+            "completed_epoch": self.completed_epoch,
+            "next_epoch_to_run": self.next_epoch_to_run,
             "global_step": self.global_step,
             "current_epoch": self.current_epoch,
             "checkpoint_boundary_policy": "CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY"
@@ -560,6 +570,8 @@ class StageA2Trainer:
         stream_st = checkpoint["stream_iterator_state"]
         self.current_split = stream_st["current_split"]
         self.current_epoch = stream_st["current_epoch"]
+        self.completed_epoch = checkpoint.get("completed_epoch", stream_st.get("completed_epoch", self.current_epoch))
+        self.next_epoch_to_run = checkpoint.get("next_epoch_to_run", stream_st.get("next_epoch_to_run", self.completed_epoch))
         self.stream_cursor = stream_st["stream_cursor"]
         self.grad_accum_position = stream_st["grad_accum_position"]
         self.global_step = checkpoint["global_step"]
@@ -568,4 +580,6 @@ class StageA2Trainer:
         es_st = checkpoint["early_stopping_state"]
         self.best_val_loss = es_st["best_val_loss"]
         self.patience_counter = es_st["patience_counter"]
-        self.best_checkpoint_path = es_st["best_checkpoint_path"]
+        self.best_epoch = es_st.get("best_epoch", 0)
+        self.best_checkpoint_global_step = es_st.get("best_checkpoint_global_step", 0)
+        self.best_checkpoint_path = es_st.get("best_checkpoint_path")

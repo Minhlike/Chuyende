@@ -419,12 +419,12 @@ def test_real_runner_requires_authorization(tmp_path):
             base_dir=Path("D:/Research"),
             is_dry_run=False,
             empirical_authorized=False,
-            fixture_mode=True
+            fixture_mode=True,
+            fixture_output_root=tmp_path
         )
 
 def test_real_runner_rejects_all_mode_for_real_execution():
     from scripts.run_stage_a2_five_seed_empirical import main
-    # Simulating --all and --authorize-real-empirical-execution without --dry-run
     import sys
     test_args = ["run_stage_a2_five_seed_empirical.py", "--all", "--authorize-real-empirical-execution"]
     orig_argv = sys.argv
@@ -461,7 +461,7 @@ def test_membership_hash_mismatch_fails_preflight(monkeypatch):
     monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.TRAIN_MEMBERSHIP_SHA", "0000000000000000000000000000000000000000000000000000000000000000")
     with pytest.raises(ValueError) as exc:
         verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
-    assert "TRAIN_MEMBERSHIP_SHA mismatch" in str(exc.value)
+    assert "Train Membership SHA mismatch" in str(exc.value)
 
 def test_environment_version_mismatch_fails_preflight(monkeypatch):
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight
@@ -470,19 +470,50 @@ def test_environment_version_mismatch_fails_preflight(monkeypatch):
         verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
     assert "ENV_LOCK_SHA mismatch" in str(exc.value)
 
-def test_gpu_name_mismatch_fails_preflight(monkeypatch):
+def test_wrong_torch_version_fails_preflight(monkeypatch):
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    monkeypatch.setattr(torch, "__version__", "1.13.0+cu117")
+    with pytest.raises(ExecutionDeviceMismatchError) as exc:
+        verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
+    assert "PyTorch version mismatch" in str(exc.value)
+
+def test_wrong_cuda_runtime_fails_preflight(monkeypatch):
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    monkeypatch.setattr(torch.version, "cuda", "11.8")
+    with pytest.raises(ExecutionDeviceMismatchError) as exc:
+        verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
+    assert "CUDA runtime mismatch" in str(exc.value)
+
+def test_wrong_gpu_name_fails_preflight(monkeypatch):
     if not torch.cuda.is_available():
         pytest.skip("CUDA not available")
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight
-    monkeypatch.setattr("torch.cuda.get_device_name", lambda idx: "Incompatible Ancient GPU")
+    monkeypatch.setattr(torch.cuda, "get_device_name", lambda idx: "Incompatible Ancient GPU")
     with pytest.raises(ExecutionDeviceMismatchError) as exc:
         verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
-    assert "Incompatible GPU device" in str(exc.value)
+    assert "GPU device name mismatch" in str(exc.value)
+
+def test_wrong_python_executable_fails_preflight(monkeypatch):
+    import sys
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    monkeypatch.setattr(sys, "executable", "C:\\Python39\\python.exe")
+    with pytest.raises(ExecutionDeviceMismatchError) as exc:
+        verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
+    assert "Python executable mismatch" in str(exc.value)
 
 def test_test_partition_request_raises_TestSetSealedError():
     builder = HDFSGraphBuilder(base_dir=Path("D:/Research"))
     with pytest.raises(TestSetSealedError):
         builder.materialize_split("TEST")
+
+def test_test_materialization_attempt_hits_runtime_firewall():
+    from scripts.run_stage_a2_five_seed_empirical import RuntimeTestFirewallGuard
+    guard = RuntimeTestFirewallGuard(base_dir=Path("D:/Research"))
+    with pytest.raises(TestSetSealedError):
+        guard.materialize_split("TEST")
+    assert guard.test_opened is True
+    assert guard.test_feature_reads == 1
+    assert guard.to_dict()["firewall_status"] == "BREACHED"
 
 def test_train_stream_exact_count_gate():
     mem_p = Path("D:/Research/experiments/evidence/stage-a2/preexecution/HDFS-EXECUTION-MEMBERSHIP.json")
@@ -512,18 +543,19 @@ def test_val_window_counts():
 
 def test_exact_573_steps_per_full_epoch_fixture_equivalent():
     from scripts.run_stage_a2_five_seed_empirical import chunk_into_windows
-    # 2292 windows accumulated in groups of 4 gives exactly 573 optimizer steps
     windows = [[] for _ in range(2292)]
     accum_groups = len(windows) // 4
     assert accum_groups == 573
 
-def test_mock_fixture_end_to_end_runner_pipeline(tmp_path):
-    """Executes the complete runner pipeline end-to-end using synthetic fixture events on CUDA."""
+def test_fixture_mode_cannot_write_real_seed_directory(tmp_path):
+    """Proves namespace isolation: fixture runs cannot write into experiments/runs/stage-a2/HDFS/seed-42."""
     if not torch.cuda.is_available():
         pytest.skip("CUDA not available")
     from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
     
-    # 8 train windows (2048 events) and 2 val windows (512 events)
+    real_run_dir = Path("D:/Research/experiments/runs/stage-a2/HDFS/seed-42")
+    real_art_dir = Path("D:/Research/.artifacts/stage-a2/HDFS/seed-42")
+    
     fix_train = [create_synthetic_event(f"A_{i}", f"B_{i}", 1, 0, 1, 100.0 + i) for i in range(2048)]
     fix_val = [create_synthetic_event(f"C_{i}", f"D_{i}", 2, 3, 2, 200.0 + i) for i in range(512)]
     
@@ -533,13 +565,39 @@ def test_mock_fixture_end_to_end_runner_pipeline(tmp_path):
         is_dry_run=False,
         empirical_authorized=True,
         fixture_mode=True,
+        fixture_output_root=tmp_path,
+        fixture_train_events=fix_train,
+        fixture_val_events=fix_val
+    )
+    assert res["status"] == "COMPLETED"
+    
+    # Real directories must remain absent or clean
+    assert not real_run_dir.exists() or not any(real_run_dir.iterdir()), "Real run directory was contaminated by fixture run!"
+    assert not real_art_dir.exists() or not any(real_art_dir.iterdir()), "Real artifact directory was contaminated by fixture run!"
+
+def test_mock_fixture_end_to_end_runner_pipeline(tmp_path):
+    """Executes the complete runner pipeline end-to-end using synthetic fixture events on CUDA."""
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA not available")
+    from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
+    
+    fix_train = [create_synthetic_event(f"A_{i}", f"B_{i}", 1, 0, 1, 100.0 + i) for i in range(2048)]
+    fix_val = [create_synthetic_event(f"C_{i}", f"D_{i}", 2, 3, 2, 200.0 + i) for i in range(512)]
+    
+    res = run_single_seed_pipeline(
+        seed=42,
+        base_dir=Path("D:/Research"),
+        is_dry_run=False,
+        empirical_authorized=True,
+        fixture_mode=True,
+        fixture_output_root=tmp_path,
         fixture_train_events=fix_train,
         fixture_val_events=fix_val
     )
     assert res["status"] == "COMPLETED"
     assert res["optimizer_steps"] > 0
 
-    run_dir = Path("D:/Research/experiments/runs/stage-a2/HDFS/seed-42")
+    run_dir = tmp_path / "evidence"
     assert (run_dir / "TRAIN-LOG.jsonl").exists()
     assert (run_dir / "METRICS.json").exists()
     assert (run_dir / "EXPERIMENTAL-SOURCE.json").exists()
@@ -550,7 +608,6 @@ def test_failure_manifest_written(tmp_path):
     """Verifies that an unhandled anomaly in the pipeline causes FAILURE.json to be written."""
     from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
     
-    # Pass malformed event dictionary to trigger processing KeyError
     with pytest.raises(KeyError):
         run_single_seed_pipeline(
             seed=42,
@@ -558,33 +615,81 @@ def test_failure_manifest_written(tmp_path):
             is_dry_run=False,
             empirical_authorized=True,
             fixture_mode=True,
+            fixture_output_root=tmp_path,
             fixture_train_events=[{"malformed_event_missing_keys": True}],
             fixture_val_events=[]
         )
-    fail_p = Path("D:/Research/experiments/runs/stage-a2/HDFS/seed-42/FAILURE.json")
+    fail_p = tmp_path / "evidence" / "FAILURE.json"
     assert fail_p.exists()
     fail_data = json.loads(fail_p.read_text(encoding="utf-8"))
     assert fail_data["error_type"] == "KeyError"
 
-def test_resume_restores_runner_trajectory(tmp_path):
-    """Verifies that runner correctly resumes from an existing checkpoint."""
+def test_resume_exact_three_epoch_trajectory(tmp_path):
+    """
+    Verifies that a resumed 3-epoch run produces zero parameter divergence,
+    zero step skip/replay, and identical early stopping state compared to a continuous 3-epoch run.
+    """
     if not torch.cuda.is_available():
         pytest.skip("CUDA not available")
-    from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
+    from scripts.run_stage_a2_five_seed_empirical import chunk_into_windows
     
-    fix_train = [create_synthetic_event(f"A_{i}", f"B_{i}", 1, 0, 1, 100.0 + i) for i in range(2048)]
-    fix_val = [create_synthetic_event(f"C_{i}", f"D_{i}", 2, 3, 2, 200.0 + i) for i in range(512)]
+    torch.manual_seed(42)
+    torch.cuda.manual_seed_all(42)
     
-    ckpt_path = Path("D:/Research/.artifacts/stage-a2/HDFS/seed-42/last_checkpoint.pt")
-    if ckpt_path.exists():
-        res = run_single_seed_pipeline(
-            seed=42,
-            base_dir=Path("D:/Research"),
-            is_dry_run=False,
-            empirical_authorized=True,
-            resume_checkpoint=ckpt_path,
-            fixture_mode=True,
-            fixture_train_events=fix_train,
-            fixture_val_events=fix_val
-        )
-        assert res["status"] == "COMPLETED"
+    fix_train = [create_synthetic_event(f"A_{i}", f"B_{i}", 1, 0, 1, 100.0 + i) for i in range(1024)]
+    fix_val = [create_synthetic_event(f"C_{i}", f"D_{i}", 2, 3, 2, 200.0 + i) for i in range(256)]
+    
+    train_windows = chunk_into_windows(fix_train, 256) # 4 windows -> 1 step/epoch
+    val_windows = chunk_into_windows(fix_val, 256)     # 1 window
+    
+    # Run 1: Continuous 3 Epochs
+    model_cont = TemporalGraphViewEncoder()
+    trainer_cont = StageA2Trainer(
+        model=model_cont,
+        gradient_accumulation_steps=4,
+        max_epochs=3,
+        execution_device="cuda",
+        execution_mode="FIXTURE_TEST",
+        total_steps_override=3
+    )
+    
+    ckpt_epoch1 = tmp_path / "ckpt_epoch1.pt"
+    
+    for ep in range(3):
+        trainer_cont.current_epoch = ep
+        trainer_cont.train_one_epoch(train_windows)
+        v_st = trainer_cont.validate_one_epoch(val_windows)
+        trainer_cont.completed_epoch = ep + 1
+        trainer_cont.next_epoch_to_run = ep + 1
+        if ep == 0:
+            trainer_cont.save_checkpoint(ckpt_epoch1)
+            
+    # Run 2: Resumed from Epoch 1 (Runs Epochs 2 and 3)
+    model_res = TemporalGraphViewEncoder()
+    trainer_res = StageA2Trainer(
+        model=model_res,
+        gradient_accumulation_steps=4,
+        max_epochs=3,
+        execution_device="cuda",
+        execution_mode="FIXTURE_TEST",
+        total_steps_override=3
+    )
+    trainer_res.load_checkpoint(ckpt_epoch1)
+    assert trainer_res.next_epoch_to_run == 1
+    
+    for ep in range(trainer_res.next_epoch_to_run, 3):
+        trainer_res.current_epoch = ep
+        trainer_res.train_one_epoch(train_windows)
+        trainer_res.validate_one_epoch(val_windows)
+        trainer_res.completed_epoch = ep + 1
+        trainer_res.next_epoch_to_run = ep + 1
+        
+    # Compare continuous vs resumed parameters
+    max_diff = 0.0
+    for k in model_cont.state_dict():
+        diff = (model_cont.state_dict()[k] - model_res.state_dict()[k]).abs().max().item()
+        if diff > max_diff:
+            max_diff = diff
+            
+    assert max_diff < 1e-6, f"Resume trajectory diverged from continuous run! max_diff={max_diff}"
+    assert trainer_cont.global_step == trainer_res.global_step == 3

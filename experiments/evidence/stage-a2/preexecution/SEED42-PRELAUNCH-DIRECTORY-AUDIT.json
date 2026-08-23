@@ -1,0 +1,77 @@
+{
+  "audit_id": "AUDIT-SEED42-PRELAUNCH-DIRECTORY-CLEANUP",
+  "timestamp_utc": "2026-08-23T19:26:00Z",
+  "real_runs_count": 0,
+  "real_optimizer_steps": 0,
+  "inspection_summary": "Identified 9 residual fixture files in experiments/runs/stage-a2/HDFS/seed-42 and 2 checkpoint files in .artifacts/stage-a2/HDFS/seed-42 produced by test_mock_fixture_end_to_end_runner_pipeline (2,048 synthetic events, 6 optimizer steps). Confirmed 0 real empirical runs.",
+  "files_audited": [
+    {
+      "path": "experiments/runs/stage-a2/HDFS/seed-42/CHECKPOINT-INVENTORY.json",
+      "size_bytes": 770,
+      "sha256": "8d5e84e63a3a0509f03fd82cf08e092092f657a3c725f8038e602229835568bb",
+      "classification": "NON_EMPIRICAL_TEST_FIXTURE_RESIDUAL"
+    },
+    {
+      "path": "experiments/runs/stage-a2/HDFS/seed-42/ENVIRONMENT.json",
+      "size_bytes": 390,
+      "sha256": "a33a501fcfe61ea04e4a871656956d0f997c91b45f218aef1af943303395a5c3",
+      "classification": "NON_EMPIRICAL_TEST_FIXTURE_RESIDUAL"
+    },
+    {
+      "path": "experiments/runs/stage-a2/HDFS/seed-42/EXPERIMENTAL-SOURCE.json",
+      "size_bytes": 2488,
+      "sha256": "1eab745240652f208a31f37bc9521a58179ce28099eeda24b8c12a3e033a2521",
+      "classification": "NON_EMPIRICAL_TEST_FIXTURE_RESIDUAL"
+    },
+    {
+      "path": "experiments/runs/stage-a2/HDFS/seed-42/FAILURE.json",
+      "size_bytes": 756,
+      "sha256": "b9cdf430360de25f271fdb8feace05571813e1b297717a92261ed73b20b36a19",
+      "classification": "NON_EMPIRICAL_TEST_FIXTURE_RESIDUAL"
+    },
+    {
+      "path": "experiments/runs/stage-a2/HDFS/seed-42/METRICS.json",
+      "size_bytes": 891,
+      "sha256": "aeaaf89a52f0fda007767513bdeff8706e3186e7480e621eaa8b0055bec4ebc4",
+      "classification": "NON_EMPIRICAL_TEST_FIXTURE_RESIDUAL"
+    },
+    {
+      "path": "experiments/runs/stage-a2/HDFS/seed-42/RUN-MANIFEST.json",
+      "size_bytes": 1300,
+      "sha256": "e5a036b8dcece0c6f50f2154a106c27010f78f5d6f14aad103266b8597b5a10c",
+      "classification": "NON_EMPIRICAL_TEST_FIXTURE_RESIDUAL"
+    },
+    {
+      "path": "experiments/runs/stage-a2/HDFS/seed-42/RUN-STATE.json",
+      "size_bytes": 409,
+      "sha256": "c6f3ff00c4fb3870cda0405e689103c5e8ebe8a37efee083beb6f9c9f44890db",
+      "classification": "NON_EMPIRICAL_TEST_FIXTURE_RESIDUAL"
+    },
+    {
+      "path": "experiments/runs/stage-a2/HDFS/seed-42/TEST-FIREWALL.json",
+      "size_bytes": 213,
+      "sha256": "e07999decc7164e639a71fbfb3a0b9670273d01fdc8cdb087ebdc50c2c84af78",
+      "classification": "NON_EMPIRICAL_TEST_FIXTURE_RESIDUAL"
+    },
+    {
+      "path": "experiments/runs/stage-a2/HDFS/seed-42/TRAIN-LOG.jsonl",
+      "size_bytes": 11254,
+      "sha256": "836821abdbadd587ea379b4f38e3fb447541f7928e11a83a433d3ba2078dcdd3",
+      "classification": "NON_EMPIRICAL_TEST_FIXTURE_RESIDUAL"
+    },
+    {
+      "path": ".artifacts/stage-a2/HDFS/seed-42/best_val_loss.pt",
+      "size_bytes": 1775700,
+      "sha256": "01599d9815f79e152f301283eab8284634c70ee5ccc377ea83157dbb66a6cf3b",
+      "classification": "NON_EMPIRICAL_TEST_FIXTURE_RESIDUAL"
+    },
+    {
+      "path": ".artifacts/stage-a2/HDFS/seed-42/last_checkpoint.pt",
+      "size_bytes": 1776096,
+      "sha256": "63d3604a17d4d7eb395ca05caf23ed2e96a3c611ad11387278332f59f495cbb0",
+      "classification": "NON_EMPIRICAL_TEST_FIXTURE_RESIDUAL"
+    }
+  ],
+  "action_taken": "PURGED_FIXTURE_CONTAMINATION_RESTORED_PRISTINE_STATE",
+  "cleanliness_status": "PRISTINE_CLEAN"
+}
