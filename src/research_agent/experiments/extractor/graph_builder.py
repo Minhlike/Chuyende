@@ -233,7 +233,7 @@ class HDFSGraphBuilder:
 
         return None, "UNMATCHED_RELATION_TEMPLATE", blk_id
 
-    def materialize_split(self, split_name: str) -> Dict[str, Any]:
+    def materialize_split(self, split_name: str, use_execution_subset: bool = True) -> Dict[str, Any]:
         """
         Materializes graph events strictly bound to SPL-HDFS-001 split authority.
         Raises TestSetSealedError if split_name == 'TEST'.
@@ -243,9 +243,15 @@ class HDFSGraphBuilder:
 
         split_data = self.split_authority.get_split()
         if split_name.upper() == "TRAIN":
-            authorized_block_ids: Set[str] = split_data["train_block_ids"]
+            if use_execution_subset:
+                authorized_block_ids: Set[str] = set(split_data["selected_train_block_ids"])
+            else:
+                authorized_block_ids: Set[str] = set(split_data["train_block_ids"])
         elif split_name.upper() == "VAL":
-            authorized_block_ids: Set[str] = split_data["val_block_ids"]
+            if use_execution_subset:
+                authorized_block_ids: Set[str] = set(split_data["selected_val_block_ids"])
+            else:
+                authorized_block_ids: Set[str] = set(split_data["val_block_ids"])
         else:
             raise ValueError(f"Unknown split name: {split_name}")
 
