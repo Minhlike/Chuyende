@@ -2,24 +2,37 @@
 
 **Document ID:** `REPORT-CH3-STAGE-A1-001`  
 **Date:** 2026-08-23  
-**Status:** `COMPLETED & VERIFIED`  
+**Status:** `STAGE A1 — FULL ACCEPTANCE / FROZEN`  
 **Execution Branch:** `train/ch3-stage-a1-execution`  
-**Verified Commit SHA:** `70b68102204bc40f73fc02f18850b065562c574f`  
-**Pre-Execution Protocol Lock SHA-256:** `b59ff02532443d9e21bb18f89f998770aa08f0e7002dfe43f38d5032f60ca026`  
 
 ---
 
-## 1. Executive Summary & Objective
+## 1. Commit & Provenance Lineage
+
+| Lifecycle Phase | Commit SHA | Description |
+| :--- | :--- | :--- |
+| **Protocol Lock Commit** | `ab15757d2fa2afaff499b23da753885c89487c51` | `protocol: finalize Stage A1 execution lock` on `train/ch3-stage-a1-preflight` |
+| **Training Implementation Commit** | `929c4818081edb2b067b2fca86c599b67b21606c` / `70b68102204bc40f73fc02f18850b065562c574f` | Training engine, multi-slot extractor, and manifest caching runner |
+| **Execution Results Commit** | `9cca545be8312417d8def6007047cc42ef5d8165` | Initial commit of all 10 manifests and dataset summaries |
+| **Final Acceptance Commit** | *(Recorded at final commit of this session)* | Full acceptance gate PASS, deterministic resume regression, and evidence inventory |
+
+**Protocol Lock & Contract Hash Distinction:**
+- **Protocol Lock File Byte SHA-256 (`STAGE-A1-PREEXECUTION-LOCK.json`):** `b59ff02532443d9e21bb18f89f998770aa08f0e7002dfe43f38d5032f60ca026`
+- **Internal `contract_sha256` (Hash of `STAGE-A1-TRAINING-CONTRACT.md`):** `151ddcca8d165cd50f3ee6258c002c5dab441ae8149235ec168bd471b654bfff`
+
+---
+
+## 2. Executive Summary & Objective
 
 Stage A1 executes real self-supervised sequence pretraining for the Chapter 2 Sequence View Transformer across two canonical system log datasets:
 1. **HDFS (Hadoop Distributed File System):** System-level event stream representation stress test.
 2. **BGL (Blue Gene/L Supercomputer):** Multi-node temporal drift and alert log stress test.
 
-This pretraining is **100% label-free** (no anomaly, alert, or attack labels were loaded or exposed to the model) and **strictly firewalled from the Test split** (`TEST_OPENED = false`, `TEST_FEATURE_READS = 0`, `TEST_LABEL_READS = 0`).
+This pretraining is **100% label-free** (no anomaly, alert, or attack labels were loaded or exposed to the model) and **strictly firewalled from the Test split** (`TEST_OPENED = false`, `TEST_FEATURE_READS = 0`, `TEST_LABEL_READS = 0`, `TEST_METRICS = 0`).
 
 ---
 
-## 2. Model Architecture & Training Regime
+## 3. Model Architecture & Training Regime
 
 ### Architecture Specification
 - **Base Architecture:** 4-layer Bidirectional Transformer Encoder (`SequenceViewTransformer`)
@@ -35,7 +48,7 @@ This pretraining is **100% label-free** (no anomaly, alert, or attack labels wer
 $$L_{\text{seq}} = 1.0 \cdot L_{\text{MEP}} + 1.0 \cdot L_{\text{MPP}} + 0.1 \cdot L_{\text{time}}$$
 
 Where:
-- $L_{\text{MEP}}$ (**Masked Event Prediction**): 15% Bernoulli token masking with 80% `[MASK]`, 10% random token, 10% unchanged. Cross-entropy loss over vocab.
+- $L_{\text{MEP}}$ (**Masked Event Prediction**): 15% Bernoulli token masking with 80% `[MASK]`, 10% random token, 10% unchanged. Cross-entropy loss over vocabulary.
 - $L_{\text{MPP}}$ (**Masked Parameter Prediction**): 15% Bernoulli masking per active parameter slot (excluding `<PAD_PARAM>` = 1 as target). Cross-entropy loss averaged across active masked slots.
 - $L_{\text{time}}$ (**Continuous Log-Time Gap Prediction**): Smooth L1 loss ($\beta=1.0$) between predicted continuous log-gap and true log-gap.
 
@@ -47,11 +60,25 @@ Where:
 - **Validation Cadence:** Evaluated once per completed epoch on the full validation split.
 - **Early Stopping:** Patience = 3 completed epochs without improvement on validation $L_{\text{seq}}$.
 - **Checkpoint Selection:** Checkpoint corresponding to minimum validation $L_{\text{seq}}$ (`best_val_loss.pt`).
-- **RNG & Reproducibility:** Exact 4-state RNG checkpointing (Python, NumPy, PyTorch CPU, PyTorch CUDA) with `torch.use_deterministic_algorithms(True)`.
 
 ---
 
-## 3. Five-Seed Pretraining Results
+## 4. Deterministic Checkpoint/Resume Continuation
+
+Deterministic continuation has been verified through a multi-step trajectory test comparing:
+1. **Continuous Run A:** Uninterrupted training through Epoch 1 and Epoch 2.
+2. **Resumed Run B:** Epoch 1 $\to$ Save Checkpoint $\to$ Destroy and instantiate fresh Trainer $\to$ Load Checkpoint $\to$ Execute Epoch 2.
+
+**Verification Results (`tests/test_stage_a1_deterministic_resume.py`):**
+- **Next Minibatch Data Order:** Exactly identical (`torch.equal` == True)
+- **Loss Value Trajectory:** Exactly identical ($\Delta L < 10^{-12}$)
+- **Optimizer State (`exp_avg`, `exp_avg_sq`, `step`):** Exactly identical ($\Delta \text{opt} = 0.0$)
+- **Scheduler Learning Rate & Step:** Exactly identical
+- **Max Model Parameter Divergence:** **`0.00000000e+00`**
+
+---
+
+## 5. Five-Seed Pretraining Results (Unmodified Historical Runs)
 
 ### A. HDFS Dataset ($K=5$ Canonical Seeds)
 
@@ -93,40 +120,39 @@ Where:
 
 ---
 
-## 4. Integrity, Firewall & Quality Verification
+## 6. Provenance Attestation & Known Limitations
 
-| Check Item | Target Contract | Realized Status | Verdict |
+1. **Attestation Status:** Recorded in `experiments/reports/STAGE-A1-PROVENANCE-AUDIT.json`.
+2. **Historical Attestation Limitations:**
+   - The 10 historical Stage A1 runs were executed across two sequential sessions on `train/ch3-stage-a1-execution`.
+   - Git commits and environment specs (`Python 3.12.3`, `PyTorch 2.6.0+cu124`, `CUDA 12.4`, `RTX 3050 Ti Laptop GPU`, `WSL2 Ubuntu 24.04`) are formally derived and attested from repository history and verified logs.
+   - For all future runs (Stage A2 onwards), runtime telemetry (`git_commit_sha`, `git_branch`, `git_dirty`, environment fingerprint) will be captured directly by the runner at invocation time.
+
+---
+
+## 7. Integrity & Acceptance Gate Checklist
+
+| Acceptance Check | Contract Requirement | Realized Status | Verdict |
 | :--- | :---: | :---: | :---: |
-| **Checkpoint Resumption Divergence** | $< 10^{-6}$ | `0.00000000e+00` | **PASS** |
-| **Test Set Sealing (`test_opened`)** | `false` | `false` (10/10 manifests) | **PASS** |
-| **Test Feature Read Count** | `0` | `0` (10/10 manifests) | **PASS** |
-| **Test Label Read Count** | `0` | `0` (10/10 manifests) | **PASS** |
-| **Test Metric Count** | `0` | `0` (10/10 manifests) | **PASS** |
-| **Label-Free SSL Purity** | `100%` | Zero downstream labels exposed | **PASS** |
-| **NaN / Inf Loss Anomalies** | `0` | `0` (10/10 runs) | **PASS** |
-| **NaN / Inf Gradient Anomalies** | `0` | `0` (10/10 runs) | **PASS** |
+| **10 Historical Manifests Present** | Exactly 10 (5 HDFS + 5 BGL) | 10 verified | **PASS** |
+| **Test Set Sealed (`test_opened`)** | `false` | `false` across all 10 manifests | **PASS** |
+| **Test Feature Read Count** | `0` | `0` across all 10 manifests | **PASS** |
+| **Test Label Read Count** | `0` | `0` across all 10 manifests | **PASS** |
+| **Test Metric Count** | `0` | `0` across all 10 manifests | **PASS** |
+| **Confirmatory Hypotheses Sealed** | No confirmatory metrics | `confirmatory_hypothesis_result = false` | **PASS** |
+| **Label-Free SSL Purity** | 100% label-free | 0 anomaly/alert/attack labels loaded | **PASS** |
+| **NaN / Inf Loss Anomalies** | `0` | `0` across all 10 runs | **PASS** |
+| **NaN / Inf Gradient Anomalies** | `0` | `0` across all 10 runs | **PASS** |
+| **Deterministic Resume Divergence** | $< 10^{-6}$ | `0.00000000e+00` | **PASS** |
 | **Windows Unit Test Suite** | 100% Passed | 192 passed, 8 skipped | **PASS** |
-| **WSL Ubuntu Adapter Tests** | 100% Passed | 7 passed (100%) | **PASS** |
+| **WSL Ubuntu Test Suite** | 100% Passed | 9 passed (7 adapter + 2 resume) | **PASS** |
 | **Secret Scan Audit** | 0 secrets | 0 secrets found | **PASS** |
 | **Database Canonical Invariants** | 100% Valid | Verified | **PASS** |
+| **Evidence Manifest & SHA256SUMS** | Valid inventory | 8 evidence artifacts verified | **PASS** |
 
 ---
 
-## 5. Artifact Directory & Checkpoint Index
+## 8. Final Verdict
 
-All metadata manifests and dataset summaries are committed in Git under:
-- `experiments/runs/stage-a1/HDFS/DATASET-SUMMARY.json`
-- `experiments/runs/stage-a1/HDFS/seed-*/RUN-MANIFEST.json`
-- `experiments/runs/stage-a1/BGL/DATASET-SUMMARY.json`
-- `experiments/runs/stage-a1/BGL/seed-*/RUN-MANIFEST.json`
-
-Checkpoints are preserved on disk at `D:\Research\experiments\runs\stage-a1\<DATASET>\seed-<SEED>\best_val_loss.pt` and indexed by their SHA-256 hashes listed in Section 3.
-
----
-
-## 6. Recommendations & Decision Gates for Next Agent / Phase
-
-1. **Stage A2 (Graph / Temporal View Pretraining):** Pretrain Graph/Node view encoders on the provenance / entity graph stream using self-supervised objectives ($L_{\text{node}}, L_{\text{edge}}$).
-2. **Stage A3 (Cross-View Fusion):** Align sequence and graph representations using contrastive loss or mutual information maximization before downstream probing.
-3. **Stage B1 (Downstream Validation Probe - Test Remains Sealed):** Evaluate frozen representations via linear probe / anomaly score on the Validation split ONLY.
-4. **Stage C (Confirmatory Test Evaluation):** Only upon final unsealing protocol authorization, execute the registered hypotheses ($H1$–$H5$) on the Test split using Paired Cluster Bootstrap ($B=2000$).
+$$\text{STAGE\_A1\_ACCEPTANCE} = \mathbf{PASS}$$
+$$\text{STATUS} = \mathbf{STAGE\ A1\ —\ FULL\ ACCEPTANCE\ /\ FROZEN}$$

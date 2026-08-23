@@ -20,6 +20,8 @@ import hashlib
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
 
+os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
+
 import psutil
 import numpy as np
 import torch
@@ -195,14 +197,14 @@ class StageA1Trainer:
         self.train_dataset = SequenceSSLDataset(train_pkg, max_seq_len=self.max_seq_len)
         self.val_dataset = SequenceSSLDataset(val_pkg, max_seq_len=self.max_seq_len)
 
-        g_train = torch.Generator()
-        g_train.manual_seed(self.seed)
+        self.train_generator = torch.Generator()
+        self.train_generator.manual_seed(self.seed)
         self.train_loader = DataLoader(
             self.train_dataset,
             batch_size=self.micro_batch_size,
             shuffle=True,
             collate_fn=lambda b: collate_sequence_ssl(b, max_param_slots=self.max_param_slots),
-            generator=g_train
+            generator=self.train_generator
         )
         self.val_loader = DataLoader(
             self.val_dataset,
@@ -427,7 +429,8 @@ class StageA1Trainer:
                 "python": random.getstate(),
                 "numpy": np.random.get_state(),
                 "torch_cpu": torch.get_rng_state(),
-                "torch_cuda": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None
+                "torch_cuda": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None,
+                "torch_dataloader_generator": self.train_generator.get_state() if hasattr(self, "train_generator") else None
             },
             "contract_sha256": self.lock_data.get("contract_sha256", ""),
             "source_commit": self.lock_data.get("source_commit", ""),
@@ -450,6 +453,8 @@ class StageA1Trainer:
         if torch.cuda.is_available() and rng.get("torch_cuda") is not None:
             cuda_states = [s.cpu().to(torch.uint8) for s in rng["torch_cuda"]]
             torch.cuda.set_rng_state_all(cuda_states)
+        if hasattr(self, "train_generator") and rng.get("torch_dataloader_generator") is not None:
+            self.train_generator.set_state(rng["torch_dataloader_generator"].cpu().to(torch.uint8))
 
         return ckpt["epoch"], ckpt["global_step"], ckpt["best_val_loss"], ckpt["patience_counter"]
 

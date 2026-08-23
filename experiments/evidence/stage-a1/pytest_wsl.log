@@ -1,0 +1,19 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/researcher/chuyende/.venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/d/Research
+configfile: pyproject.toml
+collecting ... collected 9 items
+
+../../../mnt/d/Research/tests/test_real_data_adapters.py::test_01_label_leakage_error_and_label_free_ssl_packages <- ../../../home/researcher/chuyende/D:\Research\tests\test_real_data_adapters.py PASSED [ 11%]
+../../../mnt/d/Research/tests/test_real_data_adapters.py::test_02_hdfs_true_two_pass_firewall_and_zero_test_extraction <- ../../../home/researcher/chuyende/D:\Research\tests\test_real_data_adapters.py PASSED [ 22%]
+../../../mnt/d/Research/tests/test_real_data_adapters.py::test_03_multi_parameter_slot_representation <- ../../../home/researcher/chuyende/D:\Research\tests\test_real_data_adapters.py PASSED [ 33%]
+../../../mnt/d/Research/tests/test_real_data_adapters.py::test_04_hdfs_rfc1918_exact_network_membership <- ../../../home/researcher/chuyende/D:\Research\tests\test_real_data_adapters.py PASSED [ 44%]
+../../../mnt/d/Research/tests/test_real_data_adapters.py::test_05_bgl_node_context_toggle_and_accounting_conservation <- ../../../home/researcher/chuyende/D:\Research\tests\test_real_data_adapters.py PASSED [ 55%]
+../../../mnt/d/Research/tests/test_real_data_adapters.py::test_06_stage_a1_training_contract_locked <- ../../../home/researcher/chuyende/D:\Research\tests\test_real_data_adapters.py PASSED [ 66%]
+../../../mnt/d/Research/tests/test_real_data_adapters.py::test_07_stage_a1_preexecution_lock_file <- ../../../home/researcher/chuyende/D:\Research\tests\test_real_data_adapters.py PASSED [ 77%]
+../../../mnt/d/Research/tests/test_stage_a1_deterministic_resume.py::test_stage_a1_exact_deterministic_resume PASSED [ 88%]
+../../../mnt/d/Research/tests/test_stage_a1_deterministic_resume.py::test_resume_fails_on_tampered_rng_or_dataloader PASSED [100%]
+
+======================== 9 passed in 101.53s (0:01:41) =========================
+

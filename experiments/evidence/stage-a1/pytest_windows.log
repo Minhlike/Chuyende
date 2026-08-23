@@ -1,0 +1,422 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.8, pytest-8.4.1, pluggy-1.6.0 -- C:\Users\Acer\AppData\Local\Programs\Python\Python312\python.exe
+cachedir: .pytest_cache
+rootdir: D:\Research
+configfile: pyproject.toml
+plugins: asyncio-1.1.0, cov-7.1.0
+asyncio: mode=Mode.STRICT, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 194 items / 6 skipped
+
+tests/test_bootstrap_engine.py::test_01_average_precision_matches_sklearn SKIPPED [  0%]
+tests/test_bootstrap_engine.py::test_02_decision_semantics_supported_vs_falsified PASSED [  1%]
+tests/test_bootstrap_engine.py::test_03_rejection_of_small_cluster_counts PASSED [  1%]
+tests/test_bootstrap_engine.py::test_04_benjamini_hochberg_fdr_correction PASSED [  2%]
+tests/test_bootstrap_engine.py::test_05_holm_bonferroni_stepdown PASSED  [  2%]
+tests/test_composition.py::test_comp_01_external_claim_without_citation_flagged PASSED [  3%]
+tests/test_composition.py::test_comp_02_citation_with_nonexistent_source_rejected PASSED [  3%]
+tests/test_composition.py::test_comp_03_ownership_theft_detected PASSED  [  4%]
+tests/test_composition.py::test_comp_04_unbacked_novelty_buzzwords_flagged PASSED [  4%]
+tests/test_composition.py::test_comp_05_causal_inflation_flagged PASSED  [  5%]
+tests/test_composition.py::test_comp_06_unverified_numerical_claim_flagged PASSED [  5%]
+tests/test_composition.py::test_comp_07_verified_numerical_claim_passes PASSED [  6%]
+tests/test_composition.py::test_comp_08_anomaly_attack_conflation_flagged PASSED [  6%]
+tests/test_composition.py::test_comp_09_writing_gate_unknown_node_not_ready PASSED [  7%]
+tests/test_composition.py::test_comp_10_academic_composer_builds_abstract_and_conclusion PASSED [  7%]
+tests/test_confirmatory_integrity.py::test_01_synthetic_dataset_cannot_become_sealed PASSED [  8%]
+tests/test_confirmatory_integrity.py::test_02_unacquired_dataset_cannot_become_sealed PASSED [  8%]
+tests/test_confirmatory_integrity.py::test_03_canonical_hypotheses_cannot_be_redefined PASSED [  9%]
+tests/test_confirmatory_integrity.py::test_04_bootstrap_parameters_match_protocol PASSED [  9%]
+tests/test_confirmatory_integrity.py::test_05_seed_arrays_cannot_masquerade_as_clusters PASSED [ 10%]
+tests/test_confirmatory_integrity.py::test_06_hardcoded_empirical_metric_detector PASSED [ 10%]
+tests/test_confirmatory_integrity.py::test_07_attribution_evaluator_requires_real_gt PASSED [ 11%]
+tests/test_confirmatory_integrity.py::test_08_graph_and_sequence_views_for_multiview SKIPPED [ 11%]
+tests/test_confirmatory_integrity.py::test_09_four_privacy_regimes_defined PASSED [ 12%]
+tests/test_confirmatory_integrity.py::test_10_reid_adversary_split_disjointness_enforcement PASSED [ 12%]
+tests/test_confirmatory_integrity.py::test_11_zero_stale_holm_alpha_half_in_bootstrap PASSED [ 13%]
+tests/test_dataset_acquisition_and_storage.py::test_01_storage_manifest_d_drive_allocation PASSED [ 13%]
+tests/test_dataset_acquisition_and_storage.py::test_02_storage_cleanliness_c_drive PASSED [ 14%]
+tests/test_dataset_acquisition_and_storage.py::test_03_hdfs_raw_artifact_and_labels_exist PASSED [ 14%]
+tests/test_dataset_acquisition_and_storage.py::test_04_bgl_raw_artifact_exists_and_valid PASSED [ 15%]
+tests/test_dataset_acquisition_and_storage.py::test_05_darpa_e3_e5_metadata_schema_versions PASSED [ 15%]
+tests/test_dataset_acquisition_and_storage.py::test_06_split_manifests_lifecycle_states PASSED [ 16%]
+tests/test_dataset_acquisition_and_storage.py::test_07_corrupted_archive_detection PASSED [ 17%]
+tests/test_dataset_acquisition_and_storage.py::test_08_timestamp_inversion_detection PASSED [ 17%]
+tests/test_final_build.py::test_final_01_provisional_build_produces_artifacts PASSED [ 18%]
+tests/test_final_build.py::test_final_02_packager_generates_complete_manifest PASSED [ 18%]
+tests/test_guards.py::test_invariant_10_path_guard_blocks_outside_writes PASSED [ 19%]
+tests/test_guards.py::test_untrusted_document_payload_wrapper PASSED     [ 19%]
+tests/test_human_workflow.py::test_hum_01_manual_edit_preservation PASSED [ 20%]
+tests/test_human_workflow.py::test_hum_02_upstream_invalidation_cascades_to_stale PASSED [ 20%]
+tests/test_invariants.py::test_invariant_1_invalid_claim_type_rejected PASSED [ 21%]
+tests/test_invariants.py::test_invariant_2_invalid_ownership_rejected PASSED [ 21%]
+tests/test_invariants.py::test_invariant_3_source_equation_without_provenance_rejected PASSED [ 22%]
+tests/test_invariants.py::test_invariant_4_experiment_result_without_run_id_rejected PASSED [ 22%]
+tests/test_invariants.py::test_invariant_5_figure_without_provenance_rejected PASSED [ 23%]
+tests/test_invariants.py::test_invariant_5b_table_without_provenance_rejected PASSED [ 23%]
+tests/test_invariants.py::test_invariant_6_invalid_epistemic_state_rejected PASSED [ 24%]
+tests/test_invariants.py::test_invariant_7_contradictory_evidence_preserved_concurrently PASSED [ 24%]
+tests/test_invariants.py::test_invariant_8_failed_experiment_run_persisted PASSED [ 25%]
+tests/test_memory.py::test_mem_01_restart_retrieve_decision PASSED       [ 25%]
+tests/test_memory.py::test_mem_02_failed_experiment_persistence PASSED   [ 26%]
+tests/test_memory.py::test_mem_03_our_inference_preservation PASSED      [ 26%]
+tests/test_memory.py::test_mem_04_generated_summary_not_external_evidence PASSED [ 27%]
+tests/test_memory.py::test_mem_05_contradictory_claims_coexist PASSED    [ 27%]
+tests/test_memory.py::test_mem_06_superseded_decision_handling PASSED    [ 28%]
+tests/test_memory.py::test_mem_07_rebuild_derived_index PASSED           [ 28%]
+tests/test_memory.py::test_mem_08_exact_id_lookup_priority PASSED        [ 29%]
+tests/test_memory.py::test_mem_09_invalid_canonical_reference_rejected PASSED [ 29%]
+tests/test_memory.py::test_mem_10_circular_self_support_rejected PASSED  [ 30%]
+tests/test_memory.py::test_mem_11_status_evolution_timeline PASSED       [ 30%]
+tests/test_memory.py::test_mem_12_open_question_survives_restart PASSED  [ 31%]
+tests/test_memory.py::test_mem_13_duplicate_memory_detection PASSED      [ 31%]
+tests/test_memory.py::test_mem_14_contradictory_records_not_merged PASSED [ 32%]
+tests/test_memory.py::test_mem_15_pdf_instruction_injection_blocked PASSED [ 32%]
+tests/test_memory.py::test_mem_16_stale_record_audit PASSED              [ 33%]
+tests/test_memory.py::test_mem_17_source_retraction_impact_traversal PASSED [ 34%]
+tests/test_memory.py::test_mem_18_context_bundle_provenance_metadata PASSED [ 34%]
+tests/test_memory.py::test_mem_19_retrieval_score_distinct_from_evidence_strength PASSED [ 35%]
+tests/test_memory.py::test_mem_20_deterministic_consolidation PASSED     [ 35%]
+tests/test_memory.py::test_research_continuity_across_sessions PASSED    [ 36%]
+tests/test_persistence.py::test_invariant_9_derived_indexes_disposable PASSED [ 36%]
+tests/test_persistence.py::test_stable_id_sequential_allocation PASSED   [ 37%]
+tests/test_persistence.py::test_roadmap_ingestion_preserves_hierarchy PASSED [ 37%]
+tests/test_perturbation_suite.py::test_01_all_twelve_perturbations_execute_with_changes PASSED [ 38%]
+tests/test_perturbation_suite.py::test_02_p05_strictly_injective_ip_mapping PASSED [ 38%]
+tests/test_perturbation_suite.py::test_03_p04_concurrency_safe_jitter PASSED [ 39%]
+tests/test_perturbation_suite.py::test_04_p11_schema_aware_timestamp_skew PASSED [ 39%]
+tests/test_perturbation_suite.py::test_05_shortcut_removal_experiment PASSED [ 40%]
+tests/test_reasoning.py::test_gold_01_claim_normalization_and_scope_extraction PASSED [ 40%]
+tests/test_reasoning.py::test_gold_02_contradiction_10pt_analysis PASSED [ 41%]
+tests/test_reasoning.py::test_gold_03_falsification_negative_control_design PASSED [ 41%]
+tests/test_reasoning.py::test_gold_04_causality_and_graph_guard PASSED   [ 42%]
+tests/test_reasoning.py::test_gold_05_argument_bundle_readiness_gate PASSED [ 42%]
+tests/test_reasoning.py::test_leakage_auditor_12pt_checklist PASSED      [ 43%]
+tests/test_reasoning.py::test_shortcut_auditor PASSED                    [ 43%]
+tests/test_reasoning.py::test_security_guards PASSED                     [ 44%]
+tests/test_reasoning.py::test_anti_harking_and_negative_result_preservation PASSED [ 44%]
+tests/test_reasoning.py::test_assumption_extraction_and_fragility PASSED [ 45%]
+tests/test_reasoning.py::test_steelman_counterargument_origin PASSED     [ 45%]
+tests/test_reasoning.py::test_contribution_novelty_safety PASSED         [ 46%]
+tests/test_reasoning.py::test_argument_graph_dag_and_cycle_detection PASSED [ 46%]
+tests/test_reasoning.py::test_rhetorical_discourse_planning_and_attractor_audit PASSED [ 47%]
+tests/test_reasoning.py::test_research_skills_registry_18_skills PASSED  [ 47%]
+tests/test_reasoning.py::test_prompt_6_verification_request_interface PASSED [ 48%]
+tests/test_reference_map.py::test_ref_01_malformed_doi_rejection PASSED  [ 48%]
+tests/test_reference_map.py::test_ref_02_unsourced_factual_claims_rejected PASSED [ 49%]
+tests/test_reference_map.py::test_ref_03_our_design_without_external_source PASSED [ 50%]
+tests/test_reference_map.py::test_ref_04_motivated_by_preserves_ours_ownership PASSED [ 50%]
+tests/test_reference_map.py::test_ref_05_baseline_method_provenance PASSED [ 51%]
+tests/test_reference_map.py::test_ref_06_deduplication_by_doi_and_key PASSED [ 51%]
+tests/test_reference_map.py::test_ref_07_exact_locator_validation PASSED [ 52%]
+tests/test_reference_map.py::test_ref_08_contradiction_record_preservation PASSED [ 52%]
+tests/test_reference_map.py::test_ref_09_negative_evidence_preservation PASSED [ 53%]
+tests/test_reference_map.py::test_ref_10_invalid_roadmap_node_rejected PASSED [ 53%]
+tests/test_reference_map.py::test_ref_11_version_compatibility_check PASSED [ 54%]
+tests/test_reference_map.py::test_ref_12_citation_firewall_blocks_unverified PASSED [ 54%]
+tests/test_reference_map.py::test_ref_13_citation_firewall_authorizes_ready PASSED [ 55%]
+tests/test_reference_map.py::test_ref_14_claim_ownership_taxonomy_enforcement PASSED [ 55%]
+tests/test_reference_map.py::test_ref_15_candidate_contribution_novelty_safety PASSED [ 56%]
+tests/test_reference_map.py::test_ref_16_preprint_distinction PASSED     [ 56%]
+tests/test_reference_map.py::test_ref_17_dataset_provenance PASSED       [ 57%]
+tests/test_reference_map.py::test_ref_18_attack_metadata_requirement PASSED [ 57%]
+tests/test_retrieval_benchmark.py::test_retrieval_benchmark_shortcut_learning PASSED [ 58%]
+tests/test_retrieval_benchmark.py::test_retrieval_benchmark_privacy_leakage PASSED [ 58%]
+tests/test_retrieval_benchmark.py::test_retrieval_benchmark_oversquashing PASSED [ 59%]
+tests/test_retrieval_benchmark.py::test_retrieval_benchmark_simple_baselines PASSED [ 59%]
+tests/test_roadmap.py::test_rm_01_node_parent_validity PASSED            [ 60%]
+tests/test_roadmap.py::test_rm_02_no_duplicate_codes PASSED              [ 60%]
+tests/test_roadmap.py::test_rm_03_unique_rqs PASSED                      [ 61%]
+tests/test_roadmap.py::test_rm_04_unique_hypotheses PASSED               [ 61%]
+tests/test_roadmap.py::test_rm_05_rq_ch1_ch2_ch3_traceability PASSED     [ 62%]
+tests/test_roadmap.py::test_rm_06_hypothesis_test_relations PASSED       [ 62%]
+tests/test_roadmap.py::test_rm_07_representation_contract_categories PASSED [ 63%]
+tests/test_roadmap.py::test_rm_08_central_object_representation_z PASSED [ 63%]
+tests/test_roadmap.py::test_rm_09_att_ck_non_linear_evidence_space PASSED [ 64%]
+tests/test_roadmap.py::test_rm_10_provenance_dependency_non_causal PASSED [ 64%]
+tests/test_roadmap.py::test_rm_11_idempotent_ingestion PASSED            [ 65%]
+tests/test_roadmap.py::test_rm_12_exact_canonical_wording_preserved PASSED [ 65%]
+tests/test_roadmap.py::test_rm_13_negative_results_pathways_enabled PASSED [ 66%]
+tests/test_roadmap.py::test_rm_14_tier_a_vs_tier_b_distinction PASSED    [ 67%]
+tests/test_roadmap.py::test_rm_15_intrinsic_probe_operational_order PASSED [ 67%]
+tests/test_roadmap.py::test_rm_16_no_fabricated_source_references PASSED [ 68%]
+tests/test_roadmap.py::test_rm_cli_validation_exit_code_zero PASSED      [ 68%]
+tests/test_roadmap.py::test_rm_query_axes_and_controls PASSED            [ 69%]
+tests/test_stubs.py::test_all_stubs_raise_not_implemented PASSED         [ 69%]
+tests/test_thesis_auditor.py::test_aud_01_empty_paragraphs_pass PASSED   [ 70%]
+tests/test_thesis_auditor.py::test_aud_02_detects_needs_citation_as_critical PASSED [ 70%]
+tests/test_thesis_auditor.py::test_aud_03_detects_ownership_conflict_as_critical PASSED [ 71%]
+tests/test_thesis_auditor.py::test_aud_04_detects_numerically_unverified_as_critical PASSED [ 71%]
+tests/test_thesis_auditor.py::test_aud_05_detects_overgeneralized_as_high PASSED [ 72%]
+tests/test_thesis_auditor.py::test_aud_06_detects_scope_mismatch PASSED  [ 72%]
+tests/test_thesis_auditor.py::test_aud_07_detects_stale_paragraphs PASSED [ 73%]
+tests/test_thesis_auditor.py::test_aud_08_detects_template_attractor_repetition PASSED [ 73%]
+tests/test_thesis_auditor.py::test_aud_09_10_rq_and_hypothesis_coverage PASSED [ 74%]
+tests/test_thesis_auditor.py::test_aud_11_axes_coverage PASSED           [ 74%]
+tests/test_thesis_auditor.py::test_aud_12_evaluates_10_defensibility_questions PASSED [ 75%]
+tests/test_thesis_auditor.py::test_aud_13_provisional_mode_tolerates_high_issues PASSED [ 75%]
+tests/test_thesis_auditor.py::test_aud_14_final_mode_rejects_critical_issues PASSED [ 76%]
+tests/test_thesis_auditor.py::test_aud_15_saves_audit_report_to_db PASSED [ 76%]
+tests/test_tokenizer_privacy.py::test_01_zero_hardcoded_keys_and_fingerprint PASSED [ 77%]
+tests/test_tokenizer_privacy.py::test_02_scope_rotation_breaks_cross_scope_linkage PASSED [ 77%]
+tests/test_tokenizer_privacy.py::test_03_rfc1918_private_ip_classification PASSED [ 78%]
+tests/test_tokenizer_privacy.py::test_04_privacy_aware_tokenization_transformation PASSED [ 78%]
+tests/test_verification_datasets_tables_figures.py::TestDatasetsTablesFigures::test_data_01_hash_and_schema_validation PASSED [ 79%]
+tests/test_verification_datasets_tables_figures.py::TestDatasetsTablesFigures::test_data_02_temporal_leakage_detection PASSED [ 79%]
+tests/test_verification_datasets_tables_figures.py::TestDatasetsTablesFigures::test_data_03_entity_holdout_leakage PASSED [ 80%]
+tests/test_verification_datasets_tables_figures.py::TestDatasetsTablesFigures::test_metric_01_confusion_matrix_and_f1 PASSED [ 80%]
+tests/test_verification_datasets_tables_figures.py::TestDatasetsTablesFigures::test_metric_02_trapezoidal_pr_auc PASSED [ 81%]
+tests/test_verification_datasets_tables_figures.py::TestDatasetsTablesFigures::test_tbl_01_deterministic_table_export PASSED [ 81%]
+tests/test_verification_datasets_tables_figures.py::TestDatasetsTablesFigures::test_tbl_02_table_fairness_mismatch_audit PASSED [ 82%]
+tests/test_verification_datasets_tables_figures.py::TestDatasetsTablesFigures::test_fig_01_pr_curve_generation_and_companion_data PASSED [ 82%]
+tests/test_verification_equations.py::TestSymbolicEquationVerification::test_eq_01_algebraic_equivalence_proven PASSED [ 83%]
+tests/test_verification_equations.py::TestSymbolicEquationVerification::test_eq_02_algebraic_inequivalence PASSED [ 84%]
+tests/test_verification_equations.py::TestSymbolicEquationVerification::test_eq_03_derivative_verification PASSED [ 84%]
+tests/test_verification_equations.py::TestSymbolicEquationVerification::test_eq_04_derivative_incorrect_rejected PASSED [ 85%]
+tests/test_verification_equations.py::TestSymbolicEquationVerification::test_eq_05_domain_validity_division_by_zero PASSED [ 85%]
+tests/test_verification_equations.py::TestSymbolicEquationVerification::test_eq_06_tensor_shape_compatibility PASSED [ 86%]
+tests/test_verification_equations.py::TestSymbolicEquationVerification::test_eq_07_loss_function_composition_audit PASSED [ 86%]
+tests/test_verification_equations.py::TestSymbolicEquationVerification::test_eq_08_symbol_registry_ambiguity_detection PASSED [ 87%]
+tests/test_verification_equations.py::TestSymbolicEquationVerification::test_eq_09_equation_provenance_source_missing_locator PASSED [ 87%]
+tests/test_verification_equations.py::TestSymbolicEquationVerification::test_eq_10_equation_provenance_derived_missing_steps PASSED [ 88%]
+tests/test_verification_pipeline_reproducibility.py::test_pipeline_01_equation_verification_request PASSED [ 88%]
+tests/test_verification_pipeline_reproducibility.py::test_pipeline_02_hypothesis_test_request PASSED [ 89%]
+tests/test_verification_pipeline_reproducibility.py::test_lineage_01_dag_and_invalidation_cascading PASSED [ 89%]
+tests/test_verification_pipeline_reproducibility.py::test_repro_01_level_2_metric_divergence PASSED [ 90%]
+tests/test_verification_pipeline_reproducibility.py::test_writing_gate_01_unverified_claim_blocked PASSED [ 90%]
+tests/test_verification_pipeline_reproducibility.py::test_writing_gate_02_exaggerated_language_blocked PASSED [ 91%]
+tests/test_verification_statistics.py::TestStatisticalVerification::test_stat_01_descriptive_summary PASSED [ 91%]
+tests/test_verification_statistics.py::TestStatisticalVerification::test_stat_02_parametric_confidence_interval PASSED [ 92%]
+tests/test_verification_statistics.py::TestStatisticalVerification::test_stat_03_deterministic_bootstrap_ci PASSED [ 92%]
+tests/test_verification_statistics.py::TestStatisticalVerification::test_stat_04_cohens_d_and_hedges_g PASSED [ 93%]
+tests/test_verification_statistics.py::TestStatisticalVerification::test_stat_05_paired_hypothesis_test PASSED [ 93%]
+tests/test_verification_statistics.py::TestStatisticalVerification::test_stat_06_two_sample_unpaired_test PASSED [ 94%]
+tests/test_verification_statistics.py::TestStatisticalVerification::test_stat_07_multi_seed_aggregation PASSED [ 94%]
+tests/test_verification_statistics.py::TestStatisticalVerification::test_stat_08_cherry_picking_guard PASSED [ 95%]
+tests/test_verification_statistics.py::TestStatisticalVerification::test_stat_09_statistical_misuse_p_without_effect_size PASSED [ 95%]
+tests/test_verification_statistics.py::TestStatisticalVerification::test_stat_10_statistical_misuse_absence_of_evidence_claim PASSED [ 96%]
+tests/test_word_visuals.py::TestWordVisualsEngine::test_01_visual_necessity_gate PASSED [ 96%]
+tests/test_word_visuals.py::TestWordVisualsEngine::test_02_native_table_builder_and_caption PASSED [ 97%]
+tests/test_word_visuals.py::TestWordVisualsEngine::test_03_scientific_figure_inserter PASSED [ 97%]
+tests/test_word_visuals.py::TestWordVisualsEngine::test_04_cross_reference_manager PASSED [ 98%]
+tests/test_word_visuals.py::TestWordVisualsEngine::test_05_skill_registry_registration PASSED [ 98%]
+tests/test_word_visuals.py::TestWordVisualsEngine::test_06_word_com_diagram_and_visual_qa PASSED [ 99%]
+tests/test_word_visuals.py::TestWordVisualsEngine::test_07_frozen_chapter_1_hash_check PASSED [100%]
+
+======================= 192 passed, 8 skipped in 24.44s =======================
+
+Windows fatal exception: code 0x80010108
+
+Current thread 0x000025c0 (most recent call first):
+  File "D:\Research\tests\test_word_visuals.py", line 353 in test_06_word_com_diagram_and_visual_qa
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 157 in pytest_pyfunc_call
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1671 in runtest
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 178 in pytest_runtest_call
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 246 in <lambda>
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 344 in from_call
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 245 in call_and_report
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 136 in runtestprotocol
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 117 in pytest_runtest_protocol
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 367 in pytest_runtestloop
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 343 in _main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 289 in wrap_session
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 336 in pytest_cmdline_main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175 in main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 201 in console_main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pytest\__main__.py", line 9 in <module>
+  File "<frozen runpy>", line 88 in _run_code
+  File "<frozen runpy>", line 198 in _run_module_as_main
+Windows fatal exception: code 0x800706b5
+
+Current thread 0x000025c0 (most recent call first):
+  File "D:\Research\tests\test_word_visuals.py", line 353 in test_06_word_com_diagram_and_visual_qa
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 157 in pytest_pyfunc_call
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1671 in runtest
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 178 in pytest_runtest_call
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 246 in <lambda>
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 344 in from_call
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 245 in call_and_report
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 136 in runtestprotocol
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 117 in pytest_runtest_protocol
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 367 in pytest_runtestloop
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 343 in _main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 289 in wrap_session
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 336 in pytest_cmdline_main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175 in main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 201 in console_main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pytest\__main__.py", line 9 in <module>
+  File "<frozen runpy>", line 88 in _run_code
+  File "<frozen runpy>", line 198 in _run_module_as_main
+Windows fatal exception: code 0x800706b5
+
+Current thread 0x000025c0 (most recent call first):
+  File "D:\Research\tests\test_word_visuals.py", line 353 in test_06_word_com_diagram_and_visual_qa
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 157 in pytest_pyfunc_call
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1671 in runtest
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 178 in pytest_runtest_call
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 246 in <lambda>
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 344 in from_call
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 245 in call_and_report
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 136 in runtestprotocol
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 117 in pytest_runtest_protocol
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 367 in pytest_runtestloop
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 343 in _main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 289 in wrap_session
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 336 in pytest_cmdline_main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175 in main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 201 in console_main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pytest\__main__.py", line 9 in <module>
+  File "<frozen runpy>", line 88 in _run_code
+  File "<frozen runpy>", line 198 in _run_module_as_main
+Windows fatal exception: code 0x800706ba
+
+Current thread 0x000025c0 (most recent call first):
+  File "D:\Research\tests\test_word_visuals.py", line 357 in test_06_word_com_diagram_and_visual_qa
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 157 in pytest_pyfunc_call
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1671 in runtest
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 178 in pytest_runtest_call
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 246 in <lambda>
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 344 in from_call
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 245 in call_and_report
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 136 in runtestprotocol
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 117 in pytest_runtest_protocol
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 367 in pytest_runtestloop
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 343 in _main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 289 in wrap_session
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 336 in pytest_cmdline_main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175 in main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 201 in console_main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pytest\__main__.py", line 9 in <module>
+  File "<frozen runpy>", line 88 in _run_code
+  File "<frozen runpy>", line 198 in _run_module_as_main
+Windows fatal exception: code 0x800706ba
+
+Current thread 0x000025c0 (most recent call first):
+  File "D:\Research\tests\test_word_visuals.py", line 357 in test_06_word_com_diagram_and_visual_qa
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 157 in pytest_pyfunc_call
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1671 in runtest
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 178 in pytest_runtest_call
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 246 in <lambda>
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 344 in from_call
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 245 in call_and_report
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 136 in runtestprotocol
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 117 in pytest_runtest_protocol
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 367 in pytest_runtestloop
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 343 in _main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 289 in wrap_session
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 336 in pytest_cmdline_main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175 in main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 201 in console_main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pytest\__main__.py", line 9 in <module>
+  File "<frozen runpy>", line 88 in _run_code
+  File "<frozen runpy>", line 198 in _run_module_as_main
+Windows fatal exception: code 0x800706ba
+
+Current thread 0x000025c0 (most recent call first):
+  File "D:\Research\tests\test_word_visuals.py", line 357 in test_06_word_com_diagram_and_visual_qa
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 157 in pytest_pyfunc_call
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1671 in runtest
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 178 in pytest_runtest_call
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 246 in <lambda>
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 344 in from_call
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 245 in call_and_report
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 136 in runtestprotocol
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 117 in pytest_runtest_protocol
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 367 in pytest_runtestloop
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 343 in _main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 289 in wrap_session
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 336 in pytest_cmdline_main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175 in main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 201 in console_main
+  File "C:\Users\Acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\pytest\__main__.py", line 9 in <module>
+  File "<frozen runpy>", line 88 in _run_code
+  File "<frozen runpy>", line 198 in _run_module_as_main

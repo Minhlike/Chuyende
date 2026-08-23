@@ -1,0 +1,7 @@
+{
+  "platform": "linux-wsl2",
+  "exit_code": 0,
+  "summary_text": "======================== 9 passed in 101.53s (0:01:41) =========================",
+  "duration_sec": 105.47776746749878,
+  "passed": true
+}

@@ -1,0 +1,39 @@
+{
+  "evidence_id": "EVIDENCE-STAGE-A1-001",
+  "created_timestamp": 1787492644.071184,
+  "total_evidence_files": 8,
+  "inventory": {
+    "data_firewall.json": {
+      "sha256": "119b9aa710dd55157836425d8491ead3fd9685c16f95d5e23dc4174e5ae30a70",
+      "size_bytes": 2746
+    },
+    "data_firewall.log": {
+      "sha256": "8b1914fb3f27c9f1e08aa3bf10919f25eeeb762ae3e87bc2a1975f99458058cf",
+      "size_bytes": 98
+    },
+    "pytest_windows.json": {
+      "sha256": "d21a40b3f5261217529b4f65f2c4a908dfd55c690465e72086c2e935ea0032ef",
+      "size_bytes": 229
+    },
+    "pytest_windows.log": {
+      "sha256": "37385f2a19ce21f8ef207d189addf4556c45b3c042ae82283413290ec4b0ddef",
+      "size_bytes": 43511
+    },
+    "pytest_wsl.json": {
+      "sha256": "2118cc1cb821742c32012ef6c53b9dba4d1a11d5a78c5e6c4a234ccbbe57128d",
+      "size_bytes": 212
+    },
+    "pytest_wsl.log": {
+      "sha256": "4010cdb72dcc61f807d6143a420d702cee234cb5a433a66caf308faa6b75f95c",
+      "size_bytes": 2082
+    },
+    "secret_scan.json": {
+      "sha256": "3159f26ff0dc062ad175da30e7982228cdee9ad872532d6a3d953f5cee102fe4",
+      "size_bytes": 3057
+    },
+    "secret_scan.log": {
+      "sha256": "08db915c9031c7cb1e0a670a10051931f07a786c5c3ab172d0f80cc497e39167",
+      "size_bytes": 2859
+    }
+  }
+}

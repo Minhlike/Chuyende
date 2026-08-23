@@ -1,0 +1,88 @@
+{
+  "database_invariants_pass": true,
+  "all_10_manifests_firewalled": true,
+  "all_10_manifests_nan_zero": true,
+  "total_manifests_audited": 10,
+  "manifests": [
+    {
+      "dataset": "HDFS",
+      "seed": 42,
+      "firewall_sealed": true,
+      "nan_zero": true,
+      "best_val_loss": 0.032199704398432796,
+      "checkpoint_sha256": "9df4df87c280005d0f6eee1d69f88bbc379dc5438b96596af50184bd268809b9"
+    },
+    {
+      "dataset": "HDFS",
+      "seed": 1337,
+      "firewall_sealed": true,
+      "nan_zero": true,
+      "best_val_loss": 0.029721404229922997,
+      "checkpoint_sha256": "c2347457d1c29b6b162cb76894fe660fd25249e3112aed42a618ac4e29cd1083"
+    },
+    {
+      "dataset": "HDFS",
+      "seed": 2024,
+      "firewall_sealed": true,
+      "nan_zero": true,
+      "best_val_loss": 0.030481867275072894,
+      "checkpoint_sha256": "9802d9570dfb0b0372e56621e301bc553e95e9fea83a51b906a7b324be761ea0"
+    },
+    {
+      "dataset": "HDFS",
+      "seed": 7,
+      "firewall_sealed": true,
+      "nan_zero": true,
+      "best_val_loss": 0.033878432613036906,
+      "checkpoint_sha256": "4737d60ef95bea3a8f532d1cf8c24952cacdefe5e3db267bf8f1c6ef43c8c74f"
+    },
+    {
+      "dataset": "HDFS",
+      "seed": 999,
+      "firewall_sealed": true,
+      "nan_zero": true,
+      "best_val_loss": 0.030099619423829643,
+      "checkpoint_sha256": "5b93970b78a4dec5bcc5160de29fbe4ab5c220f0fba4a13b9e3f0bfed47f20e5"
+    },
+    {
+      "dataset": "BGL",
+      "seed": 42,
+      "firewall_sealed": true,
+      "nan_zero": true,
+      "best_val_loss": 11.908216121500015,
+      "checkpoint_sha256": "bfb278ae1da9dc7aa8e7aa27482fe1ba151e0f864cc0191dfee2f1e846470e65"
+    },
+    {
+      "dataset": "BGL",
+      "seed": 1337,
+      "firewall_sealed": true,
+      "nan_zero": true,
+      "best_val_loss": 12.05965317059012,
+      "checkpoint_sha256": "a3135ec1e5cf5aad9f9f266cc0e6bc43ed53a35f4f3aa588f0ac6e13b4973853"
+    },
+    {
+      "dataset": "BGL",
+      "seed": 2024,
+      "firewall_sealed": true,
+      "nan_zero": true,
+      "best_val_loss": 11.279186727742136,
+      "checkpoint_sha256": "9903d1f2d0d21bdcd7f9064be011b9b0aa893c59418b748bb1f0bed30bff73f7"
+    },
+    {
+      "dataset": "BGL",
+      "seed": 7,
+      "firewall_sealed": true,
+      "nan_zero": true,
+      "best_val_loss": 11.77521152820664,
+      "checkpoint_sha256": "e59622617964bd764e33a20e29c69e56395f762eed76ace217074977664efc73"
+    },
+    {
+      "dataset": "BGL",
+      "seed": 999,
+      "firewall_sealed": true,
+      "nan_zero": true,
+      "best_val_loss": 11.990875808751813,
+      "checkpoint_sha256": "3d32d9ba9d95beb73c6b5f45a69b7714b848564868ca6b585e91d4f64908edbf"
+    }
+  ]
+}
