@@ -5,7 +5,7 @@
   "dataset": "HDFS",
   "split_id": "SPL-HDFS-001",
   "seed": 42,
-  "expected_execution_code_commit_sha": "b1310c3b036577317eb11be4f9dbe1e138ee6da6",
+  "expected_execution_code_commit_sha": "b1310c3675c51e0ddc562e040d70839db38f0745",
   "effective_protocol_version": "1.4.1",
   "protocol_lock_sha256": "41d0c54153d7e988acaba64cf7478037220257be3051fe831d082e3f4c1e4831",
   "environment_lock_sha256": "aeac2a947d21cec99c5a1fd0124bf8fdf6a8e86f259e740421f5a5743be3e545",
