@@ -1,6 +1,6 @@
 {
   "model_architecture": "TemporalGraphViewEncoder",
-  "model_parameter_count": 296048,
+  "model_parameter_count": 304111,
   "trainer": "StageA2Trainer",
   "device_used": "cpu",
   "optimizer": "AdamW",
@@ -8,6 +8,9 @@
   "gradient_accumulation_steps": 2,
   "checkpoint_boundary_policy": "CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY",
   "mutable_states_count": 14,
+  "relation_output_classes": 8,
+  "node_reconstruction_loss": "MSELoss",
+  "node_type_embedding_active": true,
   "predict_before_update": true,
   "relation_target_withheld": true,
   "node_target_withheld": true,
