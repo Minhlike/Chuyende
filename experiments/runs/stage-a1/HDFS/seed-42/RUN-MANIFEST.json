@@ -1,0 +1,22 @@
+{
+  "run_id": "STAGE_A1_HDFS_SEED_42_1787349673",
+  "dataset": "HDFS",
+  "seed": 42,
+  "best_val_loss": 0.032199704398432796,
+  "stopped_epoch": 19,
+  "total_optimizer_steps": 10393,
+  "total_duration_sec": 1250.7648158073425,
+  "peak_vram_mb": 170.58447265625,
+  "peak_ram_mb": 2065.28125,
+  "nan_loss_count": 0,
+  "inf_loss_count": 0,
+  "nan_grad_count": 0,
+  "inf_grad_count": 0,
+  "test_feature_read_count": 0,
+  "test_label_read_count": 0,
+  "test_metric_count": 0,
+  "test_opened": false,
+  "result_class": "SELF_SUPERVISED_PRETRAINING",
+  "confirmatory_hypothesis_result": false,
+  "best_checkpoint_sha256": "9df4df87c280005d0f6eee1d69f88bbc379dc5438b96596af50184bd268809b9"
+}

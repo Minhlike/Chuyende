@@ -68,9 +68,14 @@ datasets/processed/**
 !datasets/processed/.gitkeep
 datasets/cache/**
 
+# PyTorch checkpoints and weights
+*.pt
+*.pth
+
 # Experiments Runs, Checkpoints & Scratch Caches (RC-10)
 experiments/runs/**
 !experiments/runs/.gitkeep
+!experiments/runs/stage-a1/**/*.json
 experiments/checkpoints/**
 experiments/cache/**
 artifacts/**

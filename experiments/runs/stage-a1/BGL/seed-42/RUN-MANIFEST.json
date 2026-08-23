@@ -1,0 +1,22 @@
+{
+  "run_id": "STAGE_A1_BGL_SEED_42_1787488818",
+  "dataset": "BGL",
+  "seed": 42,
+  "best_val_loss": 11.908216121500015,
+  "stopped_epoch": 9,
+  "total_optimizer_steps": 2817,
+  "total_duration_sec": 530.3905391693115,
+  "peak_vram_mb": 470.18310546875,
+  "peak_ram_mb": 2062.00390625,
+  "nan_loss_count": 0,
+  "inf_loss_count": 0,
+  "nan_grad_count": 0,
+  "inf_grad_count": 0,
+  "test_feature_read_count": 0,
+  "test_label_read_count": 0,
+  "test_metric_count": 0,
+  "test_opened": false,
+  "result_class": "SELF_SUPERVISED_PRETRAINING",
+  "confirmatory_hypothesis_result": false,
+  "best_checkpoint_sha256": "bfb278ae1da9dc7aa8e7aa27482fe1ba151e0f864cc0191dfee2f1e846470e65"
+}
