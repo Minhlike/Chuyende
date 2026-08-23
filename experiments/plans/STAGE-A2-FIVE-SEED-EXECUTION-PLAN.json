@@ -1,7 +1,7 @@
 {
-  "plan_id": "PLAN-STAGE-A2-FIVE-SEED-EXECUTION-V1.0",
-  "execution_code_commit_sha": "6d0071d3f8fd4fd8adda128daca9a66a778fc649",
-  "protocol_version": "1.3",
+  "plan_id": "PLAN-STAGE-A2-FIVE-SEED-EXECUTION-V1.4",
+  "execution_code_commit_sha": "bc8fee372c18ae22996c8d19ff6def46db6cf41d",
+  "protocol_version": "1.4",
   "protocol_sha256": "87a783618c90c85129991e7694632172b26a43ce64f452d0f266f7db70597dfa",
   "graph_contract_sha256": "05f5ab38c4c02e14292b510ac518dd98171732551d032ec0ed09fc96848f5837",
   "dataset": "HDFS",
@@ -9,6 +9,13 @@
   "dataset_eligibility": {
     "HDFS": "ELIGIBLE",
     "BGL": "INELIGIBLE_SINGLE_NODE"
+  },
+  "execution_device": "cuda",
+  "device_requirements": {
+    "device_name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+    "cuda_runtime": "12.4",
+    "total_vram_gb": 4.00,
+    "automatic_cpu_fallback": "FORBIDDEN"
   },
   "execution_membership": {
     "authorized_train_sessions": 35000,
@@ -75,11 +82,28 @@
     "min_lr": 0.00001,
     "temporal_window_size": 256,
     "gradient_accumulation_steps": 4,
-    "effective_batch_size_events": 1024,
+    "nominal_effective_batch_size_events": 1024,
     "clip_norm": 1.0,
     "max_epochs": 20,
     "early_stopping_patience": 3,
-    "checkpoint_selection": "MINIMUM_VALIDATION_L_GRAPH"
+    "checkpoint_selection": "MINIMUM_GLOBAL_VALIDATION_L_GRAPH"
+  },
+  "validation_contract": {
+    "validation_mask_probability_rel": 0.15,
+    "validation_mask_probability_node": 0.15,
+    "validation_mask_policy": "FIXED_DETERMINISTIC_RNG_GENERATOR",
+    "validation_mask_seed": 20260823,
+    "global_loss_aggregation": true,
+    "total_validation_events": 119531,
+    "total_validation_windows": 467
+  },
+  "partial_window_contract": {
+    "train_full_windows": 2291,
+    "train_final_partial_window_events": 81,
+    "train_total_windows": 2292,
+    "train_optimizer_steps_per_epoch": 573,
+    "final_optimizer_step_group_events": 849,
+    "accumulation_gradient_weighting": "EVENT_COUNT_WEIGHTED_Nk_OVER_Ngroup"
   },
   "per_seed_output_contract": [
     "RUN-MANIFEST.json",
@@ -98,11 +122,9 @@
     "max_retry_attempts": 0
   },
   "test_firewall": {
-    "test_status": "SEALED_ZERO_ACCESS",
     "test_opened": false,
     "test_feature_reads": 0,
     "test_label_reads": 0,
     "test_metrics": 0
-  },
-  "authorization_state": "PREPARED_PENDING_INDEPENDENT_REVIEW_AUTHORIZATION"
+  }
 }

@@ -1,7 +1,9 @@
 {
   "python_version": "3.12.8",
-  "pytorch_version": "2.13.0+cpu",
-  "cuda_version": null,
-  "device_name": "cpu",
+  "pytorch_version": "2.6.0+cu124",
+  "cuda_version": "12.4",
+  "device_name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+  "device_type": "cuda",
+  "total_vram_gb": 3.99951171875,
   "platform": "Windows-11-10.0.26200-SP0"
 }
