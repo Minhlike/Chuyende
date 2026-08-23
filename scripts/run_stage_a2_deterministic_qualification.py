@@ -347,6 +347,9 @@ def run_qualification(device_arg: Optional[str] = None):
         "total_vram_gb": (torch.cuda.get_device_properties(0).total_memory / (1024**3)) if torch.cuda.is_available() else None,
         "platform": platform.platform()
     }
+    env_path = evidence_dir / "ENVIRONMENT.json"
+    env_path.write_text(json.dumps(env_data, indent=2) + "\n", encoding="utf-8")
+
     t_end = time.time()
     t_end_iso = datetime.now(timezone.utc).isoformat()
     qual_run_id = f"QUAL-STAGE-A2-SEED42-HARDENED-CUDA"
