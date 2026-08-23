@@ -61,3 +61,17 @@
   2. **Disambiguated Masking Policies:** Formally separated Masked Event Prediction ($p_{\text{MEP}} = 0.15$, 80/10/10 rule) from Masked Parameter Prediction ($p_{\text{MPP}} = 0.15$ applied independently per active slot, `<PAD_PARAM>` excluded as target, loss computed strictly over active masked slots).
   3. **Batch & Optimization Regime:** Formally locked canonical batch parameters across all specifications: `micro_batch_size = 16`, `gradient_accumulation_steps = 4`, `effective_batch_size = 64`.
   4. **Five-Seed Stability Role:** Clarified that the $K=5$ canonical seeds evaluate stochastic training stability ($\text{Mean} \pm \text{SD}$) and do not serve as a bootstrap sampling population.
+
+---
+
+### Amendment 7: Stage A2 Pre-Execution Scientific Consistency & Raw-Grounded Graph Amendment V1.1
+- **Timestamp:** 2026-08-23T21:05:00+07:00
+- **Execution State:** `TEST_OPENED = NO`, `RESULTS_SEEN = NO`, `OPTIMIZER_STEPS_BEFORE_AMENDMENT = 0`, `MODELS_TRAINED_BEFORE_AMENDMENT = 0`
+- **Reason:** Pre-execution scientific audit following Stage A2 initial registration to eliminate ungrounded topology assumptions and align graph contracts with verified raw audit schemas before the first optimizer step.
+- **Amended Specifications:**
+  1. **Dataset Grounding & BGL Ineligibility:** Formally designated **HDFS** as the authorized dataset for Stage A2 graph pretraining based on verified multi-entity raw interactions (DataBlocks, StorageNodes, Namesystem, Threads). Formally declared **BGL ineligible** for Stage A2 graph pretraining (`BGL_STAGE_A2_GRAPH_ELIGIBILITY = FAIL / INELIGIBLE`) because raw BGL telemetry comprises single-node localized alerts without extractable inter-entity interaction destinations, preventing fabricated graph topology.
+  2. **Raw-to-Graph Mapping Contract:** Materialized and locked `experiments/schemas/STAGE-A2-RAW-TO-GRAPH-MAPPING.json` specifying deterministic regex-grounded extraction rules for all 8 canonical HDFS relations.
+  3. **Removal of Unused Negative Destination Sampling:** Since the canonical multi-task objective $L_{\text{graph}} = 1.0 \cdot L_{\text{rel}} + 1.0 \cdot L_{\text{node}} + 0.1 \cdot L_{\text{time}}$ computes relation classification $L_{\text{rel}}$ on observed $(v, u)$ pairs, negative destination sampling is completely removed from all contracts and checkpoint state definitions.
+  4. **Non-Learnable Fixed Node Target:** Defined $x_v^{\text{fixed\_priv}} \in \mathbb{R}^6$ as a fixed observable target (4-dim one-hot type + 2-dim log1p causal in/out degrees fit on Train only), eliminating learnable parameter leakage in the reconstruction target.
+  5. **Exact Multi-Edge & Conservation Policy:** Enforced exact conservation $\text{raw\_scanned} = \text{materialized\_events} + \text{explicitly\_rejected\_events}$ and locked `PRESERVE_ALL_TEMPORAL_EVENTS_FIFO_CAUSAL` with `max_node_history = 64`.
+

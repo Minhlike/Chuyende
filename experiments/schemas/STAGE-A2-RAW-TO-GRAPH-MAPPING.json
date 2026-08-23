@@ -1,0 +1,191 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "contract_id": "SCHEMA-STAGE-A2-RAW-TO-GRAPH-MAPPING-V1.1",
+  "version": "1.1.0",
+  "title": "Stage A2 Raw Log to Temporal Graph Exact Extraction Mapping Contract",
+  "description": "Strict, deterministic mapping rules defining how raw HDFS log events are parsed and materialized into causal graph nodes, edges, and features without speculative semantics.",
+  "dataset_eligibility": {
+    "HDFS": {
+      "eligible": true,
+      "graph_type": "CAUSAL_EVENT_ENTITY_TEMPORAL_GRAPH_DERIVED_FROM_LOGS",
+      "rationale": "Raw HDFS logs contain explicit multi-entity interactions linking DataBlocks, StorageNodes, Namesystem coordinators, and ExecutionThreads with deterministic relation semantics."
+    },
+    "BGL": {
+      "eligible": false,
+      "graph_type": "NONE",
+      "rationale": "BGL raw logs represent single-node localized telemetry alerts without extractable inter-entity interaction destinations. Excluded from Stage A2 to prevent fabricated interaction topology."
+    },
+    "DARPA_TC_E3": {
+      "eligible": false,
+      "graph_type": "NATIVE_PROVENANCE_GRAPH",
+      "rationale": "Physical CDM18 dataset is currently PENDING_ACQUISITION. Reserved for post-acquisition execution."
+    },
+    "LANL_CYBER1": {
+      "eligible": false,
+      "graph_type": "AUTHENTICATION_BIPARTITE_GRAPH",
+      "rationale": "Raw dataset is currently PENDING_ACQUISITION. Reserved for post-acquisition execution."
+    }
+  },
+  "hdfs_node_types": [
+    {
+      "type_id": 0,
+      "type_name": "DATA_BLOCK",
+      "identifier_pattern": "^blk_[-0-9]+$",
+      "description": "HDFS unique data block identifier"
+    },
+    {
+      "type_id": 1,
+      "type_name": "STORAGE_NODE",
+      "identifier_pattern": "^(/)?[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}(:[0-9]+)?$",
+      "description": "HDFS DataNode IP address or IP:port endpoint"
+    },
+    {
+      "type_id": 2,
+      "type_name": "MANAGEMENT_SYSTEM",
+      "identifier_pattern": "^(FSNamesystem|NameSystem)$",
+      "description": "HDFS central coordinator / metadata manager"
+    },
+    {
+      "type_id": 3,
+      "type_name": "EXECUTION_THREAD",
+      "identifier_pattern": "^PacketResponder_[0-9]+$",
+      "description": "DataNode packet responder execution thread"
+    }
+  ],
+  "hdfs_relations": [
+    {
+      "relation_id": 1,
+      "relation_name": "RECEIVES_BLOCK",
+      "source_node_type": "STORAGE_NODE",
+      "dest_node_type": "DATA_BLOCK",
+      "raw_regex_pattern": "Receiving block (blk_[-0-9]+) src: (/?[\\d\\.:]+) dest: (/?[\\d\\.:]+)",
+      "source_extraction": "regex_group_3",
+      "dest_extraction": "regex_group_1",
+      "edge_features": {
+        "transmitting_source_node": "regex_group_2",
+        "has_size": false,
+        "event_code": 1
+      },
+      "raw_train_example": "081109 203518 143 INFO dfs.DataNode$DataXceiver: Receiving block blk_-1608961267986555555 src: /10.250.19.102:54106 dest: /10.250.19.102:50010"
+    },
+    {
+      "relation_id": 2,
+      "relation_name": "STORES_BLOCK",
+      "source_node_type": "STORAGE_NODE",
+      "dest_node_type": "DATA_BLOCK",
+      "raw_regex_pattern": "Received block (blk_[-0-9]+) of size (\\d+) from (/?[\\d\\.:]+)",
+      "source_extraction": "regex_group_3",
+      "dest_extraction": "regex_group_1",
+      "edge_features": {
+        "block_size_bytes": "regex_group_2",
+        "has_size": true,
+        "event_code": 2
+      },
+      "raw_train_example": "081109 203519 143 INFO dfs.DataNode$DataXceiver: Received block blk_-1608961267986555555 of size 91178 from /10.250.19.102"
+    },
+    {
+      "relation_id": 3,
+      "relation_name": "ALLOCATES_BLOCK",
+      "source_node_type": "MANAGEMENT_SYSTEM",
+      "dest_node_type": "DATA_BLOCK",
+      "raw_regex_pattern": "BLOCK\\* NameSystem\\.allocateBlock: (.*)\\. (blk_[-0-9]+)",
+      "source_extraction": "LITERAL:FSNamesystem",
+      "dest_extraction": "regex_group_2",
+      "edge_features": {
+        "file_path_prefix": "regex_group_1",
+        "has_size": false,
+        "event_code": 3
+      },
+      "raw_train_example": "081109 203520 143 INFO dfs.FSNamesystem: BLOCK* NameSystem.allocateBlock: /mnt/hadoop/dfs/data/... blk_-1608961267986555555"
+    },
+    {
+      "relation_id": 4,
+      "relation_name": "MONITORS_BLOCK",
+      "source_node_type": "EXECUTION_THREAD",
+      "dest_node_type": "DATA_BLOCK",
+      "raw_regex_pattern": "PacketResponder (\\d+) for block (blk_[-0-9]+) terminating",
+      "source_extraction": "CONCAT:PacketResponder_{regex_group_1}",
+      "dest_extraction": "regex_group_2",
+      "edge_features": {
+        "thread_id": "regex_group_1",
+        "has_size": false,
+        "event_code": 4
+      },
+      "raw_train_example": "081109 203521 143 INFO dfs.DataNode$PacketResponder: PacketResponder 1 for block blk_-1608961267986555555 terminating"
+    },
+    {
+      "relation_id": 5,
+      "relation_name": "SERVES_BLOCK",
+      "source_node_type": "STORAGE_NODE",
+      "dest_node_type": "DATA_BLOCK",
+      "raw_regex_pattern": "Served block (blk_[-0-9]+) to (/?[\\d\\.:]+)",
+      "source_extraction": "regex_group_2",
+      "dest_extraction": "regex_group_1",
+      "edge_features": {
+        "client_endpoint": "regex_group_2",
+        "has_size": false,
+        "event_code": 5
+      },
+      "raw_train_example": "081109 203522 143 INFO dfs.DataNode$DataXceiver: Served block blk_-1608961267986555555 to /10.250.19.102"
+    },
+    {
+      "relation_id": 6,
+      "relation_name": "UPDATES_BLOCK_MAP",
+      "source_node_type": "STORAGE_NODE",
+      "dest_node_type": "DATA_BLOCK",
+      "raw_regex_pattern": "BLOCK\\* NameSystem\\.addStoredBlock: blockMap updated: ([\\d\\.:]+) is added to (blk_[-0-9]+) size (\\d+)",
+      "source_extraction": "regex_group_1",
+      "dest_extraction": "regex_group_2",
+      "edge_features": {
+        "block_size_bytes": "regex_group_3",
+        "has_size": true,
+        "event_code": 6
+      },
+      "raw_train_example": "081109 203523 143 INFO dfs.FSNamesystem: BLOCK* NameSystem.addStoredBlock: blockMap updated: 10.250.19.102:50010 is added to blk_-1608961267986555555 size 91178"
+    },
+    {
+      "relation_id": 7,
+      "relation_name": "REPLICATES_BLOCK",
+      "source_node_type": "STORAGE_NODE",
+      "dest_node_type": "DATA_BLOCK",
+      "raw_regex_pattern": "BLOCK\\* ask ([\\d\\.:]+) to replicate (blk_[-0-9]+) to datanode\\(s\\) (.*)",
+      "source_extraction": "regex_group_1",
+      "dest_extraction": "regex_group_2",
+      "edge_features": {
+        "target_nodes": "regex_group_3",
+        "has_size": false,
+        "event_code": 7
+      },
+      "raw_train_example": "081109 203524 143 INFO dfs.FSNamesystem: BLOCK* ask 10.250.19.102:50010 to replicate blk_-1608961267986555555 to datanode(s) 10.250.10.6:50010"
+    },
+    {
+      "relation_id": 8,
+      "relation_name": "DELETES_BLOCK",
+      "source_node_type": "MANAGEMENT_SYSTEM",
+      "dest_node_type": "DATA_BLOCK",
+      "raw_regex_pattern": "(BLOCK\\* ask ([\\d\\.:]+) to delete (blk_[-0-9]+)|Deleting block (blk_[-0-9]+) file (.*))",
+      "source_extraction": "LITERAL:FSNamesystem",
+      "dest_extraction": "CONDITIONAL:blk_group",
+      "edge_features": {
+        "has_size": false,
+        "event_code": 8
+      },
+      "raw_train_example": "081109 203525 143 INFO dfs.FSNamesystem: BLOCK* ask 10.250.19.102:50010 to delete blk_-1608961267986555555"
+    }
+  ],
+  "node_reconstruction_target": {
+    "target_name": "x_v_fixed_priv",
+    "dimension": 6,
+    "components": [
+      {"name": "one_hot_node_type", "dim": 4, "type": "FIXED_ONE_HOT_CATEGORICAL"},
+      {"name": "normalized_causal_in_degree", "dim": 1, "type": "LOG1P_CONTINUOUS_TRAIN_SCALED"},
+      {"name": "normalized_causal_out_degree", "dim": 1, "type": "LOG1P_CONTINUOUS_TRAIN_SCALED"}
+    ],
+    "properties": {
+      "contains_learnable_parameters": false,
+      "contains_future_statistics": false,
+      "contains_raw_identifiers": false,
+      "contains_downstream_labels": false
+    }
+  }
+}

@@ -1,110 +1,89 @@
-# CHAPTER 3 — STAGE A2 SCIENTIFIC DESIGN AUDIT & ADVERSARIAL REVIEW
+# CHAPTER 3 — STAGE A2 SCIENTIFIC DESIGN AUDIT & RAW-TO-GRAPH GROUNDING REVIEW
 
-**Document ID:** `AUDIT-CH3-STAGE-A2-001`  
+**Document ID:** `AUDIT-CH3-STAGE-A2-001-V1.1`  
 **Date:** 2026-08-23  
-**Status:** `AUDITED & SEALED (PRE-EXECUTION)`  
-**Scope:** Deep Architectural & Causal Leakage Audit for Temporal Graph Self-Supervised Pretraining  
+**Status:** `AUDITED & SEALED (AMENDED V1.1 PRE-EXECUTION)`  
+**Scope:** Deep Architectural, Causal Leakage & Raw-Grounded Graph Semantics Audit  
 
 ---
 
-## 1. Adversarial Risk Audit Matrix (12 Invariant Categories)
+## 1. Executive Summary of Protocol Amendment V1.1
 
-### 1.1. Future-Edge Target Leakage
-- **Risk:** During temporal link prediction / relation classification at event $e_t = (v, u, r, t, x_e)$, if node memory states $h_v, h_u$ are updated with $e_t$ before evaluating the prediction loss, the model trivially predicts the edge from its own newly updated state.
-- **Evidence:** Standard static GNN frameworks and naive dynamic GNN loops frequently update memory states in the forward pass before computing loss.
-- **Resolution:** Strict **Predict-Before-Update** semantics. At timestamp $t$, the auxiliary prediction heads compute $\hat{r} = g_{\text{rel}}(h_v(t-), h_u(t-), \phi(\Delta t))$ and $\hat{x}_v = g_{\text{node}}(h_v(t-))$ using the memory state $h(t-)$ strictly prior to incorporating $e_t$. The GRU memory update $h_v(t) = \text{GRU}(h_v(t-), \bar{m}_v(t))$ is executed strictly *after* loss computation.
-- **Final Contract:** `SCHEMA-STAGE-A2-GRAPH-CONTRACT-V1:causality_invariants:predict_before_update = true`.
+Following post-preregistration independent review and prior to executing any optimizer step (`OPTIMIZER_STEPS = 0`, `MODELS_TRAINED = 0`, `TEST_OPENED = false`, `RESULTS_SEEN = NO`), the Stage A2 protocol was amended to V1.1 to resolve key scientific consistency gaps:
+
+1. **Raw Log Grounding & BGL Ineligibility:**
+   - **HDFS:** Fully eligible (`HDFS_GRAPH_ELIGIBILITY = YES`). Raw logs contain explicit multi-entity interactions linking DataBlocks, StorageNodes, Namesystem coordinators, and ExecutionThreads.
+   - **BGL:** Ineligible for graph pretraining (`BGL_STAGE_A2_GRAPH_ELIGIBILITY = FAIL / INELIGIBLE`). Raw BGL logs represent localized single-node alert reports without extractable inter-entity destination nodes. To prevent fabricated interaction topology, BGL is excluded from Stage A2 Graph Pretraining.
+2. **Removal of Unused Negative Destination Sampling:**
+   - The canonical objective $L_{\text{graph}} = 1.0 \cdot L_{\text{rel}} + 1.0 \cdot L_{\text{node}} + 0.1 \cdot L_{\text{time}}$ computes relation classification $L_{\text{rel}}$ on known $(v, u)$ pairs.
+   - Negative destination sampling was completely removed from the graph contract, pre-execution lock, and checkpoint state definitions, eliminating ambiguity.
+3. **Fixed, Non-Learnable Node Reconstruction Target:**
+   - $x_v^{\text{fixed\_priv}}$ is defined as a fixed 6-dimensional observable vector: 4-dim one-hot entity type + 2-dim log1p causal in/out degrees.
+   - Zero learnable parameters, zero future statistics, zero raw private strings, zero downstream labels.
+4. **Conservation & Exact Multi-Edge Policy:**
+   - Exact conservation law enforced: $\text{raw\_scanned} = \text{materialized\_events} + \text{explicitly\_rejected\_events}$.
+   - Multi-edge policy: `PRESERVE_ALL_TEMPORAL_EVENTS_FIFO_CAUSAL` with `max_node_history = 64`.
 
 ---
 
-### 1.2. Future-Neighbor & Non-Causal Topology Leakage
+## 2. Adversarial Risk Audit Matrix (12 Invariant Categories)
+
+### 2.1. Future-Edge Target Leakage
+- **Risk:** Updating node memory states $h_v, h_u$ with event $e_t = (v, u, r, t, x_e)$ before evaluating the prediction loss.
+- **Resolution:** Strict **Predict-Before-Update** semantics. At timestamp $t$, the auxiliary prediction heads compute $\hat{r} = g_{\text{rel}}(h_v(t-), h_u(t-), \phi(\Delta t))$ and $\hat{x}_v = g_{\text{node}}(h_v(t-))$ using node states strictly prior to $e_t$. The GRU memory update executes strictly *after* loss computation.
+- **Contract:** `causality_invariants:predict_before_update = true`.
+
+### 2.2. Future-Neighbor & Non-Causal Topology Leakage
 - **Risk:** Constructing a global adjacency matrix across the entire timeline allows past events to aggregate messages from future neighbors.
-- **Evidence:** Naive implementations of PyTorch Geometric `DataLoader` on temporal datasets construct static graphs over whole datasets.
-- **Resolution:** **Temporal Neighborhood Firewall**. Graph neighborhoods $\mathcal{N}(v, t)$ at time $t$ query only historical edges $E_{<t}$. Neighborhood message passing occurs along causal incoming edges observed up to $t-$.
-- **Final Contract:** Global static graph queries are strictly prohibited; dynamic memory updates maintain causal temporal adjacency.
+- **Resolution:** Graph neighborhoods $\mathcal{N}(v, t)$ at time $t$ query only historical edges $E_{<t}$. Static whole-timeline graph construction is strictly prohibited.
+- **Contract:** `future_neighbor_firewall = true`.
 
----
+### 2.3. Global Statistics & Graph Metric Contamination
+- **Risk:** Computing graph-level statistics (PageRank, global degree) across the full dataset and feeding them as static node features.
+- **Resolution:** Only causal dynamic degrees ($d_{\text{in}}(v, t-), d_{\text{out}}(v, t-)$) computed on the fly are permitted. Continuous scalers are fit strictly on Train.
+- **Contract:** Continuous degree scalers fit on `TRAIN_ONLY`.
 
-### 1.3. Global Statistics & Graph Metric Contamination
-- **Risk:** Computing graph-level statistics (e.g. PageRank, global degree, centrality, clustering coefficient) across the full dataset and feeding them as static node features leaks future activity patterns.
-- **Evidence:** `Bilot2025SimplerIsBetter` and `Arp2022DosDonts` demonstrated that global degree in provenance datasets acts as a high-performing shortcut.
-- **Resolution:** Only **causal dynamic degrees** ($d_{\text{in}}(v, t-), d_{\text{out}}(v, t-)$) computed on the fly from the causal stream are permitted. Global whole-dataset graph metrics are strictly banned.
-- **Final Contract:** Dynamic attributes restricted to causal degree and local event properties (`STAGE-A2-GRAPH-CONTRACT.json`).
+### 2.4. Split Contamination & Vocabulary Snooping
+- **Risk:** Fitting node vocabularies or tokenizers on Validation or Test splits.
+- **Resolution:** Node entity tables and relation vocabularies are fit **strictly on the Train split**. Unseen nodes in Validation receive the typed `<UNK_NODE>` fallback representation.
+- **Contract:** `entity_vocabulary_scope:fit_split = "TRAIN_ONLY"`.
 
----
+### 2.5. Entity Identity Shortcut & Privacy Inversion
+- **Risk:** Using raw hostnames, usernames, or PIDs as target labels.
+- **Resolution:** Reconstruction targets for $L_{\text{node}}$ are strictly $x_v^{\text{fixed\_priv}}$ (fixed one-hot type + causal degree). Raw PIDs, raw IP addresses, and raw usernames are strictly excluded from SSL reconstruction targets.
+- **Contract:** `privacy_and_firewall:raw_identifiers_in_targets = "STRICTLY_PROHIBITED"`.
 
-### 1.4. Split Contamination & Vocabulary Snooping
-- **Risk:** Fitting node vocabularies, tokenizers, or normalization scalers on Validation or Test splits leaks entity sets and distribution boundaries.
-- **Evidence:** `CTRL-LEAK-001` in Chapter 2 establishes strict unidirectional information flow ($\mathcal{D}_{\text{train}} \to \mathcal{D}_{\text{val}} \to \mathcal{D}_{\text{test}}$).
-- **Resolution:** Node entity tables, relation vocabularies, and continuous feature scalers are fit **strictly and exclusively on the Train split**. Unseen nodes in Validation/Test receive the typed `<UNK_NODE>` fallback representation.
-- **Final Contract:** `entity_vocabulary_scope:fit_split = "TRAIN_ONLY"`.
+### 2.6. Negative Sampling Discrepancy Resolution
+- **Risk:** Keeping negative sampling in contracts when the canonical objective does not use link prediction loss.
+- **Resolution:** Negative destination sampling is completely removed from all contracts, schemas, and checkpoint definitions.
+- **Contract:** `negative_sampling:status = "REMOVED_NO_LINK_PRED_LOSS"`.
 
----
+### 2.7. Temporal Batching & Window Boundary Leakage
+- **Risk:** Shuffling temporal graph batches across time destroys the monotonicity of time and violates causal memory updates.
+- **Resolution:** Batches are processed in **strict chronological order** within contiguous temporal windows.
+- **Contract:** `temporal_ordering_policy = "STRICT_CHRONOLOGICAL_STREAM"`.
 
-### 1.5. Entity Identity Shortcut & Privacy Inversion
-- **Risk:** Using raw hostnames, raw usernames, or raw PIDs as direct target labels in self-supervised reconstruction allows the model to memorize static entity fingerprints rather than generalizable structural interaction patterns.
-- **Evidence:** Chapter 2 (Mục 2.2.2) establishes the Controlled Linkability and Privacy Threat Model (`CTRL-PRIV-001`).
-- **Resolution:** Reconstruction targets for $L_{\text{node}}$ are strictly $x_v^{\text{priv}}$ (normalized causal degree + entity type embedding). Raw PIDs, raw IP addresses, and raw usernames are strictly excluded from SSL reconstruction targets.
-- **Final Contract:** `privacy_and_firewall:raw_identifiers_in_targets = "STRICTLY_PROHIBITED"`.
-
----
-
-### 1.6. Negative Sampling Contamination
-- **Risk:** Sampling negative destinations from the entire dataset vocabulary allows the sampler to draw entities that only exist in future unobserved time windows.
-- **Evidence:** Naive uniform negative sampling over $\mathcal{V}_{\text{global}}$ draws future nodes as negatives for past events, artificially inflating link prediction difficulty while leaking future vocabulary.
-- **Resolution:** **Causal Negative Sampling**. The negative candidate pool at time $t$ is strictly restricted to entities causally observed prior to $t$ in the training timeline ($\mathcal{V}_{\le t} \cap \mathcal{V}_{\text{train}}$). True positive destination $u$ and existing active neighbors are excluded. The negative sampler uses an explicit deterministic RNG seeded with `(seed, global_step)`.
-- **Final Contract:** `negative_sampling:algorithm = "CAUSAL_UNIFORM_SAMPLED_HISTORICAL_DESTINATION"`.
-
----
-
-### 1.7. Temporal Batching & Window Boundary Leakage
-- **Risk:** Shuffling temporal graph batches across time destroys the monotonicity of time and violates the causal memory update contract.
-- **Evidence:** Random shuffling of temporal graph batches causes backwards time jumps where $t_{i+1} < t_i$.
-- **Resolution:** Batches are processed in **strict chronological order** within contiguous temporal windows. Gradient accumulation preserves monotonic timeline progression.
-- **Final Contract:** `temporal_ordering_policy = "STRICT_CHRONOLOGICAL_STREAM"`.
-
----
-
-### 1.8. Hidden Label Leakage in Graph Attributes
-- **Risk:** Ingesting ground-truth security flags (e.g. `anomaly_label`, `attack_type`, `redteam_tag`) into edge or node attribute vectors during SSL pretraining.
-- **Evidence:** `enforce_ssl_package_label_free` decorator in `research_agent.experiments.data.data_contract`.
+### 2.8. Hidden Label Leakage in Graph Attributes
+- **Risk:** Ingesting ground-truth security flags into edge or node attribute vectors during SSL pretraining.
 - **Resolution:** The data package builder enforces `LabelLeakageError` on any graph edge/node containing `label`, `is_anomaly`, `attack`, or `alert`.
-- **Final Contract:** `privacy_and_firewall:downstream_labels_in_ssl = "STRICTLY_PROHIBITED"`.
+- **Contract:** `privacy_and_firewall:downstream_labels_in_ssl = "STRICTLY_PROHIBITED"`.
 
----
-
-### 1.9. Test Topology & Graph Structure Sealing
-- **Risk:** Accessing Test graph nodes to build static graph structures or semi-supervised transductive representations before Stage C.
-- **Evidence:** In transductive GNNs, Test graph edges are often included in the message-passing graph with masked labels.
+### 2.9. Test Topology & Graph Structure Sealing
+- **Risk:** Accessing Test graph nodes to build static graph structures or semi-supervised transductive representations.
 - **Resolution:** **Absolute Inductive Test Sealing**. The Test split graph is completely sealed. Zero nodes, zero edges, and zero graph features are accessed or materialized during Stage A2.
-- **Final Contract:** `TEST_OPENED = false`, `TEST_FEATURE_READ_COUNT = 0`, `TEST_LABEL_READ_COUNT = 0`, `TEST_METRIC_COUNT = 0`.
+- **Contract:** `TEST_OPENED = false`, `TEST_FEATURE_READ_COUNT = 0`, `TEST_LABEL_READ_COUNT = 0`, `TEST_METRIC_COUNT = 0`.
 
----
+### 2.10. Invalid Transductive Assumptions
+- **Risk:** Assuming all testing entities were observed during training.
+- **Resolution:** Inductive architecture design with typed fallback embeddings ($e_{\text{type}}(v)$) and zero-memory initialization for cold-start entities.
+- **Contract:** `unseen_node_policy = "TYPED_UNK_NODE_ONLY"`.
 
-### 1.10. Invalid Transductive Assumptions
-- **Risk:** Assuming all testing entities were observed during training, failing when encountering new processes, ephemeral sockets, or cold-start hosts.
-- **Evidence:** Real-world enterprise environments exhibit high entity turnover ($> 30\%$ new PIDs/sockets per day).
-- **Resolution:** Inductive architecture design with typed fallback embeddings ($e_{\text{type}}(v) + W_{\text{hash}} \cdot \text{hash}(v)$) and zero-memory initialization for cold-start entities.
-- **Final Contract:** Model evaluates purely inductively without assuming static transductive node sets.
+### 2.11. Equal-Timestamp Nondeterminism
+- **Risk:** Multiple log events sharing identical timestamps causing non-deterministic ordering.
+- **Resolution:** Deterministic tie-breaking key: `(event_timestamp_utc, raw_line_index)`.
+- **Contract:** `timestamp_tie_breaking:canonical_sort_key = ["event_timestamp_utc", "raw_line_index"]`.
 
----
-
-### 1.11. Equal-Timestamp Nondeterminism
-- **Risk:** When multiple audit log events share the exact same microsecond timestamp, random sorting causes non-deterministic training trajectories.
-- **Evidence:** High-throughput logging produces dozens of events sharing identical millisecond timestamps.
-- **Resolution:** Deterministic tie-breaking key: `(event_timestamp_utc, raw_line_index)`. Events with identical timestamps are causally ordered by their physical order of logging.
-- **Final Contract:** `timestamp_tie_breaking:canonical_sort_key = ["event_timestamp_utc", "raw_line_index"]`.
-
----
-
-### 1.12. Split Boundary Node Memory Contamination
-- **Risk:** Ambiguity between warm-starting Validation memory from Train vs. resetting node states, leading to unreproducible Validation metrics.
-- **Evidence:** Draft plan listed both options without selecting a single canonical rule.
-- **Resolution:** **Single Canonical Policy Locked**: `INDUCTIVE_SPLIT_RESET_ZERO_MEMORY`. At the start of Validation, all node dynamic memory states are reset to $h_{\text{init}} = \mathbf{0}$. Each validation batch/window operates within its own causal temporal context, guaranteeing exact, leak-free reproducibility.
-- **Final Contract:** `split_memory_boundary_policy:canonical_policy = "INDUCTIVE_SPLIT_RESET_ZERO_MEMORY"`.
-
----
-
-## 2. Synthesis & Final Pre-Execution Verdict
-
-All 12 potential leakage channels have been formally addressed, resolved, and bound to machine-verifiable constraints in `STAGE-A2-GRAPH-CONTRACT.json` and `STAGE-A2-PREEXECUTION-LOCK.json`.
+### 2.12. Split Boundary Node Memory Contamination
+- **Risk:** Ambiguity between warm-starting Validation memory from Train vs. resetting node states.
+- **Resolution:** **Single Canonical Policy Locked**: `INDUCTIVE_SPLIT_RESET_ZERO_MEMORY`. At the start of Validation, all node dynamic memory states are reset to $h_{\text{init}} = \mathbf{0}$, ensuring complete inductive isolation and exact reproducibility.
+- **Contract:** `split_memory_boundary_policy:canonical_policy = "INDUCTIVE_SPLIT_RESET_ZERO_MEMORY"`.

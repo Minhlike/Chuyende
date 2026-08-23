@@ -1,24 +1,27 @@
-# CHAPTER 3 — STAGE A2 PRE-REGISTRATION PROTOCOL & SPECIFICATION
+# CHAPTER 3 — STAGE A2 PRE-REGISTRATION PROTOCOL & SPECIFICATION (AMENDMENT V1.1)
 
-**Document Identifier:** `REG-CH3-STAGE-A2-20260823-V1.0`  
+**Document Identifier:** `REG-CH3-STAGE-A2-20260823-V1.1`  
 **Registration Date:** 2026-08-23  
-**Status:** **FROZEN & LOCKED PRE-EXECUTION**  
+**Status:** **FROZEN & LOCKED PRE-EXECUTION (AMENDED V1.1)**  
 **Execution Branch:** `train/ch3-stage-a2-preregistration`  
 **Base Frozen Commit:** `9a707025ed5899c524962558732218ff48e8b212` (Tagged: `ch3-stage-a1-final`)  
+**Previous Preregistration Commit:** `7b0feb788bf242456ab801e062caf6b1f06b8474`  
+**Amendment Justification:** Pre-execution audit resolved raw-to-graph grounding consistency, designated HDFS as the authorized dataset for Stage A2 graph pretraining, excluded BGL due to absence of inter-entity interaction destinations in raw logs, removed unused negative destination sampling from $L_{\text{graph}}$, and fixed the node reconstruction target $x_v^{\text{fixed\_priv}}$ to a non-learnable 6-dimensional observable vector.  
 
 ---
 
 ## 1. Executive Scientific Scope & Boundaries
 
-Stage A2 executes real self-supervised pretraining for the Chapter 2 Dependency-Temporal Graph View Encoder (`TemporalGraphViewEncoder`) across two validated real system log datasets:
-1. **HDFS (Hadoop Distributed File System):** Distributed storage node and block provenance DAG stream.
-2. **BGL (Blue Gene/L Supercomputer):** Multi-node distributed computing architecture interaction graph stream.
+Stage A2 executes real self-supervised pretraining for the Chapter 2 Temporal Graph View Encoder (`TemporalGraphViewEncoder`) on the causal event-entity temporal graph derived from HDFS logs.
 
 ### Inviolable Pre-Execution Boundaries:
 1. **Zero Pre-Execution Optimizer Steps:** At the time of locking, `STAGE_A2_OPTIMIZER_STEPS = 0`, `STAGE_A2_MODELS_TRAINED = 0`.
 2. **Zero Test Split Access:** The Test split is strictly sealed (`TEST_OPENED = false`, `TEST_FEATURE_READ_COUNT = 0`, `TEST_LABEL_READ_COUNT = 0`, `TEST_METRIC_COUNT = 0`).
 3. **Pure Self-Supervision:** Zero downstream anomaly labels, attack types, or security alerts are loaded or exposed to the model (`enforce_ssl_package_label_free`).
-4. **No Cross-Dataset Metric Equivalence:** Raw SSL graph losses ($L_{\text{graph}}$) on HDFS and BGL operate on distinct topological scales and must never be directly compared as performance ranks.
+4. **Dataset Eligibility Audit:**
+   - **HDFS:** `AUTHORIZED` — Causal event-entity temporal graph derived from raw HDFS block interactions.
+   - **BGL:** `INELIGIBLE` — Single-node localized alert telemetry without extractable inter-entity destination nodes.
+   - **DARPA TC E3 & LANL:** `PENDING_ACQUISITION` — Reserved for post-acquisition execution.
 
 ---
 
@@ -26,8 +29,8 @@ Stage A2 executes real self-supervised pretraining for the Chapter 2 Dependency-
 
 | Dataset | Split ID | Raw Checksum (SHA-256) | Train Specification | Validation Specification | Test Specification | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **HDFS** | `SPL-HDFS-001` | `6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169` | Earliest 70% causal block sessions (35,000 sessions) | Next 15% causal block sessions (7,500 sessions) | Final 15% causal block sessions (Sealed, 0 features) | **ACQUIRED & VALIDATED** |
-| **BGL** | `SPL-BGL-001` | `0a58be959cef101bbe5c053e60bd8a49673e9c942b164f4d969bb109e99fce95` | Days 1..150 ($t \in [1117838570, 1130798570)$) | Days 151..180 ($t \in [1130798570, 1133390570)$) | Days 181..215 ($t \in [1133390570, 1136390405]$, Sealed) | **ACQUIRED & VALIDATED** |
+| **HDFS** | `SPL-HDFS-001` | `6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169` | Earliest 70% causal block sessions (35,000 sessions) | Next 15% causal block sessions (7,500 sessions) | Final 15% causal block sessions (Sealed, 0 features) | **AUTHORIZED FOR STAGE A2** |
+| **BGL** | `SPL-BGL-001` | `0a58be959cef101bbe5c053e60bd8a49673e9c942b164f4d969bb109e99fce95` | Days 1..150 | Days 151..180 | Days 181..215 (Sealed) | **INELIGIBLE FOR GRAPH SSL** |
 | **DARPA TC E3** | `SPL-DTC-001` | `PENDING_ACQUISITION` | `PENDING_RAW_CDM18_ALIGNMENT` | `PENDING_RAW_CDM18_ALIGNMENT` | Sealed | `PENDING_ACQUISITION` |
 | **LANL Cyber 1**| `SPL-LANL-001` | `PENDING_ACQUISITION` | `PENDING_ACQUISITION` | `PENDING_ACQUISITION` | Sealed | `PENDING_ACQUISITION` |
 
@@ -58,12 +61,12 @@ Where:
 1. **$L_{\text{rel}}$ (Masked Edge Relation Prediction):**
    $$\mathcal{L}_{\text{rel}} = -\frac{1}{|\mathcal{E}_{\text{mask}}|} \sum_{e=(v,u,r) \in \mathcal{E}_{\text{mask}}} \log P(r \mid h_v(t-), h_u(t-), \phi(\Delta t_{uv}))$$
    - 15% Bernoulli masking on active edges.
-   - Categorical cross-entropy over relation vocabulary.
+   - Categorical cross-entropy over relation vocabulary ($|\mathcal{R}| = 8$).
    - Evaluated strictly using node states $h(t-)$ BEFORE memory update.
 2. **$L_{\text{node}}$ (Masked Node Attribute Reconstruction):**
-   $$\mathcal{L}_{\text{node}} = \frac{1}{|\mathcal{V}_{\text{mask}}|} \sum_{v \in \mathcal{V}_{\text{mask}}} \| g_{\text{node}}(h_v(t-)) - x_v^{\text{priv}} \|_2^2$$
+   $$\mathcal{L}_{\text{node}} = \frac{1}{|\mathcal{V}_{\text{mask}}|} \sum_{v \in \mathcal{V}_{\text{mask}}} \| g_{\text{node}}(h_v(t-)) - x_v^{\text{fixed\_priv}} \|_2^2$$
    - 15% Bernoulli masking on active entity nodes.
-   - Mean Squared Error between predicted continuous vector and true privacy-safe feature $x_v^{\text{priv}}$ (normalized causal degree + type embedding).
+   - Mean Squared Error between predicted continuous vector and true non-learnable feature $x_v^{\text{fixed\_priv}} \in \mathbb{R}^6$ (4-dim fixed one-hot type + 2-dim log1p causal in/out degrees).
 3. **$L_{\text{time}}$ (Relative Temporal Gap Prediction):**
    $$\mathcal{L}_{\text{time}} = \frac{1}{|\mathcal{E}_t|} \sum_{e=(v,u) \in \mathcal{E}_t} \text{Smooth}_{L1}\left( g_{\text{time}}(h_v(t-), h_u(t-)) - \log(1 + \Delta t_{uv}) \right)$$
    - Smooth L1 loss ($\beta = 1.0$) between predicted log-gap and ground-truth inter-event time difference.
@@ -94,9 +97,8 @@ All checkpoints (`best_val_loss.pt`, `checkpoint_last.pt`) must atomically seria
 3. Scheduler state dict (`scheduler_state_dict`)
 4. Node memory states (`node_memory_states`)
 5. Full 4-state RNG tuple: Python, NumPy, PyTorch CPU, PyTorch CUDA
-6. DataLoader / temporal stream iterator state (`stream_iterator_state`)
-7. Negative sampler RNG state (`negative_sampler_rng_state`)
-8. Global step and epoch counters
+6. Stream iterator state (`stream_iterator_state`)
+7. Global step and epoch counters
 
 **Acceptance Criteria for Checkpoint Resumption:**
 $$\text{Max Parameter Divergence between Continuous Run and Resumed Run} < 1.0 \times 10^{-6} \quad (\text{Target: } 0.0)$$

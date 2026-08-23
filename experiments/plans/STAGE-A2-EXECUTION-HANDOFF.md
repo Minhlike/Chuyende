@@ -1,9 +1,9 @@
-# CHAPTER 3 — STAGE A2 PRE-EXECUTION HANDOFF PLAN & RUNNER BLUEPRINT
+# CHAPTER 3 — STAGE A2 PRE-EXECUTION HANDOFF PLAN & RUNNER BLUEPRINT (AMENDMENT V1.1)
 
-**Document ID:** `HANDOFF-CH3-STAGE-A2-001`  
+**Document ID:** `HANDOFF-CH3-STAGE-A2-001-V1.1`  
 **Date:** 2026-08-23  
 **Status:** `READY_FOR_STAGE_A2_RUNNER_IMPLEMENTATION`  
-**Target Execution:** Real Stage A2 Dependency-Temporal Graph View Pretraining  
+**Target Execution:** Real Stage A2 Temporal Graph View Pretraining on HDFS  
 
 ---
 
@@ -13,13 +13,13 @@
    - No Test split unsealing (`TEST_OPENED = false`, `TEST_FEATURE_READ_COUNT = 0`, `TEST_LABEL_READ_COUNT = 0`, `TEST_METRIC_COUNT = 0`).
    - Pure self-supervised graph learning ($L_{\text{graph}} = 1.0 \cdot L_{\text{rel}} + 1.0 \cdot L_{\text{node}} + 0.1 \cdot L_{\text{time}}$).
    - Zero label ingestion into data packages (`enforce_ssl_package_label_free`).
-2. **Deterministic Resumption Guarantee:**
-   - The Stage A2 trainer must implement full state serialization (`model`, `optimizer`, `scheduler`, `node_memory_states`, `4-RNG states`, `stream_iterator`, `negative_sampler_rng`).
-   - Run the deterministic regression test before starting master training.
-3. **Execution Matrix ($K=5$ Seeds per Dataset):**
-   - **HDFS ($K=5$):** Seeds `{42, 1337, 2024, 7, 999}` $\to$ `experiments/runs/stage-a2/HDFS/seed-<SEED>/`
-   - **BGL ($K=5$):** Seeds `{42, 1337, 2024, 7, 999}` $\to$ `experiments/runs/stage-a2/BGL/seed-<SEED>/`
-4. **Acceptance Gates for Stage A2 Completion:**
-   - 10 Run Manifests generated with `nan_loss_count = 0`, `inf_loss_count = 0`, `test_opened = false`.
-   - Checkpoint SHA-256 hashes generated and recorded for every seed.
-   - Deterministic resumption test passes with $\text{max divergence} < 10^{-6}$.
+2. **Authorized Dataset Scope:**
+   - **HDFS ($K=5$ Seeds: `{42, 1337, 2024, 7, 999}`):** Grounded in causal event-entity graph stream (`HDFSGraphBuilder`).
+   - **BGL:** Excluded from Stage A2 graph pretraining (`INELIGIBLE`).
+3. **Model & Target Grounding:**
+   - Architecture: `TemporalGraphViewEncoder` (GRUCell, $d_{\text{node}}=128, d_{\text{edge}}=64, d_{\text{msg}}=128, H=4, \text{dropout}=0.10$).
+   - Node Target ($L_{\text{node}}$): $x_v^{\text{fixed\_priv}} \in \mathbb{R}^6$ (4-dim one-hot type + 2-dim log1p causal in/out degrees).
+   - Negative destination sampling is removed.
+4. **Deterministic Resumption Guarantee:**
+   - The Stage A2 trainer must serialize: `model_state_dict`, `optimizer_state_dict`, `scheduler_state_dict`, `node_memory_states`, `4-RNG states`, `stream_iterator_state`, and `global_step`.
+   - Regression test must pass with $\text{max divergence} < 10^{-6}$ prior to master execution.

@@ -1,9 +1,19 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "contract_id": "SCHEMA-STAGE-A2-GRAPH-CONTRACT-V1",
-  "version": "1.0.0",
-  "title": "Stage A2 Dependency-Temporal Provenance Graph & Temporal Message Passing Contract",
-  "description": "Strict machine-verifiable specification for causal temporal graph construction, entity typing, message passing, and privacy safeguards in Stage A2.",
+  "contract_id": "SCHEMA-STAGE-A2-GRAPH-CONTRACT-V1.1",
+  "version": "1.1.0",
+  "title": "Stage A2 Dependency-Temporal Provenance Graph & Temporal Message Passing Contract (Amended V1.1)",
+  "description": "Strict, raw-grounded specification for causal temporal graph construction, entity typing, message passing, and privacy safeguards in Stage A2.",
+  "dataset_authorization": {
+    "authorized_datasets": ["HDFS"],
+    "ineligible_datasets": [
+      {
+        "dataset": "BGL",
+        "reason": "BGL raw logs represent single-node localized telemetry alerts without extractable inter-entity interaction destinations. Excluded to prevent fabricated topology."
+      }
+    ],
+    "pending_acquisition_datasets": ["DARPA_TC_E3", "LANL_CYBER1"]
+  },
   "causality_invariants": {
     "predict_before_update": {
       "enforced": true,
@@ -25,52 +35,57 @@
     },
     "entity_vocabulary_scope": {
       "fit_split": "TRAIN_ONLY",
-      "unseen_node_policy": "TYPED_FALLBACK_WITH_UNK",
-      "rule": "Node entity vocabulary is fit exclusively on the Train split. Unseen nodes in Validation/Test receive <UNK_NODE> embedding combined with node-type embedding and deterministic identity hash."
+      "unseen_node_policy": "TYPED_UNK_NODE_ONLY",
+      "rule": "Node entity vocabulary is fit exclusively on the Train split. Unseen nodes in Validation receive <UNK_NODE> embedding combined with fixed entity type embedding. High-cardinality identity hashing is prohibited."
     },
     "negative_sampling": {
-      "algorithm": "CAUSAL_UNIFORM_SAMPLED_HISTORICAL_DESTINATION",
-      "negative_ratio": 1,
-      "candidate_pool": "CAUSALLY_OBSERVED_TRAIN_NODES_UP_TO_T",
-      "exclude_positive_destinations": true,
-      "deterministic_rng": true
+      "required_by_objective": false,
+      "status": "REMOVED_NO_LINK_PRED_LOSS",
+      "rule": "Canonical objective L_graph optimizes masked relation classification (L_rel) over known interaction pairs (v, u); negative destination sampling is excluded to maintain minimal, unbloated objective consistency."
     }
   },
   "graph_schema": {
-    "node_types": {
-      "HDFS": [
-        {"type_id": 1, "type_name": "DATA_BLOCK", "description": "HDFS Block ID (e.g. blk_-12345)"},
-        {"type_id": 2, "type_name": "STORAGE_NODE", "description": "DataNode IP / port instance"},
-        {"type_id": 3, "type_name": "MANAGEMENT_SYSTEM", "description": "FSNamesystem / NameNode coordinator"},
-        {"type_id": 4, "type_name": "EXECUTION_THREAD", "description": "PacketResponder / DataXceiver thread"}
-      ],
-      "BGL": [
-        {"type_id": 1, "type_name": "COMPUTE_NODE", "description": "Physical BlueGene compute card / node (e.g. R02-M1-N0-C:J12-U11)"},
-        {"type_id": 2, "type_name": "MIDPLANE_CONTROLLER", "description": "Rack / Midplane physical container (e.g. R02-M1)"},
-        {"type_id": 3, "type_name": "SYSTEM_SUBSYSTEM", "description": "Software subsystem component (KERNEL, APP, DISCOVERY, MONITOR, BGLMASTER)"},
-        {"type_id": 4, "type_name": "HARDWARE_DEVICE", "description": "Power / Network / Fan hardware unit"}
-      ]
+    "node_types": [
+      {"type_id": 0, "type_name": "DATA_BLOCK", "description": "HDFS Block ID (e.g. blk_-12345)"},
+      {"type_id": 1, "type_name": "STORAGE_NODE", "description": "DataNode IP / port instance"},
+      {"type_id": 2, "type_name": "MANAGEMENT_SYSTEM", "description": "FSNamesystem / NameNode coordinator"},
+      {"type_id": 3, "type_name": "EXECUTION_THREAD", "description": "PacketResponder / DataXceiver thread"}
+    ],
+    "edge_relations": [
+      {"relation_id": 1, "relation_name": "RECEIVES_BLOCK", "source_type": "STORAGE_NODE", "dest_type": "DATA_BLOCK"},
+      {"relation_id": 2, "relation_name": "STORES_BLOCK", "source_node_type": "STORAGE_NODE", "dest_type": "DATA_BLOCK"},
+      {"relation_id": 3, "relation_name": "ALLOCATES_BLOCK", "source_type": "MANAGEMENT_SYSTEM", "dest_type": "DATA_BLOCK"},
+      {"relation_id": 4, "relation_name": "MONITORS_BLOCK", "source_type": "EXECUTION_THREAD", "dest_type": "DATA_BLOCK"},
+      {"relation_id": 5, "relation_name": "SERVES_BLOCK", "source_type": "STORAGE_NODE", "dest_type": "DATA_BLOCK"},
+      {"relation_id": 6, "relation_name": "UPDATES_BLOCK_MAP", "source_type": "STORAGE_NODE", "dest_type": "DATA_BLOCK"},
+      {"relation_id": 7, "relation_name": "REPLICATES_BLOCK", "source_type": "STORAGE_NODE", "dest_type": "DATA_BLOCK"},
+      {"relation_id": 8, "relation_name": "DELETES_BLOCK", "source_type": "MANAGEMENT_SYSTEM", "dest_type": "DATA_BLOCK"}
+    ],
+    "multi_edge_policy": {
+      "policy_name": "PRESERVE_ALL_TEMPORAL_EVENTS_FIFO_CAUSAL",
+      "max_node_history": 64,
+      "eviction": "FIFO_CAUSAL_OLDEST_FIRST"
     },
-    "edge_relations": {
-      "HDFS": [
-        {"relation_id": 1, "relation_name": "SERVED_BY", "source_type": "DATA_BLOCK", "dest_type": "STORAGE_NODE"},
-        {"relation_id": 2, "relation_name": "REPLICATES_TO", "source_type": "STORAGE_NODE", "dest_type": "STORAGE_NODE"},
-        {"relation_id": 3, "relation_name": "ALLOCATED_BY", "source_type": "DATA_BLOCK", "dest_type": "MANAGEMENT_SYSTEM"},
-        {"relation_id": 4, "relation_name": "PROCESSED_BY", "source_type": "DATA_BLOCK", "dest_type": "EXECUTION_THREAD"}
-      ],
-      "BGL": [
-        {"relation_id": 1, "relation_name": "REPORTS_ALERT", "source_type": "COMPUTE_NODE", "dest_type": "SYSTEM_SUBSYSTEM"},
-        {"relation_id": 2, "relation_name": "CONTAINED_IN", "source_type": "COMPUTE_NODE", "dest_type": "MIDPLANE_CONTROLLER"},
-        {"relation_id": 3, "relation_name": "CONTROLS_DEVICE", "source_type": "SYSTEM_SUBSYSTEM", "dest_type": "HARDWARE_DEVICE"},
-        {"relation_id": 4, "relation_name": "COMMUNICATES_WITH", "source_type": "COMPUTE_NODE", "dest_type": "COMPUTE_NODE"}
-      ]
+    "self_loop_policy": {
+      "policy_name": "STRICT_SEPARATION_ZERO_SYNTHETIC_OBSERVED_SELF_LOOPS",
+      "observed_graph_synthetic_self_loops": 0,
+      "model_residual_connection": true
     },
-    "multi_edge_policy": "PRESERVE_TEMPORAL_ORDER_WITH_BOUNDED_DEGREE",
-    "self_loop_policy": "ALLOWED_FOR_INTRASYSTEM_RECURSION_REGULARIZATION",
     "dynamic_attributes": {
-      "edge_features": ["event_code_id", "normalized_payload_bytes", "priority_level"],
-      "node_features": ["node_type_id", "normalized_in_degree_causal", "normalized_out_degree_causal"]
+      "edge_features": ["event_type_id", "normalized_block_size_log1p"],
+      "node_features": ["one_hot_node_type_4d", "normalized_in_degree_causal", "normalized_out_degree_causal"]
     }
+  },
+  "node_target_specification": {
+    "target_name": "x_v_fixed_priv",
+    "dimension": 6,
+    "components": [
+      {"name": "one_hot_type", "dim": 4, "type": "FIXED_ONE_HOT_CATEGORICAL"},
+      {"name": "normalized_in_degree", "dim": 1, "type": "LOG1P_CONTINUOUS_TRAIN_SCALED"},
+      {"name": "normalized_out_degree", "dim": 1, "type": "LOG1P_CONTINUOUS_TRAIN_SCALED"}
+    ],
+    "is_learnable": false,
+    "contains_labels": false
   },
   "privacy_and_firewall": {
     "raw_identifiers_in_targets": "STRICTLY_PROHIBITED",
