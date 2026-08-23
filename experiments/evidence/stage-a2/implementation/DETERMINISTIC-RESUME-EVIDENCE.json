@@ -1,7 +1,10 @@
 {
-  "qualification_id": "QUAL-STAGE-A2-RESUME-DETERMINISM-003",
-  "timestamp": "2026-08-23T23:15:00Z",
-  "execution_code_commit_sha": "6a199ca5d81253baa2412ebc7c8da5228a990f09",
+  "qualification_id": "QUAL-STAGE-A2-SEED42-HARDENED-CUDA",
+  "qualification_run_id": "QUAL-STAGE-A2-SEED42-HARDENED-CUDA",
+  "timestamp": "2026-08-23T20:09:22.786655+00:00",
+  "timestamp_start": "2026-08-23T20:09:16.467171+00:00",
+  "timestamp_end": "2026-08-23T20:09:22.786655+00:00",
+  "execution_code_commit_sha": "6d1ea77f3fa988967fbf53b6879d99fcbd57396c",
   "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE",
   "claim_scope": "NON_EMPIRICAL_TEST_FIXTURE",
   "storage_status": "COMMITTED_GIT",

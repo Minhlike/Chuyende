@@ -1,6 +1,9 @@
 {
   "plan_id": "PLAN-STAGE-A2-FIVE-SEED-EXECUTION-V1.4",
   "protocol_version": "1.4.1",
+  "execution_code_commit_sha": "6d1ea77f3fa988967fbf53b6879d99fcbd57396c",
+  "seed42_launch_authorization_path": "experiments/evidence/stage-a2/preexecution/SEED42-LAUNCH-AUTHORIZATION.json",
+  "seed42_launch_authorization_sha256": "aa484ba351e7fb419f2569c0656ae2c14e8d1597f61942e541ca9aec4d721ffa",
   "effective_protocol_lock_path": "experiments/protocol/STAGE-A2-EXECUTION-LOCK-V1.4.json",
   "effective_protocol_lock_sha256": "41d0c54153d7e988acaba64cf7478037220257be3051fe831d082e3f4c1e4831",
   "execution_environment_lock_path": "experiments/evidence/stage-a2/preexecution/STAGE-A2-EXECUTION-ENVIRONMENT.json",
