@@ -270,7 +270,7 @@ def verify_canonical_readiness():
         "node_memory_states", "node_causal_in_degrees", "node_causal_out_degrees",
         "node_temporal_history_buffers", "checkpoint_metadata"
     }
-    accum_pos = loaded_raw.get("stream_iterator_state", {}).get("accum_step", -1)
+    accum_pos = loaded_raw.get("stream_iterator_state", {}).get("grad_accum_position", -1)
     if not required_ckpt_keys.issubset(loaded_raw.keys()) or accum_pos != 0:
         failed_checks.append(f"CHECKPOINT_EXPLICIT_EPOCH_STATE_MISSING_KEYS_OR_NON_ZERO_ACCUM: accum_pos={accum_pos}")
     else:
