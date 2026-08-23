@@ -101,5 +101,21 @@
   3. **Complete Mutable Checkpoint State:** Enforced that checkpoints occur strictly at optimizer boundaries (`CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY = true`) and atomically serialize all 14 execution state elements including causal in/out degrees, last interaction timestamps, and temporal history buffers.
   4. **Experimental Source Contract:** Established mandatory provenance standard (`EXPERIMENTAL-SOURCE-CONTRACT.md` and `EXPERIMENTAL-SOURCE-SCHEMA.json`) requiring machine-readable source manifests for every empirical claim.
 
+---
+
+### Amendment 10: Stage A2 Validation Semantics, Global Metric Aggregation & CUDA Execution Lock (V1.4)
+- **Timestamp:** 2026-08-23T23:05:00+07:00
+- **Execution State:** `TEST_OPENED = NO`, `RESULTS_SEEN = NO`, `OPTIMIZER_STEPS_BEFORE_AMENDMENT = 0`, `MODELS_TRAINED_BEFORE_AMENDMENT = 0`
+- **Amends Commit:** `7b3992be792e3b1e2fa48a724562d56c5eeed774`
+- **Reason:** Locks validation masking semantics, replaces window-averaged metrics with exact global epoch metric aggregation, formalizes partial final window gradient weighting for the 849-event accumulation group, and locks the empirical execution environment to dedicated CUDA GPU execution without CPU fallback.
+- **Amended Specifications:**
+  1. **Validation Masking (15% Fixed Deterministic Mask):** Validation evaluation strictly preserves the pre-registered SSL objective ($p_{\text{rel\_mask}} = 0.15$, $p_{\text{node\_mask}} = 0.15$) rather than masking 100% of targets. Validation masks are deterministically fixed across all validation epochs and training seeds via `VALIDATION_MASK_POLICY = "FIXED_DETERMINISTIC_RNG_GENERATOR"` with `VALIDATION_MASK_SEED = 20260823`, completely decoupled from the stochastic training RNG trajectory.
+  2. **Global Metric Aggregation:** All reported metrics ($\text{L}_{\text{rel}}$, $\text{L}_{\text{node}}$, $\text{L}_{\text{time}}$, and composite $\text{L}_{\text{graph}}$) are computed by global epoch summation over exact numerators and denominators (not mean-of-window-means):
+     $$\text{L}_{\text{rel}} = \frac{\sum \text{rel\_loss\_sum}}{\sum \text{rel\_target\_count}}, \quad \text{L}_{\text{node}} = \frac{\sum \text{node\_sq\_err\_sum}}{6 \times \sum \text{node\_target\_count}}, \quad \text{L}_{\text{time}} = \frac{\sum \text{time\_loss\_sum}}{\sum \text{time\_target\_count}}$$
+     $$\text{L}_{\text{graph}} = 1.0 \times \text{L}_{\text{rel}} + 1.0 \times \text{L}_{\text{node}} + 0.1 \times \text{L}_{\text{time}}$$
+     Minimum validation $\text{L}_{\text{graph}}$ is the sole criterion for early stopping and best checkpoint selection.
+  3. **Partial Window & Gradient Weighting Semantics:** For the 586,577 Train events with window size 256, the 2,292 windows partition into 2,291 full windows (256 events) and 1 final partial window (81 events). Over 573 optimizer steps ($\text{grad\_accum} = 4$), Steps 1..572 have $\text{NOMINAL\_EFFECTIVE\_BATCH\_EVENTS} = 1024$, while Step 573 has $\text{FINAL\_OPTIMIZER\_STEP_EFFECTIVE_EVENTS} = 849$. Gradient scaling weights each window $k$ within an accumulation group by $N_k / N_{\text{group}}$, preventing statistical overweighting of the 81-event window while preserving mathematical consistency.
+  4. **CUDA Execution Environment Lock:** Formally locks empirical execution to dedicated NVIDIA CUDA GPU hardware (`EXECUTION_DEVICE = "cuda"` on RTX 3050 Ti Laptop GPU). All Python virtual environments, pip caches, and temporary download buffers reside exclusively on drive `D:\Research`. The empirical runner enforces a fail-closed check that halts execution immediately if CUDA is unavailable or mismatched, with zero automatic CPU fallback.
+
 
 

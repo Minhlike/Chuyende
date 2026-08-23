@@ -1,0 +1,15 @@
+{
+  "audit_version": "1.4.0",
+  "audit_id": "AUDIT-STAGE-A2-GLOBAL-LOSS-AGGREGATION-V1.4",
+  "created_at": "2026-08-23T23:10:00Z",
+  "loss_formula": {
+    "composite_objective": "L_graph = 1.0 * L_rel + 1.0 * L_node + 0.1 * L_time",
+    "relation_loss": "L_rel = sum(rel_loss_sum) / sum(rel_target_count)",
+    "node_reconstruction_loss": "L_node = sum(node_sq_err_sum) / (6 * sum(node_target_count))",
+    "temporal_loss": "L_time = sum(time_loss_sum) / sum(time_target_count)",
+    "mean_of_window_means_prohibited": true
+  },
+  "checkpoint_selection_criterion": "MINIMUM_GLOBAL_VALIDATION_L_GRAPH",
+  "early_stopping_metric": "GLOBAL_VALIDATION_L_GRAPH",
+  "early_stopping_patience": 3
+}

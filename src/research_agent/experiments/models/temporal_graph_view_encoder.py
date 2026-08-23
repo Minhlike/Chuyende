@@ -301,38 +301,37 @@ class TemporalGraphViewEncoder(nn.Module):
             x_dst_target[4] = math.log1p(in_dst_prev)
             x_dst_target[5] = math.log1p(out_dst_prev)
 
-            # Decide masking deterministically via RNG generator
-            if is_training:
-                mask_rel = torch.rand(1, generator=mask_generator).item() < self.rel_mask_prob
-                mask_node_src = torch.rand(1, generator=mask_generator).item() < self.node_mask_prob
-                mask_node_dst = torch.rand(1, generator=mask_generator).item() < self.node_mask_prob
-            else:
-                mask_rel = True
-                mask_node_src = True
-                mask_node_dst = True
+            # Decide masking deterministically via RNG generator (15% for both train and val)
+            mask_rel = torch.rand(1, generator=mask_generator).item() < self.rel_mask_prob
+            mask_node_src = torch.rand(1, generator=mask_generator).item() < self.node_mask_prob
+            mask_node_dst = torch.rand(1, generator=mask_generator).item() < self.node_mask_prob
 
             # 1a. Masked Edge Relation Prediction Head (Target withheld from input, 8 output classes)
             rel_in = torch.cat([h_src_2d, h_dst_2d, phi_dt], dim=-1) # (1, rel_in_dim)
             rel_logits = self.rel_head(rel_in)                       # (1, 8)
             if mask_rel:
                 target_rel_tensor = torch.tensor([target_class_idx], dtype=torch.long, device=device)
-                loss_rel_list.append(self.loss_rel_fn(rel_logits, target_rel_tensor))
+                loss_rel_val = self.loss_rel_fn(rel_logits, target_rel_tensor)
+                loss_rel_list.append(loss_rel_val)
                 masked_rel_count += 1
 
-            # 1b. Masked Node Feature Reconstruction Head (MSE loss, Target withheld from input)
+            # 1b. Masked Node Feature Reconstruction Head (MSE loss across R^6, Target withheld from input)
             if mask_node_src:
                 node_src_pred = self.node_head(h_src_2d) # (1, 6)
-                loss_node_list.append(self.loss_node_fn(node_src_pred.squeeze(0), x_src_target))
+                sq_err_src = torch.sum((node_src_pred.squeeze(0) - x_src_target) ** 2)
+                loss_node_list.append(sq_err_src)
                 masked_node_count += 1
             if mask_node_dst:
                 node_dst_pred = self.node_head(h_dst_2d) # (1, 6)
-                loss_node_list.append(self.loss_node_fn(node_dst_pred.squeeze(0), x_dst_target))
+                sq_err_dst = torch.sum((node_dst_pred.squeeze(0) - x_dst_target) ** 2)
+                loss_node_list.append(sq_err_dst)
                 masked_node_count += 1
 
             # 1c. Continuous Temporal Gap Prediction Head
             time_in = torch.cat([h_src_2d, h_dst_2d], dim=-1)      # (1, 2*d_node)
             time_pred = F.relu(self.time_head(time_in)).squeeze(0) # (1,)
-            loss_time_list.append(self.loss_time_fn(time_pred, dt_tensor.squeeze(0)))
+            loss_time_val = self.loss_time_fn(time_pred, dt_tensor.squeeze(0))
+            loss_time_list.append(loss_time_val)
 
             # -------------------------------------------------------------
             # STEP 2: TEMPORAL MESSAGE PASSING & MEMORY UPDATE (Post-Loss)
@@ -380,10 +379,17 @@ class TemporalGraphViewEncoder(nn.Module):
         self.node_memory = {k: v.detach() for k, v in self.node_memory.items()}
         self.node_history_buffers = {k: [msg.detach() for msg in msgs] for k, msgs in self.node_history_buffers.items()}
 
-        # Compute composite loss
-        loss_rel = torch.stack(loss_rel_list).mean() if loss_rel_list else torch.tensor(0.0, device=device)
-        loss_node = torch.stack(loss_node_list).mean() if loss_node_list else torch.tensor(0.0, device=device)
-        loss_time = torch.stack(loss_time_list).mean() if loss_time_list else torch.tensor(0.0, device=device)
+        # Compute exact sums and counts
+        rel_loss_sum = torch.stack(loss_rel_list).sum() if loss_rel_list else torch.tensor(0.0, device=device)
+        node_sq_err_sum = torch.stack(loss_node_list).sum() if loss_node_list else torch.tensor(0.0, device=device)
+        time_loss_sum = torch.stack(loss_time_list).sum() if loss_time_list else torch.tensor(0.0, device=device)
+
+        node_element_count = 6 * masked_node_count
+        time_target_count = len(events)
+
+        loss_rel = rel_loss_sum / max(1, masked_rel_count) if masked_rel_count > 0 else torch.tensor(0.0, device=device)
+        loss_node = node_sq_err_sum / max(1, node_element_count) if node_element_count > 0 else torch.tensor(0.0, device=device)
+        loss_time = time_loss_sum / max(1, time_target_count) if time_target_count > 0 else torch.tensor(0.0, device=device)
 
         total_loss = self.lambda_rel * loss_rel + self.lambda_node * loss_node + self.lambda_time * loss_time
 
@@ -392,6 +398,13 @@ class TemporalGraphViewEncoder(nn.Module):
             "loss_rel": loss_rel,
             "loss_node": loss_node,
             "loss_time": loss_time,
+            "rel_loss_sum": rel_loss_sum.item() if isinstance(rel_loss_sum, torch.Tensor) else float(rel_loss_sum),
+            "rel_target_count": masked_rel_count,
+            "node_sq_err_sum": node_sq_err_sum.item() if isinstance(node_sq_err_sum, torch.Tensor) else float(node_sq_err_sum),
+            "node_element_count": node_element_count,
+            "node_target_count": masked_node_count,
+            "time_loss_sum": time_loss_sum.item() if isinstance(time_loss_sum, torch.Tensor) else float(time_loss_sum),
+            "time_target_count": time_target_count,
             "num_events": len(events),
             "masked_rel_count": masked_rel_count,
             "masked_node_count": masked_node_count

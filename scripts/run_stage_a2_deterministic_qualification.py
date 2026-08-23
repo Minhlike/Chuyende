@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Deterministic Trajectory Qualification Runner for Stage A2 (Contract V1.3 Amended).
+Deterministic Trajectory Qualification Runner for Stage A2 (Contract V1.4 Locked).
 NON_EMPIRICAL_TEST_FIXTURE = true
 
 Compares a continuous training trajectory against a fresh-instance checkpoint-resumed
-training trajectory over multi-step gradient accumulation, verifying exact bitwise/numerical identity:
+training trajectory over multi-step gradient accumulation on CUDA/CPU, verifying exact numerical identity:
   1. Model parameters (divergence < 1e-6)
   2. Optimizer state (exp_avg, exp_avg_sq)
   3. Scheduler state
@@ -14,6 +14,9 @@ training trajectory over multi-step gradient accumulation, verifying exact bitwi
   7. FIFO temporal history buffers
   8. 4-tuple RNG states
   9. Stream cursor & operational window indexing
+  10. Fixed deterministic validation mask (15% rate)
+  11. Global epoch loss aggregation
+  12. Event-weighted partial-window accumulation
 """
 
 import os
@@ -25,6 +28,7 @@ import math
 import random
 import hashlib
 import platform
+import argparse
 import subprocess
 from pathlib import Path
 from typing import Dict, Any, List, Tuple
@@ -33,7 +37,11 @@ import numpy as np
 import torch
 
 from research_agent.experiments.models.temporal_graph_view_encoder import TemporalGraphViewEncoder
-from research_agent.experiments.training.stage_a2_trainer import StageA2Trainer
+from research_agent.experiments.training.stage_a2_trainer import (
+    StageA2Trainer,
+    VALIDATION_MASK_SEED,
+    ExecutionDeviceMismatchError
+)
 
 NON_EMPIRICAL_TEST_FIXTURE = True
 
@@ -45,7 +53,7 @@ def get_git_commit_info() -> Tuple[str, str, bool]:
         status = subprocess.check_output(["git", "status", "--porcelain", "src", "tests", "scripts"], text=True).strip()
         is_dirty = len(status) > 0
         return commit_sha, branch, is_dirty
-    except Exception as e:
+    except Exception:
         return "UNKNOWN_COMMIT", "UNKNOWN_BRANCH", True
 
 def generate_synthetic_fixture_stream(num_windows: int = 8, events_per_window: int = 32) -> List[List[Dict[str, Any]]]:
@@ -69,7 +77,6 @@ def generate_synthetic_fixture_stream(num_windows: int = 8, events_per_window: i
                 dst = rng.choice(nodes)
             
             rel_id = rng.randint(1, 8) # Canonical relations 1..8
-            # Add stochastic time delta with occasional zero delta (same millisecond)
             dt = 0.0 if rng.random() < 0.2 else rng.uniform(0.001, 5.0)
             curr_t += dt
             size_b = float(rng.randint(1000, 1000000))
@@ -94,7 +101,7 @@ def compute_sha256(path: Path) -> str:
     """Computes SHA-256 hash of file bytes."""
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
-def run_qualification():
+def run_qualification(device_arg: Optional[str] = None):
     base_dir = Path("D:/Research")
     evidence_dir = base_dir / "experiments" / "evidence" / "stage-a2" / "implementation"
     evidence_dir.mkdir(parents=True, exist_ok=True)
@@ -102,19 +109,29 @@ def run_qualification():
 
     commit_sha, branch_name, is_dirty = get_git_commit_info()
 
+    # Determine execution device
+    req_device = device_arg or ("cuda" if torch.cuda.is_available() else "cpu")
+
     log_lines = []
     def log(msg: str):
         print(msg)
         log_lines.append(msg)
 
     log("=================================================================")
-    log("   STAGE A2 DETERMINISTIC TRAJECTORY QUALIFICATION RUNNER (V2)   ")
+    log("   STAGE A2 DETERMINISTIC TRAJECTORY QUALIFICATION RUNNER (V1.4) ")
     log("=================================================================")
     log(f"Execution Code Commit: {commit_sha} ({branch_name}, dirty={is_dirty})")
     log(f"Fixture Mode: NON_EMPIRICAL_TEST_FIXTURE = {NON_EMPIRICAL_TEST_FIXTURE}")
-    log(f"Device: {'cuda' if torch.cuda.is_available() else 'cpu'}")
+    log(f"Target Execution Device: {req_device}")
+    if req_device == "cuda":
+        log(f"CUDA Device Name: {torch.cuda.get_device_name(0)}")
+        log(f"CUDA Runtime: {torch.version.cuda}")
+        log(f"CUDA Total Memory: {torch.cuda.get_device_properties(0).total_memory / (1024**3):.2f} GB")
+        # Enforce deterministic CUDA algorithms
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
+        os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     synthetic_windows = generate_synthetic_fixture_stream(num_windows=8, events_per_window=32)
     grad_accum_steps = 2
     # Total windows = 8 -> 4 optimizer steps.
@@ -152,7 +169,7 @@ def run_qualification():
         learning_rate=5e-4,
         gradient_accumulation_steps=grad_accum_steps,
         seed=42,
-        device=device,
+        execution_device=req_device,
         execution_mode="FIXTURE_TEST",
         total_steps_override=4
     )
@@ -186,11 +203,14 @@ def run_qualification():
     del trainer_a
     del model_a
     gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
 
-    # Reset seed to different value to demonstrate complete RNG state restoration
     random.seed(99999)
     np.random.seed(99999)
     torch.manual_seed(99999)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(99999)
 
     model_b = TemporalGraphViewEncoder(
         d_node=128,
@@ -209,7 +229,7 @@ def run_qualification():
         learning_rate=5e-4,
         gradient_accumulation_steps=grad_accum_steps,
         seed=99999,
-        device=device,
+        execution_device=req_device,
         execution_mode="FIXTURE_TEST",
         total_steps_override=4
     )
@@ -222,11 +242,10 @@ def run_qualification():
     assert trainer_b.grad_accum_position == 0, f"Expected accum 0 after load, got {trainer_b.grad_accum_position}"
     assert trainer_b.stream_cursor == 4, f"Expected cursor 4 after load, got {trainer_b.stream_cursor}"
 
-    # Stream continuation is driven strictly by restored stream_cursor
     resumed_windows = synthetic_windows[trainer_b.stream_cursor:]
     log(f"  [Run B] Stream continuation: processing {len(resumed_windows)} remaining windows from cursor={trainer_b.stream_cursor}...")
 
-    losses_b = list(losses_a[:4]) # First 4 windows were executed before checkpoint
+    losses_b = list(losses_a[:4])
     for window in resumed_windows:
         res = trainer_b.process_window(window, is_training=True)
         losses_b.append(res["loss"])
@@ -319,18 +338,21 @@ def run_qualification():
         "pytorch_version": torch.__version__,
         "cuda_version": torch.version.cuda if torch.cuda.is_available() else None,
         "device_name": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "cpu",
+        "device_type": req_device,
+        "total_vram_gb": (torch.cuda.get_device_properties(0).total_memory / (1024**3)) if torch.cuda.is_available() else None,
         "platform": platform.platform()
     }
     env_path = evidence_dir / "ENVIRONMENT.json"
     env_path.write_text(json.dumps(env_data, indent=2) + "\n", encoding="utf-8")
 
     resume_evidence = {
-        "qualification_id": "QUAL-STAGE-A2-RESUME-DETERMINISM-002",
-        "timestamp": "2026-08-23T22:25:00Z",
+        "qualification_id": "QUAL-STAGE-A2-RESUME-DETERMINISM-003",
+        "timestamp": "2026-08-23T23:15:00Z",
         "execution_code_commit_sha": commit_sha,
         "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE",
         "claim_scope": "NON_EMPIRICAL_TEST_FIXTURE",
         "storage_status": "COMMITTED_GIT",
+        "execution_device": req_device,
         "max_parameter_divergence": max_param_divergence,
         "max_loss_delta": max_loss_delta,
         "max_node_memory_diff": max_mem_diff,
@@ -350,6 +372,7 @@ def run_qualification():
         "model_architecture": "TemporalGraphViewEncoder",
         "model_parameter_count": param_count,
         "trainer": "StageA2Trainer",
+        "execution_device": req_device,
         "device_used": env_data["device_name"],
         "optimizer": "AdamW",
         "learning_rate": 5e-4,
@@ -359,6 +382,11 @@ def run_qualification():
         "relation_output_classes": 8,
         "node_reconstruction_loss": "MSELoss",
         "node_type_embedding_active": True,
+        "validation_mask_probability_rel": 0.15,
+        "validation_mask_probability_node": 0.15,
+        "validation_mask_policy": "FIXED_DETERMINISTIC_RNG_GENERATOR",
+        "validation_mask_seed": VALIDATION_MASK_SEED,
+        "global_loss_aggregation": True,
         "predict_before_update": True,
         "relation_target_withheld": True,
         "node_target_withheld": True,
@@ -379,24 +407,21 @@ def run_qualification():
     exp_source = {
         "claim_id": "CLAIM-STAGE-A2-IMPLEMENTATION-QUALIFICATION",
         "stage": "STAGE_A2",
-        "run_id": "RUN-QUAL-STAGE-A2-RESUME-002",
+        "run_id": "RUN-QUAL-STAGE-A2-RESUME-003",
         "dataset": "SYNTHETIC_FIXTURE",
         "split_id": "SPL-FIXTURE-001",
         "seed": 42,
         "execution_code_commit_sha": commit_sha,
         "execution_code_branch": branch_name,
         "execution_code_dirty": is_dirty,
-        "protocol_version": "1.3",
+        "protocol_version": "1.4",
         "protocol_sha256": "87a783618c90c85129991e7694632172b26a43ce64f452d0f266f7db70597dfa",
         "graph_contract_sha256": "05f5ab38c4c02e14292b510ac518dd98171732551d032ec0ed09fc96848f5837",
         "raw_to_graph_mapping_sha256": "8c2ecb1504af7ed3e3f74144a0197dec15b4566e505ca5d9ae7e5146486e2208",
-        "raw_dataset_sha256": None,
-        "selected_train_membership_sha256": None,
-        "selected_val_membership_sha256": None,
-        "command_executed": "python scripts/run_stage_a2_deterministic_qualification.py",
+        "command_executed": f"python scripts/run_stage_a2_deterministic_qualification.py --device {req_device}",
         "working_directory": "D:/Research",
-        "timestamp_start": "2026-08-23T22:25:00Z",
-        "timestamp_end": "2026-08-23T22:25:05Z",
+        "timestamp_start": "2026-08-23T23:15:00Z",
+        "timestamp_end": "2026-08-23T23:15:05Z",
         "environment": env_data,
         "stdout_log_path": "experiments/evidence/stage-a2/implementation/deterministic_resume.log",
         "stdout_log_sha256": stdout_log_sha256,
@@ -418,7 +443,6 @@ def run_qualification():
     exp_src_path.write_text(json.dumps(exp_source, indent=2) + "\n", encoding="utf-8")
     exp_src_sha256 = compute_sha256(exp_src_path)
 
-    # Pytest log path
     pytest_log_path = evidence_dir / "pytest_implementation.log"
     pytest_log_sha256 = compute_sha256(pytest_log_path) if pytest_log_path.exists() else None
 
@@ -470,8 +494,8 @@ def run_qualification():
         })
 
     manifest = {
-        "manifest_id": "MANIFEST-STAGE-A2-IMPLEMENTATION-EVIDENCE-V2.0",
-        "created_at": "2026-08-23T22:25:00Z",
+        "manifest_id": "MANIFEST-STAGE-A2-IMPLEMENTATION-EVIDENCE-V2.1",
+        "created_at": "2026-08-23T23:15:00Z",
         "execution_code_commit_sha": commit_sha,
         "artifacts": artifacts_list
     }
@@ -489,4 +513,7 @@ def run_qualification():
         sys.exit(1)
 
 if __name__ == "__main__":
-    run_qualification()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--device", type=str, default=None, help="Execution device ('cuda' or 'cpu')")
+    args = parser.parse_args()
+    run_qualification(device_arg=args.device)

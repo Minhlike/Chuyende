@@ -1,0 +1,34 @@
+{
+  "audit_version": "1.4.0",
+  "audit_id": "AUDIT-STAGE-A2-GPU-ENVIRONMENT-STORAGE-V1.4",
+  "created_at": "2026-08-24T01:30:00Z",
+  "storage_baselines": {
+    "c_free_baseline_gb": 9.45,
+    "d_free_baseline_gb": 54.51
+  },
+  "storage_after_setup": {
+    "c_free_after_setup_gb": 9.45,
+    "c_free_space_delta_mb": 0.0,
+    "d_free_after_setup_gb": 49.90
+  },
+  "cuda_environment": {
+    "venv_path": "D:\\Research\\.venv-stage-a2-cuda",
+    "pip_cache_path": "D:\\Research\\.cache\\pip",
+    "temp_path": "D:\\Research\\.tmp",
+    "tmp_path": "D:\\Research\\.tmp",
+    "torch_site_packages_path": "D:\\Research\\.venv-stage-a2-cuda\\Lib\\site-packages\\torch",
+    "python_executable": "D:\\Research\\.venv-stage-a2-cuda\\Scripts\\python.exe",
+    "python_version": "3.12.8",
+    "pytorch_version": "2.6.0+cu124",
+    "cuda_runtime_version": "12.4",
+    "gpu_device_name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+    "total_vram_gb": 4.00,
+    "system_cuda_toolkit_installed_by_session": false
+  },
+  "smoke_test_results": {
+    "status": "PASS",
+    "allocated_memory_mb": 17.63,
+    "peak_allocated_memory_mb": 17.63,
+    "peak_reserved_memory_mb": 24.00
+  }
+}

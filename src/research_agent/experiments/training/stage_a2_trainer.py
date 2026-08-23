@@ -1,17 +1,25 @@
 # -*- coding: utf-8 -*-
 """
-StageA2Trainer: Deterministic Causal Temporal Graph Pretraining Runner (Contract V1.3 Amended).
+StageA2Trainer: Deterministic Causal Temporal Graph Pretraining Runner (Contract V1.4 Locked).
 
 Features:
-  1. Execution Guard: Mode FIXTURE_TEST vs REAL_EMPIRICAL. Raises EmpiricalExecutionNotAuthorizedError
-     if real empirical execution is triggered without explicit gate authorization.
-  2. Operational Stream Cursor: stream_cursor advances on every window; checkpoints serialize
+  1. Execution Device Guard: Explicit locked execution device (e.g. 'cuda' or 'cpu').
+     Fails immediately before any optimizer step if CUDA is requested but unavailable,
+     with ZERO automatic CPU fallback.
+  2. Fixed Deterministic Validation Mask: Uses dedicated validation RNG generator reset to
+     VALIDATION_MASK_SEED = 20260823 on each validation epoch (Bernoulli p=0.15 for relations and nodes).
+     Independent from training RNG trajectory.
+  3. Global Epoch Loss Aggregation: Exact summation of loss numerators and target counts across all
+     windows in an epoch (no mean-of-window-means).
+  4. Partial Window & Group Weighting: 2,291 full windows (256 events) + 1 partial window (81 events)
+     with event-weighted gradient accumulation across groups (nominal 1024 events, final group 849 events).
+  5. Operational Stream Cursor: stream_cursor advances on every window; checkpoints serialize
      exact next-window position; resume uses stream_cursor directly.
-  3. Dynamic Scope-Bound Scheduler: Exact calculation from authorized execution subset (586,577 events).
-  4. Inductive Split Boundary Reset: Clears dynamic node memory on validation transition.
-  5. NaN / Inf Fail-Closed Protection: Detects floating point anomalies and aborts immediately.
-  6. Checkpoint Boundary Policy: CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY (grad_accum_position == 0).
-  7. 14 Mandatory Mutable States: Full state serialization and exact restoration.
+  6. Dynamic Scope-Bound Scheduler: Exact calculation from authorized execution subset (586,577 events).
+  7. Inductive Split Boundary Reset: Clears dynamic node memory on validation transition.
+  8. NaN / Inf Fail-Closed Protection: Detects floating point anomalies and aborts immediately.
+  9. Checkpoint Boundary Policy: CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY (grad_accum_position == 0).
+  10. 14 Mandatory Mutable States: Full state serialization and exact restoration.
 """
 
 import os
@@ -29,6 +37,8 @@ from torch.optim.lr_scheduler import LambdaLR
 
 from research_agent.experiments.models.temporal_graph_view_encoder import TemporalGraphViewEncoder
 
+VALIDATION_MASK_SEED = 20260823
+
 class EmpiricalExecutionNotAuthorizedError(RuntimeError):
     """Raised when real empirical execution is attempted without authorization."""
     pass
@@ -39,6 +49,10 @@ class CheckpointBoundaryViolationError(RuntimeError):
 
 class FloatingPointAnomalyError(FloatingPointError):
     """Raised when NaN or Inf is encountered in loss or gradients (Fail-Closed)."""
+    pass
+
+class ExecutionDeviceMismatchError(RuntimeError):
+    """Raised when the locked execution device cannot be satisfied (No Fallback)."""
     pass
 
 def get_cosine_schedule_with_warmup(
@@ -73,7 +87,7 @@ class StageA2Trainer:
         max_epochs: int = 20,
         early_stopping_patience: int = 3,
         seed: int = 42,
-        device: Optional[torch.device] = None,
+        execution_device: str = "cuda", # "cuda" or "cpu"
         execution_mode: str = "FIXTURE_TEST", # "FIXTURE_TEST" or "REAL_EMPIRICAL"
         empirical_authorized: bool = False,
         total_steps_override: Optional[int] = None
@@ -89,9 +103,22 @@ class StageA2Trainer:
         self.max_epochs = max_epochs
         self.early_stopping_patience = early_stopping_patience
         self.seed = seed
-        self.device = device or (torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu"))
+        self.execution_device = execution_device
         self.execution_mode = execution_mode
         self.empirical_authorized = empirical_authorized
+
+        # Device Verification & Strict No-Fallback Guard
+        if self.execution_device == "cuda":
+            if not torch.cuda.is_available():
+                raise ExecutionDeviceMismatchError(
+                    "FATAL: Execution device is explicitly locked to 'cuda', but torch.cuda.is_available() is False! "
+                    "Automatic CPU fallback is strictly prohibited by Protocol V1.4."
+                )
+            self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cuda")
+        elif self.execution_device == "cpu":
+            self.device = torch.device("cpu")
+        else:
+            raise ValueError(f"Unknown execution_device: {self.execution_device}")
 
         self.model.to(self.device)
 
@@ -119,9 +146,13 @@ class StageA2Trainer:
             min_lr_ratio=min_ratio
         )
 
-        # Explicit Masking RNG Generator for deterministic masking sequence
+        # Training Masking RNG Generator for deterministic training sequence
         self.mask_generator = torch.Generator(device="cpu")
         self.mask_generator.manual_seed(seed)
+
+        # Validation Masking RNG Generator for fixed validation mask across epochs/seeds
+        self.val_mask_generator = torch.Generator(device="cpu")
+        self.val_mask_generator.manual_seed(VALIDATION_MASK_SEED)
 
         # Mutable Trajectory State
         self.current_epoch = 0
@@ -161,21 +192,24 @@ class StageA2Trainer:
     def process_window(
         self,
         window_events: List[Dict[str, Any]],
-        is_training: bool = True
+        is_training: bool = True,
+        group_total_events: Optional[int] = None
     ) -> Dict[str, Any]:
         """
         Processes a single micro-batch window:
           1. Forward pass & predict-before-update
           2. NaN/Inf check on loss (Fail-Closed)
-          3. Backward pass & NaN/Inf check on gradients
+          3. Backward pass with event-weighted scaling & NaN/Inf check on gradients
           4. Optimizer & scheduler step at accumulation boundary
           5. Operational stream cursor advance
         """
         self.model.train() if is_training else self.model.eval()
 
+        gen = self.mask_generator if is_training else self.val_mask_generator
+
         res = self.model.forward_event_window(
             events=window_events,
-            mask_generator=self.mask_generator,
+            mask_generator=gen,
             is_training=is_training
         )
 
@@ -189,7 +223,10 @@ class StageA2Trainer:
             )
 
         if is_training:
-            scaled_loss = loss / self.gradient_accumulation_steps
+            # Event-weighted gradient scaling
+            num_w_events = len(window_events)
+            eff_group_events = group_total_events if group_total_events is not None else (num_w_events * self.gradient_accumulation_steps)
+            scaled_loss = loss * (num_w_events / max(1, eff_group_events))
             scaled_loss.backward()
             self.grad_accum_position += 1
 
@@ -219,6 +256,13 @@ class StageA2Trainer:
             "loss_rel": res["loss_rel"].item() if isinstance(res["loss_rel"], torch.Tensor) else res["loss_rel"],
             "loss_node": res["loss_node"].item() if isinstance(res["loss_node"], torch.Tensor) else res["loss_node"],
             "loss_time": res["loss_time"].item() if isinstance(res["loss_time"], torch.Tensor) else res["loss_time"],
+            "rel_loss_sum": res["rel_loss_sum"],
+            "rel_target_count": res["rel_target_count"],
+            "node_sq_err_sum": res["node_sq_err_sum"],
+            "node_element_count": res["node_element_count"],
+            "node_target_count": res["node_target_count"],
+            "time_loss_sum": res["time_loss_sum"],
+            "time_target_count": res["time_target_count"],
             "global_step": self.global_step,
             "grad_accum_position": self.grad_accum_position,
             "stream_cursor": self.stream_cursor,
@@ -228,29 +272,31 @@ class StageA2Trainer:
         }
 
     def train_one_epoch(self, window_stream: Iterable[List[Dict[str, Any]]]) -> Dict[str, Any]:
-        """Executes one full training epoch over chronological windows."""
+        """
+        Executes one full training epoch over chronological windows with exact global metric aggregation.
+        """
         self.current_split = "TRAIN"
         self.model.train()
 
-        total_loss = 0.0
-        total_rel = 0.0
-        total_node = 0.0
-        total_time = 0.0
+        total_rel_loss_sum = 0.0
+        total_rel_target_count = 0
+        total_node_sq_err_sum = 0.0
+        total_node_element_count = 0
+        total_time_loss_sum = 0.0
+        total_time_target_count = 0
         total_events = 0
-        total_masked_rel = 0
-        total_masked_node = 0
         windows_count = 0
 
         t0 = time.time()
         for window in window_stream:
             stats = self.process_window(window, is_training=True)
-            total_loss += stats["loss"]
-            total_rel += stats["loss_rel"]
-            total_node += stats["loss_node"]
-            total_time += stats["loss_time"]
+            total_rel_loss_sum += stats["rel_loss_sum"]
+            total_rel_target_count += stats["rel_target_count"]
+            total_node_sq_err_sum += stats["node_sq_err_sum"]
+            total_node_element_count += stats["node_element_count"]
+            total_time_loss_sum += stats["time_loss_sum"]
+            total_time_target_count += stats["time_target_count"]
             total_events += stats["num_events"]
-            total_masked_rel += stats["masked_rel_count"]
-            total_masked_node += stats["masked_node_count"]
             windows_count += 1
 
         # Epoch-End Policy: If pending gradients remain, flush step
@@ -266,17 +312,27 @@ class StageA2Trainer:
         epoch_runtime = time.time() - t0
         curr_lr = self.optimizer.param_groups[0]["lr"]
 
+        epoch_L_rel = total_rel_loss_sum / max(1, total_rel_target_count) if total_rel_target_count > 0 else 0.0
+        epoch_L_node = total_node_sq_err_sum / max(1, total_node_element_count) if total_node_element_count > 0 else 0.0
+        epoch_L_time = total_time_loss_sum / max(1, total_time_target_count) if total_time_target_count > 0 else 0.0
+        epoch_L_graph = 1.0 * epoch_L_rel + 1.0 * epoch_L_node + 0.1 * epoch_L_time
+
         return {
             "epoch": self.current_epoch,
             "split": "TRAIN",
-            "train_L_graph": total_loss / max(1, windows_count),
-            "train_L_rel": total_rel / max(1, windows_count),
-            "train_L_node": total_node / max(1, windows_count),
-            "train_L_time": total_time / max(1, windows_count),
+            "train_L_graph": epoch_L_graph,
+            "train_L_rel": epoch_L_rel,
+            "train_L_node": epoch_L_node,
+            "train_L_time": epoch_L_time,
+            "rel_loss_sum": total_rel_loss_sum,
+            "rel_target_count": total_rel_target_count,
+            "node_sq_err_sum": total_node_sq_err_sum,
+            "node_element_count": total_node_element_count,
+            "node_target_count": total_node_element_count // 6,
+            "time_loss_sum": total_time_loss_sum,
+            "time_target_count": total_time_target_count,
             "windows_count": windows_count,
             "events_count": total_events,
-            "masked_rel_count": total_masked_rel,
-            "masked_node_count": total_masked_node,
             "optimizer_steps": self.global_step,
             "learning_rate": curr_lr,
             "epoch_runtime_sec": epoch_runtime,
@@ -287,6 +343,8 @@ class StageA2Trainer:
         """
         Executes one full validation epoch:
           - Applies INDUCTIVE_SPLIT_RESET_ZERO_MEMORY before validation
+          - Resets validation mask generator to fixed VALIDATION_MASK_SEED = 20260823
+          - Computes exact global metric aggregation (numerators / denominators)
           - Zero gradients, no optimizer/scheduler updates
           - Applies INDUCTIVE_SPLIT_RESET_ZERO_MEMORY after validation before returning to train
         """
@@ -296,43 +354,57 @@ class StageA2Trainer:
         # Split Boundary Reset: Inductive evaluation requires zero initial memory
         self.model.reset_node_states()
 
-        total_loss = 0.0
-        total_rel = 0.0
-        total_node = 0.0
-        total_time = 0.0
+        # Reset fixed validation mask generator to guarantee identical masks across epochs and seeds
+        self.val_mask_generator.manual_seed(VALIDATION_MASK_SEED)
+
+        total_rel_loss_sum = 0.0
+        total_rel_target_count = 0
+        total_node_sq_err_sum = 0.0
+        total_node_element_count = 0
+        total_time_loss_sum = 0.0
+        total_time_target_count = 0
         total_events = 0
-        total_masked_rel = 0
-        total_masked_node = 0
         windows_count = 0
 
         t0 = time.time()
         with torch.no_grad():
             for window in window_stream:
                 stats = self.process_window(window, is_training=False)
-                total_loss += stats["loss"]
-                total_rel += stats["loss_rel"]
-                total_node += stats["loss_node"]
-                total_time += stats["loss_time"]
+                total_rel_loss_sum += stats["rel_loss_sum"]
+                total_rel_target_count += stats["rel_target_count"]
+                total_node_sq_err_sum += stats["node_sq_err_sum"]
+                total_node_element_count += stats["node_element_count"]
+                total_time_loss_sum += stats["time_loss_sum"]
+                total_time_target_count += stats["time_target_count"]
                 total_events += stats["num_events"]
-                total_masked_rel += stats["masked_rel_count"]
-                total_masked_node += stats["masked_node_count"]
                 windows_count += 1
 
         # Post-Validation Split Boundary Reset: Do not carry validation interactions into next Train epoch
         self.model.reset_node_states()
 
         epoch_runtime = time.time() - t0
+
+        val_L_rel = total_rel_loss_sum / max(1, total_rel_target_count) if total_rel_target_count > 0 else 0.0
+        val_L_node = total_node_sq_err_sum / max(1, total_node_element_count) if total_node_element_count > 0 else 0.0
+        val_L_time = total_time_loss_sum / max(1, total_time_target_count) if total_time_target_count > 0 else 0.0
+        val_L_graph = 1.0 * val_L_rel + 1.0 * val_L_node + 0.1 * val_L_time
+
         return {
             "epoch": self.current_epoch,
             "split": "VAL",
-            "val_L_graph": total_loss / max(1, windows_count),
-            "val_L_rel": total_rel / max(1, windows_count),
-            "val_L_node": total_node / max(1, windows_count),
-            "val_L_time": total_time / max(1, windows_count),
+            "val_L_graph": val_L_graph,
+            "val_L_rel": val_L_rel,
+            "val_L_node": val_L_node,
+            "val_L_time": val_L_time,
+            "rel_loss_sum": total_rel_loss_sum,
+            "rel_target_count": total_rel_target_count,
+            "node_sq_err_sum": total_node_sq_err_sum,
+            "node_element_count": total_node_element_count,
+            "node_target_count": total_node_element_count // 6,
+            "time_loss_sum": total_time_loss_sum,
+            "time_target_count": total_time_target_count,
             "windows_count": windows_count,
             "events_count": total_events,
-            "masked_rel_count": total_masked_rel,
-            "masked_node_count": total_masked_node,
             "epoch_runtime_sec": epoch_runtime,
             "nan_inf_count": 0
         }

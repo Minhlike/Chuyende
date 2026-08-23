@@ -1,0 +1,22 @@
+{
+  "audit_version": "1.4.0",
+  "audit_id": "AUDIT-STAGE-A2-VALIDATION-MASK-V1.4",
+  "created_at": "2026-08-23T23:10:00Z",
+  "validation_mask_contract": {
+    "mask_mode": "FIXED_DETERMINISTIC_15_PERCENT",
+    "relation_mask_probability": 0.15,
+    "node_mask_probability": 0.15,
+    "mask_100_percent_prohibited": true,
+    "validation_mask_policy": "FIXED_DETERMINISTIC_RNG_GENERATOR",
+    "validation_mask_seed": 20260823,
+    "fixed_across_validation_epochs": true,
+    "identical_across_training_seeds": true,
+    "independent_from_training_rng": true
+  },
+  "training_mask_contract": {
+    "relation_mask_probability": 0.15,
+    "node_mask_probability": 0.15,
+    "training_rng_state_serialized_in_checkpoints": true,
+    "stochastic_per_seed": true
+  }
+}

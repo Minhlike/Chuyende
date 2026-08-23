@@ -1,0 +1,29 @@
+{
+  "audit_version": "1.4.0",
+  "audit_id": "AUDIT-STAGE-A2-PARTIAL-WINDOW-V1.4",
+  "created_at": "2026-08-23T23:10:00Z",
+  "train_partition": {
+    "total_graph_events": 586577,
+    "temporal_window_size": 256,
+    "total_windows": 2292,
+    "full_windows": 2291,
+    "final_window_events": 81,
+    "gradient_accumulation_steps": 4,
+    "optimizer_steps_per_epoch": 573,
+    "nominal_effective_batch_events": 1024,
+    "final_optimizer_step_effective_events": 849,
+    "final_accumulation_breakdown": [256, 256, 256, 81],
+    "accumulation_gradient_weighting": "EVENT_COUNT_WEIGHTED_Nk_OVER_Ngroup",
+    "final_partial_window_dropped": false,
+    "events_duplicated_or_padded": false
+  },
+  "validation_partition": {
+    "total_graph_events": 119531,
+    "temporal_window_size": 256,
+    "total_windows": 467,
+    "full_windows": 466,
+    "final_window_events": 235,
+    "final_partial_window_dropped": false,
+    "unbiased_aggregation": "GLOBAL_NUMERATOR_DENOMINATOR_SUMMATION"
+  }
+}
