@@ -5,7 +5,7 @@
   "dataset": "SYNTHETIC_FIXTURE",
   "split_id": "SPL-FIXTURE-001",
   "seed": 42,
-  "execution_code_commit_sha": "ffd89c50bb8f058b174ab7964ef419bc2b2fa66f",
+  "execution_code_commit_sha": "8e6206970141033024fc5e7d831d1767a0b17c42",
   "execution_code_branch": "train/ch3-stage-a2-implementation",
   "execution_code_dirty": false,
   "protocol_version": "1.4",
@@ -26,7 +26,7 @@
     "platform": "Windows-11-10.0.26200-SP0"
   },
   "stdout_log_path": "experiments/evidence/stage-a2/implementation/deterministic_resume.log",
-  "stdout_log_sha256": "81911e927b99ea203ea87ebe12e58637587c85fda698d1636163c1ed0ba0c683",
+  "stdout_log_sha256": "ea6f336f6a3d6a2e84751a76ce2b2622def1649214b5c3079c4a4a81c74a2d1e",
   "metrics_artifact_path": "experiments/evidence/stage-a2/implementation/IMPLEMENTATION-QUALIFICATION.json",
   "metrics_artifact_sha256": "99d04a3372931ffa1872b381aad94f5e9cfe14263cf6759553fa1868bc19073e",
   "checkpoint_path": "experiments/evidence/stage-a2/implementation/qualification_checkpoint.pt",
