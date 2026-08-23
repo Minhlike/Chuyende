@@ -1,0 +1,100 @@
+{
+  "lock_identifier": "LOCK-STAGE-A2-20260823-FINAL",
+  "status": "FROZEN_PRE_EXECUTION",
+  "created_at": "2026-08-23T20:55:00Z",
+  "source_commit": "9a707025ed5899c524962558732218ff48e8b212",
+  "protocol_document_sha256": "2156da4e375e0fe8be7cb3d41fed6467e43b0763b154d715a00daa61b5d79c05",
+  "graph_contract_sha256": "9bf6024bcf552c317d24b742e5ead45d000a40b0c2a3b9af7a59b100f5bd2db7",
+  "dataset_names": ["HDFS", "BGL"],
+  "dataset_raw_sha256": {
+    "HDFS": "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169",
+    "BGL": "0a58be959cef101bbe5c053e60bd8a49673e9c942b164f4d969bb109e99fce95"
+  },
+  "split_specifications": {
+    "HDFS": {
+      "split_id": "SPL-HDFS-001",
+      "train_split_hash": "0422677f5357494fbc587cac4b6de2004781e71d9b8087b4c8f9f0cd160f3363",
+      "val_split_hash": "96bdab531c3545f4a0f0ed7f87e47cba985c2bc4cac7a3e6c04245b5c712fbe9",
+      "test_status": "SEALED_ZERO_ACCESS"
+    },
+    "BGL": {
+      "split_id": "SPL-BGL-001",
+      "train_split_hash": "f92ddd8f6da011c61ea730d59b6aea7673ffc0c16084ca72071b59c36b7bf078",
+      "val_split_hash": "dd6255239edb4a3068a8d87d7e0a97e4eb17a2a4b1453a6251d46da667aeb1ea",
+      "test_status": "SEALED_ZERO_ACCESS"
+    }
+  },
+  "architecture": {
+    "family": "TemporalGraphViewEncoder",
+    "memory_cell": "GRUCell",
+    "d_node": 128,
+    "d_edge": 64,
+    "d_msg": 128,
+    "n_heads": 4,
+    "d_time_proj": 32,
+    "d_rel_emb": 32,
+    "d_type_emb": 32,
+    "dropout": 0.10,
+    "normalization": "LayerNorm"
+  },
+  "losses": {
+    "lambda_rel": 1.0,
+    "lambda_node": 1.0,
+    "lambda_time": 0.1,
+    "rel_masking_probability": 0.15,
+    "node_masking_probability": 0.15,
+    "smooth_l1_beta": 1.0
+  },
+  "causal_policies": {
+    "predict_before_update": "STRICTLY_ENFORCED",
+    "future_neighbor_firewall": "STRICTLY_ENFORCED",
+    "timestamp_tie_breaking": ["event_timestamp_utc", "raw_line_index"],
+    "node_identity_policy": "TYPED_FALLBACK_WITH_UNK",
+    "split_memory_policy": "INDUCTIVE_SPLIT_RESET_ZERO_MEMORY",
+    "temporal_ordering_policy": "STRICT_CHRONOLOGICAL_STREAM",
+    "negative_sampling_policy": "CAUSAL_UNIFORM_SAMPLED_HISTORICAL_DESTINATION"
+  },
+  "optimization": {
+    "optimizer": "AdamW",
+    "learning_rate": 0.0005,
+    "weight_decay": 0.01,
+    "adam_beta1": 0.9,
+    "adam_beta2": 0.98,
+    "adam_eps": 1e-8,
+    "scheduler": "LinearWarmupCosineDecay",
+    "warmup_ratio": 0.05,
+    "min_lr": 1e-5,
+    "temporal_window_size": 256,
+    "gradient_accumulation_steps": 4,
+    "effective_batch_size": 1024,
+    "clip_norm": 1.0,
+    "max_epochs": 20,
+    "early_stopping_patience": 3,
+    "checkpoint_selection": "MINIMUM_VALIDATION_L_GRAPH"
+  },
+  "canonical_seeds": [42, 1337, 2024, 7, 999],
+  "test_firewall_contract": {
+    "test_opened": false,
+    "test_feature_read_count": 0,
+    "test_label_read_count": 0,
+    "test_metric_count": 0
+  },
+  "deterministic_resume_contract": {
+    "target_max_parameter_divergence": 1e-6,
+    "mandatory_state_tuple": [
+      "model_state_dict",
+      "optimizer_state_dict",
+      "scheduler_state_dict",
+      "node_memory_states",
+      "rng_states_4tuple",
+      "stream_iterator_state",
+      "negative_sampler_rng_state",
+      "global_step"
+    ]
+  },
+  "execution_state": {
+    "optimizer_steps": 0,
+    "models_trained": 0,
+    "test_opened": false
+  }
+}

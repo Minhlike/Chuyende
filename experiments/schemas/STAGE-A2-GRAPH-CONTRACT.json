@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "contract_id": "SCHEMA-STAGE-A2-GRAPH-CONTRACT-V1",
+  "version": "1.0.0",
+  "title": "Stage A2 Dependency-Temporal Provenance Graph & Temporal Message Passing Contract",
+  "description": "Strict machine-verifiable specification for causal temporal graph construction, entity typing, message passing, and privacy safeguards in Stage A2.",
+  "causality_invariants": {
+    "predict_before_update": {
+      "enforced": true,
+      "rule": "For any interaction event e_t = (v, u, r, t, x_e), all auxiliary SSL predictions (L_rel, L_node, L_time) must evaluate strictly on node memory states h_v(t-) and h_u(t-) BEFORE applying the memory update for e_t."
+    },
+    "future_neighbor_firewall": {
+      "enforced": true,
+      "rule": "Neighborhood queries at time t must restrict edges strictly to E_{<t}. Static whole-timeline graph construction is strictly prohibited."
+    },
+    "timestamp_tie_breaking": {
+      "enforced": true,
+      "canonical_sort_key": ["event_timestamp_utc", "raw_line_index"],
+      "rule": "Events with identical timestamps are ordered strictly and deterministically by their physical occurrence sequence in the raw audit stream."
+    },
+    "split_memory_boundary_policy": {
+      "canonical_policy": "INDUCTIVE_SPLIT_RESET_ZERO_MEMORY",
+      "allowed_policies": ["INDUCTIVE_SPLIT_RESET_ZERO_MEMORY"],
+      "rule": "Upon transitioning from Train to Validation, all node dynamic memory states are strictly reset to h_init = 0, ensuring zero cross-split hidden state leakage."
+    },
+    "entity_vocabulary_scope": {
+      "fit_split": "TRAIN_ONLY",
+      "unseen_node_policy": "TYPED_FALLBACK_WITH_UNK",
+      "rule": "Node entity vocabulary is fit exclusively on the Train split. Unseen nodes in Validation/Test receive <UNK_NODE> embedding combined with node-type embedding and deterministic identity hash."
+    },
+    "negative_sampling": {
+      "algorithm": "CAUSAL_UNIFORM_SAMPLED_HISTORICAL_DESTINATION",
+      "negative_ratio": 1,
+      "candidate_pool": "CAUSALLY_OBSERVED_TRAIN_NODES_UP_TO_T",
+      "exclude_positive_destinations": true,
+      "deterministic_rng": true
+    }
+  },
+  "graph_schema": {
+    "node_types": {
+      "HDFS": [
+        {"type_id": 1, "type_name": "DATA_BLOCK", "description": "HDFS Block ID (e.g. blk_-12345)"},
+        {"type_id": 2, "type_name": "STORAGE_NODE", "description": "DataNode IP / port instance"},
+        {"type_id": 3, "type_name": "MANAGEMENT_SYSTEM", "description": "FSNamesystem / NameNode coordinator"},
+        {"type_id": 4, "type_name": "EXECUTION_THREAD", "description": "PacketResponder / DataXceiver thread"}
+      ],
+      "BGL": [
+        {"type_id": 1, "type_name": "COMPUTE_NODE", "description": "Physical BlueGene compute card / node (e.g. R02-M1-N0-C:J12-U11)"},
+        {"type_id": 2, "type_name": "MIDPLANE_CONTROLLER", "description": "Rack / Midplane physical container (e.g. R02-M1)"},
+        {"type_id": 3, "type_name": "SYSTEM_SUBSYSTEM", "description": "Software subsystem component (KERNEL, APP, DISCOVERY, MONITOR, BGLMASTER)"},
+        {"type_id": 4, "type_name": "HARDWARE_DEVICE", "description": "Power / Network / Fan hardware unit"}
+      ]
+    },
+    "edge_relations": {
+      "HDFS": [
+        {"relation_id": 1, "relation_name": "SERVED_BY", "source_type": "DATA_BLOCK", "dest_type": "STORAGE_NODE"},
+        {"relation_id": 2, "relation_name": "REPLICATES_TO", "source_type": "STORAGE_NODE", "dest_type": "STORAGE_NODE"},
+        {"relation_id": 3, "relation_name": "ALLOCATED_BY", "source_type": "DATA_BLOCK", "dest_type": "MANAGEMENT_SYSTEM"},
+        {"relation_id": 4, "relation_name": "PROCESSED_BY", "source_type": "DATA_BLOCK", "dest_type": "EXECUTION_THREAD"}
+      ],
+      "BGL": [
+        {"relation_id": 1, "relation_name": "REPORTS_ALERT", "source_type": "COMPUTE_NODE", "dest_type": "SYSTEM_SUBSYSTEM"},
+        {"relation_id": 2, "relation_name": "CONTAINED_IN", "source_type": "COMPUTE_NODE", "dest_type": "MIDPLANE_CONTROLLER"},
+        {"relation_id": 3, "relation_name": "CONTROLS_DEVICE", "source_type": "SYSTEM_SUBSYSTEM", "dest_type": "HARDWARE_DEVICE"},
+        {"relation_id": 4, "relation_name": "COMMUNICATES_WITH", "source_type": "COMPUTE_NODE", "dest_type": "COMPUTE_NODE"}
+      ]
+    },
+    "multi_edge_policy": "PRESERVE_TEMPORAL_ORDER_WITH_BOUNDED_DEGREE",
+    "self_loop_policy": "ALLOWED_FOR_INTRASYSTEM_RECURSION_REGULARIZATION",
+    "dynamic_attributes": {
+      "edge_features": ["event_code_id", "normalized_payload_bytes", "priority_level"],
+      "node_features": ["node_type_id", "normalized_in_degree_causal", "normalized_out_degree_causal"]
+    }
+  },
+  "privacy_and_firewall": {
+    "raw_identifiers_in_targets": "STRICTLY_PROHIBITED",
+    "downstream_labels_in_ssl": "STRICTLY_PROHIBITED",
+    "test_split_access": "STRICTLY_PROHIBITED",
+    "test_opened_invariant": false,
+    "test_feature_read_count_invariant": 0,
+    "test_label_read_count_invariant": 0,
+    "test_metric_count_invariant": 0
+  }
+}
