@@ -1,25 +1,33 @@
 # -*- coding: utf-8 -*-
 """
-StageA2Trainer: Deterministic Causal Temporal Graph Pretraining Runner (Contract V1.4 Locked).
+StageA2Trainer: Deterministic Causal Temporal Graph Pretraining Runner (Contract V1.4.1 Locked).
 
 Features:
-  1. Execution Device Guard: Explicit locked execution device (e.g. 'cuda' or 'cpu').
+  1. Execution Device Guard: Explicit locked execution device ('cuda' or 'cpu').
      Fails immediately before any optimizer step if CUDA is requested but unavailable,
      with ZERO automatic CPU fallback.
-  2. Fixed Deterministic Validation Mask: Uses dedicated validation RNG generator reset to
+  2. Exact Multi-Task Group Objective: In training, windows are organized into chronological
+     accumulation groups (up to gradient_accumulation_steps = 4 windows).
+     The exact multi-task group objective is computed over all masked targets in the group:
+       L_rel_group  = sum(rel_loss_sum_k) / max(1, sum(rel_target_count_k))
+       L_node_group = sum(node_sq_err_sum_k) / max(1, sum(node_element_count_k))
+       L_time_group = sum(time_loss_sum_k) / max(1, sum(time_target_count_k))
+       L_graph_group = 1.0 * L_rel_group + 1.0 * L_node_group + 0.1 * L_time_group
+     Backpropagates exact group objective in a single backward pass per optimizer step.
+  3. Fixed Deterministic Validation Mask: Uses dedicated validation RNG generator reset to
      VALIDATION_MASK_SEED = 20260823 on each validation epoch (Bernoulli p=0.15 for relations and nodes).
      Independent from training RNG trajectory.
-  3. Global Epoch Loss Aggregation: Exact summation of loss numerators and target counts across all
+  4. Global Epoch Loss Aggregation: Exact summation of loss numerators and target counts across all
      windows in an epoch (no mean-of-window-means).
-  4. Partial Window & Group Weighting: 2,291 full windows (256 events) + 1 partial window (81 events)
-     with event-weighted gradient accumulation across groups (nominal 1024 events, final group 849 events).
-  5. Operational Stream Cursor: stream_cursor advances on every window; checkpoints serialize
+  5. Partial Final Window & Group Weighting: 2,291 full windows (256 events) + 1 partial window (81 events)
+     grouped into 572 groups of 1024 events + 1 group of 849 events (256 + 256 + 256 + 81).
+  6. Operational Stream Cursor: stream_cursor advances on every window; checkpoints serialize
      exact next-window position; resume uses stream_cursor directly.
-  6. Dynamic Scope-Bound Scheduler: Exact calculation from authorized execution subset (586,577 events).
-  7. Inductive Split Boundary Reset: Clears dynamic node memory on validation transition.
-  8. NaN / Inf Fail-Closed Protection: Detects floating point anomalies and aborts immediately.
-  9. Checkpoint Boundary Policy: CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY (grad_accum_position == 0).
-  10. 14 Mandatory Mutable States: Full state serialization and exact restoration.
+  7. Dynamic Scope-Bound Scheduler: Exact calculation from authorized execution subset (586,577 events).
+  8. Inductive Split Boundary Reset: Clears dynamic node memory on validation transition.
+  9. NaN / Inf Fail-Closed Protection: Detects floating point anomalies and aborts immediately.
+  10. Checkpoint Boundary Policy: CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY (grad_accum_position == 0).
+  11. 14 Mandatory Mutable States: Full state serialization and exact restoration.
 """
 
 import os
@@ -189,48 +197,79 @@ class StageA2Trainer:
         self.total_steps = self.max_epochs * self.optimizer_steps_per_epoch
         self.warmup_steps = int(self.total_steps * self.warmup_ratio)
 
-    def process_window(
+    def process_group(
         self,
-        window_events: List[Dict[str, Any]],
-        is_training: bool = True,
-        group_total_events: Optional[int] = None
+        group_windows: List[List[Dict[str, Any]]],
+        is_training: bool = True
     ) -> Dict[str, Any]:
         """
-        Processes a single micro-batch window:
-          1. Forward pass & predict-before-update
-          2. NaN/Inf check on loss (Fail-Closed)
-          3. Backward pass with event-weighted scaling & NaN/Inf check on gradients
-          4. Optimizer & scheduler step at accumulation boundary
-          5. Operational stream cursor advance
+        Processes a multi-window accumulation group (up to gradient_accumulation_steps windows):
+          1. Sequential forward passes over windows in chronological order with dynamic memory updates.
+          2. Preserves truncated BPTT by detaching memory at each window boundary.
+          3. Collects exact loss numerator tensors and mask target counts across all windows in the group.
+          4. Computes exact multi-task group objective:
+               L_rel_group  = sum(rel_loss_sum_k) / max(1, sum(rel_target_count_k))
+               L_node_group = sum(node_sq_err_sum_k) / max(1, sum(node_element_count_k))
+               L_time_group = sum(time_loss_sum_k) / max(1, sum(time_target_count_k))
+               L_graph_group = 1.0 * L_rel_group + 1.0 * L_node_group + 0.1 * L_time_group
+          5. Backpropagates exact group objective in a single backward pass per optimizer step.
+          6. Performs gradient clipping, optimizer step, and scheduler step at group boundary.
+          7. Advances operational stream_cursor by len(group_windows).
         """
         self.model.train() if is_training else self.model.eval()
 
         gen = self.mask_generator if is_training else self.val_mask_generator
 
-        res = self.model.forward_event_window(
-            events=window_events,
-            mask_generator=gen,
-            is_training=is_training
-        )
+        group_rel_losses = []
+        group_node_losses = []
+        group_time_losses = []
 
-        loss = res["loss"]
+        total_rel_targets = 0
+        total_node_elements = 0
+        total_node_targets = 0
+        total_time_targets = 0
+        total_events = 0
 
-        # NaN / Inf Fail-Closed Check on Loss
-        loss_val = loss.item()
+        for window in group_windows:
+            res = self.model.forward_event_window(
+                events=window,
+                mask_generator=gen,
+                is_training=is_training
+            )
+            group_rel_losses.append(res["rel_loss_sum_tensor"])
+            group_node_losses.append(res["node_sq_err_sum_tensor"])
+            group_time_losses.append(res["time_loss_sum_tensor"])
+
+            total_rel_targets += res["rel_target_count"]
+            total_node_elements += res["node_element_count"]
+            total_node_targets += res["node_target_count"]
+            total_time_targets += res["time_target_count"]
+            total_events += res["num_events"]
+
+            self.stream_cursor += 1
+
+        # Sum numerators across group
+        sum_rel_tensor = torch.stack(group_rel_losses).sum() if group_rel_losses else torch.tensor(0.0, device=self.device)
+        sum_node_tensor = torch.stack(group_node_losses).sum() if group_node_losses else torch.tensor(0.0, device=self.device)
+        sum_time_tensor = torch.stack(group_time_losses).sum() if group_time_losses else torch.tensor(0.0, device=self.device)
+
+        # Exact multi-task group denominators
+        L_rel_group = sum_rel_tensor / max(1, total_rel_targets) if total_rel_targets > 0 else torch.tensor(0.0, device=self.device)
+        L_node_group = sum_node_tensor / max(1, total_node_elements) if total_node_elements > 0 else torch.tensor(0.0, device=self.device)
+        L_time_group = sum_time_tensor / max(1, total_time_targets) if total_time_targets > 0 else torch.tensor(0.0, device=self.device)
+
+        L_graph_group = 1.0 * L_rel_group + 1.0 * L_node_group + 0.1 * L_time_group
+
+        loss_val = L_graph_group.item()
         if math.isnan(loss_val) or math.isinf(loss_val):
             raise FloatingPointAnomalyError(
-                f"FATAL: NaN/Inf detected in loss value ({loss_val}) at global_step={self.global_step}, cursor={self.stream_cursor}!"
+                f"FATAL: NaN/Inf detected in group loss value ({loss_val}) at global_step={self.global_step}, cursor={self.stream_cursor}!"
             )
 
         if is_training:
-            # Event-weighted gradient scaling
-            num_w_events = len(window_events)
-            eff_group_events = group_total_events if group_total_events is not None else (num_w_events * self.gradient_accumulation_steps)
-            scaled_loss = loss * (num_w_events / max(1, eff_group_events))
-            scaled_loss.backward()
-            self.grad_accum_position += 1
+            L_graph_group.backward()
 
-            # Check for NaN / Inf in parameter gradients
+            # NaN / Inf Check on Parameter Gradients
             for name, param in self.model.named_parameters():
                 if param.grad is not None:
                     if torch.isnan(param.grad).any() or torch.isinf(param.grad).any():
@@ -238,42 +277,48 @@ class StageA2Trainer:
                             f"FATAL: NaN/Inf detected in gradients for parameter '{name}' at step {self.global_step}!"
                         )
 
-            # Optimizer Step at Boundary
-            if self.grad_accum_position >= self.gradient_accumulation_steps:
-                if self.clip_norm > 0:
-                    torch.nn.utils.clip_grad_norm_(self.model.parameters(), self.clip_norm)
-                self.optimizer.step()
-                self.scheduler.step()
-                self.optimizer.zero_grad()
-                self.global_step += 1
-                self.grad_accum_position = 0
-
-        # Operationally advance the stream cursor
-        self.stream_cursor += 1
+            if self.clip_norm > 0:
+                torch.nn.utils.clip_grad_norm_(self.model.parameters(), self.clip_norm)
+            self.optimizer.step()
+            self.scheduler.step()
+            self.optimizer.zero_grad()
+            self.global_step += 1
+            self.grad_accum_position = 0
 
         return {
             "loss": loss_val,
-            "loss_rel": res["loss_rel"].item() if isinstance(res["loss_rel"], torch.Tensor) else res["loss_rel"],
-            "loss_node": res["loss_node"].item() if isinstance(res["loss_node"], torch.Tensor) else res["loss_node"],
-            "loss_time": res["loss_time"].item() if isinstance(res["loss_time"], torch.Tensor) else res["loss_time"],
-            "rel_loss_sum": res["rel_loss_sum"],
-            "rel_target_count": res["rel_target_count"],
-            "node_sq_err_sum": res["node_sq_err_sum"],
-            "node_element_count": res["node_element_count"],
-            "node_target_count": res["node_target_count"],
-            "time_loss_sum": res["time_loss_sum"],
-            "time_target_count": res["time_target_count"],
+            "loss_rel": L_rel_group.item() if isinstance(L_rel_group, torch.Tensor) else float(L_rel_group),
+            "loss_node": L_node_group.item() if isinstance(L_node_group, torch.Tensor) else float(L_node_group),
+            "loss_time": L_time_group.item() if isinstance(L_time_group, torch.Tensor) else float(L_time_group),
+            "rel_loss_sum": sum_rel_tensor.item() if isinstance(sum_rel_tensor, torch.Tensor) else float(sum_rel_tensor),
+            "rel_target_count": total_rel_targets,
+            "node_sq_err_sum": sum_node_tensor.item() if isinstance(sum_node_tensor, torch.Tensor) else float(sum_node_tensor),
+            "node_element_count": total_node_elements,
+            "node_target_count": total_node_targets,
+            "time_loss_sum": sum_time_tensor.item() if isinstance(sum_time_tensor, torch.Tensor) else float(sum_time_tensor),
+            "time_target_count": total_time_targets,
             "global_step": self.global_step,
             "grad_accum_position": self.grad_accum_position,
             "stream_cursor": self.stream_cursor,
-            "masked_rel_count": res.get("masked_rel_count", 0),
-            "masked_node_count": res.get("masked_node_count", 0),
-            "num_events": res.get("num_events", len(window_events))
+            "masked_rel_count": total_rel_targets,
+            "masked_node_count": total_node_targets,
+            "num_events": total_events,
+            "num_windows": len(group_windows)
         }
+
+    def process_window(
+        self,
+        window_events: List[Dict[str, Any]],
+        is_training: bool = True,
+        group_total_events: Optional[int] = None
+    ) -> Dict[str, Any]:
+        """Convenience single-window processing method."""
+        return self.process_group([window_events], is_training=is_training)
 
     def train_one_epoch(self, window_stream: Iterable[List[Dict[str, Any]]]) -> Dict[str, Any]:
         """
-        Executes one full training epoch over chronological windows with exact global metric aggregation.
+        Executes one full training epoch over chronological windows by batching into
+        accumulation groups and computing exact multi-task group objectives.
         """
         self.current_split = "TRAIN"
         self.model.train()
@@ -288,8 +333,24 @@ class StageA2Trainer:
         windows_count = 0
 
         t0 = time.time()
+        curr_group = []
         for window in window_stream:
-            stats = self.process_window(window, is_training=True)
+            curr_group.append(window)
+            windows_count += 1
+            if len(curr_group) == self.gradient_accumulation_steps:
+                stats = self.process_group(curr_group, is_training=True)
+                total_rel_loss_sum += stats["rel_loss_sum"]
+                total_rel_target_count += stats["rel_target_count"]
+                total_node_sq_err_sum += stats["node_sq_err_sum"]
+                total_node_element_count += stats["node_element_count"]
+                total_time_loss_sum += stats["time_loss_sum"]
+                total_time_target_count += stats["time_target_count"]
+                total_events += stats["num_events"]
+                curr_group = []
+
+        # Flush final partial group if present
+        if curr_group:
+            stats = self.process_group(curr_group, is_training=True)
             total_rel_loss_sum += stats["rel_loss_sum"]
             total_rel_target_count += stats["rel_target_count"]
             total_node_sq_err_sum += stats["node_sq_err_sum"]
@@ -297,17 +358,7 @@ class StageA2Trainer:
             total_time_loss_sum += stats["time_loss_sum"]
             total_time_target_count += stats["time_target_count"]
             total_events += stats["num_events"]
-            windows_count += 1
-
-        # Epoch-End Policy: If pending gradients remain, flush step
-        if self.grad_accum_position > 0:
-            if self.clip_norm > 0:
-                torch.nn.utils.clip_grad_norm_(self.model.parameters(), self.clip_norm)
-            self.optimizer.step()
-            self.scheduler.step()
-            self.optimizer.zero_grad()
-            self.global_step += 1
-            self.grad_accum_position = 0
+            curr_group = []
 
         epoch_runtime = time.time() - t0
         curr_lr = self.optimizer.param_groups[0]["lr"]
@@ -369,15 +420,20 @@ class StageA2Trainer:
         t0 = time.time()
         with torch.no_grad():
             for window in window_stream:
-                stats = self.process_window(window, is_training=False)
-                total_rel_loss_sum += stats["rel_loss_sum"]
-                total_rel_target_count += stats["rel_target_count"]
-                total_node_sq_err_sum += stats["node_sq_err_sum"]
-                total_node_element_count += stats["node_element_count"]
-                total_time_loss_sum += stats["time_loss_sum"]
-                total_time_target_count += stats["time_target_count"]
-                total_events += stats["num_events"]
+                res = self.model.forward_event_window(
+                    events=window,
+                    mask_generator=self.val_mask_generator,
+                    is_training=False
+                )
+                total_rel_loss_sum += res["rel_loss_sum"]
+                total_rel_target_count += res["rel_target_count"]
+                total_node_sq_err_sum += res["node_sq_err_sum"]
+                total_node_element_count += res["node_element_count"]
+                total_time_loss_sum += res["time_loss_sum"]
+                total_time_target_count += res["time_target_count"]
+                total_events += res["num_events"]
                 windows_count += 1
+                self.stream_cursor += 1
 
         # Post-Validation Split Boundary Reset: Do not carry validation interactions into next Train epoch
         self.model.reset_node_states()

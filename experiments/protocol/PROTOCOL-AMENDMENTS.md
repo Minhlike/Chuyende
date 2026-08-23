@@ -117,5 +117,26 @@
   3. **Partial Window & Gradient Weighting Semantics:** For the 586,577 Train events with window size 256, the 2,292 windows partition into 2,291 full windows (256 events) and 1 final partial window (81 events). Over 573 optimizer steps ($\text{grad\_accum} = 4$), Steps 1..572 have $\text{NOMINAL\_EFFECTIVE\_BATCH\_EVENTS} = 1024$, while Step 573 has $\text{FINAL\_OPTIMIZER\_STEP_EFFECTIVE_EVENTS} = 849$. Gradient scaling weights each window $k$ within an accumulation group by $N_k / N_{\text{group}}$, preventing statistical overweighting of the 81-event window while preserving mathematical consistency.
   4. **CUDA Execution Environment Lock:** Formally locks empirical execution to dedicated NVIDIA CUDA GPU hardware (`EXECUTION_DEVICE = "cuda"` on RTX 3050 Ti Laptop GPU). All Python virtual environments, pip caches, and temporary download buffers reside exclusively on drive `D:\Research`. The empirical runner enforces a fail-closed check that halts execution immediately if CUDA is unavailable or mismatched, with zero automatic CPU fallback.
 
+---
+
+### Amendment 11: Stage A2 Exact Multi-Task Group Objective & Canonical Training Accumulation Fix (V1.4.1)
+- **Timestamp:** 2026-08-24T01:55:00+07:00
+- **Execution State:** `TEST_OPENED = NO`, `RESULTS_SEEN = NO`, `REAL_HDFS_RUNS = 0`, `REAL_HDFS_OPTIMIZER_STEPS = 0`, `MODELS_TRAINED_BEFORE_AMENDMENT = 0`
+- **Amends Commit:** `41d9e9eb4b2b7795f60d65d73404001c2ebeab75`
+- **Reason:** Corrects canonical training accumulation in `train_one_epoch()` prior to empirical execution so that micro-batch windows are explicitly processed as accumulation groups and normalized by exact multi-task target counts rather than simple event-count proxies, ensuring that the 81-event partial window receives the exact $81/849$ temporal weight and all components ($L_{\text{rel}}$, $L_{\text{node}}$, $L_{\text{time}}$) are mathematically identical to the group objective.
+- **Amended Specifications:**
+  1. **Canonical Accumulation Group Structure:** In `train_one_epoch()`, chronological windows are explicitly batched into accumulation groups of up to 4 windows ($W \le 4$). Steps 1..572 accumulate 4 full windows of 256 events ($1024$ events). Step 573 accumulates 3 full windows of 256 events $+ 1$ partial window of 81 events ($849$ events).
+  2. **Exact Multi-Task Group Objective:**
+     Because Bernoulli relation ($p=0.15$) and node ($p=0.15$) masking generates stochastic target counts per window, event count alone is an imperfect proxy for multi-task loss normalization. The exact group objective is defined over the union of targets within the accumulation group:
+     $$L_{\text{rel\_group}} = \frac{\sum_{k \in \text{group}} \text{rel\_loss\_sum}_k}{\max(1, \sum_{k \in \text{group}} \text{rel\_target\_count}_k)}$$
+     $$L_{\text{node\_group}} = \frac{\sum_{k \in \text{group}} \text{node\_sq\_err\_sum}_k}{\max(1, \sum_{k \in \text{group}} \text{node\_element\_count}_k)}$$
+     $$L_{\text{time\_group}} = \frac{\sum_{k \in \text{group}} \text{time\_loss\_sum}_k}{\max(1, \sum_{k \in \text{group}} \text{time\_target\_count}_k)}$$
+     $$L_{\text{graph\_group}} = 1.0 \times L_{\text{rel\_group}} + 1.0 \times L_{\text{node\_group}} + 0.1 \times L_{\text{time\_group}}$$
+  3. **Sequential Truncated-BPTT & Exact Group Backpropagation:**
+     Windows within an accumulation group are executed sequentially to advance dynamic node memory causally ($h_v(t-)$ updates and detached memory buffers at window boundaries). Unnormalized differentiable loss sums from each window are collected, combined into $L_{\text{graph\_group}}$ using the exact group denominators, and backpropagated in a single backward pass per optimizer step, guaranteeing exact gradient alignment with zero memory leakage.
+  4. **Scheduler and Data Invariants Preserved:**
+     Total Train events: 586,577; Train windows: 2,292; Optimizer steps/epoch: 573; Warmup steps: 573; Max epochs: 20; Total optimizer steps: 11,460. No events dropped, padded, duplicated, or reordered.
+
+
 
 

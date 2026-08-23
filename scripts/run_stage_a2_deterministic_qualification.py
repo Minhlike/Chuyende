@@ -175,13 +175,14 @@ def run_qualification(device_arg: Optional[str] = None):
     )
 
     losses_a = []
-    for w_idx, window in enumerate(synthetic_windows):
-        res = trainer_a.process_window(window, is_training=True)
+    groups_a = [synthetic_windows[i:i+grad_accum_steps] for i in range(0, len(synthetic_windows), grad_accum_steps)]
+    for g_idx, group in enumerate(groups_a):
+        res = trainer_a.process_group(group, is_training=True)
         losses_a.append(res["loss"])
-        log(f"  [Run A] Window {w_idx + 1}/8 (Cursor={trainer_a.stream_cursor}): Loss={res['loss']:.6f}, Step={res['global_step']}, AccumPos={res['grad_accum_position']}")
+        log(f"  [Run A] Group {g_idx + 1}/4 (Cursor={trainer_a.stream_cursor}): Loss={res['loss']:.6f}, Step={res['global_step']}, AccumPos={res['grad_accum_position']}")
         
-        # Save checkpoint at Step 2 boundary (after window 3, cursor == 4)
-        if w_idx == 3:
+        # Save checkpoint at Step 2 boundary (after group 1, cursor == 4)
+        if g_idx == 1:
             log(f"  [Run A] Saving Checkpoint at Optimizer Step {trainer_a.global_step} (Cursor = {trainer_a.stream_cursor}, Accum Pos = {trainer_a.grad_accum_position})...")
             trainer_a.save_checkpoint(checkpoint_path)
 
@@ -243,13 +244,14 @@ def run_qualification(device_arg: Optional[str] = None):
     assert trainer_b.stream_cursor == 4, f"Expected cursor 4 after load, got {trainer_b.stream_cursor}"
 
     resumed_windows = synthetic_windows[trainer_b.stream_cursor:]
-    log(f"  [Run B] Stream continuation: processing {len(resumed_windows)} remaining windows from cursor={trainer_b.stream_cursor}...")
+    groups_b = [resumed_windows[i:i+grad_accum_steps] for i in range(0, len(resumed_windows), grad_accum_steps)]
+    log(f"  [Run B] Stream continuation: processing {len(groups_b)} remaining groups from cursor={trainer_b.stream_cursor}...")
 
-    losses_b = list(losses_a[:4])
-    for window in resumed_windows:
-        res = trainer_b.process_window(window, is_training=True)
+    losses_b = list(losses_a[:2])
+    for g_idx, group in enumerate(groups_b):
+        res = trainer_b.process_group(group, is_training=True)
         losses_b.append(res["loss"])
-        log(f"  [Run B] Window (Cursor={trainer_b.stream_cursor}): Loss={res['loss']:.6f}, Step={res['global_step']}, AccumPos={res['grad_accum_position']}")
+        log(f"  [Run B] Group (Cursor={trainer_b.stream_cursor}): Loss={res['loss']:.6f}, Step={res['global_step']}, AccumPos={res['grad_accum_position']}")
 
     state_b = {
         "model_state": {k: v.cpu().clone() for k, v in model_b.state_dict().items()},

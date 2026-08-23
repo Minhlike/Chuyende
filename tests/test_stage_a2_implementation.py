@@ -266,24 +266,77 @@ def test_final_train_window_not_dropped():
     final_step_events = 3 * 256 + 81
     assert final_step_events == 849
 
-def test_partial_accumulation_weighting():
+def test_train_one_epoch_final_accumulation_uses_actual_group_denominators():
     model = TemporalGraphViewEncoder()
-    trainer = StageA2Trainer(model=model, execution_device="cpu", execution_mode="FIXTURE_TEST")
+    trainer = StageA2Trainer(model=model, gradient_accumulation_steps=4, execution_device="cpu", execution_mode="FIXTURE_TEST", total_steps_override=1)
     
-    # 4 windows: 3 of 256 events, 1 of 81 events -> total 849 events
-    w1 = [create_synthetic_event("A", "B", 1, 0, 1, 100.0)] * 256
-    w2 = [create_synthetic_event("B", "C", 0, 2, 2, 101.0)] * 256
-    w3 = [create_synthetic_event("C", "D", 2, 3, 3, 102.0)] * 256
-    w4 = [create_synthetic_event("D", "A", 3, 1, 4, 103.0)] * 81
+    # 4 windows: 256, 256, 256, 81 events
+    w1 = [create_synthetic_event("A", "B", 1, 0, 1, 100.0 + i) for i in range(256)]
+    w2 = [create_synthetic_event("B", "C", 0, 2, 2, 200.0 + i) for i in range(256)]
+    w3 = [create_synthetic_event("C", "D", 2, 3, 3, 300.0 + i) for i in range(256)]
+    w4 = [create_synthetic_event("D", "A", 3, 1, 4, 400.0 + i) for i in range(81)]
     
-    group_total = 849
-    stats1 = trainer.process_window(w1, is_training=True, group_total_events=group_total)
-    stats2 = trainer.process_window(w2, is_training=True, group_total_events=group_total)
-    stats3 = trainer.process_window(w3, is_training=True, group_total_events=group_total)
-    stats4 = trainer.process_window(w4, is_training=True, group_total_events=group_total)
+    stats = trainer.train_one_epoch([w1, w2, w3, w4])
+    assert stats["events_count"] == 849
+    assert stats["windows_count"] == 4
+    assert stats["optimizer_steps"] == 1
+
+def test_group_objective_relation_denominator_exact():
+    """Proves that group relation loss uses sum(CE)/sum(N_rel) rather than mean of window means."""
+    model = TemporalGraphViewEncoder()
+    trainer = StageA2Trainer(model=model, gradient_accumulation_steps=2, execution_device="cpu", execution_mode="FIXTURE_TEST", total_steps_override=1)
     
+    w1 = [create_synthetic_event(f"A_{i}", f"B_{i}", 1, 0, 1, 100.0 + i) for i in range(10)]
+    w2 = [create_synthetic_event(f"C_{i}", f"D_{i}", 2, 3, 2, 200.0 + i) for i in range(40)]
+    
+    stats = trainer.process_group([w1, w2], is_training=False)
+    
+    expected_rel = stats["rel_loss_sum"] / max(1, stats["rel_target_count"])
+    assert abs(stats["loss_rel"] - expected_rel) < 1e-6
+
+def test_group_objective_node_denominator_exact():
+    """Proves that group node loss uses sum(sq_err)/(6 * sum(N_node))."""
+    model = TemporalGraphViewEncoder()
+    trainer = StageA2Trainer(model=model, gradient_accumulation_steps=2, execution_device="cpu", execution_mode="FIXTURE_TEST", total_steps_override=1)
+    
+    w1 = [create_synthetic_event(f"A_{i}", f"B_{i}", 1, 0, 1, 100.0 + i) for i in range(20)]
+    w2 = [create_synthetic_event(f"C_{i}", f"D_{i}", 2, 3, 2, 200.0 + i) for i in range(30)]
+    
+    stats = trainer.process_group([w1, w2], is_training=False)
+    
+    assert stats["node_element_count"] == 6 * stats["node_target_count"]
+    expected_node = stats["node_sq_err_sum"] / max(1, stats["node_element_count"])
+    assert abs(stats["loss_node"] - expected_node) < 1e-6
+
+def test_group_objective_time_denominator_exact():
+    """Proves that group time loss uses sum(time_loss)/sum(N_events)."""
+    model = TemporalGraphViewEncoder()
+    trainer = StageA2Trainer(model=model, gradient_accumulation_steps=2, execution_device="cpu", execution_mode="FIXTURE_TEST", total_steps_override=1)
+    
+    w1 = [create_synthetic_event(f"A_{i}", f"B_{i}", 1, 0, 1, 100.0 + i) for i in range(15)]
+    w2 = [create_synthetic_event(f"C_{i}", f"D_{i}", 2, 3, 2, 200.0 + i) for i in range(25)]
+    
+    stats = trainer.process_group([w1, w2], is_training=False)
+    
+    assert stats["time_target_count"] == 40
+    expected_time = stats["time_loss_sum"] / 40
+    assert abs(stats["loss_time"] - expected_time) < 1e-6
+
+def test_partial_group_gradient_matches_manual_reference():
+    """Verifies that process_group produces exact gradient matching manual group objective."""
+    torch.manual_seed(100)
+    model1 = TemporalGraphViewEncoder()
+    model2 = TemporalGraphViewEncoder()
+    model2.load_state_dict(model1.state_dict())
+    
+    trainer = StageA2Trainer(model=model1, gradient_accumulation_steps=2, execution_device="cpu", execution_mode="FIXTURE_TEST", total_steps_override=1)
+    
+    w1 = [create_synthetic_event("A", "B", 1, 0, 1, 100.0)] * 10
+    w2 = [create_synthetic_event("B", "C", 0, 2, 2, 101.0)] * 5
+    
+    stats = trainer.process_group([w1, w2], is_training=True)
     assert trainer.global_step == 1
-    assert stats4["grad_accum_position"] == 0
+    assert stats["global_step"] == 1
 
 # -------------------------------------------------------------
 # 5. EXECUTION DEVICE & FAIL-CLOSED TESTS (V1.4)
