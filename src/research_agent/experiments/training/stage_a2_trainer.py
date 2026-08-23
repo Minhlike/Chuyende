@@ -480,12 +480,25 @@ class StageA2Trainer:
         rng_4tuple = checkpoint["rng_states_4tuple"]
         random.setstate(rng_4tuple["python_random"])
         np.random.set_state(rng_4tuple["numpy_random"])
-        torch.set_rng_state(rng_4tuple["torch_cpu"])
+        
+        cpu_rng = rng_4tuple["torch_cpu"]
+        if isinstance(cpu_rng, torch.Tensor):
+            cpu_rng = cpu_rng.cpu()
+        torch.set_rng_state(cpu_rng)
+
         if torch.cuda.is_available() and rng_4tuple.get("torch_cuda") is not None:
-            torch.cuda.set_rng_state_all(rng_4tuple["torch_cuda"])
+            cuda_rng = rng_4tuple["torch_cuda"]
+            if isinstance(cuda_rng, list):
+                cuda_rng = [s.cpu() if isinstance(s, torch.Tensor) else s for s in cuda_rng]
+            elif isinstance(cuda_rng, torch.Tensor):
+                cuda_rng = cuda_rng.cpu()
+            torch.cuda.set_rng_state_all(cuda_rng)
 
         # 4. Masking RNG Generator State
-        self.mask_generator.set_state(checkpoint["masking_rng_state"])
+        mask_rng = checkpoint["masking_rng_state"]
+        if isinstance(mask_rng, torch.Tensor):
+            mask_rng = mask_rng.cpu()
+        self.mask_generator.set_state(mask_rng)
 
         # 5. Trajectory & Stream Iterator State
         stream_st = checkpoint["stream_iterator_state"]

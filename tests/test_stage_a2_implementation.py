@@ -308,3 +308,38 @@ def test_no_cpu_fallback():
         with pytest.raises(ExecutionDeviceMismatchError) as exc_info:
             StageA2Trainer(model=model, execution_device="cuda", execution_mode="FIXTURE_TEST")
         assert "Automatic CPU fallback is strictly prohibited" in str(exc_info.value)
+
+def test_cuda_deterministic_resume(tmp_path):
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA not available on this platform")
+        
+    torch.manual_seed(42)
+    torch.cuda.manual_seed_all(42)
+    
+    events = [create_synthetic_event("nodeA", "nodeB", 1, 0, 1, 100.0 + i) for i in range(4)]
+    w1, w2, w3, w4 = [events[0]], [events[1]], [events[2]], [events[3]]
+    
+    # Run A: Continuous
+    model_a = TemporalGraphViewEncoder()
+    trainer_a = StageA2Trainer(model=model_a, gradient_accumulation_steps=2, execution_device="cuda", execution_mode="FIXTURE_TEST", total_steps_override=2)
+    trainer_a.process_window(w1)
+    trainer_a.process_window(w2)
+    ckpt_path = tmp_path / "cuda_resume.pt"
+    trainer_a.save_checkpoint(ckpt_path)
+    trainer_a.process_window(w3)
+    trainer_a.process_window(w4)
+    
+    # Run B: Resumed
+    model_b = TemporalGraphViewEncoder()
+    trainer_b = StageA2Trainer(model=model_b, gradient_accumulation_steps=2, execution_device="cuda", execution_mode="FIXTURE_TEST", total_steps_override=2)
+    trainer_b.load_checkpoint(ckpt_path)
+    trainer_b.process_window(w3)
+    trainer_b.process_window(w4)
+    
+    # Compare
+    max_diff = 0.0
+    for k in model_a.state_dict():
+        diff = (model_a.state_dict()[k] - model_b.state_dict()[k]).abs().max().item()
+        if diff > max_diff:
+            max_diff = diff
+    assert max_diff < 1e-6, f"CUDA parameter divergence {max_diff} exceeded 1e-6"
