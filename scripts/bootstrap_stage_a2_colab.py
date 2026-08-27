@@ -261,6 +261,8 @@ def mirror_qualification_artifacts(
         ("experiments/evidence/stage-a2/implementation/EXPERIMENTAL-SOURCE.json", "EXPERIMENTAL-SOURCE.json"),
         ("experiments/evidence/stage-a2/implementation/deterministic_resume.log", "deterministic_resume.log"),
         ("experiments/evidence/stage-a2/implementation/qualification_checkpoint.pt", "qualification_checkpoint.pt"),
+        ("experiments/evidence/stage-a2/implementation/SEED42-COLAB-DRY-RUN.log", "SEED42-COLAB-DRY-RUN.log"),
+        ("experiments/evidence/stage-a2/implementation/NVIDIA-SMI.txt", "NVIDIA-SMI.txt"),
         ("experiments/evidence/stage-a2/implementation/EVIDENCE-MANIFEST.json", "EVIDENCE-MANIFEST.json")
     ]
     
@@ -281,6 +283,7 @@ def mirror_qualification_artifacts(
             assert src_sha == dst_sha, f"Mirror SHA mismatch for {rel_dst}: {dst_sha} != {src_sha}"
             
             manifest_entries.append({
+                "name": rel_dst,
                 "logical_name": rel_dst,
                 "source_path": str(rel_src),
                 "durable_path": str(dst_path),
@@ -291,18 +294,37 @@ def mirror_qualification_artifacts(
         else:
             print(f"[MIRROR] Optional/Pending file not found: {rel_src}")
             
-    mirror_manifest = {
+    final_manifest = {
         "qualification_run_id": qual_run_id,
+        "created_at": datetime.now(timezone.utc).isoformat(),
         "mirrored_at": datetime.now(timezone.utc).isoformat(),
+        "storage": "GOOGLE_DRIVE_DURABLE",
+        "qualification_directory": str(dest_dir),
         "destination_directory": str(dest_dir),
+        "artifact_count": len(manifest_entries),
         "artifacts_count": len(manifest_entries),
-        "artifacts": manifest_entries
+        "artifacts": [
+            {
+                "name": entry["name"],
+                "logical_name": entry["name"],
+                "source_path": entry["source_path"],
+                "durable_path": entry["durable_path"],
+                "sha256": entry["sha256"],
+                "size_bytes": entry["size_bytes"]
+            }
+            for entry in manifest_entries
+        ]
     }
     
-    manifest_path = dest_dir / "QUALIFICATION-MIRROR-MANIFEST.json"
-    manifest_path.write_text(json.dumps(mirror_manifest, indent=2) + "\n", encoding="utf-8")
+    manifest_path = dest_dir / "FINAL-QUALIFICATION-MANIFEST.json"
+    manifest_path.write_text(json.dumps(final_manifest, indent=2) + "\n", encoding="utf-8")
     manifest_sha = compute_sha256(manifest_path)
-    print(f"[MIRROR] Qualification Manifest written: {manifest_path} (SHA: {manifest_sha[:16]}...)")
+    
+    # Also write QUALIFICATION-MIRROR-MANIFEST.json for historical compatibility
+    mirror_manifest_path = dest_dir / "QUALIFICATION-MIRROR-MANIFEST.json"
+    mirror_manifest_path.write_text(json.dumps(final_manifest, indent=2) + "\n", encoding="utf-8")
+    
+    print(f"[MIRROR] FINAL-QUALIFICATION-MANIFEST written: {manifest_path} (SHA: {manifest_sha[:16]}...)")
     print("=================================================================\n")
     return dest_dir
 

@@ -217,7 +217,13 @@ def run_worker_resume(checkpoint_path: Path, output_state_path: Path, device: st
     Loads checkpoint, restores complete state, processes remaining windows, and persists final state.
     """
     enforce_live_determinism()
-    if env_lock_path and Path(env_lock_path).exists():
+    if device == "cuda":
+        if env_lock_path is None or not Path(env_lock_path).exists():
+            raise ExecutionDeviceMismatchError(
+                f"FATAL: Environment lock is mandatory for CUDA worker resume in Process B! (path={env_lock_path})"
+            )
+        verify_against_environment_lock(Path(env_lock_path), device)
+    elif env_lock_path and Path(env_lock_path).exists():
         verify_against_environment_lock(Path(env_lock_path), device)
 
     synthetic_windows = generate_synthetic_fixture_stream(num_windows=8, events_per_window=32)
@@ -306,17 +312,30 @@ def run_qualification(
     enforce_live_determinism()
 
     # 2. Bind and verify against environment lock if provided or on CUDA Colab mode
-    if env_lock_path is None:
+    if env_lock_path is None and req_device == "cuda":
         default_colab_lock = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
-        if default_colab_lock.exists() and req_device == "cuda":
+        if default_colab_lock.exists():
             env_lock_path = default_colab_lock
+        else:
+            raise ExecutionDeviceMismatchError(
+                f"FATAL: Environment lock candidate is mandatory for CUDA qualification! "
+                f"None provided via --environment-lock and canonical default missing at {default_colab_lock}"
+            )
+
+    if req_device == "cuda":
+        if env_lock_path is None or not Path(env_lock_path).exists():
+            raise ExecutionDeviceMismatchError(
+                f"FATAL: Environment lock candidate is mandatory for CUDA qualification! "
+                f"File not found at: {env_lock_path}"
+            )
 
     env_lock_sha = None
     if env_lock_path:
         env_lock_p = Path(env_lock_path).resolve()
-        if env_lock_p.exists():
-            env_lock_sha = compute_sha256(env_lock_p)
-            verify_against_environment_lock(env_lock_p, req_device)
+        if not env_lock_p.exists():
+            raise FileNotFoundError(f"Environment lock file missing at {env_lock_p}")
+        env_lock_sha = compute_sha256(env_lock_p)
+        verify_against_environment_lock(env_lock_p, req_device)
 
     log_lines = []
     def log(msg: str):
