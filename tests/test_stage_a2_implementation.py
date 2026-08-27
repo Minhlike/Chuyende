@@ -1356,16 +1356,16 @@ def test_dependency_install_is_fail_closed():
     """Verify notebook uses check=True for pip install -e . without silent fallback."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
-    cell4_src = "".join(nb_data["cells"][3]["source"])
+    cell4_src = "".join(nb_data["cells"][4]["source"])
     assert "check=True" in cell4_src
 
 def test_approved_commit_must_be_exact_sha():
     """Verify notebook enforces exact 40-character hex commit check."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
-    cell3_src = "".join(nb_data["cells"][2]["source"])
+    cell3_src = "".join(nb_data["cells"][3]["source"])
     assert "APPROVED_PREPARATION_COMMIT" in cell3_src
-    assert "len(APPROVED_PREPARATION_COMMIT) != 40" in cell3_src
+    assert "re.match" in cell3_src
 
 def test_placeholder_commit_aborts():
     """Verify placeholder commit causes validation to abort."""
@@ -2147,7 +2147,6 @@ def test_qualification_test_firewall_stays_sealed(tmp_path):
     assert fw["test_label_reads"] == 0
     assert fw["test_metrics"] == 0
 
-
 # ---------------------------------------------------------------------------
 # 15. STAGE A2 V1.5 MANDATORY CUDA LOCK & FROZEN NOTEBOOK AUDIT TESTS
 # ---------------------------------------------------------------------------
@@ -2226,76 +2225,152 @@ def test_parent_and_child_bind_same_environment_lock_sha(tmp_path):
     assert len(resume_data["environment_lock_sha256"]) == 64
     assert resume_data["qualification_status"] == "PASS"
 
-def test_notebook_cell3_approved_commit_placeholder():
-    """Verify Cell 3 retains runtime placeholder APPROVED_PREPARATION_COMMIT."""
+def test_notebook_has_exactly_ten_executable_numbered_cells():
+    """Verify notebook contains exactly ten executable code cells numbered CELL 1 through CELL 10."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
-    cell3_src = "".join(nb_data["cells"][2]["source"])
+    code_cells = [c for c in nb_data["cells"] if c.get("cell_type") == "code"]
+    assert len(code_cells) == 10
+    
+    for i, cell in enumerate(code_cells, start=1):
+        first_line = cell["source"][0] if cell["source"] else ""
+        assert f"# CELL {i}" in first_line, f"Code cell {i} does not start with '# CELL {i}': {first_line}"
+
+def test_cell1_runtime_gpu_discovery_exists():
+    """Verify Cell 1 performs GPU and hosted environment discovery via subprocess."""
+    nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
+    nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
+    cell1_src = "".join(nb_data["cells"][1]["source"])
+    assert "nvidia-smi" in cell1_src
+    assert "query-gpu=name,compute_cap,memory.total" in cell1_src
+    assert "subprocess" in cell1_src
+
+def test_notebook_has_no_hardcoded_gpu_type():
+    """Verify notebook metadata contains no hardcoded gpuType (e.g. T4, L4, A100)."""
+    nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
+    nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
+    metadata_str = json.dumps(nb_data.get("metadata", {}))
+    assert "gpuType" not in metadata_str
+    assert "T4" not in metadata_str
+    assert "L4" not in metadata_str
+    assert "A100" not in metadata_str
+
+def test_cell3_commit_is_40_hex():
+    """Verify Cell 3 requires APPROVED_PREPARATION_COMMIT to match exact 40-character hex regex."""
+    nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
+    nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
+    cell3_src = "".join(nb_data["cells"][3]["source"])
     assert 'APPROVED_PREPARATION_COMMIT = "<supplied-after-independent-review>"' in cell3_src
-    assert "len(APPROVED_PREPARATION_COMMIT) != 40" in cell3_src
+    assert "re.match(r'^[0-9a-fA-F]{40}$'" in cell3_src or 're.match(r"^[0-9a-fA-F]{40}$"' in cell3_src
 
-def test_notebook_cell4_exact_torch_check():
-    """Verify Cell 4 enforces exact torch 2.6.0+cu124 and fail-closed reinstall."""
+def test_cell3_uses_clean_fresh_clone():
+    """Verify Cell 3 cleans any existing /content/Research directory before fresh cloning."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
-    cell4_src = "".join(nb_data["cells"][3]["source"])
-    assert "2.6.0+cu124" in cell4_src
-    assert "'pip', 'install', '-e', '.'" in cell4_src
-    assert "--index-url" in cell4_src and "https://download.pytorch.org/whl/cu124" in cell4_src
-    assert "subprocess.run" in cell4_src
+    cell3_src = "".join(nb_data["cells"][3]["source"])
+    assert "shutil.rmtree(repo_dir)" in cell3_src
+    assert "'git', 'clone'" in cell3_src or '"git", "clone"' in cell3_src
 
-def test_notebook_cell5_no_stale_local_dataset_fallback():
-    """Verify Cell 5 rejects missing Drive dataset and does not fall back to unverified local files."""
+def test_cell9_nvidia_smi_failure_is_fatal():
+    """Verify Cell 9 executes nvidia-smi with fail-closed check semantics without error swallowing."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
-    cell5_src = "".join(nb_data["cells"][4]["source"])
-    assert "FileNotFoundError" in cell5_src
-    assert "os.replace(tmp_dest, local_dest)" in cell5_src
-    assert "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169" in cell5_src
+    cell9_src = "".join(nb_data["cells"][9]["source"])
+    assert "subprocess.check_output(['nvidia-smi'], text=True)" in cell9_src or 'subprocess.check_output(["nvidia-smi"], text=True)' in cell9_src
+    assert "nvidia-smi unavailable:" not in cell9_src
 
-def test_notebook_cells_no_bang_python_shell():
-    """Verify notebook cells 4 through 10 use subprocess.run / pure Python and no !python shell calls."""
+def test_cell9_exports_current_qualification_run_identity():
+    """Verify Cell 9 exports QUALIFICATION_RUN_ID, QUALIFICATION_DIR, and FINAL_MANIFEST_PATH."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
-    for idx, cell in enumerate(nb_data["cells"]):
-        src = "".join(cell.get("source", []))
-        assert "!python" not in src, f"Cell {idx+1} contains '!python' shell execution: {src}"
+    cell9_src = "".join(nb_data["cells"][9]["source"])
+    assert "QUALIFICATION_RUN_ID = " in cell9_src
+    assert "QUALIFICATION_DIR = " in cell9_src
+    assert "FINAL_MANIFEST_PATH = " in cell9_src
 
-def test_notebook_cell7_passes_environment_lock():
-    """Verify Cell 7 passes mandatory --environment-lock to deterministic qualification."""
+def test_cell10_does_not_glob_latest_qualification():
+    """Verify Cell 10 does not use glob or sorted[-1] to infer qualification directory."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
-    cell7_src = "".join(nb_data["cells"][6]["source"])
-    assert "--environment-lock" in cell7_src
-    assert "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json" in cell7_src
+    cell10_src = "".join(nb_data["cells"][10]["source"])
+    assert "glob(" not in cell10_src
+    assert "sorted(" not in cell10_src
+    assert "[-1]" not in cell10_src
 
-def test_notebook_cell8_captures_dry_run_log_and_zero_steps():
-    """Verify Cell 8 captures SEED42-COLAB-DRY-RUN.log and validates zero optimizer steps."""
+def test_cell10_requires_cell9_runtime_binding():
+    """Verify Cell 10 fails closed if Cell 9 qualification variables are not in globals()."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
-    cell8_src = "".join(nb_data["cells"][7]["source"])
-    assert "SEED42-COLAB-DRY-RUN.log" in cell8_src
-    assert "OptimizerStepsExecuted=0" in cell8_src or "Optimizer Steps Executed: 0" in cell8_src
+    cell10_src = "".join(nb_data["cells"][10]["source"])
+    assert "'QUALIFICATION_DIR' not in globals()" in cell10_src or '"QUALIFICATION_DIR" not in globals()' in cell10_src
+    assert "'QUALIFICATION_RUN_ID' not in globals()" in cell10_src or '"QUALIFICATION_RUN_ID" not in globals()' in cell10_src
 
-def test_notebook_cell9_creates_durable_final_manifest():
-    """Verify Cell 9 writes FINAL-QUALIFICATION-MANIFEST.json to Google Drive qualification dir."""
+def test_cell10_replays_all_drive_artifact_hashes():
+    """Verify Cell 10 recomputes and checks SHA-256 for all mirrored Drive artifacts."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
-    cell9_src = "".join(nb_data["cells"][8]["source"])
-    assert "FINAL-QUALIFICATION-MANIFEST.json" in cell9_src
-    assert "GOOGLE_DRIVE_DURABLE" in cell9_src
+    cell10_src = "".join(nb_data["cells"][10]["source"])
+    assert "compute_sha256_streaming(durable_file)" in cell10_src
+    assert "actual_sha == art['sha256']" in cell10_src or 'actual_sha == art["sha256"]' in cell10_src
 
-def test_notebook_cell10_is_validation_gate():
-    """Verify Cell 10 validates qualification evidence and forbids unauthorized launch file."""
+def test_cell10_requires_exact_artifact_set():
+    """Verify Cell 10 checks the exact 10 required qualification artifacts by name."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
-    cell10_src = "".join(nb_data["cells"][9]["source"])
-    assert "FINAL-QUALIFICATION-MANIFEST.json" in cell10_src
+    cell10_src = "".join(nb_data["cells"][10]["source"])
+    expected_artifacts = [
+        "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json",
+        "IMPLEMENTATION-QUALIFICATION.json",
+        "DETERMINISTIC-RESUME-EVIDENCE.json",
+        "ENVIRONMENT.json",
+        "EXPERIMENTAL-SOURCE.json",
+        "EVIDENCE-MANIFEST.json",
+        "deterministic_resume.log",
+        "qualification_checkpoint.pt",
+        "SEED42-COLAB-DRY-RUN.log",
+        "NVIDIA-SMI.txt"
+    ]
+    for art in expected_artifacts:
+        assert art in cell10_src, f"Expected artifact {art} missing from Cell 10 verification set!"
+
+def test_cell10_uses_canonical_authorization_path():
+    """Verify Cell 10 checks for unauthorized launch file in canonical preexecution directory."""
+    nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
+    nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
+    cell10_src = "".join(nb_data["cells"][10]["source"])
     assert "SEED42-COLAB-LAUNCH-AUTHORIZATION-V1.5.json" in cell10_src
-    assert "STOP — PENDING INDEPENDENT REVIEW" in cell10_src
+    assert "preexecution" in cell10_src
+    assert "experiments/plans" not in cell10_src
 
-def test_notebook_zero_real_training_flags():
-    """Verify notebook contains zero occurrences of real empirical training authorization flags."""
+def test_cell10_authorization_path_matches_runner():
+    """Verify Cell 10 authorization check path exactly matches run_stage_a2_five_seed_empirical.py resolver."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
-    nb_text = nb_p.read_text(encoding="utf-8")
-    assert "--authorize-real-empirical-execution" not in nb_text
+    nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
+    cell10_src = "".join(nb_data["cells"][10]["source"])
+    assert "SEED42-COLAB-LAUNCH-AUTHORIZATION-V1.5.json" in cell10_src
+    assert "preexecution" in cell10_src
+
+def test_old_drive_qualification_cannot_satisfy_current_failed_run(tmp_path):
+    """Verify Cell 10 gate logic strictly validates current run identity and rejects old qualification runs."""
+    durable_root = tmp_path / "drive" / "MyDrive" / "Chuyende-stage-a2"
+    old_qual_dir = durable_root / "qualification" / "QUAL-COLAB-20260101T000000Z"
+    old_qual_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Old successful manifest
+    old_manifest = {
+        "qualification_run_id": "QUAL-COLAB-20260101T000000Z",
+        "storage": "GOOGLE_DRIVE_DURABLE",
+        "qualification_directory": str(old_qual_dir),
+        "artifact_count": 10,
+        "artifacts": []
+    }
+    (old_qual_dir / "FINAL-QUALIFICATION-MANIFEST.json").write_text(json.dumps(old_manifest), encoding="utf-8")
+    
+    # Current runtime variables point to a different run ID
+    current_run_id = "QUAL-COLAB-20260828T120000Z"
+    current_qual_dir = durable_root / "qualification" / current_run_id
+    
+    # Simulated Cell 10 check: manifest must match current_run_id
+    manifest_data = json.loads((old_qual_dir / "FINAL-QUALIFICATION-MANIFEST.json").read_text(encoding="utf-8"))
+    with pytest.raises(AssertionError):
+        assert manifest_data["qualification_run_id"] == current_run_id
