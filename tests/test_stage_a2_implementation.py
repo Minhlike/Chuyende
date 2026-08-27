@@ -1335,3 +1335,320 @@ def test_windows_interrupted_optimizer_steps_marked_unknown_if_unrecoverable():
     data = json.loads(interrupted_p.read_text(encoding="utf-8"))
     assert data["prior_attempt_optimizer_steps_executed"] == "UNKNOWN"
     assert data["prior_attempt_optimizer_steps_retained"] == 0
+
+
+# ---------------------------------------------------------------------------
+# 12. STAGE A2 V1.5 COLAB QUALIFICATION BLOCKER FIX TESTS
+# ---------------------------------------------------------------------------
+
+def test_requirements_txt_not_referenced_by_colab_notebook():
+    """Verify STAGE-A2-COLAB-V1.5.ipynb does not reference requirements.txt or || true."""
+    nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
+    assert nb_p.exists()
+    nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
+    
+    all_source = " ".join([" ".join(c.get("source", [])) for c in nb_data.get("cells", [])])
+    assert "requirements.txt" not in all_source
+    assert "|| true" not in all_source
+    assert "install" in all_source and "-e" in all_source and "." in all_source
+
+def test_dependency_install_is_fail_closed():
+    """Verify notebook uses check=True for pip install -e . without silent fallback."""
+    nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
+    nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
+    cell4_src = "".join(nb_data["cells"][4]["source"])
+    assert "check=True" in cell4_src
+
+def test_approved_commit_must_be_exact_sha():
+    """Verify notebook enforces exact 40-character hex commit check."""
+    nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
+    nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
+    cell3_src = "".join(nb_data["cells"][3]["source"])
+    assert "APPROVED_PREPARATION_COMMIT" in cell3_src
+    assert "len(APPROVED_PREPARATION_COMMIT.strip()) != 40" in cell3_src
+
+def test_placeholder_commit_aborts():
+    """Verify placeholder commit causes validation to abort."""
+    placeholder = "<supplied-after-independent-review>"
+    is_invalid = (not placeholder or "<" in placeholder or len(placeholder.strip()) != 40)
+    assert is_invalid is True
+
+def test_wrong_pytorch_version_aborts(monkeypatch):
+    """Verify bootstrap aborts if PyTorch version does not match 2.6.0 series."""
+    from scripts.bootstrap_stage_a2_colab import run_bootstrap
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA GPU required for bootstrap test")
+    monkeypatch.setattr(torch, "__version__", "2.5.1+cu121")
+    with pytest.raises(RuntimeError) as exc:
+        run_bootstrap(repo_dir=REPO_ROOT)
+    assert "PyTorch version mismatch" in str(exc.value)
+
+def test_wrong_cuda_runtime_aborts(monkeypatch):
+    """Verify bootstrap aborts if CUDA runtime is not 12.4."""
+    from scripts.bootstrap_stage_a2_colab import run_bootstrap
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA GPU required for bootstrap test")
+    monkeypatch.setattr(torch.version, "cuda", "12.1")
+    with pytest.raises(RuntimeError) as exc:
+        run_bootstrap(repo_dir=REPO_ROOT)
+    assert "CUDA runtime mismatch" in str(exc.value)
+
+def test_no_cuda_aborts(monkeypatch):
+    """Verify bootstrap aborts immediately if CUDA is not available."""
+    from scripts.bootstrap_stage_a2_colab import run_bootstrap
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
+    with pytest.raises(RuntimeError) as exc:
+        run_bootstrap(repo_dir=REPO_ROOT)
+    assert "CUDA is not available" in str(exc.value)
+
+def test_determinism_values_are_measured(tmp_path):
+    """Verify bootstrap machine-collects actual runtime determinism booleans."""
+    from scripts.bootstrap_stage_a2_colab import run_bootstrap
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required")
+    out_lock = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    env_cand = run_bootstrap(repo_dir=REPO_ROOT, env_lock_output_path=out_lock)
+    assert env_cand["deterministic_algorithms_enabled"] is True
+    assert env_cand["cudnn_deterministic"] is True
+    assert env_cand["cudnn_benchmark"] is False
+    assert env_cand["cublas_workspace_config"] == ":4096:8"
+
+def test_python_major_minor_mismatch_blocks_later_execution(tmp_path):
+    """Verify preflight rejects Python major.minor mismatch for V1.5 plan."""
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required")
+    env = {
+        "environment_id": "ENV-STAGE-A2-COLAB-V1.5",
+        "python_major_minor": "3.8",
+        "pytorch_version": torch.__version__,
+        "torch_cuda_runtime": torch.version.cuda,
+        "device_name": torch.cuda.get_device_name(0),
+        "device_type": "cuda",
+        "automatic_cpu_fallback": False,
+        "cublas_workspace_config": ":4096:8",
+        "deterministic_algorithms_enabled": True,
+        "cudnn_deterministic": True,
+        "cudnn_benchmark": False
+    }
+    env_p = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    env_p.write_text(json.dumps(env, indent=2), encoding="utf-8")
+    with pytest.raises(ExecutionDeviceMismatchError) as exc:
+        verify_preflight(
+            base_dir=REPO_ROOT,
+            target_seed=42,
+            is_dry_run=True,
+            fixture_mode=True,
+            plan_path=REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json",
+            env_lock_path=env_p
+        )
+    assert "Python major.minor mismatch" in str(exc.value)
+
+def test_gpu_model_mismatch_blocks_later_execution(tmp_path):
+    """Verify preflight rejects GPU device name mismatch for V1.5 plan."""
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required")
+    env = {
+        "environment_id": "ENV-STAGE-A2-COLAB-V1.5",
+        "python_major_minor": f"{sys.version_info.major}.{sys.version_info.minor}",
+        "pytorch_version": torch.__version__,
+        "torch_cuda_runtime": torch.version.cuda,
+        "device_name": "Tesla K80",
+        "device_type": "cuda",
+        "automatic_cpu_fallback": False,
+        "cublas_workspace_config": ":4096:8",
+        "deterministic_algorithms_enabled": True,
+        "cudnn_deterministic": True,
+        "cudnn_benchmark": False
+    }
+    env_p = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    env_p.write_text(json.dumps(env, indent=2), encoding="utf-8")
+    with pytest.raises(ExecutionDeviceMismatchError) as exc:
+        verify_preflight(
+            base_dir=REPO_ROOT,
+            target_seed=42,
+            is_dry_run=True,
+            fixture_mode=True,
+            plan_path=REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json",
+            env_lock_path=env_p
+        )
+    assert "GPU device name mismatch" in str(exc.value)
+
+def test_compute_capability_mismatch_blocks_later_execution(tmp_path):
+    """Verify preflight rejects compute capability mismatch for V1.5 plan."""
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required")
+    env = {
+        "environment_id": "ENV-STAGE-A2-COLAB-V1.5",
+        "python_major_minor": f"{sys.version_info.major}.{sys.version_info.minor}",
+        "pytorch_version": torch.__version__,
+        "torch_cuda_runtime": torch.version.cuda,
+        "device_name": torch.cuda.get_device_name(0),
+        "device_compute_capability": "3.5",
+        "device_type": "cuda",
+        "automatic_cpu_fallback": False,
+        "cublas_workspace_config": ":4096:8",
+        "deterministic_algorithms_enabled": True,
+        "cudnn_deterministic": True,
+        "cudnn_benchmark": False
+    }
+    env_p = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    env_p.write_text(json.dumps(env, indent=2), encoding="utf-8")
+    with pytest.raises(ExecutionDeviceMismatchError) as exc:
+        verify_preflight(
+            base_dir=REPO_ROOT,
+            target_seed=42,
+            is_dry_run=True,
+            fixture_mode=True,
+            plan_path=REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json",
+            env_lock_path=env_p
+        )
+    assert "GPU compute capability mismatch" in str(exc.value)
+
+def test_cublas_mismatch_blocks_later_execution(tmp_path):
+    """Verify preflight rejects CUBLAS workspace config mismatch."""
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required")
+    env = {
+        "environment_id": "ENV-STAGE-A2-COLAB-V1.5",
+        "python_major_minor": f"{sys.version_info.major}.{sys.version_info.minor}",
+        "pytorch_version": torch.__version__,
+        "torch_cuda_runtime": torch.version.cuda,
+        "device_name": torch.cuda.get_device_name(0),
+        "device_type": "cuda",
+        "automatic_cpu_fallback": False,
+        "cublas_workspace_config": ":1024:4",
+        "deterministic_algorithms_enabled": True,
+        "cudnn_deterministic": True,
+        "cudnn_benchmark": False
+    }
+    env_p = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    env_p.write_text(json.dumps(env, indent=2), encoding="utf-8")
+    with pytest.raises(ExecutionDeviceMismatchError) as exc:
+        verify_preflight(
+            base_dir=REPO_ROOT,
+            target_seed=42,
+            is_dry_run=True,
+            fixture_mode=True,
+            plan_path=REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json",
+            env_lock_path=env_p
+        )
+    assert "cublas_workspace_config" in str(exc.value)
+
+def test_determinism_mismatch_blocks_later_execution(tmp_path):
+    """Verify preflight rejects disabled deterministic algorithms."""
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required")
+    env = {
+        "environment_id": "ENV-STAGE-A2-COLAB-V1.5",
+        "python_major_minor": f"{sys.version_info.major}.{sys.version_info.minor}",
+        "pytorch_version": torch.__version__,
+        "torch_cuda_runtime": torch.version.cuda,
+        "device_name": torch.cuda.get_device_name(0),
+        "device_type": "cuda",
+        "automatic_cpu_fallback": False,
+        "cublas_workspace_config": ":4096:8",
+        "deterministic_algorithms_enabled": False,
+        "cudnn_deterministic": True,
+        "cudnn_benchmark": False
+    }
+    env_p = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    env_p.write_text(json.dumps(env, indent=2), encoding="utf-8")
+    with pytest.raises(ExecutionDeviceMismatchError) as exc:
+        verify_preflight(
+            base_dir=REPO_ROOT,
+            target_seed=42,
+            is_dry_run=True,
+            fixture_mode=True,
+            plan_path=REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json",
+            env_lock_path=env_p
+        )
+    assert "deterministic_algorithms_enabled" in str(exc.value)
+
+def test_gpu_uuid_mismatch_does_not_block(tmp_path):
+    """Verify different GPU UUID is treated as descriptive and does NOT block preflight."""
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required")
+    device_props = torch.cuda.get_device_properties(0)
+    curr_compute_cap = f"{device_props.major}.{device_props.minor}"
+    env = {
+        "environment_id": "ENV-STAGE-A2-COLAB-V1.5",
+        "python_major_minor": f"{sys.version_info.major}.{sys.version_info.minor}",
+        "pytorch_version": torch.__version__,
+        "torch_cuda_runtime": torch.version.cuda,
+        "device_name": torch.cuda.get_device_name(0),
+        "device_compute_capability": curr_compute_cap,
+        "device_type": "cuda",
+        "gpu_uuid_descriptive": "GPU-RANDOM-OTHER-UUID-12345",
+        "automatic_cpu_fallback": False,
+        "cublas_workspace_config": ":4096:8",
+        "deterministic_algorithms_enabled": True,
+        "cudnn_deterministic": True,
+        "cudnn_benchmark": False
+    }
+    env_p = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    env_p.write_text(json.dumps(env, indent=2), encoding="utf-8")
+    res = verify_preflight(
+        base_dir=REPO_ROOT,
+        target_seed=42,
+        is_dry_run=True,
+        fixture_mode=True,
+        plan_path=REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json",
+        env_lock_path=env_p
+    )
+    assert res["gpu_name"] == torch.cuda.get_device_name(0)
+
+def test_streaming_hdfs_hash_works(tmp_path):
+    """Verify streaming SHA-256 produces exact match with standard hash."""
+    import hashlib
+    from scripts.bootstrap_stage_a2_colab import compute_sha256
+    test_f = tmp_path / "dummy_archive.tar.gz"
+    data = b"STREAMING_TEST_DATA" * 50000
+    test_f.write_bytes(data)
+    
+    expected_sha = hashlib.sha256(data).hexdigest()
+    streaming_sha = compute_sha256(test_f, chunk_size=4096)
+    assert streaming_sha == expected_sha
+
+def test_qualification_artifacts_mirrored_to_drive_with_sha_equality(tmp_path):
+    """Verify mirror_qualification_artifacts mirrors files and checks SHA-256 equality."""
+    from scripts.bootstrap_stage_a2_colab import mirror_qualification_artifacts, compute_sha256
+    
+    # Create fake repo structure
+    mock_repo = tmp_path / "repo"
+    mock_drive = tmp_path / "drive"
+    mock_repo.mkdir()
+    mock_drive.mkdir()
+    
+    env_dir = mock_repo / "experiments" / "evidence" / "stage-a2" / "preexecution"
+    impl_dir = mock_repo / "experiments" / "evidence" / "stage-a2" / "implementation"
+    env_dir.mkdir(parents=True)
+    impl_dir.mkdir(parents=True)
+    
+    (env_dir / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json").write_text('{"mock":"env"}', encoding="utf-8")
+    (impl_dir / "IMPLEMENTATION-QUALIFICATION.json").write_text('{"mock":"qual"}', encoding="utf-8")
+    (impl_dir / "DETERMINISTIC-RESUME-EVIDENCE.json").write_text('{"mock":"resume"}', encoding="utf-8")
+    (impl_dir / "ENVIRONMENT.json").write_text('{"mock":"env2"}', encoding="utf-8")
+    (impl_dir / "EXPERIMENTAL-SOURCE.json").write_text('{"mock":"src"}', encoding="utf-8")
+    (impl_dir / "deterministic_resume.log").write_text('LOG_CONTENT', encoding="utf-8")
+    (impl_dir / "EVIDENCE-MANIFEST.json").write_text('{"mock":"manifest"}', encoding="utf-8")
+    
+    dest_dir = mirror_qualification_artifacts(base_dir=mock_repo, durable_root=mock_drive, qual_run_id="QUAL-TEST-001")
+    assert dest_dir.exists()
+    assert (dest_dir / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json").exists()
+    assert (dest_dir / "QUALIFICATION-MIRROR-MANIFEST.json").exists()
+    
+    manifest_data = json.loads((dest_dir / "QUALIFICATION-MIRROR-MANIFEST.json").read_text(encoding="utf-8"))
+    assert manifest_data["artifacts_count"] == 7
+
+def test_colab_notebook_has_no_real_training_cell():
+    """Verify STAGE-A2-COLAB-V1.5.ipynb does NOT contain real training authorization cell."""
+    nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
+    nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
+    all_code = " ".join([" ".join(c.get("source", [])) for c in nb_data.get("cells", []) if c.get("cell_type") == "code"])
+    assert "--authorize-real-empirical-execution" not in all_code

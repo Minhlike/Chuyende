@@ -140,9 +140,13 @@ class RuntimeTestFirewallGuard:
             "firewall_status": "LOCKED" if not self.test_opened else "BREACHED"
         }
 
-def compute_sha256(path: Path) -> str:
-    """Computes SHA-256 hash of file bytes."""
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+def compute_sha256(path: Path, chunk_size: int = 8 * 1024 * 1024) -> str:
+    """Computes SHA-256 hash using streaming chunks to prevent high memory usage."""
+    hasher = hashlib.sha256()
+    with open(path, "rb") as f:
+        while chunk := f.read(chunk_size):
+            hasher.update(chunk)
+    return hasher.hexdigest()
 
 def get_git_info() -> Tuple[str, str, bool]:
     """Retrieves current git commit, branch, and porcelain status."""
@@ -364,9 +368,14 @@ def verify_preflight(
                 raise ExecutionDeviceMismatchError("FATAL: automatic_cpu_fallback must be strictly False in execution environment lock!")
             print(f"[PRE-FLIGHT 3] Environment Lock Strict Properties: MATCH ({actual_env_sha[:16]}...) [{curr_gpu_name}, {total_vram_gb:.2f} GB VRAM]")
         else:
-            # Colab V1.5 Strict Environment Comparison
+            # Colab V1.5 Strict Environment Alignment (Amendment 12)
             if not torch.cuda.is_available():
                 raise ExecutionDeviceMismatchError("FATAL: CUDA is not available! Colab empirical execution requires CUDA GPU.")
+            
+            curr_py_maj_min = f"{sys.version_info.major}.{sys.version_info.minor}"
+            if "python_major_minor" in env_lock and curr_py_maj_min != env_lock["python_major_minor"]:
+                raise ExecutionDeviceMismatchError(f"FATAL: Python major.minor mismatch: {curr_py_maj_min} != {env_lock['python_major_minor']}")
+            
             curr_torch_ver = torch.__version__
             curr_cuda_runtime = torch.version.cuda
             if curr_torch_ver != env_lock["pytorch_version"]:
@@ -375,11 +384,28 @@ def verify_preflight(
                 raise ExecutionDeviceMismatchError(f"FATAL: CUDA runtime mismatch: {curr_cuda_runtime} != {env_lock.get('torch_cuda_runtime')}")
             if curr_gpu_name != env_lock["device_name"]:
                 raise ExecutionDeviceMismatchError(f"FATAL: GPU device name mismatch: {curr_gpu_name} != {env_lock['device_name']}")
+            
+            device_props = torch.cuda.get_device_properties(0)
+            curr_compute_cap = f"{device_props.major}.{device_props.minor}"
+            if "device_compute_capability" in env_lock and curr_compute_cap != env_lock["device_compute_capability"]:
+                raise ExecutionDeviceMismatchError(f"FATAL: GPU compute capability mismatch: {curr_compute_cap} != {env_lock['device_compute_capability']}")
+            
             if env_lock.get("device_type") != "cuda":
                 raise ExecutionDeviceMismatchError("FATAL: device_type != cuda")
             if env_lock.get("automatic_cpu_fallback") is not False:
                 raise ExecutionDeviceMismatchError("FATAL: automatic_cpu_fallback != False")
-            print(f"[PRE-FLIGHT 3] Colab Environment Lock Strict Properties: MATCH ({actual_env_sha[:16]}...) [{curr_gpu_name}, {total_vram_gb:.2f} GB VRAM]")
+            if env_lock.get("cublas_workspace_config") != ":4096:8":
+                raise ExecutionDeviceMismatchError("FATAL: cublas_workspace_config != :4096:8")
+            if env_lock.get("deterministic_algorithms_enabled") is not True:
+                raise ExecutionDeviceMismatchError("FATAL: deterministic_algorithms_enabled != True")
+            if env_lock.get("cudnn_deterministic") is not True:
+                raise ExecutionDeviceMismatchError("FATAL: cudnn_deterministic != True")
+            if env_lock.get("cudnn_benchmark") is not False:
+                raise ExecutionDeviceMismatchError("FATAL: cudnn_benchmark != False")
+            
+            # Descriptive only: gpu_uuid is recorded but does NOT raise mismatch
+            descriptive_uuid = env_lock.get("gpu_uuid_descriptive", "N/A")
+            print(f"[PRE-FLIGHT 3] Colab Environment Lock Strict Properties: MATCH ({actual_env_sha[:16]}...) [{curr_gpu_name}, Compute {curr_compute_cap}, {total_vram_gb:.2f} GB VRAM, UUID: {descriptive_uuid}]")
     else:
         if is_v15_plan and (is_dry_run or fixture_mode):
             if torch.cuda.is_available():
@@ -389,7 +415,7 @@ def verify_preflight(
         else:
             raise FileNotFoundError(f"Environment lock file missing at {env_lock_p}")
 
-    # 5. Raw Dataset Tarball Verification
+    # 5. Raw Dataset Tarball Streaming Verification
     raw_tar_p = Path(raw_tar_path).resolve() if raw_tar_path else (base_dir / "datasets" / "raw" / "hdfs" / "HDFS_1.tar.gz")
     if not raw_tar_p.exists():
         raise FileNotFoundError(f"Raw HDFS tarball missing at {raw_tar_p}")
@@ -577,6 +603,7 @@ def run_single_seed_pipeline(
         "environment_id": f"ENV-STAGE-A2-SEED{seed}",
         "python_executable": sys.executable,
         "python_version": platform.python_version(),
+        "python_major_minor": f"{sys.version_info.major}.{sys.version_info.minor}",
         "pytorch_version": torch.__version__,
         "cuda_runtime": torch.version.cuda if torch.cuda.is_available() else None,
         "device_name": preflight["gpu_name"],
