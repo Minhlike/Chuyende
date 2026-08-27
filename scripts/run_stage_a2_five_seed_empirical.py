@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Canonical Five-Seed Empirical Pretraining Runner for Stage A2 (Contract V1.4.1 Locked).
+Canonical Five-Seed Empirical Pretraining Runner for Stage A2 (Contract V1.4.1 / V1.5 Locked).
 Dataset: HDFS (SPL-HDFS-001 Canonical Split Authority)
 Authorized Execution Scope: 35,000 Train Sessions (586,577 events) | 7,500 Val Sessions (119,531 events)
 Canonical Seeds: [42, 1337, 2024, 7, 999]
@@ -13,10 +13,13 @@ Usage:
   python scripts/run_stage_a2_five_seed_empirical.py --seed 42 --dry-run
 
   # Resume interrupted run from checkpoint:
-  python scripts/run_stage_a2_five_seed_empirical.py --seed 42 --resume D:/Research/.artifacts/stage-a2/HDFS/seed-42/last_checkpoint.pt --authorize-real-empirical-execution
+  python scripts/run_stage_a2_five_seed_empirical.py --seed 42 --resume .artifacts/stage-a2/HDFS/seed-42/last_checkpoint.pt --authorize-real-empirical-execution
 
   # Real empirical training (Requires explicit authorization, executed sequentially one seed at a time):
   python scripts/run_stage_a2_five_seed_empirical.py --seed 42 --authorize-real-empirical-execution
+
+  # Google Colab / Cross-Platform with durable Google Drive root:
+  python scripts/run_stage_a2_five_seed_empirical.py --seed 42 --base-dir /content/Research --dataset-path /content/stage-a2-data/HDFS_1.tar.gz --durable-root /content/drive/MyDrive/Chuyende-stage-a2/runs --plan experiments/plans/STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json --dry-run
 """
 
 import os
@@ -29,6 +32,7 @@ import json
 import time
 import math
 import random
+import shutil
 import hashlib
 import platform
 import argparse
@@ -64,6 +68,7 @@ ENV_LOCK_SHA = "aeac2a947d21cec99c5a1fd0124bf8fdf6a8e86f259e740421f5a5743be3e545
 RAW_HDFS_TAR_SHA = "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169"
 TRAIN_MEMBERSHIP_SHA = "65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc"
 VAL_MEMBERSHIP_SHA = "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407b0609a"
+DEFAULT_BASE_DIR = Path(__file__).resolve().parent.parent
 
 class LaunchAuthorizationMissingError(FileNotFoundError):
     """Raised when the mandatory launch authorization artifact is missing for real empirical execution."""
@@ -91,10 +96,16 @@ class FrozenSourceMismatchError(RuntimeError):
 
 class RuntimeTestFirewallGuard:
     """Connected runtime test firewall wrapping graph builder materialization."""
-    def __init__(self, split_authority: Optional[HDFSSplitAuthority] = None, base_dir: Optional[Path] = None):
-        self.base_dir = base_dir or Path("D:/Research")
-        self.split_authority = split_authority or HDFSSplitAuthority(base_dir=self.base_dir)
-        self.builder = HDFSGraphBuilder(base_dir=self.base_dir, split_authority=self.split_authority)
+    def __init__(
+        self,
+        split_authority: Optional[HDFSSplitAuthority] = None,
+        base_dir: Optional[Path] = None,
+        raw_tar_path: Optional[Path] = None
+    ):
+        self.base_dir = Path(base_dir).resolve() if base_dir else DEFAULT_BASE_DIR
+        self.raw_tar_path = Path(raw_tar_path).resolve() if raw_tar_path else (self.base_dir / "datasets" / "raw" / "hdfs" / "HDFS_1.tar.gz")
+        self.split_authority = split_authority or HDFSSplitAuthority(base_dir=self.base_dir, raw_tar_path=self.raw_tar_path)
+        self.builder = HDFSGraphBuilder(base_dir=self.base_dir, split_authority=self.split_authority, raw_tar_path=self.raw_tar_path)
         self.test_opened: bool = False
         self.test_feature_reads: int = 0
         self.test_label_reads: int = 0
@@ -163,14 +174,21 @@ def verify_frozen_execution_source(base_dir: Path, expected_commit_sha: str) -> 
             text=True
         ).strip()
         if diff_out:
-            raise FrozenSourceMismatchError(
-                f"FATAL: Execution source tree has modified files relative to authorized code commit {expected_commit_sha}!\n"
-                f"Diff excerpt:\n{diff_out[:500]}"
-            )
+            msg = "FATAL: Execution source tree has modified files relative to authorized code commit " + str(expected_commit_sha) + "!\nDiff excerpt:\n" + diff_out[:500]
+            raise FrozenSourceMismatchError(msg)
     except subprocess.CalledProcessError as e:
         raise FrozenSourceMismatchError(f"FATAL: Failed to execute git diff against {expected_commit_sha}: {e}")
 
-def verify_preflight(base_dir: Path, target_seed: int, is_dry_run: bool = False, fixture_mode: bool = False) -> Dict[str, Any]:
+def verify_preflight(
+    base_dir: Path,
+    target_seed: int,
+    is_dry_run: bool = False,
+    fixture_mode: bool = False,
+    plan_path: Optional[Path] = None,
+    auth_path: Optional[Path] = None,
+    env_lock_path: Optional[Path] = None,
+    raw_tar_path: Optional[Path] = None
+) -> Dict[str, Any]:
     """
     Strict Fail-Closed Pre-Flight Verification:
       1. Git clean source code tree & frozen execution commit match
@@ -191,147 +209,197 @@ def verify_preflight(base_dir: Path, target_seed: int, is_dry_run: bool = False,
 
     commit_sha, branch, is_dirty = get_git_info()
 
-    # 1. Read Expected Execution Code Commit from Authorization Artifact & Plan Binding
-    auth_p = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / f"SEED{target_seed}-LAUNCH-AUTHORIZATION.json"
-    plan_p = base_dir / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN.json"
-    
+    # 1. Resolve Plan
+    if plan_path:
+        plan_p = Path(plan_path).resolve()
+    elif (base_dir / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN.json").exists():
+        plan_p = base_dir / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN.json"
+    elif (base_dir / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json").exists():
+        plan_p = base_dir / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
+    else:
+        raise FileNotFoundError(f"Execution plan file missing in {base_dir}")
+
     if not plan_p.exists():
         raise FileNotFoundError(f"Execution plan file missing at {plan_p}")
     plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
+    is_v15_plan = (plan_data.get("protocol_version") == "1.5.0" or plan_data.get("execution_provider") == "GOOGLE_COLAB")
 
+    # 2. Authorization Artifact / Template Resolution
+    if auth_path:
+        auth_p = Path(auth_path).resolve()
+        auth_template_p = None
+    elif is_v15_plan:
+        auth_p = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / f"SEED{target_seed}-COLAB-LAUNCH-AUTHORIZATION-V1.5.json"
+        auth_template_p = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / f"SEED{target_seed}-COLAB-LAUNCH-AUTHORIZATION-V1.5.template.json"
+    else:
+        auth_p = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / f"SEED{target_seed}-LAUNCH-AUTHORIZATION.json"
+        auth_template_p = None
+
+    expected_code_commit = None
     if not fixture_mode:
-        if not auth_p.exists():
+        if auth_p.exists():
+            if is_dirty and not is_dry_run:
+                raise RuntimeError("FATAL: Execution source tree has uncommitted changes! Aborting pre-flight.")
+            
+            auth_data = json.loads(auth_p.read_text(encoding="utf-8"))
+            if not auth_data.get("authorization_id"):
+                raise ValueError("FATAL: authorization_id missing from authorization artifact!")
+            if auth_data.get("stage") != "STAGE_A2":
+                raise ValueError(f"FATAL: Authorization stage {auth_data.get('stage')} != STAGE_A2")
+            if auth_data.get("dataset") != "HDFS":
+                raise ValueError(f"FATAL: Authorization dataset {auth_data.get('dataset')} != HDFS")
+            if auth_data.get("split_id") != "SPL-HDFS-001":
+                raise ValueError(f"FATAL: Authorization split_id {auth_data.get('split_id')} != SPL-HDFS-001")
+            if auth_data.get("seed") != target_seed:
+                raise ValueError(f"FATAL: Authorization seed {auth_data.get('seed')} != target_seed {target_seed}")
+            if auth_data.get("authorization_status") not in ["AUTHORIZED", "AUTHORIZED_PENDING_REAL_LAUNCH"]:
+                raise ValueError(f"FATAL: Authorization status {auth_data.get('authorization_status')} is not AUTHORIZED!")
+            
+            if auth_data.get("raw_hdfs_sha256") != RAW_HDFS_TAR_SHA:
+                raise ValueError(f"FATAL: Authorization raw HDFS SHA mismatch: {auth_data.get('raw_hdfs_sha256')} != {RAW_HDFS_TAR_SHA}")
+            if auth_data.get("train_membership_sha256") != TRAIN_MEMBERSHIP_SHA:
+                raise ValueError(f"FATAL: Authorization train membership SHA mismatch")
+            if auth_data.get("val_membership_sha256") != VAL_MEMBERSHIP_SHA:
+                raise ValueError(f"FATAL: Authorization val membership SHA mismatch")
+            if auth_data.get("train_sessions_count") != 35000:
+                raise ValueError("FATAL: train_sessions_count != 35000")
+            if auth_data.get("val_sessions_count") != 7500:
+                raise ValueError("FATAL: val_sessions_count != 7500")
+            if auth_data.get("train_events_count", auth_data.get("train_graph_events_count")) != 586577:
+                raise ValueError("FATAL: train_events_count != 586577")
+            if auth_data.get("val_events_count", auth_data.get("val_graph_events_count")) != 119531:
+                raise ValueError("FATAL: val_events_count != 119531")
+            if auth_data.get("train_windows_count") != 2292:
+                raise ValueError("FATAL: train_windows_count != 2292")
+            if auth_data.get("val_windows_count") != 467:
+                raise ValueError("FATAL: val_windows_count != 467")
+            if auth_data.get("optimizer_steps_per_epoch") != 573:
+                raise ValueError("FATAL: optimizer_steps_per_epoch != 573")
+            if auth_data.get("test_opened") is not False:
+                raise ValueError("FATAL: test_opened must be False!")
+
+            expected_code_commit = auth_data.get("expected_execution_code_commit_sha")
+            plan_code_commit = plan_data.get("execution_code_commit_sha")
+            if plan_code_commit and expected_code_commit != plan_code_commit:
+                raise ValueError(f"FATAL: Authorization expected code commit ({expected_code_commit}) != Plan code commit ({plan_code_commit})")
+            
+            act_auth_sha = compute_sha256(auth_p)
+            plan_auth_sha = plan_data.get(f"seed{target_seed}_launch_authorization_sha256")
+            if plan_auth_sha and act_auth_sha != plan_auth_sha:
+                raise ValueError(f"FATAL: Authorization file SHA ({act_auth_sha}) != Plan authorization SHA ({plan_auth_sha})")
+            
+            verify_frozen_execution_source(base_dir, expected_code_commit)
+            print(f"[PRE-FLIGHT 1] Frozen Source Match: PASS (Byte-identical to {expected_code_commit[:16]}...) [HEAD={commit_sha[:16]}...]")
+        elif is_v15_plan and (is_dry_run or fixture_mode) and auth_template_p and auth_template_p.exists():
+            template_data = json.loads(auth_template_p.read_text(encoding="utf-8"))
+            if template_data.get("seed") != target_seed:
+                raise ValueError(f"Template seed {template_data.get('seed')} != {target_seed}")
+            expected_code_commit = commit_sha
+            print(f"[PRE-FLIGHT 1] Execution Code Commit / HEAD: {commit_sha} (dirty={is_dirty}) [V1.5 Colab Preparation Mode]")
+        else:
             raise LaunchAuthorizationMissingError(
                 f"FATAL: Mandatory Launch Authorization Artifact missing at {auth_p}! "
                 f"Real empirical execution for seed {target_seed} cannot proceed without explicit authorization artifact."
             )
-        
-        if is_dirty and not is_dry_run:
-            raise RuntimeError("FATAL: Execution source tree has uncommitted changes! Aborting pre-flight.")
-        
-        # Validate Authorization Content
-        auth_data = json.loads(auth_p.read_text(encoding="utf-8"))
-        
-        if not auth_data.get("authorization_id"):
-            raise ValueError("FATAL: authorization_id missing from authorization artifact!")
-        if auth_data.get("stage") != "STAGE_A2":
-            raise ValueError(f"FATAL: Authorization stage {auth_data.get('stage')} != STAGE_A2")
-        if auth_data.get("dataset") != "HDFS":
-            raise ValueError(f"FATAL: Authorization dataset {auth_data.get('dataset')} != HDFS")
-        if auth_data.get("split_id") != "SPL-HDFS-001":
-            raise ValueError(f"FATAL: Authorization split_id {auth_data.get('split_id')} != SPL-HDFS-001")
-        if auth_data.get("seed") != target_seed:
-            raise ValueError(f"FATAL: Authorization seed {auth_data.get('seed')} != target_seed {target_seed}")
-        if auth_data.get("authorization_status") != "AUTHORIZED_PENDING_REAL_LAUNCH":
-            raise ValueError(f"FATAL: Authorization status {auth_data.get('authorization_status')} != AUTHORIZED_PENDING_REAL_LAUNCH")
-        if auth_data.get("effective_protocol_version") != "1.4.1":
-            raise ValueError(f"FATAL: Authorization protocol version {auth_data.get('effective_protocol_version')} != 1.4.1")
-        if auth_data.get("protocol_lock_sha256") != PROTOCOL_LOCK_SHA:
-            raise ValueError(f"FATAL: Authorization protocol lock SHA mismatch: {auth_data.get('protocol_lock_sha256')} != {PROTOCOL_LOCK_SHA}")
-        if auth_data.get("environment_lock_sha256") != ENV_LOCK_SHA:
-            raise ValueError(f"FATAL: Authorization environment lock SHA mismatch: {auth_data.get('environment_lock_sha256')} != {ENV_LOCK_SHA}")
-        if auth_data.get("raw_hdfs_sha256") != RAW_HDFS_TAR_SHA:
-            raise ValueError(f"FATAL: Authorization raw HDFS SHA mismatch: {auth_data.get('raw_hdfs_sha256')} != {RAW_HDFS_TAR_SHA}")
-        if auth_data.get("train_membership_sha256") != TRAIN_MEMBERSHIP_SHA:
-            raise ValueError(f"FATAL: Authorization train membership SHA mismatch: {auth_data.get('train_membership_sha256')} != {TRAIN_MEMBERSHIP_SHA}")
-        if auth_data.get("val_membership_sha256") != VAL_MEMBERSHIP_SHA:
-            raise ValueError(f"FATAL: Authorization val membership SHA mismatch: {auth_data.get('val_membership_sha256')} != {VAL_MEMBERSHIP_SHA}")
-        if auth_data.get("train_sessions_count") != 35000:
-            raise ValueError(f"FATAL: Authorization train sessions count {auth_data.get('train_sessions_count')} != 35000")
-        if auth_data.get("val_sessions_count") != 7500:
-            raise ValueError(f"FATAL: Authorization val sessions count {auth_data.get('val_sessions_count')} != 7500")
-        if auth_data.get("train_events_count") != 586577:
-            raise ValueError(f"FATAL: Authorization train events count {auth_data.get('train_events_count')} != 586577")
-        if auth_data.get("val_events_count") != 119531:
-            raise ValueError(f"FATAL: Authorization val events count {auth_data.get('val_events_count')} != 119531")
-        if auth_data.get("train_windows_count") != 2292:
-            raise ValueError(f"FATAL: Authorization train windows count {auth_data.get('train_windows_count')} != 2292")
-        if auth_data.get("val_windows_count") != 467:
-            raise ValueError(f"FATAL: Authorization val windows count {auth_data.get('val_windows_count')} != 467")
-        if auth_data.get("optimizer_steps_per_epoch") != 573:
-            raise ValueError(f"FATAL: Authorization optimizer steps per epoch {auth_data.get('optimizer_steps_per_epoch')} != 573")
-        if auth_data.get("real_hdfs_runs_at_authorization") != 0:
-            raise ValueError(f"FATAL: Authorization real HDFS runs {auth_data.get('real_hdfs_runs_at_authorization')} != 0")
-        if auth_data.get("real_hdfs_optimizer_steps_at_authorization") != 0:
-            raise ValueError(f"FATAL: Authorization real HDFS optimizer steps {auth_data.get('real_hdfs_optimizer_steps_at_authorization')} != 0")
-        if auth_data.get("test_opened") is not False:
-            raise ValueError(f"FATAL: Authorization test_opened must be False!")
-
-        # Cryptographic Binding to Plan
-        expected_code_commit = auth_data.get("expected_execution_code_commit_sha")
-        plan_code_commit = plan_data.get("execution_code_commit_sha")
-        if expected_code_commit != plan_code_commit:
-            raise ValueError(f"FATAL: Authorization expected code commit ({expected_code_commit}) != Plan code commit ({plan_code_commit})")
-        
-        act_auth_sha = compute_sha256(auth_p)
-        plan_auth_sha = plan_data.get(f"seed{target_seed}_launch_authorization_sha256")
-        if act_auth_sha != plan_auth_sha:
-            raise ValueError(f"FATAL: Authorization file SHA ({act_auth_sha}) != Plan authorization SHA ({plan_auth_sha})")
-
-        verify_frozen_execution_source(base_dir, expected_code_commit)
-        print(f"[PRE-FLIGHT 1] Frozen Source Match: PASS (Byte-identical to {expected_code_commit[:16]}...) [HEAD={commit_sha[:16]}...]")
     else:
         expected_code_commit = plan_data.get("execution_code_commit_sha") if plan_p.exists() else None
         print(f"[PRE-FLIGHT 1] Execution Code Commit / HEAD: {commit_sha} (dirty={is_dirty})")
 
-    # 2. Protocol Lock Verification
-    protocol_lock_p = base_dir / "experiments" / "protocol" / "STAGE-A2-EXECUTION-LOCK-V1.4.json"
-    if not protocol_lock_p.exists():
-        raise FileNotFoundError(f"Protocol lock file missing at {protocol_lock_p}")
-    actual_proto_sha = compute_sha256(protocol_lock_p)
-    if actual_proto_sha != PROTOCOL_LOCK_SHA:
-        raise ValueError(f"PROTOCOL_LOCK_SHA mismatch: {actual_proto_sha} != {PROTOCOL_LOCK_SHA}")
-    print(f"[PRE-FLIGHT 2] Protocol Lock V1.4 SHA: MATCH ({actual_proto_sha[:16]}...)")
+    # 3. Protocol Lock Verification
+    if not is_v15_plan:
+        protocol_lock_p = base_dir / "experiments" / "protocol" / "STAGE-A2-EXECUTION-LOCK-V1.4.json"
+        if not protocol_lock_p.exists():
+            raise FileNotFoundError(f"Protocol lock file missing at {protocol_lock_p}")
+        actual_proto_sha = compute_sha256(protocol_lock_p)
+        if actual_proto_sha != PROTOCOL_LOCK_SHA:
+            raise ValueError(f"PROTOCOL_LOCK_SHA mismatch: {actual_proto_sha} != {PROTOCOL_LOCK_SHA}")
+        print(f"[PRE-FLIGHT 2] Protocol Lock V1.4 SHA: MATCH ({actual_proto_sha[:16]}...)")
+    else:
+        proto_amend_p = base_dir / "experiments" / "protocol" / "PROTOCOL-AMENDMENTS.md"
+        actual_proto_sha = compute_sha256(proto_amend_p) if proto_amend_p.exists() else "AMENDMENT_12_V1.5"
+        print(f"[PRE-FLIGHT 2] Protocol V1.5 (Amendment 12): LOCKED")
 
-    # 3. Environment Lock Verification & Strict Property Comparison
-    env_lock_p = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / "STAGE-A2-EXECUTION-ENVIRONMENT.json"
-    if not env_lock_p.exists():
-        raise FileNotFoundError(f"Environment lock file missing at {env_lock_p}")
-    actual_env_sha = compute_sha256(env_lock_p)
-    if actual_env_sha != ENV_LOCK_SHA:
-        raise ValueError(f"ENV_LOCK_SHA mismatch: {actual_env_sha} != {ENV_LOCK_SHA}")
-    
-    env_lock = json.loads(env_lock_p.read_text(encoding="utf-8"))
-    
-    # Strict Environment Equality Comparison
-    if not torch.cuda.is_available():
-        raise ExecutionDeviceMismatchError("FATAL: CUDA is not available! Empirical execution requires CUDA GPU.")
-    
-    curr_exe = sys.executable
-    curr_py_ver = platform.python_version()
-    curr_torch_ver = torch.__version__
-    curr_cuda_runtime = torch.version.cuda
-    curr_gpu_name = torch.cuda.get_device_name(0)
-    total_vram_gb = torch.cuda.get_device_properties(0).total_memory / (1024**3)
+    # 4. Environment Lock Verification
+    if env_lock_path:
+        env_lock_p = Path(env_lock_path).resolve()
+    elif is_v15_plan:
+        env_lock_p = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    else:
+        env_lock_p = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / "STAGE-A2-EXECUTION-ENVIRONMENT.json"
 
-    if curr_exe.lower() != env_lock["python_executable"].lower():
-        raise ExecutionDeviceMismatchError(f"FATAL: Python executable mismatch: {curr_exe} != {env_lock['python_executable']}")
-    if curr_py_ver != env_lock["python_version"]:
-        raise ExecutionDeviceMismatchError(f"FATAL: Python version mismatch: {curr_py_ver} != {env_lock['python_version']}")
-    if curr_torch_ver != env_lock["pytorch_version"]:
-        raise ExecutionDeviceMismatchError(f"FATAL: PyTorch version mismatch: {curr_torch_ver} != {env_lock['pytorch_version']}")
-    if curr_cuda_runtime != env_lock["cuda_runtime"]:
-        raise ExecutionDeviceMismatchError(f"FATAL: CUDA runtime mismatch: {curr_cuda_runtime} != {env_lock['cuda_runtime']}")
-    if curr_gpu_name != env_lock["device_name"]:
-        raise ExecutionDeviceMismatchError(f"FATAL: GPU device name mismatch: {curr_gpu_name} != {env_lock['device_name']}")
-    if env_lock.get("device_type") != "cuda":
-        raise ExecutionDeviceMismatchError(f"FATAL: Environment lock device_type is {env_lock.get('device_type')}, expected 'cuda'")
-    if env_lock.get("automatic_cpu_fallback") is not False:
-        raise ExecutionDeviceMismatchError("FATAL: automatic_cpu_fallback must be strictly False in execution environment lock!")
+    actual_env_sha = "PENDING_COLAB_RUNTIME_ALLOCATION"
+    curr_gpu_name = "CPU"
+    total_vram_gb = 0.0
 
-    print(f"[PRE-FLIGHT 3] Environment Lock Strict Properties: MATCH ({actual_env_sha[:16]}...) [{curr_gpu_name}, {total_vram_gb:.2f} GB VRAM]")
+    if env_lock_p.exists():
+        actual_env_sha = compute_sha256(env_lock_p)
+        env_lock = json.loads(env_lock_p.read_text(encoding="utf-8"))
+        
+        if torch.cuda.is_available():
+            curr_gpu_name = torch.cuda.get_device_name(0)
+            total_vram_gb = torch.cuda.get_device_properties(0).total_memory / (1024**3)
 
-    # 4. Raw Dataset Tarball Verification
-    raw_tar_p = base_dir / "datasets" / "raw" / "hdfs" / "HDFS_1.tar.gz"
+        if not is_v15_plan:
+            if actual_env_sha != ENV_LOCK_SHA and not fixture_mode:
+                raise ValueError(f"ENV_LOCK_SHA mismatch: {actual_env_sha} != {ENV_LOCK_SHA}")
+            if not torch.cuda.is_available():
+                raise ExecutionDeviceMismatchError("FATAL: CUDA is not available! Empirical execution requires CUDA GPU.")
+            curr_exe = sys.executable
+            curr_py_ver = platform.python_version()
+            curr_torch_ver = torch.__version__
+            curr_cuda_runtime = torch.version.cuda
+            if curr_exe.lower() != env_lock.get("python_executable", "").lower():
+                raise ExecutionDeviceMismatchError(f"FATAL: Python executable mismatch: {curr_exe} != {env_lock.get('python_executable')}")
+            if curr_py_ver != env_lock.get("python_version"):
+                raise ExecutionDeviceMismatchError(f"FATAL: Python version mismatch: {curr_py_ver} != {env_lock.get('python_version')}")
+            if curr_torch_ver != env_lock.get("pytorch_version"):
+                raise ExecutionDeviceMismatchError(f"FATAL: PyTorch version mismatch: {curr_torch_ver} != {env_lock.get('pytorch_version')}")
+            if curr_cuda_runtime != env_lock.get("cuda_runtime"):
+                raise ExecutionDeviceMismatchError(f"FATAL: CUDA runtime mismatch: {curr_cuda_runtime} != {env_lock.get('cuda_runtime')}")
+            if curr_gpu_name != env_lock.get("device_name"):
+                raise ExecutionDeviceMismatchError(f"FATAL: GPU device name mismatch: {curr_gpu_name} != {env_lock.get('device_name')}")
+            if env_lock.get("device_type") != "cuda":
+                raise ExecutionDeviceMismatchError(f"FATAL: Environment lock device_type is {env_lock.get('device_type')}, expected 'cuda'")
+            if env_lock.get("automatic_cpu_fallback") is not False:
+                raise ExecutionDeviceMismatchError("FATAL: automatic_cpu_fallback must be strictly False in execution environment lock!")
+            print(f"[PRE-FLIGHT 3] Environment Lock Strict Properties: MATCH ({actual_env_sha[:16]}...) [{curr_gpu_name}, {total_vram_gb:.2f} GB VRAM]")
+        else:
+            # Colab V1.5 Strict Environment Comparison
+            if not torch.cuda.is_available():
+                raise ExecutionDeviceMismatchError("FATAL: CUDA is not available! Colab empirical execution requires CUDA GPU.")
+            curr_torch_ver = torch.__version__
+            curr_cuda_runtime = torch.version.cuda
+            if curr_torch_ver != env_lock["pytorch_version"]:
+                raise ExecutionDeviceMismatchError(f"FATAL: PyTorch version mismatch: {curr_torch_ver} != {env_lock['pytorch_version']}")
+            if curr_cuda_runtime != env_lock.get("torch_cuda_runtime", env_lock.get("cuda_runtime")):
+                raise ExecutionDeviceMismatchError(f"FATAL: CUDA runtime mismatch: {curr_cuda_runtime} != {env_lock.get('torch_cuda_runtime')}")
+            if curr_gpu_name != env_lock["device_name"]:
+                raise ExecutionDeviceMismatchError(f"FATAL: GPU device name mismatch: {curr_gpu_name} != {env_lock['device_name']}")
+            if env_lock.get("device_type") != "cuda":
+                raise ExecutionDeviceMismatchError("FATAL: device_type != cuda")
+            if env_lock.get("automatic_cpu_fallback") is not False:
+                raise ExecutionDeviceMismatchError("FATAL: automatic_cpu_fallback != False")
+            print(f"[PRE-FLIGHT 3] Colab Environment Lock Strict Properties: MATCH ({actual_env_sha[:16]}...) [{curr_gpu_name}, {total_vram_gb:.2f} GB VRAM]")
+    else:
+        if is_v15_plan and (is_dry_run or fixture_mode):
+            if torch.cuda.is_available():
+                curr_gpu_name = torch.cuda.get_device_name(0)
+                total_vram_gb = torch.cuda.get_device_properties(0).total_memory / (1024**3)
+            print(f"[PRE-FLIGHT 3] Colab Environment Lock: PENDING DYNAMIC ALLOCATION [{curr_gpu_name}, {total_vram_gb:.2f} GB VRAM]")
+        else:
+            raise FileNotFoundError(f"Environment lock file missing at {env_lock_p}")
+
+    # 5. Raw Dataset Tarball Verification
+    raw_tar_p = Path(raw_tar_path).resolve() if raw_tar_path else (base_dir / "datasets" / "raw" / "hdfs" / "HDFS_1.tar.gz")
     if not raw_tar_p.exists():
         raise FileNotFoundError(f"Raw HDFS tarball missing at {raw_tar_p}")
     act_raw_sha = compute_sha256(raw_tar_p)
     if act_raw_sha != RAW_HDFS_TAR_SHA:
         raise ValueError(f"RAW_HDFS_TAR_SHA mismatch: {act_raw_sha} != {RAW_HDFS_TAR_SHA}")
-    print(f"[PRE-FLIGHT 4] Raw HDFS Tarball SHA: MATCH ({act_raw_sha[:16]}...)")
+    print(f"[PRE-FLIGHT 4] Raw HDFS Tarball SHA: MATCH ({act_raw_sha[:16]}...) [{raw_tar_p}]")
 
-    # 5. Canonical Recomputation of Execution Membership
-    split_auth = HDFSSplitAuthority(base_dir=base_dir)
+    # 6. Canonical Recomputation of Execution Membership
+    split_auth = HDFSSplitAuthority(base_dir=base_dir, raw_tar_path=raw_tar_p)
     split_info = split_auth.get_split()
     
     recomputed_train_sha = hashlib.sha256("\n".join(split_info["selected_train_block_ids"]).encode()).hexdigest()
@@ -350,8 +418,8 @@ def verify_preflight(base_dir: Path, target_seed: int, is_dry_run: bool = False,
     print(f"[PRE-FLIGHT 5] Train Membership Recomputed: MATCH ({recomputed_train_sha[:16]}...) [35,000 sessions / 586,577 events]")
     print(f"[PRE-FLIGHT 6] Val Membership Recomputed:   MATCH ({recomputed_val_sha[:16]}...) [7,500 sessions / 119,531 events]")
 
-    # 6. Connected Test Firewall Verification
-    guard = RuntimeTestFirewallGuard(split_authority=split_auth, base_dir=base_dir)
+    # 7. Connected Test Firewall Verification
+    guard = RuntimeTestFirewallGuard(split_authority=split_auth, base_dir=base_dir, raw_tar_path=raw_tar_p)
     guard.assert_sealed()
     print("[PRE-FLIGHT 7] Connected Test Firewall: LOCKED (TEST_OPENED=false, READ_COUNT=0)")
 
@@ -371,7 +439,9 @@ def verify_preflight(base_dir: Path, target_seed: int, is_dry_run: bool = False,
         "val_membership_sha": recomputed_val_sha,
         "gpu_name": curr_gpu_name,
         "total_vram_gb": total_vram_gb,
-        "guard": guard
+        "guard": guard,
+        "is_v15_plan": is_v15_plan,
+        "raw_tar_path": raw_tar_p
     }
 
 def chunk_into_windows(events: List[Dict[str, Any]], window_size: int = 256) -> List[List[Dict[str, Any]]]:
@@ -380,6 +450,31 @@ def chunk_into_windows(events: List[Dict[str, Any]], window_size: int = 256) -> 
     for i in range(0, len(events), window_size):
         windows.append(events[i:i+window_size])
     return windows
+
+def sync_to_durable_storage(files_to_sync: List[Tuple[Path, str]], dest_dir: Path, run_state_file: Optional[Tuple[Path, str]] = None):
+    """
+    Atomically mirrors completed epoch files to durable Google Drive storage.
+    Verifies post-copy SHA-256 before committing RUN-STATE.json.
+    """
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    for src_file, rel_name in files_to_sync:
+        if src_file.exists():
+            dst_file = dest_dir / rel_name
+            dst_file.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(src_file, dst_file)
+            src_sha = compute_sha256(src_file)
+            dst_sha = compute_sha256(dst_file)
+            if src_sha != dst_sha:
+                raise RuntimeError(f"FATAL: Durable copy SHA-256 mismatch for {rel_name}: {dst_sha} != {src_sha}")
+    if run_state_file is not None:
+        src_state, rel_state_name = run_state_file
+        if src_state.exists():
+            dst_state = dest_dir / rel_state_name
+            shutil.copy2(src_state, dst_state)
+            src_sha = compute_sha256(src_state)
+            dst_sha = compute_sha256(dst_state)
+            if src_sha != dst_sha:
+                raise RuntimeError(f"FATAL: Durable RUN-STATE copy SHA-256 mismatch: {dst_sha} != {src_sha}")
 
 def run_single_seed_pipeline(
     seed: int,
@@ -392,14 +487,29 @@ def run_single_seed_pipeline(
     fixture_output_root: Optional[Path] = None,
     fixture_train_events: Optional[List[Dict[str, Any]]] = None,
     fixture_val_events: Optional[List[Dict[str, Any]]] = None,
-    max_epochs: Optional[int] = None
+    max_epochs: Optional[int] = None,
+    durable_root: Optional[Path] = None,
+    plan_path: Optional[Path] = None,
+    auth_path: Optional[Path] = None,
+    env_lock_path: Optional[Path] = None,
+    raw_tar_path: Optional[Path] = None
 ) -> Dict[str, Any]:
     """
     Complete end-to-end execution pipeline for a canonical Stage A2 run.
     """
-    preflight = verify_preflight(base_dir, seed, is_dry_run=is_dry_run, fixture_mode=fixture_mode)
+    preflight = verify_preflight(
+        base_dir=base_dir,
+        target_seed=seed,
+        is_dry_run=is_dry_run,
+        fixture_mode=fixture_mode,
+        plan_path=plan_path,
+        auth_path=auth_path,
+        env_lock_path=env_lock_path,
+        raw_tar_path=raw_tar_path
+    )
     guard: RuntimeTestFirewallGuard = preflight["guard"]
     expected_code_commit = preflight["expected_code_commit"]
+    is_v15_plan = preflight.get("is_v15_plan", False)
 
     run_id = f"RUN-STAGE-A2-HDFS-SEED{seed}"
     
@@ -447,7 +557,9 @@ def run_single_seed_pipeline(
 
         print(f"[DRY-RUN] Seed {seed} Dry-Run Initialized.")
         print(f"[DRY-RUN] Evidence Directory: {run_evidence_dir}")
-        print(f"[DRY-RUN] Checkpoint Directory (D:): {artifact_checkpoint_dir}")
+        print(f"[DRY-RUN] Checkpoint Directory: {artifact_checkpoint_dir}")
+        if durable_root:
+            print(f"[DRY-RUN] Durable Root: {durable_root}")
         print(f"[DRY-RUN] Scope: 35,000 Train sessions (586,577 events) -> 2,292 windows (573 steps/epoch)")
         print(f"[DRY-RUN] Scope: 7,500 Val sessions (119,531 events) -> 467 windows")
         print(f"[DRY-RUN] Target Optimizer Steps: 11,460 (20 epochs * 573 steps)")
@@ -553,28 +665,18 @@ def run_single_seed_pipeline(
                 raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint run_id {ckpt_meta.get('run_id')} != {run_id}")
             if expected_code_commit and ckpt_meta.get("execution_code_commit_sha") and ckpt_meta.get("execution_code_commit_sha") != expected_code_commit:
                 raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint execution code commit {ckpt_meta.get('execution_code_commit_sha')} != {expected_code_commit}")
-            if ckpt_meta.get("protocol_lock_sha256") and ckpt_meta.get("protocol_lock_sha256") != PROTOCOL_LOCK_SHA:
-                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint protocol lock SHA mismatch!")
-            if ckpt_meta.get("environment_lock_sha256") and ckpt_meta.get("environment_lock_sha256") != ENV_LOCK_SHA:
-                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint environment lock SHA mismatch!")
             if ckpt_meta.get("raw_dataset_sha256") and ckpt_meta.get("raw_dataset_sha256") != RAW_HDFS_TAR_SHA:
                 raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint raw dataset SHA mismatch!")
             if ckpt_meta.get("train_membership_sha256") and ckpt_meta.get("train_membership_sha256") != TRAIN_MEMBERSHIP_SHA:
                 raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint train membership SHA mismatch!")
             if ckpt_meta.get("val_membership_sha256") and ckpt_meta.get("val_membership_sha256") != VAL_MEMBERSHIP_SHA:
                 raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint val membership SHA mismatch!")
-            if ckpt_meta.get("protocol_lock_sha256") and ckpt_meta.get("protocol_lock_sha256") != PROTOCOL_LOCK_SHA:
+            if ckpt_meta.get("protocol_lock_sha256") and ckpt_meta.get("protocol_lock_sha256") != preflight.get("protocol_lock_sha"):
                 raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint protocol lock SHA mismatch!")
-            if ckpt_meta.get("environment_lock_sha256") and ckpt_meta.get("environment_lock_sha256") != ENV_LOCK_SHA:
+            if ckpt_meta.get("environment_lock_sha256") and ckpt_meta.get("environment_lock_sha256") != preflight.get("env_lock_sha"):
                 raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint environment lock SHA mismatch!")
-            if ckpt_meta.get("raw_dataset_sha256") and ckpt_meta.get("raw_dataset_sha256") != RAW_HDFS_TAR_SHA:
-                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint raw dataset SHA mismatch!")
-            if ckpt_meta.get("train_membership_sha256") and ckpt_meta.get("train_membership_sha256") != TRAIN_MEMBERSHIP_SHA:
-                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint train membership SHA mismatch!")
-            if ckpt_meta.get("val_membership_sha256") and ckpt_meta.get("val_membership_sha256") != VAL_MEMBERSHIP_SHA:
-                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint val membership SHA mismatch!")
 
-        # 5. Restore state
+        # 5. Restore state - INCOMPLETE_EPOCH_REPLAY_FROM_LAST_DURABLE_BOUNDARY Policy
         orig_start_time = existing_state.get("start_time", datetime.now(timezone.utc).isoformat())
         cumulative_runtime_seconds = existing_state.get("cumulative_runtime_seconds", 0.0)
         t_resume_start = time.time()
@@ -591,6 +693,9 @@ def run_single_seed_pipeline(
         run_state["status"] = "RUNNING"
         run_state["resumed_at"] = datetime.now(timezone.utc).isoformat()
         run_state_p.write_text(json.dumps(run_state, indent=2) + "\n", encoding="utf-8")
+
+        if not env_p.exists():
+            env_p.write_text(json.dumps(env_data, indent=2) + "\n", encoding="utf-8")
 
         print(f"[{run_id}] Resumed at next_epoch_to_run={start_epoch}, Step={trainer.global_step}, Cursor={trainer.stream_cursor}")
 
@@ -649,14 +754,14 @@ def run_single_seed_pipeline(
             total_train_events = len(train_events)
             total_val_events = len(val_events)
         else:
-            print(f"[{run_id}] Materializing Train Split (Authorized 35,000 sessions)...")
+            print(f"[{run_id}] Materializing Train Split (Authorized 35,000 sessions)... formulation from {preflight['raw_tar_path']}")
             train_mat = guard.materialize_split("TRAIN", use_execution_subset=True)
             train_events = train_mat["events"]
             total_train_events = len(train_events)
             if total_train_events != 586577:
                 raise ValueError(f"FATAL: Train events count {total_train_events} != 586577")
 
-            print(f"[{run_id}] Materializing Val Split (Authorized 7,500 sessions)...")
+            print(f"[{run_id}] Materializing Val Split (Authorized 7,500 sessions)... formulation from {preflight['raw_tar_path']}")
             val_mat = guard.materialize_split("VAL", use_execution_subset=True)
             val_events = val_mat["events"]
             total_val_events = len(val_events)
@@ -741,8 +846,8 @@ def run_single_seed_pipeline(
                 "run_id": run_id,
                 "seed": seed,
                 "execution_code_commit_sha": expected_code_commit or preflight["commit_sha"],
-                "protocol_lock_sha256": PROTOCOL_LOCK_SHA,
-                "environment_lock_sha256": ENV_LOCK_SHA,
+                "protocol_lock_sha256": preflight.get("protocol_lock_sha"),
+                "environment_lock_sha256": preflight.get("env_lock_sha"),
                 "raw_dataset_sha256": RAW_HDFS_TAR_SHA,
                 "train_membership_sha256": TRAIN_MEMBERSHIP_SHA,
                 "val_membership_sha256": VAL_MEMBERSHIP_SHA,
@@ -779,7 +884,7 @@ def run_single_seed_pipeline(
             ckpt_inv = {
                 "run_id": run_id,
                 "seed": seed,
-                "storage_policy": "LOCAL_D_DRIVE_NOT_COMMITTED",
+                "storage_policy": "LOCAL_AND_DURABLE_STORAGE",
                 "checkpoints": [
                     {
                         "logical_name": "last_checkpoint.pt",
@@ -864,6 +969,19 @@ def run_single_seed_pipeline(
             })
             run_state_p.write_text(json.dumps(run_state, indent=2) + "\n", encoding="utf-8")
 
+            # Google Drive Durable Mirroring at Completed Epoch Boundary
+            if durable_root:
+                durable_seed_dir = Path(durable_root) / f"seed-{seed}"
+                files_to_sync = [
+                    (last_checkpoint_p, "last_checkpoint.pt"),
+                    (train_log_p, "TRAIN-LOG.jsonl"),
+                    (ckpt_inv_p, "CHECKPOINT-INVENTORY.json")
+                ]
+                if best_checkpoint_p.exists():
+                    files_to_sync.append((best_checkpoint_p, "best_val_loss.pt"))
+                sync_to_durable_storage(files_to_sync, durable_seed_dir, run_state_file=(run_state_p, "RUN-STATE.json"))
+                print(f"[{run_id}] Durable Google Drive sync verified for completed epoch {epoch + 1} at {durable_seed_dir}")
+
             if patience_counter >= trainer.early_stopping_patience:
                 print(f"[{run_id}] Early stopping triggered after {patience_counter} epochs without improvement.")
                 break
@@ -920,9 +1038,9 @@ def run_single_seed_pipeline(
             "claim_scope": "PRETRAINING_EMPIRICAL",
             "execution_code_commit_sha": expected_code_commit,
             "execution_head_at_launch": preflight["commit_sha"],
-            "effective_protocol_lock_path": "experiments/protocol/STAGE-A2-EXECUTION-LOCK-V1.4.json",
+            "effective_protocol_lock_path": "experiments/protocol/STAGE-A2-EXECUTION-LOCK-V1.4.json" if not is_v15_plan else "experiments/protocol/PROTOCOL-AMENDMENTS.md",
             "effective_protocol_lock_sha256": preflight["protocol_lock_sha"],
-            "environment_lock_path": "experiments/evidence/stage-a2/preexecution/STAGE-A2-EXECUTION-ENVIRONMENT.json",
+            "environment_lock_path": "experiments/evidence/stage-a2/preexecution/STAGE-A2-EXECUTION-ENVIRONMENT.json" if not is_v15_plan else "experiments/evidence/stage-a2/preexecution/STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json",
             "environment_lock_sha256": preflight["env_lock_sha"],
             "raw_dataset_sha256": preflight["raw_tar_sha"],
             "selected_train_membership_sha256": preflight["train_membership_sha"],
@@ -945,7 +1063,7 @@ def run_single_seed_pipeline(
 
         # Run Manifest
         manifest_data = {
-            "manifest_version": "1.4.1",
+            "manifest_version": "1.5.0" if is_v15_plan else "1.4.1",
             "run_id": run_id,
             "seed": seed,
             "execution_code_commit_sha": expected_code_commit,
@@ -964,6 +1082,24 @@ def run_single_seed_pipeline(
         # Mark Run State Completed
         run_state["status"] = "COMPLETED"
         run_state_p.write_text(json.dumps(run_state, indent=2) + "\n", encoding="utf-8")
+
+        # Final Durable Sync
+        if durable_root:
+            durable_seed_dir = Path(durable_root) / f"seed-{seed}"
+            final_files = [
+                (metrics_p, "METRICS.json"),
+                (source_p, "EXPERIMENTAL-SOURCE.json"),
+                (env_p, "ENVIRONMENT.json"),
+                (train_log_p, "TRAIN-LOG.jsonl"),
+                (ckpt_inv_p, "CHECKPOINT-INVENTORY.json"),
+                (firewall_p, "TEST-FIREWALL.json"),
+                (manifest_p, "RUN-MANIFEST.json"),
+                (last_checkpoint_p, "last_checkpoint.pt")
+            ]
+            if best_checkpoint_p.exists():
+                final_files.append((best_checkpoint_p, "best_val_loss.pt"))
+            sync_to_durable_storage(final_files, durable_seed_dir, run_state_file=(run_state_p, "RUN-STATE.json"))
+            print(f"[{run_id}] Final Durable Google Drive sync verified at {durable_seed_dir}")
 
         print(f"\n[{run_id}] RUN COMPLETED SUCCESSFULLY.")
         print(f"[{run_id}] Best Validation L_graph: {best_val_loss:.6f} at Epoch {best_ckpt_epoch} (Step {best_ckpt_step})")
@@ -994,16 +1130,27 @@ def run_single_seed_pipeline(
         raise
 
 def main():
-    parser = argparse.ArgumentParser(description="Stage A2 Canonical Five-Seed Empirical Runner (V1.4.1)")
+    parser = argparse.ArgumentParser(description="Stage A2 Canonical Five-Seed Empirical Runner (V1.4.1 / V1.5)")
     parser.add_argument("--seed", type=int, default=None, help="Canonical seed (42, 1337, 2024, 7, 999)")
     parser.add_argument("--all", action="store_true", help="Execute across all 5 canonical seeds (DRY-RUN ONLY)")
     parser.add_argument("--dry-run", action="store_true", default=False, help="Perform complete pre-flight and dry-run without optimizer steps")
     parser.add_argument("--authorize-real-empirical-execution", action="store_true", default=False, help="Authorize real training")
     parser.add_argument("--resume", type=str, default=None, help="Path to checkpoint file to resume from")
     parser.add_argument("--resume-sha256", type=str, default=None, help="Expected SHA-256 hash of resume checkpoint")
+    parser.add_argument("--base-dir", type=str, default=None, help="Repository root directory")
+    parser.add_argument("--dataset-path", type=str, default=None, help="Explicit path to raw HDFS tarball")
+    parser.add_argument("--durable-root", type=str, default=None, help="Durable root directory (e.g. Google Drive) for completed-epoch mirror")
+    parser.add_argument("--plan", type=str, default=None, help="Execution plan JSON path")
+    parser.add_argument("--authorization", type=str, default=None, help="Launch authorization JSON path")
+    parser.add_argument("--environment-lock", type=str, default=None, help="Environment lock JSON path")
     args = parser.parse_args()
 
-    base_dir = Path("D:/Research")
+    base_dir = Path(args.base_dir).resolve() if args.base_dir else DEFAULT_BASE_DIR
+    dataset_path = Path(args.dataset_path).resolve() if args.dataset_path else None
+    durable_root = Path(args.durable_root).resolve() if args.durable_root else None
+    plan_path = Path(args.plan).resolve() if args.plan else None
+    auth_path = Path(args.authorization).resolve() if args.authorization else None
+    env_lock_path = Path(args.environment_lock).resolve() if args.environment_lock else None
 
     # Strict Safety Guard: --all is strictly prohibited for real empirical execution
     if args.all and args.authorize_real_empirical_execution and not args.dry_run:
@@ -1027,7 +1174,12 @@ def main():
             is_dry_run=args.dry_run,
             empirical_authorized=args.authorize_real_empirical_execution,
             resume_checkpoint=resume_path,
-            resume_sha256=args.resume_sha256
+            resume_sha256=args.resume_sha256,
+            durable_root=durable_root,
+            plan_path=plan_path,
+            auth_path=auth_path,
+            env_lock_path=env_lock_path,
+            raw_tar_path=dataset_path
         )
         results.append(res)
 

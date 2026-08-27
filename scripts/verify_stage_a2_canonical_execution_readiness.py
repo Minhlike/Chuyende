@@ -11,12 +11,14 @@ import sys
 from pathlib import Path
 
 # Ensure root directory is in python path
-if "D:/Research" not in sys.path:
-    sys.path.insert(0, "D:/Research")
+DEFAULT_BASE_DIR = Path(__file__).resolve().parent.parent
+if str(DEFAULT_BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(DEFAULT_BASE_DIR))
 
 import json
 import hashlib
 import platform
+from typing import Optional, Dict, Any, List
 import subprocess
 
 import torch
@@ -49,8 +51,8 @@ VAL_MEMBERSHIP_SHA = "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407
 def compute_sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
-def verify_canonical_readiness():
-    base_dir = Path("D:/Research")
+def verify_canonical_readiness(base_dir: Optional[Path] = None):
+    base_dir = Path(base_dir).resolve() if base_dir else DEFAULT_BASE_DIR
     impl_dir = base_dir / "experiments" / "evidence" / "stage-a2" / "implementation"
     preexec_dir = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution"
     protocol_dir = base_dir / "experiments" / "protocol"

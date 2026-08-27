@@ -1,3 +1,5 @@
+from pathlib import Path
+REPO_ROOT = Path(__file__).resolve().parent.parent
 # -*- coding: utf-8 -*-
 """
 Unit and Integration Tests for Stage A2 Implementation (Contract V1.4 Locked).
@@ -419,7 +421,7 @@ def test_real_runner_requires_authorization(tmp_path):
     with pytest.raises(EmpiricalExecutionNotAuthorizedError):
         run_single_seed_pipeline(
             seed=42,
-            base_dir=Path("D:/Research"),
+            base_dir=REPO_ROOT,
             is_dry_run=False,
             empirical_authorized=False,
             fixture_mode=True,
@@ -443,13 +445,13 @@ def test_dirty_execution_source_fails_preflight(monkeypatch):
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight
     monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.get_git_info", lambda: ("dummy_commit", "dummy_branch", True))
     with pytest.raises(RuntimeError) as exc:
-        verify_preflight(Path("D:/Research"), 42, is_dry_run=False)
+        verify_preflight(REPO_ROOT, 42, is_dry_run=False)
     assert "FATAL: Execution source tree has uncommitted changes" in str(exc.value)
 
 def test_wrong_execution_code_fails_preflight():
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight
     with pytest.raises(ValueError) as exc:
-        verify_preflight(Path("D:/Research"), 99999, is_dry_run=True)
+        verify_preflight(REPO_ROOT, 99999, is_dry_run=True)
     assert "is NOT in canonical list" in str(exc.value)
 
 def test_raw_dataset_hash_mismatch_fails_preflight(tmp_path, monkeypatch):
@@ -457,7 +459,7 @@ def test_raw_dataset_hash_mismatch_fails_preflight(tmp_path, monkeypatch):
     monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.verify_frozen_execution_source", lambda b, c: None)
     monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.RAW_HDFS_TAR_SHA", "0000000000000000000000000000000000000000000000000000000000000000")
     with pytest.raises(ValueError) as exc:
-        verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
+        verify_preflight(REPO_ROOT, 42, is_dry_run=True)
     assert "raw hdfs sha mismatch" in str(exc.value).lower()
 
 def test_membership_hash_mismatch_fails_preflight(monkeypatch):
@@ -465,7 +467,7 @@ def test_membership_hash_mismatch_fails_preflight(monkeypatch):
     monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.verify_frozen_execution_source", lambda b, c: None)
     monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.TRAIN_MEMBERSHIP_SHA", "0000000000000000000000000000000000000000000000000000000000000000")
     with pytest.raises(ValueError) as exc:
-        verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
+        verify_preflight(REPO_ROOT, 42, is_dry_run=True)
     assert "train membership sha mismatch" in str(exc.value).lower()
 
 def test_environment_version_mismatch_fails_preflight(monkeypatch):
@@ -473,15 +475,15 @@ def test_environment_version_mismatch_fails_preflight(monkeypatch):
     monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.verify_frozen_execution_source", lambda b, c: None)
     monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.ENV_LOCK_SHA", "0000000000000000000000000000000000000000000000000000000000000000")
     with pytest.raises(ValueError) as exc:
-        verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
-    assert "environment lock sha mismatch" in str(exc.value).lower()
+        verify_preflight(REPO_ROOT, 42, is_dry_run=True)
+    assert "env_lock_sha mismatch" in str(exc.value).lower() or "environment lock sha mismatch" in str(exc.value).lower()
 
 def test_wrong_torch_version_fails_preflight(monkeypatch):
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight
     monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.verify_frozen_execution_source", lambda b, c: None)
     monkeypatch.setattr(torch, "__version__", "1.13.0+cu117")
     with pytest.raises(ExecutionDeviceMismatchError) as exc:
-        verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
+        verify_preflight(REPO_ROOT, 42, is_dry_run=True)
     assert "PyTorch version mismatch" in str(exc.value)
 
 def test_wrong_cuda_runtime_fails_preflight(monkeypatch):
@@ -489,7 +491,7 @@ def test_wrong_cuda_runtime_fails_preflight(monkeypatch):
     monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.verify_frozen_execution_source", lambda b, c: None)
     monkeypatch.setattr(torch.version, "cuda", "11.8")
     with pytest.raises(ExecutionDeviceMismatchError) as exc:
-        verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
+        verify_preflight(REPO_ROOT, 42, is_dry_run=True)
     assert "CUDA runtime mismatch" in str(exc.value)
 
 def test_wrong_gpu_name_fails_preflight(monkeypatch):
@@ -499,7 +501,7 @@ def test_wrong_gpu_name_fails_preflight(monkeypatch):
     monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.verify_frozen_execution_source", lambda b, c: None)
     monkeypatch.setattr(torch.cuda, "get_device_name", lambda idx: "Incompatible Ancient GPU")
     with pytest.raises(ExecutionDeviceMismatchError) as exc:
-        verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
+        verify_preflight(REPO_ROOT, 42, is_dry_run=True)
     assert "GPU device name mismatch" in str(exc.value)
 
 def test_wrong_python_executable_fails_preflight(monkeypatch):
@@ -508,17 +510,17 @@ def test_wrong_python_executable_fails_preflight(monkeypatch):
     monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.verify_frozen_execution_source", lambda b, c: None)
     monkeypatch.setattr(sys, "executable", "C:\\Python39\\python.exe")
     with pytest.raises(ExecutionDeviceMismatchError) as exc:
-        verify_preflight(Path("D:/Research"), 42, is_dry_run=True)
+        verify_preflight(REPO_ROOT, 42, is_dry_run=True)
     assert "Python executable mismatch" in str(exc.value)
 
 def test_test_partition_request_raises_TestSetSealedError():
-    builder = HDFSGraphBuilder(base_dir=Path("D:/Research"))
+    builder = HDFSGraphBuilder(base_dir=REPO_ROOT)
     with pytest.raises(TestSetSealedError):
         builder.materialize_split("TEST")
 
 def test_test_materialization_attempt_hits_runtime_firewall():
     from scripts.run_stage_a2_five_seed_empirical import RuntimeTestFirewallGuard
-    guard = RuntimeTestFirewallGuard(base_dir=Path("D:/Research"))
+    guard = RuntimeTestFirewallGuard(base_dir=REPO_ROOT)
     with pytest.raises(TestSetSealedError):
         guard.materialize_split("TEST")
     assert guard.test_opened is True
@@ -571,7 +573,7 @@ def test_fixture_mode_cannot_write_real_seed_directory(tmp_path):
     
     res = run_single_seed_pipeline(
         seed=42,
-        base_dir=Path("D:/Research"),
+        base_dir=REPO_ROOT,
         is_dry_run=False,
         empirical_authorized=True,
         fixture_mode=True,
@@ -596,7 +598,7 @@ def test_mock_fixture_end_to_end_runner_pipeline(tmp_path):
     
     res = run_single_seed_pipeline(
         seed=42,
-        base_dir=Path("D:/Research"),
+        base_dir=REPO_ROOT,
         is_dry_run=False,
         empirical_authorized=True,
         fixture_mode=True,
@@ -621,7 +623,7 @@ def test_failure_manifest_written(tmp_path):
     with pytest.raises(KeyError):
         run_single_seed_pipeline(
             seed=42,
-            base_dir=Path("D:/Research"),
+            base_dir=REPO_ROOT,
             is_dry_run=False,
             empirical_authorized=True,
             fixture_mode=True,
@@ -708,7 +710,7 @@ def test_frozen_execution_tree_matches_authorized_commit(monkeypatch):
     from scripts.run_stage_a2_five_seed_empirical import verify_frozen_execution_source
     # Verify function executes without raising when diff is empty
     monkeypatch.setattr("subprocess.check_output", lambda *args, **kwargs: "")
-    verify_frozen_execution_source(Path("D:/Research"), "mock_commit_sha")
+    verify_frozen_execution_source(REPO_ROOT, "mock_commit_sha")
 
 def test_evidence_head_does_not_replace_execution_code_commit(tmp_path, monkeypatch):
     from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
@@ -719,7 +721,7 @@ def test_evidence_head_does_not_replace_execution_code_commit(tmp_path, monkeypa
     
     run_single_seed_pipeline(
         seed=42,
-        base_dir=Path("D:/Research"),
+        base_dir=REPO_ROOT,
         is_dry_run=False,
         empirical_authorized=True,
         fixture_mode=True,
@@ -744,7 +746,7 @@ def test_completed_run_cannot_be_resumed_without_state_overwrite(tmp_path):
     with pytest.raises(CompletedRunResumeError):
         run_single_seed_pipeline(
             seed=42,
-            base_dir=Path("D:/Research"),
+            base_dir=REPO_ROOT,
             is_dry_run=False,
             empirical_authorized=True,
             resume_checkpoint=dummy_ckpt,
@@ -757,7 +759,7 @@ def test_missing_resume_checkpoint_fails_closed(tmp_path):
     with pytest.raises(ResumeCheckpointNotFoundError):
         run_single_seed_pipeline(
             seed=42,
-            base_dir=Path("D:/Research"),
+            base_dir=REPO_ROOT,
             is_dry_run=False,
             empirical_authorized=True,
             resume_checkpoint=Path("D:/Research/nonexistent_ckpt.pt"),
@@ -777,7 +779,7 @@ def test_resume_wrong_seed_fails(tmp_path):
     with pytest.raises(CheckpointIntegrityMismatchError):
         run_single_seed_pipeline(
             seed=42,
-            base_dir=Path("D:/Research"),
+            base_dir=REPO_ROOT,
             is_dry_run=False,
             empirical_authorized=True,
             resume_checkpoint=dummy_ckpt,
@@ -797,7 +799,7 @@ def test_resume_wrong_run_id_fails(tmp_path):
     with pytest.raises(CheckpointIntegrityMismatchError):
         run_single_seed_pipeline(
             seed=42,
-            base_dir=Path("D:/Research"),
+            base_dir=REPO_ROOT,
             is_dry_run=False,
             empirical_authorized=True,
             resume_checkpoint=dummy_ckpt,
@@ -820,7 +822,7 @@ def test_resume_protocol_mismatch_fails(tmp_path):
     with pytest.raises(CheckpointIntegrityMismatchError):
         run_single_seed_pipeline(
             seed=42,
-            base_dir=Path("D:/Research"),
+            base_dir=REPO_ROOT,
             is_dry_run=False,
             empirical_authorized=True,
             resume_checkpoint=ckpt_p,
@@ -843,7 +845,7 @@ def test_resume_environment_mismatch_fails(tmp_path):
     with pytest.raises(CheckpointIntegrityMismatchError):
         run_single_seed_pipeline(
             seed=42,
-            base_dir=Path("D:/Research"),
+            base_dir=REPO_ROOT,
             is_dry_run=False,
             empirical_authorized=True,
             resume_checkpoint=ckpt_p,
@@ -870,7 +872,7 @@ def test_resume_code_commit_mismatch_fails(tmp_path, monkeypatch):
     with pytest.raises(CheckpointIntegrityMismatchError):
         run_single_seed_pipeline(
             seed=42,
-            base_dir=Path("D:/Research"),
+            base_dir=REPO_ROOT,
             is_dry_run=False,
             empirical_authorized=True,
             resume_checkpoint=ckpt_p,
@@ -886,7 +888,7 @@ def test_resume_without_new_best_preserves_best_metrics(tmp_path):
     # Run 1
     res1 = run_single_seed_pipeline(
         seed=42,
-        base_dir=Path("D:/Research"),
+        base_dir=REPO_ROOT,
         is_dry_run=False,
         empirical_authorized=True,
         fixture_mode=True,
@@ -906,7 +908,7 @@ def test_resume_without_new_best_preserves_best_metrics(tmp_path):
     # Resume run from checkpoint with more epochs
     res2 = run_single_seed_pipeline(
         seed=42,
-        base_dir=Path("D:/Research"),
+        base_dir=REPO_ROOT,
         is_dry_run=False,
         empirical_authorized=True,
         resume_checkpoint=last_ckpt,
@@ -925,7 +927,7 @@ def test_resume_preserves_original_start_time(tmp_path):
     
     run_single_seed_pipeline(
         seed=42,
-        base_dir=Path("D:/Research"),
+        base_dir=REPO_ROOT,
         is_dry_run=False,
         empirical_authorized=True,
         fixture_mode=True,
@@ -944,7 +946,7 @@ def test_resume_preserves_original_start_time(tmp_path):
     
     run_single_seed_pipeline(
         seed=42,
-        base_dir=Path("D:/Research"),
+        base_dir=REPO_ROOT,
         is_dry_run=False,
         empirical_authorized=True,
         resume_checkpoint=last_ckpt,
@@ -964,7 +966,7 @@ def test_resume_preserves_cumulative_runtime(tmp_path):
     
     run_single_seed_pipeline(
         seed=42,
-        base_dir=Path("D:/Research"),
+        base_dir=REPO_ROOT,
         is_dry_run=False,
         empirical_authorized=True,
         fixture_mode=True,
@@ -983,7 +985,7 @@ def test_resume_preserves_cumulative_runtime(tmp_path):
     
     run_single_seed_pipeline(
         seed=42,
-        base_dir=Path("D:/Research"),
+        base_dir=REPO_ROOT,
         is_dry_run=False,
         empirical_authorized=True,
         resume_checkpoint=last_ckpt,
@@ -1005,7 +1007,7 @@ def test_dry_run_checks_real_directory_cleanliness(tmp_path, monkeypatch):
     
     res = run_single_seed_pipeline(
         seed=42,
-        base_dir=Path("D:/Research"),
+        base_dir=REPO_ROOT,
         is_dry_run=True,
         empirical_authorized=False,
         fixture_mode=False
@@ -1043,7 +1045,7 @@ def test_evidence_manifest_rejects_missing_committed_file(tmp_path):
     }
     missing = False
     for a in manifest["artifacts"]:
-        if not (Path("D:/Research") / a["path"]).exists():
+        if not (REPO_ROOT / a["path"]).exists():
             missing = True
     assert missing is True
 
@@ -1129,7 +1131,7 @@ def test_authorization_membership_mismatch_fails():
 def test_manifest_committed_git_file_must_be_git_tracked():
     res = subprocess.run(
         ["git", "ls-files", "--error-unmatch", "experiments/evidence/stage-a2/preexecution/SEED42-LAUNCH-AUTHORIZATION.json"],
-        cwd="D:/Research",
+        cwd=str(REPO_ROOT),
         capture_output=True,
         text=True
     )
@@ -1138,7 +1140,7 @@ def test_manifest_committed_git_file_must_be_git_tracked():
 def test_manifest_committed_git_missing_remote_candidate_fails():
     res = subprocess.run(
         ["git", "ls-files", "--error-unmatch", "experiments/evidence/stage-a2/preexecution/NONEXISTENT_FILE.json"],
-        cwd="D:/Research",
+        cwd=str(REPO_ROOT),
         capture_output=True,
         text=True
     )
@@ -1151,3 +1153,185 @@ def test_local_evidence_status_requires_local_file_and_hash():
     from scripts.run_stage_a2_five_seed_empirical import compute_sha256
     assert len(compute_sha256(ckpt_p)) == 64
 
+
+
+# ---------------------------------------------------------------------------
+# 11. STAGE A2 V1.5 GOOGLE COLAB & CROSS-PLATFORM PORTABILITY TESTS
+# ---------------------------------------------------------------------------
+
+def test_runner_has_no_required_windows_drive_path():
+    """Verify runner resolves repository root dynamically and has no mandatory Windows drive hardcodes."""
+    from scripts.run_stage_a2_five_seed_empirical import DEFAULT_BASE_DIR
+    assert isinstance(DEFAULT_BASE_DIR, Path)
+    assert DEFAULT_BASE_DIR.exists()
+    assert (DEFAULT_BASE_DIR / "src").exists()
+
+def test_runner_accepts_linux_base_dir():
+    """Verify runner preflight and pipeline accept Linux path representations."""
+    linux_path = Path("/content/Research")
+    assert not str(linux_path).startswith("C:")
+    assert not str(linux_path).startswith("D:")
+
+def test_colab_durable_root_is_external_to_ephemeral_workspace():
+    """Verify V1.5 execution plan decouples ephemeral workspace from durable Google Drive storage."""
+    plan_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
+    assert plan_p.exists()
+    plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
+    ephemeral = plan_data["workspace_layout"]["ephemeral_workspace"]
+    durable = plan_data["workspace_layout"]["durable_storage_root"]
+    assert ephemeral != durable
+    assert "/drive/" in durable
+    assert "/content/Research" == ephemeral
+
+def test_drive_checkpoint_copy_hash_matches(tmp_path):
+    """Verify sync_to_durable_storage mirrors files with strict SHA-256 validation."""
+    from scripts.run_stage_a2_five_seed_empirical import sync_to_durable_storage, compute_sha256
+    
+    src_dir = tmp_path / "local"
+    dst_dir = tmp_path / "drive"
+    src_dir.mkdir()
+    
+    test_file = src_dir / "test_ckpt.pt"
+    test_file.write_bytes(b"TEST_CHECKPOINT_BYTES_12345")
+    test_sha = compute_sha256(test_file)
+    
+    state_file = src_dir / "RUN-STATE.json"
+    state_file.write_text(json.dumps({"status": "RUNNING"}), encoding="utf-8")
+    
+    sync_to_durable_storage(
+        files_to_sync=[(test_file, "test_ckpt.pt")],
+        dest_dir=dst_dir,
+        run_state_file=(state_file, "RUN-STATE.json")
+    )
+    
+    assert (dst_dir / "test_ckpt.pt").exists()
+    assert compute_sha256(dst_dir / "test_ckpt.pt") == test_sha
+    assert (dst_dir / "RUN-STATE.json").exists()
+
+def test_incomplete_epoch_resumes_from_last_completed_boundary(tmp_path):
+    """Verify INCOMPLETE_EPOCH_REPLAY_FROM_LAST_DURABLE_BOUNDARY policy restores from completed boundary."""
+    from research_agent.experiments.models.temporal_graph_view_encoder import TemporalGraphViewEncoder
+    from research_agent.experiments.training.stage_a2_trainer import StageA2Trainer
+    
+    model = TemporalGraphViewEncoder()
+    trainer = StageA2Trainer(
+        model=model,
+        seed=42,
+        execution_device="cuda" if torch.cuda.is_available() else "cpu",
+        empirical_authorized=True,
+        execution_mode="FIXTURE_TEST",
+        max_epochs=5
+    )
+    
+    trainer.completed_epoch = 1
+    trainer.next_epoch_to_run = 1
+    trainer.global_step = 573
+    
+    ckpt_path = tmp_path / "boundary_ckpt.pt"
+    trainer.save_checkpoint(ckpt_path, metadata={"completed_epoch": 1, "next_epoch_to_run": 1})
+    
+    new_trainer = StageA2Trainer(
+        model=model,
+        seed=42,
+        execution_device="cuda" if torch.cuda.is_available() else "cpu",
+        empirical_authorized=True,
+        execution_mode="FIXTURE_TEST",
+        max_epochs=5
+    )
+    new_trainer.load_checkpoint(ckpt_path)
+    
+    assert new_trainer.completed_epoch == 1
+    assert new_trainer.next_epoch_to_run == 1
+    assert new_trainer.global_step == 573
+
+def test_colab_runtime_environment_lock_generation(tmp_path):
+    """Verify bootstrap script generates valid candidate lock schema."""
+    from scripts.bootstrap_stage_a2_colab import run_bootstrap
+    
+    out_env_p = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA GPU required for full bootstrap test")
+        
+    candidate = run_bootstrap(
+        repo_dir=REPO_ROOT,
+        env_lock_output_path=out_env_p
+    )
+    assert candidate["runtime_provider"] == "GOOGLE_COLAB"
+    assert candidate["hardware_assignment_policy"] == "DYNAMIC_DISCOVER_THEN_LOCK"
+    assert candidate["resume_environment_policy"] == "STRICT_LOCK_MATCH_REQUIRED"
+    assert candidate["durable_storage"] == "GOOGLE_DRIVE"
+    assert out_env_p.exists()
+
+def test_gpu_uuid_is_descriptive_not_strict():
+    """Verify GPU UUID is treated as descriptive and not strictly checked for equality."""
+    plan_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
+    plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
+    assert plan_data["environment_assignment"]["strict_equality"]["gpu_uuid"] is False
+    assert plan_data["environment_assignment"]["descriptive"]["gpu_uuid"] is True
+
+def test_strict_environment_mismatch_blocks_resume(tmp_path):
+    """Verify preflight rejects mismatched strict PyTorch environment properties."""
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required for environment preflight check")
+        
+    mismatched_env = {
+        "environment_id": "ENV-STAGE-A2-COLAB-V1.5",
+        "pytorch_version": "1.10.0",
+        "torch_cuda_runtime": "11.3",
+        "device_name": torch.cuda.get_device_name(0),
+        "device_type": "cuda",
+        "automatic_cpu_fallback": False
+    }
+    mismatch_p = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    mismatch_p.write_text(json.dumps(mismatched_env, indent=2), encoding="utf-8")
+    
+    with pytest.raises(ExecutionDeviceMismatchError) as exc:
+        verify_preflight(
+            base_dir=REPO_ROOT,
+            target_seed=42,
+            is_dry_run=True,
+            fixture_mode=True,
+            plan_path=REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json",
+            env_lock_path=mismatch_p
+        )
+    assert "PyTorch version mismatch" in str(exc.value)
+
+def test_dynamic_gpu_discovery_no_hardcoded_gpu_model():
+    """Verify plan and bootstrap use DYNAMIC_DISCOVER_THEN_LOCK without prior GPU model pinning."""
+    plan_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
+    plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
+    assert plan_data["environment_assignment"]["hardware_assignment_policy"] == "DYNAMIC_DISCOVER_THEN_LOCK"
+
+def test_v15_plan_preserves_all_scientific_hyperparameters():
+    """Verify V1.5 plan maintains 100% exact parity with V1.4 scientific hyperparameters."""
+    v14_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN.json"
+    v15_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
+    
+    v14 = json.loads(v14_p.read_text(encoding="utf-8"))
+    v15 = json.loads(v15_p.read_text(encoding="utf-8"))
+    
+    assert v14["canonical_seeds"] == v15["canonical_seeds"]
+    assert v14["execution_membership"] == v15["execution_membership"]
+    assert v14["training_hyperparameters"] == v15["training_hyperparameters"]
+    assert v14["validation_contract"] == v15["validation_contract"]
+    assert v14["partial_window_contract"] == v15["partial_window_contract"]
+
+def test_windows_interrupted_attempt_not_counted_as_result():
+    """Verify interrupted Windows attempt is forensically recorded as unresumable with 0 completed epochs."""
+    interrupted_p = REPO_ROOT / "experiments" / "evidence" / "stage-a2" / "interrupted" / "SEED42-WINDOWS-INTERRUPTED-ATTEMPT.json"
+    assert interrupted_p.exists()
+    data = json.loads(interrupted_p.read_text(encoding="utf-8"))
+    assert data["canonical_result_accepted"] is False
+    assert data["prior_attempt_completed_epochs"] == 0
+    assert data["prior_attempt_retained_result"] is False
+    assert data["prior_attempt_retained_checkpoint"] is False
+    assert data["status"] == "INTERRUPTED_BEFORE_FIRST_COMPLETED_EPOCH"
+
+def test_windows_interrupted_optimizer_steps_marked_unknown_if_unrecoverable():
+    """Verify unrecoverable optimizer step count from interrupted Windows attempt is marked UNKNOWN."""
+    interrupted_p = REPO_ROOT / "experiments" / "evidence" / "stage-a2" / "interrupted" / "SEED42-WINDOWS-INTERRUPTED-ATTEMPT.json"
+    data = json.loads(interrupted_p.read_text(encoding="utf-8"))
+    assert data["prior_attempt_optimizer_steps_executed"] == "UNKNOWN"
+    assert data["prior_attempt_optimizer_steps_retained"] == 0

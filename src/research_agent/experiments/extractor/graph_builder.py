@@ -113,11 +113,12 @@ class HDFSGraphBuilder:
         self,
         base_dir: Path,
         split_authority: Optional[HDFSSplitAuthority] = None,
+        raw_tar_path: Optional[Path] = None,
         max_audit_events: Optional[int] = None
     ):
         self.base_dir = base_dir
-        self.raw_tar_path = self.base_dir / "datasets" / "raw" / "hdfs" / "HDFS_1.tar.gz"
-        self.split_authority = split_authority or HDFSSplitAuthority(base_dir=self.base_dir)
+        self.raw_tar_path = raw_tar_path or (self.base_dir / "datasets" / "raw" / "hdfs" / "HDFS_1.tar.gz")
+        self.split_authority = split_authority or HDFSSplitAuthority(base_dir=self.base_dir, raw_tar_path=self.raw_tar_path)
         self.split_id = "SPL-HDFS-001"
         self.max_audit_events = max_audit_events
 

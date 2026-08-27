@@ -1,0 +1,41 @@
+{
+  "attempt_id": "ATTEMPT-STAGE-A2-HDFS-SEED42-WINDOWS-001",
+  "created_at": "2026-08-27T16:50:00+00:00",
+  "execution_environment": "WINDOWS_LOCAL",
+  "execution_code_commit": "f26b963f8d8951c40bdd7eec66855104bcea6c4a",
+  "launch_authorization_commit": "3ef3fc29bfcba62fa2d5a1c463dea30ff7d3bf22",
+  "seed": 42,
+  "status": "INTERRUPTED_BEFORE_FIRST_COMPLETED_EPOCH",
+  "start_time_iso": "2026-08-24T02:18:18.934333+00:00",
+  "interruption_time_iso": "2026-08-24T05:14:14+00:00",
+  "completed_epochs": 0,
+  "retained_checkpoint": false,
+  "retained_train_log": false,
+  "retained_empirical_result": false,
+  "optimizer_steps_executed_before_interrupt": "UNKNOWN",
+  "optimizer_steps_retained": 0,
+  "canonical_result_accepted": false,
+  "restart_required": true,
+  "forensic_notes": "Training process was interrupted mid-epoch 1. RUN-STATE was only persisted at launch before epoch boundary completion. Because no end-of-epoch checkpoint was saved, any mid-epoch optimizer steps that may have executed were unrecorded and non-recoverable. Trajectory cannot be resumed.",
+  "observed_files": [
+    {
+      "path": "experiments/runs/stage-a2/HDFS/seed-42/ENVIRONMENT.json",
+      "size_bytes": 476,
+      "mtime_iso": "2026-08-24T02:18:18.934334+00:00",
+      "sha256": "a924d45a982fe8c156b40fe74cc0fa7b229d3026bc81da048a6c287d8078f26a",
+      "classification": "INITIAL_ENVIRONMENT_RECORD"
+    },
+    {
+      "path": "experiments/runs/stage-a2/HDFS/seed-42/RUN-STATE.json",
+      "size_bytes": 485,
+      "mtime_iso": "2026-08-24T02:18:18.935568+00:00",
+      "sha256": "cfe1d2379813191f28137e31b73c5881daa6ad99e5082d1de5c84ee584efc0a0",
+      "classification": "INITIAL_RUN_STATE_UNCOMPLETED"
+    }
+  ],
+  "prior_attempt_completed_epochs": 0,
+  "prior_attempt_retained_checkpoint": false,
+  "prior_attempt_retained_result": false,
+  "prior_attempt_optimizer_steps_executed": "UNKNOWN",
+  "prior_attempt_optimizer_steps_retained": 0
+}

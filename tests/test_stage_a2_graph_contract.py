@@ -36,7 +36,7 @@ NON_EMPIRICAL_TEST_FIXTURE = True
 
 @pytest.fixture
 def base_dir():
-    return Path("D:/Research")
+    return Path(__file__).resolve().parent.parent
 
 def test_hdfs_graph_uses_canonical_split_authority(base_dir):
     split_auth = HDFSSplitAuthority(base_dir=base_dir)

@@ -102,9 +102,9 @@ def compute_sha256(path: Path) -> str:
     """Computes SHA-256 hash of file bytes."""
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
-def run_qualification(device_arg: Optional[str] = None):
-    base_dir = Path("D:/Research")
-    evidence_dir = base_dir / "experiments" / "evidence" / "stage-a2" / "implementation"
+def run_qualification(device_arg: Optional[str] = None, base_dir: Optional[Path] = None, output_dir: Optional[Path] = None):
+    base_dir = Path(base_dir).resolve() if base_dir else Path(__file__).resolve().parent.parent
+    evidence_dir = Path(output_dir).resolve() if output_dir else (base_dir / "experiments" / "evidence" / "stage-a2" / "implementation")
     evidence_dir.mkdir(parents=True, exist_ok=True)
     log_path = evidence_dir / "deterministic_resume.log"
 
@@ -434,7 +434,7 @@ def run_qualification(device_arg: Optional[str] = None):
         "graph_contract_sha256": "05f5ab38c4c02e14292b510ac518dd98171732551d032ec0ed09fc96848f5837",
         "raw_to_graph_mapping_sha256": "8c2ecb1504af7ed3e3f74144a0197dec15b4566e505ca5d9ae7e5146486e2208",
         "command_executed": f"python scripts/run_stage_a2_deterministic_qualification.py --device {req_device}",
-        "working_directory": "D:/Research",
+        "working_directory": str(base_dir),
         "timestamp_start": t_start_iso,
         "timestamp_end": t_end_iso,
         "environment": env_data,
@@ -530,7 +530,9 @@ def run_qualification(device_arg: Optional[str] = None):
         sys.exit(1)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="Stage A2 Deterministic Trajectory Qualification Runner")
     parser.add_argument("--device", type=str, default=None, help="Execution device ('cuda' or 'cpu')")
+    parser.add_argument("--base-dir", type=str, default=None, help="Repository root directory")
+    parser.add_argument("--output-dir", type=str, default=None, help="Evidence output directory")
     args = parser.parse_args()
-    run_qualification(device_arg=args.device)
+    run_qualification(device_arg=args.device, base_dir=Path(args.base_dir) if args.base_dir else None, output_dir=Path(args.output_dir) if args.output_dir else None)

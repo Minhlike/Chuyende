@@ -137,6 +137,26 @@
   4. **Scheduler and Data Invariants Preserved:**
      Total Train events: 586,577; Train windows: 2,292; Optimizer steps/epoch: 573; Warmup steps: 573; Max epochs: 20; Total optimizer steps: 11,460. No events dropped, padded, duplicated, or reordered.
 
+---
 
-
-
+### Amendment 12: Stage A2 Hosted Colab Execution Environment Migration (V1.5)
+- **Timestamp:** 2026-08-27T17:00:00+00:00
+- **Execution State:** `TEST_OPENED = NO`, `RESULTS_SEEN = NO`, `CANONICAL_RESULTS_SEEN = NO`, `COMPLETED_CANONICAL_SEED_RESULTS = 0`
+- **Prior Attempt Context:** Previous Windows Seed 42 execution was interrupted before Epoch 1 completion (`completed_epochs = 0`, `retained_checkpoint = false`, `retained_train_log = false`, `retained_empirical_result = false`, `optimizer_steps_executed_before_interrupt = UNKNOWN`, `optimizer_steps_retained = 0`). Trajectory could not be resumed and is documented in forensic record `experiments/evidence/stage-a2/interrupted/SEED42-WINDOWS-INTERRUPTED-ATTEMPT.json`.
+- **Amends Commit:** `3ef3fc29bfcba62fa2d5a1c463dea30ff7d3bf22`
+- **Reason:** Migrates execution environment from Windows local (`D:\Research`, RTX 3050 Ti Laptop GPU) to hosted Google Colab GPU environment with ephemeral compute workspace (`/content/Research`), fast local dataset copy (`/content/stage-a2-data/HDFS_1.tar.gz`), and durable Google Drive artifact mirroring (`/content/drive/MyDrive/Chuyende-stage-a2`), establishing cross-platform runner execution, dynamic hardware discovery (`DYNAMIC_DISCOVER_THEN_LOCK`), atomic durable checkpointing at completed epoch boundaries, and incomplete-epoch replay recovery (`INCOMPLETE_EPOCH_REPLAY_FROM_LAST_DURABLE_BOUNDARY`).
+- **Amended Specifications:**
+  1. **Hosted Google Colab Runtime Architecture & Durability:**
+     - Compute workspace: Ephemeral `/content/Research`.
+     - Fast data cache: `/content/stage-a2-data/HDFS_1.tar.gz` (verified against canonical SHA-256 `6ca6c5bc...`).
+     - Durable storage: Google Drive `/content/drive/MyDrive/Chuyende-stage-a2/` for checkpoints, run logs, manifests, and environment records.
+     - Completed Epoch Durability: At every completed epoch, checkpoints (`last_checkpoint.pt`, `best_val_loss.pt`), `RUN-STATE.json`, `TRAIN-LOG.jsonl`, and `CHECKPOINT-INVENTORY.json` are written locally, fsynced, hash-verified, copied to Google Drive, and verified via post-copy SHA-256 recomputation.
+  2. **Incomplete Epoch Recovery Policy:**
+     - Policy: `INCOMPLETE_EPOCH_REPLAY_FROM_LAST_DURABLE_BOUNDARY`. If a session disconnects mid-epoch, the incomplete epoch is re-executed from the last durable completed-epoch checkpoint boundary. No completed epoch is replayed.
+  3. **Dynamic Hardware Discovery & Environment Locking (`DYNAMIC_DISCOVER_THEN_LOCK`):**
+     - Because Colab dynamically assigns GPU hardware (e.g. T4, L4, A100), environment locking discovers actual assigned hardware at runtime, verifies PyTorch `2.6.0+cu124` / CUDA runtime / driver properties, runs continuous vs resumed CUDA deterministic qualification (< 1e-6 parameter divergence), and generates `STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json`.
+     - Strict equality enforced for: Python major/minor, PyTorch exact version, torch CUDA runtime, GPU model, GPU compute capability, NVIDIA driver version, `CUBLAS_WORKSPACE_CONFIG=:4096:8`, deterministic algorithm flags, no CPU fallback. Descriptive fields: GPU UUID, hostname, IP.
+  4. **Cross-Platform Runner Portability:**
+     - Parameterizes paths (`--base-dir`, `--dataset-path`, `--durable-root`, `--plan`, `--authorization`, `--environment-lock`), removing hardcoded Windows drive letters (`D:\Research`).
+  5. **Absolute Scientific Immutability:**
+     - ALL scientific hyperparameters remain strictly identical: HDFS raw dataset (`6ca6c5bc...`), `SPL-HDFS-001` split authority, 35,000 Train sessions / 586,577 events, 7,500 Val sessions / 119,531 events, 2,292 Train windows / 467 Val windows, 573 optimizer steps/epoch, warmup 573 steps, max 20 epochs, grad accum 4, window size 256, model architecture (`TemporalGraphViewEncoder`), relation/node masking ($p=0.15$), fixed validation seed `20260823`, composite graph objective $L_{\text{graph}} = 1.0 L_{\text{rel}} + 1.0 L_{\text{node}} + 0.1 L_{\text{time}}$, early stopping patience 3, seeds `[42, 1337, 2024, 7, 999]`, Test firewall locked (`TEST_OPENED = false`).

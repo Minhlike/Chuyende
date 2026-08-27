@@ -41,13 +41,14 @@ class HDFSSplitAuthority:
     def __init__(
         self,
         base_dir: Path,
+        raw_tar_path: Optional[Path] = None,
         max_train_sessions: int = 35000,
         max_val_sessions: int = 7500,
         train_ratio: float = 0.70,
         val_ratio: float = 0.15
     ):
         self.base_dir = base_dir
-        self.raw_tar_path = self.base_dir / "datasets" / "raw" / "hdfs" / "HDFS_1.tar.gz"
+        self.raw_tar_path = raw_tar_path or (self.base_dir / "datasets" / "raw" / "hdfs" / "HDFS_1.tar.gz")
         self.cache_dir = self.base_dir / "experiments" / "runs" / "data" / "hdfs"
         self.cache_path = self.cache_dir / "hdfs_split_authority_cache.json"
         
