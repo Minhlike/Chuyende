@@ -1266,8 +1266,8 @@ def test_gpu_uuid_is_descriptive_not_strict():
     """Verify GPU UUID is treated as descriptive and not strictly checked for equality."""
     plan_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
     plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
-    assert plan_data["environment_assignment"]["strict_equality"]["gpu_uuid"] is False
-    assert plan_data["environment_assignment"]["descriptive"]["gpu_uuid"] is True
+    assert "gpu_uuid" not in plan_data["environment_assignment"]["strict_environment_fields"]
+    assert "gpu_uuid_descriptive" in plan_data["environment_assignment"]["descriptive_environment_fields"]
 
 def test_strict_environment_mismatch_blocks_resume(tmp_path):
     """Verify preflight rejects mismatched strict PyTorch environment properties."""
@@ -1415,7 +1415,7 @@ def test_determinism_values_are_measured(tmp_path):
 
 def test_python_major_minor_mismatch_blocks_later_execution(tmp_path):
     """Verify preflight rejects Python major.minor mismatch for V1.5 plan."""
-    from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
     env = {
@@ -1424,6 +1424,7 @@ def test_python_major_minor_mismatch_blocks_later_execution(tmp_path):
         "pytorch_version": torch.__version__,
         "torch_cuda_runtime": torch.version.cuda,
         "device_name": torch.cuda.get_device_name(0),
+        "nvidia_driver_version": get_nvidia_driver_version(),
         "device_type": "cuda",
         "automatic_cpu_fallback": False,
         "cublas_workspace_config": ":4096:8",
@@ -1446,7 +1447,7 @@ def test_python_major_minor_mismatch_blocks_later_execution(tmp_path):
 
 def test_gpu_model_mismatch_blocks_later_execution(tmp_path):
     """Verify preflight rejects GPU device name mismatch for V1.5 plan."""
-    from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
     env = {
@@ -1455,6 +1456,7 @@ def test_gpu_model_mismatch_blocks_later_execution(tmp_path):
         "pytorch_version": torch.__version__,
         "torch_cuda_runtime": torch.version.cuda,
         "device_name": "Tesla K80",
+        "nvidia_driver_version": get_nvidia_driver_version(),
         "device_type": "cuda",
         "automatic_cpu_fallback": False,
         "cublas_workspace_config": ":4096:8",
@@ -1477,7 +1479,7 @@ def test_gpu_model_mismatch_blocks_later_execution(tmp_path):
 
 def test_compute_capability_mismatch_blocks_later_execution(tmp_path):
     """Verify preflight rejects compute capability mismatch for V1.5 plan."""
-    from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
     env = {
@@ -1487,6 +1489,7 @@ def test_compute_capability_mismatch_blocks_later_execution(tmp_path):
         "torch_cuda_runtime": torch.version.cuda,
         "device_name": torch.cuda.get_device_name(0),
         "device_compute_capability": "3.5",
+        "nvidia_driver_version": get_nvidia_driver_version(),
         "device_type": "cuda",
         "automatic_cpu_fallback": False,
         "cublas_workspace_config": ":4096:8",
@@ -1509,7 +1512,7 @@ def test_compute_capability_mismatch_blocks_later_execution(tmp_path):
 
 def test_cublas_mismatch_blocks_later_execution(tmp_path):
     """Verify preflight rejects CUBLAS workspace config mismatch."""
-    from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
     env = {
@@ -1518,6 +1521,7 @@ def test_cublas_mismatch_blocks_later_execution(tmp_path):
         "pytorch_version": torch.__version__,
         "torch_cuda_runtime": torch.version.cuda,
         "device_name": torch.cuda.get_device_name(0),
+        "nvidia_driver_version": get_nvidia_driver_version(),
         "device_type": "cuda",
         "automatic_cpu_fallback": False,
         "cublas_workspace_config": ":1024:4",
@@ -1536,11 +1540,11 @@ def test_cublas_mismatch_blocks_later_execution(tmp_path):
             plan_path=REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json",
             env_lock_path=env_p
         )
-    assert "cublas_workspace_config" in str(exc.value)
+    assert "cublas_workspace_config" in str(exc.value).lower()
 
 def test_determinism_mismatch_blocks_later_execution(tmp_path):
     """Verify preflight rejects disabled deterministic algorithms."""
-    from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
     env = {
@@ -1549,6 +1553,7 @@ def test_determinism_mismatch_blocks_later_execution(tmp_path):
         "pytorch_version": torch.__version__,
         "torch_cuda_runtime": torch.version.cuda,
         "device_name": torch.cuda.get_device_name(0),
+        "nvidia_driver_version": get_nvidia_driver_version(),
         "device_type": "cuda",
         "automatic_cpu_fallback": False,
         "cublas_workspace_config": ":4096:8",
@@ -1571,9 +1576,13 @@ def test_determinism_mismatch_blocks_later_execution(tmp_path):
 
 def test_gpu_uuid_mismatch_does_not_block(tmp_path):
     """Verify different GPU UUID is treated as descriptive and does NOT block preflight."""
-    from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
+    os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
+    torch.use_deterministic_algorithms(True)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
     device_props = torch.cuda.get_device_properties(0)
     curr_compute_cap = f"{device_props.major}.{device_props.minor}"
     env = {
@@ -1583,6 +1592,7 @@ def test_gpu_uuid_mismatch_does_not_block(tmp_path):
         "torch_cuda_runtime": torch.version.cuda,
         "device_name": torch.cuda.get_device_name(0),
         "device_compute_capability": curr_compute_cap,
+        "nvidia_driver_version": get_nvidia_driver_version(),
         "device_type": "cuda",
         "gpu_uuid_descriptive": "GPU-RANDOM-OTHER-UUID-12345",
         "automatic_cpu_fallback": False,
@@ -1652,3 +1662,355 @@ def test_colab_notebook_has_no_real_training_cell():
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     all_code = " ".join([" ".join(c.get("source", [])) for c in nb_data.get("cells", []) if c.get("cell_type") == "code"])
     assert "--authorize-real-empirical-execution" not in all_code
+
+
+# ---------------------------------------------------------------------------
+# 13. STAGE A2 V1.5 FINAL COLAB STRICT RUNTIME CONTRACT ALIGNMENT TESTS
+# ---------------------------------------------------------------------------
+
+def test_v15_plan_lists_all_strict_environment_fields():
+    """Verify STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json explicitly enumerates all 12 strict fields."""
+    from scripts.bootstrap_stage_a2_colab import V15_STRICT_ENVIRONMENT_FIELDS
+    plan_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
+    plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
+    
+    plan_strict = plan_data["environment_assignment"]["strict_environment_fields"]
+    assert len(plan_strict) == 12
+    assert set(plan_strict) == set(V15_STRICT_ENVIRONMENT_FIELDS)
+
+def test_v15_plan_descriptive_fields_are_nonblocking():
+    """Verify STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json lists descriptive non-blocking fields."""
+    from scripts.bootstrap_stage_a2_colab import V15_DESCRIPTIVE_ENVIRONMENT_FIELDS
+    plan_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
+    plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
+    
+    plan_desc = plan_data["environment_assignment"]["descriptive_environment_fields"]
+    assert "gpu_uuid_descriptive" in plan_desc
+    assert set(plan_desc) == set(V15_DESCRIPTIVE_ENVIRONMENT_FIELDS)
+
+def test_runtime_driver_match_passes(tmp_path):
+    """Verify preflight passes when live NVIDIA driver matches environment lock."""
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required")
+    os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
+    torch.use_deterministic_algorithms(True)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    live_driver = get_nvidia_driver_version()
+    device_props = torch.cuda.get_device_properties(0)
+    
+    env = {
+        "environment_id": "ENV-STAGE-A2-COLAB-V1.5",
+        "python_major_minor": f"{sys.version_info.major}.{sys.version_info.minor}",
+        "pytorch_version": torch.__version__,
+        "torch_cuda_runtime": torch.version.cuda,
+        "device_name": torch.cuda.get_device_name(0),
+        "device_compute_capability": f"{device_props.major}.{device_props.minor}",
+        "nvidia_driver_version": live_driver,
+        "device_type": "cuda",
+        "automatic_cpu_fallback": False,
+        "cublas_workspace_config": ":4096:8",
+        "deterministic_algorithms_enabled": True,
+        "cudnn_deterministic": True,
+        "cudnn_benchmark": False
+    }
+    env_p = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    env_p.write_text(json.dumps(env, indent=2), encoding="utf-8")
+    
+    res = verify_preflight(
+        base_dir=REPO_ROOT,
+        target_seed=42,
+        is_dry_run=True,
+        fixture_mode=True,
+        plan_path=REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json",
+        env_lock_path=env_p
+    )
+    assert res["gpu_name"] == torch.cuda.get_device_name(0)
+
+def test_runtime_driver_mismatch_fails(tmp_path):
+    """Verify preflight fails if live NVIDIA driver does not match lock."""
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required")
+    device_props = torch.cuda.get_device_properties(0)
+    
+    env = {
+        "environment_id": "ENV-STAGE-A2-COLAB-V1.5",
+        "python_major_minor": f"{sys.version_info.major}.{sys.version_info.minor}",
+        "pytorch_version": torch.__version__,
+        "torch_cuda_runtime": torch.version.cuda,
+        "device_name": torch.cuda.get_device_name(0),
+        "device_compute_capability": f"{device_props.major}.{device_props.minor}",
+        "nvidia_driver_version": "999.99.99",
+        "device_type": "cuda",
+        "automatic_cpu_fallback": False,
+        "cublas_workspace_config": ":4096:8",
+        "deterministic_algorithms_enabled": True,
+        "cudnn_deterministic": True,
+        "cudnn_benchmark": False
+    }
+    env_p = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    env_p.write_text(json.dumps(env, indent=2), encoding="utf-8")
+    
+    with pytest.raises(ExecutionDeviceMismatchError) as exc:
+        verify_preflight(
+            base_dir=REPO_ROOT,
+            target_seed=42,
+            is_dry_run=True,
+            fixture_mode=True,
+            plan_path=REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json",
+            env_lock_path=env_p
+        )
+    assert "NVIDIA driver version mismatch" in str(exc.value)
+
+def test_runtime_driver_unavailable_fails(tmp_path, monkeypatch):
+    """Verify preflight fails if nvidia-smi cannot query host driver."""
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required")
+    
+    def mock_check_output(cmd, **kwargs):
+        if "nvidia-smi" in cmd:
+            raise subprocess.CalledProcessError(1, cmd)
+        return ""
+    
+    monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.get_nvidia_driver_version", lambda: (_ for _ in ()).throw(ExecutionDeviceMismatchError("FATAL: NVIDIA driver version unavailable via nvidia-smi: failed")))
+    
+    env = {
+        "environment_id": "ENV-STAGE-A2-COLAB-V1.5",
+        "python_major_minor": f"{sys.version_info.major}.{sys.version_info.minor}",
+        "pytorch_version": torch.__version__,
+        "torch_cuda_runtime": torch.version.cuda,
+        "device_name": torch.cuda.get_device_name(0),
+        "nvidia_driver_version": "550.54.14",
+        "device_type": "cuda",
+        "automatic_cpu_fallback": False,
+        "cublas_workspace_config": ":4096:8",
+        "deterministic_algorithms_enabled": True,
+        "cudnn_deterministic": True,
+        "cudnn_benchmark": False
+    }
+    env_p = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    env_p.write_text(json.dumps(env, indent=2), encoding="utf-8")
+    
+    with pytest.raises(ExecutionDeviceMismatchError) as exc:
+        verify_preflight(
+            base_dir=REPO_ROOT,
+            target_seed=42,
+            is_dry_run=True,
+            fixture_mode=True,
+            plan_path=REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json",
+            env_lock_path=env_p
+        )
+    assert "NVIDIA driver version unavailable" in str(exc.value)
+
+def test_live_cublas_mismatch_fails(tmp_path, monkeypatch):
+    """Verify preflight rejects live CUBLAS workspace config mismatch against lock."""
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required")
+    live_driver = get_nvidia_driver_version()
+    device_props = torch.cuda.get_device_properties(0)
+    
+    env = {
+        "environment_id": "ENV-STAGE-A2-COLAB-V1.5",
+        "python_major_minor": f"{sys.version_info.major}.{sys.version_info.minor}",
+        "pytorch_version": torch.__version__,
+        "torch_cuda_runtime": torch.version.cuda,
+        "device_name": torch.cuda.get_device_name(0),
+        "device_compute_capability": f"{device_props.major}.{device_props.minor}",
+        "nvidia_driver_version": live_driver,
+        "device_type": "cuda",
+        "automatic_cpu_fallback": False,
+        "cublas_workspace_config": ":4096:8",
+        "deterministic_algorithms_enabled": True,
+        "cudnn_deterministic": True,
+        "cudnn_benchmark": False
+    }
+    env_p = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    env_p.write_text(json.dumps(env, indent=2), encoding="utf-8")
+    
+    monkeypatch.setenv("CUBLAS_WORKSPACE_CONFIG", ":1024:4")
+    with pytest.raises(ExecutionDeviceMismatchError) as exc:
+        verify_preflight(
+            base_dir=REPO_ROOT,
+            target_seed=42,
+            is_dry_run=True,
+            fixture_mode=True,
+            plan_path=REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json",
+            env_lock_path=env_p
+        )
+    assert "Live CUBLAS_WORKSPACE_CONFIG" in str(exc.value)
+
+def test_live_deterministic_algorithms_false_fails(tmp_path, monkeypatch):
+    """Verify preflight rejects live process with disabled deterministic algorithms."""
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required")
+    live_driver = get_nvidia_driver_version()
+    device_props = torch.cuda.get_device_properties(0)
+    
+    env = {
+        "environment_id": "ENV-STAGE-A2-COLAB-V1.5",
+        "python_major_minor": f"{sys.version_info.major}.{sys.version_info.minor}",
+        "pytorch_version": torch.__version__,
+        "torch_cuda_runtime": torch.version.cuda,
+        "device_name": torch.cuda.get_device_name(0),
+        "device_compute_capability": f"{device_props.major}.{device_props.minor}",
+        "nvidia_driver_version": live_driver,
+        "device_type": "cuda",
+        "automatic_cpu_fallback": False,
+        "cublas_workspace_config": ":4096:8",
+        "deterministic_algorithms_enabled": True,
+        "cudnn_deterministic": True,
+        "cudnn_benchmark": False
+    }
+    env_p = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    env_p.write_text(json.dumps(env, indent=2), encoding="utf-8")
+    
+    monkeypatch.setattr(torch, "are_deterministic_algorithms_enabled", lambda: False)
+    with pytest.raises(ExecutionDeviceMismatchError) as exc:
+        verify_preflight(
+            base_dir=REPO_ROOT,
+            target_seed=42,
+            is_dry_run=True,
+            fixture_mode=True,
+            plan_path=REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json",
+            env_lock_path=env_p
+        )
+    assert "Live torch.are_deterministic_algorithms_enabled()" in str(exc.value)
+
+def test_live_cudnn_deterministic_false_fails(tmp_path, monkeypatch):
+    """Verify preflight rejects live process with cudnn.deterministic = False."""
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required")
+    os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
+    torch.use_deterministic_algorithms(True)
+    live_driver = get_nvidia_driver_version()
+    device_props = torch.cuda.get_device_properties(0)
+    
+    env = {
+        "environment_id": "ENV-STAGE-A2-COLAB-V1.5",
+        "python_major_minor": f"{sys.version_info.major}.{sys.version_info.minor}",
+        "pytorch_version": torch.__version__,
+        "torch_cuda_runtime": torch.version.cuda,
+        "device_name": torch.cuda.get_device_name(0),
+        "device_compute_capability": f"{device_props.major}.{device_props.minor}",
+        "nvidia_driver_version": live_driver,
+        "device_type": "cuda",
+        "automatic_cpu_fallback": False,
+        "cublas_workspace_config": ":4096:8",
+        "deterministic_algorithms_enabled": True,
+        "cudnn_deterministic": True,
+        "cudnn_benchmark": False
+    }
+    env_p = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    env_p.write_text(json.dumps(env, indent=2), encoding="utf-8")
+    
+    monkeypatch.setattr(torch.backends.cudnn, "deterministic", False)
+    with pytest.raises(ExecutionDeviceMismatchError) as exc:
+        verify_preflight(
+            base_dir=REPO_ROOT,
+            target_seed=42,
+            is_dry_run=True,
+            fixture_mode=True,
+            plan_path=REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json",
+            env_lock_path=env_p
+        )
+    assert "Live torch.backends.cudnn.deterministic" in str(exc.value)
+
+def test_live_cudnn_benchmark_true_fails(tmp_path, monkeypatch):
+    """Verify preflight rejects live process with cudnn.benchmark = True."""
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required")
+    os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
+    torch.use_deterministic_algorithms(True)
+    live_driver = get_nvidia_driver_version()
+    device_props = torch.cuda.get_device_properties(0)
+    
+    env = {
+        "environment_id": "ENV-STAGE-A2-COLAB-V1.5",
+        "python_major_minor": f"{sys.version_info.major}.{sys.version_info.minor}",
+        "pytorch_version": torch.__version__,
+        "torch_cuda_runtime": torch.version.cuda,
+        "device_name": torch.cuda.get_device_name(0),
+        "device_compute_capability": f"{device_props.major}.{device_props.minor}",
+        "nvidia_driver_version": live_driver,
+        "device_type": "cuda",
+        "automatic_cpu_fallback": False,
+        "cublas_workspace_config": ":4096:8",
+        "deterministic_algorithms_enabled": True,
+        "cudnn_deterministic": True,
+        "cudnn_benchmark": False
+    }
+    env_p = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    env_p.write_text(json.dumps(env, indent=2), encoding="utf-8")
+    
+    monkeypatch.setattr(torch.backends.cudnn, "benchmark", True)
+    with pytest.raises(ExecutionDeviceMismatchError) as exc:
+        verify_preflight(
+            base_dir=REPO_ROOT,
+            target_seed=42,
+            is_dry_run=True,
+            fixture_mode=True,
+            plan_path=REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json",
+            env_lock_path=env_p
+        )
+    assert "Live torch.backends.cudnn.benchmark" in str(exc.value)
+
+def test_gpu_uuid_change_remains_nonblocking(tmp_path):
+    """Verify changing gpu_uuid_descriptive does NOT block preflight."""
+    from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required")
+    os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
+    torch.use_deterministic_algorithms(True)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    live_driver = get_nvidia_driver_version()
+    device_props = torch.cuda.get_device_properties(0)
+    
+    env = {
+        "environment_id": "ENV-STAGE-A2-COLAB-V1.5",
+        "python_major_minor": f"{sys.version_info.major}.{sys.version_info.minor}",
+        "pytorch_version": torch.__version__,
+        "torch_cuda_runtime": torch.version.cuda,
+        "device_name": torch.cuda.get_device_name(0),
+        "device_compute_capability": f"{device_props.major}.{device_props.minor}",
+        "nvidia_driver_version": live_driver,
+        "device_type": "cuda",
+        "gpu_uuid_descriptive": "GPU-TOTALLY-DIFFERENT-12345",
+        "automatic_cpu_fallback": False,
+        "cublas_workspace_config": ":4096:8",
+        "deterministic_algorithms_enabled": True,
+        "cudnn_deterministic": True,
+        "cudnn_benchmark": False
+    }
+    env_p = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    env_p.write_text(json.dumps(env, indent=2), encoding="utf-8")
+    
+    res = verify_preflight(
+        base_dir=REPO_ROOT,
+        target_seed=42,
+        is_dry_run=True,
+        fixture_mode=True,
+        plan_path=REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json",
+        env_lock_path=env_p
+    )
+    assert res["gpu_name"] == torch.cuda.get_device_name(0)
+
+def test_bootstrap_runner_plan_strict_fields_identical():
+    """Verify bootstrap, runner, and execution plan define the exact same 12 strict fields."""
+    from scripts.bootstrap_stage_a2_colab import V15_STRICT_ENVIRONMENT_FIELDS, V15_DESCRIPTIVE_ENVIRONMENT_FIELDS
+    plan_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
+    plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
+    
+    plan_strict = plan_data["environment_assignment"]["strict_environment_fields"]
+    plan_desc = plan_data["environment_assignment"]["descriptive_environment_fields"]
+    
+    assert len(V15_STRICT_ENVIRONMENT_FIELDS) == 12
+    assert set(plan_strict) == set(V15_STRICT_ENVIRONMENT_FIELDS)
+    assert set(plan_desc) == set(V15_DESCRIPTIVE_ENVIRONMENT_FIELDS)

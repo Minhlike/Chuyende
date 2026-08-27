@@ -27,6 +27,31 @@ import torch
 EXPECTED_HDFS_SHA = "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169"
 DEFAULT_BASE_DIR = Path(__file__).resolve().parent.parent
 
+V15_STRICT_ENVIRONMENT_FIELDS = [
+    "python_major_minor",
+    "pytorch_version",
+    "torch_cuda_runtime",
+    "device_type",
+    "device_name",
+    "device_compute_capability",
+    "nvidia_driver_version",
+    "cublas_workspace_config",
+    "deterministic_algorithms_enabled",
+    "cudnn_deterministic",
+    "cudnn_benchmark",
+    "automatic_cpu_fallback"
+]
+
+V15_DESCRIPTIVE_ENVIRONMENT_FIELDS = [
+    "gpu_uuid_descriptive",
+    "hostname",
+    "session_id",
+    "pci_bus_id",
+    "platform",
+    "kernel",
+    "total_vram_bytes"
+]
+
 def compute_sha256(path: Path, chunk_size: int = 8 * 1024 * 1024) -> str:
     """Computes SHA-256 hash using streaming chunks to prevent high memory usage."""
     hasher = hashlib.sha256()

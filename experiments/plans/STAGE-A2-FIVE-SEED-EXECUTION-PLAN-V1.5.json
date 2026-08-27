@@ -5,18 +5,29 @@
   "runtime_type": "HOSTED_GPU",
   "environment_assignment": {
     "hardware_assignment_policy": "DYNAMIC_DISCOVER_THEN_LOCK",
-    "strict_equality": {
-      "framework": true,
-      "cuda_runtime": true,
-      "device_type": true,
-      "gpu_uuid": false,
-      "automatic_cpu_fallback": false
-    },
-    "descriptive": {
-      "gpu_uuid": true,
-      "pci_bus_id": true,
-      "device_name": true
-    }
+    "strict_environment_fields": [
+      "python_major_minor",
+      "pytorch_version",
+      "torch_cuda_runtime",
+      "device_type",
+      "device_name",
+      "device_compute_capability",
+      "nvidia_driver_version",
+      "cublas_workspace_config",
+      "deterministic_algorithms_enabled",
+      "cudnn_deterministic",
+      "cudnn_benchmark",
+      "automatic_cpu_fallback"
+    ],
+    "descriptive_environment_fields": [
+      "gpu_uuid_descriptive",
+      "hostname",
+      "session_id",
+      "pci_bus_id",
+      "platform",
+      "kernel",
+      "total_vram_bytes"
+    ]
   },
   "durability": "GOOGLE_DRIVE_EPOCH_BOUNDARY",
   "incomplete_epoch_policy": "REPLAY_FROM_LAST_DURABLE_COMPLETED_EPOCH",

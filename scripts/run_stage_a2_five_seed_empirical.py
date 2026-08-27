@@ -148,6 +148,20 @@ def compute_sha256(path: Path, chunk_size: int = 8 * 1024 * 1024) -> str:
             hasher.update(chunk)
     return hasher.hexdigest()
 
+
+def get_nvidia_driver_version() -> str:
+    """Queries current host NVIDIA driver version via nvidia-smi fail-closed."""
+    try:
+        out = subprocess.check_output([
+            "nvidia-smi", "--query-gpu=driver_version", "--format=csv,noheader"
+        ], text=True).strip()
+        lines = [l.strip() for l in out.splitlines() if l.strip()]
+        if not lines or not lines[0]:
+            raise RuntimeError("Empty driver version returned from nvidia-smi")
+        return lines[0]
+    except Exception as e:
+        raise ExecutionDeviceMismatchError(f"FATAL: NVIDIA driver version unavailable via nvidia-smi: {e}")
+
 def get_git_info() -> Tuple[str, str, bool]:
     """Retrieves current git commit, branch, and porcelain status."""
     try:
@@ -368,44 +382,82 @@ def verify_preflight(
                 raise ExecutionDeviceMismatchError("FATAL: automatic_cpu_fallback must be strictly False in execution environment lock!")
             print(f"[PRE-FLIGHT 3] Environment Lock Strict Properties: MATCH ({actual_env_sha[:16]}...) [{curr_gpu_name}, {total_vram_gb:.2f} GB VRAM]")
         else:
-            # Colab V1.5 Strict Environment Alignment (Amendment 12)
+            # Colab V1.5 Strict Environment Alignment (Amendment 12 - 12 Strict Fields)
             if not torch.cuda.is_available():
                 raise ExecutionDeviceMismatchError("FATAL: CUDA is not available! Colab empirical execution requires CUDA GPU.")
             
+            # 1. Live Python major.minor check
             curr_py_maj_min = f"{sys.version_info.major}.{sys.version_info.minor}"
             if "python_major_minor" in env_lock and curr_py_maj_min != env_lock["python_major_minor"]:
                 raise ExecutionDeviceMismatchError(f"FATAL: Python major.minor mismatch: {curr_py_maj_min} != {env_lock['python_major_minor']}")
             
+            # 2. Live PyTorch version check
             curr_torch_ver = torch.__version__
-            curr_cuda_runtime = torch.version.cuda
             if curr_torch_ver != env_lock["pytorch_version"]:
                 raise ExecutionDeviceMismatchError(f"FATAL: PyTorch version mismatch: {curr_torch_ver} != {env_lock['pytorch_version']}")
+            
+            # 3. Live CUDA compiler runtime check
+            curr_cuda_runtime = torch.version.cuda
             if curr_cuda_runtime != env_lock.get("torch_cuda_runtime", env_lock.get("cuda_runtime")):
                 raise ExecutionDeviceMismatchError(f"FATAL: CUDA runtime mismatch: {curr_cuda_runtime} != {env_lock.get('torch_cuda_runtime')}")
+            
+            # 4. Live Device Type check
+            if env_lock.get("device_type") != "cuda":
+                raise ExecutionDeviceMismatchError(f"FATAL: device_type {env_lock.get('device_type')} != cuda")
+            
+            # 5. Live GPU Device Name check
             if curr_gpu_name != env_lock["device_name"]:
                 raise ExecutionDeviceMismatchError(f"FATAL: GPU device name mismatch: {curr_gpu_name} != {env_lock['device_name']}")
             
+            # 6. Live GPU Compute Capability check
             device_props = torch.cuda.get_device_properties(0)
             curr_compute_cap = f"{device_props.major}.{device_props.minor}"
             if "device_compute_capability" in env_lock and curr_compute_cap != env_lock["device_compute_capability"]:
                 raise ExecutionDeviceMismatchError(f"FATAL: GPU compute capability mismatch: {curr_compute_cap} != {env_lock['device_compute_capability']}")
             
-            if env_lock.get("device_type") != "cuda":
-                raise ExecutionDeviceMismatchError("FATAL: device_type != cuda")
+            # 7. Live NVIDIA Host Driver Version check (Fail-Closed)
+            curr_driver = get_nvidia_driver_version()
+            expected_driver = env_lock.get("nvidia_driver_version")
+            if not expected_driver or curr_driver != expected_driver:
+                raise ExecutionDeviceMismatchError(
+                    f"FATAL: NVIDIA driver version mismatch! Live: {curr_driver} != Lock: {expected_driver}"
+                )
+            
+            # 8. Live CUBLAS Workspace Config check
+            live_cublas = os.environ.get("CUBLAS_WORKSPACE_CONFIG", "")
+            if live_cublas != env_lock.get("cublas_workspace_config") or live_cublas != ":4096:8":
+                raise ExecutionDeviceMismatchError(
+                    f"FATAL: Live CUBLAS_WORKSPACE_CONFIG ({live_cublas}) mismatch with lock ({env_lock.get('cublas_workspace_config')})"
+                )
+            
+            # 9. Live Deterministic Algorithms Enabled check
+            live_det_algo = torch.are_deterministic_algorithms_enabled()
+            if live_det_algo != env_lock.get("deterministic_algorithms_enabled") or not live_det_algo:
+                raise ExecutionDeviceMismatchError(
+                    f"FATAL: Live torch.are_deterministic_algorithms_enabled() ({live_det_algo}) mismatch with lock ({env_lock.get('deterministic_algorithms_enabled')})"
+                )
+            
+            # 10. Live cuDNN Deterministic check
+            live_cudnn_det = bool(torch.backends.cudnn.deterministic)
+            if live_cudnn_det != env_lock.get("cudnn_deterministic") or not live_cudnn_det:
+                raise ExecutionDeviceMismatchError(
+                    f"FATAL: Live torch.backends.cudnn.deterministic ({live_cudnn_det}) mismatch with lock ({env_lock.get('cudnn_deterministic')})"
+                )
+            
+            # 11. Live cuDNN Benchmark check
+            live_cudnn_bench = bool(torch.backends.cudnn.benchmark)
+            if live_cudnn_bench != env_lock.get("cudnn_benchmark") or live_cudnn_bench:
+                raise ExecutionDeviceMismatchError(
+                    f"FATAL: Live torch.backends.cudnn.benchmark ({live_cudnn_bench}) mismatch with lock ({env_lock.get('cudnn_benchmark')})"
+                )
+            
+            # 12. Automatic CPU Fallback check
             if env_lock.get("automatic_cpu_fallback") is not False:
                 raise ExecutionDeviceMismatchError("FATAL: automatic_cpu_fallback != False")
-            if env_lock.get("cublas_workspace_config") != ":4096:8":
-                raise ExecutionDeviceMismatchError("FATAL: cublas_workspace_config != :4096:8")
-            if env_lock.get("deterministic_algorithms_enabled") is not True:
-                raise ExecutionDeviceMismatchError("FATAL: deterministic_algorithms_enabled != True")
-            if env_lock.get("cudnn_deterministic") is not True:
-                raise ExecutionDeviceMismatchError("FATAL: cudnn_deterministic != True")
-            if env_lock.get("cudnn_benchmark") is not False:
-                raise ExecutionDeviceMismatchError("FATAL: cudnn_benchmark != False")
             
             # Descriptive only: gpu_uuid is recorded but does NOT raise mismatch
             descriptive_uuid = env_lock.get("gpu_uuid_descriptive", "N/A")
-            print(f"[PRE-FLIGHT 3] Colab Environment Lock Strict Properties: MATCH ({actual_env_sha[:16]}...) [{curr_gpu_name}, Compute {curr_compute_cap}, {total_vram_gb:.2f} GB VRAM, UUID: {descriptive_uuid}]")
+            print(f"[PRE-FLIGHT 3] Colab Environment Lock Strict Properties: MATCH ({actual_env_sha[:16]}...) [{curr_gpu_name}, Driver: {curr_driver}, Compute {curr_compute_cap}, {total_vram_gb:.2f} GB VRAM, UUID: {descriptive_uuid}]")
     else:
         if is_v15_plan and (is_dry_run or fixture_mode):
             if torch.cuda.is_available():
