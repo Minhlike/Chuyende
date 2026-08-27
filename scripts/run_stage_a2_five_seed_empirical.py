@@ -148,6 +148,31 @@ def compute_sha256(path: Path, chunk_size: int = 8 * 1024 * 1024) -> str:
             hasher.update(chunk)
     return hasher.hexdigest()
 
+def enforce_framework_determinism() -> None:
+    """
+    Enforces deterministic execution state across framework and hardware runtime:
+      - Requires / sets CUBLAS_WORKSPACE_CONFIG == ':4096:8'
+      - Enables torch.use_deterministic_algorithms(True)
+      - If CUDA:
+          torch.backends.cudnn.deterministic = True
+          torch.backends.cudnn.benchmark = False
+      - Verifies live settings after assignment fail-closed.
+    """
+    if os.environ.get("CUBLAS_WORKSPACE_CONFIG") != ":4096:8":
+        os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
+    
+    torch.use_deterministic_algorithms(True)
+    if not torch.are_deterministic_algorithms_enabled():
+        raise RuntimeError("FATAL: Failed to enable torch.use_deterministic_algorithms(True)")
+    
+    if torch.cuda.is_available():
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
+        if not torch.backends.cudnn.deterministic:
+            raise RuntimeError("FATAL: Failed to set torch.backends.cudnn.deterministic = True")
+        if torch.backends.cudnn.benchmark:
+            raise RuntimeError("FATAL: Failed to set torch.backends.cudnn.benchmark = False")
+
 
 def get_nvidia_driver_version() -> str:
     """Queries current host NVIDIA driver version via nvidia-smi fail-closed."""
@@ -575,6 +600,7 @@ def run_single_seed_pipeline(
     """
     Complete end-to-end execution pipeline for a canonical Stage A2 run.
     """
+    enforce_framework_determinism()
     preflight = verify_preflight(
         base_dir=base_dir,
         target_seed=seed,

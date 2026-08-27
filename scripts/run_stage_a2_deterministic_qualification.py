@@ -683,6 +683,11 @@ def run_qualification(
     qual_sha256 = compute_sha256(qual_path)
     ckpt_sha256 = compute_sha256(checkpoint_path)
 
+    proto_amend_p = base_dir / "experiments" / "protocol" / "PROTOCOL-AMENDMENTS.md"
+    if not proto_amend_p.exists():
+        raise FileNotFoundError(f"FATAL: Protocol amendments file missing at {proto_amend_p}")
+    protocol_amendments_sha = compute_sha256(proto_amend_p)
+
     exp_source = {
         "claim_id": "CLAIM-STAGE-A2-IMPLEMENTATION-QUALIFICATION",
         "stage": "STAGE_A2",
@@ -695,7 +700,7 @@ def run_qualification(
         "execution_code_dirty": is_dirty,
         "protocol_version": "1.5.0",
         "protocol_amendment": "Amendment 12",
-        "protocol_sha256": "AMENDMENT_12_V1.5",
+        "protocol_sha256": protocol_amendments_sha,
         "command_executed": f"python scripts/run_stage_a2_deterministic_qualification.py --device {req_device}",
         "working_directory": str(base_dir),
         "timestamp_start": t_start_iso,
@@ -722,9 +727,6 @@ def run_qualification(
     exp_src_path = evidence_dir / "EXPERIMENTAL-SOURCE.json"
     exp_src_path.write_text(json.dumps(exp_source, indent=2) + "\n", encoding="utf-8")
     exp_src_sha256 = compute_sha256(exp_src_path)
-
-    pytest_log_path = evidence_dir / "pytest_implementation.log"
-    pytest_log_sha256 = compute_sha256(pytest_log_path) if pytest_log_path.exists() else None
 
     # Truthful Storage Labels: Runtime generated in ephemeral workspace, pending Drive durable mirror
     artifacts_list = [
@@ -767,14 +769,6 @@ def run_qualification(
             "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
         }
     ]
-
-    if pytest_log_sha256:
-        artifacts_list.append({
-            "path": "experiments/evidence/stage-a2/implementation/pytest_implementation.log",
-            "sha256": pytest_log_sha256,
-            "storage_status": "COLAB_RUNTIME_GENERATED_PENDING_DURABLE_MIRROR",
-            "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
-        })
 
     manifest = {
         "manifest_id": "MANIFEST-STAGE-A2-IMPLEMENTATION-EVIDENCE-V2.2",

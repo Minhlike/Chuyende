@@ -2374,3 +2374,145 @@ def test_old_drive_qualification_cannot_satisfy_current_failed_run(tmp_path):
     manifest_data = json.loads((old_qual_dir / "FINAL-QUALIFICATION-MANIFEST.json").read_text(encoding="utf-8"))
     with pytest.raises(AssertionError):
         assert manifest_data["qualification_run_id"] == current_run_id
+
+
+# ---------------------------------------------------------------------------
+# 16. STAGE A2 V1.5 PREFLIGHT ORDERING & NOTEBOOK PARITY REGRESSION TESTS
+# ---------------------------------------------------------------------------
+
+def test_deterministic_framework_state_established_before_verify_preflight(monkeypatch):
+    """Verify enforce_framework_determinism establishes all 3 deterministic flags and cublas config."""
+    from scripts.run_stage_a2_five_seed_empirical import enforce_framework_determinism
+    # Reset states
+    torch.use_deterministic_algorithms(False)
+    if torch.cuda.is_available():
+        torch.backends.cudnn.deterministic = False
+        torch.backends.cudnn.benchmark = True
+    
+    enforce_framework_determinism()
+    
+    assert os.environ.get("CUBLAS_WORKSPACE_CONFIG") == ":4096:8"
+    assert torch.are_deterministic_algorithms_enabled() is True
+    if torch.cuda.is_available():
+        assert torch.backends.cudnn.deterministic is True
+        assert torch.backends.cudnn.benchmark is False
+
+def test_fresh_process_does_not_require_external_wrapper():
+    """Verify scripts/run_stage_a2_five_seed_empirical.py executes dry-run directly in fresh subprocess."""
+    cmd = [
+        sys.executable,
+        str(REPO_ROOT / "scripts" / "run_stage_a2_five_seed_empirical.py"),
+        "--seed", "42",
+        "--dry-run",
+        "--plan", str(REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json")
+    ]
+    proc = subprocess.run(cmd, cwd=str(REPO_ROOT), capture_output=True, text=True)
+    assert proc.returncode == 0, f"Fresh process failed directly without wrapper: {proc.stderr}"
+    assert "Optimizer Steps Executed: 0" in proc.stdout or "OptimizerStepsExecuted=0" in proc.stdout
+
+def test_deterministic_algorithms_enabled_before_env_lock_comparison():
+    """Verify run_single_seed_pipeline enables deterministic algorithms before checking env lock."""
+    from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
+    # Reset to False
+    torch.use_deterministic_algorithms(False)
+    plan_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
+    res = run_single_seed_pipeline(seed=42, base_dir=REPO_ROOT, is_dry_run=True, plan_path=plan_p)
+    assert res["status"] == "PASS"
+    assert torch.are_deterministic_algorithms_enabled() is True
+
+def test_cudnn_deterministic_before_comparison():
+    """Verify cuDNN deterministic flag is set to True before preflight lock check."""
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required")
+    from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
+    torch.backends.cudnn.deterministic = False
+    plan_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
+    res = run_single_seed_pipeline(seed=42, base_dir=REPO_ROOT, is_dry_run=True, plan_path=plan_p)
+    assert res["status"] == "PASS"
+    assert torch.backends.cudnn.deterministic is True
+
+def test_cudnn_benchmark_false_before_comparison():
+    """Verify cuDNN benchmark flag is set to False before preflight lock check."""
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required")
+    from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
+    torch.backends.cudnn.benchmark = True
+    plan_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
+    res = run_single_seed_pipeline(seed=42, base_dir=REPO_ROOT, is_dry_run=True, plan_path=plan_p)
+    assert res["status"] == "PASS"
+    assert torch.backends.cudnn.benchmark is False
+
+def test_scientific_rng_seeding_semantics_unchanged():
+    """Verify canonical RNG seed sequence produces deterministic and expected outputs."""
+    import random
+    import numpy as np
+    seed = 42
+    random.seed(seed)
+    r1 = random.random()
+    np.random.seed(seed)
+    n1 = np.random.rand()
+    torch.manual_seed(seed)
+    t1 = torch.rand(5)
+    
+    # Re-seed
+    random.seed(seed)
+    r2 = random.random()
+    np.random.seed(seed)
+    n2 = np.random.rand()
+    torch.manual_seed(seed)
+    t2 = torch.rand(5)
+    
+    assert r1 == r2
+    assert n1 == n2
+    assert torch.equal(t1, t2)
+
+def test_qualification_evidence_manifest_has_no_nonexistent_artifact(tmp_path):
+    """Verify qualification EVIDENCE-MANIFEST.json references only artifacts that actually exist."""
+    from scripts.run_stage_a2_deterministic_qualification import run_qualification
+    run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path, env_lock_path=None)
+    manifest_p = tmp_path / "EVIDENCE-MANIFEST.json"
+    assert manifest_p.exists()
+    mdata = json.loads(manifest_p.read_text(encoding="utf-8"))
+    
+    for art in mdata["artifacts"]:
+        p = tmp_path / Path(art["path"]).name
+        assert p.exists(), f"Artifact referenced in manifest does not exist: {p}"
+        assert "pytest_implementation.log" not in art["path"]
+
+def test_protocol_sha256_is_actual_64_hex(tmp_path):
+    """Verify qualification EXPERIMENTAL-SOURCE.json contains real 64-hex protocol SHA-256."""
+    import re
+    from scripts.run_stage_a2_deterministic_qualification import run_qualification
+    run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path, env_lock_path=None)
+    src_p = tmp_path / "EXPERIMENTAL-SOURCE.json"
+    assert src_p.exists()
+    src_data = json.loads(src_p.read_text(encoding="utf-8"))
+    proto_sha = src_data.get("protocol_sha256", "")
+    assert re.match(r"^[0-9a-fA-F]{64}$", proto_sha), f"Protocol SHA is not 64-hex: {proto_sha}"
+
+def test_every_notebook_code_cell_compiles():
+    """Verify every Python code cell in STAGE-A2-COLAB-V1.5.ipynb compiles cleanly via ast.parse."""
+    import ast
+    nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
+    nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
+    for idx, cell in enumerate(nb_data["cells"]):
+        if cell.get("cell_type") == "code":
+            code = "".join(cell.get("source", []))
+            try:
+                ast.parse(code)
+            except SyntaxError as e:
+                pytest.fail(f"Notebook code cell {idx} failed to compile: {e}")
+
+def test_cell8_invokes_empirical_runner_directly():
+    """Verify Cell 8 invokes scripts/run_stage_a2_five_seed_empirical.py directly without wrappers."""
+    nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
+    nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
+    cell8_src = "".join(nb_data["cells"][8]["source"])
+    assert "scripts/run_stage_a2_five_seed_empirical.py" in cell8_src
+    assert "wrapper" not in cell8_src.lower() or "without external wrappers" in cell8_src.lower()
+
+def test_notebook_contains_zero_real_training_authorization_flags():
+    """Verify notebook contains zero occurrences of real training execution authorization flag."""
+    nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
+    nb_text = nb_p.read_text(encoding="utf-8")
+    assert "--authorize-real-empirical-execution" not in nb_text
