@@ -260,6 +260,7 @@ def mirror_qualification_artifacts(
         ("experiments/evidence/stage-a2/implementation/ENVIRONMENT.json", "QUALIFICATION-ENVIRONMENT.json"),
         ("experiments/evidence/stage-a2/implementation/EXPERIMENTAL-SOURCE.json", "EXPERIMENTAL-SOURCE.json"),
         ("experiments/evidence/stage-a2/implementation/deterministic_resume.log", "deterministic_resume.log"),
+        ("experiments/evidence/stage-a2/implementation/qualification_checkpoint.pt", "qualification_checkpoint.pt"),
         ("experiments/evidence/stage-a2/implementation/EVIDENCE-MANIFEST.json", "EVIDENCE-MANIFEST.json")
     ]
     

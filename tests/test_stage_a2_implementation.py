@@ -2014,3 +2014,135 @@ def test_bootstrap_runner_plan_strict_fields_identical():
     assert len(V15_STRICT_ENVIRONMENT_FIELDS) == 12
     assert set(plan_strict) == set(V15_STRICT_ENVIRONMENT_FIELDS)
     assert set(plan_desc) == set(V15_DESCRIPTIVE_ENVIRONMENT_FIELDS)
+
+
+# ---------------------------------------------------------------------------
+# 14. STAGE A2 V1.5 DETERMINISTIC QUALIFICATION HARDENING TESTS
+# ---------------------------------------------------------------------------
+
+def test_qualification_process_enforces_live_determinism(monkeypatch):
+    """Verify qualification fails closed if live determinism is not established."""
+    from scripts.run_stage_a2_deterministic_qualification import enforce_live_determinism
+    monkeypatch.setattr(torch, "are_deterministic_algorithms_enabled", lambda: False)
+    with pytest.raises(RuntimeError) as exc:
+        enforce_live_determinism()
+    assert "Determinism state failed verification" in str(exc.value)
+
+def test_qualification_validates_all_12_strict_fields(tmp_path):
+    """Verify verify_against_environment_lock validates all 12 strict fields fail-closed."""
+    from scripts.run_stage_a2_deterministic_qualification import verify_against_environment_lock, get_nvidia_driver_version
+    from research_agent.experiments.training.stage_a2_trainer import ExecutionDeviceMismatchError
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA required")
+    live_driver = get_nvidia_driver_version()
+    props = torch.cuda.get_device_properties(0)
+    
+    # 1. Valid lock
+    env_valid = {
+        "environment_id": "ENV-STAGE-A2-COLAB-V1.5",
+        "python_major_minor": f"{sys.version_info.major}.{sys.version_info.minor}",
+        "pytorch_version": torch.__version__,
+        "torch_cuda_runtime": torch.version.cuda,
+        "device_type": "cuda",
+        "device_name": torch.cuda.get_device_name(0),
+        "device_compute_capability": f"{props.major}.{props.minor}",
+        "nvidia_driver_version": live_driver,
+        "cublas_workspace_config": ":4096:8",
+        "deterministic_algorithms_enabled": True,
+        "cudnn_deterministic": True,
+        "cudnn_benchmark": False,
+        "automatic_cpu_fallback": False
+    }
+    p_valid = tmp_path / "valid.json"
+    p_valid.write_text(json.dumps(env_valid), encoding="utf-8")
+    verify_against_environment_lock(p_valid, "cuda")
+    
+    # 2. Invalid field (e.g. driver)
+    env_invalid = dict(env_valid)
+    env_invalid["nvidia_driver_version"] = "111.11"
+    p_invalid = tmp_path / "invalid.json"
+    p_invalid.write_text(json.dumps(env_invalid), encoding="utf-8")
+    with pytest.raises(ExecutionDeviceMismatchError) as exc:
+        verify_against_environment_lock(p_invalid, "cuda")
+    assert "NVIDIA driver version mismatch" in str(exc.value)
+
+def test_qualification_uses_fresh_process_subprocess(tmp_path):
+    """Verify run_qualification executes child worker in an isolated Python interpreter."""
+    from scripts.run_stage_a2_deterministic_qualification import run_qualification
+    run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path)
+    
+    # Verify generated manifest and resume evidence
+    manifest_p = tmp_path / "EVIDENCE-MANIFEST.json"
+    resume_p = tmp_path / "DETERMINISTIC-RESUME-EVIDENCE.json"
+    assert manifest_p.exists()
+    assert resume_p.exists()
+    
+    resume_data = json.loads(resume_p.read_text(encoding="utf-8"))
+    assert resume_data["fresh_process_isolated"] is True
+    assert resume_data["qualification_status"] == "PASS"
+    assert resume_data["max_parameter_divergence"] < 1e-6
+
+def test_qualification_evidence_no_committed_git_labels(tmp_path):
+    """Verify evidence manifest does NOT contain false COMMITTED_GIT labels for uncommitted files."""
+    from scripts.run_stage_a2_deterministic_qualification import run_qualification
+    run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path)
+    
+    manifest_p = tmp_path / "EVIDENCE-MANIFEST.json"
+    manifest_data = json.loads(manifest_p.read_text(encoding="utf-8"))
+    
+    for art in manifest_data["artifacts"]:
+        assert art["storage_status"] != "COMMITTED_GIT"
+        assert "COLAB_" in art["storage_status"]
+
+def test_qualification_evidence_no_d_drive_labels(tmp_path):
+    """Verify evidence manifest does NOT contain Windows-specific D_DRIVE labels."""
+    from scripts.run_stage_a2_deterministic_qualification import run_qualification
+    run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path)
+    
+    manifest_p = tmp_path / "EVIDENCE-MANIFEST.json"
+    manifest_data = json.loads(manifest_p.read_text(encoding="utf-8"))
+    
+    for art in manifest_data["artifacts"]:
+        assert "LOCAL_D_DRIVE" not in art["storage_status"]
+
+def test_qualification_checkpoint_hashed_and_mirrored(tmp_path):
+    """Verify qualification checkpoint hash is recorded and included in mirror list."""
+    from scripts.run_stage_a2_deterministic_qualification import run_qualification
+    from scripts.bootstrap_stage_a2_colab import mirror_qualification_artifacts
+    
+    run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path)
+    ckpt_p = tmp_path / "qualification_checkpoint.pt"
+    assert ckpt_p.exists()
+    
+    manifest_p = tmp_path / "EVIDENCE-MANIFEST.json"
+    manifest_data = json.loads(manifest_p.read_text(encoding="utf-8"))
+    ckpt_entries = [a for a in manifest_data["artifacts"] if "qualification_checkpoint.pt" in a["path"]]
+    assert len(ckpt_entries) == 1
+    assert len(ckpt_entries[0]["sha256"]) == 64
+
+def test_qualification_evidence_class_is_non_empirical(tmp_path):
+    """Verify qualification artifacts are strictly labeled NON_EMPIRICAL_TEST_FIXTURE."""
+    from scripts.run_stage_a2_deterministic_qualification import run_qualification
+    run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path)
+    
+    qual_p = tmp_path / "IMPLEMENTATION-QUALIFICATION.json"
+    exp_p = tmp_path / "EXPERIMENTAL-SOURCE.json"
+    
+    qual_data = json.loads(qual_p.read_text(encoding="utf-8"))
+    exp_data = json.loads(exp_p.read_text(encoding="utf-8"))
+    
+    assert qual_data["evidence_class"] == "NON_EMPIRICAL_TEST_FIXTURE"
+    assert exp_data["evidence_class"] == "NON_EMPIRICAL_TEST_FIXTURE"
+
+def test_qualification_test_firewall_stays_sealed(tmp_path):
+    """Verify test firewall state remains sealed during deterministic qualification."""
+    from scripts.run_stage_a2_deterministic_qualification import run_qualification
+    run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path)
+    
+    exp_p = tmp_path / "EXPERIMENTAL-SOURCE.json"
+    exp_data = json.loads(exp_p.read_text(encoding="utf-8"))
+    fw = exp_data["test_firewall_state"]
+    assert fw["test_opened"] is False
+    assert fw["test_feature_reads"] == 0
+    assert fw["test_label_reads"] == 0
+    assert fw["test_metrics"] == 0
