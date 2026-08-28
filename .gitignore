@@ -83,6 +83,9 @@ experiments/runs/**
 experiments/checkpoints/**
 experiments/cache/**
 artifacts/**
+.artifacts/**
+durable/**
+logs/**
 
 # Disposable runtime data & caches (RC-17)
 runtime/cache/**

@@ -1,5 +1,5 @@
 # scripts/resume_stage_a2_local_seed42_epoch2.ps1
-# Resume Canonical Seed 42 from Epoch 1 Checkpoint -> Execute Epoch 2
+# Resume Canonical Seed 42 from Epoch 1 Checkpoint -> Execute Epoch 2 (Detached Background Process)
 
 $ErrorActionPreference = "Stop"
 
@@ -20,7 +20,20 @@ $pidFile = "$logDir\seed42.pid"
 $env:CUBLAS_WORKSPACE_CONFIG = ":4096:8"
 $env:PYTHONUNBUFFERED = "1"
 
-$argString = "-u scripts\run_stage_a2_five_seed_empirical.py --seed 42 --resume `"$lastCkpt`" --resume-sha256 `"$ckptSha`" --authorize-real-empirical-execution --base-dir `"$baseDir`" --dataset-path `"$baseDir\datasets\raw\hdfs\HDFS_1.tar.gz`" --durable-root `"$baseDir\durable\stage-a2\HDFS`" --plan `"$baseDir\experiments\plans\STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json`" --environment-lock `"$baseDir\experiments\evidence\stage-a2\preexecution\STAGE-A2-LOCAL-EXECUTION-ENVIRONMENT-V1.5.json`" --authorization `"$baseDir\experiments\evidence\stage-a2\preexecution\SEED42-LOCAL-LAUNCH-AUTHORIZATION-V1.5.json`""
+$argsArray = @(
+    "-u",
+    "scripts\run_stage_a2_five_seed_empirical.py",
+    "--seed", "42",
+    "--resume", $lastCkpt,
+    "--resume-sha256", $ckptSha,
+    "--authorize-real-empirical-execution",
+    "--base-dir", $baseDir,
+    "--dataset-path", "$baseDir\datasets\raw\hdfs\HDFS_1.tar.gz",
+    "--durable-root", "$baseDir\durable\stage-a2\HDFS",
+    "--plan", "$baseDir\experiments\plans\STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json",
+    "--environment-lock", "$baseDir\experiments\evidence\stage-a2\preexecution\STAGE-A2-LOCAL-EXECUTION-ENVIRONMENT-V1.5.json",
+    "--authorization", "$baseDir\experiments\evidence\stage-a2\preexecution\SEED42-LOCAL-LAUNCH-AUTHORIZATION-V1.5.json"
+)
 
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host "   RESUMING STAGE A2 LOCAL CANONICAL SEED 42 (EPOCH 2)    " -ForegroundColor Yellow
@@ -30,7 +43,7 @@ Write-Host "SHA-256:    $ckptSha"
 Write-Host "Logs:       $stdoutLog"
 
 $process = Start-Process -FilePath $pythonExe `
-    -ArgumentList $argString `
+    -ArgumentList $argsArray `
     -WorkingDirectory $baseDir `
     -RedirectStandardOutput $stdoutLog `
     -RedirectStandardError $stderrLog `
