@@ -1,4 +1,4 @@
-﻿# scripts/monitor_stage_a2_live.ps1
+# scripts/monitor_stage_a2_live.ps1
 # Realtime Live Monitor & Progress Bar for Stage A2 Canonical Seed 42 (100% Flicker-Free)
 
 $baseDir = "D:\Research"
@@ -87,10 +87,11 @@ try {
 
             # Visual progress bar
             $barWidth = 40
-            $filled = [math]::Round(($pct / 100.0) * $barWidth)
+            $filled = [int][math]::Round(($pct / 100.0) * $barWidth)
             if ($filled -gt $barWidth) { $filled = $barWidth }
-            $empty = $barWidth - $filled
-            $barStr = ([char]0x2588 * $filled) + ([char]0x2591 * $empty)
+            if ($filled -lt 0) { $filled = 0 }
+            $empty = [int]($barWidth - $filled)
+            $barStr = ("#" * $filled) + ("-" * $empty)
 
             $lines.Add(" RUN ID:          RUN-STAGE-A2-HDFS-SEED42")
             $lines.Add(" PROCESS STATUS:  RUNNING (PID: $($proc.ProcessId))")
