@@ -1,18 +1,23 @@
 # -*- coding: utf-8 -*-
 """
 Remote Environment Preparation for Stage A2 on Colab.
-Performs fail-closed discovery, clean clone of frozen commit d89f09b4039bd368cef60b30ae4b8ad9ba6c5e67,
+Performs fail-closed discovery, clean clone of approved execution commit,
 exact PyTorch 2.6.0+cu124 verification, and streaming SHA-256 HDFS raw dataset copy.
 """
 
-from typing import Dict, Any, Tuple
+import re
+from typing import Dict, Any, Tuple, Optional
 from scripts.colab_a2.wsl_bridge import ColabCLIBridge
 
-FROZEN_EXECUTION_COMMIT = "d89f09b4039bd368cef60b30ae4b8ad9ba6c5e67"
 EXPECTED_HDFS_SHA = "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169"
 REPO_URL = "https://github.com/Minhlike/Chuyende.git"
 
-REMOTE_PREPARATION_SCRIPT = f"""
+def build_prepare_script(execution_commit: str) -> str:
+    if not execution_commit or not re.match(r"^[0-9a-fA-F]{40}$", execution_commit.strip()):
+        raise ValueError(f"FATAL: APPROVED EXECUTION COMMIT REQUIRED (40-hex SHA). Got: '{execution_commit}'")
+    
+    commit = execution_commit.strip()
+    return f"""
 import os, sys, subprocess, shutil, hashlib, re
 from pathlib import Path
 
@@ -29,9 +34,9 @@ print("=================================================================")
 
 # 1. Host discovery & nvidia-smi fail-closed
 smi = subprocess.check_output(['nvidia-smi'], text=True)
-print("Host GPU Detected:\n", smi.strip())
+print("Host GPU Detected:\\n", smi.strip())
 
-# 2. Clean fresh clone & checkout of frozen commit
+# 2. Clean fresh clone & checkout of approved commit
 repo_dir = Path('/content/Research')
 if repo_dir.exists():
     print(f"Removing existing {{repo_dir}} for fresh clone...")
@@ -40,15 +45,15 @@ if repo_dir.exists():
 print(f"Cloning clean repository from {REPO_URL}...")
 subprocess.run(['git', 'clone', '{REPO_URL}', str(repo_dir)], check=True)
 
-print(f"Detached checkout of frozen commit: {FROZEN_EXECUTION_COMMIT}")
-subprocess.run(['git', 'checkout', '{FROZEN_EXECUTION_COMMIT}'], cwd=str(repo_dir), check=True)
+print(f"Detached checkout of approved commit: {commit}")
+subprocess.run(['git', 'checkout', '{commit}'], cwd=str(repo_dir), check=True)
 
 head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=str(repo_dir), text=True).strip()
-assert head == '{FROZEN_EXECUTION_COMMIT}', f"Commit mismatch: {{head}} != {FROZEN_EXECUTION_COMMIT}"
+assert head == '{commit}', f"Commit mismatch: {{head}} != {commit}"
 
 status = subprocess.check_output(['git', 'status', '--porcelain', 'src', 'scripts', 'experiments', 'tests'], cwd=str(repo_dir), text=True).strip()
 assert len(status) == 0, f"Source tree dirty: {{status}}"
-print("Frozen Clean Source Verified at HEAD:", head)
+print("Approved Clean Source Verified at HEAD:", head)
 
 # 3. Editable install & PyTorch 2.6.0+cu124 verification
 subprocess.run([sys.executable, '-m', 'pip', 'install', '-e', '.'], cwd=str(repo_dir), check=True)
@@ -109,10 +114,12 @@ print("   REMOTE PREPARATION COMPLETE: PASS                            ")
 print("=================================================================")
 """
 
-def run_remote_prepare(bridge: ColabCLIBridge) -> Tuple[bool, str]:
+def run_remote_prepare(bridge: ColabCLIBridge, execution_commit: str) -> Tuple[bool, str]:
     """Executes remote preparation script via Colab CLI bridge."""
-    print("[PREPARE] Sending preparation payload to Colab session...")
-    code = REMOTE_PREPARATION_SCRIPT.strip()
+    if not execution_commit:
+        raise ValueError("FATAL: APPROVED EXECUTION COMMIT REQUIRED")
+    print(f"[PREPARE] Sending preparation payload (Commit: {execution_commit}) to Colab session...")
+    code = build_prepare_script(execution_commit).strip()
     returncode, stdout, stderr = bridge.exec_code(code)
     print(stdout)
     if returncode != 0:

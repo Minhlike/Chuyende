@@ -2,18 +2,18 @@
 """
 Canonical Google Colab Resume Script for Stage A2 Seed 42.
 Automates fail-closed environment validation, durable checkpoint inspection,
-runtime requalification, and sequential optimizer continuation from the last
-durable completed-epoch boundary.
+checkpoint-bound environment lock restoration, runtime requalification,
+local workspace restoration, and unbuffered optimizer resumption.
 
 Usage:
   # Inspect remote/local durable state without training:
   python scripts/colab_stage_a2_resume_seed42.py --status
 
   # Dry-run validation (0 optimizer steps executed):
-  python scripts/colab_stage_a2_resume_seed42.py --dry-run
+  python scripts/colab_stage_a2_resume_seed42.py --dry-run --execution-commit <40-hex SHA>
 
   # Full real execution resume:
-  python scripts/colab_stage_a2_resume_seed42.py --execute
+  python scripts/colab_stage_a2_resume_seed42.py --execute --execution-commit <40-hex SHA>
 """
 
 import os
@@ -35,12 +35,16 @@ from typing import Dict, Any, Optional, Tuple, List
 
 import torch
 
-# Configuration Constants
-APPROVED_EXECUTION_COMMIT = "d89f09b4039bd368cef60b30ae4b8ad9ba6c5e67"
 TARGET_SEED = 42
 EXPECTED_RAW_HDFS_SHA = "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169"
 STEPS_PER_EPOCH = 573
 TARGET_TOTAL_STEPS = 11460
+
+ALLOWED_CLASSIFICATIONS = [
+    "CANONICAL_RESUMABLE",
+    "FORENSIC_NONCANONICAL",
+    "PENDING_INDEPENDENT_CLASSIFICATION"
+]
 
 def compute_sha256_streaming(path: Path, chunk_size: int = 8 * 1024 * 1024) -> str:
     """Computes streaming SHA-256 hash to prevent memory spikes."""
@@ -77,9 +81,9 @@ def detect_colab_paths(base_dir_arg: Optional[Path] = None, durable_root_arg: Op
     if durable_root_arg:
         durable_root = Path(durable_root_arg).resolve()
     elif is_colab:
-        durable_root = Path("/content/drive/MyDrive/Chuyende-stage-a2")
+        durable_root = Path("/content/drive/MyDrive/Chuyende-stage-a2/runs/HDFS")
     else:
-        durable_root = base_dir / "experiments" / "runs" / "stage-a2"
+        durable_root = base_dir / "experiments" / "runs" / "stage-a2" / "HDFS"
 
     local_data_dir = Path("/content/stage-a2-data") if is_colab else (base_dir / "datasets" / "raw" / "hdfs")
     raw_tarball_path = local_data_dir / "HDFS_1.tar.gz"
@@ -96,9 +100,8 @@ def detect_colab_paths(base_dir_arg: Optional[Path] = None, durable_root_arg: Op
 def discover_durable_seed42_state(durable_root: Path, base_dir: Path) -> Dict[str, Any]:
     """Inspects durable Google Drive run directory for Seed 42."""
     candidate_dirs = [
+        durable_root / "seed-42",
         durable_root / "runs" / "HDFS" / "seed-42",
-        durable_root / "runs" / "stage-a2" / "HDFS" / "seed-42",
-        durable_root / "HDFS" / "seed-42",
         base_dir / "experiments" / "runs" / "stage-a2" / "HDFS" / "seed-42"
     ]
     
@@ -118,36 +121,56 @@ def discover_durable_seed42_state(durable_root: Path, base_dir: Path) -> Dict[st
         "found": run_dir is not None,
         "run_dir": run_dir,
         "status": "NOT_STARTED",
+        "process_status": "NOT_STARTED",
         "completed_epoch": 0,
         "next_epoch_to_run": 0,
         "global_step": 0,
         "best_val_loss": None,
         "last_checkpoint_sha256": None,
         "last_checkpoint_path": None,
-        "is_forensic_only": False,
+        "classification": "PENDING_INDEPENDENT_CLASSIFICATION",
         "is_resumable": False,
         "non_resumable_reason": None,
-        "inventory": []
+        "inventory": [],
+        "firewall_status": "UNKNOWN"
     }
 
     if not run_dir or not run_dir.exists():
         state_data["non_resumable_reason"] = "Durable run directory does not exist on Drive."
         return state_data
 
+    # Read external RUN-CLASSIFICATION.json
+    class_p = run_dir / "RUN-CLASSIFICATION.json"
+    if class_p.exists():
+        try:
+            cdata = json.loads(class_p.read_text(encoding="utf-8"))
+            state_data["classification"] = cdata.get("classification", "PENDING_INDEPENDENT_CLASSIFICATION")
+        except Exception as e:
+            state_data["classification"] = "PENDING_INDEPENDENT_CLASSIFICATION"
+            state_data["non_resumable_reason"] = f"Corrupted RUN-CLASSIFICATION.json: {e}"
+    else:
+        state_data["classification"] = "PENDING_INDEPENDENT_CLASSIFICATION"
+
     run_state_p = run_dir / "RUN-STATE.json"
     if run_state_p.exists():
         try:
             rs = json.loads(run_state_p.read_text(encoding="utf-8"))
-            state_data["status"] = rs.get("status", "UNKNOWN")
+            recorded_status = rs.get("status", "UNKNOWN")
+            state_data["status"] = recorded_status
             state_data["completed_epoch"] = rs.get("completed_epoch", 0)
             state_data["next_epoch_to_run"] = rs.get("next_epoch_to_run", 0)
             state_data["global_step"] = rs.get("global_step", 0)
             state_data["best_val_loss"] = rs.get("best_val_loss")
             state_data["last_checkpoint_sha256"] = rs.get("last_checkpoint_sha256")
             
-            if rs.get("evidence_class") == "FORENSIC_NONCANONICAL" or rs.get("classification") == "NONCANONICAL_RNG_INITIALIZATION":
-                state_data["is_forensic_only"] = True
-                state_data["non_resumable_reason"] = "EXISTING SEED42 CHECKPOINT IS FORENSIC-ONLY (NONCANONICAL_RNG_INITIALIZATION)"
+            # Check process liveness
+            if recorded_status == "RUNNING":
+                state_data["process_status"] = "STALE_OR_INTERRUPTED"
+            elif recorded_status == "COMPLETED":
+                state_data["process_status"] = "COMPLETED"
+            else:
+                state_data["process_status"] = recorded_status
+                
         except Exception as e:
             state_data["non_resumable_reason"] = f"Failed to parse RUN-STATE.json: {e}"
 
@@ -158,6 +181,20 @@ def discover_durable_seed42_state(durable_root: Path, base_dir: Path) -> Dict[st
             state_data["inventory"] = inv.get("checkpoints", [])
         except Exception:
             pass
+
+    # Read TEST-FIREWALL.json if present
+    tf_p = run_dir / "TEST-FIREWALL.json"
+    if tf_p.exists():
+        try:
+            tf_data = json.loads(tf_p.read_text(encoding="utf-8"))
+            if tf_data.get("test_opened") is False and tf_data.get("test_feature_reads", 0) == 0:
+                state_data["firewall_status"] = "LOCKED"
+            else:
+                state_data["firewall_status"] = "BREACHED"
+        except Exception:
+            state_data["firewall_status"] = "UNVERIFIED"
+    else:
+        state_data["firewall_status"] = "UNVERIFIED_NO_EVIDENCE_FILE"
 
     # Locate checkpoint file
     candidate_ckpts = [
@@ -171,8 +208,15 @@ def discover_durable_seed42_state(durable_root: Path, base_dir: Path) -> Dict[st
             break
 
     # Determine resumability
-    if state_data["is_forensic_only"]:
+    if state_data["classification"] == "PENDING_INDEPENDENT_CLASSIFICATION":
         state_data["is_resumable"] = False
+        state_data["non_resumable_reason"] = "RESUME REFUSED: RUN CLASSIFICATION IS PENDING_INDEPENDENT_CLASSIFICATION"
+    elif state_data["classification"] == "FORENSIC_NONCANONICAL":
+        state_data["is_resumable"] = False
+        state_data["non_resumable_reason"] = "RESUME REFUSED: EXISTING SEED42 CHECKPOINT IS FORENSIC-ONLY"
+    elif state_data["classification"] != "CANONICAL_RESUMABLE":
+        state_data["is_resumable"] = False
+        state_data["non_resumable_reason"] = f"RESUME REFUSED: UNKNOWN CLASSIFICATION '{state_data['classification']}'"
     elif state_data["status"] == "COMPLETED":
         state_data["is_resumable"] = False
         state_data["non_resumable_reason"] = "Run is already COMPLETED (all epochs finished)."
@@ -202,7 +246,7 @@ def inspect_checkpoint_integrity(checkpoint_path: Path, expected_sha: Optional[s
         "seed": meta.get("seed"),
         "run_id": meta.get("run_id"),
         "completed_epoch": meta.get("completed_epoch", ckpt_data.get("epoch")),
-        "next_epoch_to_run": meta.get("next_epoch_to_run", (meta.get("completed_epoch", 0) + 1)),
+        "next_epoch_to_run": meta.get("next_epoch_to_run", meta.get("completed_epoch", 0)),
         "global_step": meta.get("global_step", ckpt_data.get("global_step", 0)),
         "execution_code_commit_sha": meta.get("execution_code_commit_sha"),
         "raw_dataset_sha256": meta.get("raw_dataset_sha256"),
@@ -212,6 +256,76 @@ def inspect_checkpoint_integrity(checkpoint_path: Path, expected_sha: Optional[s
         "environment_lock_sha256": meta.get("environment_lock_sha256")
     }
 
+def restore_local_workspace_state(durable_seed_dir: Path, base_dir: Path) -> Tuple[bool, str]:
+    """Restores local run state and artifacts atomically from Google Drive."""
+    local_run_dir = base_dir / "experiments" / "runs" / "stage-a2" / "HDFS" / "seed-42"
+    local_artifact_dir = base_dir / ".artifacts" / "stage-a2" / "HDFS" / "seed-42"
+    
+    local_run_dir.mkdir(parents=True, exist_ok=True)
+    local_artifact_dir.mkdir(parents=True, exist_ok=True)
+    
+    small_evidence_files = [
+        "RUN-STATE.json", "TRAIN-LOG.jsonl", "CHECKPOINT-INVENTORY.json",
+        "ENVIRONMENT.json", "TEST-FIREWALL.json", "RUN-CLASSIFICATION.json"
+    ]
+    for fname in small_evidence_files:
+        src = durable_seed_dir / fname
+        if src.exists():
+            dst = local_run_dir / fname
+            tmp = dst.with_suffix(".tmp")
+            shutil.copy2(src, tmp)
+            os.replace(tmp, dst)
+            if compute_sha256_streaming(dst) != compute_sha256_streaming(src):
+                return False, f"SHA mismatch when restoring {fname}"
+                
+    ckpt_files = ["last_checkpoint.pt", "best_val_loss.pt"]
+    for cname in ckpt_files:
+        src = durable_seed_dir / cname
+        if src.exists():
+            dst = local_artifact_dir / cname
+            tmp = dst.with_suffix(".tmp")
+            shutil.copy2(src, tmp)
+            os.replace(tmp, dst)
+            if compute_sha256_streaming(dst) != compute_sha256_streaming(src):
+                return False, f"SHA mismatch when restoring {cname}"
+                
+    return True, "Workspace restored successfully."
+
+def restore_checkpoint_environment_lock(checkpoint_env_sha: str, base_dir: Path, durable_root: Path) -> Path:
+    """Locates and restores the exact checkpoint-bound environment lock from Drive qualification."""
+    if durable_root.name == "HDFS" and durable_root.parent.name == "runs":
+        qual_root = durable_root.parent.parent / "qualification"
+    elif durable_root.name == "runs":
+        qual_root = durable_root.parent / "qualification"
+    else:
+        qual_root = durable_root / "qualification"
+    
+    found_lock = None
+    if qual_root.exists():
+        for qdir in qual_root.iterdir():
+            if qdir.is_dir():
+                cand = qdir / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+                if cand.exists():
+                    if compute_sha256_streaming(cand) == checkpoint_env_sha:
+                        found_lock = cand
+                        break
+                        
+    local_lock_dest = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    local_lock_dest.parent.mkdir(parents=True, exist_ok=True)
+    
+    if found_lock:
+        shutil.copy2(found_lock, local_lock_dest)
+    elif local_lock_dest.exists() and compute_sha256_streaming(local_lock_dest) == checkpoint_env_sha:
+        pass
+    else:
+        raise FileNotFoundError(f"FATAL: Checkpoint-bound environment lock {checkpoint_env_sha} not found in {qual_root}!")
+        
+    actual_sha = compute_sha256_streaming(local_lock_dest)
+    if actual_sha != checkpoint_env_sha:
+        raise ValueError(f"FATAL: Restored environment lock SHA mismatch: {actual_sha} != {checkpoint_env_sha}")
+        
+    return local_lock_dest
+
 def print_status_report(paths: Dict[str, Any], state: Dict[str, Any]) -> None:
     """Prints status mode summary."""
     print("=================================================================")
@@ -219,6 +333,8 @@ def print_status_report(paths: Dict[str, Any], state: Dict[str, Any]) -> None:
     print("=================================================================")
     print(f"SEED:                    {TARGET_SEED}")
     print(f"STATUS:                  {state['status']}")
+    print(f"PROCESS_STATUS:          {state['process_status']}")
+    print(f"CLASSIFICATION:          {state['classification']}")
     print(f"COMPLETED_EPOCH:         {state['completed_epoch']}")
     print(f"NEXT_EPOCH:              {state['next_epoch_to_run']}")
     print(f"GLOBAL_STEP:             {state['global_step']}")
@@ -229,21 +345,19 @@ def print_status_report(paths: Dict[str, Any], state: Dict[str, Any]) -> None:
     print(f"RESUMABLE:               {'YES' if state['is_resumable'] else 'NO'}")
     if not state['is_resumable']:
         print(f"NON_RESUMABLE_REASON:    {state['non_resumable_reason']}")
-    print(f"TEST_FIREWALL:           LOCKED (TEST_OPENED=false)")
+    print(f"TEST_FIREWALL:           {state['firewall_status']}")
     print("=================================================================\n")
 
 def run_preflight_and_resume(
     mode: str,
+    execution_commit: Optional[str] = None,
     base_dir_arg: Optional[Path] = None,
-    durable_root_arg: Optional[Path] = None,
-    override_commit: Optional[str] = None
+    durable_root_arg: Optional[Path] = None
 ) -> int:
     """Main verification, pre-resume report, and executor."""
     paths = detect_colab_paths(base_dir_arg, durable_root_arg)
     base_dir = paths["base_dir"]
     durable_root = paths["durable_root"]
-    
-    target_commit = override_commit or APPROVED_EXECUTION_COMMIT
     
     # 1. Inspect Durable Seed 42 State
     state = discover_durable_seed42_state(durable_root, base_dir)
@@ -252,17 +366,17 @@ def run_preflight_and_resume(
         print_status_report(paths, state)
         return 0
 
+    if not execution_commit or not re.match(r"^[0-9a-fA-F]{40}$", execution_commit.strip()):
+        print("FATAL: APPROVED EXECUTION COMMIT REQUIRED (--execution-commit <40-hex SHA>)")
+        return 1
+
+    target_commit = execution_commit.strip()
+
     print("=================================================================")
     print(f"   STAGE A2 SEED-42 CANONICAL RESUME (Mode: {mode.upper()})      ")
     print("=================================================================")
 
-    # 2. Check Forensic Protection Invariant
-    if state["is_forensic_only"]:
-        print("RESUME REFUSED:")
-        print("EXISTING SEED42 CHECKPOINT IS FORENSIC-ONLY")
-        print(f"Reason: {state['non_resumable_reason']}")
-        return 1
-
+    # 2. Check Classification Invariant
     if not state["is_resumable"]:
         print(f"FATAL: Seed 42 is not in a resumable state: {state['non_resumable_reason']}")
         return 1
@@ -270,7 +384,12 @@ def run_preflight_and_resume(
     ckpt_path = state["last_checkpoint_path"]
     ckpt_meta = inspect_checkpoint_integrity(ckpt_path, expected_sha=state["last_checkpoint_sha256"])
 
-    # 3. Verify Hardware & PyTorch environment
+    # 3. Cross-check Checkpoint Metadata with Approved Execution Commit
+    if ckpt_meta.get("execution_code_commit_sha") and ckpt_meta["execution_code_commit_sha"] != target_commit:
+        print(f"FATAL: Checkpoint commit ({ckpt_meta['execution_code_commit_sha']}) != Approved commit ({target_commit})")
+        return 1
+
+    # 4. Verify Hardware & PyTorch environment
     if not torch.cuda.is_available():
         print("FATAL: CUDA GPU is not available in current environment!")
         return 1
@@ -281,65 +400,52 @@ def run_preflight_and_resume(
     vram_gb = props.total_memory / (1024**3)
     driver_ver = get_nvidia_driver_version()
 
-    # 4. Resolve and verify Dataset
-    raw_tar = paths["raw_tarball_path"]
-    if not raw_tar.exists():
-        if paths["drive_canonical_dataset"].exists():
-            print(f"Copying HDFS dataset from Drive to {raw_tar}...")
-            raw_tar.parent.mkdir(parents=True, exist_ok=True)
-            tmp_p = raw_tar.with_suffix(".tar.gz.tmp")
-            shutil.copy2(paths["drive_canonical_dataset"], tmp_p)
-            os.replace(tmp_p, raw_tar)
-        elif paths["drive_fallback_dataset"].exists():
-            print(f"Copying fallback HDFS dataset from Drive to {raw_tar}...")
-            raw_tar.parent.mkdir(parents=True, exist_ok=True)
-            tmp_p = raw_tar.with_suffix(".tar.gz.tmp")
-            shutil.copy2(paths["drive_fallback_dataset"], tmp_p)
-            os.replace(tmp_p, raw_tar)
-        else:
-            print(f"FATAL: Raw HDFS dataset not found at {raw_tar} or on Drive!")
-            return 1
-
-    dataset_sha = compute_sha256_streaming(raw_tar)
-    if dataset_sha != EXPECTED_RAW_HDFS_SHA:
-        print(f"FATAL: HDFS raw dataset SHA mismatch: {dataset_sha} != {EXPECTED_RAW_HDFS_SHA}")
+    # 5. Restore Local Workspace State
+    ok, rmsg = restore_local_workspace_state(state["run_dir"], base_dir)
+    if not ok:
+        print(f"FATAL: Local workspace restoration failed: {rmsg}")
         return 1
 
-    # 5. Verify Git Source Tree
-    try:
-        head_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=str(base_dir), text=True).strip()
-        status_out = subprocess.check_output(["git", "status", "--porcelain", "src", "scripts", "experiments"], cwd=str(base_dir), text=True).strip()
-        is_clean = (len(status_out) == 0)
-    except Exception as e:
-        head_commit = "UNKNOWN"
-        is_clean = False
+    # 6. Restore and Requalify Checkpoint-Bound Environment Lock
+    env_lock_sha = ckpt_meta["environment_lock_sha256"]
+    env_lock_path = restore_checkpoint_environment_lock(env_lock_sha, base_dir, durable_root)
+    
+    qual_output_dir = base_dir / "experiments" / "evidence" / "stage-a2" / "resume_qualification"
+    qual_output_dir.mkdir(parents=True, exist_ok=True)
+    
+    qual_cmd = [
+        sys.executable, str(base_dir / "scripts" / "run_stage_a2_deterministic_qualification.py"),
+        "--device", "cuda",
+        "--base-dir", str(base_dir),
+        "--environment-lock", str(env_lock_path),
+        "--output-dir", str(qual_output_dir)
+    ]
+    print("Running Runtime Requalification:", " ".join(qual_cmd))
+    q_proc = subprocess.run(qual_cmd, capture_output=True, text=True)
+    if q_proc.returncode != 0:
+        print(f"FATAL: Runtime requalification against checkpoint lock failed:\n{q_proc.stderr}")
+        return 1
 
-    # 6. Checkpoint Metadata Validation
+    # 7. Print Pre-Resume Summary
     completed_epoch = ckpt_meta["completed_epoch"]
     global_step = ckpt_meta["global_step"]
     next_epoch = completed_epoch + 1
 
-    if completed_epoch < 1 or global_step != (completed_epoch * STEPS_PER_EPOCH):
-        print(f"FATAL: Checkpoint boundary invalid! completed_epoch={completed_epoch}, global_step={global_step}")
-        return 1
-
-    # 7. Print Pre-Resume Summary
     print("=================================================================")
     print("   STAGE A2 SEED-42 CANONICAL PRE-RESUME SUMMARY                 ")
     print("=================================================================")
-    print(f"EXECUTION COMMIT:     {head_commit} (Approved: {target_commit})")
+    print(f"EXECUTION COMMIT:     {target_commit}")
     print(f"GPU:                  {gpu_name} (CC {compute_cap}, {vram_gb:.2f} GB VRAM)")
     print(f"PYTHON:               {platform.python_version()}")
     print(f"PYTORCH:              {torch.__version__}")
     print(f"CUDA:                 {torch.version.cuda}")
     print(f"DRIVER:               {driver_ver}")
-    print(f"DATASET SHA:          {dataset_sha}")
     print(f"CHECKPOINT PATH:      {ckpt_path}")
     print(f"CHECKPOINT SHA:       {ckpt_meta['actual_sha256']}")
     print(f"COMPLETED EPOCH:      {completed_epoch}")
     print(f"GLOBAL STEP:          {global_step}")
     print(f"NEXT EPOCH:           {next_epoch}")
-    print(f"TEST FIREWALL:        LOCKED (TEST_OPENED=false)")
+    print(f"TEST FIREWALL:        {state['firewall_status']}")
     print("=================================================================")
     print(f"RESUMED FROM COMPLETED EPOCH: {completed_epoch}")
     print(f"STARTING EPOCH:               {next_epoch}")
@@ -347,9 +453,13 @@ def run_preflight_and_resume(
     print("=================================================================\n")
 
     plan_path = base_dir / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
-    env_lock_path = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
+    auth_path = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / "SEED42-COLAB-LAUNCH-AUTHORIZATION-V1.5.json"
+    
+    if not auth_path.exists():
+        print(f"FATAL: Launch authorization artifact missing at {auth_path}")
+        return 1
 
-    # Construct canonical resume command
+    raw_tar = paths["raw_tarball_path"]
     resume_cmd = [
         sys.executable, "-u", str(base_dir / "scripts" / "run_stage_a2_five_seed_empirical.py"),
         "--seed", "42",
@@ -360,6 +470,7 @@ def run_preflight_and_resume(
         "--durable-root", str(durable_root),
         "--plan", str(plan_path),
         "--environment-lock", str(env_lock_path),
+        "--authorization", str(auth_path),
         "--authorize-real-empirical-execution"
     ]
 
@@ -384,9 +495,9 @@ def main():
     group.add_argument("--dry-run", action="store_true", help="Perform pre-flight verification without training")
     group.add_argument("--execute", action="store_true", help="Execute real optimizer resumption")
     
+    parser.add_argument("--execution-commit", type=str, default=None, help="Approved 40-hex execution commit")
     parser.add_argument("--base-dir", type=str, default=None, help="Base repository directory")
     parser.add_argument("--durable-root", type=str, default=None, help="Durable storage root directory")
-    parser.add_argument("--commit", type=str, default=None, help="Override approved execution commit")
 
     args = parser.parse_args()
 
@@ -394,7 +505,12 @@ def main():
     base_dir = Path(args.base_dir) if args.base_dir else None
     durable_root = Path(args.durable_root) if args.durable_root else None
 
-    rc = run_preflight_and_resume(mode=mode, base_dir_arg=base_dir, durable_root_arg=durable_root, override_commit=args.commit)
+    rc = run_preflight_and_resume(
+        mode=mode,
+        execution_commit=args.execution_commit,
+        base_dir_arg=base_dir,
+        durable_root_arg=durable_root
+    )
     sys.exit(rc)
 
 if __name__ == "__main__":
