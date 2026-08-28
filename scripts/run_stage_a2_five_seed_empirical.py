@@ -692,6 +692,16 @@ def run_single_seed_pipeline(
         "deterministic_algorithms_enabled": True
     }
 
+    is_resume = (resume_checkpoint is not None)
+
+    # For fresh runs, seed framework RNGs so initial model weights and operations are determined by canonical seed
+    if not is_resume:
+        random.seed(seed)
+        np.random.seed(seed)
+        torch.manual_seed(seed)
+        if torch.cuda.is_available():
+            torch.cuda.manual_seed_all(seed)
+
     # Model & Trainer Architecture Instantiation
     model = TemporalGraphViewEncoder(
         d_node=128,
@@ -728,8 +738,6 @@ def run_single_seed_pipeline(
 
     best_checkpoint_p = artifact_checkpoint_dir / "best_val_loss.pt"
     last_checkpoint_p = artifact_checkpoint_dir / "last_checkpoint.pt"
-
-    is_resume = (resume_checkpoint is not None)
 
     # --- RESUME RUN PATH vs FRESH RUN PATH ---
     if is_resume:
@@ -881,15 +889,8 @@ def run_single_seed_pipeline(
         assert len(train_windows) == expected_train_windows, f"Train windows {len(train_windows)} != {expected_train_windows}"
         assert len(val_windows) == expected_val_windows, f"Val windows {len(val_windows)} != {expected_val_windows}"
 
-        # 2. Set Full PyTorch Determinism
-        random.seed(seed)
-        np.random.seed(seed)
-        torch.manual_seed(seed)
-        if torch.cuda.is_available():
-            torch.cuda.manual_seed_all(seed)
-            torch.backends.cudnn.deterministic = True
-            torch.backends.cudnn.benchmark = False
-        torch.use_deterministic_algorithms(True)
+        # 2. Verify / Enforce Deterministic Framework Flags without re-seeding RNGs
+        enforce_framework_determinism()
 
         patience_counter = trainer.patience_counter
 
