@@ -160,3 +160,23 @@
      - Parameterizes paths (`--base-dir`, `--dataset-path`, `--durable-root`, `--plan`, `--authorization`, `--environment-lock`), removing hardcoded Windows drive letters (`D:\Research`).
   5. **Absolute Scientific Immutability:**
      - ALL scientific hyperparameters remain strictly identical: HDFS raw dataset (`6ca6c5bc...`), `SPL-HDFS-001` split authority, 35,000 Train sessions / 586,577 events, 7,500 Val sessions / 119,531 events, 2,292 Train windows / 467 Val windows, 573 optimizer steps/epoch, warmup 573 steps, max 20 epochs, grad accum 4, window size 256, model architecture (`TemporalGraphViewEncoder`), relation/node masking ($p=0.15$), fixed validation seed `20260823`, composite graph objective $L_{\text{graph}} = 1.0 L_{\text{rel}} + 1.0 L_{\text{node}} + 0.1 L_{\text{time}}$, early stopping patience 3, seeds `[42, 1337, 2024, 7, 999]`, Test firewall locked (`TEST_OPENED = false`).
+
+---
+
+### Amendment 13: Stage A2 Local Windows GPU Execution Fallback
+- **Timestamp:** 2026-08-28T10:15:00+07:00
+- **Execution State:** `TEST_OPENED = NO`, `OLD_COLAB_SEED42_STATUS = NONCANONICAL_RNG_INITIALIZATION`, `CANONICAL_RESULTS_SEEN = NO`
+- **Prior Noncanonical Artifact Note:** An earlier noncanonical Colab Seed 42 run (Epoch 1 completed, `global_step = 573`, checkpoint SHA256 `cac60f9f...`) was generated under noncanonical RNG initialization (`NONCANONICAL_RNG_INITIALIZATION`) and is strictly excluded from canonical results. Because noncanonical validation output was observed during debugging, global `RESULTS_SEEN` is not claimed as NO, but `TEST_OPENED = NO` remains strictly sealed and unviolated.
+- **Reason:** Google Colab GPU quota is unavailable before the reporting deadline; canonical Stage A2 empirical execution therefore moves to the local Windows dedicated CUDA GPU (`NVIDIA GeForce RTX 3050 Ti Laptop GPU`).
+- **Amended Specifications:**
+  1. **Execution Environment Shift:**
+     - `execution_provider`: Shifted from `GOOGLE_COLAB` to `LOCAL_WINDOWS_GPU`.
+     - Base directory: `D:\Research`.
+     - Dedicated local GPU runtime: NVIDIA GeForce RTX 3050 Ti Laptop GPU (4.29 GB VRAM, Driver 595.95, CUDA 12.4 runtime, PyTorch 2.6.0+cu124, Python 3.12.8 in `D:\Research\.venv-stage-a2-cuda`).
+     - Zero automatic CPU fallback enforced.
+  2. **Canonical Run Re-initialization from Scratch:**
+     - Fresh canonical Seed 42 execution starts strictly at Epoch 1, `global_step = 0`.
+     - Old Colab checkpoint is strictly NOT resumed.
+     - Canonical run outputs: `D:\Research\experiments\runs\stage-a2\HDFS\seed-42`, `D:\Research\.artifacts\stage-a2\HDFS\seed-42`, and local durable mirror `D:\Research\durable\stage-a2\HDFS\seed-42`.
+  3. **Absolute Scientific Configuration Immutability:**
+     - All scientific parameters remain 100% identical: dataset HDFS (`6ca6c5bc...`), `SPL-HDFS-001` split authority (35,000 Train sessions / 586,577 events, 7,500 Val sessions / 119,531 events), 2,292 Train windows / 467 Val windows, 573 optimizer steps/epoch, effective batch size 1,024 events (grad accum 4, window size 256), cosine schedule with 573 warmup steps, AdamW (lr 5e-4, wd 0.01), fixed validation mask seed 20260823, sealed TEST firewall (`TEST_OPENED = false`).

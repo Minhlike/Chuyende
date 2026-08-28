@@ -1,0 +1,14 @@
+{
+  "device": "cuda:0",
+  "gpu_name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+  "timed_events": 8192,
+  "elapsed_sec": 97.31667639999068,
+  "events_per_sec": 84.1787893200264,
+  "windows_per_sec": 0.3288233957813531,
+  "steps_per_sec": 0.08220584894533828,
+  "vram_alloc_mb": 160.115234375,
+  "vram_res_mb": 162.0,
+  "est_train_time_sec": 6968.228038656901,
+  "est_val_time_sec": 1064.974332894954,
+  "est_total_epoch_sec": 8033.202371551855
+}

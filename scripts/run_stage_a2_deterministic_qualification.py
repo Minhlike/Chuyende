@@ -633,6 +633,7 @@ def run_qualification(
         "cursor_mismatches": 0 if state_a["stream_cursor"] == state_b["stream_cursor"] else 1,
         "tolerance_threshold": 1e-6,
         "qualification_status": "PASS" if qualification_pass else "FAIL",
+        "timestamp": t_end_iso,
         "timestamp_start": t_start_iso,
         "timestamp_end": t_end_iso,
         "runtime_seconds": dur_sec

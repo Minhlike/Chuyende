@@ -1,36 +1,36 @@
 {
-  "manifest_id": "MANIFEST-STAGE-A2-IMPLEMENTATION-EVIDENCE-V2.1",
-  "created_at": "2026-08-23T20:42:16.937082+00:00",
-  "execution_code_commit_sha": "f26b963f8d8951c40bdd7eec66855104bcea6c4a",
+  "manifest_id": "MANIFEST-STAGE-A2-IMPLEMENTATION-EVIDENCE-V2.2",
+  "created_at": "2026-08-28T03:24:21.176718+00:00",
+  "execution_code_commit_sha": "c6d9805ae4dd9d3f6740222ec1eb3ec98554aeb6",
   "artifacts": [
     {
       "path": "experiments/evidence/stage-a2/implementation/IMPLEMENTATION-QUALIFICATION.json",
-      "sha256": "0cb7deb71fb14efef504174cb8ade0b0ef8356ab5c0183ba54ae669e53ff04de",
-      "storage_status": "COMMITTED_GIT",
+      "sha256": "8c0a0ffe6f3d23b0dfb9698f86c5c6907348ee7970fa0c960490361ccce9e48d",
+      "storage_status": "COLAB_RUNTIME_GENERATED_PENDING_DURABLE_MIRROR",
       "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
     },
     {
       "path": "experiments/evidence/stage-a2/implementation/DETERMINISTIC-RESUME-EVIDENCE.json",
-      "sha256": "d8d02b74d39321bd06923f2e047f07424aaa6e44faaae7386f599cf4e6209166",
-      "storage_status": "COMMITTED_GIT",
+      "sha256": "fed80e1db54002b46ba5612363ee9642a5c7cf12a2bafa058e49d23af7c96389",
+      "storage_status": "COLAB_RUNTIME_GENERATED_PENDING_DURABLE_MIRROR",
       "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
     },
     {
       "path": "experiments/evidence/stage-a2/implementation/ENVIRONMENT.json",
-      "sha256": "adbe5f5ac9f43095f8c9415f09118fb225ff75fb2d3ea95d85b8c22f59fd9136",
-      "storage_status": "COMMITTED_GIT",
+      "sha256": "a5ec66b8e530b572fb3196c3ee522c31b1685b0a64dc332d4ce3c41694ab36ab",
+      "storage_status": "COLAB_RUNTIME_GENERATED_PENDING_DURABLE_MIRROR",
       "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
     },
     {
       "path": "experiments/evidence/stage-a2/implementation/EXPERIMENTAL-SOURCE.json",
-      "sha256": "f0af53d2a90d2ffe9bb4f9446d080f5e95faa9cb9a4231c7bca276466b4df2ec",
-      "storage_status": "COMMITTED_GIT",
+      "sha256": "54e39d9e250c2068453beea3f9e69cf2868f11f3427c14ed4243f633b03fe0a8",
+      "storage_status": "COLAB_RUNTIME_GENERATED_PENDING_DURABLE_MIRROR",
       "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
     },
     {
       "path": "experiments/evidence/stage-a2/implementation/deterministic_resume.log",
-      "sha256": "96b9285430f022f02f9c39769139def8f9ee66311b9dad71b8a8d0a14feffdba",
-      "storage_status": "COMMITTED_GIT",
+      "sha256": "cf9d5ec0c99596e450edc24db35eb797ffbf416bbe35880ff44bd7f8c3f58465",
+      "storage_status": "COLAB_RUNTIME_GENERATED_PENDING_DURABLE_MIRROR",
       "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
     },
     {
@@ -38,13 +38,7 @@
       "sha256": "23d6f6e34ba2d8b0b018d53128ccefaf182c8375dfbc30eacefbf1a0efc72871",
       "size_bytes": 3940030,
       "local_path": "D:\\Research\\experiments\\evidence\\stage-a2\\implementation\\qualification_checkpoint.pt",
-      "storage_status": "LOCAL_D_DRIVE_NOT_COMMITTED",
-      "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
-    },
-    {
-      "path": "experiments/evidence/stage-a2/implementation/pytest_implementation.log",
-      "sha256": "bfd64ecd5f1ce738ada7f528f8f89dc3314a05e1c1cb05e2f657fcfd5dfc91e6",
-      "storage_status": "COMMITTED_GIT",
+      "storage_status": "COLAB_EPHEMERAL_RUNTIME_PENDING_DURABLE_MIRROR",
       "evidence_class": "NON_EMPIRICAL_TEST_FIXTURE"
     }
   ]

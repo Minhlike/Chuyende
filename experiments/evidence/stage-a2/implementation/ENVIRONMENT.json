@@ -1,9 +1,15 @@
 {
   "python_version": "3.12.8",
+  "python_major_minor": "3.12",
   "pytorch_version": "2.6.0+cu124",
-  "cuda_version": "12.4",
-  "device_name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+  "torch_cuda_runtime": "12.4",
   "device_type": "cuda",
-  "total_vram_gb": 3.99951171875,
-  "platform": "Windows-11-10.0.26200-SP0"
+  "device_name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+  "device_compute_capability": "8.6",
+  "nvidia_driver_version": "595.95",
+  "cublas_workspace_config": ":4096:8",
+  "deterministic_algorithms_enabled": true,
+  "cudnn_deterministic": true,
+  "cudnn_benchmark": false,
+  "automatic_cpu_fallback": false
 }

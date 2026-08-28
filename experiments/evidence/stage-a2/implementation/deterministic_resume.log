@@ -1,37 +1,45 @@
 =================================================================
-   STAGE A2 DETERMINISTIC TRAJECTORY QUALIFICATION RUNNER (V1.4) 
+   STAGE A2 DETERMINISTIC TRAJECTORY QUALIFICATION RUNNER (V1.5) 
 =================================================================
-Execution Code Commit: f26b963f8d8951c40bdd7eec66855104bcea6c4a (train/ch3-stage-a2-implementation, dirty=False)
-Fixture Mode: NON_EMPIRICAL_TEST_FIXTURE = True
+Execution Code Commit: c6d9805ae4dd9d3f6740222ec1eb3ec98554aeb6 (perf/stage-a2-local-deadline, dirty=True)
+Protocol Version: Protocol V1.5 (Amendment 12)
+Evidence Class: NON_EMPIRICAL_TEST_FIXTURE = True
 Target Execution Device: cuda
 CUDA Device Name: NVIDIA GeForce RTX 3050 Ti Laptop GPU
 CUDA Runtime: 12.4
 CUDA Total Memory: 4.00 GB
+NVIDIA Driver: 595.95
+CUBLAS_WORKSPACE_CONFIG: :4096:8
+Deterministic Algorithms: True
+Bound Colab Environment Lock: D:\Research\experiments\evidence\stage-a2\preexecution\STAGE-A2-LOCAL-EXECUTION-ENVIRONMENT-V1.5.json (SHA: 81d3ca4865a95c75...)
 
---- [RUN A] Starting Continuous Baseline Trajectory ---
+--- [PROCESS A] Starting Continuous Baseline Trajectory ---
 Model Parameter Count: 304111
-  [Run A] Group 1/4 (Cursor=2): Loss=2.978792, Step=1, AccumPos=0
-  [Run A] Group 2/4 (Cursor=4): Loss=3.926661, Step=2, AccumPos=0
-  [Run A] Saving Checkpoint at Optimizer Step 2 (Cursor = 4, Accum Pos = 0)...
-  [Run A] Group 3/4 (Cursor=6): Loss=4.114013, Step=3, AccumPos=0
-  [Run A] Group 4/4 (Cursor=8): Loss=4.130775, Step=4, AccumPos=0
+  [Process A] Group 1/4 (Cursor=2): Loss=2.978792, Step=1, AccumPos=0
+  [Process A] Group 2/4 (Cursor=4): Loss=3.926661, Step=2, AccumPos=0
+  [Process A] Saving Qualification Checkpoint at Step 2 (Cursor = 4)...
+  [Process A] Group 3/4 (Cursor=6): Loss=4.114013, Step=3, AccumPos=0
+  [Process A] Group 4/4 (Cursor=8): Loss=4.130775, Step=4, AccumPos=0
 
---- [RUN B] Destroying Run A Trainer & Starting Fresh Resumed Trainer ---
-  [Run B] Loading Checkpoint from D:\Research\experiments\evidence\stage-a2\implementation\qualification_checkpoint.pt...
-  [Run B] Checkpoint Loaded! Resumed Global Step = 2, Cursor = 4, Accum Pos = 0
-  [Run B] Stream continuation: processing 2 remaining groups from cursor=4...
-  [Run B] Group (Cursor=6): Loss=4.114013, Step=3, AccumPos=0
-  [Run B] Group (Cursor=8): Loss=4.130775, Step=4, AccumPos=0
+--- [PROCESS B] Launching True Fresh-Process Child Interpreter for Resume ---
+  Executing Worker Subprocess: D:\Research\.venv-stage-a2-cuda\Scripts\python.exe D:\Research\scripts\run_stage_a2_deterministic_qualification.py --worker-resume --checkpoint D:\Research\experiments\evidence\stage-a2\implementation\qualification_checkpoint.pt --output-state D:\Research\experiments\evidence\stage-a2\implementation\temp_resume_worker_state.pt --device cuda --base-dir D:\Research --environment-lock D:\Research\experiments\evidence\stage-a2\preexecution\STAGE-A2-LOCAL-EXECUTION-ENVIRONMENT-V1.5.json
+  [Process B] Worker completed in 7.33s.
 
-=== COMPARING TRAJECTORIES (RUN A vs RUN B) ===
-1. Max Model Parameter Divergence: 0.0000000000e+00
-2. Max Loss Delta:                0.0000000000e+00
-3. Max Node Memory State Diff:     0.0000000000e+00
-4. Causal In-Degree Exact Match:   True
-   Causal Out-Degree Exact Match:  True
-   Last Interaction TS Match:      True
-5. Temporal History Exact Match:   True
-6. Final Optimizer Step (4):       True
-   Final Stream Cursor (8):        True
+--- Verifying Exact Identity Between Continuous (Process A) and Resumed (Process B) ---
+  1. Max Model Parameter Divergence: 0.00e+00 (Threshold: 1e-6)
+     [PASS] Model parameters numerically identical.
+  2. Max Optimizer State Divergence: 0.00e+00 (Threshold: 1e-6)
+     [PASS] Optimizer states numerically identical.
+  3. Max Loss Divergence (Groups 3-4): 0.00e+00 (Threshold: 1e-6)
+     [PASS] Loss trajectories numerically identical.
+  4. Max Node Dynamic Memory Embedding Divergence: 0.00e+00 (Threshold: 1e-6)
+  5. Causal In/Out Degree Mismatches: 0 (Must be 0)
+  6. Node Last Interaction Timestamp Mismatches: 0 (Must be 0)
+  7. FIFO Temporal History Buffer Mismatches: 0 (Must be 0)
+     [PASS] Node dynamic state table & causal counters structurally identical.
+  8. Final Global Step: Process A = 4, Process B = 4
+  9. Final Stream Cursor: Process A = 8, Process B = 8
+     [PASS] Step and cursor indices exact.
 
-DETERMINISTIC QUALIFICATION OVERALL STATUS: PASS
+Qualification Runtime: 14.15 seconds
+Qualification Gate Status: PASS
