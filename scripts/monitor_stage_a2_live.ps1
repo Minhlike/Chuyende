@@ -1,5 +1,5 @@
 # scripts/monitor_stage_a2_live.ps1
-# Realtime Live Monitor & Progress Bar for Stage A2 Canonical Seed 42 (100% Flicker-Free)
+# Realtime Live Monitor & Progress Bar for Stage A2 Canonical Seed 42
 
 $baseDir = "D:\Research"
 $stateFile = "$baseDir\experiments\runs\stage-a2\HDFS\seed-42\RUN-STATE.json"
@@ -10,7 +10,6 @@ $trainLog = "$baseDir\experiments\runs\stage-a2\HDFS\seed-42\TRAIN-LOG.jsonl"
 
 $expectedTotalUserSeconds = 9050.0
 
-# Setup console for flicker-free rendering
 try {
     [Console]::CursorVisible = $false
 } catch {}
@@ -19,7 +18,6 @@ Clear-Host
 
 try {
     while ($true) {
-        # 1. Discover Process
         $proc = Get-CimInstance Win32_Process -Filter "CommandLine LIKE '%run_stage_a2_five_seed_empirical.py%'" | 
                 Where-Object { $_.ProcessId -ne $PID } | 
                 Sort-Object -Property UserModeTime -Descending | 
@@ -35,13 +33,12 @@ try {
 
         $ckptExists = (Test-Path $ckptBest)
 
-        # Build lines buffer
         $lines = [System.Collections.Generic.List[string]]::new()
         $width = 80
         $sep = "=" * $width
 
         $lines.Add($sep)
-        $lines.Add("        STAGE A2 CANONICAL SEED 42 — REALTIME TRAINING MONITOR                  ")
+        $lines.Add("        STAGE A2 CANONICAL SEED 42 -- REALTIME TRAINING MONITOR         ")
         $lines.Add($sep)
 
         if ($isAlive) {
@@ -49,7 +46,6 @@ try {
             $kernSec = [double]$proc.KernelModeTime / 10000000.0
             $ramMB = [math]::Round($proc.WorkingSetSize / 1MB, 1)
 
-            # GPU metrics
             $gpuUtil = "N/A"
             $gpuMem = "N/A"
             $gpuTemp = "N/A"
@@ -81,11 +77,10 @@ try {
                 if ($pct -lt 83.0) {
                     $statusDesc = "TRAINING PHASE (586,577 events | 573 Optimizer Steps)"
                 } else {
-                    $statusDesc = "VALIDATION PHASE (119,531 events | 467 Windows) — Final Steps"
+                    $statusDesc = "VALIDATION PHASE (119,531 events | 467 Windows) - Final Steps"
                 }
             }
 
-            # Visual progress bar
             $barWidth = 40
             $filled = [int][math]::Round(($pct / 100.0) * $barWidth)
             if ($filled -gt $barWidth) { $filled = $barWidth }
@@ -136,7 +131,6 @@ try {
         $lines.Add($sep)
         $lines.Add(" Live smooth refresh (every 1s). Press Ctrl+C to stop monitor.")
 
-        # Pad lines to wipe previous frame artifacts and set cursor to (0,0)
         $outputBlock = ($lines | ForEach-Object { $_.PadRight($width) }) -join [Environment]::NewLine
         try {
             [Console]::SetCursorPosition(0, 0)
