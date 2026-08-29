@@ -1,6 +1,5 @@
 # scripts/monitor_stage_a2_live.ps1
-# Universal Realtime Live Monitor & Progress Bar for Stage A2 Canonical Five-Seed Execution
-# Tracks all Epochs (1 to 20), seamlessly adapts across restarts, resumes, and split-screen consoles.
+# Universal Realtime Live Monitor & Progress Bar for Stage A2 Canonical Five-Seed Execution (Bug-Free & Monotonic)
 
 $baseDir = "D:\Research"
 $stateFile = "$baseDir\experiments\runs\stage-a2\HDFS\seed-42\RUN-STATE.json"
@@ -9,7 +8,7 @@ $ckptBest = "$baseDir\.artifacts\stage-a2\HDFS\seed-42\best_val_loss.pt"
 $ckptLast = "$baseDir\.artifacts\stage-a2\HDFS\seed-42\last_checkpoint.pt"
 $trainLog = "$baseDir\experiments\runs\stage-a2\HDFS\seed-42\TRAIN-LOG.jsonl"
 
-$expectedEpochUserSeconds = 9050.0
+$expectedEpochUserSeconds = 9600.0
 $totalEpochs = 20
 
 try {
@@ -20,7 +19,7 @@ Clear-Host
 
 try {
     while ($true) {
-        # 1. Discover Process
+        # 1. Discover Active Process
         $proc = Get-CimInstance Win32_Process -Filter "CommandLine LIKE '%run_stage_a2_five_seed_empirical.py%'" | 
                 Where-Object { $_.ProcessId -ne $PID } | 
                 Sort-Object -Property UserModeTime -Descending | 
@@ -48,7 +47,7 @@ try {
             } catch {}
         }
 
-        # 3. Determine Width for Split Screen
+        # 3. Determine Console Width (Split Screen Friendly)
         $rawWidth = 80
         try {
             $rawWidth = $host.UI.RawUI.WindowSize.Width
@@ -66,7 +65,7 @@ try {
             $completedEpochs = [int]$stateData.completed_epoch
         }
 
-        # 4. Process Metrics & Hardware
+        # 4. Hardware Metrics
         $gpuUtil = "N/A"
         $gpuMem = "N/A"
         $gpuTemp = "N/A"
@@ -90,35 +89,37 @@ try {
             $activeEpoch = $completedEpochs + 1
             if ($activeEpoch -gt $totalEpochs) { $activeEpoch = $totalEpochs }
 
-            # Compute current epoch progress
-            $epochLocalUserSec = $userSec % $expectedEpochUserSeconds
-            $epochPct = [math]::Min(99.5, [math]::Max(1.0, ($epochLocalUserSec / $expectedEpochUserSeconds) * 100.0))
+            # Monotonic Progress: NEVER reset to 0 with modulo!
+            $rawEpochPct = ($userSec / $expectedEpochUserSeconds) * 100.0
+            $epochPct = [math]::Min(99.5, [math]::Max(1.0, $rawEpochPct))
             $campaignPct = [math]::Min(100.0, [math]::Round((($completedEpochs + ($epochPct / 100.0)) / [double]$totalEpochs) * 100.0, 1))
 
-            $remainingEpochSec = [math]::Max(10.0, $expectedEpochUserSeconds - $epochLocalUserSec)
+            $remainingEpochSec = [math]::Max(5.0, $expectedEpochUserSeconds - $userSec)
             $etaSec = [int]($remainingEpochSec / 0.95)
 
             $statusDesc = ""
-            if ($epochLocalUserSec -lt 120.0) {
+            if ($userSec -lt 120.0) {
                 $statusDesc = "DATASET MATERIALIZATION (HDFS Splits)"
-            } elseif ($epochPct -lt 83.0) {
+            } elseif ($epochPct -lt 88.0) {
                 $stepStart = $completedEpochs * 573
                 $stepEnd = $stepStart + 573
                 $statusDesc = "TRAINING (Steps $stepStart -> $stepEnd)"
-            } else {
+            } elseif ($epochPct -lt 99.0) {
                 $statusDesc = "VALIDATION (119,531 events | 467 Windows)"
+            } else {
+                $statusDesc = "FINALIZING VALIDATION & WRITING CHECKPOINT"
             }
 
             # Progress Bars
             $barWidth = [math]::Max(18, $width - 32)
             
-            # Overall Bar
+            # Overall Campaign Bar
             $cFilled = [int][math]::Round(($campaignPct / 100.0) * $barWidth)
             if ($cFilled -gt $barWidth) { $cFilled = $barWidth }
             $cEmpty = [int]($barWidth - $cFilled)
             $cBarStr = ("#" * $cFilled) + ("-" * $cEmpty)
 
-            # Epoch Bar
+            # Current Epoch Bar
             $eFilled = [int][math]::Round(($epochPct / 100.0) * $barWidth)
             if ($eFilled -gt $barWidth) { $eFilled = $barWidth }
             $eEmpty = [int]($barWidth - $eFilled)
@@ -132,12 +133,12 @@ try {
             $lines.Add(" EPOCH $activeEpoch PROGRESS: [$eBarStr] $([math]::Round($epochPct, 1))%")
             $lines.Add("")
 
-            $elapsedMin = [math]::Round($epochLocalUserSec / 60.0, 1)
-            $etaStr = "$([int]($etaSec / 60))m $($etaSec % 60)s"
+            $elapsedMin = [math]::Round($userSec / 60.0, 1)
+            $etaStr = if ($userSec -ge $expectedEpochUserSeconds) { "Completing now (~few seconds)" } else { "$([int]($etaSec / 60))m $($etaSec % 60)s" }
 
             $lines.Add(" [TIME & ESTIMATION]")
-            $lines.Add("   - Epoch Time: $elapsedMin mins ($([int]$epochLocalUserSec) s)")
-            $lines.Add("   - Epoch ETA:  $etaStr")
+            $lines.Add("   - Epoch Compute Time: $elapsedMin mins ($([int]$userSec) s)")
+            $lines.Add("   - Estimated Remaining: $etaStr")
             $lines.Add("")
             $lines.Add(" [SYSTEM & HARDWARE]")
             $lines.Add("   - GPU Active: $gpuUtil | VRAM: $gpuMem | Temp: $gpuTemp")
