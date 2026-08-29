@@ -1,5 +1,6 @@
 # scripts/monitor_stage_a2_live.ps1
-# Universal Realtime Live Monitor & Progress Bar for Stage A2 Canonical Five-Seed Execution (Bug-Free & Monotonic)
+# Universal Realtime Live Monitor & Progress Bar for Stage A2 Canonical Five-Seed Execution
+# Accurate, honest, calibrated against Epoch 1 baseline (~10,900s / 182 mins)
 
 $baseDir = "D:\Research"
 $stateFile = "$baseDir\experiments\runs\stage-a2\HDFS\seed-42\RUN-STATE.json"
@@ -8,7 +9,8 @@ $ckptBest = "$baseDir\.artifacts\stage-a2\HDFS\seed-42\best_val_loss.pt"
 $ckptLast = "$baseDir\.artifacts\stage-a2\HDFS\seed-42\last_checkpoint.pt"
 $trainLog = "$baseDir\experiments\runs\stage-a2\HDFS\seed-42\TRAIN-LOG.jsonl"
 
-$expectedEpochUserSeconds = 9600.0
+# Benchmark baseline: Epoch 1 took 10,934s total (Train 10,386s + Val 545s)
+$benchmarkEpochSeconds = 10800.0
 $totalEpochs = 20
 
 try {
@@ -89,25 +91,26 @@ try {
             $activeEpoch = $completedEpochs + 1
             if ($activeEpoch -gt $totalEpochs) { $activeEpoch = $totalEpochs }
 
-            # Monotonic Progress: NEVER reset to 0 with modulo!
-            $rawEpochPct = ($userSec / $expectedEpochUserSeconds) * 100.0
-            $epochPct = [math]::Min(99.5, [math]::Max(1.0, $rawEpochPct))
+            # Accurate progress based on real 10,800s benchmark
+            $rawEpochPct = ($userSec / $benchmarkEpochSeconds) * 100.0
+            $epochPct = [math]::Min(99.0, [math]::Max(1.0, $rawEpochPct))
             $campaignPct = [math]::Min(100.0, [math]::Round((($completedEpochs + ($epochPct / 100.0)) / [double]$totalEpochs) * 100.0, 1))
 
-            $remainingEpochSec = [math]::Max(5.0, $expectedEpochUserSeconds - $userSec)
-            $etaSec = [int]($remainingEpochSec / 0.95)
+            $elapsedMin = [math]::Round($userSec / 60.0, 1)
+            $remainingSec = [math]::Max(60.0, $benchmarkEpochSeconds - $userSec)
+            $remainingMin = [math]::Round($remainingSec / 60.0, 1)
 
             $statusDesc = ""
             if ($userSec -lt 120.0) {
                 $statusDesc = "DATASET MATERIALIZATION (HDFS Splits)"
-            } elseif ($epochPct -lt 88.0) {
+            } elseif ($epochPct -lt 85.0) {
                 $stepStart = $completedEpochs * 573
                 $stepEnd = $stepStart + 573
-                $statusDesc = "TRAINING (Steps $stepStart -> $stepEnd)"
-            } elseif ($epochPct -lt 99.0) {
-                $statusDesc = "VALIDATION (119,531 events | 467 Windows)"
+                $statusDesc = "TRAINING PHASE (Steps $stepStart -> $stepEnd)"
+            } elseif ($epochPct -lt 98.0) {
+                $statusDesc = "VALIDATION PHASE (119,531 events | 467 Windows)"
             } else {
-                $statusDesc = "FINALIZING VALIDATION & WRITING CHECKPOINT"
+                $statusDesc = "SAVING CHECKPOINT & SYNCHRONIZING DURABLE ROOT"
             }
 
             # Progress Bars
@@ -133,16 +136,11 @@ try {
             $lines.Add(" EPOCH $activeEpoch PROGRESS: [$eBarStr] $([math]::Round($epochPct, 1))%")
             $lines.Add("")
 
-            $elapsedMin = [math]::Round($userSec / 60.0, 1)
-            $etaStr = if ($userSec -ge $expectedEpochUserSeconds) { "Completing now (~few seconds)" } else { "$([int]($etaSec / 60))m $($etaSec % 60)s" }
-
-            $lines.Add(" [TIME & ESTIMATION]")
-            $lines.Add("   - Epoch Compute Time: $elapsedMin mins ($([int]$userSec) s)")
-            $lines.Add("   - Estimated Remaining: $etaStr")
-            $lines.Add("")
-            $lines.Add(" [SYSTEM & HARDWARE]")
-            $lines.Add("   - GPU Active: $gpuUtil | VRAM: $gpuMem | Temp: $gpuTemp")
-            $lines.Add("   - Host RAM:   $ramMB MB")
+            $lines.Add(" [COMPUTE TIME & HARDWARE]")
+            $lines.Add("   - Epoch Compute:  $elapsedMin mins / ~180 mins expected")
+            $lines.Add("   - Est. Remaining: ~$remainingMin mins")
+            $lines.Add("   - GPU Active:     $gpuUtil | VRAM: $gpuMem | Temp: $gpuTemp")
+            $lines.Add("   - Process RAM:    $ramMB MB")
             $lines.Add("")
 
         } else {
