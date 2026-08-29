@@ -1,14 +1,16 @@
 # scripts/monitor_stage_a2_live.ps1
-# Realtime Live Monitor & Progress Bar for Stage A2 Canonical Seed 42 (Responsive & Split-Screen Friendly)
+# Universal Realtime Live Monitor & Progress Bar for Stage A2 Canonical Five-Seed Execution
+# Tracks all Epochs (1 to 20), seamlessly adapts across restarts, resumes, and split-screen consoles.
 
 $baseDir = "D:\Research"
 $stateFile = "$baseDir\experiments\runs\stage-a2\HDFS\seed-42\RUN-STATE.json"
 $logFile = "$baseDir\logs\stage-a2\seed42.stdout.log"
 $ckptBest = "$baseDir\.artifacts\stage-a2\HDFS\seed-42\best_val_loss.pt"
+$ckptLast = "$baseDir\.artifacts\stage-a2\HDFS\seed-42\last_checkpoint.pt"
 $trainLog = "$baseDir\experiments\runs\stage-a2\HDFS\seed-42\TRAIN-LOG.jsonl"
 
-# Per-epoch user compute expectation ~9,000s
 $expectedEpochUserSeconds = 9050.0
+$totalEpochs = 20
 
 try {
     [Console]::CursorVisible = $false
@@ -25,6 +27,8 @@ try {
                 Select-Object -First 1
 
         $isAlive = ($proc -ne $null)
+
+        # 2. Read State & Logs
         $stateData = $null
         if (Test-Path $stateFile) {
             try {
@@ -32,57 +36,72 @@ try {
             } catch {}
         }
 
-        # Determine terminal width (handles split screens)
+        $logRecords = @()
+        if (Test-Path $trainLog) {
+            try {
+                $rawLogs = Get-Content $trainLog
+                foreach ($rl in $rawLogs) {
+                    if ($rl -and $rl.Trim().Length -gt 0) {
+                        $logRecords += ($rl | ConvertFrom-Json)
+                    }
+                }
+            } catch {}
+        }
+
+        # 3. Determine Width for Split Screen
         $rawWidth = 80
         try {
             $rawWidth = $host.UI.RawUI.WindowSize.Width
         } catch {}
-        $width = [math]::Max(50, [math]::Min($rawWidth - 2, 75))
+        $width = [math]::Max(50, [math]::Min($rawWidth - 2, 80))
         $sep = "=" * $width
 
         $lines = [System.Collections.Generic.List[string]]::new()
         $lines.Add($sep)
-        $lines.Add(" STAGE A2 CANONICAL SEED 42 - LIVE MONITOR")
+        $lines.Add(" STAGE A2 CANONICAL SEED 42 -- UNIVERSAL TRAINING MONITOR")
         $lines.Add($sep)
+
+        $completedEpochs = $logRecords.Count
+        if ($stateData -ne $null -and $stateData.completed_epoch -gt $completedEpochs) {
+            $completedEpochs = [int]$stateData.completed_epoch
+        }
+
+        # 4. Process Metrics & Hardware
+        $gpuUtil = "N/A"
+        $gpuMem = "N/A"
+        $gpuTemp = "N/A"
+        try {
+            $smiOut = & nvidia-smi --query-gpu=utilization.gpu,memory.used,memory.total,temperature.gpu --format=csv,noheader,nounits 2>$null
+            if ($smiOut) {
+                $parts = $smiOut.Split(',')
+                if ($parts.Count -ge 4) {
+                    $gpuUtil = "$($parts[0].Trim())%"
+                    $gpuMem = "$($parts[1].Trim()) / $($parts[2].Trim()) MB"
+                    $gpuTemp = "$($parts[3].Trim()) C"
+                }
+            }
+        } catch {}
 
         if ($isAlive) {
             $userSec = [double]$proc.UserModeTime / 10000000.0
             $kernSec = [double]$proc.KernelModeTime / 10000000.0
             $ramMB = [math]::Round($proc.WorkingSetSize / 1MB, 1)
 
-            # Determine running epoch
-            $completedEpochs = 0
-            $currentEpochNum = 1
-            if ($stateData -ne $null) {
-                $completedEpochs = [int]$stateData.completed_epoch
-                $currentEpochNum = $completedEpochs + 1
-            }
+            $activeEpoch = $completedEpochs + 1
+            if ($activeEpoch -gt $totalEpochs) { $activeEpoch = $totalEpochs }
 
-            # GPU metrics
-            $gpuUtil = "N/A"
-            $gpuMem = "N/A"
-            $gpuTemp = "N/A"
-            try {
-                $smiOut = & nvidia-smi --query-gpu=utilization.gpu,memory.used,memory.total,temperature.gpu --format=csv,noheader,nounits 2>$null
-                if ($smiOut) {
-                    $parts = $smiOut.Split(',')
-                    if ($parts.Count -ge 4) {
-                        $gpuUtil = "$($parts[0].Trim())%"
-                        $gpuMem = "$($parts[1].Trim()) / $($parts[2].Trim()) MB"
-                        $gpuTemp = "$($parts[3].Trim()) C"
-                    }
-                }
-            } catch {}
+            # Compute current epoch progress
+            $epochLocalUserSec = $userSec % $expectedEpochUserSeconds
+            $epochPct = [math]::Min(99.5, [math]::Max(1.0, ($epochLocalUserSec / $expectedEpochUserSeconds) * 100.0))
+            $campaignPct = [math]::Min(100.0, [math]::Round((($completedEpochs + ($epochPct / 100.0)) / [double]$totalEpochs) * 100.0, 1))
 
-            # Calculate Progress for current running epoch
-            $pct = [math]::Min(99.5, [math]::Max(1.0, ($userSec / $expectedEpochUserSeconds) * 100.0))
-            $remainingSec = [math]::Max(10.0, $expectedEpochUserSeconds - $userSec)
-            $etaSec = [int]($remainingSec / 0.95)
+            $remainingEpochSec = [math]::Max(10.0, $expectedEpochUserSeconds - $epochLocalUserSec)
+            $etaSec = [int]($remainingEpochSec / 0.95)
 
             $statusDesc = ""
-            if ($userSec -lt 120.0) {
+            if ($epochLocalUserSec -lt 120.0) {
                 $statusDesc = "DATASET MATERIALIZATION (HDFS Splits)"
-            } elseif ($pct -lt 83.0) {
+            } elseif ($epochPct -lt 83.0) {
                 $stepStart = $completedEpochs * 573
                 $stepEnd = $stepStart + 573
                 $statusDesc = "TRAINING (Steps $stepStart -> $stepEnd)"
@@ -90,57 +109,92 @@ try {
                 $statusDesc = "VALIDATION (119,531 events | 467 Windows)"
             }
 
-            # Visual progress bar (adapted to width)
-            $barWidth = [math]::Max(20, $width - 25)
-            $filled = [int][math]::Round(($pct / 100.0) * $barWidth)
-            if ($filled -gt $barWidth) { $filled = $barWidth }
-            if ($filled -lt 0) { $filled = 0 }
-            $empty = [int]($barWidth - $filled)
-            $barStr = ("#" * $filled) + ("-" * $empty)
+            # Progress Bars
+            $barWidth = [math]::Max(18, $width - 32)
+            
+            # Overall Bar
+            $cFilled = [int][math]::Round(($campaignPct / 100.0) * $barWidth)
+            if ($cFilled -gt $barWidth) { $cFilled = $barWidth }
+            $cEmpty = [int]($barWidth - $cFilled)
+            $cBarStr = ("#" * $cFilled) + ("-" * $cEmpty)
 
-            $lines.Add(" RUN ID:       RUN-STAGE-A2-HDFS-SEED42")
-            $lines.Add(" STATUS:       RUNNING (PID: $($proc.ProcessId))")
-            $lines.Add(" ACTIVE EPOCH: Epoch $currentEpochNum / 20 (Completed: $completedEpochs)")
-            $lines.Add(" PHASE:        $statusDesc")
+            # Epoch Bar
+            $eFilled = [int][math]::Round(($epochPct / 100.0) * $barWidth)
+            if ($eFilled -gt $barWidth) { $eFilled = $barWidth }
+            $eEmpty = [int]($barWidth - $eFilled)
+            $eBarStr = ("#" * $eFilled) + ("-" * $eEmpty)
+
+            $lines.Add(" STATUS:         RUNNING (PID: $($proc.ProcessId))")
+            $lines.Add(" ACTIVE EPOCH:   Epoch $activeEpoch / $totalEpochs (Completed: $completedEpochs)")
+            $lines.Add(" CURRENT PHASE:  $statusDesc")
             $lines.Add("")
-            $lines.Add(" EPOCH $currentEpochNum PROGRESS: [$barStr] $([math]::Round($pct, 1))%")
+            $lines.Add(" CAMPAIGN TOTAL: [$cBarStr] $campaignPct%")
+            $lines.Add(" EPOCH $activeEpoch PROGRESS: [$eBarStr] $([math]::Round($epochPct, 1))%")
             $lines.Add("")
 
-            $elapsedMin = [math]::Round($userSec / 60.0, 1)
-            $etaMin = [math]::Round($etaSec / 60.0, 1)
+            $elapsedMin = [math]::Round($epochLocalUserSec / 60.0, 1)
             $etaStr = "$([int]($etaSec / 60))m $($etaSec % 60)s"
 
             $lines.Add(" [TIME & ESTIMATION]")
-            $lines.Add("   - Epoch User Time: $elapsedMin mins ($([int]$userSec) s)")
-            $lines.Add("   - Estimated ETA:   $etaStr (~$etaMin mins)")
+            $lines.Add("   - Epoch Time: $elapsedMin mins ($([int]$epochLocalUserSec) s)")
+            $lines.Add("   - Epoch ETA:  $etaStr")
             $lines.Add("")
             $lines.Add(" [SYSTEM & HARDWARE]")
-            $lines.Add("   - GPU Active:      $gpuUtil | VRAM: $gpuMem")
-            $lines.Add("   - GPU Temp:        $gpuTemp")
-            $lines.Add("   - Process RAM:     $ramMB MB")
+            $lines.Add("   - GPU Active: $gpuUtil | VRAM: $gpuMem | Temp: $gpuTemp")
+            $lines.Add("   - Host RAM:   $ramMB MB")
             $lines.Add("")
-            $lines.Add(" [CHECKPOINTS]")
-            if ($stateData -ne $null -and $stateData.best_val_loss -ne $null -and $stateData.best_val_loss -ne [double]::PositiveInfinity) {
-                $bestLossStr = [math]::Round([double]$stateData.best_val_loss, 4)
-                $lines.Add("   - Best Val Loss:   $bestLossStr (Epoch $($stateData.best_epoch))")
-            }
-            if (Test-Path $ckptBest) {
-                $ckptInfo = Get-Item $ckptBest
-                $lines.Add("   - Checkpoint:      Ready ($([math]::Round($ckptInfo.Length / 1MB, 2)) MB)")
-            }
 
         } else {
-            $lines.Add(" STATUS:       PAUSED / NOT RUNNING")
-            if (Test-Path $ckptBest) {
-                $ckptInfo = Get-Item $ckptBest
-                $lines.Add(" LAST CHECKPOINT: Epoch 1 is Saved & Verified ($([math]::Round($ckptInfo.Length / 1MB, 2)) MB)")
+            $campaignPct = [math]::Min(100.0, [math]::Round(($completedEpochs / [double]$totalEpochs) * 100.0, 1))
+            $barWidth = [math]::Max(18, $width - 32)
+            $cFilled = [int][math]::Round(($campaignPct / 100.0) * $barWidth)
+            if ($cFilled -gt $barWidth) { $cFilled = $barWidth }
+            $cEmpty = [int]($barWidth - $cFilled)
+            $cBarStr = ("#" * $cFilled) + ("-" * $cEmpty)
+
+            $lines.Add(" STATUS:         PAUSED / STANDBY")
+            $lines.Add(" COMPLETED:      $completedEpochs / $totalEpochs Epochs")
+            $lines.Add(" CAMPAIGN TOTAL: [$cBarStr] $campaignPct%")
+            $lines.Add("")
+            $lines.Add(" [SYSTEM & HARDWARE]")
+            $lines.Add("   - GPU VRAM:   $gpuMem | Temp: $gpuTemp")
+            $lines.Add("")
+        }
+
+        # 5. Completed Epochs History Table
+        $lines.Add(" [EPOCH HISTORY]")
+        if ($logRecords.Count -gt 0) {
+            foreach ($rec in $logRecords) {
+                $eNum = $rec.epoch
+                $tLoss = [math]::Round([double]$rec.train_L_graph, 4)
+                $vLoss = [math]::Round([double]$rec.val_L_graph, 4)
+                $gStep = $rec.global_step
+                $star = ""
+                if ($stateData -ne $null -and $eNum -eq $stateData.best_epoch) {
+                    $star = " (*BEST*)"
+                }
+                $lines.Add("   - Epoch $eNum : Train=$tLoss | Val=$vLoss | Step $gStep$star")
             }
+        } else {
+            $lines.Add("   - (No completed epochs recorded yet)")
+        }
+        $lines.Add("")
+
+        # 6. Best Checkpoint State
+        $lines.Add(" [BEST CHECKPOINT]")
+        if ($stateData -ne $null -and $stateData.best_val_loss -ne $null -and $stateData.best_val_loss -ne [double]::PositiveInfinity) {
+            $bestLossStr = [math]::Round([double]$stateData.best_val_loss, 4)
+            $lines.Add("   - Best Val Loss: $bestLossStr (Achieved at Epoch $($stateData.best_epoch))")
+        }
+        if (Test-Path $ckptBest) {
+            $ckptInfo = Get-Item $ckptBest
+            $lines.Add("   - File: best_val_loss.pt ($([math]::Round($ckptInfo.Length / 1MB, 2)) MB)")
         }
 
         $lines.Add($sep)
         $lines.Add(" Live smooth refresh (every 1s). Press Ctrl+C to exit.")
 
-        # Ensure no line exceeds terminal width to prevent line wrapping glitches
+        # 7. Render Frame Safely
         $formattedLines = $lines | ForEach-Object {
             $line = $_
             if ($line.Length -gt $width) {
