@@ -5,7 +5,7 @@
   "dataset": "HDFS",
   "split_id": "SPL-HDFS-001",
   "seed": 2024,
-  "expected_execution_code_commit_sha": "b0e1a23bbae7f075ff9426fe9ca5a68b1fe3bb7e",
+  "expected_execution_code_commit_sha": "e4d53b82d25091ac1b445832efc00ba83ba29641",
   "effective_protocol_version": "1.5.0",
   "protocol_amendment": "Amendment 13",
   "execution_provider": "LOCAL_WINDOWS_GPU",
