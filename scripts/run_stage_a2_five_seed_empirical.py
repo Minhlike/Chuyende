@@ -666,7 +666,7 @@ def run_single_seed_pipeline(
             print(f"[DRY-RUN] Durable Root: {durable_root}")
         print(f"[DRY-RUN] Scope: 35,000 Train sessions (586,577 events) -> 2,292 windows (573 steps/epoch)")
         print(f"[DRY-RUN] Scope: 7,500 Val sessions (119,531 events) -> 467 windows")
-        print(f"[DRY-RUN] Target Optimizer Steps: 11,460 (20 epochs * 573 steps)")
+        print(f"[DRY-RUN] Target Optimizer Steps: {target_max_epochs * 573} ({target_max_epochs} epochs * 573 steps)")
         print(f"[DRY-RUN] Optimizer Steps Executed: 0")
         print(f"[DRY-RUN] Seed {seed} Dry-Run Status: PASS\n")
         return {"seed": seed, "status": "PASS", "optimizer_steps": 0}
@@ -717,7 +717,7 @@ def run_single_seed_pipeline(
     )
     param_count = sum(p.numel() for p in model.parameters())
 
-    target_max_epochs = max_epochs or (20 if not fixture_mode else 2)
+    target_max_epochs = max_epochs or (12 if not fixture_mode else 2)
     trainer = StageA2Trainer(
         model=model,
         learning_rate=5e-4,

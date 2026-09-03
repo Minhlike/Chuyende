@@ -92,7 +92,7 @@ class StageA2Trainer:
         temporal_window_size: int = 256,
         gradient_accumulation_steps: int = 4,
         clip_norm: float = 1.0,
-        max_epochs: int = 20,
+        max_epochs: int = 12,
         early_stopping_patience: int = 3,
         seed: int = 42,
         execution_device: str = "cuda", # "cuda" or "cpu"
@@ -192,9 +192,9 @@ class StageA2Trainer:
           - Windows per epoch: ceil(586577 / 256) = 2292
           - Grad accum: 4
           - Optimizer steps per epoch: 2292 // 4 = 573
-          - Max epochs: 20
-          - Max optimizer steps: 20 * 573 = 11,460
-          - Warmup steps: 11,460 * 0.05 = 573
+          - Max epochs: 12
+          - Max optimizer steps: 12 * 573 = 6,876
+          - Warmup steps: 6,876 * 0.05 = 343
         """
         self.train_windows_per_epoch = math.ceil(train_events_count / self.temporal_window_size)
         self.optimizer_steps_per_epoch = self.train_windows_per_epoch // self.gradient_accumulation_steps
