@@ -132,7 +132,7 @@
     "gradient_accumulation_steps": 4,
     "nominal_effective_batch_size_events": 1024,
     "clip_norm": 1.0,
-    "max_epochs": 20,
+    "max_epochs": 12,
     "early_stopping_patience": 3,
     "checkpoint_selection": "MINIMUM_GLOBAL_VALIDATION_L_GRAPH",
     "group_objective": "EXACT_MULTI_TASK_NORMALIZATION"
