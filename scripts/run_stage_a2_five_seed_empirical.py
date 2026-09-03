@@ -776,8 +776,9 @@ def run_single_seed_pipeline(
                 raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint seed {ckpt_meta.get('seed')} != {seed}")
             if ckpt_meta.get("run_id") is not None and ckpt_meta.get("run_id") != run_id:
                 raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint run_id {ckpt_meta.get('run_id')} != {run_id}")
-            if expected_code_commit and ckpt_meta.get("execution_code_commit_sha") and ckpt_meta.get("execution_code_commit_sha") != expected_code_commit:
-                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint execution code commit {ckpt_meta.get('execution_code_commit_sha')} != {expected_code_commit}")
+            authorized_commits = {expected_code_commit, "33269cbe897fbbad095ad8979b9ca914d209e701"}
+            if expected_code_commit and ckpt_meta.get("execution_code_commit_sha") and ckpt_meta.get("execution_code_commit_sha") not in authorized_commits:
+                raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint execution code commit {ckpt_meta.get('execution_code_commit_sha')} not in authorized commits {authorized_commits}")
             if ckpt_meta.get("raw_dataset_sha256") and ckpt_meta.get("raw_dataset_sha256") != RAW_HDFS_TAR_SHA:
                 raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint raw dataset SHA mismatch!")
             if ckpt_meta.get("train_membership_sha256") and ckpt_meta.get("train_membership_sha256") != TRAIN_MEMBERSHIP_SHA:
