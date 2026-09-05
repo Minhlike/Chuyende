@@ -20,8 +20,8 @@ Write-Host "==========================================================" -Foregro
 
 # 1. Process Check
 $proc = Get-CimInstance Win32_Process -Filter "CommandLine LIKE '%--seed $Seed%'" | 
-        Where-Object { $_.ProcessId -ne $PID } | 
-        Select-Object -First 1
+        Where-Object { $_.ProcessId -ne $PID -and $_.Name -like "*python*" } | 
+        Select-Object -Last 1
 
 if ($proc) {
     $userSec = [double]$proc.UserModeTime / 10000000.0
