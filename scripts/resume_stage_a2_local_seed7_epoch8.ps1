@@ -1,69 +1,64 @@
-﻿# scripts/resume_stage_a2_local_seed7_epoch8.ps1
+# scripts/resume_stage_a2_local_seed7_epoch8.ps1
 # Resume Canonical Seed 7 from Epoch 7 Checkpoint -> Execute Epoch 8
 
-Continue = Stop
+$ErrorActionPreference = "Stop"
 
- = D:\Research
- = \.venv-stage-a2-cuda\Scripts\python.exe
- = \logs\stage-a2
- = \.artifacts\stage-a2\HDFS\seed-7\last_checkpoint.pt
- = 529b6c8230a42f083dd611ea2cf58b9eb9e183a212f7611d0db0223070e3a850
+$baseDir = "D:\Research"
+$pythonExe = "$baseDir\.venv-stage-a2-cuda\Scripts\python.exe"
+$logDir = "$baseDir\logs\stage-a2"
+$lastCkpt = "$baseDir\.artifacts\stage-a2\HDFS\seed-7\last_checkpoint.pt"
+$ckptSha = "529b6c8230a42f083dd611ea2cf58b9eb9e183a212f7611d0db0223070e3a850"
 
-# 1. Ensure Hardware Sweet Spot is applied
-& \scripts\set_training_sweetspot.ps1
-
-if (-not (Test-Path )) {
-    New-Item -ItemType Directory -Path  -Force | Out-Null
+if (-not (Test-Path $logDir)) {
+    New-Item -ItemType Directory -Path $logDir -Force | Out-Null
 }
 
- = \seed7.stdout.log
- = \seed7.stderr.log
- = \seed7.pid
+$stdoutLog = "$logDir\seed7.stdout.log"
+$stderrLog = "$logDir\seed7.stderr.log"
+$pidFile = "$logDir\seed7.pid"
 
- = :4096:8
- = 1
+$env:CUBLAS_WORKSPACE_CONFIG = ":4096:8"
+$env:PYTHONUNBUFFERED = "1"
 
- = @(
-    -u,
-    scripts\run_stage_a2_five_seed_empirical.py,
-    --seed, 7,
-    --resume, ,
-    --resume-sha256, ,
-    --authorize-real-empirical-execution,
-    --base-dir, ,
-    --dataset-path, \datasets\raw\hdfs\HDFS_1.tar.gz,
-    --durable-root, \durable\stage-a2\HDFS,
-    --plan, \experiments\plans\STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json,
-    --environment-lock, \experiments\evidence\stage-a2\preexecution\STAGE-A2-LOCAL-EXECUTION-ENVIRONMENT-V1.5.json,
-    --authorization, \experiments\evidence\stage-a2\preexecution\SEED7-LOCAL-LAUNCH-AUTHORIZATION-V1.5.json
+$argsArray = @(
+    "-u",
+    "scripts\run_stage_a2_five_seed_empirical.py",
+    "--seed", "7",
+    "--resume", $lastCkpt,
+    "--resume-sha256", $ckptSha,
+    "--authorize-real-empirical-execution",
+    "--base-dir", $baseDir,
+    "--dataset-path", "$baseDir\datasets\raw\hdfs\HDFS_1.tar.gz",
+    "--durable-root", "$baseDir\durable\stage-a2\HDFS",
+    "--plan", "$baseDir\experiments\plans\STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json",
+    "--environment-lock", "$baseDir\experiments\evidence\stage-a2\preexecution\STAGE-A2-LOCAL-EXECUTION-ENVIRONMENT-V1.5.json",
+    "--authorization", "$baseDir\experiments\evidence\stage-a2\preexecution\SEED7-LOCAL-LAUNCH-AUTHORIZATION-V1.5.json"
 )
 
-Write-Host ========================================================== -ForegroundColor Cyan
-Write-Host  RESUMING CANONICAL SEED 7 (EPOCH 8)  -ForegroundColor Yellow
-Write-Host ========================================================== -ForegroundColor Cyan
-Write-Host Checkpoint: 
-Write-Host SHA-256: 
+Write-Host "==========================================================" -ForegroundColor Cyan
+Write-Host "   RESUMING CANONICAL SEED 7 (EPOCH 8)                    " -ForegroundColor Yellow
+Write-Host "==========================================================" -ForegroundColor Cyan
+Write-Host "Checkpoint: $lastCkpt"
+Write-Host "SHA-256:    $ckptSha"
 
- = Start-Process -FilePath  
-    -ArgumentList  
-    -WorkingDirectory  
-    -RedirectStandardOutput  
-    -RedirectStandardError  
+$process = Start-Process -FilePath $pythonExe `
+    -ArgumentList $argsArray `
+    -WorkingDirectory $baseDir `
+    -RedirectStandardOutput $stdoutLog `
+    -RedirectStandardError $stderrLog `
     -PassThru
 
-# Elevate priority to AboveNormal to guarantee CPU scheduling
 Start-Sleep -Seconds 1
 try {
-     = Get-Process -Id .Id -ErrorAction SilentlyContinue
-    if () {
-        .PriorityClass = [System.Diagnostics.ProcessPriorityClass]::AboveNormal
-        Write-Host Set process priority to:  -ForegroundColor Green
+    $procObj = Get-Process -Id $process.Id -ErrorAction SilentlyContinue
+    if ($procObj) {
+        $procObj.PriorityClass = [System.Diagnostics.ProcessPriorityClass]::AboveNormal
+        Write-Host "Set process priority to: $($procObj.PriorityClass)" -ForegroundColor Green
     }
 } catch {
-    Write-Warning Could not elevate priority class: 
+    Write-Warning "Could not elevate priority class: $_"
 }
 
-.Id | Set-Content -Path  -Encoding ascii
-Write-Host Spawned Resume Process PID:  -ForegroundColor Green
-Write-Host PID saved to 
-Write-Host ========================================================== -ForegroundColor Cyan
+$process.Id | Set-Content -Path $pidFile -Encoding ascii
+Write-Host "Spawned Resume Process PID: $($process.Id)" -ForegroundColor Green
+Write-Host "PID saved to $pidFile"
