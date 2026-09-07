@@ -48,26 +48,40 @@ while ($true) {
             Write-Host $doneMsg -ForegroundColor Green
             Add-Content -Path $watcherLog -Value $doneMsg
 
-            # Restore system CPU, GPU, fan, and sleep defaults as requested
+            # Update RUN-STATE.json to PAUSED and sync to durable
+            $runStateP = "$baseDir\experiments\runs\stage-a2\HDFS\seed-$Seed\RUN-STATE.json"
+            $durableStateP = "$baseDir\durable\stage-a2\HDFS\seed-$Seed\RUN-STATE.json"
+            if (Test-Path $runStateP) {
+                try {
+                    $st = Get-Content -Path $runStateP -Raw | ConvertFrom-Json
+                    $st.status = "PAUSED"
+                    $st | ConvertTo-Json -Depth 10 | Set-Content -Path $runStateP -Encoding utf8
+                    if (Test-Path (Split-Path $durableStateP)) {
+                        Copy-Item -Path $runStateP -Destination $durableStateP -Force
+                    }
+                    Write-Host "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] RUN-STATE.json marked PAUSED and synced to durable." -ForegroundColor Green
+                } catch {
+                    Write-Warning "Could not update RUN-STATE: $_"
+                }
+            }
+
+            # Restore system CPU, GPU, fan, and sleep defaults to normal
             $restoreMsg = "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] Restoring system CPU, GPU, and Sleep settings to factory defaults..."
             Write-Host $restoreMsg -ForegroundColor Cyan
             Add-Content -Path $watcherLog -Value $restoreMsg
 
-            powercfg /setactive 0a0d0183-1b65-4b13-ad7a-e1bfc6c0ab13
-            powercfg /setacvalueindex 0a0d0183-1b65-4b13-ad7a-e1bfc6c0ab13 SUB_PROCESSOR PROCTHROTTLEMIN 0
-            powercfg /setdcvalueindex 0a0d0183-1b65-4b13-ad7a-e1bfc6c0ab13 SUB_PROCESSOR PROCTHROTTLEMIN 0
-            powercfg /setacvalueindex 0a0d0183-1b65-4b13-ad7a-e1bfc6c0ab13 SUB_PROCESSOR PROCTHROTTLEMAX 100
-            powercfg /setdcvalueindex 0a0d0183-1b65-4b13-ad7a-e1bfc6c0ab13 SUB_PROCESSOR PROCTHROTTLEMAX 100
-            powercfg /setacvalueindex 0a0d0183-1b65-4b13-ad7a-e1bfc6c0ab13 4f971e89-eebd-4455-a8de-9e59040e7347 5ca83367-6e45-459f-a27b-476b1d01c936 1
-            powercfg /setdcvalueindex 0a0d0183-1b65-4b13-ad7a-e1bfc6c0ab13 4f971e89-eebd-4455-a8de-9e59040e7347 5ca83367-6e45-459f-a27b-476b1d01c936 1
-            powercfg /change monitor-timeout-ac 10
-            powercfg /change monitor-timeout-dc 5
-            powercfg /change standby-timeout-ac 15
-            powercfg /change standby-timeout-dc 5
-            powercfg /delete 716552c8-3966-4523-8405-f74b52b4af9a -ErrorAction SilentlyContinue
-            Remove-ItemProperty -Path "HKCU:\Software\Microsoft\DirectX\UserGpuPreferences" -Name "D:\Research\.venv-stage-a2-cuda\Scripts\python.exe" -ErrorAction SilentlyContinue
-            Remove-ItemProperty -Path "HKCU:\Software\Microsoft\DirectX\UserGpuPreferences" -Name "C:\Users\Acer\AppData\Local\Programs\Python\Python312\python.exe" -ErrorAction SilentlyContinue
-            powercfg /setactive 0a0d0183-1b65-4b13-ad7a-e1bfc6c0ab13
+            $schemeGuid = "0a0d0183-1b65-4b13-ad7a-e1bfc6c0ab13"
+            powercfg /setacvalueindex $schemeGuid SUB_VIDEO VIDEOIDLE 300
+            powercfg /setdcvalueindex $schemeGuid SUB_VIDEO VIDEOIDLE 180
+            powercfg /setacvalueindex $schemeGuid SUB_PCIEXPRESS ASPM 2
+            powercfg /setdcvalueindex $schemeGuid SUB_PCIEXPRESS ASPM 2
+            powercfg /setacvalueindex $schemeGuid SUB_PROCESSOR PROCTHROTTLEMIN 5
+            powercfg /setdcvalueindex $schemeGuid SUB_PROCESSOR PROCTHROTTLEMIN 5
+            powercfg /setacvalueindex $schemeGuid SUB_PROCESSOR PROCTHROTTLEMAX 100
+            powercfg /setdcvalueindex $schemeGuid SUB_PROCESSOR PROCTHROTTLEMAX 100
+            powercfg /setacvalueindex $schemeGuid SUB_DISK DISKIDLE 1200
+            powercfg /setdcvalueindex $schemeGuid SUB_DISK DISKIDLE 1200
+            powercfg /setactive $schemeGuid
 
             $allRestoredMsg = "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] All settings restored to default successfully."
             Write-Host $allRestoredMsg -ForegroundColor Green
