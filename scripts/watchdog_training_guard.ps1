@@ -1,4 +1,4 @@
-﻿# scripts/watchdog_training_guard.ps1
+# scripts/watchdog_training_guard.ps1
 # Continuous Hardware Thermal Guard & Training Progress Monitor for Seed 7
 
 param (
@@ -34,9 +34,20 @@ while ($true) {
                   Select-Object -First 1
 
     if (-not $pythonProc) {
-        $msg = "[$now] ALERT: No active python training process detected!"
-        Write-Host $msg -ForegroundColor Red
+        $msg = "[$now] Training process finished. Checking final state..."
+        Write-Host $msg -ForegroundColor Cyan
         Add-Content -Path $watchdogLog -Value $msg
+        if (Test-Path $stateFile) {
+            try {
+                $st = Get-Content $stateFile -Raw | ConvertFrom-Json
+                if ($st.status -eq "COMPLETED") {
+                    $completeMsg = "[$now] SUCCESS: Training COMPLETED! Restoring machine to normal resting defaults..."
+                    Write-Host $completeMsg -ForegroundColor Green
+                    Add-Content -Path $watchdogLog -Value $completeMsg
+                    & "$baseDir\scripts\restore_normal_profile.ps1"
+                }
+            } catch {}
+        }
         break
     }
 
@@ -79,9 +90,12 @@ while ($true) {
     Add-Content -Path $watchdogLog -Value $logLine
 
     if ($completedCount -ge $TargetEpoch) {
-        $finishMsg = "[$now] SUCCESS: Target Epoch $TargetEpoch completed!"
+        $finishMsg = "[$now] SUCCESS: Target Epoch $TargetEpoch reached! Waiting 10s for checkpoint sync then restoring normal profile..."
         Write-Host $finishMsg -ForegroundColor Green
         Add-Content -Path $watchdogLog -Value $finishMsg
+        Start-Sleep -Seconds 10
+        & "$baseDir\scripts\restore_normal_profile.ps1"
+        Add-Content -Path $watchdogLog -Value "[$now] All settings restored to default. Fans silenced, machine at rest."
         break
     }
 }
