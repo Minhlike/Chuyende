@@ -13,9 +13,9 @@ Write-Host "==========================================================" -Foregro
 # 1. Activate Acer Scheme
 powercfg /setactive $schemeGuid
 
-# 2. Display auto-off after 20 seconds (user constraint: laptop OPEN, screen off)
-powercfg /setacvalueindex $schemeGuid SUB_VIDEO VIDEOIDLE 20
-powercfg /setdcvalueindex $schemeGuid SUB_VIDEO VIDEOIDLE 20
+# 2. Display auto-off disabled (User uses Fn + F6 hardware backlight toggle)
+powercfg /setacvalueindex $schemeGuid SUB_VIDEO VIDEOIDLE 0
+powercfg /setdcvalueindex $schemeGuid SUB_VIDEO VIDEOIDLE 0
 
 # 3. CRITICAL: Disable PCIe ASPM (Prevents RAM->VRAM batch transfer latency choke)
 powercfg /setacvalueindex $schemeGuid SUB_PCIEXPRESS ASPM 0
@@ -60,7 +60,7 @@ if (Test-Path $pythonExe2) {
 
 Write-Host "Hardware profile configured successfully:" -ForegroundColor Green
 Write-Host " - Power Scheme: Acer ($schemeGuid)"
-Write-Host " - Screen Off: 20 seconds"
+Write-Host " - Screen Off: 0 (Always ON, hardware Fn+F6 for backlight)"
 Write-Host " - PCIe ASPM: 0 (OFF - No GPU starvation)"
 Write-Host " - CPU Min: 60% (Base ~2.2 GHz - No downclock)"
 Write-Host " - CPU Max: 99% (Turbo disabled - Silent fans & 52C)"
