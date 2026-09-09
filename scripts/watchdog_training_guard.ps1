@@ -165,7 +165,8 @@ while ($true) {
                 $st = Get-Content $stateFile -Raw | ConvertFrom-Json
                 if ($TargetEpoch -lt 12) {
                     $st.status = "PAUSED_AT_EPOCH_$TargetEpoch"
-                    $st | ConvertTo-Json -Depth 10 | Set-Content -Path $stateFile -Encoding utf8
+                    $jsonStr = $st | ConvertTo-Json -Depth 10
+                    [System.IO.File]::WriteAllText($stateFile, $jsonStr, (New-Object System.Text.UTF8Encoding($false)))
                     Add-Content -Path $watchdogLog -Value "[$now] RUN-STATE updated: status = PAUSED_AT_EPOCH_$TargetEpoch"
                 } else {
                     Add-Content -Path $watchdogLog -Value "[$now] All 12 Canonical Epochs completed! Final Status: $($st.status)"
