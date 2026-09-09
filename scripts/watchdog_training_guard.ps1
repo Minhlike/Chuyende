@@ -163,20 +163,29 @@ while ($true) {
         if (Test-Path $stateFile) {
             try {
                 $st = Get-Content $stateFile -Raw | ConvertFrom-Json
-                $st.status = "PAUSED_AT_EPOCH_$TargetEpoch"
-                $st | ConvertTo-Json -Depth 10 | Set-Content -Path $stateFile -Encoding utf8
-                Add-Content -Path $watchdogLog -Value "[$now] RUN-STATE updated: status = PAUSED_AT_EPOCH_$TargetEpoch"
+                if ($TargetEpoch -lt 12) {
+                    $st.status = "PAUSED_AT_EPOCH_$TargetEpoch"
+                    $st | ConvertTo-Json -Depth 10 | Set-Content -Path $stateFile -Encoding utf8
+                    Add-Content -Path $watchdogLog -Value "[$now] RUN-STATE updated: status = PAUSED_AT_EPOCH_$TargetEpoch"
+                } else {
+                    Add-Content -Path $watchdogLog -Value "[$now] All 12 Canonical Epochs completed! Final Status: $($st.status)"
+                }
             } catch {}
         }
 
-        # Gracefully stop the Python worker process to prevent starting next epoch
-        try {
-            $pToStop = Get-Process -Id $pythonProc.Id -ErrorAction SilentlyContinue
-            if ($pToStop) {
-                Stop-Process -Id $pToStop.Id -Force -ErrorAction SilentlyContinue
-                Add-Content -Path $watchdogLog -Value "[$now] Python worker (PID: $($pToStop.Id)) stopped cleanly at Epoch $TargetEpoch boundary."
-            }
-        } catch {}
+        # If TargetEpoch < 12, stop process to rest. If 12, wait up to 30s for natural clean exit
+        if ($TargetEpoch -lt 12) {
+            try {
+                $pToStop = Get-Process -Id $pythonProc.Id -ErrorAction SilentlyContinue
+                if ($pToStop) {
+                    Stop-Process -Id $pToStop.Id -Force -ErrorAction SilentlyContinue
+                    Add-Content -Path $watchdogLog -Value "[$now] Python worker (PID: $($pToStop.Id)) stopped cleanly at Epoch $TargetEpoch boundary."
+                }
+            } catch {}
+        } else {
+            # Wait for python process to cleanly exit after metrics write
+            Start-Sleep -Seconds 15
+        }
 
         # Restore normal everyday resting power profile
         & "$baseDir\scripts\restore_normal_profile.ps1"
