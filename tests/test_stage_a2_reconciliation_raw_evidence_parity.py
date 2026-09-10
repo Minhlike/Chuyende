@@ -25,10 +25,10 @@ def test_reconciliation_metadata_integrity(reconciliation_data):
     assert meta["final_max_epochs"] == 12
     assert meta["optimizer_steps_per_epoch"] == 573
     assert meta["final_max_optimizer_steps"] == 6876
-    assert meta["final_warmup_steps"] == 343
-    assert meta["canonical_seeds"] == [999]
-    assert set(meta["protocol_deviation_seeds"]) == {42, 7}
+    assert meta["canonical_seeds"] == []
+    assert set(meta["protocol_deviation_seeds"]) == {42, 7, 999}
     assert set(meta["noncanonical_seeds"]) == {1337, 2024}
+    assert meta["output_contract_incomplete_seeds"] == [1337]
     assert meta["test_opened"] is False
     assert meta["test_read_count"] == 0
     assert meta["new_optimizer_steps"] == 0
@@ -70,6 +70,14 @@ def test_seed_raw_evidence_exact_parity(reconciliation_data, seed):
     raw_final_train_L_graph = metrics.get("final_train_L_graph", last_train_line.get("train_L_graph"))
     raw_final_val_L_graph = metrics.get("final_val_L_graph", last_c.get("val_L_graph", last_train_line.get("val_L_graph")))
 
+    raw_final_val_L_rel = last_train_line.get("val_L_rel")
+    raw_final_val_L_node = last_train_line.get("val_L_node")
+    raw_final_val_L_time = last_train_line.get("val_L_time")
+
+    raw_best_val_L_rel = log_lines[raw_best_epoch - 1].get("val_L_rel") if log_lines else None
+    raw_best_val_L_node = log_lines[raw_best_epoch - 1].get("val_L_node") if log_lines else None
+    raw_best_val_L_time = log_lines[raw_best_epoch - 1].get("val_L_time") if log_lines else None
+
     raw_best_checkpoint_sha256 = best_c.get("sha256", state.get("best_checkpoint_sha256"))
     raw_last_checkpoint_sha256 = last_c.get("sha256", state.get("last_checkpoint_sha256"))
 
@@ -85,12 +93,57 @@ def test_seed_raw_evidence_exact_parity(reconciliation_data, seed):
     assert r["final_train_L_graph"] == raw_final_train_L_graph, f"Seed {seed}: final_train_L_graph mismatch ({r['final_train_L_graph']} != {raw_final_train_L_graph})"
     assert r["final_val_L_graph"] == raw_final_val_L_graph, f"Seed {seed}: final_val_L_graph mismatch ({r['final_val_L_graph']} != {raw_final_val_L_graph})"
 
+    # Assert component parity where available
+    if raw_final_val_L_rel is not None:
+        assert r["final_val_L_rel"] == raw_final_val_L_rel, f"Seed {seed}: final_val_L_rel mismatch"
+        assert r["final_val_L_node"] == raw_final_val_L_node, f"Seed {seed}: final_val_L_node mismatch"
+        assert r["final_val_L_time"] == raw_final_val_L_time, f"Seed {seed}: final_val_L_time mismatch"
+        # Decomposition identity assertion
+        recalc_final = r["final_val_L_rel"] + r["final_val_L_node"] + 0.1 * r["final_val_L_time"]
+        assert abs(r["final_val_L_graph"] - recalc_final) < 1e-5, f"Seed {seed}: final decomposition identity failure"
+
+    if raw_best_val_L_rel is not None:
+        assert r["best_val_L_rel"] == raw_best_val_L_rel, f"Seed {seed}: best_val_L_rel mismatch"
+        assert r["best_val_L_node"] == raw_best_val_L_node, f"Seed {seed}: best_val_L_node mismatch"
+        assert r["best_val_L_time"] == raw_best_val_L_time, f"Seed {seed}: best_val_L_time mismatch"
+        # Decomposition identity assertion
+        recalc_best = r["best_val_L_rel"] + r["best_val_L_node"] + 0.1 * r["best_val_L_time"]
+        assert abs(r["best_val_L_graph"] - recalc_best) < 1e-5, f"Seed {seed}: best decomposition identity failure"
+
     # Verify snapshot file hashes match actual disk contents
     r_hashes = r.get("evidence_hashes", {})
     for fpath in s_dir.glob("*"):
         actual_hash = hashlib.sha256(fpath.read_bytes()).hexdigest()
         recorded_hash = r_hashes.get(fpath.name)
         assert recorded_hash == actual_hash, f"Seed {seed}: File hash mismatch for {fpath.name} ({recorded_hash} != {actual_hash})"
+
+def test_chapter3_source_metrics_component_semantics_and_parity(reconciliation_data):
+    p = REPO_ROOT / "experiments" / "evidence" / "stage-a2" / "reconciliation" / "CHAPTER3-SOURCE-METRICS.json"
+    assert p.exists(), f"Missing {p}"
+    sm = json.loads(p.read_text(encoding="utf-8"))
+
+    recon_map = {s["seed"]: s for s in reconciliation_data["seeds"]}
+    for row in sm["seeds_table"]:
+        seed_num = int(row["seed_name"].split()[-1])
+        r = recon_map[seed_num]
+
+        assert row["classification"] == r["classification"]
+        assert row["l_rel"] == round(r["final_val_L_rel"], 6)
+        assert row["l_node"] == round(r["final_val_L_node"], 6)
+        assert row["l_time"] == round(r["final_val_L_time"], 6)
+        assert row["final_val_loss"] == round(r["final_val_L_graph"], 6)
+
+        decomp_sum = row["l_rel"] + row["l_node"] + 0.1 * row["l_time"]
+        assert abs(row["final_val_loss"] - decomp_sum) < 1e-4
+
+        if seed_num == 42:
+            assert abs(r["final_val_L_rel"] - 4.9265723270060295) < 1e-12
+            assert abs(r["final_val_L_node"] - 2.1803066313660158) < 1e-12
+            assert abs(r["final_val_L_time"] - 0.4406517043065614) < 1e-12
+        elif seed_num == 1337:
+            assert row["l_rel"] == round(0.30627399207198625, 6)
+            assert row["l_node"] == round(0.8316750552543444, 6)
+            assert row["l_time"] == round(0.6770880720715033, 6)
 
 def test_seed999_authorization_provenance_precedes_run(reconciliation_data):
     recon_seeds = {s["seed"]: s for s in reconciliation_data["seeds"]}
@@ -106,6 +159,10 @@ def test_seed999_authorization_provenance_precedes_run(reconciliation_data):
     assert auth_time == "2026-09-08T16:11:15Z"
     assert run_start.startswith("2026-09-08T16:12:43")
     assert auth_time < run_start, f"Authorization ({auth_time}) must precede run start ({run_start})"
+
+    # Seed 999 classification and prospective contract deviation check
+    assert s999["classification"] == "PROTOCOL_DEVIATION"
+    assert any("warmup_steps=573" in issue for issue in s999["provenance_issues"])
 
 def test_authoritative_plan_file_exists_and_matches():
     p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FINAL-12-EPOCH-AUTHORITY.json"

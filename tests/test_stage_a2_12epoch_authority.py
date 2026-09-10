@@ -38,11 +38,15 @@ def test_source_metrics_12epoch_authority():
 def test_execution_plan_v15_12epoch_authority():
     p = REPO_ROOT / 'experiments' / 'plans' / 'STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json'
     assert p.exists(), f"Missing {p}"
+    import hashlib
     data = json.loads(p.read_text(encoding='utf-8'))
     
     hp = data['training_hyperparameters']
     assert hp['max_epochs'] == 12
-    assert hp['warmup_steps'] == 343
+    # Historical plan bound by pre-execution authorization retains warmup_steps=573
+    assert hp['warmup_steps'] == 573
+    # Verify exact bound plan SHA-256
+    assert hashlib.sha256(p.read_bytes()).hexdigest() == 'ba79bc71ebef02a8f28dca6ff69bf492d88cb6d98ccd104346425daee39046ee'
 
 def test_reconciliation_12epoch_authority():
     p = REPO_ROOT / 'experiments' / 'evidence' / 'stage-a2' / 'reconciliation' / 'STAGE-A2-FIVE-SEED-RECONCILIATION.json'
@@ -54,9 +58,10 @@ def test_reconciliation_12epoch_authority():
     assert meta['optimizer_steps_per_epoch'] == 573
     assert meta['final_max_optimizer_steps'] == 6876
     assert meta['final_warmup_steps'] == 343
-    assert meta['canonical_seeds'] == [999]
-    assert set(meta['protocol_deviation_seeds']) == {42, 7}
+    assert meta['canonical_seeds'] == []
+    assert set(meta['protocol_deviation_seeds']) == {42, 7, 999}
     assert set(meta['noncanonical_seeds']) == {1337, 2024}
+    assert meta['output_contract_incomplete_seeds'] == [1337]
     assert meta['authoritative_plan_file'] == 'experiments/plans/STAGE-A2-FINAL-12-EPOCH-AUTHORITY.json'
 
 def test_final_12epoch_authority_plan():

@@ -69,6 +69,38 @@ def load_source_metrics() -> dict:
     return json.loads(metrics_path.read_text(encoding="utf-8"))
 
 
+def soft_break(text: str, chunk_size: int = 8) -> str:
+    """
+    Inserts zero-width space (ZWSP \\u200b) into long uninterrupted tokens (hashes, paths, long identifiers)
+    to provide Microsoft Word with line-break opportunities in justified paragraphs, preventing wide whitespace gaps.
+    """
+    if not text or not isinstance(text, str):
+        return text
+    import re
+    # 1. Soft breaks after / and \\ in file paths
+    text = text.replace("/", "/\u200b").replace("\\", "\\\u200b")
+    # 2. Break hex hashes (32+ consecutive hex chars) into chunk_size chunks
+    def wrap_hex(m):
+        h = m.group(0)
+        return "\u200b".join([h[i:i+chunk_size] for i in range(0, len(h), chunk_size)])
+    text = re.sub(r"[0-9a-fA-F]{32,}", wrap_hex, text)
+    # 3. Soft breaks after _ in long snake_case tokens
+    def wrap_identifier(m):
+        tok = m.group(0)
+        if len(tok) > 15 and "_" in tok:
+            return tok.replace("_", "_\u200b")
+        return tok
+    text = re.sub(r"[A-Za-z0-9_]+", wrap_identifier, text)
+    # 4. Soft breaks after - in long kebab-case tokens
+    def wrap_kebab(m):
+        tok = m.group(0)
+        if len(tok) > 18 and "-" in tok:
+            return tok.replace("-", "-\u200b")
+        return tok
+    text = re.sub(r"[A-Za-z0-9\-_.]+", wrap_kebab, text)
+    return text
+
+
 def build_chapter_3():
     master_docx_path = Path(r"D:\Research\Chuyên đề chuyên sâu.docx")
     backup_path = Path(r"D:\Research\Chuyên đề chuyên sâu.pre_ch3_report_backup.docx")
@@ -120,13 +152,13 @@ def build_chapter_3():
             r_pre.bold = True
 
         if isinstance(text_segments, str):
-            r = new_p.add_run(text_segments)
+            r = new_p.add_run(soft_break(text_segments))
             r.font.name = "Times New Roman"
             r.font.size = Pt(14)
         elif isinstance(text_segments, list):
             for seg in text_segments:
                 if isinstance(seg, str):
-                    r = new_p.add_run(seg)
+                    r = new_p.add_run(soft_break(seg))
                     r.font.name = "Times New Roman"
                     r.font.size = Pt(14)
                 elif hasattr(seg, "tag") and "oMath" in seg.tag:
@@ -154,13 +186,13 @@ def build_chapter_3():
             r_pre.font.size = Pt(14)
             r_pre.bold = True
         if isinstance(text_segments, str):
-            r = new_p.add_run(text_segments)
+            r = new_p.add_run(soft_break(text_segments))
             r.font.name = "Times New Roman"
             r.font.size = Pt(14)
         elif isinstance(text_segments, list):
             for seg in text_segments:
                 if isinstance(seg, str):
-                    r = new_p.add_run(seg)
+                    r = new_p.add_run(soft_break(seg))
                     r.font.name = "Times New Roman"
                     r.font.size = Pt(14)
                 elif hasattr(seg, "tag") and "oMath" in seg.tag:
@@ -395,11 +427,10 @@ def build_chapter_3():
         "(trần 12 epochs, 6.876 bước tối ưu hóa, 343 bước khởi động tuyến tính) "
         "kết hợp kiểm toán nguồn gốc thực thi độc lập từ nhật ký Git và các tệp bằng chứng máy đọc được, "
         "các đợt chạy được phân loại khoa học và minh bạch như sau: "
-        "(1) Hạt giống Chuẩn (Canonical): Seed 999 là đợt chạy tuân thủ toàn diện giao thức 12 epochs hiện hành, "
-        "có văn bản ủy quyền được commit lên Git (commit 244e81a5) trước thời điểm khởi chạy, sở hữu đầy đủ bộ bằng chứng thực nghiệm với độ khớp bằng chứng tuyệt đối và giữ niêm phong dữ liệu kiểm thử; "
-        "(2) Nhóm Lệch Giao thức (Protocol Deviation): Seed 42 (quỹ đạo chạy theo bộ lập lịch cũ và dừng sớm tại Epoch 4 theo quy tắc dừng sớm đã tiền đăng ký) "
+        "(1) Nhóm Lệch Giao thức (Protocol Deviation): Seed 999 (hoàn thành 12 epochs với mất mát kiểm định 0,6095 nhưng có sai lệch giao thức tiền thi hành khi văn bản ủy quyền commit 244e81a5 ràng buộc kế hoạch chứa 573 bước khởi động trong khi mã nguồn thực thi sử dụng 343 bước), "
+        "Seed 42 (quỹ đạo chạy theo bộ lập lịch cũ và dừng sớm tại Epoch 4 theo quy tắc dừng sớm đã tiền đăng ký), "
         "và Seed 7 (khớp lịch trình 12 epochs nhưng tệp ủy quyền chỉ được commit lên Git sau thời điểm khởi chạy); "
-        "và (3) Nhóm Đợt chạy Không chuẩn (Noncanonical): Seed 1337 (chạy theo lịch trình cũ, dừng tại Epoch 12 và thiếu các tệp biên bản thực thi bắt buộc) "
+        "và (2) Nhóm Đợt chạy Không chuẩn (Noncanonical): Seed 1337 (chạy theo lịch trình cũ, dừng tại Epoch 12 và thiếu các tệp biên bản thực thi bắt buộc METRICS.json, RUN-MANIFEST.json, TEST-FIREWALL.json) "
         "và Seed 2024 (chứa sai lệch mã băm commit và điều chỉnh lịch học giữa chừng). "
         "Bảng 3.3 tổng hợp chi tiết số liệu đo đạc thực tế trên từng hạt giống từ các tệp nhật ký thực thi được xác minh."
     )
@@ -429,28 +460,11 @@ def build_chapter_3():
             f"{s['l_time']:.4f}"
         ])
 
-    ag_canon = ag["canonical"]
     ag_dev = ag["protocol_deviation"]
 
-    # Canonical aggregate row
+    # Protocol deviation aggregate row (3 seeds)
     t3_rows.append([
-        "TB Chuẩn (1 seed)",
-        "CANONICAL (Seed 999)",
-        "12",
-        "6,876",
-        "CEILING_REACHED",
-        f"{ag_canon['mean_final_train_loss']:.4f}",
-        "12",
-        f"{ag_canon['mean_best_val_loss']:.6f}",
-        f"{ag_canon['mean_final_val_loss']:.6f}",
-        f"{ag_canon['mean_l_rel']:.4f}",
-        f"{ag_canon['mean_l_node']:.4f}",
-        f"{ag_canon['mean_l_time']:.4f}"
-    ])
-
-    # Protocol deviation aggregate row
-    t3_rows.append([
-        "TB Lệch GT (2 seeds)",
+        "TB Lệch GT (3 seeds)",
         "PROTOCOL_DEVIATION",
         "-",
         "-",
@@ -468,12 +482,16 @@ def build_chapter_3():
     add_p("", first_line_indent=False)
 
     add_p(
-        f"Từ kết quả Bảng 3.3, hạt giống chuẩn duy nhất tuân thủ toàn diện cấu hình 12 epochs hiện hành là Seed 999, "
-        f"ghi nhận mất mát kiểm định tốt nhất đạt {ag_canon['mean_best_val_loss']:.6f} tại Epoch 12 và mất mát huấn luyện cuối đạt {ag_canon['mean_final_train_loss']:.4f}. "
-        f"Đối với nhóm quan sát bổ trợ lệch giao thức (Seed 42 và Seed 7), mức mất mát kiểm định ghi nhận trung bình là {ag_dev['mean_best_val_loss']:.6f}. "
-        f"Đáng chú ý, Seed 42 kích hoạt điều kiện dừng sớm tại Epoch 4 khi chạy trên lịch trình cũ với mức mất mát kiểm định ban đầu đạt {st[1]['best_val_loss']:.6f}, "
-        f"trong khi Seed 7 đạt mức mất mát kiểm định tốt nhất {st[2]['best_val_loss']:.6f} tương đồng với Seed 999 nhưng có độ lệch về thời điểm commit ủy quyền. "
-        f"Việc phân tách minh bạch giữa kết quả chuẩn khẳng định và các đợt chạy quan sát bổ trợ bảo đảm tính liêm chính học thuật cao nhất của luận văn."
+        f"Từ kết quả Bảng 3.3, toàn bộ 5 hạt giống thực nghiệm được bóc tách và đối soát nguồn gốc độc lập. "
+        f"Trong khuôn khổ kiểm toán hợp đồng tiền thi hành nghiêm ngặt, không có đợt chạy nào đạt chuẩn khẳng định tuyệt đối (Canonical) "
+        f"do sự bất tương thích giữa kế hoạch tiền thi hành và thực thi thực tế. "
+        f"Đối với nhóm quan sát lệch giao thức (Seed 999, Seed 42, Seed 7), mức mất mát kiểm định tốt nhất ghi nhận trung bình là {ag_dev['mean_best_val_loss']:.6f} "
+        f"và mất mát kiểm định cuối trung bình đạt {ag_dev['mean_final_val_loss']:.6f}. "
+        f"Trong đó, Seed 999 hoàn thành 12 epochs với mất mát kiểm định 0,609500 nhưng mang sai lệch về số bước khởi động so với văn bản ủy quyền; "
+        f"Seed 7 đạt mức mất mát kiểm định tốt nhất 0,550259 nhưng văn bản ủy quyền được commit sau khi khởi chạy; "
+        f"Seed 42 dừng sớm tại Epoch 4 theo quy tắc dừng sớm đã tiền đăng ký. "
+        f"Các thành phần mất mát kiểm định cuối (L_rel, L_node, L_time) tuân thủ chặt chẽ công thức phân rã thành phần L_graph = 1.0 * L_rel + 1.0 * L_node + 0.1 * L_time cho từng đợt chạy. "
+        f"Việc công khai minh bạch mọi sai lệch nguồn gốc và bảo toàn trọn vẹn niêm phong kiểm thử khẳng định tính liêm chính học thuật tuyệt đối của công trình."
     )
 
     # 3.2.2
@@ -680,7 +698,7 @@ def build_chapter_3():
         new_p.paragraph_format.space_after = Pt(6)
         new_p.paragraph_format.space_before = Pt(0)
         new_p.paragraph_format.first_line_indent = Cm(1.27)
-        r = new_p.add_run(text)
+        r = new_p.add_run(soft_break(text))
         r.font.name = "Times New Roman"
         r.font.size = Pt(14)
         return new_p
@@ -707,12 +725,13 @@ def build_chapter_3():
     )
 
     add_conc_p(
-        f"3. Về mặt thực nghiệm và kiểm toán khoa học (Chương 3): Theo chuẩn cấu hình 12 epochs hiện hành, "
-        f"hạt giống chuẩn tuân thủ toàn diện giao thức tiền đăng ký và lịch tối ưu hóa là Seed 999, "
-        f"ghi nhận mất mát kiểm định tốt nhất đạt {ag_canon['mean_best_val_loss']:.6f} tại Epoch 12 với mất mát huấn luyện cuối là {ag_canon['mean_final_train_loss']:.4f}. "
-        f"Bên cạnh đó, các đợt chạy lệch giao thức (Seed 42 dừng sớm theo quy tắc định trước trên lịch trình cũ; Seed 7 có mốc ủy quyền Git sau thời điểm khởi chạy) "
-        f"và các đợt chạy không chuẩn (Seed 1337, Seed 2024) được ghi nhận và phân loại minh bạch, "
-        f"cung cấp dữ liệu đối chiếu khách quan cho quá trình tối ưu hóa mà không làm suy giảm tính toàn vẹn khoa học của báo cáo."
+        f"3. Về mặt thực nghiệm và kiểm toán khoa học (Chương 3): Dựa trên cấu hình 12 epochs hiện hành, "
+        f"quá trình kiểm toán độc lập đã phân loại minh bạch toàn bộ 5 hạt giống thực nghiệm. "
+        f"Nhóm quan sát lệch giao thức (Seed 999 hoàn thành 12 epochs với mất mát kiểm định 0,609500 nhưng mang sai lệch về số bước khởi động so với văn bản ủy quyền tiền thi hành; "
+        f"Seed 7 đạt mất mát kiểm định tốt nhất 0,550259 nhưng văn bản ủy quyền commit sau khi khởi chạy; "
+        f"Seed 42 dừng sớm tại Epoch 4) ghi nhận mức mất mát kiểm định trung bình là {ag_dev['mean_best_val_loss']:.6f}. "
+        f"Cùng với các đợt chạy không chuẩn (Seed 1337, Seed 2024), các kết quả cung cấp dữ liệu đối chiếu khách quan "
+        f"trong khi toàn bộ dữ liệu kiểm thử được bảo toàn tuyệt đối sau tường lửa mật mã (test_opened = false)."
     )
 
     add_conc_p(

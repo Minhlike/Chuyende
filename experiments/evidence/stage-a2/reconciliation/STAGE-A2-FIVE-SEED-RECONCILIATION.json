@@ -2,34 +2,35 @@
   "metadata": {
     "audit_title": "Stage A2 Five-Seed Chronological Provenance & 12-Epoch Authority Reconciliation",
     "audit_timestamp_utc": "2026-09-10T08:15:00Z",
-    "working_branch": "fix/stage-a2-final-evidence-parity",
-    "base_commit": "8cda77c5a1e13223c2ef100a9596ff2829a03280",
+    "working_branch": "fix/stage-a2-prospective-contract-final",
+    "base_commit": "e1d84db803d06ecff4ad4ad97c176ef28d9e6ffa",
     "authoritative_plan_file": "experiments/plans/STAGE-A2-FINAL-12-EPOCH-AUTHORITY.json",
     "final_max_epochs": 12,
     "optimizer_steps_per_epoch": 573,
     "final_max_optimizer_steps": 6876,
     "final_warmup_steps": 343,
     "stale_active_epoch_config_references": 0,
-    "canonical_seeds": [
-      999
-    ],
+    "canonical_seeds": [],
     "protocol_deviation_seeds": [
+      7,
       42,
-      7
+      999
     ],
     "noncanonical_seeds": [
       1337,
       2024
     ],
-    "incomplete_seeds": [],
     "test_opened": false,
     "test_read_count": 0,
-    "new_optimizer_steps": 0
+    "new_optimizer_steps": 0,
+    "output_contract_incomplete_seeds": [
+      1337
+    ]
   },
   "seeds": [
     {
       "seed": 999,
-      "classification": "CANONICAL",
+      "classification": "PROTOCOL_DEVIATION",
       "authorization_commit": "244e81a576bf49d7a58c7f2c69bbb16fc8e304fe",
       "authorization_committed_at": "2026-09-08T16:11:15Z",
       "execution_started_at": "2026-09-08T16:12:43.408463+00:00",
@@ -62,7 +63,9 @@
       "early_stopped": false,
       "test_opened": false,
       "output_contract_complete": true,
-      "provenance_issues": [],
+      "provenance_issues": [
+        "Pre-execution authorization bound a plan containing warmup_steps=573, while the actual execution trajectory used warmup_steps=343."
+      ],
       "evidence_files": [
         "experiments/evidence/stage-a2/run-snapshots/seed-999/CHECKPOINT-INVENTORY.json",
         "experiments/evidence/stage-a2/run-snapshots/seed-999/ENVIRONMENT.json",
@@ -121,7 +124,7 @@
       "test_opened": false,
       "output_contract_complete": true,
       "provenance_issues": [
-        "Qu\u1ef9 \u0111\u1ea1o ch\u1ea1y theo b\u1ed9 l\u1eadp l\u1ecbch c\u0169 (warmup 573 steps); d\u1eebng s\u1edbm t\u1ea1i epoch 4 theo c\u01a1 ch\u1ebf early stopping ki\u00ean nh\u1eabn patience=3."
+        "Quỹ đạo chạy theo bộ lập lịch cũ (warmup 573 steps); dừng sớm tại epoch 4 theo cơ chế early stopping kiên nhẫn patience=3."
       ],
       "evidence_files": [
         "experiments/evidence/stage-a2/run-snapshots/seed-42/CHECKPOINT-INVENTORY.json",
@@ -181,7 +184,7 @@
       "test_opened": false,
       "output_contract_complete": true,
       "provenance_issues": [
-        "T\u1ec7p \u1ee7y quy\u1ec1n ch\u1ec9 \u0111\u01b0\u1ee3c commit l\u00ean Git v\u00e0o 2026-09-07T01:31:20Z (~34 gi\u1edd sau th\u1eddi \u0111i\u1ec3m kh\u1edfi ch\u1ea1y 2026-09-05T15:17:43Z). L\u1ec7ch m\u1ed1c th\u1eddi gian Git."
+        "Tệp ủy quyền chỉ được commit lên Git vào 2026-09-07T01:31:20Z (~34 giờ sau thời điểm khởi chạy 2026-09-05T15:17:43Z). Lệch mốc thời gian Git."
       ],
       "evidence_files": [
         "experiments/evidence/stage-a2/run-snapshots/seed-7/CHECKPOINT-INVENTORY.json",
@@ -241,7 +244,7 @@
       "test_opened": false,
       "output_contract_complete": false,
       "provenance_issues": [
-        "Qu\u1ef9 \u0111\u1ea1o t\u1ed1i \u01b0u h\u00f3a kh\u00f4ng kh\u1edbp giao th\u1ee9c 12-epoch hi\u1ec7n h\u00e0nh; d\u1eebng t\u1ea1i epoch 12 m\u00e0 kh\u00f4ng \u0111\u1ea1t min_lr; thi\u1ebfu 3 t\u1ec7p bi\u00ean b\u1ea3n th\u1ef1c thi (METRICS.json, RUN-MANIFEST.json, TEST-FIREWALL.json)."
+        "Quỹ đạo tối ưu hóa không khớp giao thức 12-epoch hiện hành; dừng tại epoch 12 mà không đạt min_lr; thiếu 3 tệp biên bản thực thi (METRICS.json, RUN-MANIFEST.json, TEST-FIREWALL.json)."
       ],
       "evidence_files": [
         "experiments/evidence/stage-a2/run-snapshots/seed-1337/CHECKPOINT-INVENTORY.json",
@@ -294,7 +297,7 @@
       "test_opened": false,
       "output_contract_complete": true,
       "provenance_issues": [
-        "Bi\u00ean b\u1ea3n ho\u00e0n th\u00e0nh vi\u1ec7n d\u1eabn commit \u1ea3o 00ce524e; \u0111i\u1ec1u ch\u1ec9nh b\u1ed9 l\u1eadp l\u1ecbch gi\u1eefa ch\u1eebng t\u1ea1o qu\u1ef9 \u0111\u1ea1o LR lai t\u1ea1p."
+        "Biên bản hoàn thành viện dẫn commit ảo 00ce524e; điều chỉnh bộ lập lịch giữa chừng tạo quỹ đạo LR lai tạp."
       ],
       "evidence_files": [
         "experiments/evidence/stage-a2/run-snapshots/seed-2024/CHECKPOINT-INVENTORY.json",
