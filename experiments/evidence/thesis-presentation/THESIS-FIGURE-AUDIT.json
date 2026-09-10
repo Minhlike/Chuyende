@@ -1,0 +1,79 @@
+{
+  "figure_count": 8,
+  "figure_layout_deviations_after": 0,
+  "caption_deviations_after": 0,
+  "figures": [
+    {
+      "figure_number": "Hình 1.1",
+      "bookmark": "BK_FIG_1_001",
+      "caption": "Hình 1.1: Phân cấp các đơn vị quan sát và sự đánh đổi giữa ngữ cảnh và chi phí tính toán trong biểu diễn dữ liệu log (Nguồn: Tác giả tổng hợp)",
+      "alignment": "CENTER",
+      "inline": true,
+      "aspect_ratio_preserved": true,
+      "page_overflow": false
+    },
+    {
+      "figure_number": "Hình 1.2",
+      "bookmark": "BK_FIG_1_002",
+      "caption": "Hình 1.2: Mô hình Không gian Bằng chứng Hành vi Đa chiều MITRE ATT&CK và các đặc trưng phi tuyến tính trong tấn công APT (Nguồn: Tác giả tổng hợp dựa trên MITRE ATT&CK  [4] và Inam et al.  [1])",
+      "alignment": "CENTER",
+      "inline": true,
+      "aspect_ratio_preserved": true,
+      "page_overflow": false
+    },
+    {
+      "figure_number": "Hình 1.3",
+      "bookmark": "BK_FIG_1_003",
+      "caption": "Hình 1.3: Khung phân định ranh giới ba tầng phương pháp luận và vị trí trọng tâm của không gian vector biểu diễn z (Nguồn: Tác giả đề xuất)",
+      "alignment": "CENTER",
+      "inline": true,
+      "aspect_ratio_preserved": true,
+      "page_overflow": false
+    },
+    {
+      "figure_number": "Hình 1.4",
+      "bookmark": "BK_FIG_1_004",
+      "caption": "Hình 1.4: Bản đồ đối chiếu ba nhóm phương pháp biểu diễn log và nguồn gốc hình thành năm khoảng trống nghiên cứu cốt lõi (Nguồn: Tác giả tổng hợp)",
+      "alignment": "CENTER",
+      "inline": true,
+      "aspect_ratio_preserved": true,
+      "page_overflow": false
+    },
+    {
+      "figure_number": "Hình 2.1",
+      "bookmark": "BK_FIG_2_001",
+      "caption": "Hình 2.1: Kiến trúc hai mặt phẳng (Training Plane & Inference Plane) của khung biểu diễn đặc trưng log đa góc nhìn dòng (Nguồn: Tác giả đề xuất)",
+      "alignment": "CENTER",
+      "inline": true,
+      "aspect_ratio_preserved": true,
+      "page_overflow": false
+    },
+    {
+      "figure_number": "Hình 2.2",
+      "bookmark": "BK_FIG_2_002",
+      "caption": "Hình 2.2: Kiến trúc Bộ trích xuất tuần tự ngữ nghĩa Transformer và cơ chế học tự giám sát trên cửa sổ ngắn hạn (Nguồn: Tác giả đề xuất)",
+      "alignment": "CENTER",
+      "inline": true,
+      "aspect_ratio_preserved": true,
+      "page_overflow": false
+    },
+    {
+      "figure_number": "Hình 2.3",
+      "bookmark": "BK_FIG_2_003",
+      "caption": "Hình 2.3: Kiến trúc xây dựng đồ thị nguồn gốc phụ thuộc thời gian và Bộ trích xuất Temporal GNN (Nguồn: Tác giả đề xuất)",
+      "alignment": "CENTER",
+      "inline": true,
+      "aspect_ratio_preserved": true,
+      "page_overflow": false
+    },
+    {
+      "figure_number": "Hình 2.4",
+      "bookmark": "BK_FIG_2_004",
+      "caption": "Hình 2.4: Sơ đồ kiến trúc Gióng hàng đa góc nhìn, Kiểm soát sụp đổ và Tổng hợp biểu diễn thống nhất (Nguồn: Tác giả đề xuất)",
+      "alignment": "CENTER",
+      "inline": true,
+      "aspect_ratio_preserved": true,
+      "page_overflow": false
+    }
+  ]
+}

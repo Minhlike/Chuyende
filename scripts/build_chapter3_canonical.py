@@ -30,7 +30,7 @@ from docx.shared import Pt, Cm, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_LINE_SPACING
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.oxml import parse_xml
-from docx.oxml.ns import nsdecls
+from docx.oxml.ns import nsdecls, qn
 
 # Ensure D:\Research\src is in sys.path
 SRC_DIR = Path(r"D:\Research\src")
@@ -204,7 +204,7 @@ def build_chapter_3():
 
     def add_h1(text):
         new_p = target_p.insert_paragraph_before(style="Heading 1")
-        new_p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        # In Chapter 1 & 2, Heading 1 inherits center alignment from style
         new_p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
         new_p.paragraph_format.space_before = Pt(12)
         new_p.paragraph_format.space_after = Pt(6)
@@ -436,22 +436,58 @@ def build_chapter_3():
         "Bảng 3.3 tổng hợp chi tiết số liệu đo đạc thực tế trên từng hạt giống từ các tệp nhật ký thực thi được xác minh."
     )
 
-    # Table 3.3
+    # -------------------------------------------------------------------------
+    # DEDICATED LANDSCAPE SECTION FOR TABLE 3.3
+    # -------------------------------------------------------------------------
+    # 1. Paragraph ending the preceding Portrait section:
+    p_break1 = target_p.insert_paragraph_before()
+    pPr1 = p_break1._p.get_or_add_pPr()
+    sectPr1_xml = (
+        f'<w:sectPr {nsdecls("w", "r")}>\n'
+        f'  <w:footerReference w:type="default" r:id="rId15"/>\n'
+        f'  <w:footerReference w:type="first" r:id="rId16"/>\n'
+        f'  <w:type w:val="nextPage"/>\n'
+        f'  <w:pgSz w:w="11906" w:h="16838"/>\n'
+        f'  <w:pgMar w:top="1134" w:right="851" w:bottom="1134" w:left="1440" w:header="709" w:footer="709" w:gutter="0"/>\n'
+        f'  <w:pgNumType w:start="1"/>\n'
+        f'  <w:cols w:space="708"/>\n'
+        f'  <w:docGrid w:linePitch="381"/>\n'
+        f'</w:sectPr>'
+    )
+    pPr1.append(parse_xml(sectPr1_xml))
+
+    # Table 3.3 Caption (inside Landscape section)
     add_table_caption(doc, target_p, 3, "Báo cáo kết quả huấn luyện Stage A2 trên 5 hạt ngẫu nhiên thực nghiệm", bookmark_name="BK_TBL_3_003", chapter_num=3)
+
+    # Human-readable display mapping for Table 3.3 (presentation-only, raw evidence remains intact)
+    DISPLAY_CLASSIFICATION = {
+        "PROTOCOL_DEVIATION": "Sai lệch giao thức",
+        "NONCANONICAL": "Không chuẩn",
+        "CANONICAL": "Chuẩn",
+        "EVIDENCE_INCOMPLETE": "Thiếu bằng chứng"
+    }
+    DISPLAY_STOP_REASON = {
+        "EARLY_STOPPING": "Dừng sớm",
+        "CEILING_REACHED": "Đạt trần epoch",
+        "HALTED": "Dừng giữa chừng"
+    }
+
     t3_headers = [
         "Hạt giống", "Phân loại", "Epochs HT", "Số bước", "Lý do kết thúc",
-        "Train Loss", "Best Epoch", "Best Val Loss", "Val Loss Cuối", "L_rel", "L_node", "L_time"
+        "Train Loss", "Best Epoch", "Best Val Loss", "Val Loss cuối", "L_rel", "L_node", "L_time"
     ]
-    t3_widths = [750, 1450, 620, 730, 1200, 730, 570, 820, 820, 610, 610, 610]
+    t3_widths = [1200, 1700, 850, 950, 1600, 1000, 850, 1300, 1300, 950, 950, 950]
 
     t3_rows = []
     for s in st:
+        disp_class = DISPLAY_CLASSIFICATION.get(s["classification"], s["classification"])
+        disp_stop = DISPLAY_STOP_REASON.get(s["stop_reason"], s["stop_reason"])
         t3_rows.append([
             s["seed_name"],
-            s["classification"],
+            disp_class,
             str(s["epochs_completed"]),
             f"{s['steps']:,}",
-            s["stop_reason"],
+            disp_stop,
             f"{s['train_loss']:.4f}",
             str(s["best_epoch"]),
             f"{s['best_val_loss']:.6f}",
@@ -462,11 +498,12 @@ def build_chapter_3():
         ])
 
     ag_dev = ag["protocol_deviation"]
+    disp_agg_class = DISPLAY_CLASSIFICATION.get("PROTOCOL_DEVIATION", "Sai lệch giao thức")
 
     # Protocol deviation aggregate row (3 seeds)
     t3_rows.append([
-        "TB lệch GT\n(3 seed)",
-        "PROTOCOL_DEVIATION",
+        "TB lệch GT (3 seed)",
+        disp_agg_class,
         "-",
         "-",
         "-",
@@ -479,17 +516,48 @@ def build_chapter_3():
         f"{ag_dev['mean_l_time']:.4f}"
     ])
 
+    body_alignments = [
+        WD_ALIGN_PARAGRAPH.CENTER,  # 0: Hạt giống
+        WD_ALIGN_PARAGRAPH.CENTER,  # 1: Phân loại
+        WD_ALIGN_PARAGRAPH.CENTER,  # 2: Epochs HT
+        WD_ALIGN_PARAGRAPH.RIGHT,   # 3: Số bước
+        WD_ALIGN_PARAGRAPH.CENTER,  # 4: Lý do kết thúc
+        WD_ALIGN_PARAGRAPH.RIGHT,   # 5: Train Loss
+        WD_ALIGN_PARAGRAPH.CENTER,  # 6: Best Epoch
+        WD_ALIGN_PARAGRAPH.RIGHT,   # 7: Best Val Loss
+        WD_ALIGN_PARAGRAPH.RIGHT,   # 8: Val Loss cuối
+        WD_ALIGN_PARAGRAPH.RIGHT,   # 9: L_rel
+        WD_ALIGN_PARAGRAPH.RIGHT,   # 10: L_node
+        WD_ALIGN_PARAGRAPH.RIGHT    # 11: L_time
+    ]
+
     insert_thesis_table(
         doc, target_p, t3_headers, t3_widths, t3_rows,
-        font_size_pt=8.5,
-        body_alignments=WD_ALIGN_PARAGRAPH.CENTER,
+        font_size_pt=10.5,
+        body_alignments=body_alignments,
         header_alignments=WD_ALIGN_PARAGRAPH.CENTER,
         table_alignment=WD_TABLE_ALIGNMENT.CENTER,
         fixed_layout=True,
         cell_space_before_pt=0,
-        cell_space_after_pt=0
+        cell_space_after_pt=0,
+        no_wrap=True
     )
-    add_p("", first_line_indent=False)
+
+    # 2. Paragraph ending the Landscape section and transitioning back to Portrait:
+    p_break2 = target_p.insert_paragraph_before()
+    pPr2 = p_break2._p.get_or_add_pPr()
+    sectPr2_xml = (
+        f'<w:sectPr {nsdecls("w", "r")}>\n'
+        f'  <w:footerReference w:type="default" r:id="rId15"/>\n'
+        f'  <w:footerReference w:type="first" r:id="rId16"/>\n'
+        f'  <w:type w:val="nextPage"/>\n'
+        f'  <w:pgSz w:w="16838" w:h="11906" w:orient="landscape"/>\n'
+        f'  <w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="709" w:footer="709" w:gutter="0"/>\n'
+        f'  <w:cols w:space="708"/>\n'
+        f'  <w:docGrid w:linePitch="381"/>\n'
+        f'</w:sectPr>'
+    )
+    pPr2.append(parse_xml(sectPr2_xml))
 
     add_p(
         f"Từ kết quả Bảng 3.3, toàn bộ 5 hạt giống thực nghiệm được bóc tách và đối soát nguồn gốc độc lập. "
@@ -748,6 +816,12 @@ def build_chapter_3():
         "Các kết quả đạt được cung cấp cơ sở kỹ thuật ban đầu để phục vụ các giai đoạn nghiên cứu tiếp theo, "
         "hướng tới việc hoàn thiện mô hình biểu diễn đa góc nhìn toàn phần và thử nghiệm đánh giá phát hiện tấn công trên dữ liệu kiểm thử khi được ủy quyền."
     )
+
+    # Ensure final body sectPr continues page numbering (no w:pgNumType w:start="1")
+    body_sectPr = doc._element.body.find(qn("w:sectPr"))
+    if body_sectPr is not None:
+        for pgn in body_sectPr.findall(qn("w:pgNumType")):
+            body_sectPr.remove(pgn)
 
     # Save document
     doc.save(str(master_docx_path))

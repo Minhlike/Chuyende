@@ -1,0 +1,119 @@
+{
+  "BODY": {
+    "font": "Times New Roman",
+    "size": 14.0,
+    "alignment": "JUSTIFY",
+    "first_line_indent": 1.27,
+    "line_spacing": 1.5,
+    "space_before": 0,
+    "space_after": 6
+  },
+  "CHAPTER_TITLE": {
+    "font": "Times New Roman",
+    "size": 16.0,
+    "bold": true,
+    "case": "UPPERCASE",
+    "alignment": "CENTER",
+    "space_before": 12,
+    "space_after": 18,
+    "page_break_before": true
+  },
+  "HEADING_LEVEL_1": {
+    "font": "Times New Roman",
+    "size": 16.0,
+    "bold": true,
+    "case": "UPPERCASE",
+    "alignment": "CENTER",
+    "space_before": 12,
+    "space_after": 18,
+    "page_break_before": true,
+    "keep_with_next": true
+  },
+  "HEADING_LEVEL_2": {
+    "font": "Times New Roman",
+    "size": 14.0,
+    "bold": true,
+    "case": "sentence_case",
+    "alignment": "LEFT",
+    "space_before": 12,
+    "space_after": 6,
+    "keep_with_next": true
+  },
+  "HEADING_LEVEL_3": {
+    "font": "Times New Roman",
+    "size": 14.0,
+    "bold": true,
+    "italic": true,
+    "case": "sentence_case",
+    "alignment": "LEFT",
+    "space_before": 6,
+    "space_after": 4,
+    "keep_with_next": true
+  },
+  "HEADING_LEVEL_4": {
+    "font": "Times New Roman",
+    "size": 13.0,
+    "bold": true,
+    "case": "sentence_case",
+    "alignment": "LEFT",
+    "space_before": 6,
+    "space_after": 4,
+    "keep_with_next": true
+  },
+  "CAPTION_FIGURE": {
+    "font": "Times New Roman",
+    "size": 14.0,
+    "bold_prefix": true,
+    "case": "sentence_case",
+    "alignment": "CENTER",
+    "space_before": 6,
+    "space_after": 12,
+    "keep_with_previous": true
+  },
+  "CAPTION_TABLE": {
+    "font": "Times New Roman",
+    "size": 14.0,
+    "bold_prefix": true,
+    "case": "sentence_case",
+    "alignment": "CENTER",
+    "space_before": 12,
+    "space_after": 4,
+    "keep_with_next": true
+  },
+  "TABLE_HEADER": {
+    "font": "Times New Roman",
+    "size": 10.5,
+    "bold": true,
+    "alignment": "CENTER",
+    "v_alignment": "CENTER",
+    "cant_split": true,
+    "tbl_header": true
+  },
+  "TABLE_BODY": {
+    "font": "Times New Roman",
+    "size": 10.5,
+    "semantic_alignment": true,
+    "v_alignment": "CENTER",
+    "cant_split": true,
+    "no_wrap": true
+  },
+  "EQUATION": {
+    "font": "Cambria Math",
+    "format": "OMML",
+    "alignment": "CENTER",
+    "space_before": 4,
+    "space_after": 6
+  },
+  "HEADER": {
+    "linked_to_previous": true,
+    "distance_pt": 35.45
+  },
+  "FOOTER": {
+    "linked_to_previous": true,
+    "distance_pt": 35.45
+  },
+  "PAGE_NUMBER": {
+    "continuous_across_landscape": true,
+    "starting_page": 1
+  }
+}

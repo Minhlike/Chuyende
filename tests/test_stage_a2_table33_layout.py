@@ -99,6 +99,33 @@ def test_table33_row_cant_split(table_33_and_metrics):
         assert cantSplit is not None, f"Row {r_idx} missing <w:cantSplit/>!"
 
 
+DISPLAY_CLASSIFICATION = {
+    "PROTOCOL_DEVIATION": "Sai lệch giao thức",
+    "NONCANONICAL": "Không chuẩn",
+    "CANONICAL": "Chuẩn",
+    "EVIDENCE_INCOMPLETE": "Thiếu bằng chứng"
+}
+DISPLAY_STOP_REASON = {
+    "EARLY_STOPPING": "Dừng sớm",
+    "CEILING_REACHED": "Đạt trần epoch",
+    "HALTED": "Dừng giữa chừng"
+}
+EXPECTED_BODY_ALIGNMENTS = [
+    WD_ALIGN_PARAGRAPH.CENTER,  # 0: Hạt giống
+    WD_ALIGN_PARAGRAPH.CENTER,  # 1: Phân loại
+    WD_ALIGN_PARAGRAPH.CENTER,  # 2: Epochs HT
+    WD_ALIGN_PARAGRAPH.RIGHT,   # 3: Số bước
+    WD_ALIGN_PARAGRAPH.CENTER,  # 4: Lý do kết thúc
+    WD_ALIGN_PARAGRAPH.RIGHT,   # 5: Train Loss
+    WD_ALIGN_PARAGRAPH.CENTER,  # 6: Best Epoch
+    WD_ALIGN_PARAGRAPH.RIGHT,   # 7: Best Val Loss
+    WD_ALIGN_PARAGRAPH.RIGHT,   # 8: Val Loss cuối
+    WD_ALIGN_PARAGRAPH.RIGHT,   # 9: L_rel
+    WD_ALIGN_PARAGRAPH.RIGHT,   # 10: L_node
+    WD_ALIGN_PARAGRAPH.RIGHT    # 11: L_time
+]
+
+
 def test_table33_cell_vertical_and_horizontal_alignment(table_33_and_metrics):
     table, _, _ = table_33_and_metrics
     for r_idx, row in enumerate(table.rows):
@@ -112,11 +139,12 @@ def test_table33_cell_vertical_and_horizontal_alignment(table_33_and_metrics):
             )
 
             # Horizontal alignment & paragraph formatting
+            expected_align = WD_ALIGN_PARAGRAPH.CENTER if r_idx == 0 else EXPECTED_BODY_ALIGNMENTS[c_idx]
             for p_idx, p in enumerate(cell.paragraphs):
                 txt = p.text.strip()
                 if txt:
-                    assert p.alignment == WD_ALIGN_PARAGRAPH.CENTER, (
-                        f"Cell ({r_idx}, {c_idx}) paragraph {p_idx} alignment is {p.alignment}, expected CENTER"
+                    assert p.alignment == expected_align, (
+                        f"Cell ({r_idx}, {c_idx}) paragraph {p_idx} alignment is {p.alignment}, expected {expected_align}"
                     )
                     assert (p.paragraph_format.first_line_indent or 0) == 0, (
                         f"Cell ({r_idx}, {c_idx}) has first_line_indent {p.paragraph_format.first_line_indent}"
@@ -147,10 +175,11 @@ def test_table33_source_metrics_parity(table_33_and_metrics):
         row = table.rows[i + 1]
         cells = [c.text.strip() for c in row.cells]
         assert cells[0] == s["seed_name"]
-        assert cells[1] == s["classification"]
+        # Human-readable display mapping check
+        assert cells[1] == DISPLAY_CLASSIFICATION[s["classification"]]
         assert cells[2] == str(s["epochs_completed"])
         assert cells[3] == f"{s['steps']:,}"
-        assert cells[4] == s["stop_reason"]
+        assert cells[4] == DISPLAY_STOP_REASON[s["stop_reason"]]
         assert cells[5] == f"{s['train_loss']:.4f}"
         assert cells[6] == str(s["best_epoch"])
         assert cells[7] == f"{s['best_val_loss']:.6f}"
@@ -162,8 +191,8 @@ def test_table33_source_metrics_parity(table_33_and_metrics):
     # Check aggregate row (row 6)
     agg_row = table.rows[6]
     agg_cells = [c.text.strip() for c in agg_row.cells]
-    assert agg_cells[0] == "TB lệch GT\n(3 seed)"
-    assert agg_cells[1] == "PROTOCOL_DEVIATION"
+    assert agg_cells[0] == "TB lệch GT (3 seed)"
+    assert agg_cells[1] == DISPLAY_CLASSIFICATION["PROTOCOL_DEVIATION"]
     assert agg_cells[2] == "-"
     assert agg_cells[3] == "-"
     assert agg_cells[4] == "-"
@@ -174,3 +203,16 @@ def test_table33_source_metrics_parity(table_33_and_metrics):
     assert agg_cells[9] == f"{ag_dev['mean_l_rel']:.4f}"
     assert agg_cells[10] == f"{ag_dev['mean_l_node']:.4f}"
     assert agg_cells[11] == f"{ag_dev['mean_l_time']:.4f}"
+
+
+def test_table33_display_mapping_is_presentation_only(table_33_and_metrics):
+    """Verifies that machine-readable source JSON retains raw enum strings."""
+    _, _, source_metrics = table_33_and_metrics
+    st = source_metrics["seeds_table"]
+    # Raw JSON must still have PROTOCOL_DEVIATION, NONCANONICAL, CEILING_REACHED, EARLY_STOPPING
+    raw_classifications = {s["classification"] for s in st}
+    assert "PROTOCOL_DEVIATION" in raw_classifications
+    assert "NONCANONICAL" in raw_classifications
+    raw_stop_reasons = {s["stop_reason"] for s in st}
+    assert "CEILING_REACHED" in raw_stop_reasons
+    assert "EARLY_STOPPING" in raw_stop_reasons

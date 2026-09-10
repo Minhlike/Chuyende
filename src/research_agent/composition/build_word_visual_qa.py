@@ -491,7 +491,8 @@ def insert_thesis_table(
     font_size_pt=14, pad_v_dxa=80, space_v_pt=3,
     body_alignments=None, header_alignments=None,
     table_alignment=WD_TABLE_ALIGNMENT.CENTER,
-    fixed_layout=False, cell_space_before_pt=None, cell_space_after_pt=None
+    fixed_layout=False, cell_space_before_pt=None, cell_space_after_pt=None,
+    no_wrap=False
 ):
     """Creates an elegant, professional thesis table matching original template layout, supporting OMML nodes in cells."""
     tbl = doc.add_table(rows=len(rows_data) + 1, cols=len(headers))
@@ -532,7 +533,8 @@ def insert_thesis_table(
         format_table_cell_rich(
             cell, h, col_widths[c_i], align=h_align, bold=True,
             font_size_pt=font_size_pt, pad_v_dxa=pad_v_dxa, space_v_pt=space_v_pt,
-            space_before_pt=cell_space_before_pt, space_after_pt=cell_space_after_pt
+            space_before_pt=cell_space_before_pt, space_after_pt=cell_space_after_pt,
+            no_wrap=no_wrap
         )
 
     for r_i, row in enumerate(rows_data):
@@ -553,20 +555,23 @@ def insert_thesis_table(
                 cell, val, col_widths[c_i], align=cell_align,
                 bold=(c_i == 0 and len(headers) == 3),
                 font_size_pt=font_size_pt, pad_v_dxa=pad_v_dxa, space_v_pt=space_v_pt,
-                space_before_pt=cell_space_before_pt, space_after_pt=cell_space_after_pt
+                space_before_pt=cell_space_before_pt, space_after_pt=cell_space_after_pt,
+                no_wrap=no_wrap
             )
 
 
 def format_table_cell_rich(
     cell, val, width_dxa: int, align=WD_ALIGN_PARAGRAPH.LEFT, bold: bool = False,
     font_size_pt: float = 14.0, pad_v_dxa: int = 80, space_v_pt: float = 3.0,
-    space_before_pt=None, space_after_pt=None
+    space_before_pt=None, space_after_pt=None, no_wrap=False
 ):
     """Formats cell borders, margins, alignment and renders rich text / OMML nodes without raw math underscores."""
     tcPr = cell._tc.get_or_add_tcPr()
+    nowrap_xml = '  <w:noWrap/>\n' if no_wrap else ''
     tc_xml = (
         f'<w:tcPr {nsdecls("w")}>\n'
         f'  <w:tcW w:w="{width_dxa}" w:type="dxa"/>\n'
+        f'{nowrap_xml}'
         '  <w:vAlign w:val="center"/>\n'
         '  <w:tcBorders>\n'
         '    <w:top w:val="single" w:sz="4" w:space="0" w:color="000000"/>\n'
