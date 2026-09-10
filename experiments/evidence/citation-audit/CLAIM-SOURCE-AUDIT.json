@@ -17,18 +17,18 @@
   },
   {
     "claim_location": "Chương 1, Mục 1.1, Không gian telemetry máy chủ (p[97])",
-    "citation": "[1], [2]",
-    "claim_summary": "Sysmon Event IDs (1, 3, 7, 11, 13) ánh xạ tới các sự kiện kiểm toán hệ thống kernel và đồ thị provenance.",
-    "support": "PARTIAL",
-    "action": "REPLACE_SOURCE",
-    "notes": "Đã bổ sung dẫn chiếu đặc tả kỹ thuật chính thức Microsoft Sysinternals Sysmon (Russinovich & Garnier) cho Event ID mapping, giữ [1], [2] cho bối cảnh provenance telemetry."
+    "citation": "[41], [1], [2]",
+    "claim_summary": "Sysmon Event IDs (1, 3, 7, 11, 13) ánh xạ tới các sự kiện kiểm toán hệ thống kernel và đồ thị provenance theo đặc tả kỹ thuật chính thức Microsoft Sysinternals Sysmon.",
+    "support": "SUPPORTED",
+    "action": "KEEP",
+    "notes": "Đã bổ sung dẫn chiếu đặc tả kỹ thuật chính thức Microsoft Sysinternals Sysmon (Russinovich & Garnier) [41] cho Event ID mapping, giữ [1], [2] cho bối cảnh provenance telemetry."
   },
   {
     "claim_location": "Chương 1, Mục 1.1, Phân loại trôi dạt dữ liệu (p[104])",
     "citation": "[8]",
     "claim_summary": "Khung phân định bốn cơ chế trôi dạt dữ liệu (Concept Drift, Template Drift, Population Drift, Representation Drift).",
     "support": "AUTHOR_ADAPTATION",
-    "action": "NARROW",
+    "action": "KEEP",
     "notes": "Đã làm rõ Arp et al. [8] thảo luận về vấn đề non-stationarity và temporal evaluation; bộ bốn cơ chế trôi dạt là do Tác giả tổng hợp phục vụ khung phân tích của đề tài."
   },
   {
@@ -36,7 +36,7 @@
     "citation": "[1], [3]",
     "claim_summary": "Quản trị viên sử dụng PowerShell, SSH, WMI tương tự kẻ tấn công APT gây ra sự trùng lặp hành vi và cảnh báo giả.",
     "support": "SUPPORTED",
-    "action": "REMOVE_CITATION",
+    "action": "KEEP",
     "notes": "Đã loại bỏ citation [15] (Ilse et al. Attention-based Deep MIL) khỏi câu nhiễu quản trị viên; giữ lại [1], [3] vốn là các công bố trực tiếp về log quality và provenance telemetry."
   },
   {
@@ -44,7 +44,7 @@
     "citation": "[18], [6]",
     "claim_summary": "Bộ dữ liệu HDFS được gán nhãn ở mức khối (Block-level); bộ dữ liệu BGL được gán nhãn bất thường ở mức dòng đơn lẻ.",
     "support": "SUPPORTED",
-    "action": "REPLACE_SOURCE",
+    "action": "KEEP",
     "notes": "Đã thay thế citation [14] (DeepLog) bằng nguồn dữ liệu trực tiếp: Xu et al. [18] cho HDFS và LogHub [6] cho BGL."
   },
   {
@@ -52,7 +52,7 @@
     "citation": "[29], [30]",
     "claim_summary": "Các mô hình GNN phức tạp có nguy cơ học đường tắt; khi kiểm soát nhiễu, các baseline đơn giản có thể đạt kết quả cạnh tranh.",
     "support": "SUPPORTED",
-    "action": "NARROW",
+    "action": "KEEP",
     "notes": "Đã thu hẹp và tách bạch: Bilot et al. [29] chứng minh mạng nơ-ron đơn giản / kiến trúc rút gọn; Guerra et al. [30] chỉ ra hiệu quả của baseline allowlist / thống kê."
   },
   {
@@ -60,15 +60,15 @@
     "citation": "[31]",
     "claim_summary": "Phân định hiện tượng over-smoothing làm suy giảm tính phân biệt của nút và hiện tượng over-squashing gây nghẽn cổ chai thông tin.",
     "support": "SUPPORTED",
-    "action": "NARROW",
+    "action": "KEEP",
     "notes": "Đã phân tách hai hiện tượng: over-smoothing là đặc tính truyền tin GNN chung; over-squashing và nút thắt thông tin được dẫn chứng theo Alon & Yahav [31]."
   },
   {
     "claim_location": "Chương 1, Mục 1.3, Thách thức an toàn quyền riêng tư (p[194], p[269], p[278])",
     "citation": "[33]",
     "claim_summary": "Tấn công nghịch đảo mô hình (Model Inversion) nhằm khôi phục định danh nhạy cảm (username, hostname, lệnh).",
-    "support": "PARTIAL",
-    "action": "NARROW",
+    "support": "AUTHOR_ADAPTATION",
+    "action": "KEEP",
     "notes": "Đã phân tách hai tầng: Source Fact là nguyên lý khai thác output/confidence của Fredrikson et al. [33]; Author Threat-Model Adaptation là việc áp dụng kiểm thử thực nghiệm trên các thuộc tính nhạy cảm của log doanh nghiệp."
   },
   {
@@ -76,7 +76,7 @@
     "citation": "[10]",
     "claim_summary": "VICReg điều hòa phương sai/hiệp phương sai không cần mẫu âm; giả thuyết kỳ vọng giảm False Negatives trong log telemetry.",
     "support": "AUTHOR_ADAPTATION",
-    "action": "NARROW",
+    "action": "KEEP",
     "notes": "Đã phân tách rõ: Bardes et al. [10] chứng minh cơ chế tự giám sát không tương phản ngăn sụp đổ biểu diễn; việc giảm False Negatives trong telemetry log là giả thuyết thích nghi của nghiên cứu (Author Adaptation Hypothesis) được kiểm chứng tại Chương 3."
   },
   {
@@ -92,7 +92,7 @@
     "citation": "[14], [20], [9], [24], [26]",
     "claim_summary": "Đối sánh đặc tính phương pháp luận giữa khung biểu diễn đề xuất và các phương pháp cơ sở.",
     "support": "SUPPORTED",
-    "action": "NARROW",
+    "action": "KEEP",
     "notes": "Đã audit từng ô: DeepLog phản ánh đúng việc mô hình hóa chuỗi log key và vector giá trị tham số qua các LSTM tách rời; KAIROS chuẩn hóa venue IEEE S&P 2024; MAGIC chuẩn hóa tác giả Jia et al. USENIX Security 2024; các nhận xét limitation được ghi rõ 'Nhận xét trong phạm vi đối sánh của nghiên cứu'."
   }
 ]

@@ -106,6 +106,7 @@ def compute_chapter_hashes():
     AUTH_CITATIONS_CH1_HASHES = {
         "fcdcb1a531f5900fc0b2c36e725bd8f8bfa1e4605d6b0bcde1a34306c819f398",
         "322ee8d072c553b41306426551bf3a4b8cbdee8facb41354a174288de8e02b60",  # fix/thesis-citation-integrity
+        "f44b58b1c22f3a877378021228236c407f07d54f2488a4fa518f15cca1bc7f5e",  # fix/thesis-citation-forensic-final (p[97] Sysmon [41])
     }
     AUTH_CITATIONS_CH2_HASHES = {
         "c62e1ebe2a01b6668f24e5383abf74372d78c4cc758f1c5a264d6789a3cef855",
