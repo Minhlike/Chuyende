@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
 """
-Master Academic Chapter 3 Generator & Injector (Canonical Forensic V3.0)
+Master Academic Chapter 3 Generator & Injector (Forensic Final V3.1)
 Strictly adheres to:
-1. Forensic Provenance Reconciliation (STAGE-A2-FIVE-SEED-RECONCILIATION.json)
-2. Dynamic metric loading from CHAPTER3-SOURCE-METRICS.json (ZERO hardcoded metrics)
-3. Strict code alignment: TemporalGraphViewEncoder + GRUCell + Temporal Attention + multi-task loss L_rel + L_node + 0.1*L_time
-   (ZERO VICReg, L_inv, L_var, L_cov in Stage A2)
-4. Honest scientific reporting: 3 Canonical seeds (7, 999, 42) + 2 Noncanonical runs (1337, 2024)
-5. Exact Word 2016 thesis styles (clean headings, Table Grid, SEQ captions, OMML equations)
-6. Preservation of cryptographically frozen Chapter 1 and Chapter 2 hashes (100% bit-level invariance)
-7. Supervisor ThS. Nguyen Thi Thu Thuy respected strictly on cover pages (ZERO fabricated citations in comparisons)
+1. Forensic Provenance & Protocol Audit:
+   - Seed 42: CANONICAL (Followed Amendment 13 schedule, early stopped at epoch 4)
+   - Seed 7, 999: PROTOCOL_DEVIATION (12 epochs without prospective protocol amendment in PROTOCOL-AMENDMENTS.md)
+   - Seed 1337, 2024: NONCANONICAL (Incomplete run / phantom commit in completion record)
+2. Hardware environment facts strictly matching STAGE-A2-LOCAL-EXECUTION-ENVIRONMENT-V1.5.json:
+   Python 3.12.8, PyTorch 2.6.0+cu124, CUDA 12.4, Windows-11-10.0.26200-SP0, Intel Core i5-12500H, RAM 15.71 GB,
+   RTX 3050 Ti Laptop GPU (4.0 GB VRAM, CC 8.6, Driver 595.95, cuBLAS :4096:8).
+   Zero unsupported claims (no DDR4 speed, no PCIe generation, no Windows edition).
+3. Softened causal claims:
+   Replaced unsupported claims (Saddle Point Plateau, gradient vanishing, global minima, proof of H1/H2)
+   with evidence-bound language ("quan sát thấy", "phù hợp với", "gợi ý", "chưa đủ bằng chứng để xác định nguyên nhân").
+4. Separation of Canonical vs Protocol Deviation in Table 3.3 and aggregates.
+5. Exact Word 2016 thesis styles, Table Grid, SEQ captions, native OMML equations, bit-level preservation of Ch1/Ch2.
 """
 
 import sys
@@ -222,8 +227,8 @@ def build_chapter_3():
     add_p(
         "Chương này trình bày chi tiết công tác thực nghiệm, phương pháp luận đánh giá và các kết quả định lượng thu được "
         "nhằm kiểm chứng mô hình biểu diễn đồ thị sự kiện theo dòng thời gian liên tục (Temporal Graph View Encoder) đã đề xuất tại Chương 2. "
-        "Mọi quy trình thực nghiệm đều được thực thi theo các chuẩn mực liêm chính khoa học nghiêm ngặt: môi trường phần cứng và phần mềm được khóa mật mã, "
-        "dữ liệu phân tách nhân quả chống rò rỉ thông tin, và kết quả được đối soát kiểm toán độc lập trên từng hạt giống ngẫu nhiên. "
+        "Mọi quy trình thực nghiệm đều tuân thủ các nguyên tắc kiểm toán độc lập: môi trường phần cứng và phần mềm được ghi nhận chính xác theo khóa môi trường, "
+        "dữ liệu phân tách nhân quả chống rò rỉ thông tin, và kết quả được đối soát nguồn gốc độc lập trên từng hạt giống ngẫu nhiên. "
         "Toàn bộ các phân tích trong chương này được dẫn xuất trực tiếp từ các bằng chứng thực nghiệm máy đọc được, phân định rõ ràng giữa kết quả quan sát thực tế, "
         "suy diễn khoa học và các giới hạn kỹ thuật nội tại."
     )
@@ -237,18 +242,19 @@ def build_chapter_3():
     add_h3("Môi trường tính toán, tính tái lập và kiểm định độ bất định thống kê")
 
     add_p(
-        f"Để đảm bảo khả năng kiểm toán và tái lập thực nghiệm, toàn bộ quá trình tiền huấn luyện được thực thi trên môi trường máy trạm độc lập "
-        f"với thông số kỹ thuật được xác định rõ ràng. Hệ thống phần cứng trang bị card đồ họa {hw['gpu']} "
-        f"(bộ nhớ video {hw['vram']}, vi kiến trúc Ampere Compute Capability {hw['compute_capability']}, phiên bản driver {hw['driver']}, "
-        f"mã định danh UUID: {hw['gpu_uuid']}). "
-        f"Bộ xử lý trung tâm là {hw['cpu']}, bộ nhớ hệ thống {hw['ram']} và ổ cứng {hw['storage']}."
+        f"Để đảm bảo tính minh bạch và khả năng tái lập thực nghiệm, toàn bộ quá trình tiền huấn luyện được thực thi trên môi trường máy trạm độc lập "
+        f"với thông số kỹ thuật được xác định theo đúng khóa môi trường thực thi STAGE-A2-LOCAL-EXECUTION-ENVIRONMENT-V1.5.json. "
+        f"Hệ thống phần cứng trang bị card đồ họa {hw['gpu']} (dung lượng bộ nhớ {hw['vram']}, Compute Capability {hw['compute_capability']}, "
+        f"phiên bản driver {hw['driver']}, mã định danh UUID: {hw['gpu_uuid']}). "
+        f"Bộ xử lý trung tâm là {hw['cpu']} với bộ nhớ RAM hệ thống ghi nhận {hw['ram']}."
     )
 
     add_p(
-        f"Môi trường phần mềm vận hành trên hệ điều hành {hw['os']}, nền tảng {hw['python']} và thư viện PyTorch {hw['pytorch']}. "
-        f"Nhằm kiểm soát tối đa tính ngẫu nhiên của các phép toán trên nhân CUDA, hệ thống cấu hình biến môi trường "
+        f"Môi trường phần mềm vận hành trên nền tảng hệ điều hành {hw['os']}, phiên bản Python {hw['python']}, thư viện PyTorch {hw['pytorch']} "
+        f"với CUDA runtime {hw['cuda_runtime']}. "
+        f"Nhằm kiểm soát tối đa tính ngẫu nhiên của các phép toán trên nhân GPU, hệ thống cấu hình biến môi trường "
         f"CUBLAS_WORKSPACE_CONFIG={hw['cublas_workspace_config']} và kích hoạt chế độ tính toán xác định torch.use_deterministic_algorithms(True). "
-        f"Toàn bộ đặc tả môi trường được niêm phong trong tệp bằng chứng {hw['environment_lock_path']} với mã băm SHA-256: {hw['environment_lock_sha256']}."
+        f"Đặc tả môi trường được niêm phong trong tệp bằng chứng {hw['environment_lock_path']} với mã băm SHA-256: {hw['environment_lock_sha256']}."
     )
 
     # Table 3.1
@@ -258,11 +264,11 @@ def build_chapter_3():
     t1_rows = [
         ["GPU phần cứng", f"{hw['gpu']} ({hw['vram']}, CC {hw['compute_capability']})", f"UUID: {hw['gpu_uuid'][:24]}..."],
         ["Driver GPU", f"NVIDIA Display Driver {hw['driver']}", "Khóa phiên bản cố định"],
-        ["Bộ vi xử lý", f"{hw['cpu']}", "Affinity Mask: Cores 0-7"],
-        ["Bộ nhớ & Lưu trữ", f"{hw['ram']}, {hw['storage']}", "Zero GPU Starvation"],
-        ["Phần mềm tính toán", f"Python {hw['python']} / PyTorch {hw['pytorch']}, cuBLAS {hw['cublas_workspace_config']}", "Deterministic Math Locked"],
-        ["Mã băm môi trường", "STAGE-A2-LOCAL-EXECUTION-ENVIRONMENT-V1.5.json", f"SHA256: {hw['environment_lock_sha256'][:24]}..."],
-        ["Kế hoạch thực thi", "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json", "Tuân thủ Amendment 13"]
+        ["Bộ vi xử lý", f"{hw['cpu']}", "12 nhân vật lý, 16 luồng"],
+        ["Bộ nhớ hệ thống", f"RAM {hw['ram']}", "Ghi nhận từ môi trường lock"],
+        ["Hệ điều hành", f"{hw['os']}", "Nền tảng thực thi cục bộ"],
+        ["Phần mềm tính toán", f"Python {hw['python']}, PyTorch {hw['pytorch']}, CUDA {hw['cuda_runtime']}", f"cuBLAS {hw['cublas_workspace_config']}"],
+        ["Mã băm môi trường", "STAGE-A2-LOCAL-EXECUTION-ENVIRONMENT-V1.5.json", f"SHA256: {hw['environment_lock_sha256'][:24]}..."]
     ]
     insert_thesis_table(doc, target_p, t1_headers, t1_widths, t1_rows, font_size_pt=12)
     add_p("", first_line_indent=False)
@@ -277,9 +283,9 @@ def build_chapter_3():
     )
 
     add_p(
-        f"Khác với các phương pháp xáo trộn ngẫu nhiên truyền thống có thể gây ra hiện tượng rò rỉ dữ liệu qua chiều thời gian, "
+        f"Khác với các phương pháp xáo trộn ngẫu nhiên truyền thống có nguy cơ rò rỉ thông tin thời gian, "
         f"nghiên cứu áp dụng Giao thức Phân chia Nhân quả Thời gian ({ds['split_protocol']}). "
-        f"Toàn bộ các phân vùng dữ liệu được phân định rành mạch và xác thực bằng chữ ký mật mã:"
+        f"Toàn bộ các phân vùng dữ liệu được phân định theo thứ tự thời gian và xác thực bằng chữ ký mật mã:"
     )
 
     train_info = ds["train"]
@@ -301,10 +307,10 @@ def build_chapter_3():
     )
 
     add_p(
-        f"Được niêm phong cách ly mật mã tuyệt đối thông qua cơ chế Tường lửa Dữ liệu Kiểm thử ({test_info['status']}). "
+        f"Được niêm phong cách ly mật mã thông qua cơ chế Tường lửa Dữ liệu Kiểm thử ({test_info['status']}). "
         f"Toàn bộ quá trình tối ưu hóa trọng số và kích hoạt điều kiện dừng sớm chỉ được thực hiện trên tập Train và Validation; "
         f"chỉ số test_opened luôn được bảo toàn ở trạng thái {str(test_info['test_opened']).lower()} với {test_info['test_reads']} lượt truy cập, "
-        f"đảm bảo tính khách quan tuyệt đối cho giai đoạn kiểm thử hạ nguồn.",
+        f"đảm bảo dữ liệu kiểm thử hoàn toàn chưa bị truy cập cho đến giai đoạn đánh giá hạ nguồn.",
         bold_prefix="3. Phân vùng Kiểm thử Niêm phong (Sealed Test Split): "
     )
 
@@ -326,7 +332,7 @@ def build_chapter_3():
 
     add_p(
         "Theo khung đánh giá của luận văn, năng lực của vector biểu diễn đặc trưng log được kiểm chứng qua hệ thống thang đo ba tầng: "
-        "(1) Thang đo Bản chất (Intrinsic Metrics) đo lường độ phân kỳ phân phối và sai số tái cấu trúc trên không gian tự giám sát; "
+        "(1) Thang đo Bản chất (Intrinsic Metrics) đo lường sai số dự đoán và độ phân kỳ phân phối trên không gian tự giám sát; "
         "(2) Thang đo Đầu dò (Probe Metrics) đánh giá năng lực phân tách tuyến tính các thuộc tính an ninh; "
         "và (3) Thang đo Vận hành (Operational Metrics) kiểm tra hiệu năng tính toán, độ trễ và thông lượng dòng sự kiện."
     )
@@ -336,7 +342,7 @@ def build_chapter_3():
         f"bộ nhớ trạng thái thực thể động dựa trên tế bào {arch['memory_cell']}, "
         f"cơ chế chú ý thời gian đa đầu ({arch['attention']}), và phép chiếu thời gian liên tục điều hòa ({arch['time_encoding']}). "
         f"Mô hình xử lý đồ thị dị thể với {arch['node_types_count']} loại nút thực thể và {arch['canonical_relations_count']} loại quan hệ cạnh. "
-        f"Mô hình được huấn luyện bằng thuật toán tối ưu {arch['optimizer']} kết hợp bộ lập lịch {arch['scheduler']}. "
+        f"Mô hình được tối ưu hóa bằng thuật toán {arch['optimizer']} kết hợp bộ lập lịch {arch['scheduler']}. "
         f"Kích thước lô hiệu dụng là {arch['effective_batch_size']}, tương ứng {arch['steps_per_epoch']} bước cập nhật trọng số trên mỗi epoch."
     )
 
@@ -373,13 +379,17 @@ def build_chapter_3():
     add_h3("Kết quả huấn luyện Stage A2 trên 5 hạt ngẫu nhiên chuẩn")
 
     add_p(
-        "Nhằm đánh giá tính ổn định thống kê và loại trừ hiện tượng thiên lệch do chọn lọc kết quả, "
-        "chiến dịch thực nghiệm được tiến hành trên 5 hạt giống khởi tạo ngẫu nhiên độc lập: 7, 999, 42, 1337, và 2024. "
-        "Dựa trên kết quả kiểm toán nguồn gốc thực thi (Provenance Audit), các đợt chạy được phân định khoa học thành hai nhóm: "
-        "(1) Nhóm Hạt giống Chuẩn có chứng nhận (Canonical Seeds) gồm Seed 7, Seed 999 và Seed 42, tuân thủ đúng cam kết mã nguồn và thiết lập thực thi; "
-        "và (2) Nhóm Đợt chạy Khám phá không chuẩn (Noncanonical Runs) gồm Seed 1337 (bị dừng ở epoch 12 trên bộ lập lịch 20 epoch) "
-        "và Seed 2024 (chứa sai lệch mã băm commit trong biên bản hoàn tất và điều chỉnh lập lịch giữa chừng). "
-        "Bảng 3.3 tổng hợp chi tiết các chỉ số đo đạc thực tế trên từng hạt giống từ các tệp nhật ký thực thi được xác minh."
+        "Nhằm đánh giá tính ổn định thống kê và loại trừ hiện tượng thiên lệch chọn lọc, "
+        "chiến dịch thực nghiệm được tiến hành trên 5 hạt giống khởi tạo ngẫu nhiên độc lập: 42, 7, 999, 1337, và 2024. "
+        "Qua quá trình kiểm toán nguồn gốc thực thi độc lập dựa trên lịch sử commit Git và văn bản tu chính giao thức (PROTOCOL-AMENDMENTS.md), "
+        "các đợt chạy được phân loại khoa học và minh bạch như sau: "
+        "(1) Hạt giống Chuẩn (Canonical): Seed 42 là đợt chạy tuân thủ trọn vẹn Giao thức Tu chính 13 (lập lịch 20 epochs, warmup 573 steps), "
+        "dừng tại Epoch 4 theo quy tắc dừng sớm đã tiền đăng ký; "
+        "(2) Nhóm Lệch Giao thức (Protocol Deviation): Seed 7 và Seed 999 hoàn thành 12 epochs với kết quả mất mát kiểm định thấp, "
+        "tuy nhiên việc áp dụng trần 12 epochs không có văn bản tu chính khoa học tiền đăng ký tương ứng trong danh mục tu chính chính thức; "
+        "và (3) Nhóm Đợt chạy Không chuẩn (Noncanonical): Seed 1337 (dừng ở epoch 12 trên bộ lập lịch 20 epochs chưa kết thúc, thiếu biên bản chạy) "
+        "và Seed 2024 (chứa sai lệch mã băm commit và điều chỉnh lịch học giữa chừng). "
+        "Bảng 3.3 tổng hợp chi tiết số liệu đo đạc thực tế trên từng hạt giống từ các tệp nhật ký thực thi được xác minh."
     )
 
     # Table 3.3
@@ -403,45 +413,48 @@ def build_chapter_3():
             f"{s['l_time']:.4f}"
         ])
 
-    ag_conv = ag["canonical_converged"]
-    ag_all = ag["canonical_all"]
+    ag_canon = ag["canonical"]
+    ag_dev = ag["protocol_deviation"]
+
+    # Canonical aggregate row
     t3_rows.append([
-        "TB Chuẩn Hội tụ",
-        f"CANONICAL ({ag_conv['seeds_count']} seeds)",
-        "Hoàn tất",
+        "TB Chuẩn (1 seed)",
+        "CANONICAL (Seed 42)",
+        "Dừng sớm (Ep 4)",
+        "4 / 12",
+        "2,292",
+        f"{ag_canon['mean_final_train_loss']:.4f}",
+        f"{ag_canon['mean_best_val_loss']:.6f}",
+        f"{ag_canon['mean_final_val_loss']:.6f}",
+        "4.9266",
+        "2.1803",
+        "0.4407"
+    ])
+
+    # Protocol deviation aggregate row
+    t3_rows.append([
+        "TB Lệch GT (2 seeds)",
+        "PROTOCOL_DEVIATION",
+        "Hoàn tất 12 ep",
         "12 / 12",
         "6,876",
-        f"{ag_conv['mean_final_train_loss']:.4f}",
-        f"{ag_conv['mean_best_val_loss']:.6f}",
-        f"{ag_conv['mean_final_val_loss']:.6f}",
-        f"{ag_conv['mean_l_rel']:.4f}",
-        f"{ag_conv['mean_l_node']:.4f}",
-        f"{ag_conv['mean_l_time']:.4f}"
-    ])
-    t3_rows.append([
-        "TB Toàn bộ Chuẩn",
-        f"CANONICAL ({ag_all['seeds_count']} seeds)",
-        "Đã kiểm toán",
-        "9.3 / 12",
-        "5,348",
-        f"{ag_all['mean_final_train_loss']:.4f}",
-        f"{ag_all['mean_best_val_loss']:.6f}",
-        f"{ag_all['mean_final_val_loss']:.6f}",
-        "-",
-        "-",
-        "-"
+        f"{ag_dev['mean_final_train_loss']:.4f}",
+        f"{ag_dev['mean_best_val_loss']:.6f}",
+        f"{ag_dev['mean_final_val_loss']:.6f}",
+        f"{ag_dev['mean_l_rel']:.4f}",
+        f"{ag_dev['mean_l_node']:.4f}",
+        f"{ag_dev['mean_l_time']:.4f}"
     ])
 
     insert_thesis_table(doc, target_p, t3_headers, t3_widths, t3_rows, font_size_pt=9.5)
     add_p("", first_line_indent=False)
 
     add_p(
-        f"Từ kết quả Bảng 3.3, trên tập hạt giống chuẩn hội tụ hoàn tất ({ag_conv['description']}), "
-        f"mô hình đạt giá trị mất mát kiểm định trung bình tốt nhất là {ag_conv['mean_best_val_loss']:.6f} "
-        f"với độ lệch chuẩn cực kỳ thấp (std = {ag_conv['std_best_val_loss']:.6f}). "
-        f"Các thành phần mất mát thành phần cũng cho thấy mức độ hội tụ nhất quán: "
-        f"mất mát quan hệ L_rel đạt mức trung bình {ag_conv['mean_l_rel']:.4f}, mất mát thuộc tính nút L_node đạt {ag_conv['mean_l_node']:.4f}, "
-        f"và mất mát hồi quy thời gian L_time duy trì ở mức tối ưu {ag_conv['mean_l_time']:.4f}."
+        f"Từ kết quả Bảng 3.3, hạt giống chuẩn duy nhất tuân thủ toàn diện giao thức V1.5 là Seed 42, "
+        f"ghi nhận mất mát kiểm định tốt nhất đạt {ag_canon['mean_best_val_loss']:.6f} tại Epoch 1 trước khi kích hoạt quy tắc dừng sớm. "
+        f"Đối với nhóm quan sát bổ trợ 12 epochs (Seed 7 và Seed 999, được ghi nhận dưới dạng Protocol Deviation do thiếu văn bản tu chính tiền đăng ký), "
+        f"mức mất mát kiểm định trung bình quan sát thấy là {ag_dev['mean_best_val_loss']:.6f} (độ lệch chuẩn mẫu {ag_dev['std_best_val_loss']:.6f}). "
+        f"Việc phân tách rạch ròi giữa kết quả chuẩn tiền đăng ký và kết quả lệch giao thức đảm bảo tính liêm chính cao nhất cho báo cáo chuyên đề."
     )
 
     # 3.2.2
@@ -451,7 +464,7 @@ def build_chapter_3():
         "Nhằm làm rõ vị trí đóng góp học thuật của khung biểu diễn đề xuất, Bảng 3.4 tiến hành đối sánh định tính "
         "về mặt đặc tính phương pháp luận giữa mô hình của luận văn và các phương pháp trích xuất đặc trưng log tiêu biểu được công bố trên các diễn đàn bảo mật quốc tế. "
         "Cần nhấn mạnh rằng đây là đối chiếu dựa trên phân tích thiết kế kiến trúc lý thuyết và thực nghiệm tiền huấn luyện Stage A2, "
-        "không phải là tuyên bố thực nghiệm vượt trội về độ chính xác phát hiện bất thường hạ downstream khi chưa tiến hành đánh giá end-to-end có gắn nhãn."
+        "không cấu thành tuyên bố thực nghiệm so sánh hơn về độ chính xác phát hiện bất thường downstream khi chưa tiến hành đánh giá end-to-end có gắn nhãn."
     )
 
     # Table 3.4
@@ -508,64 +521,64 @@ def build_chapter_3():
     add_h3("Phân tích động thái tối ưu hóa và hiện tượng dừng sớm")
 
     add_p(
-        "Một phát hiện thực nghiệm có ý nghĩa khoa học sâu sắc trong chiến dịch huấn luyện Stage A2 là sự phân hóa rõ rệt "
-        "giữa các quỹ đạo hội tụ. Trong khi Seed 7 và Seed 999 hội tụ thuận lợi về vùng cực tiểu toàn cục quanh mức 0.550 - 0.609, "
-        "thì Seed 42 đã kích hoạt cơ chế dừng sớm (Early Stopping) ngay tại Epoch 4 với giá trị mất mát kiểm định dừng ở mức 6.081352 "
-        "(patience = 3/3 epochs không cải thiện so với Epoch 1)."
+        "Một phát hiện thực nghiệm đáng chú ý trong chiến dịch huấn luyện Stage A2 là sự phân hóa giữa các quỹ đạo hội tụ. "
+        "Trong khi Seed 7 và Seed 999 đạt được mức mất mát kiểm định thấp quanh 0.550 - 0.609 sau 12 epochs, "
+        "thì Seed 42 đã kích hoạt cơ chế dừng sớm (Early Stopping) ngay tại Epoch 4 với giá trị mất mát kiểm định ghi nhận ở mức 6.081352 "
+        "(do thỏa mãn điều kiện kiên nhẫn patience = 3/3 epochs không cải thiện so với Epoch 1)."
     )
 
     add_p(
-        "Phân tích chuyên sâu nhật ký huấn luyện (TRAIN-LOG.jsonl) cho thấy nguyên nhân cốt lõi xuất phát từ hình học của bề mặt mất mát không lồi (Non-convex Loss Surface) "
-        "trong mạng nơ-ron đồ thị thời gian. Tại Epoch 1, Seed 42 ghi nhận mất mát kiểm định ban đầu là 6.081352 (trong đó L_rel = 4.6729, L_node = 1.3935). "
-        "Tuy nhiên, do điểm khởi tạo trọng số ngẫu nhiên ban đầu rơi vào một vùng bề mặt có độ dốc cực nhỏ (Saddle Point Plateau), "
-        "gradient truyền ngược của nhánh dự đoán quan hệ (Relation Head) bị tiêu giảm, khiến mất mát L_rel trên tập kiểm định tăng vọt lên 6.3761 ở Epoch 2 "
-        "và duy trì ở mức cao 5.2464 (Epoch 3) và 4.9266 (Epoch 4). Điều này dẫn đến việc điều kiện kiên nhẫn bị vi phạm và quá trình huấn luyện dừng an toàn."
+        "Phân tích nhật ký huấn luyện (TRAIN-LOG.jsonl) ghi nhận tại Epoch 1, Seed 42 có mất mát kiểm định ban đầu là 6.081352. "
+        "Sau đó, mất mát trên tập kiểm định không tiếp tục giảm mà tăng lên 6.3761 ở Epoch 2, duy trì ở mức cao ở Epoch 3 (7.0354) và Epoch 4 (7.1509). "
+        "Dữ liệu thực nghiệm hiện có chưa đủ bằng chứng để xác định chính xác nguyên nhân nội tại của hiện tượng này "
+        "(chẳng hạn như liệu bề mặt tối ưu có dạng yên ngựa hay gradient của nhánh quan hệ có bị suy giảm hay không), "
+        "do trong quá trình chạy chưa thực hiện đo đạc trực tiếp phổ giá trị riêng hay chuẩn gradient của từng tầng trọng số. "
+        "Tuy nhiên, hiện tượng này cho thấy quá trình tối ưu hóa mô hình đồ thị thời gian có thể chịu ảnh hưởng đáng kể từ trạng thái khởi tạo trọng số ngẫu nhiên ban đầu."
     )
 
     add_p(
-        "Về mặt liêm chính học thuật, việc báo cáo trung thực kết quả của Seed 42 minh chứng cho tính khách quan tuyệt đối của nghiên cứu: "
-        "số liệu được ghi nhận nguyên vẹn từ thiết bị tính toán, không hề có hành vi loại bỏ dữ liệu bất lợi (cherry-picking) "
-        "để tạo dựng kết quả hoàn hảo nhân tạo. Đồng thời, hiện tượng này khẳng định tính tất yếu của việc thực nghiệm đa hạt giống (K >= 3) "
-        "nhằm lượng hóa độ bất định khởi tạo trước khi kết luận về độ tin cậy của một kiến trúc học sâu."
+        "Việc báo cáo trung thực kết quả của Seed 42 thể hiện sự tuân thủ nghiêm túc quy trình nghiên cứu khoa học: "
+        "mọi quan sát thực tế đều được ghi nhận đầy đủ, không thực hiện hành vi loại bỏ kết quả bất lợi để làm đẹp số liệu. "
+        "Đồng thời, sự biến thiên giữa các hạt giống khẳng định sự cần thiết của việc đánh giá đa seed nhằm lượng hóa độ bất định trước khi đưa ra các kết luận khái quát."
     )
 
     # 3.3.2
     add_h3("Kiểm chứng các giả thuyết khoa học tiền đăng ký")
 
     add_p(
-        "Đối chiếu kết quả thực nghiệm Stage A2 với các giả thuyết khoa học đã tiền đăng ký trong đề cương nghiên cứu:"
+        "Đối chiếu các kết quả quan sát thấy tại Stage A2 với các giả thuyết khoa học đã tiền đăng ký:"
     )
 
     add_p(
-        "Giả thuyết về Năng lực Biểu diễn Quan hệ Cấu trúc (H1): Được củng cố mạnh mẽ bởi mức độ hội tụ của hàm mất mát tự giám sát. "
-        "Trên các hạt giống chuẩn hội tụ, mất mát dự đoán quan hệ cạnh (L_rel) giảm sâu từ mức ban đầu ~0.59 xuống 0.1833, "
-        "chứng minh mô hình học được phân phối tương tác có nghĩa giữa các thực thể hệ thống trong log HDFS.",
+        "Giả thuyết về Năng lực Biểu diễn Quan hệ Cấu trúc (H1): Kết quả quan sát thấy bước đầu phù hợp với giả định H1. "
+        "Trên các đợt chạy 12 epochs, mất mát dự đoán quan hệ cạnh (L_rel) giảm từ mức ban đầu ~0.59 xuống 0.1833, "
+        "gợi ý rằng mô hình có khả năng nắm bắt phân phối quan hệ giữa các thực thể hệ thống trong log HDFS.",
         bold_prefix="1. Giả thuyết H1 (Tính Chân thực Biểu diễn): "
     )
 
     add_p(
-        "Giả thuyết về Độ nhạy Thời gian Liên tục (H2): Được kiểm chứng qua hàm mất mát hồi quy khoảng thời gian (L_time). "
-        "Giá trị mất mát L_time hội tụ ổn định về mức 0.0857 - 0.0887 trên các hạt giống chuẩn, xác nhận hiệu quả của phép chiếu "
-        "điều hòa phi(Delta t) trong việc nắm bắt nhịp điệu phát sinh sự kiện hệ thống mà không cần rời rạc hóa nhân tạo.",
+        "Giả thuyết về Độ nhạy Thời gian Liên tục (H2): Kết quả quan sát thấy bước đầu phù hợp với giả định H2. "
+        "Giá trị mất mát hồi quy thời gian L_time giảm về mức 0.0857 - 0.0887 trên các đợt chạy 12 epochs, "
+        "phù hợp với kỳ vọng rằng hàm chiếu điều hòa phi(Delta t) hỗ trợ việc biểu diễn các khoảng trễ thời gian liên tục.",
         bold_prefix="2. Giả thuyết H2 (Độ nhạy Dòng Thời gian): "
     )
 
     add_p(
-        "Giả thuyết về Gióng hàng Đa góc nhìn (H3): Trong phạm vi Stage A2, nghiên cứu tập trung kiểm chứng độc lập nhánh biểu diễn đồ thị (Temporal Graph View). "
-        "Việc gióng hàng đồng thời giữa góc nhìn đồ thị và góc nhìn tuần tự Transformer được định vị là mục tiêu của các giai đoạn thực nghiệm tiếp theo.",
+        "Giả thuyết về Gióng hàng Đa góc nhìn (H3): Trong phạm vi Stage A2, nghiên cứu tập trung kiểm chứng nhánh biểu diễn đồ thị (Temporal Graph View). "
+        "Việc kiểm chứng gióng hàng đồng bộ giữa góc nhìn đồ thị và góc nhìn tuần tự Transformer được định vị cho các giai đoạn thực nghiệm tiếp theo.",
         bold_prefix="3. Giả thuyết H3 (Đồng bộ Đa góc nhìn): "
     )
 
     add_p(
-        "Giả thuyết về Hiệu năng Tính toán Luồng (H4): Kích thước lô hiệu dụng 1,024 sự kiện (tập hợp từ 4 cửa sổ W = 256) "
-        "chỉ tiêu tốn tối đa 546.9 MB bộ nhớ VRAM trên card RTX 3050 Ti Laptop (ngưỡng an toàn tuyệt đối so với dung lượng 4 GB VRAM), "
-        "khẳng định khả năng triển khai mô hình trên các thiết bị biên hoặc máy trạm SOC tiêu chuẩn.",
+        "Giả thuyết về Hiệu năng Tính toán Luồng (H4): Kích thước lô hiệu dụng 1,024 sự kiện tiêu tốn dưới 550 MB bộ nhớ GPU trong quá trình chạy, "
+        "gợi ý tiềm năng bước đầu về mặt dung lượng bộ nhớ khi xử lý luồng sự kiện. "
+        "Tuy nhiên, cần thêm các phép đo thực nghiệm về độ trễ streaming và thông lượng thực tế trước khi có thể kết luận về khả năng triển khai trong môi trường vận hành SOC.",
         bold_prefix="4. Giả thuyết H4 (Khả thi Tài nguyên): "
     )
 
     add_p(
-        "Giả thuyết về Độ bất định Khởi tạo Trọng số (H5): Sự phân kỳ rõ rệt giữa Seed 42 và nhóm Seed 7 / 999 đã chứng minh giả thuyết H5, "
-        "khẳng định kết quả học sâu trên đồ thị phụ thuộc chặt chẽ vào phân phối khởi tạo ban đầu và đòi hỏi các giải pháp khởi tạo thích nghi trong tương lai.",
+        "Giả thuyết về Độ bất định Khởi tạo Trọng số (H5): Sự phân kỳ quan sát thấy giữa Seed 42 và các đợt chạy khác bước đầu ủng hộ giả định H5, "
+        "cho thấy kết quả huấn luyện mô hình đồ thị thời gian có thể nhạy cảm với khởi tạo ngẫu nhiên ban đầu.",
         bold_prefix="5. Giả thuyết H5 (Độ bất định Khởi tạo): "
     )
 
@@ -578,49 +591,45 @@ def build_chapter_3():
     add_h3("Khả năng tích hợp vận hành trong trung tâm điều hành an ninh mạng SOC")
 
     add_p(
-        "Kiến trúc biểu diễn đồ thị thời gian của chuyên đề mở ra triển vọng ứng dụng thiết thực trong các trung tâm giám sát an ninh mạng (SOC):"
+        "Mô hình biểu diễn đồ thị thời gian cung cấp tiềm năng ứng dụng hỗ trợ công tác giám sát an ninh mạng:"
     )
 
     add_bullet_p(
-        "Giảm tải Cảnh báo Rác (Alert Fatigue Reduction): Bằng cách mô hình hóa tương tác giữa các thực thể hệ thống theo thời gian liên tục, "
-        "bộ biểu diễn cho phép gom cụm các sự kiện cảnh báo đơn lẻ có cùng nguồn gốc nhân quả thành một đồ thị sự cố thống nhất, "
-        "giúp chuyên viên phân tích nắm bắt ngữ cảnh toàn cục thay vì xử lý từng cảnh báo rời rạc."
+        "Tiềm năng Hỗ trợ Giảm tải Cảnh báo: Việc biểu diễn các thực thể hệ thống theo chuỗi tương tác thời gian liên tục "
+        "mở ra khả năng gom cụm các sự kiện cảnh báo đơn lẻ có liên hệ nhân quả, hỗ trợ chuyên viên phân tích theo dõi ngữ cảnh sự cố theo đồ thị tương tác."
     )
 
     add_bullet_p(
-        "Hỗ trợ Điều tra Số (Digital Forensics Enhancement): Vector biểu diễn trạng thái động của các nút thực thể cho phép tái hiện "
-        "chuỗi hành vi khả nghi theo trình tự thời gian chính xác đến từng mili-giây, hỗ trợ đắc lực cho công tác truy vết nguồn gốc xâm nhập (Provenance Tracking)."
+        "Tiềm năng Hỗ trợ Truy vết Sự cố: Vector biểu diễn trạng thái động của các nút thực thể có thể được sử dụng "
+        "để đối chiếu thứ tự tương tác theo thời gian, hỗ trợ công tác truy vết nguồn gốc trong các tình huống phân tích điều tra số."
     )
 
     # 3.4.2
     add_h3("Các giới hạn thực nghiệm và hướng nghiên cứu tiếp theo")
 
     add_p(
-        "Nhìn nhận thẳng thắn dưới góc độ khoa học, nghiên cứu còn tồn tại một số giới hạn cần được giải quyết trong các giai đoạn tiếp theo:"
+        "Nghiên cứu ghi nhận các giới hạn thực nghiệm cụ thể cần được hoàn thiện trong các giai đoạn tiếp theo:"
     )
 
     add_bullet_p(
-        "Giới hạn Tài nguyên Cục bộ: Các thực nghiệm Stage A2 được tiến hành trên môi trường máy trạm cục bộ với card đồ họa 4GB VRAM. "
-        "Mặc dù đã tối ưu hóa thông qua tích lũy gradient, quy mô đồ thị hiện tại bị giới hạn trong phạm vi các cửa sổ ngữ cảnh W = 256 sự kiện. "
-        "Giai đoạn tiếp theo cần mở rộng thử nghiệm trên các cụm máy chủ đa GPU để xử lý các đồ thị quy mô hàng triệu nút trên tập dữ liệu DARPA TC."
+        "Giới hạn Quy mô Thực nghiệm Cục bộ: Thực nghiệm Stage A2 được tiến hành trên môi trường máy trạm đơn GPU với độ dài cửa sổ W = 256 sự kiện. "
+        "Cần tiếp tục đánh giá khả năng mở rộng trên các đồ thị quy mô lớn hơn với các tập dữ liệu như DARPA TC."
     )
 
     add_bullet_p(
-        "Cơ chế Khởi tạo Thích nghi: Hiện tượng bẫy yên ngựa tại Seed 42 chỉ ra nhu cầu cấp thiết về việc nghiên cứu các kỹ thuật khởi tạo trọng số chuyên biệt "
-        "cho mạng đồ thị thời gian (như Normalized Dynamic Initialization) hoặc áp dụng giai đoạn Warmup thích nghi theo độ dốc gradient "
-        "để đảm bảo tỷ lệ hội tụ 100% trên mọi hạt giống ngẫu nhiên."
+        "Nghiên cứu Chiến lược Khởi tạo Trọng số: Hiện tượng dừng sớm ở Seed 42 gợi ý sự cần thiết của việc nghiên cứu sâu hơn "
+        "về các cơ chế khởi tạo trọng số hoặc kỹ thuật khởi động (warmup) thích nghi nhằm cải thiện độ ổn định tối ưu hóa."
     )
 
     add_bullet_p(
-        "Đánh giá Hạ nguồn End-to-End: Báo cáo hiện tại tập trung hoàn tất giai đoạn tiền huấn luyện tự giám sát (Stage A2). "
-        "Nhiệm vụ trọng tâm tiếp theo là tích hợp các đầu dò phân loại (Probing Classifiers) và đánh giá năng lực phát hiện tấn công thực tế "
-        "trên tập dữ liệu kiểm thử niêm phong (Sealed Test Split) khi được cấp phép mở tường lửa."
+        "Đánh giá Hạ nguồn với Dữ liệu Kiểm thử: Giai đoạn Stage A2 mới hoàn thành tiền huấn luyện tự giám sát trên tập Train và Validation. "
+        "Nhiệm vụ tiếp theo là tiến hành đánh giá năng lực phát hiện tấn công trên tập dữ liệu kiểm thử niêm phong khi có ủy quyền chính thức."
     )
 
     # =========================================================================
     # CONCLUSION SECTION REGENERATION
     # =========================================================================
-    print("[Conclusion] Rebuilding Conclusion section with reconciled academic findings...")
+    print("[Conclusion] Rebuilding Conclusion section with evidence-bound language...")
 
     # Clean existing following paragraphs until bibliography
     cur_elem = target_p._p.getnext()
@@ -658,20 +667,20 @@ def build_chapter_3():
         return new_p
 
     add_conc_p(
-        "Báo cáo chuyên đề nghiên cứu chuyên sâu đã hoàn thành các mục tiêu khoa học đề ra, xây dựng và kiểm chứng thực nghiệm "
-        "khung biểu diễn đặc trưng nhật ký sự kiện hệ thống dựa trên mô hình đồ thị theo dòng thời gian liên tục. "
-        "Các đóng góp học thuật và thực tiễn cốt lõi của báo cáo chuyên đề được tổng hợp qua ba chương trọng tâm:"
+        "Báo cáo chuyên đề nghiên cứu chuyên sâu đã hoàn thành việc xây dựng và bước đầu kiểm chứng thực nghiệm "
+        "mô hình biểu diễn đặc trưng nhật ký sự kiện hệ thống dựa trên đồ thị theo dòng thời gian liên tục. "
+        "Các nội dung chính của báo cáo chuyên đề được tổng hợp qua ba chương:"
     )
 
     add_conc_p(
-        "1. Về mặt khảo sát và xác lập bài toán (Chương 1): Nghiên cứu đã hệ thống hóa toàn diện các phương pháp trích xuất đặc trưng log truyền thống "
+        "1. Về mặt khảo sát và xác lập bài toán (Chương 1): Nghiên cứu đã hệ thống hóa các phương pháp trích xuất đặc trưng log truyền thống "
         "(thống kê tần suất, nhúng từ vựng, trích xuất mẫu template tĩnh và đồ thị nguồn gốc tĩnh). "
-        "Nghiên cứu đã chỉ ra 5 điểm nghẽn then chốt trong các cách tiếp cận hiện hữu, đặc biệt là sự mất mát ngữ nghĩa tham số biến đổi "
+        "Nghiên cứu đã chỉ ra các điểm nghẽn then chốt trong các cách tiếp cận hiện hữu, đặc biệt là sự mất mát ngữ nghĩa tham số biến đổi "
         "và sự thiếu hụt thông tin về khoảng trễ thời gian liên tục giữa các sự kiện an ninh mạng."
     )
 
     add_conc_p(
-        "2. Về mặt phương pháp luận và thiết kế kiến trúc (Chương 2): Luận văn đã đề xuất khung kiến trúc biểu diễn đa góc nhìn, "
+        "2. Về mặt phương pháp luận và thiết kế kiến trúc (Chương 2): Luận văn đã đề xuất khung kiến trúc biểu diễn đặc trưng, "
         "trong đó nhánh đồ thị sự kiện theo thời gian (TemporalGraphViewEncoder) tích hợp tế bào bộ nhớ GRU động "
         "và cơ chế chú ý thời gian đa đầu nhằm theo vết trạng thái biến đổi của các thực thể hệ thống. "
         "Mô hình tích hợp hàm nhúng thời gian liên tục phi(Delta t) và hàm mục tiêu tự giám sát đa nhiệm, "
@@ -679,17 +688,17 @@ def build_chapter_3():
     )
 
     add_conc_p(
-        f"3. Về mặt thực nghiệm và liêm chính khoa học (Chương 3): Triển khai nghiêm ngặt theo Giao thức Tiền đăng ký V1.5 và quy trình kiểm toán nguồn gốc, "
-        f"chiến dịch thực nghiệm Stage A2 trên tập dữ liệu HDFS quy mô lớn đã xác nhận sự hội tụ vững chắc trên tập các hạt giống chuẩn (Seed 7: {st[0]['best_val_loss']:.6f}, "
-        f"Seed 999: {st[1]['best_val_loss']:.6f}), đạt mức mất mát kiểm định trung bình {ag_conv['mean_best_val_loss']:.6f}. "
-        f"Đồng thời, việc phân tích khách quan hiện tượng dừng sớm ở Seed 42 đã cung cấp bằng chứng thực tế về tính chất không lồi của bài toán tối ưu đồ thị thời gian. "
-        f"Quy trình kiểm toán cũng đã minh bạch hóa việc phân loại các đợt chạy không chuẩn (Seed 1337 và Seed 2024), "
-        f"khẳng định cam kết liêm chính học thuật tuyệt đối của luận văn."
+        f"3. Về mặt thực nghiệm và kiểm toán khoa học (Chương 3): Dựa trên quy trình kiểm toán nguồn gốc thực thi, "
+        f"kết quả tiền huấn luyện Stage A2 trên tập dữ liệu HDFS ghi nhận hạt giống chuẩn tuân thủ giao thức V1.5 là Seed 42 "
+        f"với mất mát kiểm định tốt nhất đạt {ag_canon['mean_best_val_loss']:.6f} tại Epoch 1 trước khi dừng sớm theo quy tắc định trước. "
+        f"Bên cạnh đó, các quan sát trên các đợt chạy 12 epochs (Seed 7 và Seed 999, được phân loại là Protocol Deviation do thiếu văn bản tu chính tiền đăng ký) "
+        f"cho thấy mức mất mát kiểm định đạt trung bình {ag_dev['mean_best_val_loss']:.6f}. "
+        f"Việc phân loại minh bạch giữa các nhóm kết quả đảm bảo tính trung thực học thuật của báo cáo."
     )
 
     add_conc_p(
-        "Các kết quả đạt được tạo tiền đề kỹ thuật vững chắc để bước vào các giai đoạn tiếp theo của lộ trình nghiên cứu, "
-        "hướng tới việc hoàn thiện mô hình gióng hàng đa góc nhìn toàn phần và triển khai thử nghiệm phát hiện tấn công đa giai đoạn trong môi trường thực tế."
+        "Các kết quả đạt được cung cấp cơ sở kỹ thuật ban đầu để phục vụ các giai đoạn nghiên cứu tiếp theo, "
+        "hướng tới việc hoàn thiện mô hình biểu diễn đa góc nhìn toàn phần và thử nghiệm đánh giá phát hiện tấn công trên dữ liệu kiểm thử khi được ủy quyền."
     )
 
     # Save document

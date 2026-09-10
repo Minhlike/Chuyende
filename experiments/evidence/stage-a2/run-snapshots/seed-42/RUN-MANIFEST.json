@@ -1,0 +1,33 @@
+{
+  "manifest_version": "1.5.0",
+  "run_id": "RUN-STAGE-A2-HDFS-SEED42",
+  "seed": 42,
+  "execution_code_commit_sha": "33269cbe897fbbad095ad8979b9ca914d209e701",
+  "status": "COMPLETED",
+  "artifacts": [
+    {
+      "path": "experiments\\runs\\stage-a2\\HDFS\\seed-42\\METRICS.json",
+      "sha256": "f005a079b938d142c3064231f3d975ef9c82ab12484b7a1b951dc27b058551f1"
+    },
+    {
+      "path": "experiments\\runs\\stage-a2\\HDFS\\seed-42\\EXPERIMENTAL-SOURCE.json",
+      "sha256": "4bd986307b52f06cd4acfc7e645e3d839f6a607f806a9d518fac04f92b1e8915"
+    },
+    {
+      "path": "experiments\\runs\\stage-a2\\HDFS\\seed-42\\ENVIRONMENT.json",
+      "sha256": "598d38def4a87e9ca0dcb9eab27f49ab0c8f5330ac4868ff8ade38a3ed205ee3"
+    },
+    {
+      "path": "experiments\\runs\\stage-a2\\HDFS\\seed-42\\TRAIN-LOG.jsonl",
+      "sha256": "0c607b464fa10846bd82f7c1ba09b17e0356a8ac4d4dafb222f177d3e48385c7"
+    },
+    {
+      "path": "experiments\\runs\\stage-a2\\HDFS\\seed-42\\CHECKPOINT-INVENTORY.json",
+      "sha256": "ec61610353129b0aea8b7bfe27719d58bb009190433bbb9634165b1b99c341fc"
+    },
+    {
+      "path": "experiments\\runs\\stage-a2\\HDFS\\seed-42\\TEST-FIREWALL.json",
+      "sha256": "e07999decc7164e639a71fbfb3a0b9670273d01fdc8cdb087ebdc50c2c84af78"
+    }
+  ]
+}

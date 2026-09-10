@@ -1,0 +1,14 @@
+{
+  "environment_id": "ENV-STAGE-A2-SEED999",
+  "python_executable": "D:\\Research\\.venv-stage-a2-cuda\\Scripts\\python.exe",
+  "python_version": "3.12.8",
+  "python_major_minor": "3.12",
+  "pytorch_version": "2.6.0+cu124",
+  "cuda_runtime": "12.4",
+  "device_name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+  "device_type": "cuda",
+  "total_vram_gb": 3.99951171875,
+  "platform": "Windows-11-10.0.26200-SP0",
+  "cublas_workspace_config": ":4096:8",
+  "deterministic_algorithms_enabled": true
+}

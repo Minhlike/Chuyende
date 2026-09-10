@@ -1,0 +1,23 @@
+{
+  "run_id": "RUN-STAGE-A2-HDFS-SEED42",
+  "seed": 42,
+  "storage_policy": "LOCAL_AND_DURABLE_STORAGE",
+  "checkpoints": [
+    {
+      "logical_name": "best_val_loss.pt",
+      "path": "D:\\Research\\.artifacts\\stage-a2\\HDFS\\seed-42\\best_val_loss.pt",
+      "sha256": "98da747668786815f5f81e102bb92713b003a5efa8534b6491bcd9348068afbc",
+      "epoch": 1,
+      "global_step": 573,
+      "val_L_graph": 6.081352412568631
+    },
+    {
+      "logical_name": "last_checkpoint.pt",
+      "path": "D:\\Research\\.artifacts\\stage-a2\\HDFS\\seed-42\\last_checkpoint.pt",
+      "sha256": "b058d43266c03ac709e03f71363da7925e7b04515cfdc5a6ae33028d62e44140",
+      "epoch": 4,
+      "global_step": 2292,
+      "val_L_graph": 7.150944128802701
+    }
+  ]
+}

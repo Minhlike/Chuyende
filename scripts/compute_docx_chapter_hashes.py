@@ -1,38 +1,40 @@
 # -*- coding: utf-8 -*-
 """
 Canonical DOCX Chapter Content Extractor & Hasher
-Version: 1.0.0 (DOCX_CANONICAL_CONTENT_HASH_V1)
-Extracts Chapter 1 and Chapter 2 text from D:\\Research\\Chuyên đề chuyên sâu.docx
-Normalizes unicode, whitespace, and structural boundaries, and computes immutable SHA-256 hashes.
+Version: 2.0.0 (DOCX_CANONICAL_CONTENT_HASH_V1 with Historical Git Baseline)
+Extracts Chapter 1 and Chapter 2 text from D:\\Research\\Chuyên đề chuyên sâu.docx.
+Extracts frozen historical baseline DOCX directly from git commit a99d5dc0e1499f8454293a2931a4962ad214d4af.
+Computes and verifies bit-level invariance across both chapters.
 """
 
 import sys
 import docx
 import hashlib
 import unicodedata
+import subprocess
 from pathlib import Path
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="backslashreplace")
 
-def compute_chapter_hashes():
-    docx_path = Path(r"D:\Research\Chuyên đề chuyên sâu.docx")
-    if not docx_path.exists():
-        raise FileNotFoundError(f"Master DOCX not found at {docx_path}")
+BASELINE_SOURCE_COMMIT = "a99d5dc0e1499f8454293a2931a4962ad214d4af"
+BASELINE_DOCX_BLOB_SHA = "2e7caa307dc8ffcc1f5e920e133da1bad6e79cac"
 
-    doc_bytes = docx_path.read_bytes()
-    master_docx_sha256 = hashlib.sha256(doc_bytes).hexdigest()
-    print(f"Master DOCX Path: {docx_path}")
-    print(f"Master DOCX File Size: {len(doc_bytes)} bytes")
-    print(f"Master DOCX SHA-256: {master_docx_sha256}")
+def normalize_chapter_paragraphs(paras):
+    norm_lines = []
+    for p in paras:
+        raw_text = p.text
+        if not raw_text:
+            continue
+        nfc_text = unicodedata.normalize('NFC', raw_text).strip()
+        if not nfc_text:
+            continue
+        collapsed_line = ' '.join(nfc_text.split())
+        norm_lines.append(collapsed_line)
+    return '\n'.join(norm_lines)
 
-    doc = docx.Document(str(docx_path))
+def extract_chapter_boundaries_and_hashes(doc):
     paragraphs = doc.paragraphs
-
-    # Locate Chapter 1 boundary
-    # Chapter 1 starts at heading: "TỔNG QUAN VỀ PHƯƠNG PHÁP TRÍCH XUẤT ĐẶC TRƯNG..."
-    # Chapter 2 starts at heading: "PHƯƠNG PHÁP BIỂU DIỄN ĐẶC TRƯNG LOG ĐA GÓC NHÌN..."
-    # Chapter 2 ends at heading: "Kết luận" or "Tài liệu tham khảo"
     ch1_start = None
     ch2_start = None
     ch2_end = None
@@ -41,13 +43,10 @@ def compute_chapter_hashes():
         txt = p.text.strip()
         style_name = p.style.name if p.style else ""
         
-        # Chapter 1 starts at Heading 1 after front matter (idx >= 70)
         if idx >= 70 and style_name == "Heading 1" and "TỔNG QUAN VỀ PHƯƠNG PHÁP TRÍCH XUẤT" in txt and ch1_start is None:
             ch1_start = idx
-        # Chapter 2 starts at Heading 1 after Chapter 1
         elif idx > 150 and style_name == "Heading 1" and "PHƯƠNG PHÁP BIỂU DIỄN ĐẶC TRƯNG LOG" in txt and ch2_start is None:
             ch2_start = idx
-        # Chapter 2 ends at Chapter 3, Conclusion, or Bibliography heading
         elif ch2_start is not None and idx > ch2_start and (txt in ["Kết luận", "KẾT LUẬN", "Tài liệu tham khảo", "TÀI LIỆU THAM KHẢO"] or style_name == "UH1" or ("THỰC NGHIỆM" in txt and style_name == "Heading 1")):
             ch2_end = idx
             break
@@ -55,82 +54,74 @@ def compute_chapter_hashes():
     if ch2_end is None:
         ch2_end = len(paragraphs)
 
-    print(f"\n[Boundaries] Chapter 1: Paragraphs {ch1_start}..{ch2_start-1} ({ch2_start - ch1_start} paragraphs)")
-    print(f"[Boundaries] Chapter 2: Paragraphs {ch2_start}..{ch2_end-1} ({ch2_end - ch2_start} paragraphs)")
-
     ch1_paras = paragraphs[ch1_start:ch2_start]
     ch2_paras = paragraphs[ch2_start:ch2_end]
 
-    # Normalization Algorithm: DOCX_CANONICAL_CONTENT_HASH_V1
-    # 1. Unicode NFC normalization on each paragraph string
-    # 2. Collapse internal whitespace (tabs, consecutive spaces) to single space ' '
-    # 3. Strip leading/trailing whitespaces
-    # 4. Filter out empty/whitespace-only paragraphs
-    # 5. Join non-empty normalized lines with newline '\n'
-    # 6. Encode to UTF-8 and compute SHA-256
+    ch1_norm = normalize_chapter_paragraphs(ch1_paras)
+    ch2_norm = normalize_chapter_paragraphs(ch2_paras)
 
-    def normalize_chapter_paragraphs(paras):
-        norm_lines = []
-        for p in paras:
-            raw_text = p.text
-            if not raw_text:
-                continue
-            nfc_text = unicodedata.normalize('NFC', raw_text).strip()
-            if not nfc_text:
-                continue
-            collapsed_line = ' '.join(nfc_text.split())
-            norm_lines.append(collapsed_line)
-        return '\n'.join(norm_lines)
+    ch1_hash = hashlib.sha256(ch1_norm.encode('utf-8')).hexdigest()
+    ch2_hash = hashlib.sha256(ch2_norm.encode('utf-8')).hexdigest()
 
-    ch1_normalized_text = normalize_chapter_paragraphs(ch1_paras)
-    ch2_normalized_text = normalize_chapter_paragraphs(ch2_paras)
+    return ch1_hash, ch2_hash, ch1_start, ch2_start, ch2_end
 
-    ch1_hash = hashlib.sha256(ch1_normalized_text.encode('utf-8')).hexdigest()
-    ch2_hash = hashlib.sha256(ch2_normalized_text.encode('utf-8')).hexdigest()
+def compute_chapter_hashes():
+    docx_path = Path(r"D:\Research\Chuyên đề chuyên sâu.docx")
+    if not docx_path.exists():
+        raise FileNotFoundError(f"Master DOCX not found at {docx_path}")
 
-    print(f"\n[Algorithm: DOCX_CANONICAL_CONTENT_HASH_V1]")
-    print(f"CH1_NORMALIZED_LINES: {len(ch1_normalized_text.splitlines())}")
-    print(f"CH1_HASH: {ch1_hash}")
-    print(f"CH2_NORMALIZED_LINES: {len(ch2_normalized_text.splitlines())}")
-    print(f"CH2_HASH: {ch2_hash}")
+    current_doc_bytes = docx_path.read_bytes()
+    current_docx_sha256 = hashlib.sha256(current_doc_bytes).hexdigest()
 
-    # Also compute exact raw paragraph join hash for comparison
-    ch1_raw_join = '\n'.join([p.text for p in ch1_paras])
-    ch2_raw_join = '\n'.join([p.text for p in ch2_paras])
-    ch1_raw_hash = hashlib.sha256(ch1_raw_join.encode('utf-8')).hexdigest()
-    ch2_raw_hash = hashlib.sha256(ch2_raw_join.encode('utf-8')).hexdigest()
+    print(f"Master DOCX Path: {docx_path}")
+    print(f"Master DOCX File Size: {len(current_doc_bytes)} bytes")
+    print(f"Master DOCX SHA-256: {current_docx_sha256}")
 
-    # Cryptographic Baseline Invariant Assertions (Fail-Closed)
-    CH1_BASELINE_HASH = "b7912883570e369e765c7a6daa7fc626db570c8b53050e976d4f652a2dc7e16e"
-    CH2_BASELINE_HASH = "e91bbc47de218d037d5dec3192b6ba59fda4e3c7423e51c34aea898d3db25a01"
+    # Extract historical baseline DOCX directly from git object store
+    cmd = ["git", "show", f"{BASELINE_SOURCE_COMMIT}:Chuyên đề chuyên sâu.docx"]
+    res = subprocess.run(cmd, capture_output=True, cwd=r"D:\Research")
+    if res.returncode != 0:
+        raise RuntimeError(f"Failed to extract historical baseline from git commit {BASELINE_SOURCE_COMMIT}")
 
-    print(f"\n[Baseline Verification]")
-    if ch1_hash == CH1_BASELINE_HASH:
-        print(f"CH1 Baseline: MATCH (100% PASS)")
-    else:
-        print(f"CH1 Baseline: MISMATCH! Expected {CH1_BASELINE_HASH}, got {ch1_hash}")
+    historical_bytes = res.stdout
+    import io
+    hist_doc = docx.Document(io.BytesIO(historical_bytes))
+    curr_doc = docx.Document(str(docx_path))
 
-    if ch2_hash == CH2_BASELINE_HASH:
-        print(f"CH2 Baseline: MATCH (100% PASS)")
-    else:
-        print(f"CH2 Baseline: MISMATCH! Expected {CH2_BASELINE_HASH}, got {ch2_hash}")
+    baseline_ch1_hash, baseline_ch2_hash, b_s1, b_s2, b_e2 = extract_chapter_boundaries_and_hashes(hist_doc)
+    current_ch1_hash, current_ch2_hash, c_s1, c_s2, c_e2 = extract_chapter_boundaries_and_hashes(curr_doc)
 
-    assert ch1_hash == CH1_BASELINE_HASH, f"CH1 Hash mismatch! Expected {CH1_BASELINE_HASH}, got {ch1_hash}"
-    assert ch2_hash == CH2_BASELINE_HASH, f"CH2 Hash mismatch! Expected {CH2_BASELINE_HASH}, got {ch2_hash}"
+    print(f"\n[Historical Baseline Git Provenance]")
+    print(f"baseline_source_commit: {BASELINE_SOURCE_COMMIT}")
+    print(f"baseline_docx_blob_sha: {BASELINE_DOCX_BLOB_SHA}")
+    print(f"baseline_ch1_hash:      {baseline_ch1_hash}")
+    print(f"baseline_ch2_hash:      {baseline_ch2_hash}")
+
+    print(f"\n[Current Master Document Hashes]")
+    print(f"current_ch1_hash:       {current_ch1_hash}")
+    print(f"current_ch2_hash:       {current_ch2_hash}")
+
+    ch1_match = (current_ch1_hash == baseline_ch1_hash)
+    ch2_match = (current_ch2_hash == baseline_ch2_hash)
+
+    print(f"\n[Cryptographic Invariance Verification]")
+    print(f"CH1 Equality: {'PASS (100% Bit-level Invariant)' if ch1_match else 'FAIL (Mismatch)'}")
+    print(f"CH2 Equality: {'PASS (100% Bit-level Invariant)' if ch2_match else 'FAIL (Mismatch)'}")
+
+    assert ch1_match, f"CH1 Hash mismatch! Baseline: {baseline_ch1_hash}, Current: {current_ch1_hash}"
+    assert ch2_match, f"CH2 Hash mismatch! Baseline: {baseline_ch2_hash}, Current: {current_ch2_hash}"
 
     return {
-        "master_docx_sha256": master_docx_sha256,
-        "algorithm_version": "DOCX_CANONICAL_CONTENT_HASH_V1",
-        "ch1_start_para": ch1_start,
-        "ch1_end_para": ch2_start,
-        "ch2_start_para": ch2_start,
-        "ch2_end_para": ch2_end,
-        "ch1_normalized_hash": ch1_hash,
-        "ch2_normalized_hash": ch2_hash,
-        "ch1_raw_join_hash": ch1_raw_hash,
-        "ch2_raw_join_hash": ch2_raw_hash,
-        "ch1_baseline_match": True,
-        "ch2_baseline_match": True
+        "baseline_source_commit": BASELINE_SOURCE_COMMIT,
+        "baseline_docx_blob_sha": BASELINE_DOCX_BLOB_SHA,
+        "baseline_ch1_hash": baseline_ch1_hash,
+        "baseline_ch2_hash": baseline_ch2_hash,
+        "current_ch1_hash": current_ch1_hash,
+        "current_ch2_hash": current_ch2_hash,
+        "ch1_match": ch1_match,
+        "ch2_match": ch2_match,
+        "current_docx_sha256": current_docx_sha256,
+        "current_docx_size": len(current_doc_bytes)
     }
 
 if __name__ == "__main__":
@@ -140,4 +131,3 @@ if __name__ == "__main__":
     except AssertionError as e:
         print(f"\n[FAIL-CLOSED ASSERTION ERROR] {e}", file=sys.stderr)
         sys.exit(1)
-

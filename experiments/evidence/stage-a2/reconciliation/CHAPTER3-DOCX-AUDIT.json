@@ -1,12 +1,59 @@
 {
-  "audit_version": "1.0.0",
-  "docx_path": "D:/Research/Chuy\u00ean \u0111\u1ec1 chuy\u00ean s\u00e2u.docx",
-  "immutable_baselines": {
-    "ch1_baseline_hash": "b7912883570e369e765c7a6daa7fc626db570c8b53050e976d4f652a2dc7e16e",
-    "ch2_baseline_hash": "e91bbc47de218d037d5dec3192b6ba59fda4e3c7423e51c34aea898d3db25a01"
+  "schema_version": "1.0.0",
+  "audit_timestamp": "2026-09-10T07:36:19.049810+00:00",
+  "word_version": "16.0",
+  "word_product_name": "Microsoft Word 16.0",
+  "docx_file": "Chuyên đề chuyên sâu.docx",
+  "docx_sha256": "167e09539dd7b09083da01b53a8f7404c3d5103462b45ec8d4b4da2cbe1c5639",
+  "pages": 97,
+  "paragraphs": 1001,
+  "tables": 13,
+  "bookmarks_checked": {
+    "BK_TBL_3_001": true,
+    "BK_TBL_3_002": true,
+    "BK_TBL_3_003": true,
+    "BK_TBL_3_004": true
   },
-  "target_chapter": "Chapter 3 (Th\u1ef1c nghi\u1ec7m, \u0110\u00e1nh gi\u00e1 v\u00e0 \u1ee8ng d\u1ee5ng)",
-  "target_conclusion": "K\u1ebft lu\u1eadn",
-  "provenance_reconciliation_ref": "experiments/evidence/stage-a2/reconciliation/STAGE-A2-FIVE-SEED-RECONCILIATION.json",
-  "source_metrics_ref": "experiments/evidence/stage-a2/reconciliation/CHAPTER3-SOURCE-METRICS.json"
+  "omml_count": 525,
+  "table_grid_validation": {
+    "status": "PASS",
+    "chapter3_tables": [
+      {
+        "table_index": 9,
+        "caption": "Bảng 3.1",
+        "style": "Table Grid",
+        "rows": 8,
+        "cols": 3
+      },
+      {
+        "table_index": 10,
+        "caption": "Bảng 3.2",
+        "style": "Table Grid",
+        "rows": 5,
+        "cols": 5
+      },
+      {
+        "table_index": 11,
+        "caption": "Bảng 3.3",
+        "style": "Table Grid",
+        "rows": 8,
+        "cols": 11
+      },
+      {
+        "table_index": 12,
+        "caption": "Bảng 3.4",
+        "style": "Table Grid",
+        "rows": 7,
+        "cols": 4
+      }
+    ]
+  },
+  "open_save_reopen_pass": true,
+  "ch1_ch2_hash_pass": true,
+  "baseline_source_commit": "a99d5dc0e1499f8454293a2931a4962ad214d4af",
+  "baseline_docx_blob_sha": "2e7caa307dc8ffcc1f5e920e133da1bad6e79cac",
+  "baseline_ch1_hash": "b7912883570e369e765c7a6daa7fc626db570c8b53050e976d4f652a2dc7e16e",
+  "baseline_ch2_hash": "e91bbc47de218d037d5dec3192b6ba59fda4e3c7423e51c34aea898d3db25a01",
+  "current_ch1_hash": "b7912883570e369e765c7a6daa7fc626db570c8b53050e976d4f652a2dc7e16e",
+  "current_ch2_hash": "e91bbc47de218d037d5dec3192b6ba59fda4e3c7423e51c34aea898d3db25a01"
 }

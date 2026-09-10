@@ -1,0 +1,9 @@
+{
+  "test_opened": false,
+  "test_feature_reads": 0,
+  "test_label_reads": 0,
+  "test_metrics": 0,
+  "test_graph_events_materialized": 0,
+  "test_relation_parse_count": 0,
+  "firewall_status": "LOCKED"
+}

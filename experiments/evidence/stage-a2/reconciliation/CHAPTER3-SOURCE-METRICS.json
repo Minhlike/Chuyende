@@ -1,18 +1,21 @@
 {
   "hardware_environment": {
     "gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
-    "vram": "4.00 GB GDDR6",
+    "vram": "4.0 GB",
     "compute_capability": "8.6",
     "driver": "595.95",
     "gpu_uuid": "GPU-3f4d825d-63ad-0695-1b32-466308a00b8c",
     "cpu": "Intel Core i5-12500H (12 Cores / 16 Threads)",
-    "ram": "16 GB DDR4 3200MHz",
-    "storage": "SSD NVMe PCIe 4.0",
-    "os": "Windows 11 Pro 64-bit",
-    "python": "3.10 / 3.12",
-    "pytorch": "2.1+ CUDA 12.x",
+    "ram": "15.71 GB",
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.8",
+    "pytorch": "2.6.0+cu124",
+    "cuda_runtime": "12.4",
     "cublas_workspace_config": ":4096:8",
     "deterministic_algorithms": true,
+    "cudnn_deterministic": true,
+    "cudnn_benchmark": false,
+    "automatic_cpu_fallback": false,
     "environment_lock_path": "experiments/evidence/stage-a2/preexecution/STAGE-A2-LOCAL-EXECUTION-ENVIRONMENT-V1.5.json",
     "environment_lock_sha256": "81d3ca4865a95c75cc2345695091265f948ad58e705865a3f8f780a9bf09f362"
   },
@@ -53,41 +56,11 @@
     "node_attribute_dim": 6,
     "loss_formula": "L_graph = 1.0 * L_rel + 1.0 * L_node + 0.1 * L_time",
     "optimizer": "AdamW (lr=5e-4, betas=(0.9, 0.98), eps=1e-8, weight_decay=0.01)",
-    "scheduler": "Linear Warmup (ratio=0.05) + Cosine Annealing to min_lr=1e-5",
+    "scheduler": "Linear Warmup + Cosine Annealing to min_lr=1e-5",
     "effective_batch_size": "1,024 events (4 windows x 256 events per optimizer step)",
     "steps_per_epoch": 573
   },
   "seeds_table": [
-    {
-      "seed_name": "Seed 7",
-      "classification": "CANONICAL",
-      "status": "COMPLETED",
-      "epochs": "12 / 12",
-      "steps": 6876,
-      "train_loss": 0.16091,
-      "best_epoch": 12,
-      "best_val_loss": 0.550259,
-      "final_val_loss": 0.550259,
-      "l_rel": 0.183315,
-      "l_node": 0.358369,
-      "l_time": 0.085746,
-      "execution_commit": "e4d53b82d25091ac1b445832efc00ba83ba29641"
-    },
-    {
-      "seed_name": "Seed 999",
-      "classification": "CANONICAL",
-      "status": "COMPLETED",
-      "epochs": "12 / 12",
-      "steps": 6876,
-      "train_loss": 0.159004,
-      "best_epoch": 12,
-      "best_val_loss": 0.6095,
-      "final_val_loss": 0.6095,
-      "l_rel": 0.194297,
-      "l_node": 0.406335,
-      "l_time": 0.088676,
-      "execution_commit": "e4d53b82d25091ac1b445832efc00ba83ba29641"
-    },
     {
       "seed_name": "Seed 42",
       "classification": "CANONICAL",
@@ -102,6 +75,36 @@
       "l_node": 2.180307,
       "l_time": 0.440652,
       "execution_commit": "33269cbe897fbbad095ad8979b9ca914d209e701"
+    },
+    {
+      "seed_name": "Seed 7",
+      "classification": "PROTOCOL_DEVIATION",
+      "status": "COMPLETED",
+      "epochs": "12 / 12",
+      "steps": 6876,
+      "train_loss": 0.16091,
+      "best_epoch": 12,
+      "best_val_loss": 0.550259,
+      "final_val_loss": 0.550259,
+      "l_rel": 0.183315,
+      "l_node": 0.358369,
+      "l_time": 0.085746,
+      "execution_commit": "e4d53b82d25091ac1b445832efc00ba83ba29641"
+    },
+    {
+      "seed_name": "Seed 999",
+      "classification": "PROTOCOL_DEVIATION",
+      "status": "COMPLETED",
+      "epochs": "12 / 12",
+      "steps": 6876,
+      "train_loss": 0.159004,
+      "best_epoch": 12,
+      "best_val_loss": 0.6095,
+      "final_val_loss": 0.6095,
+      "l_rel": 0.194297,
+      "l_node": 0.406335,
+      "l_time": 0.088676,
+      "execution_commit": "e4d53b82d25091ac1b445832efc00ba83ba29641"
     },
     {
       "seed_name": "Seed 1337",
@@ -135,8 +138,16 @@
     }
   ],
   "aggregates": {
-    "canonical_converged": {
-      "description": "T\u1eadp h\u1ea1t gi\u1ed1ng chu\u1ea9n h\u1ed9i t\u1ee5 ho\u00e0n t\u1ea5t (Seed 7, Seed 999)",
+    "canonical": {
+      "description": "H\u1ea1t gi\u1ed1ng chu\u1ea9n tu\u00e2n th\u1ee7 giao th\u1ee9c V1.5 (Seed 42)",
+      "seeds_count": 1,
+      "mean_best_val_loss": 6.081352,
+      "std_best_val_loss": null,
+      "mean_final_train_loss": 0.308279,
+      "mean_final_val_loss": 7.150944
+    },
+    "protocol_deviation": {
+      "description": "Nh\u00f3m \u0111\u1ee3t ch\u1ea1y 12 epochs kh\u00f4ng c\u00f3 tu ch\u00ednh khoa h\u1ecdc ti\u1ec1n \u0111\u0103ng k\u00fd (Seed 7, Seed 999)",
       "seeds_count": 2,
       "mean_best_val_loss": 0.57988,
       "std_best_val_loss": 0.04189,
@@ -145,14 +156,6 @@
       "mean_l_rel": 0.188806,
       "mean_l_node": 0.382352,
       "mean_l_time": 0.087211
-    },
-    "canonical_all": {
-      "description": "To\u00e0n b\u1ed9 t\u1eadp h\u1ea1t gi\u1ed1ng chu\u1ea9n c\u00f3 c\u0103n c\u1ee9 ch\u1ee9ng minh (Seed 7, Seed 999, Seed 42)",
-      "seeds_count": 3,
-      "mean_best_val_loss": 2.413704,
-      "std_best_val_loss": 3.176319,
-      "mean_final_train_loss": 0.209398,
-      "mean_final_val_loss": 2.770234
     }
   }
 }
