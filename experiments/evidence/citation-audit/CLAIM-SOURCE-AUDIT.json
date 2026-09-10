@@ -9,8 +9,9 @@
       3,
       4
     ],
-    "source_title": "Inam et al., IEEE S&P 2023; Han et al., ACSAC 2020; Liu et al., IEEE S&P 2025; MITRE ATT&CK Matrix v19.1",
+    "source_title": "Inam et al., SP 2023; Michael et al., ACSAC 2020; Liu et al., SP 2025; MITRE ATT&CK Matrix v19.1",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [2] Sec. 3 & Sec. 4 (Approximated audit logs and forensic validity); [3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection); [4] Enterprise Matrix, Tactics TA0001-TA0043 & Techniques (Official Release 12/05/2026)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -27,8 +28,9 @@
       7,
       41
     ],
-    "source_title": "Inam et al., IEEE S&P 2023; Han et al., ACSAC 2020; Pasquier et al., ACM CSUR 2023; Zhu et al., ICSE-SEIP 2019; Jiang et al., ISSTA 2024; Russinovich & Garnier, Sysmon 2026",
+    "source_title": "Inam et al., SP 2023; Michael et al., ACSAC 2020; Zipperle et al., ACM CSUR 2023; Zhu et al., ICSE-SEIP 2019; Jiang et al., ISSTA 2024; Russinovich & Garnier, Sysmon 2026",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [2] Sec. 3 & Sec. 4 (Approximated audit logs and forensic validity); [5] Sec. 2, Sec. 3, Sec. 4 (Provenance-based IDS survey, pipeline, taxonomy); [6] Sec. II & Sec. III (Automated log parsing tools and benchmark); [7] Sec. 3 & Sec. 4, Tab. 2 (Large-scale evaluation of log parsing techniques); [41] Microsoft Learn, Heading 'Event IDs' (Sysmon Event IDs 1, 3, 7, 11, 13)",
     "action": "KEEP",
     "notes": "Đã dẫn nguồn đặc tả kỹ thuật Microsoft Sysinternals Sysmon (Russinovich & Garnier, 2026) [41] cho Event IDs (1, 3, 7, 11, 13) kết hợp provenance telemetry [1], [2], [5] và log parsing [6], [7]."
@@ -44,8 +46,9 @@
       10,
       11
     ],
-    "source_title": "Liu et al., IEEE S&P 2025; Arp et al., USENIX Security 2022; Han et al., NDSS 2020; Bardes et al., ICLR 2022; Zbontar et al., ICML 2021",
+    "source_title": "Liu et al., SP 2025; Arp et al., USENIX Security 2022; Han et al., NDSS 2020; Bardes et al., ICLR 2022; Zbontar et al., ICML 2021",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection); [8] Sec. IV-B, Tab. 2 (Dos and don'ts of ML in security: temporal snooping, drift); [9] Sec. IV & Sec. V (UNICORN runtime provenance detector, WL subtree kernel); [10] Sec. 3, Eq. (1)-(4) (VICReg: Variance, Invariance, Covariance regularization); [11] Sec. 2 & Sec. 3 (Barlow Twins: Cross-correlation matrix redundancy reduction)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -59,6 +62,7 @@
     ],
     "source_title": "Arp et al., USENIX Security 2022",
     "support_status": "AUTHOR_SYNTHESIS",
+    "audit_type": "AUTHOR_SYNTHESIS",
     "source_locator": "[8] Sec. IV-B, Tab. 2 (Dos and don'ts of ML in security: temporal snooping, drift)",
     "action": "KEEP",
     "notes": "Khung 4 cơ chế trôi dạt (Concept, Template, Population, Representation Drift) do Tác giả đề xuất, tổng hợp từ nguyên lý non-stationarity của Arp et al. [8]."
@@ -71,11 +75,12 @@
       1,
       4
     ],
-    "source_title": "Inam et al., IEEE S&P 2023; MITRE ATT&CK Matrix v19.1",
-    "support_status": "DIRECT_SUPPORT",
-    "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [4] Enterprise Matrix, Tactics TA0001-TA0043 & Techniques (Official Release 12/05/2026)",
+    "source_title": "Inam et al., SP 2023; MITRE ATT&CK Matrix v19.1",
+    "support_status": "AUTHOR_SYNTHESIS",
+    "audit_type": "AUTHOR_SYNTHESIS",
+    "source_locator": "Section 2.1 / Synthesis of non-linear APT behaviors from [1] and [4]",
     "action": "KEEP",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
+    "notes": "Các cấu trúc phân tích (Step Skipping, Tactic Looping & Interleaving, Parallel Branching) là do tác giả luận văn tổng hợp từ các hành vi APT phi tuyến tính trong Inam et al. [1] và khung MITRE ATT&CK [4]."
   },
   {
     "claim_id": "CLM-006",
@@ -85,8 +90,9 @@
       1,
       4
     ],
-    "source_title": "Inam et al., IEEE S&P 2023; MITRE ATT&CK Matrix v19.1",
+    "source_title": "Inam et al., SP 2023; MITRE ATT&CK Matrix v19.1",
     "support_status": "AUTHOR_SYNTHESIS",
+    "audit_type": "AUTHOR_SYNTHESIS",
     "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [4] Enterprise Matrix, Tactics TA0001-TA0043 & Techniques (Official Release 12/05/2026)",
     "action": "KEEP",
     "notes": "Hình 1.2 mô hình Không gian Bằng chứng Hành vi Đa chiều do Tác giả xây dựng, kết hợp MITRE ATT&CK [4] và provenance telemetry của Inam et al. [1]."
@@ -100,6 +106,7 @@
     ],
     "source_title": "MITRE ATT&CK Matrix v19.1",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[4] Enterprise Matrix, Tactics TA0001-TA0043 & Techniques (Official Release 12/05/2026)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -116,8 +123,9 @@
       42,
       43
     ],
-    "source_title": "Liu et al., IEEE S&P 2025; DARPA/I2O TC Engagement 3; Kent, LANL 2015; Xu et al., ACM SOSP 2009; Zhu et al., IEEE ISSRE 2023; DARPA/I2O TC Engagement 5",
+    "source_title": "Liu et al., SP 2025; DARPA/I2O TC Engagement 3 (2018); Kent, LANL 2015; Xu et al., SOSP '09 2009; Zhu et al., ISSRE 2023; DARPA/I2O TC Engagement 5 (2020)",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection); [12] README-E3.md, Official Repo (TC E3 fine-grained kernel audit logs and APT scenarios); [13] Dataset Specification & redteam.txt (Enterprise network authentication compromise events); [18] Sec. 4.1, Tab. 1 (Detecting system problems by mining console logs, HDFS block labels); [42] Sec. 2 & Sec. 3, Tab. 1 (Loghub: 17 datasets including BGL line-level anomaly labels); [43] README.md, Official Repo (TC E5 enterprise APT scenarios and fine-grained logs)",
     "action": "KEEP",
     "notes": "Đã dẫn nguồn dữ liệu chính thức: Liu et al. [3] (chất lượng dữ liệu log), DARPA TC E3 [12] và E5 [43] (kiểm toán kernel gán nhãn mức tiến trình/luồng), LANL [13] (sự kiện xâm nhập xác thực redteam.txt), Xu et al. [18] (HDFS block-level), LogHub ISSRE 2023 [42] (BGL line-level)."
@@ -130,8 +138,9 @@
       1,
       3
     ],
-    "source_title": "Inam et al., IEEE S&P 2023; Liu et al., IEEE S&P 2025",
+    "source_title": "Inam et al., SP 2023; Liu et al., SP 2025",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -145,8 +154,9 @@
       16,
       17
     ],
-    "source_title": "Arp et al., USENIX Security 2022; Shokri et al., IEEE S&P 2017; NIST SP 800-226 Final",
+    "source_title": "Arp et al., USENIX Security 2022; Shokri et al., S&P 2017; Near et al., NIST SP 800-226 Final 2025",
     "support_status": "AUTHOR_SYNTHESIS",
+    "audit_type": "AUTHOR_SYNTHESIS",
     "source_locator": "[8] Sec. IV-B, Tab. 2 (Dos and don'ts of ML in security: temporal snooping, drift); [16] Sec. III & Sec. IV (Membership inference attacks against machine learning models); [17] Sec. 3 & Sec. 4 (Evaluating differential privacy guarantees, budget epsilon)",
     "action": "KEEP",
     "notes": "Nguyên tắc Hợp đồng Biểu diễn (PRESERVE, EQUIV, EXCLUDE) do Tác giả thiết lập, tích hợp các ràng buộc an ninh từ Arp et al. [8], Shokri et al. [16], NIST [17]."
@@ -160,8 +170,9 @@
       16,
       17
     ],
-    "source_title": "Arp et al., USENIX Security 2022; Shokri et al., IEEE S&P 2017; NIST SP 800-226 Final",
+    "source_title": "Arp et al., USENIX Security 2022; Shokri et al., S&P 2017; Near et al., NIST SP 800-226 Final 2025",
     "support_status": "AUTHOR_SYNTHESIS",
+    "audit_type": "AUTHOR_SYNTHESIS",
     "source_locator": "[8] Sec. IV-B, Tab. 2 (Dos and don'ts of ML in security: temporal snooping, drift); [16] Sec. III & Sec. IV (Membership inference attacks against machine learning models); [17] Sec. 3 & Sec. 4 (Evaluating differential privacy guarantees, budget epsilon)",
     "action": "KEEP",
     "notes": "Nguyên tắc Hợp đồng Biểu diễn (PRESERVE, EQUIV, EXCLUDE) do Tác giả thiết lập, tích hợp các ràng buộc an ninh từ Arp et al. [8], Shokri et al. [16], NIST [17]."
@@ -175,6 +186,7 @@
     ],
     "source_title": "Bardes et al., ICLR 2022",
     "support_status": "AUTHOR_SYNTHESIS",
+    "audit_type": "AUTHOR_SYNTHESIS",
     "source_locator": "[10] Sec. 3, Eq. (1)-(4) (VICReg: Variance, Invariance, Covariance regularization)",
     "action": "KEEP",
     "notes": "Khung phân tách ba tầng phương pháp luận do Tác giả đề xuất, tích hợp cơ chế tự giám sát VICReg [10] và nguyên tắc đánh giá đóng băng của Arp et al. [8]."
@@ -188,6 +200,7 @@
     ],
     "source_title": "Arp et al., USENIX Security 2022",
     "support_status": "AUTHOR_SYNTHESIS",
+    "audit_type": "AUTHOR_SYNTHESIS",
     "source_locator": "[8] Sec. IV-B, Tab. 2 (Dos and don'ts of ML in security: temporal snooping, drift)",
     "action": "KEEP",
     "notes": "Khung phân tách ba tầng phương pháp luận do Tác giả đề xuất, tích hợp cơ chế tự giám sát VICReg [10] và nguyên tắc đánh giá đóng băng của Arp et al. [8]."
@@ -201,8 +214,9 @@
       5,
       6
     ],
-    "source_title": "Inam et al., IEEE S&P 2023; Pasquier et al., ACM CSUR 2023; Zhu et al., ICSE-SEIP 2019",
+    "source_title": "Inam et al., SP 2023; Zipperle et al., ACM CSUR 2023; Zhu et al., ICSE-SEIP 2019",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [5] Sec. 2, Sec. 3, Sec. 4 (Provenance-based IDS survey, pipeline, taxonomy); [6] Sec. II & Sec. III (Automated log parsing tools and benchmark)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -217,6 +231,7 @@
     ],
     "source_title": "Zhu et al., ICSE-SEIP 2019; Jiang et al., ISSTA 2024",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[6] Sec. II & Sec. III (Automated log parsing tools and benchmark); [7] Sec. 3 & Sec. 4, Tab. 2 (Large-scale evaluation of log parsing techniques)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -231,6 +246,7 @@
     ],
     "source_title": "Zhu et al., ICSE-SEIP 2019; Jiang et al., ISSTA 2024",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[6] Sec. II & Sec. III (Automated log parsing tools and benchmark); [7] Sec. 3 & Sec. 4, Tab. 2 (Large-scale evaluation of log parsing techniques)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -244,6 +260,7 @@
     ],
     "source_title": "Zhu et al., ICSE-SEIP 2019",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[6] Sec. II & Sec. III (Automated log parsing tools and benchmark)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -255,8 +272,9 @@
     "citation_numbers": [
       18
     ],
-    "source_title": "Xu et al., ACM SOSP 2009",
+    "source_title": "Xu et al., SOSP '09 2009",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[18] Sec. 4.1, Tab. 1 (Detecting system problems by mining console logs, HDFS block labels)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -268,8 +286,9 @@
     "citation_numbers": [
       19
     ],
-    "source_title": "Lou et al., USENIX ATC 2010",
+    "source_title": "Lou et al., USENIX ATC 10 2010",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[19] Sec. 3 & Sec. 4 (Mining invariants from console logs for problem detection)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -282,8 +301,9 @@
       2,
       6
     ],
-    "source_title": "Han et al., ACSAC 2020; Zhu et al., ICSE-SEIP 2019",
+    "source_title": "Michael et al., ACSAC 2020; Zhu et al., ICSE-SEIP 2019",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[2] Sec. 3 & Sec. 4 (Approximated audit logs and forensic validity); [6] Sec. II & Sec. III (Automated log parsing tools and benchmark)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -299,8 +319,9 @@
       22,
       23
     ],
-    "source_title": "Du et al., ACM CCS 2017; Guo et al., IEEE IJCNN 2021; Le & Zhang, IEEE/ACM ASE 2021; Meng et al., IJCAI 2019; Nedelkoski et al., IEEE ICDM 2020",
+    "source_title": "Du et al., CCS '17 2017; Guo et al., IJCNN 2021; Le & Zhang, ASE 2021; Meng et al., IJCAI 2019; Nedelkoski et al., ICDM 2020",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[14] Sec. 3 & Sec. 4 (DeepLog: Dual LSTM for log keys and quantitative parameters); [20] Sec. III & Sec. IV (LogBERT: Masked log sequence modeling via BERT); [21] Sec. 3 & Sec. 4 (Log-based anomaly detection without log parsing); [22] Sec. 3 & Sec. 4 (LogAnomaly: Sequential and quantitative anomalies in unstructured logs); [23] Sec. III & Sec. IV (Self-attentive classification anomaly detection in logs)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -312,8 +333,9 @@
     "citation_numbers": [
       14
     ],
-    "source_title": "Du et al., ACM CCS 2017",
+    "source_title": "Du et al., CCS '17 2017",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[14] Sec. 3 & Sec. 4 (DeepLog: Dual LSTM for log keys and quantitative parameters)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -325,8 +347,9 @@
     "citation_numbers": [
       14
     ],
-    "source_title": "Du et al., ACM CCS 2017",
+    "source_title": "Du et al., CCS '17 2017",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[14] Sec. 3 & Sec. 4 (DeepLog: Dual LSTM for log keys and quantitative parameters)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -341,8 +364,9 @@
       22,
       23
     ],
-    "source_title": "Guo et al., IEEE IJCNN 2021; Le & Zhang, IEEE/ACM ASE 2021; Meng et al., IJCAI 2019; Nedelkoski et al., IEEE ICDM 2020",
+    "source_title": "Guo et al., IJCNN 2021; Le & Zhang, ASE 2021; Meng et al., IJCAI 2019; Nedelkoski et al., ICDM 2020",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[20] Sec. III & Sec. IV (LogBERT: Masked log sequence modeling via BERT); [21] Sec. 3 & Sec. 4 (Log-based anomaly detection without log parsing); [22] Sec. 3 & Sec. 4 (LogAnomaly: Sequential and quantitative anomalies in unstructured logs); [23] Sec. III & Sec. IV (Self-attentive classification anomaly detection in logs)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -355,8 +379,9 @@
       3,
       8
     ],
-    "source_title": "Liu et al., IEEE S&P 2025; Arp et al., USENIX Security 2022",
+    "source_title": "Liu et al., SP 2025; Arp et al., USENIX Security 2022",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection); [8] Sec. IV-B, Tab. 2 (Dos and don'ts of ML in security: temporal snooping, drift)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -369,8 +394,9 @@
       1,
       5
     ],
-    "source_title": "Inam et al., IEEE S&P 2023; Pasquier et al., ACM CSUR 2023",
+    "source_title": "Inam et al., SP 2023; Zipperle et al., ACM CSUR 2023",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [5] Sec. 2, Sec. 3, Sec. 4 (Provenance-based IDS survey, pipeline, taxonomy)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -382,8 +408,9 @@
     "citation_numbers": [
       1
     ],
-    "source_title": "Inam et al., IEEE S&P 2023",
+    "source_title": "Inam et al., SP 2023",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -405,8 +432,9 @@
       30,
       31
     ],
-    "source_title": "Inam et al., IEEE S&P 2023; Pasquier et al., ACM CSUR 2023; Han et al., NDSS 2020; Cheng et al., IEEE S&P 2024; Li et al., NDSS 2024; Jia et al., USENIX Security 2024; Jiang et al., USENIX Security 2025; Ji et al., ACM CCS 2022; Bilot et al., USENIX Security 2025; Guerra et al., arXiv 2026; Alon & Yahav, ICLR 2021",
+    "source_title": "Inam et al., SP 2023; Zipperle et al., ACM CSUR 2023; Han et al., NDSS 2020; Cheng et al., S&P 2024; Li et al., NDSS 2024; Jia et al., USENIX Security 2024; Jiang et al., USENIX Security 2025; Zeng et al., CCS '22 2022; Bilot et al., USENIX Security 2025; Guerra et al., arXiv 2026; Alon & Yahav, ICLR 2021",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [5] Sec. 2, Sec. 3, Sec. 4 (Provenance-based IDS survey, pipeline, taxonomy); [9] Sec. IV & Sec. V (UNICORN runtime provenance detector, WL subtree kernel); [24] Sec. IV & Sec. V (KAIROS: Time-aware GNN for whole-system provenance); [25] Sec. 4 & Sec. 5 (NODLINK: Online Steiner tree for fine-grained APT detection); [26] Sec. 4 & Sec. 5 (MAGIC: Masked Graph Autoencoder for APT detection); [27] Sec. 4 & Sec. 5 (ORTHRUS: Attribution quality in provenance-based IDS); [28] Sec. 3 & Sec. 4 (PalanTír: Hardware-enhanced system observability for provenance); [29] Sec. 5 & Sec. 6 (Simpler neural baselines and evaluation flaws in PIDS); [30] Sec. 4 & Sec. 5 (Benchmarks and evaluation protocols in PIDS, statistical baselines); [31] Sec. 1, Sec. 3, Thm. 1 (Over-squashing and information bottleneck in GNNs)",
     "action": "KEEP",
     "notes": "Khảo sát hệ thống PIDS được dẫn chứng đầy đủ từ các công bố gốc: UNICORN [9], KAIROS [24], NODLINK [25], MAGIC [26], ORTHRUS [27], PalanTír [28], Bilot et al. [29], Guerra et al. [30], Alon & Yahav [31]."
@@ -418,11 +446,12 @@
     "citation_numbers": [
       32
     ],
-    "source_title": "Nguyễn Thị Thu Thủy, TC ATTT 2026",
+    "source_title": "Nguyễn Thị Thu Thủy, Tạp chí ATTT 2026",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[32] Mục 2 & Mục 3 (Phát hiện tấn công APT dựa trên Graph Learning)",
     "action": "KEEP",
-    "notes": "Nghiên cứu về Graph Learning trong phát hiện APT của ThS. Nguyễn Thị Thu Thủy được trích dẫn trực tiếp từ bài báo công khai trên Tạp chí An toàn thông tin [32]."
+    "notes": "Nghiên cứu về Graph Learning trong phát hiện APT của Nguyễn Thị Thu Thủy được trích dẫn trực tiếp từ bài báo công khai trên Tạp chí An toàn thông tin [32]."
   },
   {
     "claim_id": "CLM-030",
@@ -434,8 +463,9 @@
       6,
       8
     ],
-    "source_title": "Inam et al., IEEE S&P 2023; Liu et al., IEEE S&P 2025; Zhu et al., ICSE-SEIP 2019; Arp et al., USENIX Security 2022",
+    "source_title": "Inam et al., SP 2023; Liu et al., SP 2025; Zhu et al., ICSE-SEIP 2019; Arp et al., USENIX Security 2022",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection); [6] Sec. II & Sec. III (Automated log parsing tools and benchmark); [8] Sec. IV-B, Tab. 2 (Dos and don'ts of ML in security: temporal snooping, drift)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -450,6 +480,7 @@
     ],
     "source_title": "Zhu et al., ICSE-SEIP 2019; Jiang et al., ISSTA 2024",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[6] Sec. II & Sec. III (Automated log parsing tools and benchmark); [7] Sec. 3 & Sec. 4, Tab. 2 (Large-scale evaluation of log parsing techniques)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -462,8 +493,9 @@
       2,
       3
     ],
-    "source_title": "Han et al., ACSAC 2020; Liu et al., IEEE S&P 2025",
+    "source_title": "Michael et al., ACSAC 2020; Liu et al., SP 2025",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[2] Sec. 3 & Sec. 4 (Approximated audit logs and forensic validity); [3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -480,8 +512,9 @@
       14,
       20
     ],
-    "source_title": "Inam et al., IEEE S&P 2023; Pasquier et al., ACM CSUR 2023; Zhu et al., ICSE-SEIP 2019; Han et al., NDSS 2020; Du et al., ACM CCS 2017; Guo et al., IEEE IJCNN 2021",
+    "source_title": "Inam et al., SP 2023; Zipperle et al., ACM CSUR 2023; Zhu et al., ICSE-SEIP 2019; Han et al., NDSS 2020; Du et al., CCS '17 2017; Guo et al., IJCNN 2021",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [5] Sec. 2, Sec. 3, Sec. 4 (Provenance-based IDS survey, pipeline, taxonomy); [6] Sec. II & Sec. III (Automated log parsing tools and benchmark); [9] Sec. IV & Sec. V (UNICORN runtime provenance detector, WL subtree kernel); [14] Sec. 3 & Sec. 4 (DeepLog: Dual LSTM for log keys and quantitative parameters); [20] Sec. III & Sec. IV (LogBERT: Masked log sequence modeling via BERT)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -496,6 +529,7 @@
     ],
     "source_title": "Bardes et al., ICLR 2022; Zbontar et al., ICML 2021",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[10] Sec. 3, Eq. (1)-(4) (VICReg: Variance, Invariance, Covariance regularization); [11] Sec. 2 & Sec. 3 (Barlow Twins: Cross-correlation matrix redundancy reduction)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -508,8 +542,9 @@
       3,
       8
     ],
-    "source_title": "Liu et al., IEEE S&P 2025; Arp et al., USENIX Security 2022",
+    "source_title": "Liu et al., SP 2025; Arp et al., USENIX Security 2022",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection); [8] Sec. IV-B, Tab. 2 (Dos and don'ts of ML in security: temporal snooping, drift)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -523,8 +558,9 @@
       12,
       13
     ],
-    "source_title": "Liu et al., IEEE S&P 2025; DARPA/I2O TC Engagement 3; Kent, LANL 2015",
+    "source_title": "Liu et al., SP 2025; DARPA/I2O TC Engagement 3 (2018); Kent, LANL 2015",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection); [12] README-E3.md, Official Repo (TC E3 fine-grained kernel audit logs and APT scenarios); [13] Dataset Specification & redteam.txt (Enterprise network authentication compromise events)",
     "action": "KEEP",
     "notes": "Thực tế gán nhãn mức thô (Coarse Labels) trong giám sát doanh nghiệp được xác thực từ Liu et al. [3], DARPA TC E3 [12] và LANL [13]."
@@ -537,8 +573,9 @@
       1,
       3
     ],
-    "source_title": "Inam et al., IEEE S&P 2023; Liu et al., IEEE S&P 2025",
+    "source_title": "Inam et al., SP 2023; Liu et al., SP 2025",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -551,8 +588,9 @@
       1,
       5
     ],
-    "source_title": "Inam et al., IEEE S&P 2023; Pasquier et al., ACM CSUR 2023",
+    "source_title": "Inam et al., SP 2023; Zipperle et al., ACM CSUR 2023",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [5] Sec. 2, Sec. 3, Sec. 4 (Provenance-based IDS survey, pipeline, taxonomy)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -566,8 +604,9 @@
       17,
       33
     ],
-    "source_title": "Shokri et al., IEEE S&P 2017; NIST SP 800-226 Final; Fredrikson et al., ACM CCS 2015",
+    "source_title": "Shokri et al., S&P 2017; Near et al., NIST SP 800-226 Final 2025; Fredrikson et al., CCS '15 2015",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[16] Sec. III & Sec. IV (Membership inference attacks against machine learning models); [17] Sec. 3 & Sec. 4 (Evaluating differential privacy guarantees, budget epsilon); [33] Sec. 1, Sec. 4 (Model inversion attacks exploiting confidence information)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -579,8 +618,9 @@
     "citation_numbers": [
       1
     ],
-    "source_title": "Inam et al., IEEE S&P 2023",
+    "source_title": "Inam et al., SP 2023",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -594,6 +634,7 @@
     ],
     "source_title": "MITRE ATT&CK Matrix v19.1",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[4] Enterprise Matrix, Tactics TA0001-TA0043 & Techniques (Official Release 12/05/2026)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -607,8 +648,9 @@
       17,
       33
     ],
-    "source_title": "Shokri et al., IEEE S&P 2017; NIST SP 800-226 Final; Fredrikson et al., ACM CCS 2015",
+    "source_title": "Shokri et al., S&P 2017; Near et al., NIST SP 800-226 Final 2025; Fredrikson et al., CCS '15 2015",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[16] Sec. III & Sec. IV (Membership inference attacks against machine learning models); [17] Sec. 3 & Sec. 4 (Evaluating differential privacy guarantees, budget epsilon); [33] Sec. 1, Sec. 4 (Model inversion attacks exploiting confidence information)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -621,8 +663,9 @@
       1,
       25
     ],
-    "source_title": "Inam et al., IEEE S&P 2023; Li et al., NDSS 2024",
+    "source_title": "Inam et al., SP 2023; Li et al., NDSS 2024",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [25] Sec. 4 & Sec. 5 (NODLINK: Online Steiner tree for fine-grained APT detection)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -634,8 +677,9 @@
     "citation_numbers": [
       16
     ],
-    "source_title": "Shokri et al., IEEE S&P 2017",
+    "source_title": "Shokri et al., S&P 2017",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[16] Sec. III & Sec. IV (Membership inference attacks against machine learning models)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -647,8 +691,9 @@
     "citation_numbers": [
       33
     ],
-    "source_title": "Fredrikson et al., ACM CCS 2015",
+    "source_title": "Fredrikson et al., CCS '15 2015",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[33] Sec. 1, Sec. 4 (Model inversion attacks exploiting confidence information)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -661,8 +706,9 @@
       16,
       33
     ],
-    "source_title": "Shokri et al., IEEE S&P 2017; Fredrikson et al., ACM CCS 2015",
+    "source_title": "Shokri et al., S&P 2017; Fredrikson et al., CCS '15 2015",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[16] Sec. III & Sec. IV (Membership inference attacks against machine learning models); [33] Sec. 1, Sec. 4 (Model inversion attacks exploiting confidence information)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -676,6 +722,7 @@
     ],
     "source_title": "Vaswani et al., NeurIPS 2017",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[34] Sec. 3 (Attention Is All You Need: Multi-Head Self-Attention Transformer)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -687,8 +734,9 @@
     "citation_numbers": [
       35
     ],
-    "source_title": "Rossi et al., ICLR 2020",
+    "source_title": "Xu et al., ICLR 2020",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[35] Sec. 3 & Sec. 4 (TGAT: Inductive representation learning on temporal graphs)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -700,8 +748,9 @@
     "citation_numbers": [
       20
     ],
-    "source_title": "Guo et al., IEEE IJCNN 2021",
+    "source_title": "Guo et al., IJCNN 2021",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[20] Sec. III & Sec. IV (LogBERT: Masked log sequence modeling via BERT)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -717,8 +766,9 @@
       27,
       36
     ],
-    "source_title": "Cheng et al., IEEE S&P 2024; Li et al., NDSS 2024; Jia et al., USENIX Security 2024; Jiang et al., USENIX Security 2025; Rossi et al., ICML WS / arXiv 2020",
+    "source_title": "Cheng et al., S&P 2024; Li et al., NDSS 2024; Jia et al., USENIX Security 2024; Jiang et al., USENIX Security 2025; Rossi et al., arXiv 2020",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[24] Sec. IV & Sec. V (KAIROS: Time-aware GNN for whole-system provenance); [25] Sec. 4 & Sec. 5 (NODLINK: Online Steiner tree for fine-grained APT detection); [26] Sec. 4 & Sec. 5 (MAGIC: Masked Graph Autoencoder for APT detection); [27] Sec. 4 & Sec. 5 (ORTHRUS: Attribution quality in provenance-based IDS); [36] Sec. 2 & Sec. 3 (TGN: Temporal graph networks for dynamic graphs)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -732,6 +782,7 @@
     ],
     "source_title": "Jia et al., USENIX Security 2024",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[26] Sec. 4 & Sec. 5 (MAGIC: Masked Graph Autoencoder for APT detection)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -745,6 +796,7 @@
     ],
     "source_title": "Alon & Yahav, ICLR 2021",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[31] Sec. 1, Sec. 3, Thm. 1 (Over-squashing and information bottleneck in GNNs)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -759,6 +811,7 @@
     ],
     "source_title": "Bardes et al., ICLR 2022; Chen et al., ICML 2020",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[10] Sec. 3, Eq. (1)-(4) (VICReg: Variance, Invariance, Covariance regularization); [37] Sec. 2 (SimCLR: InfoNCE contrastive learning with negative pairs)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -775,6 +828,7 @@
     ],
     "source_title": "Bardes et al., ICLR 2022; Zbontar et al., ICML 2021; Chen et al., ICML 2020; van den Oord et al., arXiv 2018",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[10] Sec. 3, Eq. (1)-(4) (VICReg: Variance, Invariance, Covariance regularization); [11] Sec. 2 & Sec. 3 (Barlow Twins: Cross-correlation matrix redundancy reduction); [37] Sec. 2 (SimCLR: InfoNCE contrastive learning with negative pairs); [38] Sec. 2 (CPC: Contrastive predictive coding for representation learning)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -791,6 +845,7 @@
     ],
     "source_title": "Bardes et al., ICLR 2022; Zbontar et al., ICML 2021; Chen et al., ICML 2020; van den Oord et al., arXiv 2018",
     "support_status": "AUTHOR_SYNTHESIS",
+    "audit_type": "AUTHOR_SYNTHESIS",
     "source_locator": "[10] Sec. 3, Eq. (1)-(4) (VICReg: Variance, Invariance, Covariance regularization); [11] Sec. 2 & Sec. 3 (Barlow Twins: Cross-correlation matrix redundancy reduction); [37] Sec. 2 (SimCLR: InfoNCE contrastive learning with negative pairs); [38] Sec. 2 (CPC: Contrastive predictive coding for representation learning)",
     "action": "KEEP",
     "notes": "Giả thuyết thích nghi (Author Adaptation Hypothesis): Áp dụng hàm mất mát VICReg [10] vào telemetry log nhằm giảm thiểu False Negatives, kiểm chứng tại Chương 3."
@@ -802,9 +857,10 @@
     "citation_numbers": [
       39
     ],
-    "source_title": "Hu et al., NeurIPS 2019",
+    "source_title": "Zhang et al., NeurIPS 2019",
     "support_status": "DIRECT_SUPPORT",
-    "source_locator": "[39] Sec. 3 (CPM-Nets: Cross partial multi-view representation learning)",
+    "audit_type": "DIRECT_SUPPORT",
+    "source_locator": "[39] Sec. 3, pp. 557-567 (CPM-Nets: Cross partial multi-view representation learning)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
   },
@@ -817,6 +873,7 @@
     ],
     "source_title": "Yu et al., NeurIPS 2020",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[40] Sec. 3 (PCGrad: Gradient surgery for multi-task learning)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -830,6 +887,7 @@
     ],
     "source_title": "Ilse et al., ICML 2018",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[15] Sec. 2, Eq. (1)-(3) (Attention-based Deep Multiple Instance Learning)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -843,6 +901,7 @@
     ],
     "source_title": "Arp et al., USENIX Security 2022",
     "support_status": "AUTHOR_SYNTHESIS",
+    "audit_type": "AUTHOR_SYNTHESIS",
     "source_locator": "[8] Sec. IV-B, Tab. 2 (Dos and don'ts of ML in security: temporal snooping, drift)",
     "action": "KEEP",
     "notes": "Giao thức phân chia dữ liệu 'Strict Causal Temporal Split' do Tác giả đặt tên và hiện thực hóa theo các nguyên tắc tránh rò rỉ thời gian của Arp et al. [8]."
@@ -857,6 +916,7 @@
     ],
     "source_title": "Chen et al., ICML 2020; van den Oord et al., arXiv 2018",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[37] Sec. 2 (SimCLR: InfoNCE contrastive learning with negative pairs); [38] Sec. 2 (CPC: Contrastive predictive coding for representation learning)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -870,6 +930,7 @@
     ],
     "source_title": "Zbontar et al., ICML 2021",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[11] Sec. 2 & Sec. 3 (Barlow Twins: Cross-correlation matrix redundancy reduction)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -883,6 +944,7 @@
     ],
     "source_title": "Bardes et al., ICLR 2022",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[10] Sec. 3, Eq. (1)-(4) (VICReg: Variance, Invariance, Covariance regularization)",
     "action": "KEEP",
     "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
@@ -894,8 +956,9 @@
     "citation_numbers": [
       14
     ],
-    "source_title": "Du et al., ACM CCS 2017",
+    "source_title": "Du et al., CCS '17 2017",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[14] Sec. 3 & Sec. 4 (DeepLog: Dual LSTM for log keys and quantitative parameters)",
     "action": "KEEP",
     "notes": "Đối sánh đặc tính phương pháp luận tại Bảng 3.5 (Table 12) được xác thực chính xác theo từng công bố gốc của phương pháp cơ sở."
@@ -907,8 +970,9 @@
     "citation_numbers": [
       20
     ],
-    "source_title": "Guo et al., IEEE IJCNN 2021",
+    "source_title": "Guo et al., IJCNN 2021",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[20] Sec. III & Sec. IV (LogBERT: Masked log sequence modeling via BERT)",
     "action": "KEEP",
     "notes": "Đối sánh đặc tính phương pháp luận tại Bảng 3.5 (Table 12) được xác thực chính xác theo từng công bố gốc của phương pháp cơ sở."
@@ -922,6 +986,7 @@
     ],
     "source_title": "Han et al., NDSS 2020",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[9] Sec. IV & Sec. V (UNICORN runtime provenance detector, WL subtree kernel)",
     "action": "KEEP",
     "notes": "Đối sánh đặc tính phương pháp luận tại Bảng 3.5 (Table 12) được xác thực chính xác theo từng công bố gốc của phương pháp cơ sở."
@@ -933,8 +998,9 @@
     "citation_numbers": [
       24
     ],
-    "source_title": "Cheng et al., IEEE S&P 2024",
+    "source_title": "Cheng et al., S&P 2024",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[24] Sec. IV & Sec. V (KAIROS: Time-aware GNN for whole-system provenance)",
     "action": "KEEP",
     "notes": "Đối sánh đặc tính phương pháp luận tại Bảng 3.5 (Table 12) được xác thực chính xác theo từng công bố gốc của phương pháp cơ sở."
@@ -948,6 +1014,7 @@
     ],
     "source_title": "Jia et al., USENIX Security 2024",
     "support_status": "DIRECT_SUPPORT",
+    "audit_type": "DIRECT_SUPPORT",
     "source_locator": "[26] Sec. 4 & Sec. 5 (MAGIC: Masked Graph Autoencoder for APT detection)",
     "action": "KEEP",
     "notes": "Đối sánh đặc tính phương pháp luận tại Bảng 3.5 (Table 12) được xác thực chính xác theo từng công bố gốc của phương pháp cơ sở."

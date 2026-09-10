@@ -10,10 +10,10 @@
     "lowercase_main_l_count": 0,
     "plain_underscore_loss_notation_count": 0,
     "verified_omml_subscripts": [
-      "L_{time}",
-      "L_{rel}",
       "L_{graph}",
-      "L_{node}"
+      "L_{node}",
+      "L_{rel}",
+      "L_{time}"
     ]
   },
   "equations_summary": {

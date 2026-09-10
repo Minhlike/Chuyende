@@ -1,0 +1,524 @@
+[
+  {
+    "reference_index": 1,
+    "field": "authors",
+    "pre_regression_598be1c": "M. A. Inam, Y. Chen, A. Goyal, J. Liu, J. Mink, N. Michael, S. Gaur, A. Bates and W. U. Hassan",
+    "corrupted_in_37df689": "M. Inam, Y. Chen, A. Goyal, H. Liu, C. Wang, E. Xue and X. Han",
+    "repaired_value": "M. A. Inam, Y. Chen, A. Goyal, J. Liu, J. Mink, N. Michael, S. Gaur, A. Bates and W. U. Hassan",
+    "decision": "RESTORE_PRE_REGRESSION",
+    "evidence_url": "https://doi.org/10.1109/SP46215.2023.10179405"
+  },
+  {
+    "reference_index": 1,
+    "field": "venue",
+    "pre_regression_598be1c": "2023 IEEE Symposium on Security and Privacy (S&P)",
+    "corrupted_in_37df689": "2023 IEEE Symposium on Security and Privacy (SP)",
+    "repaired_value": "2023 IEEE Symposium on Security and Privacy (SP)",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://doi.org/10.1109/SP46215.2023.10179405"
+  },
+  {
+    "reference_index": 1,
+    "field": "pages",
+    "pre_regression_598be1c": "2446-2463",
+    "corrupted_in_37df689": "2620-2638",
+    "repaired_value": "2620-2638",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://doi.org/10.1109/SP46215.2023.10179405"
+  },
+  {
+    "reference_index": 2,
+    "field": "authors",
+    "pre_regression_598be1c": "N. Michael, J. Mink, J. Liu, S. Gaur, W. U. Hassan and A. Bates",
+    "corrupted_in_37df689": "X. Han, T. Pasquier, T. Ranjit, M. Goldstein and M. Seltzer",
+    "repaired_value": "N. Michael, J. Mink, J. Liu, S. Gaur, W. U. Hassan and A. Bates",
+    "decision": "RESTORE_PRE_REGRESSION",
+    "evidence_url": "https://doi.org/10.1145/3427228.3427272"
+  },
+  {
+    "reference_index": 2,
+    "field": "pages",
+    "pre_regression_598be1c": "180-192",
+    "corrupted_in_37df689": "189-202",
+    "repaired_value": "189-202",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://doi.org/10.1145/3427228.3427272"
+  },
+  {
+    "reference_index": 3,
+    "field": "authors",
+    "pre_regression_598be1c": "J. Liu, M. A. Inam, A. Goyal, A. Riddle, K. Westfall and A. Bates",
+    "corrupted_in_37df689": "H. Liu, M. Inam, H. Feng, J. He, C. Wang and X. Han",
+    "repaired_value": "J. Liu, M. A. Inam, A. Goyal, A. Riddle, K. Westfall and A. Bates",
+    "decision": "RESTORE_PRE_REGRESSION",
+    "evidence_url": "https://doi.org/10.1109/SP61157.2025.00112"
+  },
+  {
+    "reference_index": 3,
+    "field": "venue",
+    "pre_regression_598be1c": "2025 IEEE Symposium on Security and Privacy (S&P)",
+    "corrupted_in_37df689": "2025 IEEE Symposium on Security and Privacy (SP)",
+    "repaired_value": "2025 IEEE Symposium on Security and Privacy (SP)",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://doi.org/10.1109/SP61157.2025.00112"
+  },
+  {
+    "reference_index": 4,
+    "field": "authors",
+    "pre_regression_598be1c": "MITRE ATT&CK",
+    "corrupted_in_37df689": "MITRE Corporation",
+    "repaired_value": "MITRE Corporation",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://attack.mitre.org/"
+  },
+  {
+    "reference_index": 5,
+    "field": "authors",
+    "pre_regression_598be1c": "M. Zipperle, F. Gottwalt, E. Chang and T. S. Dillon",
+    "corrupted_in_37df689": "T. Pasquier, X. Han, M. Goldstein, E. Xue, P. Hu, M. Seltzer and D. Eyers",
+    "repaired_value": "M. Zipperle, F. Gottwalt, E. Chang and T. S. Dillon",
+    "decision": "RESTORE_PRE_REGRESSION",
+    "evidence_url": "https://doi.org/10.1145/3539605"
+  },
+  {
+    "reference_index": 7,
+    "field": "authors",
+    "pre_regression_598be1c": "Z. Jiang, J. Liu, J. Huang, Y. Li, Y. Huo, J. Gu, Z. Chen, J. Zhu and M. R. Lyu",
+    "corrupted_in_37df689": "Z. Jiang, J. Liu, J. Huang, Y. Su, M. Zhuang, L. Song and M. R. Lyu",
+    "repaired_value": "Z. Jiang, J. Liu, J. Huang, Y. Li, Y. Huo, J. Gu, Z. Chen, J. Zhu and M. R. Lyu",
+    "decision": "RESTORE_PRE_REGRESSION",
+    "evidence_url": "https://doi.org/10.1145/3650212.3652123"
+  },
+  {
+    "reference_index": 7,
+    "field": "pages",
+    "pre_regression_598be1c": "1-13",
+    "corrupted_in_37df689": "223-234",
+    "repaired_value": "223-234",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://doi.org/10.1145/3650212.3652123"
+  },
+  {
+    "reference_index": 8,
+    "field": "authors",
+    "pre_regression_598be1c": "D. Arp, E. Quiring, F. Pendlebury, A. Warnecke, F. Pierazzi, C. Wressnegger, L. Cavallaro and K. Rieck",
+    "corrupted_in_37df689": "D. Arp, E. Quiring, F. Pendlebury, A. Warnecke, F. Pierazzi, C. Wressnegger, R. Cavallaro and K. Rieck",
+    "repaired_value": "D. Arp, E. Quiring, F. Pendlebury, A. Warnecke, F. Pierazzi, C. Wressnegger, L. Cavallaro and K. Rieck",
+    "decision": "RESTORE_PRE_REGRESSION",
+    "evidence_url": "https://www.usenix.org/conference/usenixsecurity22/presentation/arp"
+  },
+  {
+    "reference_index": 8,
+    "field": "venue",
+    "pre_regression_598be1c": "Proceedings of the 31st USENIX Security Symposium (USENIX Security 2022)",
+    "corrupted_in_37df689": "Proceedings of the 31st USENIX Security Symposium",
+    "repaired_value": "Proceedings of the 31st USENIX Security Symposium",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://www.usenix.org/conference/usenixsecurity22/presentation/arp"
+  },
+  {
+    "reference_index": 9,
+    "field": "pages",
+    "pre_regression_598be1c": "1-17",
+    "corrupted_in_37df689": "",
+    "repaired_value": "",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://doi.org/10.14722/ndss.2020.24004"
+  },
+  {
+    "reference_index": 10,
+    "field": "pages",
+    "pre_regression_598be1c": "1-18",
+    "corrupted_in_37df689": "",
+    "repaired_value": "",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://openreview.net/forum?id=kWybx3Acvo"
+  },
+  {
+    "reference_index": 12,
+    "field": "authors",
+    "pre_regression_598be1c": "Defense Advanced Research Projects Agency (DARPA)",
+    "corrupted_in_37df689": "Defense Advanced Research Projects Agency (DARPA/I2O)",
+    "repaired_value": "Defense Advanced Research Projects Agency (DARPA/I2O)",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://github.com/darpa-i2o/Transparent-Computing/blob/master/README-E3.md"
+  },
+  {
+    "reference_index": 12,
+    "field": "title",
+    "pre_regression_598be1c": "DARPA Transparent Computing Program Telemetry Datasets: Engagement 3 (April 2018) and Engagement 5 (May 2019)",
+    "corrupted_in_37df689": "Transparent Computing Engagement 3 Data Release",
+    "repaired_value": "Transparent Computing Engagement 3 Data Release",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://github.com/darpa-i2o/Transparent-Computing/blob/master/README-E3.md"
+  },
+  {
+    "reference_index": 12,
+    "field": "year",
+    "pre_regression_598be1c": "2019",
+    "corrupted_in_37df689": "2018",
+    "repaired_value": "2018",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://github.com/darpa-i2o/Transparent-Computing/blob/master/README-E3.md"
+  },
+  {
+    "reference_index": 12,
+    "field": "venue",
+    "pre_regression_598be1c": "Defense Advanced Research Projects Agency, DARPA BAA-15-24 Technical Report",
+    "corrupted_in_37df689": "Defense Advanced Research Projects Agency (DARPA/I2O)",
+    "repaired_value": "Defense Advanced Research Projects Agency (DARPA/I2O)",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://github.com/darpa-i2o/Transparent-Computing/blob/master/README-E3.md"
+  },
+  {
+    "reference_index": 12,
+    "field": "identifier_type",
+    "pre_regression_598be1c": "REPORT_NO",
+    "corrupted_in_37df689": "REPORT_NO",
+    "repaired_value": "OFFICIAL_RELEASE",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://github.com/darpa-i2o/Transparent-Computing/blob/master/README-E3.md"
+  },
+  {
+    "reference_index": 12,
+    "field": "identifier_value",
+    "pre_regression_598be1c": "DARPA BAA-15-24 (Engagements 3 & 5)",
+    "corrupted_in_37df689": "DARPA-I2O/Transparent-Computing/README-E3.md",
+    "repaired_value": "DARPA-I2O/Transparent-Computing/README-E3.md",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://github.com/darpa-i2o/Transparent-Computing/blob/master/README-E3.md"
+  },
+  {
+    "reference_index": 13,
+    "field": "authors",
+    "pre_regression_598be1c": "Alexander D. Kent",
+    "corrupted_in_37df689": "A. D. Kent",
+    "repaired_value": "A. D. Kent",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://doi.org/10.17021/1179829"
+  },
+  {
+    "reference_index": 14,
+    "field": "venue",
+    "pre_regression_598be1c": "Proceedings of the 2017 ACM SIGSAC Conference on Computer and Communications Security (CCS 2017)",
+    "corrupted_in_37df689": "Proceedings of the 2017 ACM SIGSAC Conference on Computer and Communications Security (CCS '17)",
+    "repaired_value": "Proceedings of the 2017 ACM SIGSAC Conference on Computer and Communications Security (CCS '17)",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://doi.org/10.1145/3133956.3134015"
+  },
+  {
+    "reference_index": 17,
+    "field": "authors",
+    "pre_regression_598be1c": "J. P. Near, D. Darais, N. Lefkovitz and G. S. Howarth",
+    "corrupted_in_37df689": "National Institute of Standards and Technology (NIST)",
+    "repaired_value": "J. P. Near, D. Darais, N. Lefkovitz and G. S. Howarth",
+    "decision": "RESTORE_PRE_REGRESSION",
+    "evidence_url": "https://doi.org/10.6028/NIST.SP.800-226"
+  },
+  {
+    "reference_index": 17,
+    "field": "venue",
+    "pre_regression_598be1c": "National Institute of Standards and Technology, NIST Special Publication (SP) 800-226",
+    "corrupted_in_37df689": "National Institute of Standards and Technology (NIST)",
+    "repaired_value": "National Institute of Standards and Technology, NIST Special Publication (SP) 800-226",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://doi.org/10.6028/NIST.SP.800-226"
+  },
+  {
+    "reference_index": 18,
+    "field": "venue",
+    "pre_regression_598be1c": "Proceedings of the ACM SIGOPS 22nd Symposium on Operating Systems Principles (SOSP 2009)",
+    "corrupted_in_37df689": "Proceedings of the ACM SIGOPS 22nd Symposium on Operating Systems Principles (SOSP '09)",
+    "repaired_value": "Proceedings of the ACM SIGOPS 22nd Symposium on Operating Systems Principles (SOSP '09)",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://doi.org/10.1145/1629575.1629587"
+  },
+  {
+    "reference_index": 19,
+    "field": "venue",
+    "pre_regression_598be1c": "Proceedings of the 2010 USENIX Annual Technical Conference (USENIX ATC 2010)",
+    "corrupted_in_37df689": "Proceedings of the 2010 USENIX Annual Technical Conference (USENIX ATC 10)",
+    "repaired_value": "Proceedings of the 2010 USENIX Annual Technical Conference (USENIX ATC 10)",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://www.usenix.org/conference/usenix-atc-10/mining-invariants-console-logs-system-problem-detection"
+  },
+  {
+    "reference_index": 19,
+    "field": "pages",
+    "pre_regression_598be1c": "1-14",
+    "corrupted_in_37df689": "",
+    "repaired_value": "",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://www.usenix.org/conference/usenix-atc-10/mining-invariants-console-logs-system-problem-detection"
+  },
+  {
+    "reference_index": 22,
+    "field": "authors",
+    "pre_regression_598be1c": "W. Meng, Y. Liu, Y. Zhu, S. Zhang, D. Pei, Y. Liu, Y. Chen, R. Zhang, S. Tao, P. Sun and R. Zhou",
+    "corrupted_in_37df689": "W. Meng, Y. Liu, Y. Zhu, S. Zhang, D. Pei, Y. Liu, Y. Chen, R. Tao, P. Sun and R. Zhou",
+    "repaired_value": "W. Meng, Y. Liu, Y. Zhu, S. Zhang, D. Pei, Y. Liu, Y. Chen, R. Zhang, S. Tao, P. Sun and R. Zhou",
+    "decision": "RESTORE_PRE_REGRESSION",
+    "evidence_url": "https://doi.org/10.24963/ijcai.2019/658"
+  },
+  {
+    "reference_index": 24,
+    "field": "pages",
+    "pre_regression_598be1c": "248-265",
+    "corrupted_in_37df689": "3533-3551",
+    "repaired_value": "3533-3551",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://doi.org/10.1109/SP54263.2024.00005"
+  },
+  {
+    "reference_index": 25,
+    "field": "pages",
+    "pre_regression_598be1c": "1-17",
+    "corrupted_in_37df689": "",
+    "repaired_value": "",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://doi.org/10.14722/ndss.2024.23204"
+  },
+  {
+    "reference_index": 26,
+    "field": "authors",
+    "pre_regression_598be1c": "Z. Jia, Y. Xiong, Y. Nan, Y. Zhang, J. Zhao and M. Wen",
+    "corrupted_in_37df689": "Y. Jia, F. Shao, Y. Guo, J. Zhang, H. Wang and X. Xiao",
+    "repaired_value": "Z. Jia, Y. Xiong, Y. Nan, Y. Zhang, J. Zhao and M. Wen",
+    "decision": "RESTORE_PRE_REGRESSION",
+    "evidence_url": "https://www.usenix.org/conference/usenixsecurity24/presentation/jia"
+  },
+  {
+    "reference_index": 26,
+    "field": "venue",
+    "pre_regression_598be1c": "Proceedings of the 33rd USENIX Security Symposium (USENIX Security 2024)",
+    "corrupted_in_37df689": "Proceedings of the 33rd USENIX Security Symposium",
+    "repaired_value": "Proceedings of the 33rd USENIX Security Symposium",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://www.usenix.org/conference/usenixsecurity24/presentation/jia"
+  },
+  {
+    "reference_index": 26,
+    "field": "pages",
+    "pre_regression_598be1c": "4335-4352",
+    "corrupted_in_37df689": "5197-5214",
+    "repaired_value": "5197-5214",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://www.usenix.org/conference/usenixsecurity24/presentation/jia"
+  },
+  {
+    "reference_index": 27,
+    "field": "authors",
+    "pre_regression_598be1c": "B. Jiang, T. Bilot, N. E. Madhoun, K. A. Agha, A. Zouaoui, S. Iqbal, X. Han and T. Pasquier",
+    "corrupted_in_37df689": "Z. Jiang, R. Chen, J. Huang, Z. Lin and S. He",
+    "repaired_value": "B. Jiang, T. Bilot, N. E. Madhoun, K. A. Agha, A. Zouaoui, S. Iqbal, X. Han and T. Pasquier",
+    "decision": "RESTORE_PRE_REGRESSION",
+    "evidence_url": "https://www.usenix.org/conference/usenixsecurity25/presentation/jiang"
+  },
+  {
+    "reference_index": 27,
+    "field": "venue",
+    "pre_regression_598be1c": "Proceedings of the 34th USENIX Security Symposium (USENIX Security 2025)",
+    "corrupted_in_37df689": "Proceedings of the 34th USENIX Security Symposium",
+    "repaired_value": "Proceedings of the 34th USENIX Security Symposium",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://www.usenix.org/conference/usenixsecurity25/presentation/jiang"
+  },
+  {
+    "reference_index": 27,
+    "field": "pages",
+    "pre_regression_598be1c": "1-18",
+    "corrupted_in_37df689": "7173-7192",
+    "repaired_value": "7173-7192",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://www.usenix.org/conference/usenixsecurity25/presentation/jiang"
+  },
+  {
+    "reference_index": 28,
+    "field": "authors",
+    "pre_regression_598be1c": "J. Zeng, C. Zhang and Z. Liang",
+    "corrupted_in_37df689": "Y. Ji, S. Li, F. Dong, S. Yang, P. Gao and X. Xiao",
+    "repaired_value": "J. Zeng, C. Zhang and Z. Liang",
+    "decision": "RESTORE_PRE_REGRESSION",
+    "evidence_url": "https://doi.org/10.1145/3548606.3560570"
+  },
+  {
+    "reference_index": 28,
+    "field": "venue",
+    "pre_regression_598be1c": "Proceedings of the 2022 ACM SIGSAC Conference on Computer and Communications Security (CCS 2022)",
+    "corrupted_in_37df689": "Proceedings of the 2022 ACM SIGSAC Conference on Computer and Communications Security (CCS '22)",
+    "repaired_value": "Proceedings of the 2022 ACM SIGSAC Conference on Computer and Communications Security (CCS '22)",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://doi.org/10.1145/3548606.3560570"
+  },
+  {
+    "reference_index": 28,
+    "field": "pages",
+    "pre_regression_598be1c": "2901-2915",
+    "corrupted_in_37df689": "3135-3149",
+    "repaired_value": "3135-3149",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://doi.org/10.1145/3548606.3560570"
+  },
+  {
+    "reference_index": 29,
+    "field": "authors",
+    "pre_regression_598be1c": "T. Bilot, B. Jiang, Z. Li, N. E. Madhoun, K. A. Agha, A. Zouaoui and T. Pasquier",
+    "corrupted_in_37df689": "E. Bilot, N. El Madhoun, K. Zouaoui, Z. Trabelsi and M. Debbah",
+    "repaired_value": "T. Bilot, B. Jiang, Z. Li, N. E. Madhoun, K. A. Agha, A. Zouaoui and T. Pasquier",
+    "decision": "RESTORE_PRE_REGRESSION",
+    "evidence_url": "https://www.usenix.org/conference/usenixsecurity25/presentation/bilot"
+  },
+  {
+    "reference_index": 29,
+    "field": "venue",
+    "pre_regression_598be1c": "Proceedings of the 34th USENIX Security Symposium (USENIX Security 2025)",
+    "corrupted_in_37df689": "Proceedings of the 34th USENIX Security Symposium",
+    "repaired_value": "Proceedings of the 34th USENIX Security Symposium",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://www.usenix.org/conference/usenixsecurity25/presentation/bilot"
+  },
+  {
+    "reference_index": 29,
+    "field": "pages",
+    "pre_regression_598be1c": "1-18",
+    "corrupted_in_37df689": "7193-7212",
+    "repaired_value": "7193-7212",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://www.usenix.org/conference/usenixsecurity25/presentation/bilot"
+  },
+  {
+    "reference_index": 30,
+    "field": "authors",
+    "pre_regression_598be1c": "L. Guerra, T. Chapuis, G. Duc, P. Mozharovskyi and V.-T. Nguyen",
+    "corrupted_in_37df689": "M. Guerra, P. Schmitt and B. Chandrasekaran",
+    "repaired_value": "L. Guerra, T. Chapuis, G. Duc, P. Mozharovskyi and V.-T. Nguyen",
+    "decision": "RESTORE_PRE_REGRESSION",
+    "evidence_url": "https://arxiv.org/abs/2608.01454"
+  },
+  {
+    "reference_index": 31,
+    "field": "pages",
+    "pre_regression_598be1c": "1-14",
+    "corrupted_in_37df689": "",
+    "repaired_value": "",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://openreview.net/forum?id=i_LO12GqxBu"
+  },
+  {
+    "reference_index": 32,
+    "field": "authors",
+    "pre_regression_598be1c": "T. T. T. Nguyễn",
+    "corrupted_in_37df689": "ThS. Nguyễn Thị Thu Thủy",
+    "repaired_value": "Nguyễn Thị Thu Thủy",
+    "decision": "CANONICAL_AUDIT_FIX",
+    "evidence_url": "https://antoanthongtin.vn/tin/phat-hien-tan-cong-apt-dua-tren-graph-learning-phan-2"
+  },
+  {
+    "reference_index": 33,
+    "field": "venue",
+    "pre_regression_598be1c": "Proceedings of the 22nd ACM SIGSAC Conference on Computer and Communications Security (CCS 2015)",
+    "corrupted_in_37df689": "Proceedings of the 22nd ACM SIGSAC Conference on Computer and Communications Security (CCS '15)",
+    "repaired_value": "Proceedings of the 22nd ACM SIGSAC Conference on Computer and Communications Security (CCS '15)",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://doi.org/10.1145/2810103.2813677"
+  },
+  {
+    "reference_index": 33,
+    "field": "pages",
+    "pre_regression_598be1c": "353-366",
+    "corrupted_in_37df689": "1322-1333",
+    "repaired_value": "1322-1333",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://doi.org/10.1145/2810103.2813677"
+  },
+  {
+    "reference_index": 35,
+    "field": "authors",
+    "pre_regression_598be1c": "D. Xu, C. Ruan, E. Korpeoglu, S. Kumar and K. Achan",
+    "corrupted_in_37df689": "E. Rossi, B. Chamberlain, F. Frasca, D. Eynard, F. Monti and M. Bronstein",
+    "repaired_value": "D. Xu, C. Ruan, E. Korpeoglu, S. Kumar and K. Achan",
+    "decision": "RESTORE_PRE_REGRESSION",
+    "evidence_url": "https://openreview.net/forum?id=rJeEk24FPr"
+  },
+  {
+    "reference_index": 35,
+    "field": "venue",
+    "pre_regression_598be1c": "International Conference on Learning Representations (ICLR 2020)",
+    "corrupted_in_37df689": "Proceedings of the 8th International Conference on Learning Representations (ICLR 2020)",
+    "repaired_value": "Proceedings of the 8th International Conference on Learning Representations (ICLR 2020)",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://openreview.net/forum?id=rJeEk24FPr"
+  },
+  {
+    "reference_index": 35,
+    "field": "pages",
+    "pre_regression_598be1c": "1-16",
+    "corrupted_in_37df689": "",
+    "repaired_value": "",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://openreview.net/forum?id=rJeEk24FPr"
+  },
+  {
+    "reference_index": 36,
+    "field": "venue",
+    "pre_regression_598be1c": "ICML 2020 Workshop on Graph Representation Learning",
+    "corrupted_in_37df689": "ICML 2020 Workshop on Graph Representation Learning / arXiv:2006.10637",
+    "repaired_value": "ICML 2020 Workshop on Graph Representation Learning / arXiv:2006.10637",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://arxiv.org/abs/2006.10637"
+  },
+  {
+    "reference_index": 36,
+    "field": "pages",
+    "pre_regression_598be1c": "1-12",
+    "corrupted_in_37df689": "",
+    "repaired_value": "",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://arxiv.org/abs/2006.10637"
+  },
+  {
+    "reference_index": 38,
+    "field": "authors",
+    "pre_regression_598be1c": "A. v. d. Oord, Y. Li and O. Vinyals",
+    "corrupted_in_37df689": "A. van den Oord, Y. Li and O. Vinyals",
+    "repaired_value": "A. van den Oord, Y. Li and O. Vinyals",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://arxiv.org/abs/1807.03748"
+  },
+  {
+    "reference_index": 38,
+    "field": "pages",
+    "pre_regression_598be1c": "1-13",
+    "corrupted_in_37df689": "",
+    "repaired_value": "",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://arxiv.org/abs/1807.03748"
+  },
+  {
+    "reference_index": 39,
+    "field": "authors",
+    "pre_regression_598be1c": "C. Zhang, Z. Han, Y. Cui, H. Fu, J. T. Zhou and Q. Hu",
+    "corrupted_in_37df689": "P. Hu, Z. Peng, J. Zhu, L. Zhen and D. Peng",
+    "repaired_value": "C. Zhang, Z. Han, Y. Cui, H. Fu, J. T. Zhou and Q. Hu",
+    "decision": "RESTORE_PRE_REGRESSION",
+    "evidence_url": "https://proceedings.neurips.cc/paper/2019/hash/5b65103c8c76dae9095690b213b28ee5-Abstract.html"
+  },
+  {
+    "reference_index": 39,
+    "field": "pages",
+    "pre_regression_598be1c": "559-569",
+    "corrupted_in_37df689": "559-569",
+    "repaired_value": "557-567",
+    "decision": "CANONICAL_AUDIT_FIX",
+    "evidence_url": "https://proceedings.neurips.cc/paper/2019/hash/5b65103c8c76dae9095690b213b28ee5-Abstract.html"
+  },
+  {
+    "reference_index": 43,
+    "field": "reference_entry",
+    "pre_regression_598be1c": "NOT_PRESENT (Engagements 3 & 5 combined in [12])",
+    "corrupted_in_37df689": "Added as separate Ref [43]",
+    "repaired_value": "Defense Advanced Research Projects Agency (DARPA/I2O), \"Transparent Computing Engagement 5 Data Release,\" original release 29 Apr. 2020, official DARPA-I2O repository / README.md.",
+    "decision": "KEEP_FIX",
+    "evidence_url": "https://github.com/darpa-i2o/Transparent-Computing/blob/master/README.md"
+  }
+]
