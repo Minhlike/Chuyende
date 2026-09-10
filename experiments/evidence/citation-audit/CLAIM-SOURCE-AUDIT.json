@@ -21,7 +21,7 @@
     "claim_summary": "Sysmon Event IDs (1, 3, 7, 11, 13) ánh xạ tới các sự kiện kiểm toán hệ thống kernel và đồ thị provenance theo đặc tả kỹ thuật chính thức Microsoft Sysinternals Sysmon.",
     "support": "SUPPORTED",
     "action": "KEEP",
-    "notes": "Đã bổ sung dẫn chiếu đặc tả kỹ thuật chính thức Microsoft Sysinternals Sysmon (Russinovich & Garnier) [41] cho Event ID mapping, giữ [1], [2] cho bối cảnh provenance telemetry."
+    "notes": "Đã bổ sung dẫn chiếu đặc tả kỹ thuật chính thức Microsoft Sysinternals Sysmon (Russinovich & Garnier, 17/06/2026) [41] cho Event ID mapping, giữ [1], [2] cho bối cảnh provenance telemetry."
   },
   {
     "claim_location": "Chương 1, Mục 1.1, Phân loại trôi dạt dữ liệu (p[104])",
@@ -41,11 +41,11 @@
   },
   {
     "claim_location": "Chương 1, Mục 1.1, Mức độ hạt nhãn của bộ dữ liệu thực nghiệm (p[117])",
-    "citation": "[18], [6]",
+    "citation": "[18], [42]",
     "claim_summary": "Bộ dữ liệu HDFS được gán nhãn ở mức khối (Block-level); bộ dữ liệu BGL được gán nhãn bất thường ở mức dòng đơn lẻ.",
     "support": "SUPPORTED",
     "action": "KEEP",
-    "notes": "Đã thay thế citation [14] (DeepLog) bằng nguồn dữ liệu trực tiếp: Xu et al. [18] cho HDFS và LogHub [6] cho BGL."
+    "notes": "Đã dẫn nguồn dữ liệu trực tiếp: Xu et al. [18] cho HDFS và LogHub [42] (He et al., arXiv:2008.06448) cho BGL, phân định chính xác [6] là công cụ log parsing thay vì LogHub."
   },
   {
     "claim_location": "Chương 1, Mục 1.2, Khảo sát PIDS và baseline đơn giản (p[163])",
