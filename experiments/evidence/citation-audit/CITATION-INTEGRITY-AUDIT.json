@@ -9,7 +9,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.1109/SP46215.2023.10179405",
     "official_verification_url": "https://doi.org/10.1109/SP46215.2023.10179405",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 18,
     "metadata_verified": true,
     "issues": []
@@ -24,7 +24,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.1145/3427228.3427272",
     "official_verification_url": "https://doi.org/10.1145/3427228.3427272",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 4,
     "metadata_verified": true,
     "issues": []
@@ -39,7 +39,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.1109/SP61157.2025.00112",
     "official_verification_url": "https://doi.org/10.1109/SP61157.2025.00112",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 11,
     "metadata_verified": true,
     "issues": []
@@ -54,7 +54,7 @@
     "identifier_type": "OFFICIAL_URL",
     "identifier_value": "https://attack.mitre.org/",
     "official_verification_url": "https://attack.mitre.org/",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 5,
     "metadata_verified": true,
     "issues": []
@@ -69,7 +69,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.1145/3539605",
     "official_verification_url": "https://doi.org/10.1145/3539605",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 6,
     "metadata_verified": true,
     "issues": []
@@ -84,7 +84,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.1109/ICSE-SEIP.2019.00021",
     "official_verification_url": "https://doi.org/10.1109/ICSE-SEIP.2019.00021",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 12,
     "metadata_verified": true,
     "issues": []
@@ -99,7 +99,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.1145/3650212.3652123",
     "official_verification_url": "https://doi.org/10.1145/3650212.3652123",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 4,
     "metadata_verified": true,
     "issues": []
@@ -114,7 +114,7 @@
     "identifier_type": "OFFICIAL_URL",
     "identifier_value": "https://www.usenix.org/conference/usenixsecurity22/presentation/arp",
     "official_verification_url": "https://www.usenix.org/conference/usenixsecurity22/presentation/arp",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 10,
     "metadata_verified": true,
     "issues": []
@@ -129,7 +129,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.14722/ndss.2020.24004",
     "official_verification_url": "https://doi.org/10.14722/ndss.2020.24004",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 3,
     "metadata_verified": true,
     "issues": []
@@ -144,7 +144,7 @@
     "identifier_type": "OFFICIAL_URL",
     "identifier_value": "https://openreview.net/forum?id=kWybx3Acvo",
     "official_verification_url": "https://openreview.net/forum?id=kWybx3Acvo",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 7,
     "metadata_verified": true,
     "issues": []
@@ -159,7 +159,7 @@
     "identifier_type": "OFFICIAL_URL",
     "identifier_value": "https://proceedings.mlr.press/v139/zbontar21a.html",
     "official_verification_url": "https://proceedings.mlr.press/v139/zbontar21a.html",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 4,
     "metadata_verified": true,
     "issues": []
@@ -174,7 +174,7 @@
     "identifier_type": "REPORT_NO",
     "identifier_value": "DARPA BAA-15-24 (Engagements 3 & 5)",
     "official_verification_url": "https://github.com/darpa-i2o/transparent-computing",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 2,
     "metadata_verified": true,
     "issues": []
@@ -189,7 +189,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.17021/1179829",
     "official_verification_url": "https://doi.org/10.17021/1179829",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 2,
     "metadata_verified": true,
     "issues": []
@@ -204,7 +204,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.1145/3133956.3134015",
     "official_verification_url": "https://doi.org/10.1145/3133956.3134015",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 4,
     "metadata_verified": true,
     "issues": []
@@ -219,7 +219,7 @@
     "identifier_type": "OFFICIAL_URL",
     "identifier_value": "https://proceedings.mlr.press/v80/ilse18a.html",
     "official_verification_url": "https://proceedings.mlr.press/v80/ilse18a.html",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 1,
     "metadata_verified": true,
     "issues": []
@@ -234,7 +234,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.1109/SP.2017.41",
     "official_verification_url": "https://doi.org/10.1109/SP.2017.41",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 7,
     "metadata_verified": true,
     "issues": []
@@ -249,7 +249,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.6028/NIST.SP.800-226",
     "official_verification_url": "https://doi.org/10.6028/NIST.SP.800-226",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 5,
     "metadata_verified": true,
     "issues": []
@@ -264,7 +264,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.1145/1629575.1629587",
     "official_verification_url": "https://doi.org/10.1145/1629575.1629587",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 3,
     "metadata_verified": true,
     "issues": []
@@ -279,7 +279,7 @@
     "identifier_type": "OFFICIAL_URL",
     "identifier_value": "https://www.usenix.org/conference/usenix-atc-10/mining-invariants-console-logs-system-problem-detection",
     "official_verification_url": "https://www.usenix.org/conference/usenix-atc-10/mining-invariants-console-logs-system-problem-detection",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 1,
     "metadata_verified": true,
     "issues": []
@@ -294,7 +294,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.1109/IJCNN52387.2021.9534113",
     "official_verification_url": "https://doi.org/10.1109/IJCNN52387.2021.9534113",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 4,
     "metadata_verified": true,
     "issues": []
@@ -309,7 +309,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.1109/ASE51524.2021.9678773",
     "official_verification_url": "https://doi.org/10.1109/ASE51524.2021.9678773",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 2,
     "metadata_verified": true,
     "issues": []
@@ -324,7 +324,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.24963/ijcai.2019/658",
     "official_verification_url": "https://doi.org/10.24963/ijcai.2019/658",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 2,
     "metadata_verified": true,
     "issues": []
@@ -339,7 +339,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.1109/ICDM50108.2020.00148",
     "official_verification_url": "https://doi.org/10.1109/ICDM50108.2020.00148",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 2,
     "metadata_verified": true,
     "issues": []
@@ -354,7 +354,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.1109/SP54263.2024.00005",
     "official_verification_url": "https://doi.org/10.1109/SP54263.2024.00005",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 2,
     "metadata_verified": true,
     "issues": []
@@ -369,7 +369,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.14722/ndss.2024.23204",
     "official_verification_url": "https://doi.org/10.14722/ndss.2024.23204",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 3,
     "metadata_verified": true,
     "issues": []
@@ -384,7 +384,7 @@
     "identifier_type": "OFFICIAL_URL",
     "identifier_value": "https://www.usenix.org/conference/usenixsecurity24/presentation/jia",
     "official_verification_url": "https://www.usenix.org/conference/usenixsecurity24/presentation/jia",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 3,
     "metadata_verified": true,
     "issues": []
@@ -399,7 +399,7 @@
     "identifier_type": "OFFICIAL_URL",
     "identifier_value": "https://www.usenix.org/conference/usenixsecurity25/presentation/jiang",
     "official_verification_url": "https://www.usenix.org/conference/usenixsecurity25/presentation/jiang",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 2,
     "metadata_verified": true,
     "issues": []
@@ -414,7 +414,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.1145/3548606.3560570",
     "official_verification_url": "https://doi.org/10.1145/3548606.3560570",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 1,
     "metadata_verified": true,
     "issues": []
@@ -429,7 +429,7 @@
     "identifier_type": "OFFICIAL_URL",
     "identifier_value": "https://www.usenix.org/conference/usenixsecurity25/presentation/bilot",
     "official_verification_url": "https://www.usenix.org/conference/usenixsecurity25/presentation/bilot",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 2,
     "metadata_verified": true,
     "issues": []
@@ -444,7 +444,7 @@
     "identifier_type": "ARXIV",
     "identifier_value": "arXiv:2608.01454",
     "official_verification_url": "https://arxiv.org/abs/2608.01454",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 2,
     "metadata_verified": true,
     "issues": []
@@ -459,7 +459,7 @@
     "identifier_type": "OFFICIAL_URL",
     "identifier_value": "https://openreview.net/forum?id=i_LO12GqxBu",
     "official_verification_url": "https://openreview.net/forum?id=i_LO12GqxBu",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 2,
     "metadata_verified": true,
     "issues": []
@@ -474,7 +474,7 @@
     "identifier_type": "OFFICIAL_URL",
     "identifier_value": "https://antoanthongtin.vn/tin/phat-hien-tan-cong-apt-dua-tren-graph-learning-phan-2",
     "official_verification_url": "https://antoanthongtin.vn/tin/phat-hien-tan-cong-apt-dua-tren-graph-learning-phan-2",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 1,
     "metadata_verified": true,
     "issues": []
@@ -489,7 +489,7 @@
     "identifier_type": "DOI",
     "identifier_value": "10.1145/2810103.2813677",
     "official_verification_url": "https://doi.org/10.1145/2810103.2813677",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 5,
     "metadata_verified": true,
     "issues": []
@@ -504,7 +504,7 @@
     "identifier_type": "OFFICIAL_URL",
     "identifier_value": "https://proceedings.neurips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html",
     "official_verification_url": "https://proceedings.neurips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 1,
     "metadata_verified": true,
     "issues": []
@@ -519,7 +519,7 @@
     "identifier_type": "OFFICIAL_URL",
     "identifier_value": "https://openreview.net/forum?id=rJeEk24FPr",
     "official_verification_url": "https://openreview.net/forum?id=rJeEk24FPr",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 1,
     "metadata_verified": true,
     "issues": []
@@ -534,7 +534,7 @@
     "identifier_type": "ARXIV",
     "identifier_value": "arXiv:2006.10637",
     "official_verification_url": "https://arxiv.org/abs/2006.10637",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 1,
     "metadata_verified": true,
     "issues": []
@@ -549,7 +549,7 @@
     "identifier_type": "OFFICIAL_URL",
     "identifier_value": "https://proceedings.mlr.press/v119/chen20j.html",
     "official_verification_url": "https://proceedings.mlr.press/v119/chen20j.html",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 3,
     "metadata_verified": true,
     "issues": []
@@ -564,7 +564,7 @@
     "identifier_type": "ARXIV",
     "identifier_value": "arXiv:1807.03748",
     "official_verification_url": "https://arxiv.org/abs/1807.03748",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 2,
     "metadata_verified": true,
     "issues": []
@@ -579,7 +579,7 @@
     "identifier_type": "OFFICIAL_URL",
     "identifier_value": "https://proceedings.neurips.cc/paper/2019/hash/5b65103c8c76dae9095690b213b28ee5-Abstract.html",
     "official_verification_url": "https://proceedings.neurips.cc/paper/2019/hash/5b65103c8c76dae9095690b213b28ee5-Abstract.html",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 1,
     "metadata_verified": true,
     "issues": []
@@ -594,7 +594,7 @@
     "identifier_type": "OFFICIAL_URL",
     "identifier_value": "https://proceedings.neurips.cc/paper/2020/hash/32e54441e6382a7fbacbbbaf3c450059-Abstract.html",
     "official_verification_url": "https://proceedings.neurips.cc/paper/2020/hash/32e54441e6382a7fbacbbbaf3c450059-Abstract.html",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 1,
     "metadata_verified": true,
     "issues": []
@@ -609,22 +609,22 @@
     "identifier_type": "OFFICIAL_URL",
     "identifier_value": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon",
     "official_verification_url": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 1,
     "metadata_verified": true,
     "issues": []
   },
   {
     "reference_number": 42,
-    "authors": "S. He, J. Zhu, P. He and M. R. Lyu",
-    "title": "Loghub: A Large Collection of System Log Datasets towards Automated Log Analytics",
-    "year": "2020",
-    "venue": "arXiv preprint arXiv:2008.06448",
-    "pages": "1-13",
-    "identifier_type": "ARXIV",
-    "identifier_value": "arXiv:2008.06448",
-    "official_verification_url": "https://arxiv.org/abs/2008.06448",
-    "verified_at": "2026-09-10T17:29:06Z",
+    "authors": "J. Zhu, S. He, P. He, J. Liu and M. R. Lyu",
+    "title": "Loghub: A Large Collection of System Log Datasets for AI-driven Log Analytics",
+    "year": "2023",
+    "venue": "2023 IEEE 34th International Symposium on Software Reliability Engineering (ISSRE)",
+    "pages": "355-366",
+    "identifier_type": "DOI",
+    "identifier_value": "10.1109/ISSRE59848.2023.00071",
+    "official_verification_url": "https://doi.org/10.1109/ISSRE59848.2023.00071",
+    "verified_at": "2026-09-10T17:37:13Z",
     "body_citation_count": 2,
     "metadata_verified": true,
     "issues": []

@@ -45,7 +45,7 @@
     "claim_summary": "Bộ dữ liệu HDFS được gán nhãn ở mức khối (Block-level); bộ dữ liệu BGL được gán nhãn bất thường ở mức dòng đơn lẻ.",
     "support": "SUPPORTED",
     "action": "KEEP",
-    "notes": "Đã dẫn nguồn dữ liệu trực tiếp: Xu et al. [18] cho HDFS và LogHub [42] (He et al., arXiv:2008.06448) cho BGL, phân định chính xác [6] là công cụ log parsing thay vì LogHub."
+    "notes": "Đã dẫn nguồn dữ liệu trực tiếp: Xu et al. [18] cho HDFS và LogHub [42] (Zhu et al., ISSRE 2023, DOI: 10.1109/ISSRE59848.2023.00071) cho BGL, phân định chính xác [6] là công cụ log parsing thay vì LogHub."
   },
   {
     "claim_location": "Chương 1, Mục 1.2, Khảo sát PIDS và baseline đơn giản (p[163])",
