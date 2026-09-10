@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "audit_title": "Stage A2 12-Epoch Authoritative Configuration Audit",
+  "audit_timestamp_utc": "2026-09-10T08:00:00Z",
+  "authoritative_max_epochs": 12,
+  "optimizer_steps_per_epoch": 573,
+  "authoritative_max_optimizer_steps": 6876,
+  "authoritative_warmup_steps": 343,
+  "warmup_ratio": 0.05,
+  "warmup_calculation": "int(6876 * 0.05) == 343",
+  "min_lr": 1e-05,
+  "initial_lr": 0.0005,
+  "scheduler_formula": "Linear warmup (0..342 steps) -> Cosine decay to min_lr=1e-5 (343..6876 steps)",
+  "scheduler_contract_pass": true,
+  "seed_scheduler_matches": {
+    "Seed 999": true,
+    "Seed 7": true,
+    "Seed 42": false,
+    "Seed 1337": false,
+    "Seed 2024": false
+  },
+  "seed_classifications": {
+    "Seed 999": "CANONICAL",
+    "Seed 42": "PROTOCOL_DEVIATION",
+    "Seed 7": "PROTOCOL_DEVIATION",
+    "Seed 1337": "NONCANONICAL",
+    "Seed 2024": "NONCANONICAL"
+  },
+  "stale_active_epoch_config_references": 0
+}

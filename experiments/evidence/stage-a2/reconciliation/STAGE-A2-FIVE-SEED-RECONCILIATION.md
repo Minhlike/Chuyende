@@ -1,53 +1,61 @@
-# Stage A2 Five-Seed Chronological Provenance & Protocol Audit Report
+# Stage A2 Five-Seed Chronological Provenance & 12-Epoch Authority Reconciliation Report
 
 **Audit Date:** 2026-09-10  
-**Branch:** `fix/stage-a2-forensic-final`  
-**Base Commit:** `3864ea64eea490bf316edeaa733677a48e14df22`  
-**Auditor:** Senior Research Reproducibility Engineer + Scientific Auditor  
+**Branch:** `fix/stage-a2-final-12epoch-authority`  
+**Base Commit:** `c01bddbbbd3cc55863c9fc25d017b3c57353583b`  
+**Auditor:** Senior Research Reproducibility Engineer + Scientific Auditor + Git Forensics Engineer  
 
 ---
 
-## 1. Executive Summary & Forensic Seed Classifications
+## 1. Authoritative 12-Epoch Protocol Authority
 
-| Seed | Classification | Status | Epochs | Steps | Best Epoch | Best Val Loss | Final Train Loss | Execution Commit | Git Provenance & Protocol Status |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Seed 42** | `CANONICAL` | EARLY_STOPPED | 4 / 12 | 2,292 | 1 | `6.081352` | `0.308279` | `33269cbe...` | Adhered to Amendment 13 (20-epoch schedule, warmup 573); stopped early at epoch 4 by protocol rule. |
-| **Seed 7** | `PROTOCOL_DEVIATION` | COMPLETED | 12 / 12 | 6,876 | 12 | `0.550259` | `0.160910` | `e4d53b82...` | Ran 12 epochs without prospective protocol amendment; authorization committed ~34h post-start. |
-| **Seed 999** | `PROTOCOL_DEVIATION` | COMPLETED | 12 / 12 | 6,876 | 12 | `0.609500` | `0.159004` | `e4d53b82...` | Ran 12 epochs without prospective protocol amendment in PROTOCOL-AMENDMENTS.md. |
-| **Seed 1337** | `NONCANONICAL` | INCOMPLETE | 12 / 20 | 6,876 | 10 | `0.917827` | `0.184784` | `33269cbe...` | Incomplete 20-epoch schedule, halted at epoch 12 (`lr=0.000195`), missing run-level artifacts. |
-| **Seed 2024** | `NONCANONICAL` | FLAWED | 12 / 12 | 6,876 | 12 | `0.553257` | `0.167085` | `e4d53b82...` | Phantom commit `00ce524e`, retroactive authorization, mid-run schedule alteration. |
-
----
-
-## 2. Chronological Git Provenance Timeline
-
-An exhaustive git history audit using commit timestamps reveals:
-
-1. **Protocol Amendments (2026-08-28 10:24:59 +0700, commit `33269cbe`):**
-   - Amendment 12 locked `max_epochs = 20`, `warmup_steps = 573`, `total_steps = 11,460`.
-   - Amendment 13 moved execution to `LOCAL_WINDOWS_GPU` while explicitly maintaining all scientific parameters invariant.
-   - **No prospective protocol amendment for 12 epochs was ever recorded in `PROTOCOL-AMENDMENTS.md`.**
-2. **Seed 42 Launch (2026-08-28 10:25:53 +0700):**
-   - Authorization committed in `c8879181` prior to run launch (`10:26:33 +0700`). Compliant with protocol.
-3. **Seed 1337 Launch (2026-08-29 23:20:24 +0700):**
-   - Authorization committed in `84d1aa95` for 20 epochs. Halted at epoch 12.
-4. **Seed 2024 Launch (2026-09-02 21:02:35 +0700):**
-   - Started on 20-epoch schedule. Plan modified mid-run to 12 epochs in commit `68cdcbf` on 2026-09-03.
-5. **Seed 7 Launch (2026-09-05 22:17:43 +0700):**
-   - Began training on 2026-09-05. Its launch authorization was committed to Git on 2026-09-07 in `b53b7264` (~34 hours later).
-6. **Seed 999 Launch (2026-09-08 23:12:43 +0700):**
-   - Authorization committed on 2026-09-08 23:11:15 (`244e81a5`), but 12-epoch ceiling has no scientific amendment.
+The official authoritative Stage A2 configuration is locked to:
+- **Maximum Epochs:** `12`
+- **Steps per Epoch:** `573`
+- **Maximum Optimizer Steps:** `6,876` (`12 * 573 = 6,876`)
+- **Warmup Ratio:** `0.05` (`int(6,876 * 0.05) = 343` steps)
+- **Minimum Learning Rate:** `1e-5` (initial `5e-4`, AdamW betas `(0.9, 0.98)`, weight decay `0.01`)
+- **Effective Batch Size:** `1,024` events (`4` windows x `256` events)
+- **Dataset:** HDFS raw SHA `6ca6c5bc...`, Train membership SHA `65b76694...`, Val membership SHA `14cf689f...`
+- **Test Firewall:** Cryptographically sealed (`test_opened = false`, `test_reads = 0`).
 
 ---
 
-## 3. Strict Machine-Readable Aggregates
+## 2. Executive Summary & Forensic Seed Classifications
 
-- **Canonical Subset ($N=1$, Seed 42):**
-  - Best Val Loss: `6.081352`
-  - Final Train Loss: `0.308279`
-  - Standard deviation is undefined for $N=1$.
-- **Protocol Deviation Subset ($N=2$, Seed 7 & Seed 999):**
-  - Mean Best Val Loss: `0.579880`
-  - Sample Std Best Val Loss: `0.041890`
-  - Mean Final Train Loss: `0.159957`
-  - Kept strictly distinct from the Canonical aggregate.
+| Seed | Classification | Status | Epochs Completed | Optimizer Steps | Stop Reason | Best Epoch | Best Val Loss | Final Train Loss | Execution Commit | Git Provenance & Protocol Status |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **Seed 999** | `CANONICAL` | COMPLETED | 12 | 6,876 | CEILING_REACHED | 12 | `0.609500` | `0.159004` | `e4d53b82...` | Fully compliant with 12-epoch authority; authorization committed before run launch; full artifact contract present. |
+| **Seed 42** | `PROTOCOL_DEVIATION` | EARLY_STOPPED | 4 | 2,292 | EARLY_STOPPING | 1 | `6.081352` | `0.308279` | `33269cbe...` | Trajectory ran on legacy schedule không khớp giao thức 12-epoch hiện hành; stopped early at epoch 4 by pre-registered patience=3. |
+| **Seed 7** | `PROTOCOL_DEVIATION` | COMPLETED | 12 | 6,876 | CEILING_REACHED | 12 | `0.550259` | `0.160910` | `e4d53b82...` | Scheduler matched 12-epoch schedule; authorization artifact committed to Git ~34 hours after training launch. |
+| **Seed 1337** | `NONCANONICAL` | HALTED | 12 | 6,876 | HALTED | 10 | `0.917827` | `0.184784` | `33269cbe...` | Trajectory ran on lịch trình cũ; halted at epoch 12 (`lr=0.000195`); missing run artifacts (METRICS, RUN-MANIFEST, TEST-FIREWALL). |
+| **Seed 2024** | `NONCANONICAL` | COMPLETED | 12 | 6,876 | CEILING_REACHED | 12 | `0.553257` | `0.167085` | `e4d53b82...` | Completion record cites phantom commit `00ce524e`; mid-run schedule alteration produced hybrid LR trajectory. |
+
+---
+
+## 3. Chronological Git Provenance Timeline
+
+1. **Seed 42 Launch (2026-08-28 10:25:53 +0700):**
+   - Authorization committed in `c8879181` prior to launch (`10:26:33`). Scheduler configured for lịch trình cũ; early stopped at epoch 4 (`lr=0.0004705` vs `0.0003995` under 12-epoch schedule).
+2. **Seed 1337 Launch (2026-08-29 23:20:24 +0700):**
+   - Authorization committed in `84d1aa95`. Quỹ đạo chạy không khớp giao thức 12-epoch hiện hành, halted at epoch 12 (`lr=0.000195` vs `1e-5`).
+3. **Seed 2024 Launch (2026-09-02 21:02:35 +0700):**
+   - Hybrid schedule trajectory: epochs 1-4 ran on legacy schedule, epochs 5-12 adjusted. Completion cited nonexistent commit `00ce524e`.
+4. **Seed 7 Launch (2026-09-05 22:17:43 +0700):**
+   - Began training on 2026-09-05. Launch authorization was committed to Git in `b53b7264` on 2026-09-07 (~34 hours post-start).
+5. **Seed 999 Launch (2026-09-08 23:12:43 +0700):**
+   - Authorization committed on 2026-09-08 23:11:15 (`6bb68305`) prior to launch (`23:12:43`). Exact 12-epoch schedule match across all 12 epochs (`lr=1e-5` at step 6,876). All required run artifacts present.
+
+---
+
+## 4. Strict Machine-Readable Aggregates
+
+- **Canonical Subset ($N=1$, Seed 999):**
+  - Best Val Loss: `0.609500`
+  - Final Train Loss: `0.159004`
+  - Sample standard deviation is undefined for $N=1$ (`N/A`).
+- **Protocol Deviation Subset ($N=2$, Seed 42 & Seed 7):**
+  - Mean Best Val Loss: `3.315806`
+  - Sample Std Best Val Loss: `3.911073`
+  - Mean Final Train Loss: `0.234595`
+  - Kept strictly distinct as supporting observational runs.

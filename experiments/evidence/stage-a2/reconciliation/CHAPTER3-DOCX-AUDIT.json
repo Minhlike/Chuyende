@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0.0",
-  "audit_timestamp": "2026-09-10T07:36:19.049810+00:00",
+  "audit_timestamp": "2026-09-10T07:58:41.595696+00:00",
   "word_version": "16.0",
-  "word_product_name": "Microsoft Word 16.0",
+  "word_product_name": "Microsoft Word COM 16.0",
   "docx_file": "Chuyên đề chuyên sâu.docx",
-  "docx_sha256": "167e09539dd7b09083da01b53a8f7404c3d5103462b45ec8d4b4da2cbe1c5639",
+  "docx_sha256": "304e28bbac7f18f950d0f76c2c84faf75cac0531875b42376f013edf397149c6",
   "pages": 97,
-  "paragraphs": 1001,
+  "paragraphs": 1009,
   "tables": 13,
   "bookmarks_checked": {
     "BK_TBL_3_001": true,
@@ -37,7 +37,7 @@
         "caption": "Bảng 3.3",
         "style": "Table Grid",
         "rows": 8,
-        "cols": 11
+        "cols": 12
       },
       {
         "table_index": 12,
@@ -49,7 +49,8 @@
     ]
   },
   "open_save_reopen_pass": true,
-  "ch1_ch2_hash_pass": true,
+  "ch1_ch2_normalized_content_pass": true,
+  "algorithm_version": "DOCX_CANONICAL_CONTENT_HASH_V1",
   "baseline_source_commit": "a99d5dc0e1499f8454293a2931a4962ad214d4af",
   "baseline_docx_blob_sha": "2e7caa307dc8ffcc1f5e920e133da1bad6e79cac",
   "baseline_ch1_hash": "b7912883570e369e765c7a6daa7fc626db570c8b53050e976d4f652a2dc7e16e",

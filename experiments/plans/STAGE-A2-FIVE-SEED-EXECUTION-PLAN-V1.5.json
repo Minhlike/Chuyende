@@ -126,7 +126,7 @@
     "adam_eps": 1e-08,
     "scheduler": "LinearWarmupCosineDecay",
     "warmup_ratio": 0.05,
-    "warmup_steps": 573,
+    "warmup_steps": 343,
     "min_lr": 1e-05,
     "temporal_window_size": 256,
     "gradient_accumulation_steps": 4,

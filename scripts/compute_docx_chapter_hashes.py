@@ -105,13 +105,14 @@ def compute_chapter_hashes():
     ch2_match = (current_ch2_hash == baseline_ch2_hash)
 
     print(f"\n[Cryptographic Invariance Verification]")
-    print(f"CH1 Equality: {'PASS (100% Bit-level Invariant)' if ch1_match else 'FAIL (Mismatch)'}")
-    print(f"CH2 Equality: {'PASS (100% Bit-level Invariant)' if ch2_match else 'FAIL (Mismatch)'}")
+    print(f"CH1 Content Equality: {'PASS (NORMALIZED TEXTUAL CONTENT INVARIANCE)' if ch1_match else 'FAIL (Mismatch)'}")
+    print(f"CH2 Content Equality: {'PASS (NORMALIZED TEXTUAL CONTENT INVARIANCE)' if ch2_match else 'FAIL (Mismatch)'}")
 
     assert ch1_match, f"CH1 Hash mismatch! Baseline: {baseline_ch1_hash}, Current: {current_ch1_hash}"
     assert ch2_match, f"CH2 Hash mismatch! Baseline: {baseline_ch2_hash}, Current: {current_ch2_hash}"
 
     return {
+        "algorithm_version": "DOCX_CANONICAL_CONTENT_HASH_V1",
         "baseline_source_commit": BASELINE_SOURCE_COMMIT,
         "baseline_docx_blob_sha": BASELINE_DOCX_BLOB_SHA,
         "baseline_ch1_hash": baseline_ch1_hash,
@@ -120,6 +121,9 @@ def compute_chapter_hashes():
         "current_ch2_hash": current_ch2_hash,
         "ch1_match": ch1_match,
         "ch2_match": ch2_match,
+        "ch1_normalized_text_content_invariant": ch1_match,
+        "ch2_normalized_text_content_invariant": ch2_match,
+        "bit_level_invariance_claim_removed": True,
         "current_docx_sha256": current_docx_sha256,
         "current_docx_size": len(current_doc_bytes)
     }

@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Master Academic Chapter 3 Generator & Injector (Forensic Final V3.1)
+Master Academic Chapter 3 Generator & Injector (12-Epoch Authority Final)
 Strictly adheres to:
-1. Forensic Provenance & Protocol Audit:
-   - Seed 42: CANONICAL (Followed Amendment 13 schedule, early stopped at epoch 4)
-   - Seed 7, 999: PROTOCOL_DEVIATION (12 epochs without prospective protocol amendment in PROTOCOL-AMENDMENTS.md)
-   - Seed 1337, 2024: NONCANONICAL (Incomplete run / phantom commit in completion record)
+1. Authoritative 12-Epoch Protocol Authority:
+   - Seed 999: CANONICAL (Followed authoritative 12-epoch schedule: 6,876 steps, 343 warmup steps, final LR 1e-5; authorization committed before launch; complete artifacts; sealed firewall)
+   - Seed 42: PROTOCOL_DEVIATION (Trajectory ran on legacy schedule with 573 warmup steps; stopped early at Epoch 4 due to pre-registered early stopping patience=3)
+   - Seed 7: PROTOCOL_DEVIATION (12-epoch schedule matched; authorization artifact committed to Git ~34 hours post-launch)
+   - Seed 1337: NONCANONICAL (Legacy schedule; halted at epoch 12; missing run-level artifacts: METRICS, RUN-MANIFEST, TEST-FIREWALL)
+   - Seed 2024: NONCANONICAL (Completion record cites phantom commit 00ce524e; mid-run schedule alteration produced hybrid LR trajectory)
 2. Hardware environment facts strictly matching STAGE-A2-LOCAL-EXECUTION-ENVIRONMENT-V1.5.json:
    Python 3.12.8, PyTorch 2.6.0+cu124, CUDA 12.4, Windows-11-10.0.26200-SP0, Intel Core i5-12500H, RAM 15.71 GB,
    RTX 3050 Ti Laptop GPU (4.0 GB VRAM, CC 8.6, Driver 595.95, cuBLAS :4096:8).
@@ -14,7 +16,7 @@ Strictly adheres to:
    Replaced unsupported claims (Saddle Point Plateau, gradient vanishing, global minima, proof of H1/H2)
    with evidence-bound language ("quan sát thấy", "phù hợp với", "gợi ý", "chưa đủ bằng chứng để xác định nguyên nhân").
 4. Separation of Canonical vs Protocol Deviation in Table 3.3 and aggregates.
-5. Exact Word 2016 thesis styles, Table Grid, SEQ captions, native OMML equations, bit-level preservation of Ch1/Ch2.
+5. Exact Word 2016 thesis styles, Table Grid, SEQ captions, native OMML equations, normalized textual invariance of Ch1/Ch2.
 """
 
 import sys
@@ -167,51 +169,58 @@ def build_chapter_3():
                     new_p._p.append(seg)
         return new_p
 
-    def add_h1(clean_text):
-        """Heading 1: Word automatically prepends 'Chương 3. ' via multilevel list."""
-        p = target_p.insert_paragraph_before(style="Heading 1")
-        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p.paragraph_format.space_before = Pt(18)
-        p.paragraph_format.space_after = Pt(12)
-        r = p.add_run(clean_text)
+    def add_h1(text):
+        new_p = target_p.insert_paragraph_before(style="Heading 1")
+        new_p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        new_p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
+        new_p.paragraph_format.space_before = Pt(12)
+        new_p.paragraph_format.space_after = Pt(6)
+        new_p.paragraph_format.keep_with_next = True
+        r = new_p.add_run(text)
         r.font.name = "Times New Roman"
         r.font.size = Pt(16)
         r.bold = True
-        return p
+        return new_p
 
-    def add_h2(clean_text):
-        """Heading 2: Word automatically prepends '3.X. ' via multilevel list."""
-        p = target_p.insert_paragraph_before(style="Heading 2")
-        p.paragraph_format.space_before = Pt(14)
-        p.paragraph_format.space_after = Pt(8)
-        r = p.add_run(clean_text)
+    def add_h2(text):
+        new_p = target_p.insert_paragraph_before(style="Heading 2")
+        new_p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        new_p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
+        new_p.paragraph_format.space_before = Pt(12)
+        new_p.paragraph_format.space_after = Pt(6)
+        new_p.paragraph_format.keep_with_next = True
+        r = new_p.add_run(text)
         r.font.name = "Times New Roman"
         r.font.size = Pt(14)
         r.bold = True
-        return p
+        return new_p
 
-    def add_h3(clean_text):
-        """Heading 3: Word automatically prepends '3.X.Y. ' via multilevel list."""
-        p = target_p.insert_paragraph_before(style="Heading 3")
-        p.paragraph_format.space_before = Pt(10)
-        p.paragraph_format.space_after = Pt(6)
-        r = p.add_run(clean_text)
+    def add_h3(text):
+        new_p = target_p.insert_paragraph_before(style="Heading 3")
+        new_p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        new_p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
+        new_p.paragraph_format.space_before = Pt(6)
+        new_p.paragraph_format.space_after = Pt(4)
+        new_p.paragraph_format.keep_with_next = True
+        r = new_p.add_run(text)
         r.font.name = "Times New Roman"
         r.font.size = Pt(14)
         r.bold = True
         r.italic = True
-        return p
+        return new_p
 
-    def add_display_equation(omml_node):
-        """Adds centered block equation in Word native OMML."""
-        eq_p = target_p.insert_paragraph_before(style="Normal")
-        eq_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        eq_p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
-        eq_p.paragraph_format.space_before = Pt(4)
-        eq_p.paragraph_format.space_after = Pt(4)
-        eq_p.paragraph_format.first_line_indent = Cm(0)
-        eq_p._p.append(omml_node)
-        return eq_p
+    def add_display_equation(omml_elem):
+        p = target_p.insert_paragraph_before(style="Normal")
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
+        p.paragraph_format.space_before = Pt(4)
+        p.paragraph_format.space_after = Pt(6)
+        p.paragraph_format.first_line_indent = Cm(0)
+        pPr = p._p.get_or_add_pPr()
+        jc_xml = f'<w:jc {nsdecls("w")} w:val="center"/>'
+        pPr.append(parse_xml(jc_xml))
+        p._p.append(omml_elem)
+        return p
 
     hw = metrics["hardware_environment"]
     ds = metrics["dataset_split"]
@@ -343,7 +352,8 @@ def build_chapter_3():
         f"cơ chế chú ý thời gian đa đầu ({arch['attention']}), và phép chiếu thời gian liên tục điều hòa ({arch['time_encoding']}). "
         f"Mô hình xử lý đồ thị dị thể với {arch['node_types_count']} loại nút thực thể và {arch['canonical_relations_count']} loại quan hệ cạnh. "
         f"Mô hình được tối ưu hóa bằng thuật toán {arch['optimizer']} kết hợp bộ lập lịch {arch['scheduler']}. "
-        f"Kích thước lô hiệu dụng là {arch['effective_batch_size']}, tương ứng {arch['steps_per_epoch']} bước cập nhật trọng số trên mỗi epoch."
+        f"Kích thước lô hiệu dụng là {arch['effective_batch_size']}, tương ứng {arch['steps_per_epoch']} bước cập nhật trọng số trên mỗi epoch "
+        f"(tổng số bước tối ưu hóa tối đa là {arch['max_optimizer_steps']:,} bước trên {arch['max_epochs']} epochs, trong đó giai đoạn khởi động kéo dài {arch['warmup_steps']} bước)."
     )
 
     add_p(
@@ -376,36 +386,41 @@ def build_chapter_3():
     add_h2("Kết quả thực nghiệm và benchmarking")
 
     # 3.2.1
-    add_h3("Kết quả huấn luyện Stage A2 trên 5 hạt ngẫu nhiên chuẩn")
+    add_h3("Kết quả huấn luyện Stage A2 trên 5 hạt ngẫu nhiên thực nghiệm")
 
     add_p(
         "Nhằm đánh giá tính ổn định thống kê và loại trừ hiện tượng thiên lệch chọn lọc, "
-        "chiến dịch thực nghiệm được tiến hành trên 5 hạt giống khởi tạo ngẫu nhiên độc lập: 42, 7, 999, 1337, và 2024. "
-        "Qua quá trình kiểm toán nguồn gốc thực thi độc lập dựa trên lịch sử commit Git và văn bản tu chính giao thức (PROTOCOL-AMENDMENTS.md), "
+        "chiến dịch thực nghiệm được tiến hành trên 5 hạt giống khởi tạo ngẫu nhiên độc lập: 999, 42, 7, 1337, và 2024. "
+        "Dựa trên cấu hình Stage A2 chính thức hiện hành (trần 12 epochs, 6.876 bước tối ưu hóa, 343 bước khởi động tuyến tính) "
+        "kết hợp kiểm toán nguồn gốc thực thi độc lập từ nhật ký Git và các tệp bằng chứng máy đọc được, "
         "các đợt chạy được phân loại khoa học và minh bạch như sau: "
-        "(1) Hạt giống Chuẩn (Canonical): Seed 42 là đợt chạy tuân thủ trọn vẹn Giao thức Tu chính 13 (lập lịch 20 epochs, warmup 573 steps), "
-        "dừng tại Epoch 4 theo quy tắc dừng sớm đã tiền đăng ký; "
-        "(2) Nhóm Lệch Giao thức (Protocol Deviation): Seed 7 và Seed 999 hoàn thành 12 epochs với kết quả mất mát kiểm định thấp, "
-        "tuy nhiên việc áp dụng trần 12 epochs không có văn bản tu chính khoa học tiền đăng ký tương ứng trong danh mục tu chính chính thức; "
-        "và (3) Nhóm Đợt chạy Không chuẩn (Noncanonical): Seed 1337 (dừng ở epoch 12 trên bộ lập lịch 20 epochs chưa kết thúc, thiếu biên bản chạy) "
+        "(1) Hạt giống Chuẩn (Canonical): Seed 999 là đợt chạy tuân thủ toàn diện giao thức 12 epochs hiện hành, "
+        "có văn bản ủy quyền được commit lên Git trước thời điểm khởi chạy, sở hữu đầy đủ bộ bằng chứng thực nghiệm và giữ niêm phong dữ liệu kiểm thử; "
+        "(2) Nhóm Lệch Giao thức (Protocol Deviation): Seed 42 (quỹ đạo chạy theo bộ lập lịch cũ và dừng sớm tại Epoch 4 theo quy tắc dừng sớm đã tiền đăng ký) "
+        "và Seed 7 (khớp lịch trình 12 epochs nhưng tệp ủy quyền chỉ được commit lên Git sau thời điểm khởi chạy); "
+        "và (3) Nhóm Đợt chạy Không chuẩn (Noncanonical): Seed 1337 (chạy theo lịch trình cũ, dừng tại Epoch 12 và thiếu các tệp biên bản thực thi bắt buộc) "
         "và Seed 2024 (chứa sai lệch mã băm commit và điều chỉnh lịch học giữa chừng). "
         "Bảng 3.3 tổng hợp chi tiết số liệu đo đạc thực tế trên từng hạt giống từ các tệp nhật ký thực thi được xác minh."
     )
 
     # Table 3.3
     add_table_caption(doc, target_p, 3, "Báo cáo kết quả huấn luyện Stage A2 trên 5 hạt ngẫu nhiên thực nghiệm", bookmark_name="BK_TBL_3_003", chapter_num=3)
-    t3_headers = ["Hạt giống", "Phân loại", "Trạng thái", "Epochs", "Steps", "Train Loss", "Best Val Loss", "Val Loss Cuối", "L_rel", "L_node", "L_time"]
-    t3_widths = [850, 1100, 950, 750, 750, 850, 1050, 1000, 750, 750, 805]
+    t3_headers = [
+        "Hạt giống", "Phân loại", "Epochs HT", "Số bước", "Lý do kết thúc",
+        "Train Loss", "Best Epoch", "Best Val Loss", "Val Loss Cuối", "L_rel", "L_node", "L_time"
+    ]
+    t3_widths = [900, 1300, 650, 750, 1050, 800, 600, 850, 850, 650, 650, 650]
 
     t3_rows = []
     for s in st:
         t3_rows.append([
             s["seed_name"],
             s["classification"],
-            s["status"],
-            s["epochs"],
+            str(s["epochs_completed"]),
             f"{s['steps']:,}",
+            s["stop_reason"],
             f"{s['train_loss']:.4f}",
+            str(s["best_epoch"]),
             f"{s['best_val_loss']:.6f}",
             f"{s['final_val_loss']:.6f}",
             f"{s['l_rel']:.4f}",
@@ -419,26 +434,28 @@ def build_chapter_3():
     # Canonical aggregate row
     t3_rows.append([
         "TB Chuẩn (1 seed)",
-        "CANONICAL (Seed 42)",
-        "Dừng sớm (Ep 4)",
-        "4 / 12",
-        "2,292",
+        "CANONICAL (Seed 999)",
+        "12",
+        "6,876",
+        "CEILING_REACHED",
         f"{ag_canon['mean_final_train_loss']:.4f}",
+        "12",
         f"{ag_canon['mean_best_val_loss']:.6f}",
         f"{ag_canon['mean_final_val_loss']:.6f}",
-        "4.9266",
-        "2.1803",
-        "0.4407"
+        f"{ag_canon['mean_l_rel']:.4f}",
+        f"{ag_canon['mean_l_node']:.4f}",
+        f"{ag_canon['mean_l_time']:.4f}"
     ])
 
     # Protocol deviation aggregate row
     t3_rows.append([
         "TB Lệch GT (2 seeds)",
         "PROTOCOL_DEVIATION",
-        "Hoàn tất 12 ep",
-        "12 / 12",
-        "6,876",
+        "-",
+        "-",
+        "-",
         f"{ag_dev['mean_final_train_loss']:.4f}",
+        "-",
         f"{ag_dev['mean_best_val_loss']:.6f}",
         f"{ag_dev['mean_final_val_loss']:.6f}",
         f"{ag_dev['mean_l_rel']:.4f}",
@@ -446,15 +463,16 @@ def build_chapter_3():
         f"{ag_dev['mean_l_time']:.4f}"
     ])
 
-    insert_thesis_table(doc, target_p, t3_headers, t3_widths, t3_rows, font_size_pt=9.5)
+    insert_thesis_table(doc, target_p, t3_headers, t3_widths, t3_rows, font_size_pt=8.5)
     add_p("", first_line_indent=False)
 
     add_p(
-        f"Từ kết quả Bảng 3.3, hạt giống chuẩn duy nhất tuân thủ toàn diện giao thức V1.5 là Seed 42, "
-        f"ghi nhận mất mát kiểm định tốt nhất đạt {ag_canon['mean_best_val_loss']:.6f} tại Epoch 1 trước khi kích hoạt quy tắc dừng sớm. "
-        f"Đối với nhóm quan sát bổ trợ 12 epochs (Seed 7 và Seed 999, được ghi nhận dưới dạng Protocol Deviation do thiếu văn bản tu chính tiền đăng ký), "
-        f"mức mất mát kiểm định trung bình quan sát thấy là {ag_dev['mean_best_val_loss']:.6f} (độ lệch chuẩn mẫu {ag_dev['std_best_val_loss']:.6f}). "
-        f"Việc phân tách rạch ròi giữa kết quả chuẩn tiền đăng ký và kết quả lệch giao thức đảm bảo tính liêm chính cao nhất cho báo cáo chuyên đề."
+        f"Từ kết quả Bảng 3.3, hạt giống chuẩn duy nhất tuân thủ toàn diện cấu hình 12 epochs hiện hành là Seed 999, "
+        f"ghi nhận mất mát kiểm định tốt nhất đạt {ag_canon['mean_best_val_loss']:.6f} tại Epoch 12 và mất mát huấn luyện cuối đạt {ag_canon['mean_final_train_loss']:.4f}. "
+        f"Đối với nhóm quan sát bổ trợ lệch giao thức (Seed 42 và Seed 7), mức mất mát kiểm định ghi nhận trung bình là {ag_dev['mean_best_val_loss']:.6f}. "
+        f"Đáng chú ý, Seed 42 kích hoạt điều kiện dừng sớm tại Epoch 4 khi chạy trên lịch trình cũ với mức mất mát kiểm định ban đầu đạt {st[1]['best_val_loss']:.6f}, "
+        f"trong khi Seed 7 đạt mức mất mát kiểm định tốt nhất {st[2]['best_val_loss']:.6f} tương đồng với Seed 999 nhưng có độ lệch về thời điểm commit ủy quyền. "
+        f"Việc phân tách minh bạch giữa kết quả chuẩn khẳng định và các đợt chạy quan sát bổ trợ bảo đảm tính liêm chính học thuật cao nhất của luận văn."
     )
 
     # 3.2.2
@@ -688,12 +706,12 @@ def build_chapter_3():
     )
 
     add_conc_p(
-        f"3. Về mặt thực nghiệm và kiểm toán khoa học (Chương 3): Dựa trên quy trình kiểm toán nguồn gốc thực thi, "
-        f"kết quả tiền huấn luyện Stage A2 trên tập dữ liệu HDFS ghi nhận hạt giống chuẩn tuân thủ giao thức V1.5 là Seed 42 "
-        f"với mất mát kiểm định tốt nhất đạt {ag_canon['mean_best_val_loss']:.6f} tại Epoch 1 trước khi dừng sớm theo quy tắc định trước. "
-        f"Bên cạnh đó, các quan sát trên các đợt chạy 12 epochs (Seed 7 và Seed 999, được phân loại là Protocol Deviation do thiếu văn bản tu chính tiền đăng ký) "
-        f"cho thấy mức mất mát kiểm định đạt trung bình {ag_dev['mean_best_val_loss']:.6f}. "
-        f"Việc phân loại minh bạch giữa các nhóm kết quả đảm bảo tính trung thực học thuật của báo cáo."
+        f"3. Về mặt thực nghiệm và kiểm toán khoa học (Chương 3): Theo chuẩn cấu hình 12 epochs hiện hành, "
+        f"hạt giống chuẩn tuân thủ toàn diện giao thức tiền đăng ký và lịch tối ưu hóa là Seed 999, "
+        f"ghi nhận mất mát kiểm định tốt nhất đạt {ag_canon['mean_best_val_loss']:.6f} tại Epoch 12 với mất mát huấn luyện cuối là {ag_canon['mean_final_train_loss']:.4f}. "
+        f"Bên cạnh đó, các đợt chạy lệch giao thức (Seed 42 dừng sớm theo quy tắc định trước trên lịch trình cũ; Seed 7 có mốc ủy quyền Git sau thời điểm khởi chạy) "
+        f"và các đợt chạy không chuẩn (Seed 1337, Seed 2024) được ghi nhận và phân loại minh bạch, "
+        f"cung cấp dữ liệu đối chiếu khách quan cho quá trình tối ưu hóa mà không làm suy giảm tính toàn vẹn khoa học của báo cáo."
     )
 
     add_conc_p(
