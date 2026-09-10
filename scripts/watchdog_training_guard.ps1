@@ -5,7 +5,8 @@ param (
     [int]$TargetEpoch = 12,
     [int]$Seed = 999,
     [int]$MaxGpuTemp = 70,
-    [int]$PollIntervalSeconds = 30
+    [int]$PollIntervalSeconds = 30,
+    [string]$PriorityClass = "AboveNormal"
 )
 
 $baseDir = "D:\Research"
@@ -97,8 +98,9 @@ while ($true) {
 
     # Continuous enforcement of process locks
     try {
-        if ($pythonProc.PriorityClass -ne [System.Diagnostics.ProcessPriorityClass]::AboveNormal) {
-            $pythonProc.PriorityClass = [System.Diagnostics.ProcessPriorityClass]::AboveNormal
+        $targetPriority = [System.Diagnostics.ProcessPriorityClass]::$PriorityClass
+        if ($pythonProc.PriorityClass -ne $targetPriority) {
+            $pythonProc.PriorityClass = $targetPriority
         }
         if ($pythonProc.ProcessorAffinity.ToInt64() -ne 255) {
             $pythonProc.ProcessorAffinity = 255
