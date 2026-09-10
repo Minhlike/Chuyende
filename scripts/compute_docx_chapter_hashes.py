@@ -47,8 +47,8 @@ def compute_chapter_hashes():
         # Chapter 2 starts at Heading 1 after Chapter 1
         elif idx > 150 and style_name == "Heading 1" and "PHƯƠNG PHÁP BIỂU DIỄN ĐẶC TRƯNG LOG" in txt and ch2_start is None:
             ch2_start = idx
-        # Chapter 2 ends at Conclusion or Bibliography heading
-        elif ch2_start is not None and idx > ch2_start and (txt in ["Kết luận", "KẾT LUẬN", "Tài liệu tham khảo", "TÀI LIỆU THAM KHẢO"] or style_name == "UH1"):
+        # Chapter 2 ends at Chapter 3, Conclusion, or Bibliography heading
+        elif ch2_start is not None and idx > ch2_start and (txt in ["Kết luận", "KẾT LUẬN", "Tài liệu tham khảo", "TÀI LIỆU THAM KHẢO"] or style_name == "UH1" or ("THỰC NGHIỆM" in txt and style_name == "Heading 1")):
             ch2_end = idx
             break
 
