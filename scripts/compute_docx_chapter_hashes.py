@@ -108,6 +108,7 @@ def compute_chapter_hashes():
         "322ee8d072c553b41306426551bf3a4b8cbdee8facb41354a174288de8e02b60",  # fix/thesis-citation-integrity
         "f44b58b1c22f3a877378021228236c407f07d54f2488a4fa518f15cca1bc7f5e",  # fix/thesis-citation-forensic-final (p[97] Sysmon [41])
         "79e944d34fb11bcb28f5340c4b018a96cc36d67b42e35b6267b91ace89029d5c",  # fix/thesis-citation-truth-final (p[117] LogHub [42], Xu [18])
+        "8e550f959fb0c9b071e57da8a8ff62229a21364c480edfe9126e1219dbda1310",  # fix/thesis-citation-exhaustive-lock (p[117] TC E3 [12], E5 [43])
     }
     AUTH_CITATIONS_CH2_HASHES = {
         "c62e1ebe2a01b6668f24e5383abf74372d78c4cc758f1c5a264d6789a3cef855",
