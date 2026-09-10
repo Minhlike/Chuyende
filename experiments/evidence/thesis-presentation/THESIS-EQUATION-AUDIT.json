@@ -11,9 +11,9 @@
     "plain_underscore_loss_notation_count": 0,
     "verified_omml_subscripts": [
       "L_{graph}",
+      "L_{node}",
       "L_{time}",
-      "L_{rel}",
-      "L_{node}"
+      "L_{rel}"
     ]
   },
   "equations_summary": {

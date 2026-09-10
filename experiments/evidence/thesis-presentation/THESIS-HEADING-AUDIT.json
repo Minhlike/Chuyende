@@ -176,7 +176,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 168,
+      "paragraph_index": 169,
       "text": "Các khoảng trống nghiên cứu cốt lõi",
       "style": "Heading 2",
       "level": 2,
@@ -189,7 +189,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 170,
+      "paragraph_index": 171,
       "text": "Khoảng trống 1: Mất mát ngữ nghĩa an ninh trong quá trình trừu tượng hóa tham số",
       "style": "Heading 3",
       "level": 3,
@@ -202,7 +202,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 175,
+      "paragraph_index": 176,
       "text": "Khoảng trống 2: Bất đồng bộ và suy thoái trong gióng hàng biểu diễn đa góc nhìn",
       "style": "Heading 3",
       "level": 3,
@@ -215,7 +215,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 180,
+      "paragraph_index": 181,
       "text": "Khoảng trống 3: Rò rỉ thông tin quy trình, học đường tắt và trôi dạt biểu diễn",
       "style": "Heading 3",
       "level": 3,
@@ -228,7 +228,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 185,
+      "paragraph_index": 186,
       "text": "Khoảng trống 4: Gán nhãn mức thô, phân bổ bằng chứng yếu và nhiễu quản trị viên",
       "style": "Heading 3",
       "level": 3,
@@ -241,7 +241,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 190,
+      "paragraph_index": 191,
       "text": "Khoảng trống 5: Đánh đổi giữa bảo toàn liên kết an ninh và rủi ro quyền riêng tư",
       "style": "Heading 3",
       "level": 3,
@@ -254,7 +254,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 195,
+      "paragraph_index": 196,
       "text": "PHƯƠNG PHÁP BIỂU DIỄN ĐẶC TRƯNG LOG ĐA GÓC NHÌN BẢO TOÀN NGỮ CẢNH AN TOÀN",
       "style": "Heading 1",
       "level": 1,
@@ -267,7 +267,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 196,
+      "paragraph_index": 197,
       "text": "Hình thức hóa bài toán và giới hạn xử lý dòng",
       "style": "Heading 2",
       "level": 2,
@@ -280,7 +280,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 197,
+      "paragraph_index": 198,
       "text": "Biểu diễn đa góc nhìn và ranh giới Extractor–Detector",
       "style": "Heading 3",
       "level": 3,
@@ -293,7 +293,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 219,
+      "paragraph_index": 220,
       "text": "Độ phức tạp xử lý dòng với trạng thái hữu hạn",
       "style": "Heading 3",
       "level": 3,
@@ -306,7 +306,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 228,
+      "paragraph_index": 229,
       "text": "Kiến trúc tổng thể và giao diện vào/ra",
       "style": "Heading 3",
       "level": 3,
@@ -319,7 +319,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 234,
+      "paragraph_index": 235,
       "text": "Tiền xử lý và bảo vệ dynamic parameters",
       "style": "Heading 2",
       "level": 2,
@@ -332,7 +332,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 236,
+      "paragraph_index": 237,
       "text": "Parsing, Typed Canonicalization, Entity Resolution và Security-aware Parameter Retention",
       "style": "Heading 3",
       "level": 3,
@@ -345,7 +345,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 238,
+      "paragraph_index": 239,
       "text": "Typed Schema và Security-aware Parameter Retention",
       "style": "Heading 4",
       "level": 4,
@@ -358,7 +358,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 243,
+      "paragraph_index": 244,
       "text": "Typed Canonicalization và Entity Resolution",
       "style": "Heading 4",
       "level": 4,
@@ -371,7 +371,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 252,
+      "paragraph_index": 253,
       "text": "Leakage-safe Preprocessing",
       "style": "Heading 4",
       "level": 4,
@@ -384,7 +384,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 258,
+      "paragraph_index": 259,
       "text": "Mô hình đe dọa quyền riêng tư và Controlled Linkability",
       "style": "Heading 3",
       "level": 3,
@@ -397,7 +397,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 260,
+      "paragraph_index": 261,
       "text": "Data/Entity Adversary",
       "style": "Heading 4",
       "level": 4,
@@ -410,7 +410,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 264,
+      "paragraph_index": 265,
       "text": "Model Adversary",
       "style": "Heading 4",
       "level": 4,
@@ -423,7 +423,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 269,
+      "paragraph_index": 270,
       "text": "Controlled Linkability Mechanism Contract",
       "style": "Heading 4",
       "level": 4,
@@ -436,7 +436,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 277,
+      "paragraph_index": 278,
       "text": "Đồng bộ thời gian và cửa sổ ngữ cảnh đa tỷ lệ",
       "style": "Heading 3",
       "level": 3,
@@ -449,7 +449,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 279,
+      "paragraph_index": 280,
       "text": "Event-Time, Clock Skew, Watermark và Late Events",
       "style": "Heading 4",
       "level": 4,
@@ -462,7 +462,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 284,
+      "paragraph_index": 285,
       "text": "Multi-scale Context Windows",
       "style": "Heading 4",
       "level": 4,
@@ -475,7 +475,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 291,
+      "paragraph_index": 292,
       "text": "Trích xuất đặc trưng đa góc nhìn",
       "style": "Heading 2",
       "level": 2,
@@ -488,7 +488,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 293,
+      "paragraph_index": 294,
       "text": "Bộ trích xuất tuần tự ngữ nghĩa Transformer",
       "style": "Heading 3",
       "level": 3,
@@ -501,7 +501,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 295,
+      "paragraph_index": 296,
       "text": "Biểu diễn sự kiện kiểu hóa và mã hóa ngữ cảnh",
       "style": "Heading 4",
       "level": 4,
@@ -514,7 +514,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 299,
+      "paragraph_index": 300,
       "text": "Mục tiêu huấn luyện tự giám sát",
       "style": "Heading 4",
       "level": 4,
@@ -527,7 +527,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 308,
+      "paragraph_index": 309,
       "text": "Giao diện đầu ra của bộ trích xuất tuần tự",
       "style": "Heading 4",
       "level": 4,
@@ -540,7 +540,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 315,
+      "paragraph_index": 316,
       "text": "Xây dựng đồ thị nguồn gốc phụ thuộc thời gian và đảm bảo độ chân thực đồ thị",
       "style": "Heading 3",
       "level": 3,
@@ -553,7 +553,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 317,
+      "paragraph_index": 318,
       "text": "Đỉnh kiểu hóa, cạnh có hướng và thuộc tính thời gian",
       "style": "Heading 4",
       "level": 4,
@@ -566,7 +566,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 323,
+      "paragraph_index": 324,
       "text": "Quan hệ phụ thuộc quan sát được và ranh giới với quan hệ nhân quả",
       "style": "Heading 4",
       "level": 4,
@@ -579,7 +579,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 325,
+      "paragraph_index": 326,
       "text": "Các cơ chế ứng viên kiểm soát độ chân thực đồ thị và bùng nổ phụ thuộc",
       "style": "Heading 4",
       "level": 4,
@@ -592,7 +592,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 331,
+      "paragraph_index": 332,
       "text": "Xử lý thực thể khởi động lạnh và thực thể mới",
       "style": "Heading 4",
       "level": 4,
@@ -605,7 +605,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 335,
+      "paragraph_index": 336,
       "text": "Bộ trích xuất đồ thị động Temporal GNN",
       "style": "Heading 3",
       "level": 3,
@@ -618,7 +618,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 337,
+      "paragraph_index": 338,
       "text": "Truyền thông điệp thời gian có kiểu hóa",
       "style": "Heading 4",
       "level": 4,
@@ -631,7 +631,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 344,
+      "paragraph_index": 345,
       "text": "Học biểu diễn tự giám sát trên đồ thị nguồn gốc động",
       "style": "Heading 4",
       "level": 4,
@@ -644,7 +644,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 354,
+      "paragraph_index": 355,
       "text": "Kiểm soát hiện tượng làm mịn quá mức và nghẽn cổ chai thông tin",
       "style": "Heading 4",
       "level": 4,
@@ -657,7 +657,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 358,
+      "paragraph_index": 359,
       "text": "Giao diện đầu ra của bộ trích xuất đồ thị",
       "style": "Heading 4",
       "level": 4,
@@ -670,7 +670,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 367,
+      "paragraph_index": 368,
       "text": "Gióng hàng và học biểu diễn thống nhất đa góc nhìn",
       "style": "Heading 2",
       "level": 2,
@@ -683,7 +683,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 369,
+      "paragraph_index": 370,
       "text": "Gióng hàng đa góc nhìn dị thể",
       "style": "Heading 3",
       "level": 3,
@@ -696,7 +696,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 371,
+      "paragraph_index": 372,
       "text": "Hợp đồng tương ứng ngữ cảnh và siêu dữ liệu liên kết",
       "style": "Heading 4",
       "level": 4,
@@ -709,7 +709,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 377,
+      "paragraph_index": 378,
       "text": "Phân tách không gian biểu diễn và không gian chiếu",
       "style": "Heading 4",
       "level": 4,
@@ -722,7 +722,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 382,
+      "paragraph_index": 383,
       "text": "Phân tích đối sánh các cơ chế tự giám sát đa góc nhìn",
       "style": "Heading 4",
       "level": 4,
@@ -735,7 +735,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 386,
+      "paragraph_index": 387,
       "text": "Hàm mục tiêu gióng hàng VICReg trên không gian chiếu",
       "style": "Heading 4",
       "level": 4,
@@ -748,7 +748,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 399,
+      "paragraph_index": 400,
       "text": "Cơ chế thích ứng góc nhìn khuyết và tương ứng từng phần",
       "style": "Heading 4",
       "level": 4,
@@ -761,7 +761,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 407,
+      "paragraph_index": 408,
       "text": "Nhận thức hành vi quản trị viên và điều hòa rủi ro",
       "style": "Heading 3",
       "level": 3,
@@ -774,7 +774,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 409,
+      "paragraph_index": 410,
       "text": "Nguyên tắc bất biến: Bất thường không đồng nhất với Độc hại",
       "style": "Heading 4",
       "level": 4,
@@ -787,7 +787,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 417,
+      "paragraph_index": 418,
       "text": "Kiểm soát biến gây nhiễu và ngăn chặn học đường tắt",
       "style": "Heading 4",
       "level": 4,
@@ -800,7 +800,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 421,
+      "paragraph_index": 422,
       "text": "Hàm mục tiêu thống nhất và phân bổ bằng chứng yếu",
       "style": "Heading 3",
       "level": 3,
@@ -813,7 +813,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 423,
+      "paragraph_index": 424,
       "text": "Đóng kín đồ thị tối ưu hóa và kiểm toán tham số huấn luyện",
       "style": "Heading 4",
       "level": 4,
@@ -826,7 +826,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 426,
+      "paragraph_index": 427,
       "text": "Hàm mục tiêu tự giám sát thống nhất Stage A và Bảo toàn Đối xứng",
       "style": "Heading 4",
       "level": 4,
@@ -839,7 +839,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 436,
+      "paragraph_index": 437,
       "text": "Cổng độ tin cậy động và Phẫu thuật Gradient PCGrad",
       "style": "Heading 4",
       "level": 4,
@@ -852,7 +852,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 446,
+      "paragraph_index": 447,
       "text": "Stage B (Tùy chọn): Phân bổ bằng chứng yếu qua Attention-MIL",
       "style": "Heading 4",
       "level": 4,
@@ -865,7 +865,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 461,
+      "paragraph_index": 462,
       "text": "Biểu diễn thống nhất, giao diện đầu ra và độ phức tạp",
       "style": "Heading 3",
       "level": 3,
@@ -878,7 +878,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 463,
+      "paragraph_index": 464,
       "text": "Vector biểu diễn thống nhất canonical  và giao diện Extractor",
       "style": "Heading 4",
       "level": 4,
@@ -891,7 +891,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 474,
+      "paragraph_index": 475,
       "text": "Phân tích độ phức tạp tính toán và ngân sách streaming",
       "style": "Heading 4",
       "level": 4,
@@ -904,7 +904,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 481,
+      "paragraph_index": 482,
       "text": "THỰC NGHIỆM, ĐÁNH GIÁ VÀ ỨNG DỤNG",
       "style": "Heading 1",
       "level": 1,
@@ -917,7 +917,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 483,
+      "paragraph_index": 484,
       "text": "Thiết lập thực nghiệm và dữ liệu",
       "style": "Heading 2",
       "level": 2,
@@ -930,7 +930,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 484,
+      "paragraph_index": 485,
       "text": "Môi trường tính toán, tính tái lập và kiểm định độ bất định thống kê",
       "style": "Heading 3",
       "level": 3,
@@ -943,7 +943,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 489,
+      "paragraph_index": 490,
       "text": "Hai tầng benchmark và giao thức phân chia nhân quả chống rò rỉ",
       "style": "Heading 3",
       "level": 3,
@@ -956,7 +956,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 497,
+      "paragraph_index": 498,
       "text": "Hệ thống thang đo ba tầng và hàm mục tiêu huấn luyện",
       "style": "Heading 3",
       "level": 3,
@@ -969,7 +969,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 509,
+      "paragraph_index": 510,
       "text": "Kết quả thực nghiệm và benchmarking",
       "style": "Heading 2",
       "level": 2,
@@ -982,7 +982,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 510,
+      "paragraph_index": 511,
       "text": "Kết quả huấn luyện Stage A2 trên 5 hạt ngẫu nhiên thực nghiệm",
       "style": "Heading 3",
       "level": 3,
@@ -995,7 +995,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 517,
+      "paragraph_index": 518,
       "text": "Đối sánh đặc tính phương pháp luận so với các nghiên cứu cơ sở",
       "style": "Heading 3",
       "level": 3,
@@ -1008,7 +1008,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 521,
+      "paragraph_index": 522,
       "text": "Phân tích triệt tiêu, động thái tối ưu hóa và kiểm chứng giả thuyết",
       "style": "Heading 2",
       "level": 2,
@@ -1021,7 +1021,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 522,
+      "paragraph_index": 523,
       "text": "Phân tích động thái tối ưu hóa và hiện tượng dừng sớm",
       "style": "Heading 3",
       "level": 3,
@@ -1034,7 +1034,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 526,
+      "paragraph_index": 527,
       "text": "Kiểm chứng các giả thuyết khoa học tiền đăng ký",
       "style": "Heading 3",
       "level": 3,
@@ -1047,7 +1047,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 533,
+      "paragraph_index": 534,
       "text": "Khả năng ứng dụng thực tế, giới hạn và hướng phát triển",
       "style": "Heading 2",
       "level": 2,
@@ -1060,7 +1060,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 534,
+      "paragraph_index": 535,
       "text": "Khả năng tích hợp vận hành trong trung tâm điều hành an ninh mạng SOC",
       "style": "Heading 3",
       "level": 3,
@@ -1073,7 +1073,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 538,
+      "paragraph_index": 539,
       "text": "Các giới hạn thực nghiệm và hướng nghiên cứu tiếp theo",
       "style": "Heading 3",
       "level": 3,
@@ -1086,7 +1086,7 @@
       "compliant": true
     },
     {
-      "paragraph_index": 543,
+      "paragraph_index": 544,
       "text": "Kết luận",
       "style": "UH1",
       "level": 1,

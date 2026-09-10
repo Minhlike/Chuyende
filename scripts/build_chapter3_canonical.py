@@ -86,6 +86,58 @@ def make_inline_l_sub(sub: str):
     return parse_xml(xml_str)
 
 
+def make_native_citation_runs(tag: str, num_str: str, font_size_pt: float = 14.0):
+    """Constructs Word 2016 native CITATION field elements.
+    In Word 2016, right-clicking on this field shows 'Edit Citation' and 'Edit Source'.
+    """
+    sz_val = str(int(font_size_pt * 2))
+    xml_str = f'''<w:p {nsdecls("w")}>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:sz w:val="{sz_val}"/>
+          <w:szCs w:val="{sz_val}"/>
+        </w:rPr>
+        <w:fldChar w:fldCharType="begin"/>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:sz w:val="{sz_val}"/>
+          <w:szCs w:val="{sz_val}"/>
+        </w:rPr>
+        <w:instrText xml:space="preserve">CITATION {tag} \\l 1033 </w:instrText>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:sz w:val="{sz_val}"/>
+          <w:szCs w:val="{sz_val}"/>
+        </w:rPr>
+        <w:fldChar w:fldCharType="separate"/>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:sz w:val="{sz_val}"/>
+          <w:szCs w:val="{sz_val}"/>
+          <w:noProof/>
+        </w:rPr>
+        <w:t>[{num_str}]</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:sz w:val="{sz_val}"/>
+          <w:szCs w:val="{sz_val}"/>
+        </w:rPr>
+        <w:fldChar w:fldCharType="end"/>
+      </w:r>
+    </w:p>'''
+    p_elem = parse_xml(xml_str)
+    return list(p_elem.findall(qn("w:r")))
+
+
 def load_source_metrics() -> dict:
     metrics_path = Path(r"D:\Research\experiments\evidence\stage-a2\reconciliation\CHAPTER3-SOURCE-METRICS.json")
     if not metrics_path.exists():
@@ -348,9 +400,14 @@ def build_chapter_3():
     )
 
     add_p(
-        f"Khác với các phương pháp xáo trộn ngẫu nhiên truyền thống có nguy cơ rò rỉ thông tin thời gian, "
-        f"nghiên cứu áp dụng Giao thức Phân chia Nhân quả Thời gian ({ds['split_protocol']}). "
-        f"Toàn bộ các phân vùng dữ liệu được phân định theo thứ tự thời gian và xác thực bằng chữ ký mật mã:"
+        [
+            "Khác với các phương pháp xáo trộn ngẫu nhiên truyền thống có nguy cơ rò rỉ thông tin thời gian, "
+            "nghiên cứu áp dụng Giao thức Phân chia Nhân quả Thời gian (Strict Causal Temporal Split (Arp et al. ",
+        ]
+        + make_native_citation_runs("SRC000002", "8", font_size_pt=14.0)
+        + [
+            ")). Toàn bộ các phân vùng dữ liệu được phân định theo thứ tự thời gian và xác thực bằng chữ ký mật mã:"
+        ]
     )
 
     train_info = ds["train"]
@@ -653,31 +710,31 @@ def build_chapter_3():
     t4_widths = [1800, 2200, 2600, 3005]
     t4_rows = [
         [
-            "DeepLog (Du et al., CCS 2017) [3]",
+            ["DeepLog (Du et al., CCS 2017) "] + make_native_citation_runs("SRC000003", "14", font_size_pt=9.5),
             "Mô hình chuỗi LSTM trên mã định danh mẫu (Template ID)",
             "Loại bỏ toàn bộ tham số biến đổi; chỉ mô hình hóa thời gian rời rạc qua thứ tự bước",
             "Thiếu cấu trúc liên kết đồ thị giữa các thực thể hệ thống; nhạy cảm với biến động log ngoài từ điển"
         ],
         [
-            "LogBERT (Guo et al., IJCNN 2021) [4]",
+            ["LogBERT (Guo et al., IJCNN 2021) "] + make_native_citation_runs("SRC000004", "20", font_size_pt=9.5),
             "Mô hình ngôn ngữ tự chú ý Transformer 2 chiều",
             "Mô hình hóa chuỗi mã mẫu; không bảo toàn ngữ nghĩa số học của tham số dòng lệnh",
             "Không khai thác cấu trúc quan hệ nhân quả đồ thị; chi phí tính toán bậc hai theo độ dài chuỗi"
         ],
         [
-            "UNICORN (Han et al., NDSS 2020) [11]",
+            ["UNICORN (Han et al., NDSS 2020) "] + make_native_citation_runs("SRC000011", "9", font_size_pt=9.5),
             "Đồ thị nguồn gốc tĩnh với cấu trúc phác họa đồ thị động (Graph Sketching)",
             "Thời gian chia theo khoảng (Histogram/Bucketing); không hỗ trợ tham số biến đổi liên tục",
             "Dễ gặp hiện tượng bùng nổ phụ thuộc (Dependency Explosion) trong các tiến trình dài ngày"
         ],
         [
-            "KAIROS (Cheng et al., USENIX Security 2024) [12]",
+            ["KAIROS (Cheng et al., USENIX Security 2024) "] + make_native_citation_runs("SRC000012", "24", font_size_pt=9.5),
             "Mạng đồ thị nguồn gốc theo thời gian (Temporal Provenance Graph)",
             "Sử dụng khoảng thời gian rời rạc giữa các sự kiện kiểm toán kernel",
             "Tập trung vào log kiểm toán hệ điều hành cấp thấp; chi phí bộ nhớ lớn khi theo vết toàn bộ dòng dữ liệu"
         ],
         [
-            "MAGIC (Xie et al., USENIX Security 2024) [14]",
+            ["MAGIC (Xie et al., USENIX Security 2024) "] + make_native_citation_runs("SRC000014", "26", font_size_pt=9.5),
             "Đồ thị tĩnh phân đoạn hai giai đoạn kết hợp mặt phẳng ngắt",
             "Phân chia cửa sổ sự kiện tĩnh; không mô hình hóa luồng thời gian liên tục cục bộ",
             "Quy trình xử lý đồ thị offline, khó triển khai cho các luồng log streaming tốc độ cao"
