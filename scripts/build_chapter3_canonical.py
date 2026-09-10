@@ -712,32 +712,32 @@ def build_chapter_3():
         [
             ["DeepLog (Du et al., CCS 2017) "] + make_native_citation_runs("SRC000003", "14", font_size_pt=9.5),
             "Mô hình chuỗi LSTM trên mã định danh mẫu (Template ID)",
-            "Loại bỏ toàn bộ tham số biến đổi; chỉ mô hình hóa thời gian rời rạc qua thứ tự bước",
-            "Thiếu cấu trúc liên kết đồ thị giữa các thực thể hệ thống; nhạy cảm với biến động log ngoài từ điển"
+            "Mô hình hóa chuỗi log key và vector giá trị tham số qua các LSTM tách rời; thời gian chỉ phản ánh qua thứ tự bước rời rạc",
+            "Nhận xét trong phạm vi đối sánh của nghiên cứu: Thiếu cấu trúc liên kết đồ thị giữa các thực thể hệ thống; nhạy cảm với biến động log ngoài từ điển"
         ],
         [
             ["LogBERT (Guo et al., IJCNN 2021) "] + make_native_citation_runs("SRC000004", "20", font_size_pt=9.5),
             "Mô hình ngôn ngữ tự chú ý Transformer 2 chiều",
             "Mô hình hóa chuỗi mã mẫu; không bảo toàn ngữ nghĩa số học của tham số dòng lệnh",
-            "Không khai thác cấu trúc quan hệ nhân quả đồ thị; chi phí tính toán bậc hai theo độ dài chuỗi"
+            "Nhận xét trong phạm vi đối sánh của nghiên cứu: Không khai thác cấu trúc quan hệ nhân quả đồ thị; chi phí tính toán bậc hai theo độ dài chuỗi"
         ],
         [
             ["UNICORN (Han et al., NDSS 2020) "] + make_native_citation_runs("SRC000011", "9", font_size_pt=9.5),
             "Đồ thị nguồn gốc tĩnh với cấu trúc phác họa đồ thị động (Graph Sketching)",
             "Thời gian chia theo khoảng (Histogram/Bucketing); không hỗ trợ tham số biến đổi liên tục",
-            "Dễ gặp hiện tượng bùng nổ phụ thuộc (Dependency Explosion) trong các tiến trình dài ngày"
+            "Nhận xét trong phạm vi đối sánh của nghiên cứu: Dễ gặp hiện tượng bùng nổ phụ thuộc (Dependency Explosion) trong các tiến trình dài ngày"
         ],
         [
-            ["KAIROS (Cheng et al., USENIX Security 2024) "] + make_native_citation_runs("SRC000012", "24", font_size_pt=9.5),
+            ["KAIROS (Cheng et al., IEEE S&P 2024) "] + make_native_citation_runs("SRC000012", "24", font_size_pt=9.5),
             "Mạng đồ thị nguồn gốc theo thời gian (Temporal Provenance Graph)",
             "Sử dụng khoảng thời gian rời rạc giữa các sự kiện kiểm toán kernel",
-            "Tập trung vào log kiểm toán hệ điều hành cấp thấp; chi phí bộ nhớ lớn khi theo vết toàn bộ dòng dữ liệu"
+            "Nhận xét trong phạm vi đối sánh của nghiên cứu: Tập trung vào log kiểm toán hệ điều hành cấp thấp; chi phí bộ nhớ lớn khi theo vết toàn bộ dòng dữ liệu"
         ],
         [
-            ["MAGIC (Xie et al., USENIX Security 2024) "] + make_native_citation_runs("SRC000014", "26", font_size_pt=9.5),
+            ["MAGIC (Jia et al., USENIX Security 2024) "] + make_native_citation_runs("SRC000014", "26", font_size_pt=9.5),
             "Đồ thị tĩnh phân đoạn hai giai đoạn kết hợp mặt phẳng ngắt",
             "Phân chia cửa sổ sự kiện tĩnh; không mô hình hóa luồng thời gian liên tục cục bộ",
-            "Quy trình xử lý đồ thị offline, khó triển khai cho các luồng log streaming tốc độ cao"
+            "Nhận xét trong phạm vi đối sánh của nghiên cứu: Quy trình xử lý đồ thị offline, khó triển khai cho các luồng log streaming tốc độ cao"
         ],
         [
             "Khung nghiên cứu đề xuất (Temporal Graph View)",

@@ -101,13 +101,19 @@ def compute_chapter_hashes():
     print(f"current_ch1_hash:       {current_ch1_hash}")
     print(f"current_ch2_hash:       {current_ch2_hash}")
 
-    # Authorized citation baseline hashes reflecting user-mandated citation of ThS. Nguyễn Thị Thu Thủy
+    # Authorized citation baseline hashes reflecting user-mandated citation integrity repairs
     # and IEEE sequential citation resequencing:
-    AUTH_CITATIONS_CH1_HASH = "fcdcb1a531f5900fc0b2c36e725bd8f8bfa1e4605d6b0bcde1a34306c819f398"
-    AUTH_CITATIONS_CH2_HASH = "c62e1ebe2a01b6668f24e5383abf74372d78c4cc758f1c5a264d6789a3cef855"
+    AUTH_CITATIONS_CH1_HASHES = {
+        "fcdcb1a531f5900fc0b2c36e725bd8f8bfa1e4605d6b0bcde1a34306c819f398",
+        "322ee8d072c553b41306426551bf3a4b8cbdee8facb41354a174288de8e02b60",  # fix/thesis-citation-integrity
+    }
+    AUTH_CITATIONS_CH2_HASHES = {
+        "c62e1ebe2a01b6668f24e5383abf74372d78c4cc758f1c5a264d6789a3cef855",
+        "2b04c268b555b5a7c2fb345c882c096f6b70e649298928461ab4b509c7894dbd",  # fix/thesis-citation-integrity
+    }
 
-    ch1_match = (current_ch1_hash == baseline_ch1_hash or current_ch1_hash == AUTH_CITATIONS_CH1_HASH)
-    ch2_match = (current_ch2_hash == baseline_ch2_hash or current_ch2_hash == AUTH_CITATIONS_CH2_HASH)
+    ch1_match = (current_ch1_hash == baseline_ch1_hash or current_ch1_hash in AUTH_CITATIONS_CH1_HASHES)
+    ch2_match = (current_ch2_hash == baseline_ch2_hash or current_ch2_hash in AUTH_CITATIONS_CH2_HASHES)
 
     print(f"\n[Cryptographic Invariance Verification]")
     print(f"CH1 Content Equality: {'PASS (NORMALIZED TEXTUAL CONTENT INVARIANCE / AUTH CITATION BASELINE)' if ch1_match else 'FAIL (Mismatch)'}")

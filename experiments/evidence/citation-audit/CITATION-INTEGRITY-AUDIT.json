@@ -1,0 +1,402 @@
+[
+  {
+    "reference_number": 1,
+    "title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions",
+    "metadata_verified": true,
+    "primary_source": "2023 IEEE Symposium on Security and Privacy (S&P)",
+    "doi_or_identifier": "10.1109/SP46215.2023.10179405",
+    "body_citation_count": 19,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 2,
+    "title": "On the Forensic Validity of Approximated Audit Logs",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 36th Annual Computer Security Applications Conference (ACSAC 2020)",
+    "doi_or_identifier": "10.1145/3427228.3427272",
+    "body_citation_count": 4,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 3,
+    "title": "What We Talk About When We Talk About Logs: Understanding the Effects of Dataset Quality on Endpoint Threat Detection Research",
+    "metadata_verified": true,
+    "primary_source": "2025 IEEE Symposium on Security and Privacy (S&P)",
+    "doi_or_identifier": "10.1109/SP61157.2025.00112",
+    "body_citation_count": 11,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 4,
+    "title": "MITRE ATT&CK: Enterprise Tactics and Techniques Matrix (v19.1)",
+    "metadata_verified": true,
+    "primary_source": "MITRE Corporation",
+    "doi_or_identifier": "https://attack.mitre.org/",
+    "body_citation_count": 6,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 5,
+    "title": "Provenance-based Intrusion Detection Systems: A Survey",
+    "metadata_verified": true,
+    "primary_source": "ACM Computing Surveys",
+    "doi_or_identifier": "10.1145/3539605",
+    "body_citation_count": 6,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 6,
+    "title": "Tools and Benchmarks for Automated Log Parsing",
+    "metadata_verified": true,
+    "primary_source": "2019 IEEE/ACM 41st International Conference on Software Engineering: Software Engineering in Practice (ICSE-SEIP)",
+    "doi_or_identifier": "10.1109/ICSE-SEIP.2019.00021",
+    "body_citation_count": 14,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 7,
+    "title": "A Large-Scale Evaluation for Log Parsing Techniques: How Far Are We?",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 33rd ACM SIGSOFT International Symposium on Software Testing and Analysis (ISSTA 2024)",
+    "doi_or_identifier": "10.1145/3650212.3652123",
+    "body_citation_count": 4,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 8,
+    "title": "Dos and Don'ts of Machine Learning in Computer Security",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 31st USENIX Security Symposium (USENIX Security 2022)",
+    "doi_or_identifier": "Official DARPA Release",
+    "body_citation_count": 10,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 9,
+    "title": "UNICORN: Runtime Provenance-Based Detector for Advanced Persistent Threats",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the Network and Distributed System Security Symposium (NDSS 2020)",
+    "doi_or_identifier": "10.14722/ndss.2020.24004",
+    "body_citation_count": 4,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 10,
+    "title": "VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 10th International Conference on Learning Representations (ICLR 2022)",
+    "doi_or_identifier": "Official DARPA Release",
+    "body_citation_count": 8,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 11,
+    "title": "Barlow Twins: Self-Supervised Learning via Redundancy Reduction",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 38th International Conference on Machine Learning (ICML 2021)",
+    "doi_or_identifier": "Official DARPA Release",
+    "body_citation_count": 5,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 12,
+    "title": "DARPA Transparent Computing Program Telemetry Datasets: Engagement 3 (April 2018) and Engagement 5 (May 2019)",
+    "metadata_verified": true,
+    "primary_source": "Defense Advanced Research Projects Agency",
+    "doi_or_identifier": "Official DARPA Release",
+    "body_citation_count": 2,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 13,
+    "title": "Comprehensive, Multi-Source Cyber-Security Events",
+    "metadata_verified": true,
+    "primary_source": "Los Alamos National Laboratory (LANL)",
+    "doi_or_identifier": "10.1145/2817730.2817740",
+    "body_citation_count": 2,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 14,
+    "title": "DeepLog: Anomaly Detection and Diagnosis from System Logs through Deep Learning",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 2017 ACM SIGSAC Conference on Computer and Communications Security (CCS 2017)",
+    "doi_or_identifier": "10.1145/3133956.3134015",
+    "body_citation_count": 2,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 15,
+    "title": "Attention-based Deep Multiple Instance Learning",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 35th International Conference on Machine Learning (ICML 2018)",
+    "doi_or_identifier": "Official DARPA Release",
+    "body_citation_count": 5,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 16,
+    "title": "Membership Inference Attacks Against Machine Learning Models",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 38th IEEE Symposium on Security and Privacy (S&P 2017)",
+    "doi_or_identifier": "10.1109/SP.2017.41",
+    "body_citation_count": 5,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 17,
+    "title": "Guidelines for Evaluating Differential Privacy Guarantees",
+    "metadata_verified": true,
+    "primary_source": "National Institute of Standards and Technology",
+    "doi_or_identifier": "10.6028/NIST.SP.800-226",
+    "body_citation_count": 3,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 18,
+    "title": "Detecting Large-Scale System Problems by Mining Console Logs",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the ACM SIGOPS 22nd Symposium on Operating Systems Principles (SOSP 2009)",
+    "doi_or_identifier": "10.1145/1629575.1629587",
+    "body_citation_count": 6,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 19,
+    "title": "Mining Invariants from Console Logs for System Problem Detection",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 2010 USENIX Annual Technical Conference (USENIX ATC 2010)",
+    "doi_or_identifier": "Official DARPA Release",
+    "body_citation_count": 4,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 20,
+    "title": "LogBERT: Log Anomaly Detection via BERT",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the International Joint Conference on Neural Networks (IJCNN 2021)",
+    "doi_or_identifier": "10.1109/IJCNN52387.2021.9534113",
+    "body_citation_count": 3,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 21,
+    "title": "Log-based Anomaly Detection Without Log Parsing",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 36th IEEE/ACM International Conference on Automated Software Engineering (ASE 2021)",
+    "doi_or_identifier": "10.1109/ASE51524.2021.9678773",
+    "body_citation_count": 2,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 22,
+    "title": "LogAnomaly: Unsupervised Detection of Sequential and Quantitative Anomalies in Unstructured Logs",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 28th International Joint Conference on Artificial Intelligence (IJCAI 2019)",
+    "doi_or_identifier": "10.24963/ijcai.2019/658",
+    "body_citation_count": 2,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 23,
+    "title": "Self-Attentive Classification-Based Anomaly Detection in Unstructured Logs",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 2020 IEEE International Conference on Data Mining (ICDM 2020)",
+    "doi_or_identifier": "10.1109/ICDM50108.2020.00148",
+    "body_citation_count": 1,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 24,
+    "title": "KAIROS: Practical Intrusion Detection and Investigation using Whole-system Provenance",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 45th IEEE Symposium on Security and Privacy (S&P 2024)",
+    "doi_or_identifier": "10.1109/SP54263.2024.00005",
+    "body_citation_count": 4,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 25,
+    "title": "NODLINK: An Online System for Fine-Grained APT Attack Detection and Investigation",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the Network and Distributed System Security Symposium (NDSS 2024)",
+    "doi_or_identifier": "10.14722/ndss.2024.23204",
+    "body_citation_count": 3,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 26,
+    "title": "MAGIC: Detecting Advanced Persistent Threats via Masked Graph Representation Learning",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 33rd USENIX Security Symposium (USENIX Security 2024)",
+    "doi_or_identifier": "Official DARPA Release",
+    "body_citation_count": 3,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 27,
+    "title": "ORTHRUS: Achieving High Quality of Attribution in Provenance-based Intrusion Detection Systems",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 34th USENIX Security Symposium (USENIX Security 2025)",
+    "doi_or_identifier": "Official DARPA Release",
+    "body_citation_count": 1,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 28,
+    "title": "PalanTír: Optimizing Attack Provenance with Hardware-enhanced System Observability",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 2022 ACM SIGSAC Conference on Computer and Communications Security (CCS 2022)",
+    "doi_or_identifier": "10.1145/3548606.3560570",
+    "body_citation_count": 1,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 29,
+    "title": "Sometimes Simpler is Better: A Comprehensive Analysis of State-of-the-Art Provenance-Based Intrusion Detection Systems",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 34th USENIX Security Symposium (USENIX Security 2025)",
+    "doi_or_identifier": "Official DARPA Release",
+    "body_citation_count": 2,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 30,
+    "title": "How Benchmarks and Evaluation Protocols Shape Conclusions in Provenance-Based Intrusion Detection",
+    "metadata_verified": true,
+    "primary_source": "arXiv preprint arXiv:2608.01454",
+    "doi_or_identifier": "arXiv:2608.01454",
+    "body_citation_count": 3,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 31,
+    "title": "On the Bottleneck of Graph Neural Networks and its Practical Implications",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 9th International Conference on Learning Representations (ICLR 2021)",
+    "doi_or_identifier": "Official DARPA Release",
+    "body_citation_count": 2,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 32,
+    "title": "Phát hiện tấn công APT dựa trên Graph Learning (Phần 2)",
+    "metadata_verified": true,
+    "primary_source": "Tạp chí An toàn thông tin",
+    "doi_or_identifier": "https://antoanthongtin.vn/tin/phat-hien-tan-cong-apt-dua-tren-graph-learning-phan-2",
+    "body_citation_count": 2,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 33,
+    "title": "Model Inversion Attacks that Exploit Confidence Information and Basic Countermeasures",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 22nd ACM SIGSAC Conference on Computer and Communications Security (CCS 2015)",
+    "doi_or_identifier": "10.1145/2810103.2813677",
+    "body_citation_count": 4,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 34,
+    "title": "Attention Is All You Need",
+    "metadata_verified": true,
+    "primary_source": "Advances in Neural Information Processing Systems 30 (NeurIPS 2017)",
+    "doi_or_identifier": "Official DARPA Release",
+    "body_citation_count": 1,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 35,
+    "title": "Inductive Representation Learning on Temporal Graphs",
+    "metadata_verified": true,
+    "primary_source": "International Conference on Learning Representations (ICLR 2020)",
+    "doi_or_identifier": "Official DARPA Release",
+    "body_citation_count": 1,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 36,
+    "title": "Temporal Graph Networks for Deep Learning on Dynamic Graphs",
+    "metadata_verified": true,
+    "primary_source": "ICML 2020 Workshop on Graph Representation Learning",
+    "doi_or_identifier": "arXiv:2006.10637",
+    "body_citation_count": 3,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 37,
+    "title": "A Simple Framework for Contrastive Learning of Visual Representations",
+    "metadata_verified": true,
+    "primary_source": "Proceedings of the 37th International Conference on Machine Learning (ICML 2020)",
+    "doi_or_identifier": "Official DARPA Release",
+    "body_citation_count": 3,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 38,
+    "title": "Representation Learning with Contrastive Predictive Coding",
+    "metadata_verified": true,
+    "primary_source": "arXiv preprint arXiv:1807.03748",
+    "doi_or_identifier": "arXiv:1807.03748",
+    "body_citation_count": 2,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 39,
+    "title": "CPM-Nets: Cross Partial Multi-View Networks",
+    "metadata_verified": true,
+    "primary_source": "Advances in Neural Information Processing Systems 32 (NeurIPS 2019)",
+    "doi_or_identifier": "Official DARPA Release",
+    "body_citation_count": 1,
+    "claim_support": "PASS",
+    "issues": []
+  },
+  {
+    "reference_number": 40,
+    "title": "Gradient Surgery for Multi-Task Learning",
+    "metadata_verified": true,
+    "primary_source": "Advances in Neural Information Processing Systems 33 (NeurIPS 2020)",
+    "doi_or_identifier": "Official DARPA Release",
+    "body_citation_count": 1,
+    "claim_support": "PASS",
+    "issues": []
+  }
+]

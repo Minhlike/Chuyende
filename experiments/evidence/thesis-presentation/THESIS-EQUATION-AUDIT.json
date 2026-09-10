@@ -1,7 +1,7 @@
 {
   "metadata": {
     "document_path": "D:\\Research\\Chuyên đề chuyên sâu.docx",
-    "total_omml_math_elements": 538,
+    "total_omml_math_elements": 534,
     "equation_layout_deviations_after": 0,
     "status": "PASS"
   },
@@ -10,15 +10,15 @@
     "lowercase_main_l_count": 0,
     "plain_underscore_loss_notation_count": 0,
     "verified_omml_subscripts": [
+      "L_{node}",
       "L_{graph}",
-      "L_{rel}",
       "L_{time}",
-      "L_{node}"
+      "L_{rel}"
     ]
   },
   "equations_summary": {
     "display_equations": 4,
-    "inline_math_elements": 534,
+    "inline_math_elements": 530,
     "cambria_math_enforced": true,
     "visible_latex_count": 0
   }
