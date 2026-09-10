@@ -28,6 +28,7 @@ from pathlib import Path
 import docx
 from docx.shared import Pt, Cm, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_LINE_SPACING
+from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.oxml import parse_xml
 from docx.oxml.ns import nsdecls
 
@@ -441,7 +442,7 @@ def build_chapter_3():
         "Hạt giống", "Phân loại", "Epochs HT", "Số bước", "Lý do kết thúc",
         "Train Loss", "Best Epoch", "Best Val Loss", "Val Loss Cuối", "L_rel", "L_node", "L_time"
     ]
-    t3_widths = [900, 1300, 650, 750, 1050, 800, 600, 850, 850, 650, 650, 650]
+    t3_widths = [750, 1450, 620, 730, 1200, 730, 570, 820, 820, 610, 610, 610]
 
     t3_rows = []
     for s in st:
@@ -464,7 +465,7 @@ def build_chapter_3():
 
     # Protocol deviation aggregate row (3 seeds)
     t3_rows.append([
-        "TB Lệch GT (3 seeds)",
+        "TB lệch GT\n(3 seed)",
         "PROTOCOL_DEVIATION",
         "-",
         "-",
@@ -478,12 +479,21 @@ def build_chapter_3():
         f"{ag_dev['mean_l_time']:.4f}"
     ])
 
-    insert_thesis_table(doc, target_p, t3_headers, t3_widths, t3_rows, font_size_pt=8.5)
+    insert_thesis_table(
+        doc, target_p, t3_headers, t3_widths, t3_rows,
+        font_size_pt=8.5,
+        body_alignments=WD_ALIGN_PARAGRAPH.CENTER,
+        header_alignments=WD_ALIGN_PARAGRAPH.CENTER,
+        table_alignment=WD_TABLE_ALIGNMENT.CENTER,
+        fixed_layout=True,
+        cell_space_before_pt=0,
+        cell_space_after_pt=0
+    )
     add_p("", first_line_indent=False)
 
     add_p(
         f"Từ kết quả Bảng 3.3, toàn bộ 5 hạt giống thực nghiệm được bóc tách và đối soát nguồn gốc độc lập. "
-        f"Trong khuôn khổ kiểm toán hợp đồng tiền thi hành nghiêm ngặt, không có đợt chạy nào đạt chuẩn khẳng định tuyệt đối (Canonical) "
+        f"Trong khuôn khổ kiểm toán hợp đồng tiền thi hành nghiêm ngặt, không có đợt chạy nào thỏa mãn đầy đủ các điều kiện chuẩn (Canonical) "
         f"do sự bất tương thích giữa kế hoạch tiền thi hành và thực thi thực tế. "
         f"Đối với nhóm quan sát lệch giao thức (Seed 999, Seed 42, Seed 7), mức mất mát kiểm định tốt nhất ghi nhận trung bình là {ag_dev['mean_best_val_loss']:.6f} "
         f"và mất mát kiểm định cuối trung bình đạt {ag_dev['mean_final_val_loss']:.6f}. "
@@ -491,7 +501,7 @@ def build_chapter_3():
         f"Seed 7 đạt mức mất mát kiểm định tốt nhất 0,550259 nhưng văn bản ủy quyền được commit sau khi khởi chạy; "
         f"Seed 42 dừng sớm tại Epoch 4 theo quy tắc dừng sớm đã tiền đăng ký. "
         f"Các thành phần mất mát kiểm định cuối (L_rel, L_node, L_time) tuân thủ chặt chẽ công thức phân rã thành phần L_graph = 1.0 * L_rel + 1.0 * L_node + 0.1 * L_time cho từng đợt chạy. "
-        f"Việc công khai minh bạch mọi sai lệch nguồn gốc và bảo toàn trọn vẹn niêm phong kiểm thử khẳng định tính liêm chính học thuật tuyệt đối của công trình."
+        f"Việc công khai các sai lệch nguồn gốc và duy trì trạng thái niêm phong của tập kiểm thử giúp tăng tính minh bạch và khả năng kiểm toán của quy trình thực nghiệm."
     )
 
     # 3.2.2
@@ -731,7 +741,7 @@ def build_chapter_3():
         f"Seed 7 đạt mất mát kiểm định tốt nhất 0,550259 nhưng văn bản ủy quyền commit sau khi khởi chạy; "
         f"Seed 42 dừng sớm tại Epoch 4) ghi nhận mức mất mát kiểm định trung bình là {ag_dev['mean_best_val_loss']:.6f}. "
         f"Cùng với các đợt chạy không chuẩn (Seed 1337, Seed 2024), các kết quả cung cấp dữ liệu đối chiếu khách quan "
-        f"trong khi toàn bộ dữ liệu kiểm thử được bảo toàn tuyệt đối sau tường lửa mật mã (test_opened = false)."
+        f"trong khi toàn bộ dữ liệu kiểm thử được duy trì niêm phong sau tường lửa mật mã (test_opened = false)."
     )
 
     add_conc_p(

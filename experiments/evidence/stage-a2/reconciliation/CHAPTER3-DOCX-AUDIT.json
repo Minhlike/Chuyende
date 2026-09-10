@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0.0",
-  "audit_timestamp": "2026-09-10T08:49:01.469417+00:00",
+  "audit_timestamp": "2026-09-10T09:08:17.380596+00:00",
   "word_version": "16.0",
   "word_product_name": "Microsoft Word COM 16.0",
   "docx_file": "Chuyên đề chuyên sâu.docx",
-  "docx_sha256": "2eebc3685f7f276682b1b38bf81fb9787d7739a637331b0f47dd72501aa355b8",
+  "docx_sha256": "0b8544a6a1fc3372e33c87b4f1d687a53a398e6905949d3fa822c688f87c7966",
   "pages": 98,
-  "paragraphs": 537,
+  "paragraphs": 997,
   "tables": 13,
   "bookmarks_checked": {
     "BK_TBL_3_001": true,
@@ -19,32 +19,70 @@
     "status": "PASS",
     "chapter3_tables": [
       {
-        "table_index": 9,
+        "bookmark": "BK_TBL_3_001",
         "caption": "Bảng 3.1",
+        "actual_table_index": 9,
+        "actual_table_index_0based": 8,
+        "rows": 8,
+        "cols": 3,
         "style": "Table Grid",
-        "rows": 5,
-        "cols": 5
+        "table_alignment": "CENTER",
+        "layout": "AUTO",
+        "total_width_dxa": 9605,
+        "vertical_alignment_pass": true,
+        "horizontal_alignment_pass": true,
+        "cant_split_pass": true,
+        "width_within_printable_area": true
       },
       {
-        "table_index": 10,
+        "bookmark": "BK_TBL_3_002",
         "caption": "Bảng 3.2",
+        "actual_table_index": 10,
+        "actual_table_index_0based": 9,
+        "rows": 5,
+        "cols": 5,
         "style": "Table Grid",
-        "rows": 7,
-        "cols": 12
+        "table_alignment": "CENTER",
+        "layout": "AUTO",
+        "total_width_dxa": 9605,
+        "vertical_alignment_pass": true,
+        "horizontal_alignment_pass": true,
+        "cant_split_pass": true,
+        "width_within_printable_area": true
       },
       {
-        "table_index": 11,
+        "bookmark": "BK_TBL_3_003",
         "caption": "Bảng 3.3",
-        "style": "Table Grid",
+        "actual_table_index": 11,
+        "actual_table_index_0based": 10,
         "rows": 7,
-        "cols": 4
+        "cols": 12,
+        "style": "Table Grid",
+        "table_alignment": "CENTER",
+        "layout": "FIXED",
+        "total_width_dxa": 9520,
+        "vertical_alignment_pass": true,
+        "horizontal_alignment_pass": true,
+        "cant_split_pass": true,
+        "width_within_printable_area": true,
+        "all_body_cells_horizontal_center": true,
+        "all_cells_vertical_center": true
       },
       {
-        "table_index": 12,
+        "bookmark": "BK_TBL_3_004",
         "caption": "Bảng 3.4",
+        "actual_table_index": 12,
+        "actual_table_index_0based": 11,
+        "rows": 7,
+        "cols": 4,
         "style": "Table Grid",
-        "rows": 41,
-        "cols": 2
+        "table_alignment": "CENTER",
+        "layout": "AUTO",
+        "total_width_dxa": 9605,
+        "vertical_alignment_pass": true,
+        "horizontal_alignment_pass": true,
+        "cant_split_pass": true,
+        "width_within_printable_area": true
       }
     ]
   },

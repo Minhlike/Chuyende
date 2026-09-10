@@ -16,7 +16,7 @@ from docx.shared import Pt, Cm, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_LINE_SPACING
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.oxml import parse_xml
-from docx.oxml.ns import nsdecls
+from docx.oxml.ns import nsdecls, qn
 import win32com.client as win32
 import pythoncom
 
@@ -486,17 +486,34 @@ def format_table_cell(cell, width_dxa: int, align=WD_ALIGN_PARAGRAPH.LEFT, bold=
             r.bold = True
 
 
-def insert_thesis_table(doc, ref_p, headers, col_widths, rows_data, font_size_pt=14, pad_v_dxa=80, space_v_pt=3):
+def insert_thesis_table(
+    doc, ref_p, headers, col_widths, rows_data,
+    font_size_pt=14, pad_v_dxa=80, space_v_pt=3,
+    body_alignments=None, header_alignments=None,
+    table_alignment=WD_TABLE_ALIGNMENT.CENTER,
+    fixed_layout=False, cell_space_before_pt=None, cell_space_after_pt=None
+):
     """Creates an elegant, professional thesis table matching original template layout, supporting OMML nodes in cells."""
     tbl = doc.add_table(rows=len(rows_data) + 1, cols=len(headers))
     tbl.style = "Table Grid"
-    tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
+    if table_alignment is not None:
+        tbl.alignment = table_alignment
     if ref_p is not None:
         ref_p._p.addprevious(tbl._tbl)
 
     tblPr = tbl._tbl.tblPr
     total_w = sum(col_widths)
+    for old_w in tblPr.findall(qn("w:tblW")):
+        tblPr.remove(old_w)
     tblPr.append(parse_xml(f'<w:tblW {nsdecls("w")} w:w="{total_w}" w:type="dxa"/>'))
+    if fixed_layout:
+        tblPr.append(parse_xml(f'<w:tblLayout {nsdecls("w")} w:type="fixed"/>'))
+
+    tblGrid = tbl._tbl.tblGrid
+    if tblGrid is not None and hasattr(tblGrid, 'gridCol_lst'):
+        for c_i, col in enumerate(tblGrid.gridCol_lst):
+            if c_i < len(col_widths):
+                col.set(qn('w:w'), str(col_widths[c_i]))
 
     hdr_row = tbl.rows[0]
     hdr_trPr = hdr_row._tr.get_or_add_trPr()
@@ -505,7 +522,18 @@ def insert_thesis_table(doc, ref_p, headers, col_widths, rows_data, font_size_pt
 
     for c_i, h in enumerate(headers):
         cell = hdr_row.cells[c_i]
-        format_table_cell_rich(cell, h, col_widths[c_i], align=WD_ALIGN_PARAGRAPH.CENTER, bold=True, font_size_pt=font_size_pt, pad_v_dxa=pad_v_dxa, space_v_pt=space_v_pt)
+        if header_alignments is not None:
+            if isinstance(header_alignments, list):
+                h_align = header_alignments[c_i]
+            else:
+                h_align = header_alignments
+        else:
+            h_align = WD_ALIGN_PARAGRAPH.CENTER
+        format_table_cell_rich(
+            cell, h, col_widths[c_i], align=h_align, bold=True,
+            font_size_pt=font_size_pt, pad_v_dxa=pad_v_dxa, space_v_pt=space_v_pt,
+            space_before_pt=cell_space_before_pt, space_after_pt=cell_space_after_pt
+        )
 
     for r_i, row in enumerate(rows_data):
         b_row = tbl.rows[r_i + 1]
@@ -514,11 +542,26 @@ def insert_thesis_table(doc, ref_p, headers, col_widths, rows_data, font_size_pt
 
         for c_i, val in enumerate(row):
             cell = b_row.cells[c_i]
-            cell_align = WD_ALIGN_PARAGRAPH.CENTER if (c_i == 0 and len(headers) >= 4) else WD_ALIGN_PARAGRAPH.LEFT
-            format_table_cell_rich(cell, val, col_widths[c_i], align=cell_align, bold=(c_i == 0 and len(headers) == 3), font_size_pt=font_size_pt, pad_v_dxa=pad_v_dxa, space_v_pt=space_v_pt)
+            if body_alignments is not None:
+                if isinstance(body_alignments, list):
+                    cell_align = body_alignments[c_i]
+                else:
+                    cell_align = body_alignments
+            else:
+                cell_align = WD_ALIGN_PARAGRAPH.CENTER if (c_i == 0 and len(headers) >= 4) else WD_ALIGN_PARAGRAPH.LEFT
+            format_table_cell_rich(
+                cell, val, col_widths[c_i], align=cell_align,
+                bold=(c_i == 0 and len(headers) == 3),
+                font_size_pt=font_size_pt, pad_v_dxa=pad_v_dxa, space_v_pt=space_v_pt,
+                space_before_pt=cell_space_before_pt, space_after_pt=cell_space_after_pt
+            )
 
 
-def format_table_cell_rich(cell, val, width_dxa: int, align=WD_ALIGN_PARAGRAPH.LEFT, bold: bool = False, font_size_pt: float = 14.0, pad_v_dxa: int = 80, space_v_pt: float = 3.0):
+def format_table_cell_rich(
+    cell, val, width_dxa: int, align=WD_ALIGN_PARAGRAPH.LEFT, bold: bool = False,
+    font_size_pt: float = 14.0, pad_v_dxa: int = 80, space_v_pt: float = 3.0,
+    space_before_pt=None, space_after_pt=None
+):
     """Formats cell borders, margins, alignment and renders rich text / OMML nodes without raw math underscores."""
     tcPr = cell._tc.get_or_add_tcPr()
     tc_xml = (
@@ -546,8 +589,10 @@ def format_table_cell_rich(cell, val, width_dxa: int, align=WD_ALIGN_PARAGRAPH.L
     p.alignment = align
     p.paragraph_format.first_line_indent = Cm(0)
     p.paragraph_format.line_spacing = 1.0
-    p.paragraph_format.space_before = Pt(space_v_pt)
-    p.paragraph_format.space_after = Pt(space_v_pt)
+    sb = space_v_pt if space_before_pt is None else space_before_pt
+    sa = space_v_pt if space_after_pt is None else space_after_pt
+    p.paragraph_format.space_before = Pt(sb)
+    p.paragraph_format.space_after = Pt(sa)
 
     # Clear default text runs
     p.text = ""
