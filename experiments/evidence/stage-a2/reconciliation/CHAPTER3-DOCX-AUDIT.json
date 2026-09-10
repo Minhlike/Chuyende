@@ -1,0 +1,12 @@
+{
+  "audit_version": "1.0.0",
+  "docx_path": "D:/Research/Chuy\u00ean \u0111\u1ec1 chuy\u00ean s\u00e2u.docx",
+  "immutable_baselines": {
+    "ch1_baseline_hash": "b7912883570e369e765c7a6daa7fc626db570c8b53050e976d4f652a2dc7e16e",
+    "ch2_baseline_hash": "e91bbc47de218d037d5dec3192b6ba59fda4e3c7423e51c34aea898d3db25a01"
+  },
+  "target_chapter": "Chapter 3 (Th\u1ef1c nghi\u1ec7m, \u0110\u00e1nh gi\u00e1 v\u00e0 \u1ee8ng d\u1ee5ng)",
+  "target_conclusion": "K\u1ebft lu\u1eadn",
+  "provenance_reconciliation_ref": "experiments/evidence/stage-a2/reconciliation/STAGE-A2-FIVE-SEED-RECONCILIATION.json",
+  "source_metrics_ref": "experiments/evidence/stage-a2/reconciliation/CHAPTER3-SOURCE-METRICS.json"
+}

@@ -1,0 +1,262 @@
+{
+  "metadata": {
+    "audit_title": "Stage A2 Five-Seed Forensic Provenance Reconciliation",
+    "audit_timestamp_utc": "2026-09-10T07:15:00Z",
+    "auditor_role": "Senior Research Reproducibility Engineer + Scientific Auditor",
+    "working_branch": "fix/stage-a2-forensic-reconciliation",
+    "base_commit": "585223e3deba67665c92bdd0cfb9fc71c8420b2f",
+    "canonical_seeds": [
+      7,
+      999,
+      42
+    ],
+    "noncanonical_seeds": [
+      1337,
+      2024
+    ],
+    "incomplete_seeds": [],
+    "test_opened": false,
+    "new_optimizer_steps": 0
+  },
+  "seeds": [
+    {
+      "seed": 7,
+      "classification": "CANONICAL_WITH_DOCUMENTED_AMENDMENT",
+      "authorization_commit": "e4d53b82d25091ac1b445832efc00ba83ba29641",
+      "actual_execution_commit": "e4d53b82d25091ac1b445832efc00ba83ba29641",
+      "commit_exists_remote": true,
+      "environment_lock_sha256": "81d3ca4865a95c75cc2345695091265f948ad58e705865a3f8f780a9bf09f362",
+      "dataset_sha256": "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169",
+      "train_membership_sha256": "65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc",
+      "val_membership_sha256": "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407b0609a",
+      "epochs_completed": 12,
+      "optimizer_steps": 6876,
+      "best_epoch": 12,
+      "best_val_L_graph": 0.5502585781658642,
+      "final_train_L_graph": 0.16090952344926493,
+      "final_val_L_graph": 0.5502585781658642,
+      "final_val_L_rel": 0.18331454441866504,
+      "final_val_L_node": 0.3583694440508382,
+      "final_val_L_time": 0.08574589696360949,
+      "best_val_L_rel": 0.18331454441866504,
+      "best_val_L_node": 0.3583694440508382,
+      "best_val_L_time": 0.08574589696360949,
+      "early_stopped": false,
+      "test_opened": false,
+      "provenance_issues": [
+        "Authorized under Amendment 13 (12-epoch hard ceiling, local Windows GPU fallback). Fully executed post-commit e4d53b82."
+      ],
+      "evidence_files": [
+        "experiments/evidence/stage-a2/preexecution/SEED7-LOCAL-LAUNCH-AUTHORIZATION-V1.5.json",
+        "experiments/runs/stage-a2/HDFS/seed-7/RUN-STATE.json",
+        "experiments/runs/stage-a2/HDFS/seed-7/METRICS.json",
+        "experiments/runs/stage-a2/HDFS/seed-7/RUN-MANIFEST.json",
+        "experiments/runs/stage-a2/HDFS/seed-7/TRAIN-LOG.jsonl",
+        "experiments/runs/stage-a2/HDFS/seed-7/CHECKPOINT-INVENTORY.json",
+        "experiments/runs/stage-a2/HDFS/seed-7/TEST-FIREWALL.json",
+        "experiments/runs/stage-a2/HDFS/seed-7/ENVIRONMENT.json",
+        "experiments/evidence/stage-a2/completed/SEED7-CANONICAL-COMPLETION.json"
+      ],
+      "evidence_hashes": {
+        "RUN-STATE.json": "3bbd8c74b62e1824e8a5ac18571c9ae5782dd46aec83c5e5a15267856efbda5a",
+        "METRICS.json": "7ebbf5e3a3ce64ebb957b667b528e55896b7fc357fa3ed575a7d1e1d5e67803a",
+        "RUN-MANIFEST.json": "a73ee683b55fde2aab84891cb1aa4cb34eaa5740af7cbbdc9783f67fb45483bd",
+        "TRAIN-LOG.jsonl": "75faa70636f895375e4faa4ca67fe86cb9425c84430159cde04b3f3a066c2d45",
+        "TEST-FIREWALL.json": "e07999decc7164e639a71fbfb3a0b9670273d01fdc8cdb087ebdc50c2c84af78",
+        "best_checkpoint.pt": "4364739b8ffaf3696e95e41bda7fe55f1d83bc558885cf027905dfae724351db",
+        "last_checkpoint.pt": "2d7520e7ad25c56fbc51ec7d0da535679e9e83202d28387c5d3371ccf06330c0"
+      }
+    },
+    {
+      "seed": 999,
+      "classification": "CANONICAL_WITH_DOCUMENTED_AMENDMENT",
+      "authorization_commit": "e4d53b82d25091ac1b445832efc00ba83ba29641",
+      "actual_execution_commit": "e4d53b82d25091ac1b445832efc00ba83ba29641",
+      "commit_exists_remote": true,
+      "environment_lock_sha256": "81d3ca4865a95c75cc2345695091265f948ad58e705865a3f8f780a9bf09f362",
+      "dataset_sha256": "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169",
+      "train_membership_sha256": "65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc",
+      "val_membership_sha256": "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407b0609a",
+      "epochs_completed": 12,
+      "optimizer_steps": 6876,
+      "best_epoch": 12,
+      "best_val_L_graph": 0.609499505038375,
+      "final_train_L_graph": 0.15900419260943693,
+      "final_val_L_graph": 0.609499505038375,
+      "final_val_L_rel": 0.19429656430197312,
+      "final_val_L_node": 0.4063353160623698,
+      "final_val_L_time": 0.08867624674032144,
+      "best_val_L_rel": 0.19429656430197312,
+      "best_val_L_node": 0.4063353160623698,
+      "best_val_L_time": 0.08867624674032144,
+      "early_stopped": false,
+      "test_opened": false,
+      "provenance_issues": [
+        "Authorized under Amendment 13 on 2026-09-08T16:00:00Z. Fully executed post-commit e4d53b82."
+      ],
+      "evidence_files": [
+        "experiments/evidence/stage-a2/preexecution/SEED999-LOCAL-LAUNCH-AUTHORIZATION-V1.5.json",
+        "experiments/runs/stage-a2/HDFS/seed-999/RUN-STATE.json",
+        "experiments/runs/stage-a2/HDFS/seed-999/METRICS.json",
+        "experiments/runs/stage-a2/HDFS/seed-999/RUN-MANIFEST.json",
+        "experiments/runs/stage-a2/HDFS/seed-999/TRAIN-LOG.jsonl",
+        "experiments/runs/stage-a2/HDFS/seed-999/CHECKPOINT-INVENTORY.json",
+        "experiments/runs/stage-a2/HDFS/seed-999/TEST-FIREWALL.json",
+        "experiments/runs/stage-a2/HDFS/seed-999/ENVIRONMENT.json",
+        "experiments/evidence/stage-a2/completed/SEED999-CANONICAL-COMPLETION.json"
+      ],
+      "evidence_hashes": {
+        "RUN-STATE.json": "d1afa2c4d0c402d876c1436474ac266d963c94a8c664b8a30bb65a614d05fa4e",
+        "METRICS.json": "4e41422d5fea0aa5843621b800be9bac90c7c93afcacfc8d15f537483d5b6ef0",
+        "RUN-MANIFEST.json": "d3d51e640faaef5d198444a03a677f32e5544c1175b78b64280bc9f95d7936fe",
+        "TRAIN-LOG.jsonl": "26ea9dd051b50eebbef2b7c87e572151d9e043de6e0958c3061329e4f9af35e9",
+        "TEST-FIREWALL.json": "e07999decc7164e639a71fbfb3a0b9670273d01fdc8cdb087ebdc50c2c84af78",
+        "best_checkpoint.pt": "adcdb2ca2d3130e5d1069900b4ebf7b5ca095309340ad744b27633962243280b",
+        "last_checkpoint.pt": "3efcbde393259a834673080d0609a8487a2f757c385d1bae9883e612170dad5a"
+      }
+    },
+    {
+      "seed": 42,
+      "classification": "CANONICAL_WITH_DOCUMENTED_AMENDMENT",
+      "authorization_commit": "33269cbe897fbbad095ad8979b9ca914d209e701",
+      "actual_execution_commit": "33269cbe897fbbad095ad8979b9ca914d209e701",
+      "commit_exists_remote": true,
+      "environment_lock_sha256": "81d3ca4865a95c75cc2345695091265f948ad58e705865a3f8f780a9bf09f362",
+      "dataset_sha256": "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169",
+      "train_membership_sha256": "65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc",
+      "val_membership_sha256": "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407b0609a",
+      "epochs_completed": 4,
+      "optimizer_steps": 2292,
+      "best_epoch": 1,
+      "best_val_L_graph": 6.081352412568631,
+      "final_train_L_graph": 0.3082787216312121,
+      "final_val_L_graph": 7.150944128802701,
+      "final_val_L_rel": 4.9265723270060295,
+      "final_val_L_node": 2.1803066313660158,
+      "final_val_L_time": 0.4406517043065614,
+      "best_val_L_rel": 4.672867397020213,
+      "best_val_L_node": 1.3935153470661892,
+      "best_val_L_time": 0.14969668482228343,
+      "early_stopped": true,
+      "test_opened": false,
+      "provenance_issues": [
+        "Authorized under Amendment 13 for 20 epochs; early stopping triggered at Epoch 4 due to saddle point stagnation (patience=3)."
+      ],
+      "evidence_files": [
+        "experiments/evidence/stage-a2/preexecution/SEED42-LOCAL-LAUNCH-AUTHORIZATION-V1.5.json",
+        "experiments/runs/stage-a2/HDFS/seed-42/RUN-STATE.json",
+        "experiments/runs/stage-a2/HDFS/seed-42/METRICS.json",
+        "experiments/runs/stage-a2/HDFS/seed-42/RUN-MANIFEST.json",
+        "experiments/runs/stage-a2/HDFS/seed-42/TRAIN-LOG.jsonl",
+        "experiments/runs/stage-a2/HDFS/seed-42/CHECKPOINT-INVENTORY.json",
+        "experiments/runs/stage-a2/HDFS/seed-42/TEST-FIREWALL.json",
+        "experiments/runs/stage-a2/HDFS/seed-42/ENVIRONMENT.json",
+        "experiments/evidence/stage-a2/completed/SEED42-CANONICAL-COMPLETION.json"
+      ],
+      "evidence_hashes": {
+        "RUN-STATE.json": "fa8d3c13a3d201c343a401f62d21af00137d38c15cf09312f94d61acc492c70e",
+        "METRICS.json": "f005a079b938d142c3064231f3d975ef9c82ab12484b7a1b951dc27b058551f1",
+        "RUN-MANIFEST.json": "be5f20c63353d97d3f6c919a6b870564e0fe67583d3a90bea09d8dd948005266",
+        "TRAIN-LOG.jsonl": "0c607b464fa10846bd82f7c1ba09b17e0356a8ac4d4dafb222f177d3e48385c7",
+        "TEST-FIREWALL.json": "e07999decc7164e639a71fbfb3a0b9670273d01fdc8cdb087ebdc50c2c84af78",
+        "best_checkpoint.pt": "98da747668786815f5f81e102bb92713b003a5efa8534b6491bcd9348068afbc",
+        "last_checkpoint.pt": "b058d43266c03ac709e03f71363da7925e7b04515cfdc5a6ae33028d62e44140"
+      }
+    },
+    {
+      "seed": 1337,
+      "classification": "NONCANONICAL",
+      "authorization_commit": "33269cbe897fbbad095ad8979b9ca914d209e701",
+      "actual_execution_commit": "33269cbe897fbbad095ad8979b9ca914d209e701",
+      "commit_exists_remote": true,
+      "environment_lock_sha256": "81d3ca4865a95c75cc2345695091265f948ad58e705865a3f8f780a9bf09f362",
+      "dataset_sha256": "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169",
+      "train_membership_sha256": "65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc",
+      "val_membership_sha256": "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407b0609a",
+      "epochs_completed": 12,
+      "optimizer_steps": 6876,
+      "best_epoch": 10,
+      "best_val_L_graph": 0.917826856094738,
+      "final_train_L_graph": 0.18478442614214396,
+      "final_val_L_graph": 1.205657854533481,
+      "final_val_L_rel": 0.30627399207198625,
+      "final_val_L_node": 0.8316750552543444,
+      "final_val_L_time": 0.6770880720715033,
+      "best_val_L_rel": 0.3440732721629779,
+      "best_val_L_node": 0.5541323810147585,
+      "best_val_L_time": 0.1962120291700165,
+      "early_stopped": false,
+      "test_opened": false,
+      "provenance_issues": [
+        "Authorization locked max_epochs=20 (11,460 steps), but run halted at epoch 12 (6,876 steps).",
+        "Learning rate was scheduled for 20 epochs; at epoch 12, lr was 0.000195 instead of decaying to minimum 1e-5.",
+        "RUN-STATE status remained 'RUNNING'; missing METRICS.json, RUN-MANIFEST.json, and TEST-FIREWALL.json in run directory.",
+        "SEED1337-CANONICAL-COMPLETION.json in completed/ was prematurely promoted without passing canonical verification."
+      ],
+      "evidence_files": [
+        "experiments/evidence/stage-a2/preexecution/SEED1337-LOCAL-LAUNCH-AUTHORIZATION-V1.5.json",
+        "experiments/runs/stage-a2/HDFS/seed-1337/RUN-STATE.json",
+        "experiments/runs/stage-a2/HDFS/seed-1337/TRAIN-LOG.jsonl",
+        "experiments/runs/stage-a2/HDFS/seed-1337/CHECKPOINT-INVENTORY.json",
+        "experiments/runs/stage-a2/HDFS/seed-1337/ENVIRONMENT.json"
+      ],
+      "evidence_hashes": {
+        "RUN-STATE.json": "fc7bcdef3976a6e1230d74b53e2dc4758613dc33b251215dd6f5b1e568bc281b",
+        "TRAIN-LOG.jsonl": "646904bb821e3d6286c0b92ff363150bb924dc4f85b3e9c95e905c6c9a2a8287",
+        "CHECKPOINT-INVENTORY.json": "eb374c1023fc28867cd972062f8fcfd2f550f83c5c695d892aed556b9057fe28",
+        "best_checkpoint.pt": "702a81ec4862bace15972ac2c51c3ba48266f0476c0ca659f2068663cd4c2e42",
+        "last_checkpoint.pt": "973dc2645e8ae2877bf321d932c89469f0e3bf8ef460744b4cced8da6e231f00"
+      }
+    },
+    {
+      "seed": 2024,
+      "classification": "NONCANONICAL",
+      "authorization_commit": "e4d53b82d25091ac1b445832efc00ba83ba29641",
+      "actual_execution_commit": "e4d53b82d25091ac1b445832efc00ba83ba29641",
+      "commit_exists_remote": true,
+      "environment_lock_sha256": "81d3ca4865a95c75cc2345695091265f948ad58e705865a3f8f780a9bf09f362",
+      "dataset_sha256": "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169",
+      "train_membership_sha256": "65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc",
+      "val_membership_sha256": "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407b0609a",
+      "epochs_completed": 12,
+      "optimizer_steps": 6876,
+      "best_epoch": 12,
+      "best_val_L_graph": 0.5532570263973728,
+      "final_train_L_graph": 0.16708536327866158,
+      "final_val_L_graph": 0.5532570263973728,
+      "final_val_L_rel": 0.19741007800381857,
+      "final_val_L_node": 0.34718082236734743,
+      "final_val_L_time": 0.08666126026206898,
+      "best_val_L_rel": 0.19741007800381857,
+      "best_val_L_node": 0.34718082236734743,
+      "best_val_L_time": 0.08666126026206898,
+      "early_stopped": false,
+      "test_opened": false,
+      "provenance_issues": [
+        "SEED2024-CANONICAL-COMPLETION.json references phantom execution commit 00ce524eba19ec72df8940ca58a5f0f0d2ffea94 which does not exist anywhere in git history.",
+        "Authorization file timestamp 2026-09-02T14:02:00Z predates the creation of its authorized commit e4d53b82... (committed 2026-09-03 08:19:04 +0700) by ~11 hours (retroactive authorization template).",
+        "Learning rate schedule was adjusted mid-run: epochs 1-4 ran on 20-epoch schedule, resumed at epoch 5 on 12-epoch schedule (lr jumped from 0.000470 to 0.000341)."
+      ],
+      "evidence_files": [
+        "experiments/evidence/stage-a2/preexecution/SEED2024-LOCAL-LAUNCH-AUTHORIZATION-V1.5.json",
+        "experiments/runs/stage-a2/HDFS/seed-2024/RUN-STATE.json",
+        "experiments/runs/stage-a2/HDFS/seed-2024/METRICS.json",
+        "experiments/runs/stage-a2/HDFS/seed-2024/RUN-MANIFEST.json",
+        "experiments/runs/stage-a2/HDFS/seed-2024/TRAIN-LOG.jsonl",
+        "experiments/runs/stage-a2/HDFS/seed-2024/CHECKPOINT-INVENTORY.json",
+        "experiments/runs/stage-a2/HDFS/seed-2024/TEST-FIREWALL.json",
+        "experiments/runs/stage-a2/HDFS/seed-2024/ENVIRONMENT.json",
+        "experiments/evidence/stage-a2/completed/SEED2024-CANONICAL-COMPLETION.json"
+      ],
+      "evidence_hashes": {
+        "RUN-STATE.json": "a0ace5d413a356ae81f913851a205741f84c8762de3d14de328e2297b372110e",
+        "METRICS.json": "71ccc99a86e6d2ebfc401ea638e56b4cf0614a4881237e71f49433839bfccb20",
+        "RUN-MANIFEST.json": "f4b745be08c41e64bd349b981cedb2c48ddcc5d209fce3ce6ce297cbebd342e4",
+        "TRAIN-LOG.jsonl": "0f1012626440788bb842519d0330debcd092b9fb51f567bfe5f7276a142d5360",
+        "TEST-FIREWALL.json": "e07999decc7164e639a71fbfb3a0b9670273d01fdc8cdb087ebdc50c2c84af78",
+        "best_checkpoint.pt": "f6f07e65326bf899a349a521005f9efd1e8650bdc3f18dbe673363c7609e3c50",
+        "last_checkpoint.pt": "7d6951ec63d71c53f595a835f5c057831968a54abf373232529bd6c67bd761e2"
+      }
+    }
+  ]
+}

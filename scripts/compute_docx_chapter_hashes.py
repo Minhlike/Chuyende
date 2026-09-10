@@ -100,9 +100,23 @@ def compute_chapter_hashes():
     ch1_raw_hash = hashlib.sha256(ch1_raw_join.encode('utf-8')).hexdigest()
     ch2_raw_hash = hashlib.sha256(ch2_raw_join.encode('utf-8')).hexdigest()
 
-    print(f"\n[Raw Paragraph String Join Hashes]")
-    print(f"CH1_RAW_JOIN_HASH: {ch1_raw_hash}")
-    print(f"CH2_RAW_JOIN_HASH: {ch2_raw_hash}")
+    # Cryptographic Baseline Invariant Assertions (Fail-Closed)
+    CH1_BASELINE_HASH = "b7912883570e369e765c7a6daa7fc626db570c8b53050e976d4f652a2dc7e16e"
+    CH2_BASELINE_HASH = "e91bbc47de218d037d5dec3192b6ba59fda4e3c7423e51c34aea898d3db25a01"
+
+    print(f"\n[Baseline Verification]")
+    if ch1_hash == CH1_BASELINE_HASH:
+        print(f"CH1 Baseline: MATCH (100% PASS)")
+    else:
+        print(f"CH1 Baseline: MISMATCH! Expected {CH1_BASELINE_HASH}, got {ch1_hash}")
+
+    if ch2_hash == CH2_BASELINE_HASH:
+        print(f"CH2 Baseline: MATCH (100% PASS)")
+    else:
+        print(f"CH2 Baseline: MISMATCH! Expected {CH2_BASELINE_HASH}, got {ch2_hash}")
+
+    assert ch1_hash == CH1_BASELINE_HASH, f"CH1 Hash mismatch! Expected {CH1_BASELINE_HASH}, got {ch1_hash}"
+    assert ch2_hash == CH2_BASELINE_HASH, f"CH2 Hash mismatch! Expected {CH2_BASELINE_HASH}, got {ch2_hash}"
 
     return {
         "master_docx_sha256": master_docx_sha256,
@@ -114,8 +128,16 @@ def compute_chapter_hashes():
         "ch1_normalized_hash": ch1_hash,
         "ch2_normalized_hash": ch2_hash,
         "ch1_raw_join_hash": ch1_raw_hash,
-        "ch2_raw_join_hash": ch2_raw_hash
+        "ch2_raw_join_hash": ch2_raw_hash,
+        "ch1_baseline_match": True,
+        "ch2_baseline_match": True
     }
 
 if __name__ == "__main__":
-    compute_chapter_hashes()
+    try:
+        compute_chapter_hashes()
+        sys.exit(0)
+    except AssertionError as e:
+        print(f"\n[FAIL-CLOSED ASSERTION ERROR] {e}", file=sys.stderr)
+        sys.exit(1)
+

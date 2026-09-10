@@ -1,0 +1,158 @@
+{
+  "hardware_environment": {
+    "gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+    "vram": "4.00 GB GDDR6",
+    "compute_capability": "8.6",
+    "driver": "595.95",
+    "gpu_uuid": "GPU-3f4d825d-63ad-0695-1b32-466308a00b8c",
+    "cpu": "Intel Core i5-12500H (12 Cores / 16 Threads)",
+    "ram": "16 GB DDR4 3200MHz",
+    "storage": "SSD NVMe PCIe 4.0",
+    "os": "Windows 11 Pro 64-bit",
+    "python": "3.10 / 3.12",
+    "pytorch": "2.1+ CUDA 12.x",
+    "cublas_workspace_config": ":4096:8",
+    "deterministic_algorithms": true,
+    "environment_lock_path": "experiments/evidence/stage-a2/preexecution/STAGE-A2-LOCAL-EXECUTION-ENVIRONMENT-V1.5.json",
+    "environment_lock_sha256": "81d3ca4865a95c75cc2345695091265f948ad58e705865a3f8f780a9bf09f362"
+  },
+  "dataset_split": {
+    "dataset_name": "HDFS (Hadoop Distributed File System)",
+    "raw_tarball": "HDFS_1.tar.gz",
+    "raw_tarball_size_gb": 44.7,
+    "raw_tarball_sha256": "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169",
+    "total_raw_events": 11175629,
+    "total_block_sessions": 575061,
+    "split_protocol": "Strict Causal Temporal Split (Arp et al. [2])",
+    "train": {
+      "sessions_count": 35000,
+      "events_count": 586577,
+      "windows_count_w256": 2292,
+      "membership_sha256": "65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc"
+    },
+    "validation": {
+      "sessions_count": 7500,
+      "events_count": 119531,
+      "windows_count_w256": 467,
+      "membership_sha256": "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407b0609a"
+    },
+    "test": {
+      "status": "SEALED_CRYPTO_FIREWALL",
+      "test_opened": false,
+      "test_reads": 0,
+      "firewall_sha256": "e07999decc7164e639a71fbfb3a0b9670273d01fdc8cdb087ebdc50c2c84af78"
+    }
+  },
+  "model_architecture": {
+    "name": "TemporalGraphViewEncoder",
+    "memory_cell": "GRUCell (d_mem=128)",
+    "attention": "Multi-Head Temporal Attention over causal event window",
+    "time_encoding": "Continuous Sinusoidal Time Projection phi(Delta t)",
+    "node_types_count": 4,
+    "canonical_relations_count": 8,
+    "node_attribute_dim": 6,
+    "loss_formula": "L_graph = 1.0 * L_rel + 1.0 * L_node + 0.1 * L_time",
+    "optimizer": "AdamW (lr=5e-4, betas=(0.9, 0.98), eps=1e-8, weight_decay=0.01)",
+    "scheduler": "Linear Warmup (ratio=0.05) + Cosine Annealing to min_lr=1e-5",
+    "effective_batch_size": "1,024 events (4 windows x 256 events per optimizer step)",
+    "steps_per_epoch": 573
+  },
+  "seeds_table": [
+    {
+      "seed_name": "Seed 7",
+      "classification": "CANONICAL",
+      "status": "COMPLETED",
+      "epochs": "12 / 12",
+      "steps": 6876,
+      "train_loss": 0.16091,
+      "best_epoch": 12,
+      "best_val_loss": 0.550259,
+      "final_val_loss": 0.550259,
+      "l_rel": 0.183315,
+      "l_node": 0.358369,
+      "l_time": 0.085746,
+      "execution_commit": "e4d53b82d25091ac1b445832efc00ba83ba29641"
+    },
+    {
+      "seed_name": "Seed 999",
+      "classification": "CANONICAL",
+      "status": "COMPLETED",
+      "epochs": "12 / 12",
+      "steps": 6876,
+      "train_loss": 0.159004,
+      "best_epoch": 12,
+      "best_val_loss": 0.6095,
+      "final_val_loss": 0.6095,
+      "l_rel": 0.194297,
+      "l_node": 0.406335,
+      "l_time": 0.088676,
+      "execution_commit": "e4d53b82d25091ac1b445832efc00ba83ba29641"
+    },
+    {
+      "seed_name": "Seed 42",
+      "classification": "CANONICAL",
+      "status": "EARLY_STOPPED",
+      "epochs": "4 / 12",
+      "steps": 2292,
+      "train_loss": 0.308279,
+      "best_epoch": 1,
+      "best_val_loss": 6.081352,
+      "final_val_loss": 7.150944,
+      "l_rel": 4.926572,
+      "l_node": 2.180307,
+      "l_time": 0.440652,
+      "execution_commit": "33269cbe897fbbad095ad8979b9ca914d209e701"
+    },
+    {
+      "seed_name": "Seed 1337",
+      "classification": "NONCANONICAL",
+      "status": "HALTED",
+      "epochs": "12 / 20",
+      "steps": 6876,
+      "train_loss": 0.184784,
+      "best_epoch": 10,
+      "best_val_loss": 0.917827,
+      "final_val_loss": 1.205658,
+      "l_rel": 0.306274,
+      "l_node": 0.831675,
+      "l_time": 0.677088,
+      "execution_commit": "33269cbe897fbbad095ad8979b9ca914d209e701"
+    },
+    {
+      "seed_name": "Seed 2024",
+      "classification": "NONCANONICAL",
+      "status": "COMPLETED",
+      "epochs": "12 / 12",
+      "steps": 6876,
+      "train_loss": 0.167085,
+      "best_epoch": 12,
+      "best_val_loss": 0.553257,
+      "final_val_loss": 0.553257,
+      "l_rel": 0.19741,
+      "l_node": 0.347181,
+      "l_time": 0.086661,
+      "execution_commit": "e4d53b82d25091ac1b445832efc00ba83ba29641"
+    }
+  ],
+  "aggregates": {
+    "canonical_converged": {
+      "description": "T\u1eadp h\u1ea1t gi\u1ed1ng chu\u1ea9n h\u1ed9i t\u1ee5 ho\u00e0n t\u1ea5t (Seed 7, Seed 999)",
+      "seeds_count": 2,
+      "mean_best_val_loss": 0.57988,
+      "std_best_val_loss": 0.04189,
+      "mean_final_train_loss": 0.159957,
+      "mean_final_val_loss": 0.57988,
+      "mean_l_rel": 0.188806,
+      "mean_l_node": 0.382352,
+      "mean_l_time": 0.087211
+    },
+    "canonical_all": {
+      "description": "To\u00e0n b\u1ed9 t\u1eadp h\u1ea1t gi\u1ed1ng chu\u1ea9n c\u00f3 c\u0103n c\u1ee9 ch\u1ee9ng minh (Seed 7, Seed 999, Seed 42)",
+      "seeds_count": 3,
+      "mean_best_val_loss": 2.413704,
+      "std_best_val_loss": 3.176319,
+      "mean_final_train_loss": 0.209398,
+      "mean_final_val_loss": 2.770234
+    }
+  }
+}
