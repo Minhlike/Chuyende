@@ -48,16 +48,39 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 
 def make_stage_a2_loss_omml():
-    """Native OMML for L_graph = 1.0 * L_rel + 1.0 * L_node + 0.1 * L_time."""
+    """Native OMML for L_{graph} = 1.0 L_{rel} + 1.0 L_{node} + 0.1 L_{time}."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
-        '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>graph</m:t></m:r></m:sub></m:sSub>\n'
-        '  <m:r><w:rPr><w:noProof/></w:rPr><m:t> = 1.0 · </m:t></m:r>\n'
-        '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>rel</m:t></m:r></m:sub></m:sSub>\n'
-        '  <m:r><w:rPr><w:noProof/></w:rPr><m:t> + 1.0 · </m:t></m:r>\n'
-        '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>node</m:t></m:r></m:sub></m:sSub>\n'
-        '  <m:r><w:rPr><w:noProof/></w:rPr><m:t> + 0.1 · </m:t></m:r>\n'
-        '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>time</m:t></m:r></m:sub></m:sSub>\n'
+        '  <m:sSub><m:e><m:r><m:rPr><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>graph</m:t></m:r></m:sub></m:sSub>\n'
+        '  <m:r><w:rPr><w:noProof/></w:rPr><m:t> = 1.0 </m:t></m:r>\n'
+        '  <m:sSub><m:e><m:r><m:rPr><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>rel</m:t></m:r></m:sub></m:sSub>\n'
+        '  <m:r><w:rPr><w:noProof/></w:rPr><m:t> + 1.0 </m:t></m:r>\n'
+        '  <m:sSub><m:e><m:r><m:rPr><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>node</m:t></m:r></m:sub></m:sSub>\n'
+        '  <m:r><w:rPr><w:noProof/></w:rPr><m:t> + 0.1 </m:t></m:r>\n'
+        '  <m:sSub><m:e><m:r><m:rPr><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>time</m:t></m:r></m:sub></m:sSub>\n'
+        '</m:oMath>'
+    )
+    return parse_xml(xml_str)
+
+
+def make_inline_l_sub(sub: str):
+    """Inline OMML: uppercase italic L with true subscript (e.g., L_{rel}).
+    No visible underscore. Uses Word-native math rendering (Cambria Math).
+    """
+    xml_str = (
+        f'<m:oMath {nsdecls("m", "w")}>'
+        '<m:sSub>'
+        '<m:e>'
+        '<m:r>'
+        '<m:rPr><m:sty m:val="i"/></m:rPr>'
+        '<w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr>'
+        '<m:t>L</m:t>'
+        '</m:r>'
+        '</m:e>'
+        '<m:sub>'
+        f'<m:r><w:rPr><w:noProof/></w:rPr><m:t>{sub}</m:t></m:r>'
+        '</m:sub>'
+        '</m:sSub>'
         '</m:oMath>'
     )
     return parse_xml(xml_str)
@@ -394,22 +417,30 @@ def build_chapter_3():
     )
 
     add_bullet_p(
-        "Mất mát Dự đoán Quan hệ Che giấu (Masked Relation Prediction Loss, L_rel): Đo lường sai số phân loại quan hệ cạnh giữa các thực thể dựa trên hàm mất mát cross-entropy:"
+        ["Mất mát Dự đoán Quan hệ Che giấu (Masked Relation Prediction Loss, ",
+         make_inline_l_sub("rel"),
+         "): Đo lường sai số phân loại quan hệ cạnh giữa các thực thể dựa trên hàm mất mát cross-entropy:"]
     )
     add_display_equation(make_l_mask_edge_omml())
 
     add_bullet_p(
-        "Mất mát Tái cấu trúc Đặc trưng Nút (Masked Node Attribute Reconstruction Loss, L_node): Sử dụng sai số toàn phương trung bình (MSE) để khôi phục vector thuộc tính nút bị che giấu:"
+        ["Mất mát Tái cấu trúc Đặc trưng Nút (Masked Node Attribute Reconstruction Loss, ",
+         make_inline_l_sub("node"),
+         "): Sử dụng sai số toàn phương trung bình (MSE) để khôi phục vector thuộc tính nút bị che giấu:"]
     )
     add_display_equation(make_l_mask_node_omml())
 
     add_bullet_p(
-        "Mất mát Hồi quy Khoảng thời gian Sự kiện (Continuous Time Interval Regression Loss, L_time): Hồi quy độ lệch thời gian liên tục log(1 + Delta t) bằng hàm mất mát Smooth L1:"
+        ["Mất mát Hồi quy Khoảng thời gian Sự kiện (Continuous Time Interval Regression Loss, ",
+         make_inline_l_sub("time"),
+         "): Hồi quy độ lệch thời gian liên tục log(1 + \u0394t) bằng hàm mất mát Smooth L1:"]
     )
     add_display_equation(make_l_time_gap_omml())
 
     add_p(
-        "Hàm mất mát đồ thị tổng hợp Stage A2 là tổ hợp tuyến tính cố định giữa ba thành phần trên:"
+        ["Hàm mất mát đồ thị tổng hợp Stage A2 (",
+         make_inline_l_sub("graph"),
+         ") là tổ hợp tuyến tính cố định giữa ba thành phần trên:"]
     )
     add_display_equation(make_stage_a2_loss_omml())
 
@@ -433,78 +464,70 @@ def build_chapter_3():
         "và Seed 7 (khớp lịch trình 12 epochs nhưng tệp ủy quyền chỉ được commit lên Git sau thời điểm khởi chạy); "
         "và (2) Nhóm Đợt chạy Không chuẩn (Noncanonical): Seed 1337 (chạy theo lịch trình cũ, dừng tại Epoch 12 và thiếu các tệp biên bản thực thi bắt buộc METRICS.json, RUN-MANIFEST.json, TEST-FIREWALL.json) "
         "và Seed 2024 (chứa sai lệch mã băm commit và điều chỉnh lịch học giữa chừng). "
-        "Bảng 3.3 tổng hợp chi tiết số liệu đo đạc thực tế trên từng hạt giống từ các tệp nhật ký thực thi được xác minh."
+        "Bảng 3.3 tổng hợp chi tiết số liệu đo đạc thực tế trên từng hạt giống từ các tệp nhật ký thực thi được xác minh; "
+        "Bảng 3.4 ghi nhận trạng thái hồ sơ và điều kiện kết thúc từng đợt chạy."
     )
 
     # -------------------------------------------------------------------------
-    # DEDICATED LANDSCAPE SECTION FOR TABLE 3.3
+    # Human-readable display mapping (presentation-only; raw evidence unchanged)
     # -------------------------------------------------------------------------
-    # 1. Paragraph ending the preceding Portrait section:
-    p_break1 = target_p.insert_paragraph_before()
-    pPr1 = p_break1._p.get_or_add_pPr()
-    sectPr1_xml = (
-        f'<w:sectPr {nsdecls("w", "r")}>\n'
-        f'  <w:footerReference w:type="default" r:id="rId15"/>\n'
-        f'  <w:footerReference w:type="first" r:id="rId16"/>\n'
-        f'  <w:type w:val="nextPage"/>\n'
-        f'  <w:pgSz w:w="11906" w:h="16838"/>\n'
-        f'  <w:pgMar w:top="1134" w:right="851" w:bottom="1134" w:left="1440" w:header="709" w:footer="709" w:gutter="0"/>\n'
-        f'  <w:pgNumType w:start="1"/>\n'
-        f'  <w:cols w:space="708"/>\n'
-        f'  <w:docGrid w:linePitch="381"/>\n'
-        f'</w:sectPr>'
-    )
-    pPr1.append(parse_xml(sectPr1_xml))
-
-    # Table 3.3 Caption (inside Landscape section)
-    add_table_caption(doc, target_p, 3, "Báo cáo kết quả huấn luyện Stage A2 trên 5 hạt ngẫu nhiên thực nghiệm", bookmark_name="BK_TBL_3_003", chapter_num=3)
-
-    # Human-readable display mapping for Table 3.3 (presentation-only, raw evidence remains intact)
     DISPLAY_CLASSIFICATION = {
-        "PROTOCOL_DEVIATION": "Sai lệch giao thức",
-        "NONCANONICAL": "Không chuẩn",
-        "CANONICAL": "Chuẩn",
-        "EVIDENCE_INCOMPLETE": "Thiếu bằng chứng"
+        "CANONICAL":           "Đạt chuẩn",
+        "PROTOCOL_DEVIATION":  "Có sai lệch thủ tục",
+        "NONCANONICAL":        "Ngoài tập chuẩn",
+        "EVIDENCE_INCOMPLETE": "Hồ sơ chưa đầy đủ",
     }
     DISPLAY_STOP_REASON = {
-        "EARLY_STOPPING": "Dừng sớm",
+        "EARLY_STOPPING":  "Dừng sớm",
         "CEILING_REACHED": "Đạt trần epoch",
-        "HALTED": "Dừng giữa chừng"
+        "HALTED":          "Dừng giữa chừng",
     }
 
+    # -------------------------------------------------------------------------
+    # BẢNG 3.3 — Kết quả huấn luyện Stage A2 (metric columns, portrait-fit)
+    # -------------------------------------------------------------------------
+    add_table_caption(
+        doc, target_p, 3,
+        "Kết quả huấn luyện Stage A2 trên 5 hạt ngẫu nhiên thực nghiệm",
+        bookmark_name="BK_TBL_3_003", chapter_num=3
+    )
+
+    # Inline OMML headers for L_rel, L_node, L_time (no visible underscore)
     t3_headers = [
-        "Hạt giống", "Phân loại", "Epochs HT", "Số bước", "Lý do kết thúc",
-        "Train Loss", "Best Epoch", "Best Val Loss", "Val Loss cuối", "L_rel", "L_node", "L_time"
+        "Hạt giống",
+        "Epoch",
+        "Số bước",
+        "Train loss",
+        "Best epoch",
+        "Best val loss",
+        "Val loss cuối",
+        make_inline_l_sub("rel"),
+        make_inline_l_sub("node"),
+        make_inline_l_sub("time"),
     ]
-    t3_widths = [1200, 1700, 850, 950, 1600, 1000, 850, 1300, 1300, 950, 950, 950]
+    # Column widths (dxa) — total 9540 dxa ≈ 477pt → fits A4 portrait text area
+    t3_widths = [1050, 700, 900, 1050, 900, 1200, 1200, 880, 880, 780]
 
     t3_rows = []
     for s in st:
-        disp_class = DISPLAY_CLASSIFICATION.get(s["classification"], s["classification"])
-        disp_stop = DISPLAY_STOP_REASON.get(s["stop_reason"], s["stop_reason"])
         t3_rows.append([
             s["seed_name"],
-            disp_class,
             str(s["epochs_completed"]),
             f"{s['steps']:,}",
-            disp_stop,
             f"{s['train_loss']:.4f}",
             str(s["best_epoch"]),
             f"{s['best_val_loss']:.6f}",
             f"{s['final_val_loss']:.6f}",
             f"{s['l_rel']:.4f}",
             f"{s['l_node']:.4f}",
-            f"{s['l_time']:.4f}"
+            f"{s['l_time']:.4f}",
         ])
 
     ag_dev = ag["protocol_deviation"]
-    disp_agg_class = DISPLAY_CLASSIFICATION.get("PROTOCOL_DEVIATION", "Sai lệch giao thức")
 
-    # Protocol deviation aggregate row (3 seeds)
+    # Aggregate row (3 protocol-deviation seeds)
     t3_rows.append([
-        "TB lệch GT (3 seed)",
-        disp_agg_class,
-        "-",
+        "TB lệch thủ tục (3 seed)",
         "-",
         "-",
         f"{ag_dev['mean_final_train_loss']:.4f}",
@@ -513,77 +536,119 @@ def build_chapter_3():
         f"{ag_dev['mean_final_val_loss']:.6f}",
         f"{ag_dev['mean_l_rel']:.4f}",
         f"{ag_dev['mean_l_node']:.4f}",
-        f"{ag_dev['mean_l_time']:.4f}"
+        f"{ag_dev['mean_l_time']:.4f}",
     ])
 
-    body_alignments = [
-        WD_ALIGN_PARAGRAPH.CENTER,  # 0: Hạt giống
-        WD_ALIGN_PARAGRAPH.CENTER,  # 1: Phân loại
-        WD_ALIGN_PARAGRAPH.CENTER,  # 2: Epochs HT
-        WD_ALIGN_PARAGRAPH.RIGHT,   # 3: Số bước
-        WD_ALIGN_PARAGRAPH.CENTER,  # 4: Lý do kết thúc
-        WD_ALIGN_PARAGRAPH.RIGHT,   # 5: Train Loss
-        WD_ALIGN_PARAGRAPH.CENTER,  # 6: Best Epoch
-        WD_ALIGN_PARAGRAPH.RIGHT,   # 7: Best Val Loss
-        WD_ALIGN_PARAGRAPH.RIGHT,   # 8: Val Loss cuối
-        WD_ALIGN_PARAGRAPH.RIGHT,   # 9: L_rel
-        WD_ALIGN_PARAGRAPH.RIGHT,   # 10: L_node
-        WD_ALIGN_PARAGRAPH.RIGHT    # 11: L_time
+    t3_body_align = [
+        WD_ALIGN_PARAGRAPH.CENTER,  # Hạt giống
+        WD_ALIGN_PARAGRAPH.CENTER,  # Epoch
+        WD_ALIGN_PARAGRAPH.RIGHT,   # Số bước
+        WD_ALIGN_PARAGRAPH.RIGHT,   # Train loss
+        WD_ALIGN_PARAGRAPH.CENTER,  # Best epoch
+        WD_ALIGN_PARAGRAPH.RIGHT,   # Best val loss
+        WD_ALIGN_PARAGRAPH.RIGHT,   # Val loss cuối
+        WD_ALIGN_PARAGRAPH.RIGHT,   # L_rel
+        WD_ALIGN_PARAGRAPH.RIGHT,   # L_node
+        WD_ALIGN_PARAGRAPH.RIGHT,   # L_time
     ]
 
     insert_thesis_table(
-        doc, target_p, t3_headers, t3_widths, t3_rows,
+        doc, target_p,
+        t3_headers, t3_widths, t3_rows,
         font_size_pt=10.5,
-        body_alignments=body_alignments,
+        body_alignments=t3_body_align,
         header_alignments=WD_ALIGN_PARAGRAPH.CENTER,
         table_alignment=WD_TABLE_ALIGNMENT.CENTER,
         fixed_layout=True,
         cell_space_before_pt=0,
         cell_space_after_pt=0,
-        no_wrap=True
+        no_wrap=True,
     )
 
-    # 2. Paragraph ending the Landscape section and transitioning back to Portrait:
-    p_break2 = target_p.insert_paragraph_before()
-    pPr2 = p_break2._p.get_or_add_pPr()
-    sectPr2_xml = (
-        f'<w:sectPr {nsdecls("w", "r")}>\n'
-        f'  <w:footerReference w:type="default" r:id="rId15"/>\n'
-        f'  <w:footerReference w:type="first" r:id="rId16"/>\n'
-        f'  <w:type w:val="nextPage"/>\n'
-        f'  <w:pgSz w:w="16838" w:h="11906" w:orient="landscape"/>\n'
-        f'  <w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="709" w:footer="709" w:gutter="0"/>\n'
-        f'  <w:cols w:space="708"/>\n'
-        f'  <w:docGrid w:linePitch="381"/>\n'
-        f'</w:sectPr>'
+    # Provenance note below Bảng 3.3
+    add_p(
+        "Ghi chú: Các trạng thái hồ sơ phản ánh mức độ tuân thủ quy trình ủy quyền, cấu hình và khả năng truy vết "
+        "của từng đợt thực nghiệm; chúng không đồng nghĩa với lỗi tính toán hoặc checkpoint không sử dụng được. "
+        "Các đợt có sai lệch được giữ lại để báo cáo minh bạch và được tách biệt khi tổng hợp kết quả chuẩn. "
+        "Chi tiết trạng thái hồ sơ và điều kiện kết thúc từng đợt chạy được ghi nhận tại Bảng 3.4.",
+        first_line_indent=False,
     )
-    pPr2.append(parse_xml(sectPr2_xml))
+
+    # -------------------------------------------------------------------------
+    # BẢNG 3.4 — Trạng thái hồ sơ và điều kiện kết thúc
+    # -------------------------------------------------------------------------
+    add_table_caption(
+        doc, target_p, 4,
+        "Trạng thái hồ sơ và điều kiện kết thúc các đợt thực nghiệm Stage A2",
+        bookmark_name="BK_TBL_3_004", chapter_num=3
+    )
+
+    t4_status_headers = ["Hạt giống", "Trạng thái hồ sơ", "Lý do kết thúc"]
+    t4_status_widths = [1200, 3000, 2500]
+
+    t4_status_rows = []
+    for s in st:
+        disp_class = DISPLAY_CLASSIFICATION.get(s["classification"], s["classification"])
+        disp_stop  = DISPLAY_STOP_REASON.get(s["stop_reason"], s["stop_reason"])
+        t4_status_rows.append([s["seed_name"], disp_class, disp_stop])
+
+    t4_status_rows.append([
+        "TB lệch thủ tục (3 seed)",
+        DISPLAY_CLASSIFICATION.get("PROTOCOL_DEVIATION", "Có sai lệch thủ tục"),
+        "-",
+    ])
+
+    insert_thesis_table(
+        doc, target_p,
+        t4_status_headers, t4_status_widths, t4_status_rows,
+        font_size_pt=11,
+        body_alignments=[
+            WD_ALIGN_PARAGRAPH.CENTER,
+            WD_ALIGN_PARAGRAPH.CENTER,
+            WD_ALIGN_PARAGRAPH.CENTER,
+        ],
+        header_alignments=WD_ALIGN_PARAGRAPH.CENTER,
+        table_alignment=WD_TABLE_ALIGNMENT.CENTER,
+        fixed_layout=True,
+        cell_space_before_pt=0,
+        cell_space_after_pt=0,
+        no_wrap=True,
+    )
+    add_p("", first_line_indent=False)
 
     add_p(
-        f"Từ kết quả Bảng 3.3, toàn bộ 5 hạt giống thực nghiệm được bóc tách và đối soát nguồn gốc độc lập. "
-        f"Trong khuôn khổ kiểm toán hợp đồng tiền thi hành nghiêm ngặt, không có đợt chạy nào thỏa mãn đầy đủ các điều kiện chuẩn (Canonical) "
-        f"do sự bất tương thích giữa kế hoạch tiền thi hành và thực thi thực tế. "
-        f"Đối với nhóm quan sát lệch giao thức (Seed 999, Seed 42, Seed 7), mức mất mát kiểm định tốt nhất ghi nhận trung bình là {ag_dev['mean_best_val_loss']:.6f} "
-        f"và mất mát kiểm định cuối trung bình đạt {ag_dev['mean_final_val_loss']:.6f}. "
-        f"Trong đó, Seed 999 hoàn thành 12 epochs với mất mát kiểm định 0,609500 nhưng mang sai lệch về số bước khởi động so với văn bản ủy quyền; "
-        f"Seed 7 đạt mức mất mát kiểm định tốt nhất 0,550259 nhưng văn bản ủy quyền được commit sau khi khởi chạy; "
-        f"Seed 42 dừng sớm tại Epoch 4 theo quy tắc dừng sớm đã tiền đăng ký. "
-        f"Các thành phần mất mát kiểm định cuối (L_rel, L_node, L_time) tuân thủ chặt chẽ công thức phân rã thành phần L_graph = 1.0 * L_rel + 1.0 * L_node + 0.1 * L_time cho từng đợt chạy. "
-        f"Việc công khai các sai lệch nguồn gốc và duy trì trạng thái niêm phong của tập kiểm thử giúp tăng tính minh bạch và khả năng kiểm toán của quy trình thực nghiệm."
+        [
+            f"Từ kết quả Bảng 3.3, toàn bộ 5 hạt giống thực nghiệm được bóc tách và đối soát nguồn gốc độc lập. "
+            f"Trong khuôn khổ kiểm toán hợp đồng tiền thi hành nghiêm ngặt, không có đợt chạy nào thỏa mãn đầy đủ các điều kiện đạt chuẩn (Canonical) "
+            f"do sự bất tương thích giữa kế hoạch tiền thi hành và thực thi thực tế. "
+            f"Đối với nhóm quan sát lệch thủ tục (Seed 999, Seed 42, Seed 7), mức mất mát kiểm định tốt nhất ghi nhận trung bình là {ag_dev['mean_best_val_loss']:.6f} "
+            f"và mất mát kiểm định cuối trung bình đạt {ag_dev['mean_final_val_loss']:.6f}. "
+            f"Trong đó, Seed 999 hoàn thành 12 epochs với mất mát kiểm định 0,609500 nhưng mang sai lệch về số bước khởi động so với văn bản ủy quyền; "
+            f"Seed 7 đạt mức mất mát kiểm định tốt nhất 0,550259 nhưng văn bản ủy quyền được commit sau khi khởi chạy; "
+            f"Seed 42 dừng sớm tại Epoch 4 theo quy tắc dừng sớm đã tiền đăng ký. "
+            f"Các thành phần mất mát kiểm định cuối (",
+            make_inline_l_sub("rel"), ", ",
+            make_inline_l_sub("node"), ", ",
+            make_inline_l_sub("time"),
+            ") tuân thủ chặt chẽ công thức phân rã thành phần ",
+            make_inline_l_sub("graph"),
+            " cho từng đợt chạy. "
+            "Việc công khai các sai lệch nguồn gốc và duy trì trạng thái niêm phong của tập kiểm thử giúp tăng tính minh bạch và khả năng kiểm toán của quy trình thực nghiệm."
+        ]
     )
 
     # 3.2.2
     add_h3("Đối sánh đặc tính phương pháp luận so với các nghiên cứu cơ sở")
 
     add_p(
-        "Nhằm làm rõ vị trí đóng góp học thuật của khung biểu diễn đề xuất, Bảng 3.4 tiến hành đối sánh định tính "
+        "Nhằm làm rõ vị trí đóng góp học thuật của khung biểu diễn đề xuất, Bảng 3.5 tiến hành đối sánh định tính "
         "về mặt đặc tính phương pháp luận giữa mô hình của luận văn và các phương pháp trích xuất đặc trưng log tiêu biểu được công bố trên các diễn đàn bảo mật quốc tế. "
         "Cần nhấn mạnh rằng đây là đối chiếu dựa trên phân tích thiết kế kiến trúc lý thuyết và thực nghiệm tiền huấn luyện Stage A2, "
         "không cấu thành tuyên bố thực nghiệm so sánh hơn về độ chính xác phát hiện bất thường downstream khi chưa tiến hành đánh giá end-to-end có gắn nhãn."
     )
 
-    # Table 3.4
-    add_table_caption(doc, target_p, 4, "Đối sánh đặc tính phương pháp luận giữa khung biểu diễn đề xuất và các phương pháp cơ sở", bookmark_name="BK_TBL_3_004", chapter_num=3)
+    # Table 3.5
+    add_table_caption(doc, target_p, 5, "Đối sánh đặc tính phương pháp luận giữa khung biểu diễn đề xuất và các phương pháp cơ sở", bookmark_name="BK_TBL_3_005", chapter_num=3)
     t4_headers = ["Phương pháp cơ sở", "Mô hình biểu diễn", "Xử lý tham số & thời gian", "Đặc tính cấu trúc & Phân tích khoảng trống"]
     t4_widths = [1800, 2200, 2600, 3005]
     t4_rows = [
@@ -665,16 +730,20 @@ def build_chapter_3():
     )
 
     add_p(
-        "Giả thuyết về Năng lực Biểu diễn Quan hệ Cấu trúc (H1): Kết quả quan sát thấy bước đầu phù hợp với giả định H1. "
-        "Trên các đợt chạy 12 epochs, mất mát dự đoán quan hệ cạnh (L_rel) giảm từ mức ban đầu ~0.59 xuống 0.1833, "
-        "gợi ý rằng mô hình có khả năng nắm bắt phân phối quan hệ giữa các thực thể hệ thống trong log HDFS.",
+        ["Giả thuyết về Năng lực Biểu diễn Quan hệ Cấu trúc (H1): Kết quả quan sát thấy bước đầu phù hợp với giả định H1. "
+         "Trên các đợt chạy 12 epochs, mất mát dự đoán quan hệ cạnh (",
+         make_inline_l_sub("rel"),
+         ") giảm từ mức ban đầu ~0.59 xuống 0.1833, "
+         "gợi ý rằng mô hình có khả năng nắm bắt phân phối quan hệ giữa các thực thể hệ thống trong log HDFS."],
         bold_prefix="1. Giả thuyết H1 (Tính Chân thực Biểu diễn): "
     )
 
     add_p(
-        "Giả thuyết về Độ nhạy Thời gian Liên tục (H2): Kết quả quan sát thấy bước đầu phù hợp với giả định H2. "
-        "Giá trị mất mát hồi quy thời gian L_time giảm về mức 0.0857 - 0.0887 trên các đợt chạy 12 epochs, "
-        "phù hợp với kỳ vọng rằng hàm chiếu điều hòa phi(Delta t) hỗ trợ việc biểu diễn các khoảng trễ thời gian liên tục.",
+        ["Giả thuyết về Độ nhạy Thời gian Liên tục (H2): Kết quả quan sát thấy bước đầu phù hợp với giả định H2. "
+         "Giá trị mất mát hồi quy thời gian (",
+         make_inline_l_sub("time"),
+         ") giảm về mức 0.0857 - 0.0887 trên các đợt chạy 12 epochs, "
+         "phù hợp với kỳ vọng rằng hàm chiếu điều hòa phi(Δt) hỗ trợ việc biểu diễn các khoảng trễ thời gian liên tục."],
         bold_prefix="2. Giả thuyết H2 (Độ nhạy Dòng Thời gian): "
     )
 

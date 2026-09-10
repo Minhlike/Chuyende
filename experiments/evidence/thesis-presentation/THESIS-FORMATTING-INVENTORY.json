@@ -1,188 +1,32 @@
 {
   "metadata": {
     "document_path": "D:\\Research\\Chuyên đề chuyên sâu.docx",
-    "baseline_commit": "f52a504c99d5101c1bb60b324fcd97b79c651ffc",
-    "historical_baseline_commit": "a99d5dc0e1499f8454293a2931a4962ad214d4af",
-    "role": "Senior Academic Publishing Engineer + OOXML Specialist",
-    "primary_visual_reference": "Chapters 1 and 2"
+    "total_pages": 98,
+    "total_paragraphs": 552,
+    "total_tables": 14,
+    "status": "PASS"
   },
   "sections": [
     {
       "section_index": 0,
-      "type": "COVER_FRONT_MATTER",
       "orientation": "PORTRAIT",
-      "width_pt": 595.3,
-      "height_pt": 841.9,
-      "margins_pt": {
-        "top": 56.7,
-        "bottom": 56.7,
-        "left": 85.05,
-        "right": 42.55
-      },
-      "header_distance_pt": 35.45,
-      "footer_distance_pt": 35.45,
-      "different_first_page": true
+      "page_width_pt": 595.3,
+      "page_height_pt": 841.9
     },
     {
       "section_index": 1,
-      "type": "THESIS_BODY_PORTRAIT_PRE_TABLE33",
       "orientation": "PORTRAIT",
-      "width_pt": 595.3,
-      "height_pt": 841.9,
-      "margins_pt": {
-        "top": 56.7,
-        "bottom": 56.7,
-        "left": 72.0,
-        "right": 42.55
-      },
-      "header_distance_pt": 35.45,
-      "footer_distance_pt": 35.45,
-      "page_numbering": {
-        "start": 1,
-        "restart": true
-      }
-    },
-    {
-      "section_index": 2,
-      "type": "DEDICATED_LANDSCAPE_TABLE_3_3",
-      "orientation": "LANDSCAPE",
-      "width_pt": 841.9,
-      "height_pt": 595.3,
-      "margins_pt": {
-        "top": 56.7,
-        "bottom": 56.7,
-        "left": 56.7,
-        "right": 56.7
-      },
-      "header_distance_pt": 35.45,
-      "footer_distance_pt": 35.45,
-      "page_numbering": {
-        "restart": false,
-        "continuous": true
-      }
-    },
-    {
-      "section_index": 3,
-      "type": "THESIS_BODY_PORTRAIT_POST_TABLE33",
-      "orientation": "PORTRAIT",
-      "width_pt": 595.3,
-      "height_pt": 841.9,
-      "margins_pt": {
-        "top": 56.7,
-        "bottom": 56.7,
-        "left": 72.0,
-        "right": 42.55
-      },
-      "header_distance_pt": 35.45,
-      "footer_distance_pt": 35.45,
-      "page_numbering": {
-        "restart": false,
-        "continuous": true
-      }
+      "page_width_pt": 595.3,
+      "page_height_pt": 841.9
     }
   ],
-  "typography": {
-    "normal_font": "Times New Roman",
-    "default_font_size_pt": 14.0,
-    "paragraph_alignment": "JUSTIFY (both)",
-    "first_line_indent_cm": 1.27,
-    "line_spacing": "1.5 lines (312/360 dxa)",
-    "space_before_pt": 0,
-    "space_after_pt": 6
-  },
-  "heading_hierarchy": {
-    "Heading 1": {
-      "font": "Times New Roman",
-      "size_pt": 16.0,
-      "bold": true,
-      "case": "ALL_CAPS",
-      "alignment": "CENTER",
-      "space_before_pt": 12,
-      "space_after_pt": 18,
-      "keep_with_next": true,
-      "page_break_before": true
-    },
-    "UH1": {
-      "font": "Times New Roman",
-      "size_pt": 16.0,
-      "bold": true,
-      "case": "ALL_CAPS",
-      "alignment": "CENTER",
-      "space_before_pt": 12,
-      "space_after_pt": 18,
-      "keep_with_next": true,
-      "page_break_before": true
-    },
-    "Heading 2": {
-      "font": "Times New Roman",
-      "size_pt": 14.0,
-      "bold": true,
-      "case": "sentence_case",
-      "alignment": "LEFT",
-      "space_before_pt": 12,
-      "space_after_pt": 6,
-      "keep_with_next": true
-    },
-    "Heading 3": {
-      "font": "Times New Roman",
-      "size_pt": 14.0,
-      "bold": true,
-      "italic": true,
-      "case": "sentence_case",
-      "alignment": "LEFT",
-      "space_before_pt": 6,
-      "space_after_pt": 4,
-      "keep_with_next": true
-    },
-    "Heading 4": {
-      "font": "Times New Roman",
-      "size_pt": 13.0,
-      "bold": true,
-      "case": "sentence_case",
-      "alignment": "LEFT",
-      "space_before_pt": 6,
-      "space_after_pt": 4,
-      "keep_with_next": true
-    }
-  },
-  "captions": {
-    "figure_caption": {
-      "prefix": "Hình X.Y:",
-      "font": "Times New Roman",
-      "size_pt": 14.0,
-      "bold_prefix": true,
-      "alignment": "CENTER",
-      "case": "sentence_case"
-    },
-    "table_caption": {
-      "prefix": "Bảng X.Y:",
-      "font": "Times New Roman",
-      "size_pt": 14.0,
-      "bold_prefix": true,
-      "alignment": "CENTER",
-      "case": "sentence_case"
-    }
-  },
-  "tables": {
-    "table_grid_style": "Table Grid",
-    "standard_table_font_size_pt": 11.0,
-    "wide_landscape_table_font_size_pt": 10.5,
-    "alignment": "CENTER",
-    "cant_split": true,
-    "header_repeat": true,
-    "vertical_alignment": "CENTER"
-  },
-  "equations": {
-    "math_font": "Cambria Math",
-    "format": "Word OMML (Office Open XML Math)",
-    "display_alignment": "CENTER",
-    "space_before_pt": 4,
-    "space_after_pt": 6
-  },
-  "page_numbering_continuity": {
-    "cover": "No page number",
-    "main_body_portrait_start": 1,
-    "table33_landscape": "Continuous",
-    "post_table33_portrait": "Continuous"
-  }
+  "body_paragraphs_checked": 351,
+  "font_name_deviations": 0,
+  "font_size_deviations": 0,
+  "alignment_deviations": 0,
+  "indent_deviations": 0,
+  "line_spacing_deviations": 0,
+  "spacing_deviations": 0,
+  "emphasis_deviations": 0,
+  "body_format_deviations_after": 0
 }

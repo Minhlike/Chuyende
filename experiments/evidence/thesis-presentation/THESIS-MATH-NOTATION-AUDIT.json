@@ -1,0 +1,39 @@
+{
+  "metadata": {
+    "title": "Stage A2 Loss Notation & Mathematical Typography Audit",
+    "document_path": "D:\\Research\\Chuyên đề chuyên sâu.docx",
+    "target_chapter": "Chương 3 & Toàn văn",
+    "status": "PASS"
+  },
+  "main_loss_symbol": "L",
+  "main_symbol_case": "UPPERCASE",
+  "main_symbol_style": "math_italic",
+  "math_font": "Cambria Math",
+  "notation": [
+    "L_{graph}",
+    "L_{rel}",
+    "L_{node}",
+    "L_{time}"
+  ],
+  "word_native_omml": true,
+  "literal_L_graph_count": 0,
+  "literal_L_rel_count": 0,
+  "literal_L_node_count": 0,
+  "literal_L_time_count": 0,
+  "literal_lowercase_l_loss_count": 0,
+  "underscore_loss_notation_visible": false,
+  "uppercase_L_true_subscript_verified": true,
+  "programming_style_multiplication_in_math": 0,
+  "table_33_loss_headers": {
+    "col_7": "L_{rel} (Word-native inline OMML)",
+    "col_8": "L_{node} (Word-native inline OMML)",
+    "col_9": "L_{time} (Word-native inline OMML)",
+    "visible_underscores": 0
+  },
+  "decomposition_formula": {
+    "omml_representation": "L_{graph} = 1.0 L_{rel} + 1.0 L_{node} + 0.1 L_{time}",
+    "uses_asterisk": false,
+    "uses_programming_notation": false,
+    "status": "PASS"
+  }
+}

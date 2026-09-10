@@ -1,11 +1,25 @@
 {
-  "standalone_display_equations": 65,
-  "total_omml_math_nodes": 604,
-  "math_font": "Cambria Math",
-  "format": "Native Word OMML",
-  "alignment": "CENTER",
-  "raw_unicode_pseudo_equations": 0,
-  "raw_latex_visible": false,
-  "equation_rendered_as_image": false,
-  "equation_layout_deviations_after": 0
+  "metadata": {
+    "document_path": "D:\\Research\\Chuyên đề chuyên sâu.docx",
+    "total_omml_math_elements": 538,
+    "equation_layout_deviations_after": 0,
+    "status": "PASS"
+  },
+  "loss_notation_verification": {
+    "uppercase_L_with_true_subscript": "PASS",
+    "lowercase_main_l_count": 0,
+    "plain_underscore_loss_notation_count": 0,
+    "verified_omml_subscripts": [
+      "L_{graph}",
+      "L_{time}",
+      "L_{rel}",
+      "L_{node}"
+    ]
+  },
+  "equations_summary": {
+    "display_equations": 4,
+    "inline_math_elements": 534,
+    "cambria_math_enforced": true,
+    "visible_latex_count": 0
+  }
 }

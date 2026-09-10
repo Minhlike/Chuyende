@@ -1,28 +1,1678 @@
 {
-  "qa_status": "PASS",
-  "word_com_version": "16.0",
-  "page_count": 99,
-  "paragraph_count": 1010,
-  "table_count": 13,
-  "figure_count": 8,
-  "standalone_display_equations": 65,
-  "omml_count": 604,
-  "section_count": 4,
-  "portrait_sections": 3,
-  "landscape_sections": 1,
-  "table_33_orientation": "LANDSCAPE",
-  "table_33_visual_lines": 7,
-  "table_33_mid_token_wraps": 0,
-  "table_33_mid_number_wraps": 0,
-  "table_33_human_readable_status_labels": "PASS",
-  "toc_updated": "PASS",
-  "page_number_continuity": "PASS",
-  "ch1_content_invariant": "PASS",
-  "ch2_content_invariant": "PASS",
-  "scientific_numbers_changed": "NO",
-  "seed_classifications_changed": "NO",
-  "raw_evidence_changed": "NO",
-  "test_opened": false,
-  "new_optimizer_steps": 0,
-  "word_com_open_save_reopen": "PASS"
+  "metadata": {
+    "document_path": "D:\\Research\\Chuyên đề chuyên sâu.docx",
+    "pdf_path": "D:\\Research\\Chuyên đề chuyên sâu.pdf",
+    "total_pages": 98,
+    "landscape_pages": 0,
+    "all_pages_visually_inspected": true,
+    "final_visual_qa": "PASS"
+  },
+  "pages": [
+    {
+      "page": 1,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 2,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 3,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 4,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 5,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 6,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 7,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 8,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 9,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 10,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 11,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 12,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 13,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 14,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 15,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 16,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 17,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 18,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 19,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 20,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 21,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 22,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 23,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 24,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 25,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 26,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 27,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 28,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 29,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 30,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 31,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 32,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 33,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 34,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 35,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 36,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 37,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 38,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 39,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 40,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 41,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 42,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 43,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 44,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 45,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 46,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 47,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 48,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 49,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 50,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 51,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 52,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 53,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 54,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 55,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 56,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 57,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 58,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 59,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 60,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 61,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 62,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 63,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 64,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 65,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 66,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 67,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 68,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 69,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 70,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 71,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 72,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 73,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 74,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 75,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 76,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 77,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 78,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 79,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 80,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 81,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 82,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 83,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 84,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 85,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 86,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 87,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 88,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 89,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 90,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 91,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 92,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 93,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 94,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 95,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 96,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 97,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    },
+    {
+      "page": 98,
+      "orientation": "PORTRAIT",
+      "dimensions_pt": [
+        595.3,
+        841.9
+      ],
+      "clipping": false,
+      "overlap": false,
+      "typography_issue": false,
+      "heading_issue": false,
+      "table_issue": false,
+      "figure_issue": false,
+      "equation_issue": false,
+      "wrap_issue": false,
+      "result": "PASS"
+    }
+  ]
 }
