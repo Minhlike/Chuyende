@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0.0",
-  "audit_timestamp": "2026-09-10T07:58:41.595696+00:00",
+  "audit_timestamp": "2026-09-10T08:20:22.475019+00:00",
   "word_version": "16.0",
   "word_product_name": "Microsoft Word COM 16.0",
-  "docx_file": "Chuyên đề chuyên sâu.docx",
-  "docx_sha256": "304e28bbac7f18f950d0f76c2c84faf75cac0531875b42376f013edf397149c6",
-  "pages": 97,
+  "docx_file": "Chuy\u00ean \u0111\u1ec1 chuy\u00ean s\u00e2u.docx",
+  "docx_sha256": "8d2c53665e4db30284db4c935cd07f868f94d401b799fdcb09a78746ce2bd22c",
+  "pages": 98,
   "paragraphs": 1009,
   "tables": 13,
   "bookmarks_checked": {
@@ -14,34 +14,34 @@
     "BK_TBL_3_003": true,
     "BK_TBL_3_004": true
   },
-  "omml_count": 525,
+  "omml_count": 535,
   "table_grid_validation": {
     "status": "PASS",
     "chapter3_tables": [
       {
         "table_index": 9,
-        "caption": "Bảng 3.1",
+        "caption": "B\u1ea3ng 3.1",
         "style": "Table Grid",
         "rows": 8,
         "cols": 3
       },
       {
         "table_index": 10,
-        "caption": "Bảng 3.2",
+        "caption": "B\u1ea3ng 3.2",
         "style": "Table Grid",
         "rows": 5,
         "cols": 5
       },
       {
         "table_index": 11,
-        "caption": "Bảng 3.3",
+        "caption": "B\u1ea3ng 3.3",
         "style": "Table Grid",
         "rows": 8,
         "cols": 12
       },
       {
         "table_index": 12,
-        "caption": "Bảng 3.4",
+        "caption": "B\u1ea3ng 3.4",
         "style": "Table Grid",
         "rows": 7,
         "cols": 4

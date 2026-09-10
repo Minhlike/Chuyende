@@ -57,6 +57,19 @@ def test_reconciliation_12epoch_authority():
     assert meta['canonical_seeds'] == [999]
     assert set(meta['protocol_deviation_seeds']) == {42, 7}
     assert set(meta['noncanonical_seeds']) == {1337, 2024}
+    assert meta['authoritative_plan_file'] == 'experiments/plans/STAGE-A2-FINAL-12-EPOCH-AUTHORITY.json'
+
+def test_final_12epoch_authority_plan():
+    p = REPO_ROOT / 'experiments' / 'plans' / 'STAGE-A2-FINAL-12-EPOCH-AUTHORITY.json'
+    assert p.exists(), f"Missing {p}"
+    data = json.loads(p.read_text(encoding='utf-8'))
+    assert data['execution_provider'] == 'LOCAL_WINDOWS_GPU'
+    hp = data['training_hyperparameters']
+    assert hp['max_epochs'] == 12
+    assert hp['steps_per_epoch'] == 573
+    assert hp['max_optimizer_steps'] == 6876
+    assert hp['warmup_steps'] == 343
+    assert hp['min_lr'] == 1e-05
 
 def test_docx_no_stale_epoch_references():
     p = REPO_ROOT / 'Chuyên đề chuyên sâu.docx'

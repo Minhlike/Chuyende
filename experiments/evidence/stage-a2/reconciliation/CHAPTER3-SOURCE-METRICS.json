@@ -61,7 +61,8 @@
     "steps_per_epoch": 573,
     "max_epochs": 12,
     "max_optimizer_steps": 6876,
-    "warmup_steps": 343
+    "warmup_steps": 343,
+    "authoritative_plan_path": "experiments/plans/STAGE-A2-FINAL-12-EPOCH-AUTHORITY.json"
   },
   "seeds_table": [
     {
@@ -91,9 +92,9 @@
       "best_epoch": 1,
       "best_val_loss": 6.081352,
       "final_val_loss": 7.150944,
-      "l_rel": 4.926572,
-      "l_node": 2.180307,
-      "l_time": 0.440652,
+      "l_rel": 4.672867,
+      "l_node": 1.393515,
+      "l_time": 0.149697,
       "execution_commit": "33269cbe897fbbad095ad8979b9ca914d209e701"
     },
     {
@@ -123,9 +124,9 @@
       "best_epoch": 10,
       "best_val_loss": 0.917827,
       "final_val_loss": 1.205658,
-      "l_rel": 0.306274,
-      "l_node": 0.831675,
-      "l_time": 0.677088,
+      "l_rel": 0.344073,
+      "l_node": 0.554132,
+      "l_time": 0.196212,
       "execution_commit": "33269cbe897fbbad095ad8979b9ca914d209e701"
     },
     {
@@ -147,7 +148,7 @@
   ],
   "aggregates": {
     "canonical": {
-      "description": "Hạt giống chuẩn tuân thủ toàn diện giao thức 12-epoch hiện hành (Seed 999)",
+      "description": "H\u1ea1t gi\u1ed1ng chu\u1ea9n tu\u00e2n th\u1ee7 to\u00e0n di\u1ec7n giao th\u1ee9c 12-epoch hi\u1ec7n h\u00e0nh (Seed 999)",
       "seeds_count": 1,
       "mean_best_val_loss": 0.6095,
       "std_best_val_loss": null,
@@ -158,15 +159,15 @@
       "mean_l_time": 0.088676
     },
     "protocol_deviation": {
-      "description": "Các đợt chạy lệch giao thức được ghi nhận để đối chiếu (Seed 42, Seed 7)",
+      "description": "C\u00e1c \u0111\u1ee3t ch\u1ea1y l\u1ec7ch giao th\u1ee9c \u0111\u01b0\u1ee3c ghi nh\u1eadn \u0111\u1ec3 \u0111\u1ed1i chi\u1ebfu (Seed 42, Seed 7)",
       "seeds_count": 2,
-      "mean_best_val_loss": 3.315806,
-      "std_best_val_loss": 3.911073,
-      "mean_final_train_loss": 0.234595,
-      "mean_final_val_loss": 3.850602,
-      "mean_l_rel": 2.554943,
-      "mean_l_node": 1.269338,
-      "mean_l_time": 0.263199
+      "mean_best_val_loss": 3.315805,
+      "std_best_val_loss": 3.911074,
+      "mean_final_train_loss": 0.234594,
+      "mean_final_val_loss": 3.850601,
+      "mean_l_rel": 2.428091,
+      "mean_l_node": 0.875942,
+      "mean_l_time": 0.117721
     }
   }
 }
