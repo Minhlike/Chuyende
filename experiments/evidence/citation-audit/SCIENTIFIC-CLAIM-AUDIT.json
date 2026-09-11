@@ -549,7 +549,7 @@
   {
     "claim_id": "CLM-029",
     "document_location": "Chương (Đoạn P145, câu S1)",
-    "atomic_claim": "Bên cạnh đếm tần suất đơn thuần, trọng số TF-IDF (Term Frequency – Inverse Document Frequency) được vận dụng nhằm cân bằng độ nổi bật của sự kiện: tần suất sự kiện (TF) đo lường mức độ xuất hiện trong một cửa sổ hoặc phiên phân tích, trong khi tần số nghịch đảo văn bản (IDF) làm giảm trọng số của các sự kiện xuất hiện phổ biến trên nhiều cửa sổ; nhờ đó, sự kiện xuất hiện nhiều trong một phiên nhưng ít phổ biến trên toàn tập sẽ nhận trọng số tương đối lớn hơn, dù TF-IDF không mô hình hóa được thứ tự thời gian, khoảng cách ngữ nghĩa hay quan hệ nhân quả giữa các sự kiện; độc lập với TF-IDF, độ hỗn loạn thông tin Shannon (Entropy) đóng vai trò là thước đo mức độ bất định và phân tán của phân phối sự kiện trong cửa sổ phân tích:",
+    "atomic_claim": "Bên cạnh đếm tần suất đơn thuần, trọng số TF-IDF (Term Frequency – Inverse Document Frequency) được vận dụng nhằm cân bằng độ nổi bật của sự kiện: tần suất sự kiện (TF) đo lường mức độ xuất hiện cục bộ trong một cửa sổ hoặc phiên phân tích, trong khi tần số nghịch đảo văn bản (IDF) phạt giảm trọng số của các sự kiện phổ biến trên toàn bộ các cửa sổ; nhờ đó, sự kiện xuất hiện nhiều trong một phiên nhưng hiếm gặp trên toàn tập dữ liệu sẽ nhận trọng số tương đối lớn hơn, hỗ trợ làm nổi bật các biến động bất thường nhưng cần lưu ý rằng sự kiện hiếm không mặc nhiên đồng nghĩa với hành vi tấn công (rare != malicious); mặt khác, TF-IDF không mô hình hóa được thứ tự thời gian, khoảng cách ngữ nghĩa hay quan hệ nhân quả giữa các sự kiện; hoàn toàn độc lập với TF-IDF, độ hỗn loạn thông tin Shannon (Entropy) phản ánh mức độ bất định và phân tán của phân phối sự kiện trong cửa sổ: khi luồng log chỉ tập trung vào một vài loại hành vi quen thuộc, entropy nhận giá trị thấp; ngược lại, khi các sự kiện phân bố trải đều trên nhiều nhóm trạng thái khác nhau, entropy đạt mức cao:",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
@@ -559,7 +559,7 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P145-S01",
-    "parent_text_hash": "69862b4c7919",
+    "parent_text_hash": "be017ef698f1",
     "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
@@ -660,7 +660,7 @@
   {
     "claim_id": "CLM-035",
     "document_location": "Chương (Đoạn P154, câu S1)",
-    "atomic_claim": "DeepLog không chỉ phân tích chuỗi mã sự kiện log mà còn là một khung làm việc toàn diện gồm hai thành phần mô hình hóa: Một là, mô hình LSTM thứ nhất học biểu diễn chuỗi các mẫu log (Log-Key Anomaly Detection) nhằm phát hiện các sự kiện sai lệch khỏi trật tự thực thi bình thường theo phân phối có điều kiện ; Hai là, mô hình LSTM thứ hai kết hợp phân phối chuẩn nhiều chiều để kiểm tra sự bất thường về giá trị tham số số học (Parameter Value Anomaly Detection) [14].",
+    "atomic_claim": "DeepLog không chỉ phân tích chuỗi mã sự kiện log mà còn thiết lập một khung làm việc gồm hai thành phần mô hình hóa: Một là, mô hình LSTM thứ nhất học biểu diễn chuỗi các mẫu log (Log-Key Anomaly Detection) nhằm phát hiện các sự kiện sai lệch khỏi trật tự thực thi bình thường theo phân phối có điều kiện ; Hai là, mô hình LSTM thứ hai kết hợp phân phối chuẩn nhiều chiều để kiểm tra sự bất thường về giá trị tham số số học (Parameter Value Anomaly Detection) [14].",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
@@ -672,7 +672,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P154-S01",
-    "parent_text_hash": "a762e6e994f2",
+    "parent_text_hash": "3df76aa8c127",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
@@ -789,7 +789,7 @@
   {
     "claim_id": "CLM-042",
     "document_location": "Chương (Đoạn P158, câu S0)",
-    "atomic_claim": "Mặc dù đạt kết quả tốt trên các tập dữ liệu phần mềm, nhóm phương pháp Semantic–Sequential đối mặt với ba rào cản khi áp dụng vào an ninh mạng [8], [3]: (1) Nguy cơ rò rỉ và thiên lệch từ dữ liệu tiền huấn luyện (Pretraining-Data Advantage): các mô hình sử dụng Transformer tiền huấn luyện trên kho văn bản tổng quát có nguy cơ tận dụng tri thức ngoài miền; khi đánh giá trong điều kiện phân vùng nghiêm ngặt, năng lực phân tách thực tế cần được kiểm chứng cẩn trọng [8]; (2) Chi phí tài nguyên tính toán: cơ chế Self-Attention trong Transformer [34] có độ phức tạp tính toán và bộ nhớ bậc hai theo độ dài chuỗi hoặc kích thước cửa sổ, đòi hỏi tài nguyên tính toán đáng kể khi triển khai trên luồng dữ liệu thời gian thực có lưu lượng lớn; (3) Giới hạn phạm vi quan sát đơn luồng: mô hình chuỗi chủ yếu theo dõi các sự kiện trên một dòng thời gian cục bộ, gặp khó khăn khi mô hình hóa trực tiếp các mối liên hệ phụ thuộc đan xen đa tiến trình, đa thực thể và vượt ranh giới máy chủ.",
+    "atomic_claim": "Mặc dù đạt kết quả tốt trên các tập dữ liệu phần mềm, nhóm phương pháp Semantic–Sequential đối mặt với ba rào cản khi áp dụng vào an ninh mạng [8], [3]: (1) Nguy cơ rò rỉ và thiên lệch từ dữ liệu tiền huấn luyện (Pretraining-Data Advantage): các mô hình sử dụng Transformer tiền huấn luyện trên kho văn bản tổng quát có nguy cơ tận dụng tri thức ngoài miền; khi đánh giá trong điều kiện phân vùng nghiêm ngặt, năng lực phân tách thực tế cần được kiểm chứng cẩn trọng [8]; (2) Chi phí tài nguyên tính toán: cơ chế Self-Attention trong Transformer [34] có độ phức tạp tính toán và bộ nhớ bậc hai theo độ dài chuỗi hoặc kích thước cửa sổ, đòi hỏi tài nguyên tính toán đáng kể khi triển khai trên luồng dữ liệu thời gian thực có lưu lượng lớn; (3) Giới hạn phạm vi quan sát đơn luồng và thiếu nhận thức cấu trúc: cơ chế chú ý tự thân chỉ so khớp tương đồng hình thức giữa các token trên một dòng thời gian cục bộ, không tự động hiểu được cấu trúc tô-pô đồ thị, quan hệ tương tác đa thực thể giữa tiến trình - tệp tin - socket mạng, cũng như không tự suy diễn được quan hệ nhân quả hay ngữ nghĩa an ninh chuyên sâu của hệ điều hành.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
@@ -803,13 +803,13 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P158-S00",
-    "parent_text_hash": "c301e4b0ce93",
+    "parent_text_hash": "ad1a87c77f00",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
     "claim_id": "CLM-043",
     "document_location": "Chương (Đoạn P160, câu S0)",
-    "atomic_claim": "Khắc phục hạn chế về phạm vi quan sát của mô hình chuỗi, hướng tiếp cận dựa trên đồ thị nguồn gốc hệ thống (System Provenance Graph) mô hình hóa toàn bộ lịch sử thực thi và tương tác trong hệ điều hành dưới dạng một đồ thị có hướng, không đồng nhất và gán nhãn thời gian  [1],  [5]:",
+    "atomic_claim": "Để khắc phục hạn chế của mô hình chuỗi khi một sự kiện đơn lẻ không chứa đủ ngữ cảnh của cả chuỗi hành vi, hướng tiếp cận dựa trên đồ thị nguồn gốc hệ thống (System Provenance Graph) mô hình hóa toàn bộ lịch sử thực thi và tương tác trong hệ điều hành dưới dạng một đồ thị có hướng, không đồng nhất và gán nhãn thời gian  [1],  [5]:",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
@@ -822,7 +822,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P160-S00",
-    "parent_text_hash": "a21fa398877f",
+    "parent_text_hash": "ea4950b0670d",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
@@ -893,7 +893,7 @@
   {
     "claim_id": "CLM-047",
     "document_location": "Chương (Đoạn P164, câu S0)",
-    "atomic_claim": "Tại Việt Nam, các nghiên cứu chuyên sâu của ThS. Nguyễn Thị Thu Thủy (Khoa An toàn thông tin, Học viện Kỹ thuật Mật mã)  [32] cũng đã hệ thống hóa toàn diện phương pháp luận ứng dụng Graph Learning và mạng nơ-ron đồ thị (Graph Neural Network, GNN) trên đồ thị nguồn gốc (provenance graph) để phát hiện các chiến dịch tấn công APT đa giai đoạn; đồng thời phân tích sâu sắc các thách thức về hiện tượng bùng nổ phụ thuộc, tính đa góc nhìn và yêu cầu bảo toàn tính nhân quả khi phân tích luồng sự kiện kiểm toán hệ thống.",
+    "atomic_claim": "Nguyễn Thị Thu Thủy (Khoa An toàn thông tin, Học viện Kỹ thuật Mật mã)  [32] cũng đã hệ thống hóa phương pháp luận ứng dụng Graph Learning và mạng nơ-ron đồ thị (Graph Neural Network, GNN) trên đồ thị nguồn gốc (provenance graph) để phát hiện các chiến dịch tấn công APT đa giai đoạn; đồng thời phân tích sâu sắc các thách thức về hiện tượng bùng nổ phụ thuộc, tính đa góc nhìn và yêu cầu bảo toàn tính nhân quả khi phân tích luồng sự kiện kiểm toán hệ thống.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
@@ -905,7 +905,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P164-S01",
-    "parent_text_hash": "32da806ce850",
+    "parent_text_hash": "d17a0bac36e1",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -1193,7 +1193,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P207-S02",
-    "parent_text_hash": "7bd7279ed57c",
+    "parent_text_hash": "bc2bf21b1e81",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
@@ -1320,7 +1320,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P301-S00",
-    "parent_text_hash": "7f07375fa996",
+    "parent_text_hash": "f80de60fc6f3",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -1377,7 +1377,7 @@
   {
     "claim_id": "CLM-071",
     "document_location": "Chương (Đoạn P332, câu S0)",
-    "atomic_claim": "Khi áp dụng mạng nơ-ron đồ thị trên đồ thị nguồn gốc có đường kính lớn, hai rủi ro kiến trúc phổ biến là hiện tượng làm mịn quá mức (Over-smoothing, Oono & Suzuki  [44]) khiến biểu diễn các đỉnh hội tụ về các vector khó phân biệt, và hiện tượng nghẽn cổ chai thông tin (Over-squashing, Alon & Yahav  [31]) khi thông tin từ vùng lân cận mở rộng theo hàm mũ bị ép vào một vector kích thước cố định.",
+    "atomic_claim": "Khi áp dụng mạng nơ-ron đồ thị trên đồ thị nguồn gốc có đường kính lớn, hai rủi ro kiến trúc phổ biến là hiện tượng làm mịn quá mức (Over-smoothing, Oono & Suzuki  [44]) khiến biểu diễn các đỉnh hội tụ về các vector khó phân biệt, và hiện tượng nghẽn cổ chai thông tin (Over-squashing, Alon & Yahav  [31]) khi lượng thông tin từ vùng lân cận mở rộng nhanh chóng phải truyền qua một số ít cạnh trung gian để nén vào một vector kích thước cố định.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
@@ -1390,7 +1390,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P332-S00",
-    "parent_text_hash": "7cae4170737d",
+    "parent_text_hash": "506070c68c21",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
@@ -1799,7 +1799,7 @@
     "required_action": "NONE",
     "notes": "TGAT_IMPLEMENTATION_EQUIVALENCE_OVERCLAIM=0; Harmonic relative time encoding is a fixed sinusoidal adaptation inspired by TGAT.; CLAIM_CLASS_SUPPORT_STATUS_CONTRADICTIONS=0; Reclassified to MATHEMATICAL_FORMULATION: Harmonic time encoding formula from Xu et al. adapted and implemented in graph_view.py.",
     "parent_detected_id": "DET-P301-S00",
-    "parent_text_hash": "7f07375fa996",
+    "parent_text_hash": "f80de60fc6f3",
     "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
@@ -2290,7 +2290,7 @@
   {
     "claim_id": "CLM-SEC-023",
     "document_location": "Chương (Đoạn P207, câu S2)",
-    "atomic_claim": "Trong đó, hàm tính điểm bất thường, phép đo khoảng cách/năng lượng, phân bố nền chuẩn, phương pháp hiệu chuẩn và chính sách ngưỡng/ngân sách cảnh báo đều được đăng ký trước và khóa cố định trên tập Train/Validation tại Chương 3 trước khi mở tập Test.",
+    "atomic_claim": "Trong đó, hàm tính điểm bất thường, phép đo khoảng cách/năng lượng, phân bố nền chuẩn, phương pháp hiệu chuẩn và chính sách ngưỡng/ngân sách cảnh báo đều được đăng ký trước và khóa cố định trên tập Train/Validation tại Chương 3 trước khi mở tập Test; do phân loại tuyến tính chỉ đo lường thông tin phân tách tuyến tính trực tiếp từ z, giao thức này không hàm ý khai thác toàn bộ các tương quan phi tuyến tiềm ẩn.",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
@@ -2300,7 +2300,7 @@
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P207-S02",
-    "parent_text_hash": "7bd7279ed57c",
+    "parent_text_hash": "bc2bf21b1e81",
     "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
@@ -2867,7 +2867,7 @@
   {
     "claim_id": "CLM-SEC-059",
     "document_location": "Chương (Đoạn P301, câu S0)",
-    "atomic_claim": "Trong đó:  là các ma trận nhúng kiểu sự kiện và hành động tĩnh;  là nhúng thực thể chủ thể và đối tượng theo không gian giả danh có kiểm soát;  là nhúng các token tham số an ninh được giữ lại;  là mã hóa vị trí rời rạc; và  là hàm mã hóa thời gian liên tục điều hòa (Harmonic Time Encoding) dạng , kế thừa nguyên lý mã hóa thời gian liên tục trên đồ thị động  [35], cung cấp biểu diễn học được của khoảng thời gian tương đối  giữa các hành vi liên tiếp.",
+    "atomic_claim": "Trong đó:  là các ma trận nhúng kiểu sự kiện và hành động tĩnh;  là nhúng thực thể chủ thể và đối tượng theo không gian giả danh có kiểm soát;  là nhúng các token tham số an ninh được giữ lại;  là mã hóa vị trí rời rạc; và  là hàm mã hóa thời gian liên tục điều hòa (Harmonic Time Encoding) dạng , kế thừa nguyên lý mã hóa thời gian liên tục trên đồ thị động  [35], cung cấp biểu diễn học được của khoảng thời gian tương đối  giữa các hành vi liên tiếp nhằm phân biệt các động thái có nhịp độ khác nhau (như hai hành vi giống nhau diễn ra cách nhau 10 mili-giây trong một đoạn mã tự động so với cách nhau 10 giờ trong hoạt động thông thường), thay vì giả định đây là phép đo đồng hồ tuyệt đối.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
@@ -2879,7 +2879,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P301-S00",
-    "parent_text_hash": "7f07375fa996",
+    "parent_text_hash": "f80de60fc6f3",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -3333,7 +3333,7 @@
   {
     "claim_id": "CLM-SEC-088",
     "document_location": "Chương (Đoạn P420, câu S0)",
-    "atomic_claim": "Bảo đảm tính vững chắc (Robustness) của không gian vector biểu diễn, chuyên đề thiết lập các cơ chế kiểm soát biến gây nhiễu (Confounder Controls):",
+    "atomic_claim": "Nhằm hạn chế rủi ro trôi dạt và tăng tính ổn định (Robustness) cho không gian vector biểu diễn, chuyên đề thiết lập các cơ chế kiểm soát biến gây nhiễu (Confounder Controls):",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
@@ -3343,7 +3343,7 @@
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P420-S00",
-    "parent_text_hash": "96f14f0ff989",
+    "parent_text_hash": "084eeba52bfe",
     "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
@@ -3509,7 +3509,7 @@
   {
     "claim_id": "CLM-SEC-099",
     "document_location": "Chương (Đoạn P482, câu S1)",
-    "atomic_claim": "Các chỉ số đo kiểm thực nghiệm toàn trình (thông lượng sự kiện/giây, độ trễ p50/p95, dung lượng RAM, VRAM và kích thước trạng thái trên mỗi thực thể) sẽ được đo lường thực nghiệm chi tiết tại Chương 3 nhằm kiểm định toàn diện giả thuyết .",
+    "atomic_claim": "Các chỉ số đo kiểm thực nghiệm toàn trình (thông lượng sự kiện/giây, độ trễ p50/p95, dung lượng RAM, VRAM và kích thước trạng thái trên mỗi thực thể) sẽ được đo lường thực nghiệm chi tiết tại Chương 3 nhằm kiểm định giả thuyết .",
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
     "citation_numbers": [],
@@ -3519,7 +3519,7 @@
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P482-S01",
-    "parent_text_hash": "a2e277e22675",
+    "parent_text_hash": "825175f0003a",
     "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
@@ -4820,7 +4820,7 @@
     "claim_id": "CLM-SEC-P163-S05",
     "parent_detected_id": "DET-P163-S05",
     "document_location": "Chương (Đoạn P163, câu S5)",
-    "atomic_claim": "[30] chỉ ra hiệu quả của các baseline danh sách cho phép / thống kê sự kiện, khẳng định một cạnh phụ thuộc trong đồ thị không đồng nghĩa với tác động nhân quả an ninh; Ba là, hai bệnh lý mạng nơ-ron đồ thị về mặt cấu trúc: khi tăng số lớp truyền tin (message passing), hiện tượng làm mịn quá mức (Over-smoothing), được Oono & Suzuki [44] chứng minh về mặt toán học tại ICLR 2020, khiến vector biểu diễn của các đỉnh mất dần năng lực biểu đạt theo hàm mũ và hội tụ về các vector khó phân biệt; trong khi đó hiện tượng nghẽn cổ chai thông tin (Over-squashing), được Alon & Yahav [31] phân tích tại ICLR 2021, xuất hiện khi thông tin từ vùng lân cận tăng theo hàm mũ bị ép vào một vector kích thước cố định.",
+    "atomic_claim": "[30] chỉ ra hiệu quả của các baseline danh sách cho phép / thống kê sự kiện, khẳng định một cạnh phụ thuộc trong đồ thị không đồng nghĩa với tác động nhân quả an ninh; Ba là, hai bệnh lý mạng nơ-ron đồ thị về mặt cấu trúc: khi tăng số lớp truyền tin (message passing), hiện tượng làm mịn quá mức (Over-smoothing), được Oono & Suzuki [44] chứng minh về mặt toán học tại ICLR 2020, khiến vector biểu diễn của các đỉnh mất dần năng lực biểu đạt theo hàm mũ và hội tụ về các vector khó phân biệt; trong khi đó hiện tượng nghẽn cổ chai thông tin (Over-squashing), được Alon & Yahav [31] phân tích tại ICLR 2021, xuất hiện khi lượng thông tin từ vùng lân cận mở rộng nhanh chóng phải truyền qua một số ít cạnh trung gian để nén vào một vector có kích thước cố định, khiến các tín hiệu bất thường quan trọng từ xa dễ bị hòa lẫn hoặc thất thoát.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
@@ -4834,7 +4834,7 @@
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "48c3e3d99dc2",
+    "parent_text_hash": "3df73aaf372a",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {

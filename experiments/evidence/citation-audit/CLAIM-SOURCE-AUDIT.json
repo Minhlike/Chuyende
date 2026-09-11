@@ -577,7 +577,7 @@
   {
     "claim_id": "CLM-029",
     "document_location": "Chương (Đoạn P145, câu S1)",
-    "claim_text": "Bên cạnh đếm tần suất đơn thuần, trọng số TF-IDF (Term Frequency – Inverse Document Frequency) được vận dụng nhằm cân bằng độ nổi bật của sự kiện: tần suất sự kiện (TF) đo lường mức độ xuất hiện trong một cửa sổ hoặc phiên phân tích, trong khi tần số nghịch đảo văn bản (IDF) làm giảm trọng số của các sự kiện xuất hiện phổ biến trên nhiều cửa sổ; nhờ đó, sự kiện xuất hiện nhiều trong một phiên nhưng ít phổ biến trên toàn tập sẽ nhận trọng số tương đối lớn hơn, dù TF-IDF không mô hình hóa được thứ tự thời gian, khoảng cách ngữ nghĩa hay quan hệ nhân quả giữa các sự kiện; độc lập với TF-IDF, độ hỗn loạn thông tin Shannon (Entropy) đóng vai trò là thước đo mức độ bất định và phân tán của phân phối sự kiện trong cửa sổ phân tích:",
+    "claim_text": "Bên cạnh đếm tần suất đơn thuần, trọng số TF-IDF (Term Frequency – Inverse Document Frequency) được vận dụng nhằm cân bằng độ nổi bật của sự kiện: tần suất sự kiện (TF) đo lường mức độ xuất hiện cục bộ trong một cửa sổ hoặc phiên phân tích, trong khi tần số nghịch đảo văn bản (IDF) phạt giảm trọng số của các sự kiện phổ biến trên toàn bộ các cửa sổ; nhờ đó, sự kiện xuất hiện nhiều trong một phiên nhưng hiếm gặp trên toàn tập dữ liệu sẽ nhận trọng số tương đối lớn hơn, hỗ trợ làm nổi bật các biến động bất thường nhưng cần lưu ý rằng sự kiện hiếm không mặc nhiên đồng nghĩa với hành vi tấn công (rare != malicious); mặt khác, TF-IDF không mô hình hóa được thứ tự thời gian, khoảng cách ngữ nghĩa hay quan hệ nhân quả giữa các sự kiện; hoàn toàn độc lập với TF-IDF, độ hỗn loạn thông tin Shannon (Entropy) phản ánh mức độ bất định và phân tán của phân phối sự kiện trong cửa sổ: khi luồng log chỉ tập trung vào một vài loại hành vi quen thuộc, entropy nhận giá trị thấp; ngược lại, khi các sự kiện phân bố trải đều trên nhiều nhóm trạng thái khác nhau, entropy đạt mức cao:",
     "citation_numbers": [],
     "source_title": "Tổng quan phương pháp thống kê kinh điển",
     "support_status": "AUTHOR_SYNTHESIS",
@@ -694,7 +694,7 @@
   {
     "claim_id": "CLM-035",
     "document_location": "Chương (Đoạn P154, câu S1)",
-    "claim_text": "DeepLog không chỉ phân tích chuỗi mã sự kiện log mà còn là một khung làm việc toàn diện gồm hai thành phần mô hình hóa: Một là, mô hình LSTM thứ nhất học biểu diễn chuỗi các mẫu log (Log-Key Anomaly Detection) nhằm phát hiện các sự kiện sai lệch khỏi trật tự thực thi bình thường theo phân phối có điều kiện ; Hai là, mô hình LSTM thứ hai kết hợp phân phối chuẩn nhiều chiều để kiểm tra sự bất thường về giá trị tham số số học (Parameter Value Anomaly Detection) [14].",
+    "claim_text": "DeepLog không chỉ phân tích chuỗi mã sự kiện log mà còn thiết lập một khung làm việc gồm hai thành phần mô hình hóa: Một là, mô hình LSTM thứ nhất học biểu diễn chuỗi các mẫu log (Log-Key Anomaly Detection) nhằm phát hiện các sự kiện sai lệch khỏi trật tự thực thi bình thường theo phân phối có điều kiện ; Hai là, mô hình LSTM thứ hai kết hợp phân phối chuẩn nhiều chiều để kiểm tra sự bất thường về giá trị tham số số học (Parameter Value Anomaly Detection) [14].",
     "citation_numbers": [
       14
     ],
@@ -830,7 +830,7 @@
   {
     "claim_id": "CLM-042",
     "document_location": "Chương (Đoạn P158, câu S0)",
-    "claim_text": "Mặc dù đạt kết quả tốt trên các tập dữ liệu phần mềm, nhóm phương pháp Semantic–Sequential đối mặt với ba rào cản khi áp dụng vào an ninh mạng [8], [3]: (1) Nguy cơ rò rỉ và thiên lệch từ dữ liệu tiền huấn luyện (Pretraining-Data Advantage): các mô hình sử dụng Transformer tiền huấn luyện trên kho văn bản tổng quát có nguy cơ tận dụng tri thức ngoài miền; khi đánh giá trong điều kiện phân vùng nghiêm ngặt, năng lực phân tách thực tế cần được kiểm chứng cẩn trọng [8]; (2) Chi phí tài nguyên tính toán: cơ chế Self-Attention trong Transformer [34] có độ phức tạp tính toán và bộ nhớ bậc hai theo độ dài chuỗi hoặc kích thước cửa sổ, đòi hỏi tài nguyên tính toán đáng kể khi triển khai trên luồng dữ liệu thời gian thực có lưu lượng lớn; (3) Giới hạn phạm vi quan sát đơn luồng: mô hình chuỗi chủ yếu theo dõi các sự kiện trên một dòng thời gian cục bộ, gặp khó khăn khi mô hình hóa trực tiếp các mối liên hệ phụ thuộc đan xen đa tiến trình, đa thực thể và vượt ranh giới máy chủ.",
+    "claim_text": "Mặc dù đạt kết quả tốt trên các tập dữ liệu phần mềm, nhóm phương pháp Semantic–Sequential đối mặt với ba rào cản khi áp dụng vào an ninh mạng [8], [3]: (1) Nguy cơ rò rỉ và thiên lệch từ dữ liệu tiền huấn luyện (Pretraining-Data Advantage): các mô hình sử dụng Transformer tiền huấn luyện trên kho văn bản tổng quát có nguy cơ tận dụng tri thức ngoài miền; khi đánh giá trong điều kiện phân vùng nghiêm ngặt, năng lực phân tách thực tế cần được kiểm chứng cẩn trọng [8]; (2) Chi phí tài nguyên tính toán: cơ chế Self-Attention trong Transformer [34] có độ phức tạp tính toán và bộ nhớ bậc hai theo độ dài chuỗi hoặc kích thước cửa sổ, đòi hỏi tài nguyên tính toán đáng kể khi triển khai trên luồng dữ liệu thời gian thực có lưu lượng lớn; (3) Giới hạn phạm vi quan sát đơn luồng và thiếu nhận thức cấu trúc: cơ chế chú ý tự thân chỉ so khớp tương đồng hình thức giữa các token trên một dòng thời gian cục bộ, không tự động hiểu được cấu trúc tô-pô đồ thị, quan hệ tương tác đa thực thể giữa tiến trình - tệp tin - socket mạng, cũng như không tự suy diễn được quan hệ nhân quả hay ngữ nghĩa an ninh chuyên sâu của hệ điều hành.",
     "citation_numbers": [
       3,
       8,
@@ -851,7 +851,7 @@
   {
     "claim_id": "CLM-043",
     "document_location": "Chương (Đoạn P160, câu S0)",
-    "claim_text": "Khắc phục hạn chế về phạm vi quan sát của mô hình chuỗi, hướng tiếp cận dựa trên đồ thị nguồn gốc hệ thống (System Provenance Graph) mô hình hóa toàn bộ lịch sử thực thi và tương tác trong hệ điều hành dưới dạng một đồ thị có hướng, không đồng nhất và gán nhãn thời gian  [1],  [5]:",
+    "claim_text": "Để khắc phục hạn chế của mô hình chuỗi khi một sự kiện đơn lẻ không chứa đủ ngữ cảnh của cả chuỗi hành vi, hướng tiếp cận dựa trên đồ thị nguồn gốc hệ thống (System Provenance Graph) mô hình hóa toàn bộ lịch sử thực thi và tương tác trong hệ điều hành dưới dạng một đồ thị có hướng, không đồng nhất và gán nhãn thời gian  [1],  [5]:",
     "citation_numbers": [
       1,
       5
@@ -939,7 +939,7 @@
   {
     "claim_id": "CLM-047",
     "document_location": "Chương (Đoạn P164, câu S0)",
-    "claim_text": "Tại Việt Nam, các nghiên cứu chuyên sâu của ThS. Nguyễn Thị Thu Thủy (Khoa An toàn thông tin, Học viện Kỹ thuật Mật mã)  [32] cũng đã hệ thống hóa toàn diện phương pháp luận ứng dụng Graph Learning và mạng nơ-ron đồ thị (Graph Neural Network, GNN) trên đồ thị nguồn gốc (provenance graph) để phát hiện các chiến dịch tấn công APT đa giai đoạn; đồng thời phân tích sâu sắc các thách thức về hiện tượng bùng nổ phụ thuộc, tính đa góc nhìn và yêu cầu bảo toàn tính nhân quả khi phân tích luồng sự kiện kiểm toán hệ thống.",
+    "claim_text": "Nguyễn Thị Thu Thủy (Khoa An toàn thông tin, Học viện Kỹ thuật Mật mã)  [32] cũng đã hệ thống hóa phương pháp luận ứng dụng Graph Learning và mạng nơ-ron đồ thị (Graph Neural Network, GNN) trên đồ thị nguồn gốc (provenance graph) để phát hiện các chiến dịch tấn công APT đa giai đoạn; đồng thời phân tích sâu sắc các thách thức về hiện tượng bùng nổ phụ thuộc, tính đa góc nhìn và yêu cầu bảo toàn tính nhân quả khi phân tích luồng sự kiện kiểm toán hệ thống.",
     "citation_numbers": [
       32
     ],
@@ -1449,7 +1449,7 @@
   {
     "claim_id": "CLM-071",
     "document_location": "Chương (Đoạn P332, câu S0)",
-    "claim_text": "Khi áp dụng mạng nơ-ron đồ thị trên đồ thị nguồn gốc có đường kính lớn, hai rủi ro kiến trúc phổ biến là hiện tượng làm mịn quá mức (Over-smoothing, Oono & Suzuki  [44]) khiến biểu diễn các đỉnh hội tụ về các vector khó phân biệt, và hiện tượng nghẽn cổ chai thông tin (Over-squashing, Alon & Yahav  [31]) khi thông tin từ vùng lân cận mở rộng theo hàm mũ bị ép vào một vector kích thước cố định.",
+    "claim_text": "Khi áp dụng mạng nơ-ron đồ thị trên đồ thị nguồn gốc có đường kính lớn, hai rủi ro kiến trúc phổ biến là hiện tượng làm mịn quá mức (Over-smoothing, Oono & Suzuki  [44]) khiến biểu diễn các đỉnh hội tụ về các vector khó phân biệt, và hiện tượng nghẽn cổ chai thông tin (Over-squashing, Alon & Yahav  [31]) khi lượng thông tin từ vùng lân cận mở rộng nhanh chóng phải truyền qua một số ít cạnh trung gian để nén vào một vector kích thước cố định.",
     "citation_numbers": [
       31,
       44
