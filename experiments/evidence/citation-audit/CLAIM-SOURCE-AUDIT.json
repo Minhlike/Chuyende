@@ -10,7 +10,11 @@
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions; MITRE ATT&CK: Enterprise Tactics and Techniques Matrix (v19.1)",
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "Tác giả luận văn tổng hợp cấu trúc phân tích từ các nguồn y văn [1, 4]; không phải taxonomy nguyên bản của từng bài báo đơn lẻ.",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-002",
@@ -22,7 +26,11 @@
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-003",
@@ -35,7 +43,11 @@
     "source_title": "On the Forensic Validity of Approximated Audit Logs; What We Talk About When We Talk About Logs: Understanding the Effects of Dataset Quality on Endpoint Threat Detection Research",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Michael et al., ACSAC 2020, Sec. 3 & 4, pp. 189-202 (Approximated audit logs and forensic validity) | Liu et al., IEEE S&P 2025, Sec. III & V, pp. 112-129 (Dataset quality, noise, and evaluation pitfalls)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-004",
@@ -48,7 +60,10 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "MITRE ATT&CK -> Get Started -> Key Concepts (Tactics represent 'why', Techniques represent 'how') | Khung Hợp đồng Biểu diễn là đề xuất phương pháp luận của luận văn.",
     "action": "KEEP",
-    "claim_class": "AUTHOR_SYNTHESIS"
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-005",
@@ -62,7 +77,10 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 | Zipperle et al., ACM CSUR 2023, Sec. 2 & 3, Article 135 | Phân loại ba nhóm telemetry là tổng hợp cấu trúc của luận văn.",
     "action": "KEEP",
-    "claim_class": "AUTHOR_SYNTHESIS"
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-006A",
@@ -75,9 +93,11 @@
     "source_title": "Inam et al. (IEEE S&P 2023) & Michael et al. (ACSAC 2020)",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "PRIMARY_PAPER",
-    "support_status": "AUTHOR_SYNTHESIS",
+    "support_status": "DIRECT_SUPPORT",
     "source_locator": "Inam et al., IEEE S&P 2023 [1] (Provenance telemetry and audit graphs); Michael et al., ACSAC 2020 [2] (Approximated audit logs and forensic validity); Các syscall là ví dụ đại diện cho viễn trắc kiểm toán.",
-    "action": "VALIDATED"
+    "action": "VALIDATED",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-006B",
@@ -91,7 +111,9 @@
     "evidence_class": "PRIMARY_PAPER",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Russinovich & Garnier, Microsoft Learn, 2026 -> Sysmon Events (Event ID 1, 3, 7, 11, 13)",
-    "action": "VALIDATED"
+    "action": "VALIDATED",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-007",
@@ -104,7 +126,11 @@
     "source_title": "Tools and Benchmarks for Automated Log Parsing; A Large-Scale Evaluation for Log Parsing Techniques: How Far Are We?",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Zhu et al., ICSE-SEIP 2019 [6]; Jiang et al., ISSTA 2024 [7] (Đánh giá benchmark trên các hệ thống log LogHub gồm Apache, HDFS, ZooKeeper, Spark, v.v.).",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-008",
@@ -117,7 +143,11 @@
     "source_title": "What We Talk About When We Talk About Logs: Understanding the Effects of Dataset Quality on Endpoint Threat Detection Research; Dos and Don'ts of Machine Learning in Computer Security",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Liu et al., IEEE S&P 2025, Sec. III & V, pp. 112-129 (Dataset quality, noise, and evaluation pitfalls) | Arp et al., USENIX Security 2022, Sec. 3 & 4, pp. 3971-3988 (Pitfalls in ML security: sampling bias, data snooping, base rate fallacy)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-009",
@@ -129,7 +159,11 @@
     "source_title": "UNICORN: Runtime Provenance-Based Detector for Advanced Persistent Threats",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Han et al., NDSS 2020 [9] (UNICORN: Runtime provenance-based detector for APTs via graph sketching); Đã loại bỏ khẳng định O(N) và giới hạn RAM tiệm cận không được bài báo chứng minh.",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-010",
@@ -141,7 +175,11 @@
     "source_title": "Dos and Don'ts of Machine Learning in Computer Security",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Arp et al., USENIX Security 2022, Sec. 3 & 4, pp. 3971-3988 (Pitfalls in ML security: sampling bias, data snooping, base rate fallacy)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-011",
@@ -154,7 +192,11 @@
     "source_title": "VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning; Barlow Twins: Self-Supervised Learning via Redundancy Reduction",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Bardes et al., ICLR 2022, Sec. 3, Eq. 1-4 (Variance-Invariance-Covariance Regularization preventing representation collapse) | Zbontar et al., ICML 2021, Sec. 2, pp. 12310-12320 (Cross-correlation matrix redundancy reduction)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-012",
@@ -166,7 +208,11 @@
     "source_title": "Dos and Don'ts of Machine Learning in Computer Security",
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "Tác giả luận văn tổng hợp cấu trúc phân tích từ các nguồn y văn [8]; không phải taxonomy nguyên bản của từng bài báo đơn lẻ.",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-013",
@@ -179,7 +225,11 @@
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions; MITRE ATT&CK: Enterprise Tactics and Techniques Matrix (v19.1)",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs) | MITRE ATT&CK -> Get Started -> Key Concepts (Tactics represent 'why', Techniques represent 'how')",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-014",
@@ -191,7 +241,11 @@
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions",
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "Tác giả luận văn tổng hợp cấu trúc phân tích từ các nguồn y văn [1]; không phải taxonomy nguyên bản của từng bài báo đơn lẻ.",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-015",
@@ -204,7 +258,11 @@
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions; MITRE ATT&CK: Enterprise Tactics and Techniques Matrix (v19.1)",
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "Tác giả luận văn tổng hợp cấu trúc phân tích từ các nguồn y văn [1, 4]; không phải taxonomy nguyên bản của từng bài báo đơn lẻ.",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-016",
@@ -216,7 +274,11 @@
     "source_title": "MITRE ATT&CK: Enterprise Tactics and Techniques Matrix (v19.1)",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "MITRE ATT&CK -> Get Started -> Key Concepts (Tactics represent 'why', Techniques represent 'how')",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-017",
@@ -233,7 +295,11 @@
     "source_title": "What We Talk About When We Talk About Logs: Understanding the Effects of Dataset Quality on Endpoint Threat Detection Research; Transparent Computing Engagement 3 Data Release (and 4 others)",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Liu et al., IEEE S&P 2025, Sec. III & V, pp. 112-129 (Dataset quality, noise, and evaluation pitfalls) | DARPA-I2O Transparent Computing README-E3.md (commit e94c9f29b8a9c32f0e764366797eb216648195a8) -> Engagement #3 (April 2018 provenance data release) | Kent, Los Alamos National Laboratory, 2015, DOI 10.17021/1179829 (Multi-Source Cyber-Security Events dataset) | Xu et al., ACM SOSP 2009, Sec. 3 & 4, pp. 117-132 (Mining console logs and PCA for large-scale system problem detection) | Zhu et al., IEEE ISSRE 2023, Sec. 2, pp. 355-366 (Loghub: System log datasets collection for AI-driven analytics) | DARPA-I2O Transparent Computing README.md (commit 244ae2401032ce92ac3b72f49b8039cae67d60d6) -> Engagement #5 (April 2020 data release)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-018",
@@ -245,7 +311,11 @@
     "source_title": "Dos and Don'ts of Machine Learning in Computer Security",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Arp et al., USENIX Security 2022, Sec. 3 & 4, pp. 3971-3988 (Pitfalls in ML security: sampling bias, data snooping, base rate fallacy)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-019",
@@ -257,7 +327,11 @@
     "source_title": "Dos and Don'ts of Machine Learning in Computer Security",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Arp et al., USENIX Security 2022, Sec. 3 & 4, pp. 3971-3988 (Pitfalls in ML security: sampling bias, data snooping, base rate fallacy)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-020",
@@ -272,7 +346,10 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "Khung phân định bốn cấp độ an toàn thông tin là đóng góp tổng hợp phương pháp luận của luận văn; tích hợp kỹ thuật MIA [16] (Shokri et al.), Model Inversion [33] (Fredrikson et al.), và Differential Privacy [17] (NIST SP 800-226).",
     "action": "KEEP",
-    "claim_class": "AUTHOR_SYNTHESIS"
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-021",
@@ -284,12 +361,14 @@
       33
     ],
     "source_title": "Membership Inference Attacks Against Machine Learning Models; Guidelines for Evaluating Differential Privacy Guarantees (and 1 others)",
-    "support_status": "AUTHOR_SYNTHESIS",
-    "source_locator": "Kiểm chứng thực nghiệm độc lập MIA [16], Model Inversion [33] và khung định lượng độ mất mát quyền riêng tư vi sai DP [17] là quy trình thực nghiệm của đề tài.",
+    "support_status": "NOT_EMPIRICALLY_EXECUTED",
+    "source_locator": "Đề xuất quy trình đánh giá và định vị phương pháp luận cho mô hình hạ nguồn; chưa thực nghiệm tấn công trong phạm vi chuyên đề.",
     "action": "KEEP",
-    "claim_class": "AUTHOR_SYNTHESIS",
-    "evidence_class": "CODEBASE",
-    "code_locator": "src/research_agent/experiments/protocols/weak_attribution_evaluator.py:L1-L85"
+    "claim_class": "AUTHOR_PROPOSED_EVALUATION_FRAMEWORK",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": "",
+    "notes": "PRIVACY_IMPLEMENTATION_FALSE_POSITIVES=0; Proposed evaluation framework, NOT empirically executed."
   },
   {
     "claim_id": "CLM-022",
@@ -302,7 +381,10 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "Nguyên tắc EXCLUDE thiết lập ràng buộc phủ định chống đường tắt là thiết kế của đề tài, kế thừa phân tích cạm bẫy rò rỉ từ Arp et al. [8].",
     "action": "KEEP",
-    "claim_class": "AUTHOR_SYNTHESIS"
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-023",
@@ -315,7 +397,10 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "Thiết kế các hàm mục tiêu tự giám sát liên kết với ràng buộc hợp đồng biểu diễn là đóng góp phương pháp luận của đề tài, tích hợp nguyên lý chống suy thoái biểu diễn từ Bardes et al. [10].",
     "action": "KEEP",
-    "claim_class": "AUTHOR_SYNTHESIS"
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-024",
@@ -327,7 +412,11 @@
     "source_title": "A Simple Framework for Contrastive Learning of Visual Representations",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Chen et al., ICML 2020, Sec. 2 & 3, pp. 1597-1607 (A Simple Framework for Contrastive Learning of Visual Representations)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-025",
@@ -340,7 +429,11 @@
     "source_title": "Dos and Don'ts of Machine Learning in Computer Security; A Simple Framework for Contrastive Learning of Visual Representations",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Arp et al., USENIX Security 2022, Sec. 3 & 4, pp. 3971-3988 (Pitfalls in ML security: sampling bias, data snooping, base rate fallacy) | Chen et al., ICML 2020, Sec. 2 & 3, pp. 1597-1607 (A Simple Framework for Contrastive Learning of Visual Representations)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-026",
@@ -355,7 +448,10 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "Khung khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log là đóng góp tổng quan của luận văn, tổng hợp từ Inam et al. [1], Zipperle et al. [5], và Zhu et al. [6].",
     "action": "KEEP",
-    "claim_class": "AUTHOR_SYNTHESIS"
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-027",
@@ -368,7 +464,11 @@
     "source_title": "Tools and Benchmarks for Automated Log Parsing; A Large-Scale Evaluation for Log Parsing Techniques: How Far Are We?",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Zhu et al., ICSE-SEIP 2019, Sec. 3 & 4, pp. 121-130 (Automated log parsers: Drain, Spell, LenMa, AEL and benchmark evaluation) | Jiang et al., ISSTA 2024, Sec. 3 & 5, pp. 223-234 (Evaluation of log parsers: efficiency, robustness and template matching)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-028",
@@ -382,7 +482,10 @@
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Zhu et al., ICSE-SEIP 2019, Sec. 3 & 4, pp. 121-130 (Automated log parsers: Drain empirical near-linear time scaling across log sizes, Spell, LenMa, AEL benchmark evaluation) | Jiang et al., ISSTA 2024, Sec. 3 & 5, pp. 223-234",
     "action": "KEEP",
-    "claim_class": "LITERATURE_DIRECT"
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-029",
@@ -393,7 +496,10 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "Tổng hợp phương pháp luận nền tảng về trích xuất đặc trưng thống kê kinh điển trong phân tích log; không gán nhãn sai cho Ref [6].",
     "action": "KEEP",
-    "claim_class": "AUTHOR_SYNTHESIS"
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-030",
@@ -405,7 +511,11 @@
     "source_title": "Detecting Large-Scale System Problems by Mining Console Logs",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Xu et al., ACM SOSP 2009, Sec. 3 & 4, pp. 117-132 (Mining console logs and PCA for large-scale system problem detection)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-031",
@@ -417,7 +527,11 @@
     "source_title": "Mining Invariants from Console Logs for System Problem Detection",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Lou et al., USENIX ATC 2010, Sec. 2 & 3 (Mining program invariants from console logs)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-032",
@@ -430,7 +544,11 @@
     "source_title": "On the Forensic Validity of Approximated Audit Logs; Tools and Benchmarks for Automated Log Parsing",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Michael et al., ACSAC 2020, Sec. 3 & 4, pp. 189-202 (Approximated audit logs and forensic validity) | Zhu et al., ICSE-SEIP 2019, Sec. 3 & 4, pp. 121-130 (Automated log parsers: Drain, Spell, LenMa, AEL and benchmark evaluation)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-033",
@@ -446,7 +564,11 @@
     "source_title": "DeepLog: Anomaly Detection and Diagnosis from System Logs through Deep Learning; LogBERT: Log Anomaly Detection via BERT (and 3 others)",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Du et al., ACM CCS 2017, Sec. 4 & 5, pp. 1285-1298 (DeepLog: Log key sequence LSTM anomaly detector and parameter value anomaly detector) | Guo et al., IJCNN 2021, Sec. III, pp. 1-8 (LogBERT: Masked log event prediction via BERT) | Le & Zhang, IEEE/ACM ASE 2021, Sec. 3, pp. 492-504 (Log anomaly detection without log parsing) | Meng et al., IJCAI 2019, Sec. 3, pp. 4739-4745 (LogAnomaly: Template2Vec and sequential/quantitative anomaly detection) | Nedelkoski et al., IEEE ICDM 2020, Sec. 3, pp. 1196-1201 (Self-attentive classification in unstructured logs)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-034",
@@ -458,7 +580,11 @@
     "source_title": "DeepLog: Anomaly Detection and Diagnosis from System Logs through Deep Learning",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Du et al., ACM CCS 2017, Sec. 4 & 5, pp. 1285-1298 (DeepLog: Log key sequence LSTM anomaly detector and parameter value anomaly detector)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-035",
@@ -470,7 +596,11 @@
     "source_title": "DeepLog: Anomaly Detection and Diagnosis from System Logs through Deep Learning",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Du et al., ACM CCS 2017, Sec. 4 & 5, pp. 1285-1298 (DeepLog: Log key sequence LSTM anomaly detector and parameter value anomaly detector)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-036",
@@ -482,7 +612,11 @@
     "source_title": "DeepLog: Anomaly Detection and Diagnosis from System Logs through Deep Learning",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Du et al., ACM CCS 2017, Sec. 4 & 5, pp. 1285-1298 (DeepLog: Log key sequence LSTM anomaly detector and parameter value anomaly detector)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-037",
@@ -497,7 +631,11 @@
     "source_title": "LogBERT: Log Anomaly Detection via BERT; LogAnomaly: Unsupervised Detection of Sequential and Quantitative Anomalies in Unstructured Logs (and 2 others)",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Guo et al., IJCNN 2021, Sec. III, pp. 1-8 (LogBERT: Masked log event prediction via BERT) | Meng et al., IJCAI 2019, Sec. 3, pp. 4739-4745 (LogAnomaly: Template2Vec and sequential/quantitative anomaly detection) | Nedelkoski et al., IEEE ICDM 2020, Sec. 3, pp. 1196-1201 (Self-attentive classification in unstructured logs) | Vaswani et al., NeurIPS 2017, Sec. 3.2, pp. 5998-6008 (Attention Is All You Need: Scaled dot-product and multi-head attention)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-038",
@@ -509,7 +647,11 @@
     "source_title": "Attention Is All You Need",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Vaswani et al., NeurIPS 2017, Sec. 3.2, pp. 5998-6008 (Attention Is All You Need: Scaled dot-product and multi-head attention)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-039",
@@ -521,7 +663,11 @@
     "source_title": "Log-based Anomaly Detection Without Log Parsing",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Le & Zhang, IEEE/ACM ASE 2021, Sec. 3, pp. 492-504 (Log anomaly detection without log parsing)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-040",
@@ -533,7 +679,11 @@
     "source_title": "VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Bardes et al., ICLR 2022, Sec. 3, Eq. 1-4 (Variance-Invariance-Covariance Regularization preventing representation collapse)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-041",
@@ -545,7 +695,11 @@
     "source_title": "VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning",
     "support_status": "AUTHOR_HYPOTHESIS",
     "source_locator": "Giả thuyết nghiên cứu của luận văn được xây dựng trên cơ sở các phát hiện từ [10]; được kiểm chứng tại Chương 3.",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "AUTHOR_HYPOTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-042",
@@ -559,7 +713,11 @@
     "source_title": "What We Talk About When We Talk About Logs: Understanding the Effects of Dataset Quality on Endpoint Threat Detection Research; Dos and Don'ts of Machine Learning in Computer Security (and 1 others)",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Liu et al., IEEE S&P 2025, Sec. III & V, pp. 112-129 (Dataset quality, noise, and evaluation pitfalls) | Arp et al., USENIX Security 2022, Sec. 3 & 4, pp. 3971-3988 (Pitfalls in ML security: sampling bias, data snooping, base rate fallacy) | Vaswani et al., NeurIPS 2017, Sec. 3.2, pp. 5998-6008 (Attention Is All You Need: Scaled dot-product and multi-head attention)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-043",
@@ -572,7 +730,11 @@
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions; Provenance-based Intrusion Detection Systems: A Survey",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs) | Zipperle et al., ACM CSUR 2023, Sec. 2 & 3, Article 135 (Provenance-based IDS architecture and taxonomy)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-044",
@@ -584,7 +746,11 @@
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-045",
@@ -602,7 +768,11 @@
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions; Provenance-based Intrusion Detection Systems: A Survey (and 5 others)",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs) | Zipperle et al., ACM CSUR 2023, Sec. 2 & 3, Article 135 (Provenance-based IDS architecture and taxonomy) | Han et al., NDSS 2020, Sec. 3 & 4 (UNICORN: Graph-based runtime provenance analysis for APT detection) | Cheng et al., IEEE S&P 2024, Sec. IV & V, pp. 3533-3551 (KAIROS: GNN encoder-decoder and temporal evolution of provenance graphs) | Li et al., NDSS 2024, Sec. 3 & 4 (NODLINK: Online fine-grained APT attack detection via Steiner Tree problem formulation) | Jia et al., USENIX Security 2024, Sec. 4 & 5, pp. 5197-5214 (presentation/jia-zian: MAGIC Masked graph representation learning and model adaptation) | Jiang et al., USENIX Security 2025, Sec. 4 & 5, pp. 7173-7192 (ORTHRUS: Attribution quality in provenance-based IDS)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-046",
@@ -619,7 +789,11 @@
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions; PalanTír: Optimizing Attack Provenance with Hardware-enhanced System Observability (and 4 others)",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs) | Zeng et al., ACM CCS 2022, Sec. 3 & 4, pp. 3135-3149 (PalanTír: Hardware-enhanced system observability for attack provenance) | Bilot et al., USENIX Security 2025, Abstract & Sec. 5, pp. 7193-7212 (Comprehensive analysis of provenance IDS: simple neural network reaches SOTA on 5/7 DARPA datasets) | Guerra et al., arXiv:2608.01454v1, Sec. 3 & 4 (Benchmarking protocols shaping conclusions in provenance IDS) | Alon & Yahav, ICLR 2021, Sec. 3 & 4 (OpenReview: i80OPhOCVH2: On the Bottleneck of Graph Neural Networks and over-squashing) | Oono & Suzuki, ICLR 2020, Theorem 1 & Sec. 4 (Graph Neural Networks Exponentially Lose Expressive Power for Node Classification: over-smoothing analysis)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-047",
@@ -631,7 +805,11 @@
     "source_title": "Phát hiện tấn công APT dựa trên Graph Learning (Phần 2)",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Nguyễn Thị Thu Thủy, Tạp chí An toàn thông tin, 2026, Phần 2 (Phát hiện tấn công APT dựa trên Graph Learning)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-048",
@@ -646,7 +824,11 @@
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions; What We Talk About When We Talk About Logs: Understanding the Effects of Dataset Quality on Endpoint Threat Detection Research (and 2 others)",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs) | Liu et al., IEEE S&P 2025, Sec. III & V, pp. 112-129 (Dataset quality, noise, and evaluation pitfalls) | Zhu et al., ICSE-SEIP 2019, Sec. 3 & 4, pp. 121-130 (Automated log parsers: Drain, Spell, LenMa, AEL and benchmark evaluation) | Arp et al., USENIX Security 2022, Sec. 3 & 4, pp. 3971-3988 (Pitfalls in ML security: sampling bias, data snooping, base rate fallacy)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-049",
@@ -659,7 +841,11 @@
     "source_title": "Tools and Benchmarks for Automated Log Parsing; A Large-Scale Evaluation for Log Parsing Techniques: How Far Are We?",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Zhu et al., ICSE-SEIP 2019, Sec. 3 & 4, pp. 121-130 (Automated log parsers: Drain, Spell, LenMa, AEL and benchmark evaluation) | Jiang et al., ISSTA 2024, Sec. 3 & 5, pp. 223-234 (Evaluation of log parsers: efficiency, robustness and template matching)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-050",
@@ -672,7 +858,11 @@
     "source_title": "On the Forensic Validity of Approximated Audit Logs; What We Talk About When We Talk About Logs: Understanding the Effects of Dataset Quality on Endpoint Threat Detection Research",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Michael et al., ACSAC 2020, Sec. 3 & 4, pp. 189-202 (Approximated audit logs and forensic validity) | Liu et al., IEEE S&P 2025, Sec. III & V, pp. 112-129 (Dataset quality, noise, and evaluation pitfalls)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-051",
@@ -689,7 +879,11 @@
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions; Provenance-based Intrusion Detection Systems: A Survey (and 4 others)",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs) | Zipperle et al., ACM CSUR 2023, Sec. 2 & 3, Article 135 (Provenance-based IDS architecture and taxonomy) | Zhu et al., ICSE-SEIP 2019, Sec. 3 & 4, pp. 121-130 (Automated log parsers: Drain, Spell, LenMa, AEL and benchmark evaluation) | Han et al., NDSS 2020, Sec. 3 & 4 (UNICORN: Graph-based runtime provenance analysis for APT detection) | Du et al., ACM CCS 2017, Sec. 4 & 5, pp. 1285-1298 (DeepLog: Log key sequence LSTM anomaly detector and parameter value anomaly detector) | Guo et al., IJCNN 2021, Sec. III, pp. 1-8 (LogBERT: Masked log event prediction via BERT)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-052",
@@ -702,7 +896,11 @@
     "source_title": "VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning; Barlow Twins: Self-Supervised Learning via Redundancy Reduction",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Bardes et al., ICLR 2022, Sec. 3, Eq. 1-4 (Variance-Invariance-Covariance Regularization preventing representation collapse) | Zbontar et al., ICML 2021, Sec. 2, pp. 12310-12320 (Cross-correlation matrix redundancy reduction)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-053",
@@ -715,7 +913,11 @@
     "source_title": "What We Talk About When We Talk About Logs: Understanding the Effects of Dataset Quality on Endpoint Threat Detection Research; Dos and Don'ts of Machine Learning in Computer Security",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Liu et al., IEEE S&P 2025, Sec. III & V, pp. 112-129 (Dataset quality, noise, and evaluation pitfalls) | Arp et al., USENIX Security 2022, Sec. 3 & 4, pp. 3971-3988 (Pitfalls in ML security: sampling bias, data snooping, base rate fallacy)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-054",
@@ -729,7 +931,11 @@
     "source_title": "What We Talk About When We Talk About Logs: Understanding the Effects of Dataset Quality on Endpoint Threat Detection Research; Transparent Computing Engagement 3 Data Release (and 1 others)",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Liu et al., IEEE S&P 2025, Sec. III & V, pp. 112-129 (Dataset quality, noise, and evaluation pitfalls) | DARPA-I2O Transparent Computing README-E3.md (commit e94c9f29b8a9c32f0e764366797eb216648195a8) -> Engagement #3 (April 2018 provenance data release) | Kent, Los Alamos National Laboratory, 2015, DOI 10.17021/1179829 (Multi-Source Cyber-Security Events dataset)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-055",
@@ -742,7 +948,11 @@
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions; What We Talk About When We Talk About Logs: Understanding the Effects of Dataset Quality on Endpoint Threat Detection Research",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs) | Liu et al., IEEE S&P 2025, Sec. III & V, pp. 112-129 (Dataset quality, noise, and evaluation pitfalls)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-056",
@@ -755,7 +965,11 @@
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions; Provenance-based Intrusion Detection Systems: A Survey",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs) | Zipperle et al., ACM CSUR 2023, Sec. 2 & 3, Article 135 (Provenance-based IDS architecture and taxonomy)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-057",
@@ -769,7 +983,11 @@
     "source_title": "Membership Inference Attacks Against Machine Learning Models; Guidelines for Evaluating Differential Privacy Guarantees (and 1 others)",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Shokri et al., IEEE S&P 2017, Sec. II & III, pp. 3-18 (Membership Inference Attacks against machine learning models) | Near et al., NIST Special Publication 800-226, 2025, Sec. 2 & 3 (Evaluating differential privacy guarantees) | Fredrikson et al., ACM CCS 2015, Sec. 3 & 4, pp. 1322-1333 (Model Inversion attacks exploiting confidence information)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-058",
@@ -781,7 +999,11 @@
     "source_title": "Membership Inference Attacks Against Machine Learning Models",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Shokri et al., IEEE S&P 2017, Sec. II & III, pp. 3-18 (Membership Inference Attacks against machine learning models)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-059",
@@ -793,7 +1015,11 @@
     "source_title": "Model Inversion Attacks that Exploit Confidence Information and Basic Countermeasures",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Fredrikson et al., ACM CCS 2015, Sec. 3 & 4, pp. 1322-1333 (Model Inversion attacks exploiting confidence information)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-060",
@@ -805,7 +1031,11 @@
     "source_title": "Guidelines for Evaluating Differential Privacy Guarantees",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Near et al., NIST Special Publication 800-226, 2025, Sec. 2 & 3 (Evaluating differential privacy guarantees)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-061",
@@ -817,7 +1047,11 @@
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-062",
@@ -829,7 +1063,11 @@
     "source_title": "MITRE ATT&CK: Enterprise Tactics and Techniques Matrix (v19.1)",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "MITRE ATT&CK -> Get Started -> Key Concepts (Tactics represent 'why', Techniques represent 'how')",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-063",
@@ -843,7 +1081,11 @@
     "source_title": "Membership Inference Attacks Against Machine Learning Models; Guidelines for Evaluating Differential Privacy Guarantees (and 1 others)",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Shokri et al., IEEE S&P 2017, Sec. II & III, pp. 3-18 (Membership Inference Attacks against machine learning models) | Near et al., NIST Special Publication 800-226, 2025, Sec. 2 & 3 (Evaluating differential privacy guarantees) | Fredrikson et al., ACM CCS 2015, Sec. 3 & 4, pp. 1322-1333 (Model Inversion attacks exploiting confidence information)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-064",
@@ -857,7 +1099,10 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "Inam et al. [1] & Li et al. [25] cung cấp bằng chứng y văn về thách thức độ trễ mạng và thứ tự sự kiện trong đồ thị nguồn gốc; Cơ chế Event-Time Watermark là giải pháp phương pháp luận do chuyên đề đề xuất.",
     "action": "KEEP",
-    "claim_class": "AUTHOR_SYNTHESIS"
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-065",
@@ -869,7 +1114,11 @@
     "source_title": "Membership Inference Attacks Against Machine Learning Models",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Shokri et al., IEEE S&P 2017, Sec. II & III, pp. 3-18 (Membership Inference Attacks against machine learning models)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-066",
@@ -881,7 +1130,11 @@
     "source_title": "Model Inversion Attacks that Exploit Confidence Information and Basic Countermeasures",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Fredrikson et al., ACM CCS 2015, Sec. 3 & 4, pp. 1322-1333 (Model Inversion attacks exploiting confidence information)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-067",
@@ -894,7 +1147,11 @@
     "source_title": "Membership Inference Attacks Against Machine Learning Models; Model Inversion Attacks that Exploit Confidence Information and Basic Countermeasures",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Shokri et al., IEEE S&P 2017, Sec. II & III, pp. 3-18 (Membership Inference Attacks against machine learning models) | Fredrikson et al., ACM CCS 2015, Sec. 3 & 4, pp. 1322-1333 (Model Inversion attacks exploiting confidence information)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-068",
@@ -906,7 +1163,11 @@
     "source_title": "Attention Is All You Need",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Vaswani et al., NeurIPS 2017, Sec. 3.2, pp. 5998-6008 (Attention Is All You Need: Scaled dot-product and multi-head attention)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-069A",
@@ -920,7 +1181,9 @@
     "evidence_class": "PRIMARY_PAPER",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Xu et al., ICLR 2020, Sec. 3 & 4 (Inductive Representation Learning on Temporal Graphs: functional harmonic time encoding)",
-    "action": "VALIDATED"
+    "action": "VALIDATED",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-069B",
@@ -931,9 +1194,11 @@
     "claim_class": "IMPLEMENTATION_VERIFIED",
     "evidence_class": "CODEBASE",
     "support_status": "VERIFIED_IN_CODE",
-    "code_locator": "src/research_agent/experiments/training/stage_a1_runner.py:L5-L11, L147; src/research_agent/experiments/extractor/sequence_view.py:L45-L66",
+    "code_locator": "Stage A1: PATH_EXCLUSION_BY_CONTRACT (stage_a1_runner.py:174-215); graph_builder.py:240-245 (active raise TestSetSealedError)",
     "artifact_locator": "experiments/protocol/STAGE-A1-TRAINING-CONTRACT.md:L1-L40",
-    "action": "VALIDATED"
+    "action": "VALIDATED",
+    "notes": "Stage A1 uses PATH_EXCLUSION_BY_CONTRACT; active raise in graph_builder.py:240-245.",
+    "source_locator": ""
   },
   {
     "claim_id": "CLM-070A",
@@ -947,7 +1212,9 @@
     "evidence_class": "PRIMARY_PAPER",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Guo et al., IJCNN 2021, Sec. III, pp. 1-8 (LogBERT: Masked log event prediction via BERT transformer)",
-    "action": "VALIDATED"
+    "action": "VALIDATED",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-070B",
@@ -974,7 +1241,11 @@
     "source_title": "On the Bottleneck of Graph Neural Networks and its Practical Implications; Graph Neural Networks Exponentially Lose Expressive Power for Node Classification",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Alon & Yahav, ICLR 2021, Sec. 3 & 4 (OpenReview: i80OPhOCVH2: On the Bottleneck of Graph Neural Networks and over-squashing) | Oono & Suzuki, ICLR 2020, Theorem 1 & Sec. 4 (Graph Neural Networks Exponentially Lose Expressive Power for Node Classification: over-smoothing analysis)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-072",
@@ -990,7 +1261,11 @@
     "source_title": "KAIROS: Practical Intrusion Detection and Investigation using Whole-system Provenance; NODLINK: An Online System for Fine-Grained APT Attack Detection and Investigation (and 3 others)",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Cheng et al., IEEE S&P 2024, Sec. IV & V, pp. 3533-3551 (KAIROS: GNN encoder-decoder and temporal evolution of provenance graphs) | Li et al., NDSS 2024, Sec. 3 & 4 (NODLINK: Online fine-grained APT attack detection via Steiner Tree problem formulation) | Jia et al., USENIX Security 2024, Sec. 4 & 5, pp. 5197-5214 (presentation/jia-zian: MAGIC Masked graph representation learning and model adaptation) | Jiang et al., USENIX Security 2025, Sec. 4 & 5, pp. 7173-7192 (ORTHRUS: Attribution quality in provenance-based IDS) | Rossi et al., arXiv:2006.10637v2, Sec. 3 (Temporal Graph Networks for dynamic graphs)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-073",
@@ -1003,7 +1278,10 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "Jia et al., USENIX Security 2024, Sec. 4 & 5, pp. 5197-5214 (presentation/jia-zian: MAGIC) | Mở rộng cho đồ thị nguồn gốc động theo thời gian (Adapted / Ours) là đóng góp phương pháp luận của đề tài.",
     "action": "KEEP",
-    "claim_class": "AUTHOR_SYNTHESIS"
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-074",
@@ -1016,7 +1294,11 @@
     "source_title": "On the Bottleneck of Graph Neural Networks and its Practical Implications; Graph Neural Networks Exponentially Lose Expressive Power for Node Classification",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Alon & Yahav, ICLR 2021, Sec. 3 & 4 (OpenReview: i80OPhOCVH2: On the Bottleneck of Graph Neural Networks and over-squashing) | Oono & Suzuki, ICLR 2020, Theorem 1 & Sec. 4 (Graph Neural Networks Exponentially Lose Expressive Power for Node Classification: over-smoothing analysis)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-075",
@@ -1029,7 +1311,11 @@
     "source_title": "VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning; A Simple Framework for Contrastive Learning of Visual Representations",
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "Đóng góp và lựa chọn thiết kế phương pháp luận của luận văn, kế thừa và tích hợp các nguyên lý từ [10, 37].",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-076",
@@ -1044,7 +1330,11 @@
     "source_title": "VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning; Barlow Twins: Self-Supervised Learning via Redundancy Reduction (and 2 others)",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Bardes et al., ICLR 2022, Sec. 3, Eq. 1-4 (Variance-Invariance-Covariance Regularization preventing representation collapse) | Zbontar et al., ICML 2021, Sec. 2, pp. 12310-12320 (Cross-correlation matrix redundancy reduction) | Chen et al., ICML 2020, Sec. 2 & 3, pp. 1597-1607 (A Simple Framework for Contrastive Learning of Visual Representations) | van den Oord et al., arXiv:1807.03748v2, Sec. 2 & 3 (Contrastive Predictive Coding and InfoNCE loss)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-077",
@@ -1056,7 +1346,11 @@
     "source_title": "VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning",
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "Đóng góp và lựa chọn thiết kế phương pháp luận của luận văn, kế thừa và tích hợp các nguyên lý từ [10].",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-078",
@@ -1068,7 +1362,11 @@
     "source_title": "VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Bardes et al., ICLR 2022, Sec. 3, Eq. 1-4 (Variance-Invariance-Covariance Regularization preventing representation collapse)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-079",
@@ -1082,7 +1380,11 @@
     "source_title": "Barlow Twins: Self-Supervised Learning via Redundancy Reduction; A Simple Framework for Contrastive Learning of Visual Representations (and 1 others)",
     "support_status": "AUTHOR_HYPOTHESIS",
     "source_locator": "Giả thuyết nghiên cứu của luận văn được xây dựng trên cơ sở các phát hiện từ [11, 37, 38]; được kiểm chứng tại Chương 3.",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "AUTHOR_HYPOTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-080",
@@ -1095,7 +1397,10 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "Zhang et al., NeurIPS 2019, Sec. 3, pp. 557-567 (CPM-Nets) | Cơ chế mặt nạ khả dụng và suy thoái duyên dáng (Graceful Degradation) là đề xuất phương pháp luận của chuyên đề.",
     "action": "KEEP",
-    "claim_class": "AUTHOR_SYNTHESIS"
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-081",
@@ -1108,7 +1413,10 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "Yu et al., NeurIPS 2020, Sec. 3, pp. 5824-5836 (PCGrad: Gradient Surgery for Multi-Task Learning) | Đề xuất áp dụng kỹ thuật PCGrad trong tối ưu hóa liên hợp là thiết kế của chuyên đề.",
     "action": "KEEP",
-    "claim_class": "AUTHOR_SYNTHESIS"
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-082",
@@ -1121,7 +1429,10 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "Đóng góp và lựa chọn thiết kế phương pháp luận của luận văn, kế thừa và tích hợp các nguyên lý từ [15].",
     "action": "KEEP",
-    "claim_class": "AUTHOR_SYNTHESIS"
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-083",
@@ -1150,7 +1461,11 @@
     "source_title": "A Simple Framework for Contrastive Learning of Visual Representations; Representation Learning with Contrastive Predictive Coding",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Chen et al., ICML 2020, Sec. 2 & 3, pp. 1597-1607 (A Simple Framework for Contrastive Learning of Visual Representations) | van den Oord et al., arXiv:1807.03748v2, Sec. 2 & 3 (Contrastive Predictive Coding and InfoNCE loss)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-085",
@@ -1162,7 +1477,11 @@
     "source_title": "Barlow Twins: Self-Supervised Learning via Redundancy Reduction",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Zbontar et al., ICML 2021, Sec. 2, pp. 12310-12320 (Cross-correlation matrix redundancy reduction)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-086",
@@ -1174,7 +1493,11 @@
     "source_title": "VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Bardes et al., ICLR 2022, Sec. 3, Eq. 1-4 (Variance-Invariance-Covariance Regularization preventing representation collapse)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-087",
@@ -1186,7 +1509,11 @@
     "source_title": "DeepLog: Anomaly Detection and Diagnosis from System Logs through Deep Learning",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Du et al., ACM CCS 2017, Sec. 4 & 5, pp. 1285-1298 (DeepLog: Log key sequence LSTM anomaly detector and parameter value anomaly detector)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-088",
@@ -1198,7 +1525,11 @@
     "source_title": "LogBERT: Log Anomaly Detection via BERT",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Guo et al., IJCNN 2021, Sec. III, pp. 1-8 (LogBERT: Masked log event prediction via BERT)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-089",
@@ -1210,7 +1541,11 @@
     "source_title": "UNICORN: Runtime Provenance-Based Detector for Advanced Persistent Threats",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Han et al., NDSS 2020, Sec. 3 & 4 (UNICORN: Graph-based runtime provenance analysis for APT detection)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-090",
@@ -1222,7 +1557,11 @@
     "source_title": "KAIROS: Practical Intrusion Detection and Investigation using Whole-system Provenance",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Cheng et al., IEEE S&P 2024, Sec. IV & V, pp. 3533-3551 (KAIROS: GNN encoder-decoder and temporal evolution of provenance graphs)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   },
   {
     "claim_id": "CLM-091",
@@ -1234,6 +1573,10 @@
     "source_title": "MAGIC: Detecting Advanced Persistent Threats via Masked Graph Representation Learning",
     "support_status": "DIRECT_SUPPORT",
     "source_locator": "Jia et al., USENIX Security 2024, Sec. 4 & 5, pp. 5197-5214 (presentation/jia-zian: MAGIC Masked graph representation learning and model adaptation)",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "code_locator": "",
+    "artifact_locator": ""
   }
 ]

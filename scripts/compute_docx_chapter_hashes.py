@@ -1,155 +1,226 @@
 # -*- coding: utf-8 -*-
 """
-Chapter Hash Provenance & Integrity Auditor
+Chapter Hash Provenance and Diff Ledger Auditor
 
-Audits Chapter 1 and Chapter 2 text invariance against the immutable
+Audits Chapter 1 and Chapter 2 text transformation against the immutable
 historical baseline from authority commit a99d5dc0e1499f8454293a2931a4962ad214d4af.
 Guarantees non-circular hash validation:
 - baseline is immutable and external from git object store;
 - modifications are strictly governed by APPROVED-SCIENTIFIC-EDIT-LEDGER.json;
-- no self-referential allowlisting of current commit hashes.
+- verifies 100% of diff hunks match approved ledger entries;
+- outputs CHAPTER-DIFF-LEDGER-VERIFICATION.json.
 """
 
 import sys
+import io
 import docx
 import hashlib
 import unicodedata
 import subprocess
 import json
+import difflib
 from pathlib import Path
 
-if hasattr(sys.stdout, "reconfigure"):
-    sys.stdout.reconfigure(encoding="utf-8", errors="backslashreplace")
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8', errors='backslashreplace')
 
-BASELINE_SOURCE_COMMIT = "a99d5dc0e1499f8454293a2931a4962ad214d4af"
-BASELINE_DOCX_BLOB_SHA = "2e7caa307dc8ffcc1f5e920e133da1bad6e79cac"
+BASELINE_SOURCE_COMMIT = 'a99d5dc0e1499f8454293a2931a4962ad214d4af'
+BASELINE_DOCX_BLOB_SHA = '2e7caa307dc8ffcc1f5e920e133da1bad6e79cac'
 
-def normalize_chapter_paragraphs(paras):
-    norm_lines = []
-    for p in paras:
-        raw_text = p.text
-        if not raw_text:
-            continue
-        nfc_text = unicodedata.normalize('NFC', raw_text).strip()
-        if not nfc_text:
-            continue
-        collapsed_line = ' '.join(nfc_text.split())
-        norm_lines.append(collapsed_line)
-    return '\n'.join(norm_lines)
+def normalize_text(text):
+    if not text:
+        return ''
+    nfc = unicodedata.normalize('NFC', text).strip()
+    return ' '.join(nfc.split())
 
-def extract_chapter_boundaries_and_hashes(doc):
+def extract_chapter_paragraphs(doc):
     paragraphs = doc.paragraphs
-    ch1_start = None
-    ch2_start = None
-    ch2_end = None
+    c1_matches = []
+    c2_matches = []
+    c2_end_matches = []
 
     for idx, p in enumerate(paragraphs):
         txt = p.text.strip()
-        style_name = p.style.name if p.style else ""
+        style_name = p.style.name if p.style else ''
         
-        if idx >= 70 and style_name == "Heading 1" and "TỔNG QUAN VỀ PHƯƠNG PHÁP TRÍCH XUẤT" in txt and ch1_start is None:
-            ch1_start = idx
-        elif idx > 150 and style_name == "Heading 1" and "PHƯƠNG PHÁP BIỂU DIỄN ĐẶC TRƯNG LOG" in txt and ch2_start is None:
-            ch2_start = idx
-        elif ch2_start is not None and idx > ch2_start and (txt in ["Kết luận", "KẾT LUẬN", "Tài liệu tham khảo", "TÀI LIỆU THAM KHẢO"] or style_name == "UH1" or ("THỰC NGHIỆM" in txt and style_name == "Heading 1")):
-            ch2_end = idx
-            break
+        if idx >= 70 and style_name == 'Heading 1' and 'TỔNG QUAN VỀ PHƯƠNG PHÁP TRÍCH XUẤT' in txt and not c1_matches:
+            c1_matches.append(idx)
+        elif idx > 150 and style_name == 'Heading 1' and 'PHƯƠNG PHÁP BIỂU DIỄN ĐẶC TRƯNG LOG' in txt and not c2_matches:
+            c2_matches.append(idx)
+        elif c2_matches and idx > c2_matches[0] and (('THỰC NGHIỆM' in txt and style_name == 'Heading 1') or (txt in ['Kết luận', 'KẾT LUẬN', 'Tài liệu tham khảo', 'TÀI LIỆU THAM KHẢO'] or style_name == 'UH1')):
+            c2_end_matches.append(idx)
 
-    if ch2_end is None:
-        ch2_end = len(paragraphs)
+    assert len(c1_matches) == 1, f'Expected 1 C1 start, got {c1_matches}'
+    assert len(c2_matches) == 1, f'Expected 1 C2 start, got {c2_matches}'
+    assert len(c2_end_matches) >= 1, f'Expected C2 end, got {c2_end_matches}'
 
-    ch1_paras = paragraphs[ch1_start:ch2_start]
-    ch2_paras = paragraphs[ch2_start:ch2_end]
+    c1_start = c1_matches[0]
+    c2_start = c2_matches[0]
+    c2_end = c2_end_matches[0]
 
-    ch1_norm = normalize_chapter_paragraphs(ch1_paras)
-    ch2_norm = normalize_chapter_paragraphs(ch2_paras)
+    ch1_lines = [normalize_text(p.text) for p in paragraphs[c1_start:c2_start] if normalize_text(p.text)]
+    ch2_lines = [normalize_text(p.text) for p in paragraphs[c2_start:c2_end] if normalize_text(p.text)]
 
-    ch1_hash = hashlib.sha256(ch1_norm.encode('utf-8')).hexdigest()
-    ch2_hash = hashlib.sha256(ch2_norm.encode('utf-8')).hexdigest()
+    ch1_hash = hashlib.sha256('\n'.join(ch1_lines).encode('utf-8')).hexdigest()
+    ch2_hash = hashlib.sha256('\n'.join(ch2_lines).encode('utf-8')).hexdigest()
 
-    return ch1_hash, ch2_hash, ch1_start, ch2_start, ch2_end
+    return ch1_lines, ch2_lines, ch1_hash, ch2_hash, c1_start, c2_start, c2_end
 
-def compute_chapter_hashes():
-    docx_path = Path(r"D:\Research\Chuyên đề chuyên sâu.docx")
+def compute_hunks(base_lines, curr_lines, ch_num):
+    matcher = difflib.SequenceMatcher(None, base_lines, curr_lines)
+    hunks = []
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag != 'equal':
+            old_chunk = base_lines[i1:i2]
+            new_chunk = curr_lines[j1:j2]
+            old_str = '\n'.join(old_chunk)
+            new_str = '\n'.join(new_chunk)
+            old_sha = hashlib.sha256(old_str.encode('utf-8')).hexdigest() if old_str else None
+            new_sha = hashlib.sha256(new_str.encode('utf-8')).hexdigest() if new_str else None
+            hunks.append({
+                'chapter': ch_num,
+                'opcode': tag,
+                'base_indices': [i1, i2],
+                'curr_indices': [j1, j2],
+                'old_lines': old_chunk,
+                'new_lines': new_chunk,
+                'old_text_sha256': old_sha,
+                'new_text_sha256': new_sha
+            })
+    return hunks
+
+def audit_and_verify():
+    repo_root = Path(r'D:\Research')
+    docx_path = repo_root / 'Chuyên đề chuyên sâu.docx'
     if not docx_path.exists():
-        raise FileNotFoundError(f"Master DOCX not found at {docx_path}")
+        raise FileNotFoundError(f'Master DOCX not found at {docx_path}')
 
     current_doc_bytes = docx_path.read_bytes()
     current_docx_sha256 = hashlib.sha256(current_doc_bytes).hexdigest()
 
-    print(f"Master DOCX Path: {docx_path}")
-    print(f"Master DOCX File Size: {len(current_doc_bytes)} bytes")
-    print(f"Master DOCX SHA-256: {current_docx_sha256}")
-
     # Extract historical baseline DOCX directly from git object store
-    cmd = ["git", "show", f"{BASELINE_SOURCE_COMMIT}:Chuyên đề chuyên sâu.docx"]
-    res = subprocess.run(cmd, capture_output=True, cwd=r"D:\Research")
+    cmd = ['git', 'show', f'{BASELINE_SOURCE_COMMIT}:Chuyên đề chuyên sâu.docx']
+    res = subprocess.run(cmd, capture_output=True, cwd=str(repo_root))
     if res.returncode != 0:
-        raise RuntimeError(f"Failed to extract historical baseline from git commit {BASELINE_SOURCE_COMMIT}")
+        raise RuntimeError(f'Failed to extract historical baseline from git commit {BASELINE_SOURCE_COMMIT}')
 
-    historical_bytes = res.stdout
-    import io
-    hist_doc = docx.Document(io.BytesIO(historical_bytes))
+    hist_doc = docx.Document(io.BytesIO(res.stdout))
     curr_doc = docx.Document(str(docx_path))
 
-    baseline_ch1_hash, baseline_ch2_hash, b_s1, b_s2, b_e2 = extract_chapter_boundaries_and_hashes(hist_doc)
-    current_ch1_hash, current_ch2_hash, c_s1, c_s2, c_e2 = extract_chapter_boundaries_and_hashes(curr_doc)
+    b_ch1, b_ch2, b_h1, b_h2, b_s1, b_s2, b_e2 = extract_chapter_paragraphs(hist_doc)
+    c_ch1, c_ch2, c_h1, c_h2, c_s1, c_s2, c_e2 = extract_chapter_paragraphs(curr_doc)
 
-    print(f"\n[Historical Baseline Git Provenance]")
-    print(f"baseline_source_commit: {BASELINE_SOURCE_COMMIT}")
-    print(f"baseline_docx_blob_sha: {BASELINE_DOCX_BLOB_SHA}")
-    print(f"baseline_ch1_hash:      {baseline_ch1_hash}")
-    print(f"baseline_ch2_hash:      {baseline_ch2_hash}")
+    ch1_hunks = compute_hunks(b_ch1, c_ch1, 1)
+    ch2_hunks = compute_hunks(b_ch2, c_ch2, 2)
+    total_computed_hunks = ch1_hunks + ch2_hunks
 
-    print(f"\n[Current Master Document Hashes]")
-    print(f"current_ch1_hash:       {current_ch1_hash}")
-    print(f"current_ch2_hash:       {current_ch2_hash}")
+    # Load approved edit ledger
+    ledger_path = repo_root / 'experiments/evidence/citation-audit/APPROVED-SCIENTIFIC-EDIT-LEDGER.json'
+    assert ledger_path.exists(), f'Ledger missing at {ledger_path}'
+    with open(ledger_path, 'r', encoding='utf-8') as lf:
+        ledger_items = json.load(lf)
 
-    # Verify CHAPTER_HASH_PROVENANCE.json
-    prov_path = Path(r"D:\Research\experiments\evidence\citation-audit\CHAPTER_HASH_PROVENANCE.json")
-    assert prov_path.exists(), f"CHAPTER_HASH_PROVENANCE.json missing at {prov_path}"
-    with open(prov_path, "r", encoding="utf-8") as pf:
+    # Verification checks
+    matched_hunks = 0
+    unmatched_hunks = 0
+    self_attested_fields_used = 0
+
+    ledger_matched_indices = set()
+
+    for idx, hunk in enumerate(total_computed_hunks):
+        found = False
+        for l_idx, item in enumerate(ledger_items):
+            if (item.get('chapter') == hunk['chapter'] and 
+                item.get('old_text_sha256') == hunk['old_text_sha256'] and
+                item.get('new_text_sha256') == hunk['new_text_sha256']):
+                found = True
+                ledger_matched_indices.add(l_idx)
+                break
+        if found:
+            matched_hunks += 1
+        else:
+            unmatched_hunks += 1
+            print(f'[UNMATCHED HUNK] Ch{hunk["chapter"]} {hunk["opcode"]}: {hunk["new_lines"][:1]}')
+
+    unused_ledger = len(ledger_items) - len(ledger_matched_indices)
+
+    # Check for self-attested provenance fields
+    prov_path = repo_root / 'experiments/evidence/citation-audit/CHAPTER_HASH_PROVENANCE.json'
+    with open(prov_path, 'r', encoding='utf-8') as pf:
         prov = json.load(pf)
 
-    assert prov.get("expected_hash_commit") == BASELINE_SOURCE_COMMIT, "Provenance commit mismatch!"
-    assert prov.get("baseline_mutable") is False, "Baseline must be immutable!"
-    assert prov.get("circular_allowlisting_detected") is False, "Circular allowlisting detected!"
-    assert prov.get("circular_hash_validation") == 0, "Non-zero circular hash validation!"
-    assert prov.get("status") == "PASS", "Provenance status not PASS!"
+    if prov.get('expected_hash_commit') != BASELINE_SOURCE_COMMIT:
+        self_attested_fields_used += 1
+    if prov.get('circular_allowlisting_detected') is True:
+        self_attested_fields_used += 1
 
-    # Verify approved edit ledger
-    ledger_path = Path(r"D:\Research\experiments\evidence\citation-audit\APPROVED-SCIENTIFIC-EDIT-LEDGER.json")
-    assert ledger_path.exists(), f"Approved edit ledger missing at {ledger_path}"
-    with open(ledger_path, "r", encoding="utf-8") as lf:
-        ledger_items = json.load(lf)
-    assert len(ledger_items) >= 37, f"Expected at least 37 approved edits in ledger, got {len(ledger_items)}"
+    verification_status = 'PASS' if (unmatched_hunks == 0 and unused_ledger == 0 and self_attested_fields_used == 0) else 'FAIL'
 
-    print(f"\n[Cryptographic Invariance & Provenance Verification]")
-    print(f"Baseline Commit: {BASELINE_SOURCE_COMMIT} (IMMUTABLE)")
-    print(f"Approved Edits Tracked: {len(ledger_items)}")
-    print(f"Circular Hash Validation: 0 (PASS)")
-    print(f"Provenance Status: PASS")
-
-    return {
-        "algorithm_version": "DOCX_CANONICAL_CONTENT_HASH_V2_PROVENANCE",
-        "baseline_source_commit": BASELINE_SOURCE_COMMIT,
-        "baseline_docx_blob_sha": BASELINE_DOCX_BLOB_SHA,
-        "baseline_ch1_hash": baseline_ch1_hash,
-        "baseline_ch2_hash": baseline_ch2_hash,
-        "current_ch1_hash": current_ch1_hash,
-        "current_ch2_hash": current_ch2_hash,
-        "circular_hash_validation": 0,
-        "circular_allowlisting_detected": False,
-        "baseline_mutable": False,
-        "provenance_status": "PASS",
-        "current_docx_sha256": current_docx_sha256,
-        "current_docx_size": len(current_doc_bytes)
+    verification_result = {
+        'status': verification_status,
+        'verification_gate': 'CHAPTER_DIFF_LEDGER_VERIFICATION',
+        'baseline_source_commit': BASELINE_SOURCE_COMMIT,
+        'baseline_docx_blob_sha': BASELINE_DOCX_BLOB_SHA,
+        'expected_baseline_hashes': {
+            'chapter_1_sha256': b_h1,
+            'chapter_2_sha256': b_h2
+        },
+        'observed_current_hashes': {
+            'chapter_1_sha256': c_h1,
+            'chapter_2_sha256': c_h2
+        },
+        'diff_statistics': {
+            'ch1_diff_hunks': len(ch1_hunks),
+            'ch2_diff_hunks': len(ch2_hunks),
+            'total_diff_hunks': len(total_computed_hunks),
+            'ledger_entries_count': len(ledger_items),
+            'matched_diff_hunks': matched_hunks,
+            'unmatched_diff_hunks': unmatched_hunks,
+            'unused_ledger_entries': unused_ledger,
+            'self_attested_fields_used': self_attested_fields_used
+        },
+        'current_docx_sha256': current_docx_sha256,
+        'current_docx_size': len(current_doc_bytes)
     }
 
-if __name__ == "__main__":
+    out_verification_path = repo_root / 'experiments/evidence/citation-audit/CHAPTER-DIFF-LEDGER-VERIFICATION.json'
+    with open(out_verification_path, 'w', encoding='utf-8') as vf:
+        json.dump(verification_result, vf, indent=2, ensure_ascii=False)
+
+    # Also update CHAPTER_HASH_PROVENANCE.json with latest observed hashes and count
+    prov['observed_hash']['chapter_1_sha256'] = c_h1
+    prov['observed_hash']['chapter_2_sha256'] = c_h2
+    prov['approved_edits_count'] = len(ledger_items)
+    prov['total_diff_hunks'] = len(total_computed_hunks)
+    with open(prov_path, 'w', encoding='utf-8') as pf:
+        json.dump(prov, pf, indent=2, ensure_ascii=False)
+
+    # Also sync root CHAPTER_HASH_PROVENANCE.json if it exists
+    root_prov = repo_root / 'CHAPTER_HASH_PROVENANCE.json'
+    if root_prov.exists():
+        with open(root_prov, 'w', encoding='utf-8') as rpf:
+            json.dump(prov, rpf, indent=2, ensure_ascii=False)
+
+    print('\n==================================================')
+    print('CHAPTER DIFF LEDGER VERIFICATION SUMMARY')
+    print('==================================================')
+    print(f'Status:                     {verification_status}')
+    print(f'Total Diff Hunks:           {len(total_computed_hunks)} (CH1: {len(ch1_hunks)}, CH2: {len(ch2_hunks)})')
+    print(f'Ledger Entries:             {len(ledger_items)}')
+    print(f'Matched Diff Hunks:         {matched_hunks}')
+    print(f'Unmatched Diff Hunks:       {unmatched_hunks}')
+    print(f'Unused Ledger Entries:      {unused_ledger}')
+    print(f'Self-Attested Fields Used:  {self_attested_fields_used}')
+    print('==================================================')
+
+    assert verification_status == 'PASS', f'Verification failed: unmatched={unmatched_hunks}, unused={unused_ledger}'
+    return verification_result
+
+if __name__ == '__main__':
     try:
-        compute_chapter_hashes()
+        audit_and_verify()
         sys.exit(0)
     except AssertionError as e:
-        print(f"\n[FAIL-CLOSED ASSERTION ERROR] {e}", file=sys.stderr)
+        print(f'\n[FAIL-CLOSED ASSERTION ERROR] {e}', file=sys.stderr)
         sys.exit(1)
+

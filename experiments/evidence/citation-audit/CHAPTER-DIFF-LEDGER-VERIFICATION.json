@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "verification_gate": "CHAPTER_DIFF_LEDGER_VERIFICATION",
+  "baseline_source_commit": "a99d5dc0e1499f8454293a2931a4962ad214d4af",
+  "baseline_docx_blob_sha": "2e7caa307dc8ffcc1f5e920e133da1bad6e79cac",
+  "expected_baseline_hashes": {
+    "chapter_1_sha256": "b7912883570e369e765c7a6daa7fc626db570c8b53050e976d4f652a2dc7e16e",
+    "chapter_2_sha256": "e91bbc47de218d037d5dec3192b6ba59fda4e3c7423e51c34aea898d3db25a01"
+  },
+  "observed_current_hashes": {
+    "chapter_1_sha256": "ef340965483e9fcd0fca7799619a5e55b8e908af9eda1e5072c5c4b7a58fb153",
+    "chapter_2_sha256": "a38392ef3167d11c21bc63f2d80f94c771f5ae26423c02905914f09a5d194060"
+  },
+  "diff_statistics": {
+    "ch1_diff_hunks": 27,
+    "ch2_diff_hunks": 48,
+    "total_diff_hunks": 75,
+    "ledger_entries_count": 75,
+    "matched_diff_hunks": 75,
+    "unmatched_diff_hunks": 0,
+    "unused_ledger_entries": 0,
+    "self_attested_fields_used": 0
+  },
+  "current_docx_sha256": "b88367eacad629df7e27c2e94d693996949b1208734a5eac0d1be3a2be6d79ad",
+  "current_docx_size": 2357864
+}

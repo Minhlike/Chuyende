@@ -1,18 +1,5 @@
 [
   {
-    "claim_id": "CLM-021",
-    "claim_text": "Khung đánh giá độ mất mát quyền riêng tư và khả năng chống chịu tấn công suy luận thành viên (MIA) và Model Inversion.",
-    "evidence_class": "CODEBASE",
-    "repository_path": "src/research_agent/experiments/protocols/weak_attribution_evaluator.py",
-    "symbol": "evaluate_weak_attribution_accuracy",
-    "line_range": "14-85",
-    "artifact_path": "experiments/protocol/CH3-PRE-REGISTRATION.md",
-    "expected_fact": "Evaluator function implementing membership inference attack evaluation and privacy metrics.",
-    "observed_fact": "def evaluate_weak_attribution_accuracy defined at line 14; evaluates MIA and weak attribution leakage.",
-    "status": "RESOLVED_AND_VERIFIED",
-    "notes": "Matches implementation exactly; file and function exist at current HEAD."
-  },
-  {
     "claim_id": "CLM-069B",
     "claim_text": "Toàn bộ các siêu tham số cấu trúc như số tầng encoder L=4, số đầu chú ý H=4, số chiều ẩn d=128, số chiều lan truyền d_ff=512 và tỷ lệ dropout p=0.10 đều được xác lập dựa trên tập huấn luyện và kiểm định (Train/Validation), tuyệt đối không sử dụng nhãn kiểm tra.",
     "evidence_class": "CODEBASE",
@@ -20,10 +7,10 @@
     "symbol": "StageA1Trainer, TestSetSealedError",
     "line_range": "stage_a1_runner.py:142-215; STAGE-A1-PREEXECUTION-LOCK.json:5-12; graph_builder.py:240-245",
     "artifact_path": "experiments/protocol/STAGE-A1-PREEXECUTION-LOCK.json",
-    "expected_fact": "Hyperparameters L=4, H=4, d=128, d_ff=512, p=0.10 locked in config; training loop loads strictly Train/Val; Test access raises TestSetSealedError.",
-    "observed_fact": "Hyperparameters verified in STAGE-A1-PREEXECUTION-LOCK.json lines 5-12; training loop loads strictly train_pkg and val_pkg in stage_a1_runner.py lines 174-215; Test access actively raises TestSetSealedError in graph_builder.py lines 240-245 and stage_a1_runner.py lines 41-44.",
+    "expected_fact": "Hyperparameters L=4, H=4, d=128, d_ff=512, p=0.10 locked in config; Stage A1 runner isolates test data via PATH_EXCLUSION_BY_CONTRACT; graph_builder.py actively raises TestSetSealedError on test split access.",
+    "observed_fact": "Hyperparameters verified in STAGE-A1-PREEXECUTION-LOCK.json lines 5-12; Stage A1 runner loads strictly train_pkg and val_pkg via PATH_EXCLUSION_BY_CONTRACT (lines 174-215; zero test splits read attested in RUN-MANIFEST.json); Test access actively raises TestSetSealedError in graph_builder.py lines 240-245; class TestSetSealedError defined in stage_a1_runner.py lines 41-44.",
     "status": "RESOLVED_AND_VERIFIED",
-    "notes": "Separately proves A (config values), B (training path only Train/Val), and C (active test firewall call)."
+    "notes": "Distinguishes PATH_EXCLUSION_BY_CONTRACT for Stage A1 runner from active runtime exception guard in graph_builder.py:240-245."
   },
   {
     "claim_id": "CLM-070B",
@@ -98,10 +85,10 @@
     "symbol": "TestSetSealedError",
     "line_range": "graph_builder.py:240-245; stage_a1_runner.py:41-44; run_stage_a2_five_seed_empirical.py:121-127",
     "artifact_path": "experiments/evidence/stage-a2/reconciliation/CHAPTER3-SOURCE-METRICS.json",
-    "expected_fact": "TestSetSealedError is actively invoked on actual execution paths when Test split is requested.",
-    "observed_fact": "Verified graph_builder.py line 243 raises TestSetSealedError('Attempted to access or materialize sealed Test graph split!'); active checks in runner scripts.",
+    "expected_fact": "Test data access guard: Stage A1 isolates test data via PATH_EXCLUSION_BY_CONTRACT; graph_builder and Stage A2 actively raise TestSetSealedError.",
+    "observed_fact": "Stage A1 runner enforces PATH_EXCLUSION_BY_CONTRACT; graph_builder.py lines 240-245 and Stage A2 actively raise TestSetSealedError on test data load.",
     "status": "RESOLVED_AND_VERIFIED",
-    "notes": "Test firewall active invocation verified on actual execution paths."
+    "notes": "Verified separation of PATH_EXCLUSION_BY_CONTRACT in Stage A1 and active raise in graph_builder/Stage A2."
   },
   {
     "claim_id": "SCI-CODE-003",
@@ -111,10 +98,10 @@
     "symbol": "enforce_real_training_data_purity, enforce_ssl_package_label_free",
     "line_range": "25-56",
     "artifact_path": "experiments/protocol/STAGE-A1-TRAINING-CONTRACT.md",
-    "expected_fact": "Both validation functions check forbidden proxy classifications and prohibited label keys, failing closed.",
-    "observed_fact": "enforce_real_training_data_purity lines 25-42 checks SYNTHETIC_PROXY; enforce_ssl_package_label_free lines 43-56 checks labels/anomalies/alerts.",
+    "expected_fact": "Heuristic fail-closed data purity guards check forbidden proxy classifications and top-level label keys.",
+    "observed_fact": "enforce_real_training_data_purity (lines 25-42) checks blacklist of known synthetic classes [SYNTHETIC_PROXY, SYNTHETIC_SMOKE_ONLY, HYBRID_SMOKE_FIXTURE]; enforce_ssl_package_label_free (lines 43-56) checks 11 top-level label keys; identical logic verified in historical execution commits 70b68102 (Stage A1) and e4d53b82 (Stage A2).",
     "status": "RESOLVED_AND_VERIFIED",
-    "notes": "Verified in codebase."
+    "notes": "Accurately characterized as heuristic blacklist rather than overbroad complete exclusion proof."
   },
   {
     "claim_id": "SCI-EXP-001",
@@ -141,18 +128,5 @@
     "observed_fact": "Verified STAGE-A2-FIVE-SEED-RECONCILIATION.json matches Table 3.3 and Table 3.4 in docx; TB lệch thủ tục (3 seed) mean=2.413704 accurately reported; zero test access.",
     "status": "RESOLVED_AND_VERIFIED",
     "notes": "Preserves historical classifications; zero artifact modification to match prose."
-  },
-  {
-    "claim_id": "SCI-PRIV-001",
-    "claim_text": "Luận văn thiết lập khung 4 cấp độ an toàn quyền riêng tư phân định rõ: Giả danh hóa (Pseudonymization), Thử nghiệm MIA [16], Thử nghiệm Model Inversion [33], và Bảo đảm toán học Vi sai (Differential Privacy theo NIST SP 800-226 [17]).",
-    "evidence_class": "CODEBASE",
-    "repository_path": "src/research_agent/experiments/protocols/weak_attribution_evaluator.py",
-    "symbol": "evaluate_weak_attribution_accuracy",
-    "line_range": "14-85",
-    "artifact_path": "experiments/protocol/CH3-PRE-REGISTRATION.md",
-    "expected_fact": "Code and pre-registration define the privacy hierarchy and quantitative metrics.",
-    "observed_fact": "evaluate_weak_attribution_accuracy implements quantitative evaluation of MIA, attribute inversion, and differential privacy bounds.",
-    "status": "RESOLVED_AND_VERIFIED",
-    "notes": "Fully resolved; matches codebase and pre-registration."
   }
 ]

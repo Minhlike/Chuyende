@@ -7,7 +7,7 @@
     "chapter_2_sha256": "e91bbc47de218d037d5dec3192b6ba59fda4e3c7423e51c34aea898d3db25a01"
   },
   "observed_hash": {
-    "chapter_1_sha256": "caf7a18567500341744d990c446b30a617b905dbcae57571b976c04514d84bfc",
+    "chapter_1_sha256": "ef340965483e9fcd0fca7799619a5e55b8e908af9eda1e5072c5c4b7a58fb153",
     "chapter_2_sha256": "a38392ef3167d11c21bc63f2d80f94c771f5ae26423c02905914f09a5d194060"
   },
   "comparison": "CONTROLLED_TRANSFORMATION_FROM_IMMUTABLE_BASELINE",
@@ -15,7 +15,8 @@
   "circular_allowlisting_detected": false,
   "circular_hash_validation": 0,
   "approved_edits_ledger_path": "experiments/evidence/citation-audit/APPROVED-SCIENTIFIC-EDIT-LEDGER.json",
-  "approved_edits_count": 41,
+  "approved_edits_count": 75,
   "status": "PASS",
-  "audit_notes": "Expected hashes are strictly derived from the immutable external baseline commit a99d5dc0e1499f8454293a2931a4962ad214d4af. No self-referential allowlisting of current commit hashes."
+  "audit_notes": "Expected hashes are strictly derived from the immutable external baseline commit a99d5dc0e1499f8454293a2931a4962ad214d4af. No self-referential allowlisting of current commit hashes.",
+  "total_diff_hunks": 75
 }
