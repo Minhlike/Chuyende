@@ -1039,7 +1039,7 @@
   },
   {
     "claim_id": "CLM-061",
-    "document_location": "Chương (Đoạn P200, câu S1)",
+    "document_location": "Chương (Đoạn P201, câu S1)",
     "atomic_claim": "Quá trình biểu diễn bắt đầu bằng việc hình thức hóa luồng nhật ký kiểm toán hệ thống thành một chuỗi sự kiện được gán nhãn thời gian: , trong đó mỗi sự kiện  tuân thủ thống nhất lược đồ bộ sáu kiểu hóa (Typed Six-tuple, đặc tả chi tiết tại Mục 2.2.1), bao gồm mốc thời gian xuất hiện sự kiện  (Event-Time), định danh kiểu sự kiện , thực thể tác nhân chủ động  (Actor Entity như tiến trình gốc, tài khoản người dùng), thực thể đối tượng đích chịu tác động  (Object Entity như tệp tin, cổng mạng, tiến trình con), hành động/thao tác thực hiện  (Action như fork, execve, read, write, connect, registry_set), và tập hợp các tham số động có cấu trúc  (đường dẫn tệp tin, tham số dòng lệnh thực thi, cổng mạng và địa chỉ IP kết nối)  [1].",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
@@ -1051,11 +1051,11 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P200-S01"
+    "parent_detected_id": "DET-P201-S01"
   },
   {
     "claim_id": "CLM-062",
-    "document_location": "Chương (Đoạn P206, câu S2)",
+    "document_location": "Chương (Đoạn P207, câu S2)",
     "atomic_claim": "Đánh giá chất lượng biểu diễn thông qua giao thức đóng băng tham số (Frozen Linear Probe: ) phục vụ phân loại và quy kết chiến thuật/kỹ thuật theo phân loại MITRE ATT&CK  [4], hoặc quy trình chấm điểm bất thường không giám sát tùy chọn (Optional Downstream Zero-Shot Anomaly Scoring Protocol).",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
@@ -1067,11 +1067,11 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P206-S02"
+    "parent_detected_id": "DET-P207-S02"
   },
   {
     "claim_id": "CLM-063",
-    "document_location": "Chương (Đoạn P220, câu S0)",
+    "document_location": "Chương (Đoạn P221, câu S0)",
     "atomic_claim": "Trong đó lý thuyết Quyền riêng tư Vi sai (DP) đóng vai trò định lượng và chặn trên tổn thất lý thuyết  dưới các giả định toán học xác định, còn rủi ro thực tế được kiểm chứng thực nghiệm độc lập thông qua các tấn công suy luận thành viên (MIA)  [16],  [17] và tấn công nghịch đảo/tái định danh thực thể  [33].",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
@@ -1085,11 +1085,11 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P220-S00"
+    "parent_detected_id": "DET-P221-S00"
   },
   {
     "claim_id": "CLM-064",
-    "document_location": "Chương (Đoạn P225, câu S0)",
+    "document_location": "Chương (Đoạn P226, câu S0)",
     "atomic_claim": "Xử lý hiện tượng sự kiện đến muộn hoặc xáo trộn thứ tự (Out-of-Order Events) phát sinh từ độ trễ mạng thu thập telemetry  [1],  [25], chuyên đề đề xuất nguyên tắc xử lý theo thời gian sự kiện kết hợp cơ chế mốc ngắt thời gian (Event-Time Watermark):",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
@@ -1102,11 +1102,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P225-S00"
+    "parent_detected_id": "DET-P226-S00"
   },
   {
     "claim_id": "CLM-065",
-    "document_location": "Chương (Đoạn P268, câu S0)",
+    "document_location": "Chương (Đoạn P269, câu S0)",
     "atomic_claim": "Tấn công suy luận thành viên (Membership Inference Attack, MIA): đối nghịch xác định xem một bản ghi dữ liệu cụ thể của một thực thể có nằm trong tập huấn luyện của mô hình hay không, thông qua quan sát hành vi đầu ra hoặc các đặc trưng của vector  ([16]).",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
@@ -1118,11 +1118,11 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P268-S00"
+    "parent_detected_id": "DET-P269-S00"
   },
   {
     "claim_id": "CLM-066",
-    "document_location": "Chương (Đoạn P269, câu S0)",
+    "document_location": "Chương (Đoạn P270, câu S0)",
     "atomic_claim": "Tấn công nghịch đảo biểu diễn (Representation/Model Inversion Attack): Về mặt nguyên lý, Fredrikson et al. [33] chứng minh tấn công nghịch đảo có thể khai thác thông tin đầu ra/độ tin cậy để tái cấu trúc thuộc tính dữ liệu; trong mô hình đe dọa thích ứng của đề tài (Threat-Model Adaptation), đối nghịch cố gắng khôi phục hoặc xấp xỉ các thuộc tính nhạy cảm tiềm năng (như tên người dùng, hostname, chuỗi lệnh) từ vector nhúng z.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
@@ -1134,11 +1134,11 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P269-S00"
+    "parent_detected_id": "DET-P270-S00"
   },
   {
     "claim_id": "CLM-067",
-    "document_location": "Chương (Đoạn P278, câu S2)",
+    "document_location": "Chương (Đoạn P279, câu S2)",
     "atomic_claim": "Tuy nhiên, khẳng định sự vượt trội này yêu cầu kiểm thử thực nghiệm tường minh tại Chương 3 thông qua CTRL-PRIV-001: đánh giá MIA ([16]), tấn công nghịch đảo (theo nguyên lý Fredrikson et al. [33] áp dụng cho các thuộc tính nhạy cảm của log), và tấn công tái định danh; không thể đưa ra kết luận chỉ từ lý thuyết DP hoặc thiết kế pseudonymization.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
@@ -1151,11 +1151,11 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P278-S02"
+    "parent_detected_id": "DET-P279-S02"
   },
   {
     "claim_id": "CLM-068",
-    "document_location": "Chương (Đoạn P296, câu S0)",
+    "document_location": "Chương (Đoạn P297, câu S0)",
     "atomic_claim": "Bộ trích xuất tuần tự ngữ nghĩa tiếp nhận chuỗi các sự kiện kiểu hóa trong cửa sổ ngắn hạn  gồm  sự kiện liên tiếp, kế thừa kiến trúc Self-Attention tiêu chuẩn  [34].",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
@@ -1167,11 +1167,11 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P296-S00"
+    "parent_detected_id": "DET-P297-S00"
   },
   {
     "claim_id": "CLM-069A",
-    "document_location": "Chương 2 (Đoạn P300, câu S0)",
+    "document_location": "Chương 2 (Đoạn P301, câu S0)",
     "atomic_claim": "Hàm mã hóa thời gian liên tục điều hòa (Harmonic Time Encoding) dạng Phi(Delta t) = [cos(w_1 Delta t), sin(w_1 Delta t), ...]^T kế thừa nguyên lý mã hóa thời gian liên tục trên đồ thị động [35], cung cấp biểu diễn học được của khoảng thời gian tương đối giữa các hành vi liên tiếp.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
@@ -1183,11 +1183,11 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P300-S00"
+    "parent_detected_id": "DET-P301-S00"
   },
   {
     "claim_id": "CLM-069B",
-    "document_location": "Chương 2 (Đoạn P300, câu S1)",
+    "document_location": "Chương 2 (Đoạn P301, câu S1)",
     "atomic_claim": "Toàn bộ các siêu tham số cấu trúc như số tầng encoder L=4, số đầu chú ý H=4, số chiều ẩn d=128, số chiều lan truyền d_ff=512 và tỷ lệ dropout p=0.10 đều được xác lập dựa trên tập huấn luyện và kiểm định (Train/Validation), tuyệt đối không sử dụng nhãn kiểm tra.",
     "claim_class": "IMPLEMENTATION_VERIFIED",
     "evidence_class": "CODEBASE",
@@ -1198,11 +1198,11 @@
     "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
     "notes": "Stage A1 uses PATH_EXCLUSION_BY_CONTRACT; active raise in graph_builder.py:240-245.",
-    "parent_detected_id": "DET-P300-S01"
+    "parent_detected_id": "DET-P301-S01"
   },
   {
     "claim_id": "CLM-070A",
-    "document_location": "Chương 2 (Đoạn P303, câu S0)",
+    "document_location": "Chương 2 (Đoạn P304, câu S0)",
     "atomic_claim": "Tác vụ dự đoán sự kiện bị che (Masked Event Prediction, L_MEP): Thích ứng từ phương pháp LogBERT [20], che ngẫu nhiên tập chỉ số sự kiện.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
@@ -1214,11 +1214,11 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P303-S00"
+    "parent_detected_id": "DET-P304-S00"
   },
   {
     "claim_id": "CLM-070B",
-    "document_location": "Chương 2 (Đoạn P303, câu S0)",
+    "document_location": "Chương 2 (Đoạn P304, câu S0)",
     "atomic_claim": "Trong tác vụ L_MEP, đề tài lựa chọn tỷ lệ che 15% làm điểm khởi tạo tham chiếu và khóa cố định trên tập Train/Validation trước khi đánh giá trên tập Test.",
     "claim_class": "IMPLEMENTATION_VERIFIED",
     "evidence_class": "CODEBASE",
@@ -1228,11 +1228,11 @@
     "artifact_locator": "experiments/reports/STAGE-A1-PRETRAINING-REPORT.md:L51; experiments/protocol/STAGE-A1-TRAINING-CONTRACT.md:L30",
     "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P303-S00"
+    "parent_detected_id": "DET-P304-S00"
   },
   {
     "claim_id": "CLM-071",
-    "document_location": "Chương (Đoạn P331, câu S0)",
+    "document_location": "Chương (Đoạn P332, câu S0)",
     "atomic_claim": "Khi áp dụng mạng nơ-ron đồ thị trên đồ thị nguồn gốc có đường kính lớn, hai rủi ro kiến trúc phổ biến là hiện tượng làm mịn quá mức (Over-smoothing, Oono & Suzuki  [44]) khiến biểu diễn các đỉnh hội tụ về các vector khó phân biệt, và hiện tượng nghẽn cổ chai thông tin (Over-squashing, Alon & Yahav  [31]) khi thông tin từ vùng lân cận mở rộng theo hàm mũ bị ép vào một vector kích thước cố định.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
@@ -1245,11 +1245,11 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P331-S00"
+    "parent_detected_id": "DET-P332-S00"
   },
   {
     "claim_id": "CLM-072",
-    "document_location": "Chương (Đoạn P338, câu S1)",
+    "document_location": "Chương (Đoạn P339, câu S1)",
     "atomic_claim": "Kế thừa khung xử lý bộ nhớ và truyền thông điệp thời gian động  [36] cùng các nguyên lý thiết kế từ các hệ thống đồ thị nguồn gốc tiêu biểu  [24],  [25],  [26],  [27], chuyên đề hình thức hóa cơ chế truyền thông điệp thời gian có kiểu hóa (Typed Temporal Message Passing) phù hợp với dữ liệu log bảo toàn ngữ cảnh an ninh.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
@@ -1265,11 +1265,11 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P338-S01"
+    "parent_detected_id": "DET-P339-S01"
   },
   {
     "claim_id": "CLM-073",
-    "document_location": "Chương (Đoạn P347, câu S1)",
+    "document_location": "Chương (Đoạn P348, câu S1)",
     "atomic_claim": "Kế thừa cảm hứng từ mô hình MAGIC  [26] về học biểu diễn qua cơ chế che giấu (Masked Graph Representation Learning) và mở rộng cho đồ thị nguồn gốc động theo thời gian (Adapted / Ours), hàm Mục tiêu tự giám sát đồ thị được cấu thành từ ba tác vụ phụ trợ với đầu dự đoán riêng biệt:",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
@@ -1281,11 +1281,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P347-S01"
+    "parent_detected_id": "DET-P348-S01"
   },
   {
     "claim_id": "CLM-074",
-    "document_location": "Chương (Đoạn P357, câu S0)",
+    "document_location": "Chương (Đoạn P358, câu S0)",
     "atomic_claim": "Khi áp dụng mạng nơ-ron đồ thị trên đồ thị nguồn gốc có đường kính lớn, hai rủi ro kiến trúc phổ biến là hiện tượng làm mịn quá mức (Over-smoothing, Oono & Suzuki  [44]) khiến biểu diễn các đỉnh hội tụ về các vector khó phân biệt, và hiện tượng nghẽn cổ chai thông tin (Over-squashing, Alon & Yahav  [31]) khi thông tin từ vùng lân cận mở rộng theo hàm mũ bị ép vào một vector kích thước cố định.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
@@ -1298,11 +1298,11 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P357-S00"
+    "parent_detected_id": "DET-P358-S00"
   },
   {
     "claim_id": "CLM-075",
-    "document_location": "Chương (Đoạn P379, câu S0)",
+    "document_location": "Chương (Đoạn P380, câu S0)",
     "atomic_claim": "Tránh hiện tượng mất mát thông tin cấu trúc đặc thù khi ép hai vector biểu diễn gốc  và  phải hội tụ về cùng một điểm, chuyên đề áp dụng nguyên lý phân tách không gian theo SimCLR  [37] và VICReg  [10].",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
@@ -1315,11 +1315,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P379-S00"
+    "parent_detected_id": "DET-P380-S00"
   },
   {
     "claim_id": "CLM-076",
-    "document_location": "Chương (Đoạn P384, câu S0)",
+    "document_location": "Chương (Đoạn P385, câu S0)",
     "atomic_claim": "Trong học biểu diễn tự giám sát, ba hướng tiếp cận tiêu biểu bao gồm: InfoNCE / Contrastive Learning  [38],  [37], Barlow Twins  [11], và VICReg  [10].",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
@@ -1334,11 +1334,11 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P384-S00"
+    "parent_detected_id": "DET-P385-S00"
   },
   {
     "claim_id": "CLM-077",
-    "document_location": "Chương (Đoạn P386, câu S0)",
+    "document_location": "Chương (Đoạn P387, câu S0)",
     "atomic_claim": "Từ phân tích phương pháp luận trên, chuyên đề lựa chọn VICReg (Variance-Invariance-Covariance Regularization) [10] làm ứng viên gióng hàng cốt lõi (Primary Candidate).",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
@@ -1350,11 +1350,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P386-S00"
+    "parent_detected_id": "DET-P387-S00"
   },
   {
     "claim_id": "CLM-078",
-    "document_location": "Chương (Đoạn P386, câu S1)",
+    "document_location": "Chương (Đoạn P387, câu S1)",
     "atomic_claim": "Theo Bardes et al. [10], VICReg thiết lập cơ chế tự giám sát không tương phản dựa trên điều hòa phương sai và hiệp phương sai (variance/covariance regularization) để ngăn ngừa sụp đổ biểu diễn mà không cần khai thác các cặp mẫu âm (negative pairs).",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
@@ -1366,11 +1366,11 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P386-S02"
+    "parent_detected_id": "DET-P387-S02"
   },
   {
     "claim_id": "CLM-079",
-    "document_location": "Chương (Đoạn P386, câu S3)",
+    "document_location": "Chương (Đoạn P387, câu S3)",
     "atomic_claim": "Giả thuyết này sẽ được kiểm chứng thực nghiệm độc lập tại Chương 3 trong mối tương quan với hai phương pháp đối chứng (Ablation Baselines) là InfoNCE [38], [37] và Barlow Twins [11].",
     "claim_class": "AUTHOR_HYPOTHESIS",
     "evidence_class": "NONE",
@@ -1384,11 +1384,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_HYPOTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P386-S03"
+    "parent_detected_id": "DET-P387-S03"
   },
   {
     "claim_id": "CLM-080",
-    "document_location": "Chương (Đoạn P401, câu S1)",
+    "document_location": "Chương (Đoạn P402, câu S1)",
     "atomic_claim": "Chuyên đề xử lý vấn đề này theo khung tiếp cận của CPM-Nets  [39] kết hợp cơ chế mặt nạ khả dụng và suy thoái duyên dáng (Graceful Degradation) do chuyên đề đề xuất:",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
@@ -1400,11 +1400,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P401-S01"
+    "parent_detected_id": "DET-P402-S01"
   },
   {
     "claim_id": "CLM-081",
-    "document_location": "Chương (Đoạn P442, câu S1)",
+    "document_location": "Chương (Đoạn P443, câu S1)",
     "atomic_claim": "Khi tối ưu hóa liên hợp, chuyên đề đề xuất áp dụng kỹ thuật phẫu thuật gradient PCGrad  [40] trên tập tham số nhận đồng thời hai luồng gradient:",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
@@ -1416,11 +1416,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P442-S01"
+    "parent_detected_id": "DET-P443-S01"
   },
   {
     "claim_id": "CLM-082",
-    "document_location": "Chương (Đoạn P449, câu S0)",
+    "document_location": "Chương (Đoạn P450, câu S0)",
     "atomic_claim": "Chuyên đề áp dụng cơ chế Attention-based Deep MIL của Ilse et al.  [15], nhưng thiết kế cơ chế ánh xạ Túi, Thực thể đặc thù cho bài toán an ninh mạng (Cybersecurity Bag-Instance Mapping, Đề xuất của đề tài / Ours):",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
@@ -1432,11 +1432,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P449-S01"
+    "parent_detected_id": "DET-P450-S01"
   },
   {
     "claim_id": "CLM-083",
-    "document_location": "Chương (Đoạn P492, câu S0)",
+    "document_location": "Chương (Đoạn P493, câu S0)",
     "atomic_claim": "Khác với các phương pháp xáo trộn ngẫu nhiên truyền thống có nguy cơ rò rỉ thông tin thời gian, nghiên cứu đề xuất và áp dụng quy trình phân chia dữ liệu theo thứ tự thời gian nhân quả nghiêm ngặt (Strict Causal Temporal Split), tuân thủ khuyến nghị tránh rò rỉ thời gian (temporal snooping) của Arp et al. [8].",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "CODEBASE",
@@ -1448,7 +1448,7 @@
     "artifact_locator": "experiments/plans/STAGE-A2-FINAL-12-EPOCH-AUTHORITY.json:L57; research_specs/roadmap/controls.yaml:L4-L10",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P492-S00"
+    "parent_detected_id": "DET-P493-S00"
   },
   {
     "claim_id": "CLM-084",
@@ -1596,7 +1596,7 @@
   },
   {
     "claim_id": "SCI-MATH-002",
-    "document_location": "Chương 2 (Đoạn P300, câu S0)",
+    "document_location": "Chương 2 (Đoạn P301, câu S0)",
     "atomic_claim": "Hàm Fourier / Harmonic Relative Time Encoding ánh xạ khoảng thời gian delta_t sang vector điều hòa phi(delta_t) = [cos(w_1 delta_t), sin(w_1 delta_t), ...] duy trì tính liên tục và bất biến tịnh tiến thời gian.",
     "claim_class": "AUTHOR_ADAPTATION",
     "evidence_class": "CODEBASE",
@@ -1609,11 +1609,11 @@
     "support_status": "IMPLEMENTATION_VERIFIED",
     "required_action": "NONE",
     "notes": "TGAT_IMPLEMENTATION_EQUIVALENCE_OVERCLAIM=0; Harmonic relative time encoding is a fixed sinusoidal adaptation inspired by TGAT.",
-    "parent_detected_id": "DET-P300-S00"
+    "parent_detected_id": "DET-P301-S00"
   },
   {
     "claim_id": "SCI-CODE-001",
-    "document_location": "Chương 2 (Đoạn P338, câu S1)",
+    "document_location": "Chương 2 (Đoạn P339, câu S1)",
     "atomic_claim": "Ngân hàng bộ nhớ thực thể giới hạn LRU (BoundedEntityMemoryBank) kiểm soát trần tài nguyên bộ nhớ tối đa max_entities=10000, ngăn chặn bùng nổ tài nguyên theo O(K_max).",
     "claim_class": "IMPLEMENTATION_VERIFIED",
     "evidence_class": "CODEBASE",
@@ -1623,11 +1623,11 @@
     "artifact_locator": "experiments/protocol/STAGE-A1-TRAINING-CONTRACT.md:L1-L50",
     "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P338-S01"
+    "parent_detected_id": "DET-P339-S01"
   },
   {
     "claim_id": "SCI-CODE-002",
-    "document_location": "Chương 3 (Đoạn P495, câu S0)",
+    "document_location": "Chương 3 (Đoạn P496, câu S0)",
     "atomic_claim": "Trên các execution path được kiểm toán, Test được cô lập bằng path exclusion và/hoặc fail-closed guard; các manifest thực nghiệm được lưu không ghi nhận lượt đọc Test.",
     "claim_class": "IMPLEMENTATION_VERIFIED",
     "evidence_class": "CODEBASE",
@@ -1638,11 +1638,11 @@
     "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
     "notes": "ABSOLUTE_TEST_LEAKAGE_GUARANTEE=0; Bounded claim reflecting verified path exclusion in Stage A1 runner and active TestSetSealedError in graph builder.",
-    "parent_detected_id": "DET-P495-S00"
+    "parent_detected_id": "DET-P496-S00"
   },
   {
     "claim_id": "SCI-CODE-003",
-    "document_location": "Chương 2 (Đoạn P249, câu S0)",
+    "document_location": "Chương 2 (Đoạn P250, câu S0)",
     "atomic_claim": "Hệ thống áp dụng các guard fail-closed đối với các lớp synthetic đã định danh và các khóa nhãn top-level đã liệt kê nhằm giảm nguy cơ đưa proxy giả hoặc downstream labels vào Stage A1.",
     "claim_class": "IMPLEMENTATION_VERIFIED",
     "evidence_class": "CODEBASE",
@@ -1653,11 +1653,11 @@
     "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
     "notes": "OVERBROAD_DATA_PURITY_CLAIMS=0; Blacklist of known synthetic classes [SYNTHETIC_PROXY, SYNTHETIC_SMOKE_ONLY, HYBRID_SMOKE_FIXTURE] and 11 top-level label keys; verified identical in historical commits 70b68102 and e4d53b82.",
-    "parent_detected_id": "DET-P249-S00"
+    "parent_detected_id": "DET-P250-S00"
   },
   {
     "claim_id": "SCI-EXP-001",
-    "document_location": "Chương 2 (Đoạn P430, câu S3)",
+    "document_location": "Chương 2 (Đoạn P431, câu S3)",
     "atomic_claim": "Mô hình tiền huấn luyện Stage A1 tự giám sát chuỗi đạt điểm hội tụ loss L_seq trên tập Validation trên cả hai tập HDFS và BGL qua 5 hạt giống thực nghiệm độc lập.",
     "claim_class": "EXPERIMENT_ARTIFACT_VERIFIED",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -1670,11 +1670,11 @@
     "evidence_strength_remote": "REMOTE_MANIFEST_ATTESTED",
     "evidence_strength_local": "LOCAL_AGENT_BYTE_VERIFIED",
     "notes": "REMOTE_LOCAL_EVIDENCE_STRENGTH_MISMATCH=0; remote manifests attest loss metrics and zero test access; local workstation verifies raw checkpoint bytes.",
-    "parent_detected_id": "DET-P430-S03"
+    "parent_detected_id": "DET-P431-S03"
   },
   {
     "claim_id": "SCI-EXP-002",
-    "document_location": "Chương 3 (Đoạn P517, câu S0)",
+    "document_location": "Chương 3 (Đoạn P518, câu S0)",
     "atomic_claim": "Giai đoạn tiền huấn luyện đa góc nhìn Stage A2 đạt điểm dừng CEILING_REACHED tại epoch 12 với L_total_val=1.4580 và EARLY_STOPPING tại epoch 7 với L_total_val=1.5831, bảo toàn 100% tính nguyên vẹn số liệu nguồn gốc.",
     "claim_class": "EXPERIMENT_ARTIFACT_VERIFIED",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -1684,7 +1684,7 @@
     "artifact_locator": "experiments/evidence/stage-a2/reconciliation/CHAPTER3-SOURCE-METRICS.json; experiments/plans/STAGE-A2-FINAL-12-EPOCH-AUTHORITY.json",
     "support_status": "VERIFIED_IN_ARTIFACT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P517-S00"
+    "parent_detected_id": "DET-P518-S00"
   },
   {
     "claim_id": "SCI-PRIV-001",
@@ -1723,7 +1723,7 @@
   },
   {
     "claim_id": "CLM-SEC-001",
-    "document_location": "Chương 2 (Đoạn P252, câu S0)",
+    "document_location": "Chương 2 (Đoạn P253, câu S0)",
     "atomic_claim": "Bảng 2.1: Chính sách RETAIN / NORMALIZE / PRIVACY-PROTECT / UNKNOWN-SAFE cho các trường của bộ sáu kiểu hóa\t42",
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
@@ -1733,11 +1733,11 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P252-S00"
+    "parent_detected_id": "DET-P253-S00"
   },
   {
     "claim_id": "CLM-SEC-002",
-    "document_location": "Chương 2 (Đoạn P366, câu S0)",
+    "document_location": "Chương 2 (Đoạn P367, câu S0)",
     "atomic_claim": "Bảng 2.2: Đặc tả kiến trúc và độ phức tạp tính toán của hai bộ trích xuất đặc trưng đa góc nhìn\t64",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -1747,7 +1747,7 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P366-S00"
+    "parent_detected_id": "DET-P367-S00"
   },
   {
     "claim_id": "CLM-SEC-003",
@@ -1989,7 +1989,7 @@
   },
   {
     "claim_id": "CLM-SEC-020",
-    "document_location": "Chương (Đoạn P199, câu S1)",
+    "document_location": "Chương (Đoạn P200, câu S1)",
     "atomic_claim": "Việc giảm một hàm mất mát phụ trợ (auxiliary loss) chỉ chứng minh mô hình tối ưu tốt hơn trên tác vụ đại diện (surrogate task) và dữ liệu được quan sát; mọi kết luận về năng lực phát hiện xâm nhập downstream, tính vững chắc hay độ an toàn quyền riêng tư bắt buộc phải được thẩm định độc lập qua các phép đo thực nghiệm tương ứng.",
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
@@ -1999,11 +1999,11 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P199-S01"
+    "parent_detected_id": "DET-P200-S01"
   },
   {
     "claim_id": "CLM-SEC-021",
-    "document_location": "Chương (Đoạn P200, câu S0)",
+    "document_location": "Chương (Đoạn P201, câu S0)",
     "atomic_claim": "Trên cơ sở các khoảng trống phương pháp luận được xác lập tại Chương 1, Chương 2 đề xuất khung phương pháp biểu diễn đặc trưng log đa góc nhìn bảo toàn ngữ cảnh an toàn, vận hành trực tuyến trong môi trường xử lý dòng (Streaming Environment).",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
@@ -2013,11 +2013,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P200-S00"
+    "parent_detected_id": "DET-P201-S00"
   },
   {
     "claim_id": "CLM-SEC-022",
-    "document_location": "Chương (Đoạn P203, câu S0)",
+    "document_location": "Chương (Đoạn P204, câu S0)",
     "atomic_claim": "Trong đó  là trạng thái bộ nhớ nội bộ hữu hạn tại thời điểm t, được cập nhật theo cơ chế đơn lượt theo chiều thời gian, không nhìn trước (Strictly Causal Single-pass Update) khi tiếp nhận sự kiện mới .",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -2027,11 +2027,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P203-S00"
+    "parent_detected_id": "DET-P204-S00"
   },
   {
     "claim_id": "CLM-SEC-023",
-    "document_location": "Chương (Đoạn P206, câu S2)",
+    "document_location": "Chương (Đoạn P207, câu S2)",
     "atomic_claim": "Trong đó, hàm tính điểm bất thường, phép đo khoảng cách/năng lượng, phân bố nền chuẩn, phương pháp hiệu chuẩn và chính sách ngưỡng/ngân sách cảnh báo đều được đăng ký trước và khóa cố định trên tập Train/Validation tại Chương 3 trước khi mở tập Test.",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -2041,11 +2041,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P206-S02"
+    "parent_detected_id": "DET-P207-S02"
   },
   {
     "claim_id": "CLM-SEC-024",
-    "document_location": "Chương (Đoạn P208, câu S0)",
+    "document_location": "Chương (Đoạn P209, câu S0)",
     "atomic_claim": "Giả thuyết H1 (Parameter Semantic Fidelity, Đóng góp Độc lập): Biểu diễn nhận biết tham số  (chuỗi lệnh, đường dẫn tệp tin, địa chỉ IP) vào không gian vector z bảo tồn lượng thông tin tương hỗ về ngữ nghĩa an ninh tiềm ẩn  cao hơn có ý nghĩa so với biểu diễn chỉ dựa trên mẫu tĩnh hoặc bị trừu tượng hóa tham số :",
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
@@ -2055,11 +2055,11 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P208-S00"
+    "parent_detected_id": "DET-P209-S00"
   },
   {
     "claim_id": "CLM-SEC-025",
-    "document_location": "Chương (Đoạn P211, câu S0)",
+    "document_location": "Chương (Đoạn P212, câu S0)",
     "atomic_claim": "Giả thuyết H2 (Multi-View Alignment & Negative Transfer Prevention, Đóng góp Độc lập): Cơ chế gióng hàng có kiểm soát giữa góc nhìn chuỗi sự kiện  và góc nhìn đồ thị nguồn gốc  được kỳ vọng nâng cao hiệu năng biểu diễn tổng thể vượt trên các góc nhìn đơn lẻ, đồng thời thỏa mãn các điều kiện kiểm chứng định lượng:",
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
@@ -2069,11 +2069,11 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P211-S00"
+    "parent_detected_id": "DET-P212-S00"
   },
   {
     "claim_id": "CLM-SEC-026",
-    "document_location": "Chương (Đoạn P216, câu S0)",
+    "document_location": "Chương (Đoạn P217, câu S0)",
     "atomic_claim": "Giả thuyết H4 (Bounded Operational Budget Feasibility, Đóng góp Độc lập): Quá trình trích xuất và cập nhật biểu diễn dòng vận hành ổn định trong giới hạn ngân sách độ trễ và bộ nhớ xác định trước, đáp ứng yêu cầu độ trễ xử lý mỗi sự kiện  và dung lượng trạng thái bộ nhớ  trên toàn bộ dòng thời gian vận hành dài hạn:",
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
@@ -2083,11 +2083,11 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P216-S00"
+    "parent_detected_id": "DET-P217-S00"
   },
   {
     "claim_id": "CLM-SEC-027",
-    "document_location": "Chương (Đoạn P218, câu S0)",
+    "document_location": "Chương (Đoạn P219, câu S0)",
     "atomic_claim": "Giả thuyết H5 (Controlled Linkability & Utility–Privacy Frontier, Đóng góp Độc lập): Cơ chế duy trì liên kết có kiểm soát được kỳ vọng sẽ thiết lập sự vượt trội theo nghĩa Pareto (Pareto-dominance) so với các đường cơ sở giữ nguyên định danh thô hoặc ẩn danh hóa quá mức tại ít nhất một điểm vận hành thực tế dưới các thước đo hiệu năng an ninh (Utility) và tổn thất quyền riêng tư (Privacy Loss) đã định nghĩa trước:",
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
@@ -2097,11 +2097,11 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P218-S00"
+    "parent_detected_id": "DET-P219-S00"
   },
   {
     "claim_id": "CLM-SEC-028",
-    "document_location": "Chương (Đoạn P221, câu S0)",
+    "document_location": "Chương (Đoạn P222, câu S0)",
     "atomic_claim": "Độ phức tạp xử lý dòng với trạng thái hữu hạn",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2111,11 +2111,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P221-S00"
+    "parent_detected_id": "DET-P222-S00"
   },
   {
     "claim_id": "CLM-SEC-029",
-    "document_location": "Chương (Đoạn P222, câu S1)",
+    "document_location": "Chương (Đoạn P223, câu S1)",
     "atomic_claim": "Việc duy trì toàn bộ lịch sử tương tác của hệ thống trên bộ nhớ là bất khả thi về mặt tài nguyên.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2125,11 +2125,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P222-S01"
+    "parent_detected_id": "DET-P223-S01"
   },
   {
     "claim_id": "CLM-SEC-030",
-    "document_location": "Chương (Đoạn P222, câu S2)",
+    "document_location": "Chương (Đoạn P223, câu S2)",
     "atomic_claim": "Do đó, chuyên đề thiết lập hợp đồng xử lý dòng với trạng thái hữu hạn (Bounded-State Streaming Contract), được quy định bởi ngân sách bộ nhớ trần  và tập thực thể hoạt động :",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2139,11 +2139,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P222-S02"
+    "parent_detected_id": "DET-P223-S02"
   },
   {
     "claim_id": "CLM-SEC-031",
-    "document_location": "Chương (Đoạn P224, câu S3)",
+    "document_location": "Chương (Đoạn P225, câu S3)",
     "atomic_claim": "Để hiện thực hóa hợp đồng này, các kỹ thuật như chính sách Least Recently Updated (LRU), cấu trúc phác thảo Count-Min Sketch và hàm suy giảm trọng số cạnh theo hàm mũ  được đề xuất như các ứng viên kỹ thuật hiện thực hóa (Proposed Implementation Choices) có thể thay thế hoặc tùy biến linh hoạt.",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
@@ -2153,11 +2153,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P224-S03"
+    "parent_detected_id": "DET-P225-S03"
   },
   {
     "claim_id": "CLM-SEC-032",
-    "document_location": "Chương (Đoạn P228, câu S1)",
+    "document_location": "Chương (Đoạn P229, câu S1)",
     "atomic_claim": "Nếu lưu lượng vượt quá giới hạn chịu tải tối đa, việc loại bỏ gói tin (Shedding) được thực hiện hoàn toàn độc lập với kết quả phát hiện của mô hình (dựa trên hạn ngạch băng thông nguồn thu thập hoặc mức độ ưu tiên của phân vùng telemetry, tuyệt đối không dựa vào điểm số an ninh chưa kiểm chứng) nhằm tránh rủi ro rò rỉ vòng lặp (Detector Leakage) và loại bỏ nhầm các bằng chứng APT yếu thưa thớt.",
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -2167,11 +2167,11 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P228-S01"
+    "parent_detected_id": "DET-P229-S01"
   },
   {
     "claim_id": "CLM-SEC-033",
-    "document_location": "Chương (Đoạn P229, câu S0)",
+    "document_location": "Chương (Đoạn P230, câu S0)",
     "atomic_claim": "Xét theo lý thuyết tính toán, mô hình dòng thiết lập hợp đồng ngân sách độ phức tạp cho từng thành phần xử lý ký hiệu tổng quát: .",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2181,11 +2181,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P229-S00"
+    "parent_detected_id": "DET-P230-S00"
   },
   {
     "claim_id": "CLM-SEC-034",
-    "document_location": "Chương (Đoạn P229, câu S2)",
+    "document_location": "Chương (Đoạn P230, câu S2)",
     "atomic_claim": "Các mức chặn Big-O cụ thể được đặc tả chặt chẽ cho từng nhánh tại Mục 2.3, Mục 2.4 và tổng hợp tại Bảng 2.2 và Bảng 2.4. Chuyên đề chỉ rõ bản chất đánh đổi cốt lõi (Long-Horizon Context Trade-off): các chiến dịch APT kéo dài nhiều tuần đòi hỏi duy trì ngữ cảnh tương tác sâu, trong khi bộ nhớ thực tế bị giới hạn bởi , và thiết kế dòng giải quyết mâu thuẫn này bằng cơ chế nén ngữ cảnh có kiểm soát thay vì lưu trữ toàn bộ dữ liệu thô.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2195,11 +2195,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P229-S02"
+    "parent_detected_id": "DET-P230-S02"
   },
   {
     "claim_id": "CLM-SEC-035",
-    "document_location": "Chương (Đoạn P233, câu S0)",
+    "document_location": "Chương (Đoạn P234, câu S0)",
     "atomic_claim": "Hình 2.1: Kiến trúc hai mặt phẳng (Training Plane & Inference Plane) của khung biểu diễn đặc trưng log đa góc nhìn dòng (Nguồn: Tác giả đề xuất)",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
@@ -2209,11 +2209,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P233-S00"
+    "parent_detected_id": "DET-P234-S00"
   },
   {
     "claim_id": "CLM-SEC-036",
-    "document_location": "Chương (Đoạn P235, câu S1)",
+    "document_location": "Chương (Đoạn P236, câu S1)",
     "atomic_claim": "Mặt phẳng này tiếp nhận trọng số đã đóng băng hoàn toàn , cập nhật trạng thái bộ nhớ hữu hạn  theo các chính sách TTL, Eviction và Watermarking, sau đó trích xuất vector đóng gói  theo cơ chế đơn lượt đơn hướng (Strictly Causal, Zero Lookahead), cung cấp đầu vào tức thời cho các bộ dò tuyến tính đóng băng Giai đoạn C phục vụ phát hiện và quy kết chiến thuật/kỹ thuật MITRE ATT&CK.",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -2223,11 +2223,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P235-S01"
+    "parent_detected_id": "DET-P236-S01"
   },
   {
     "claim_id": "CLM-SEC-037",
-    "document_location": "Chương (Đoạn P236, câu S0)",
+    "document_location": "Chương (Đoạn P237, câu S0)",
     "atomic_claim": "Tiền xử lý và bảo vệ dynamic parameters",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2237,11 +2237,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P236-S00"
+    "parent_detected_id": "DET-P237-S00"
   },
   {
     "claim_id": "CLM-SEC-038",
-    "document_location": "Chương (Đoạn P237, câu S0)",
+    "document_location": "Chương (Đoạn P238, câu S0)",
     "atomic_claim": "Mục 2.2 xác lập cơ sở tiền xử lý phục vụ toàn bộ pipeline trích xuất đặc trưng đa góc nhìn: từ luồng nhật ký thô đến các sự kiện đã được chuẩn hóa, phân loại tham số an ninh và bảo vệ quyền riêng tư có kiểm soát; tất cả đều tuân thủ nghiêm ngặt ranh giới Extractor–Detector và hợp đồng biểu diễn đã thiết lập tại Mục 2.1. Ba thành phần cốt lõi được trình bày theo thứ tự phụ thuộc logic: (1) Parsing và chuẩn hóa có nhận thức an ninh (2.2.1); (2) Mô hình đe dọa quyền riêng tư và cơ chế liên kết có kiểm soát (2.2.2); (3) Đồng bộ thời gian và cửa sổ ngữ cảnh đa tỷ lệ (2.2.3).",
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
@@ -2251,11 +2251,11 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P237-S00"
+    "parent_detected_id": "DET-P238-S00"
   },
   {
     "claim_id": "CLM-SEC-039",
-    "document_location": "Chương (Đoạn P238, câu S0)",
+    "document_location": "Chương (Đoạn P239, câu S0)",
     "atomic_claim": "Parsing, Typed Canonicalization, Entity Resolution và Security-aware Parameter Retention",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2265,11 +2265,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P238-S00"
+    "parent_detected_id": "DET-P239-S00"
   },
   {
     "claim_id": "CLM-SEC-040",
-    "document_location": "Chương (Đoạn P244, câu S1)",
+    "document_location": "Chương (Đoạn P245, câu S1)",
     "atomic_claim": "Ngược lại, từ vựng tham số động (đặc biệt là chuỗi đường dẫn tệp tin và đối số lệnh) phụ thuộc vào môi trường và được học hoàn toàn trên phân vùng huấn luyện  theo cơ chế fit-only: mọi thống kê, ánh xạ từ vựng và bảng chuẩn hóa đều được fit trên  và áp dụng ở trạng thái đóng băng (frozen state) lên phân vùng Validation và Test , qua đó bảo đảm không có thông tin ngược từ Val/Test nào được đưa vào quá trình fit.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2279,11 +2279,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P244-S01"
+    "parent_detected_id": "DET-P245-S01"
   },
   {
     "claim_id": "CLM-SEC-041",
-    "document_location": "Chương (Đoạn P255, câu S0)",
+    "document_location": "Chương (Đoạn P256, câu S0)",
     "atomic_claim": "Tất cả các thành phần tiền xử lý có trạng thái học được (bao gồm từ vựng tokenizer tham số động, bảng chuẩn hóa tên tiến trình theo môi trường, thống kê tần suất sự kiện phục vụ outlier filtering, và ngưỡng phân ngưỡng tham số) đều được fit độc quyền trên phân vùng huấn luyện  theo thứ tự nhân quả thời gian (causal-time order), tức là chỉ sử dụng dữ liệu quan sát trước thời điểm phân cắt huấn luyện.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2293,11 +2293,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P255-S00"
+    "parent_detected_id": "DET-P256-S00"
   },
   {
     "claim_id": "CLM-SEC-042",
-    "document_location": "Chương (Đoạn P255, câu S1)",
+    "document_location": "Chương (Đoạn P256, câu S1)",
     "atomic_claim": "Phân vùng Validation và Test chỉ nhận các phép biến đổi (transform) từ trạng thái đóng băng đã fit, không có bất kỳ thông tin thống kê nào từ Val/Test được đưa trở lại (CTRL-LEAK-001: Anti-Leakage Temporal Split).",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2307,11 +2307,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P255-S01"
+    "parent_detected_id": "DET-P256-S01"
   },
   {
     "claim_id": "CLM-SEC-043",
-    "document_location": "Chương (Đoạn P258, câu S2)",
+    "document_location": "Chương (Đoạn P259, câu S2)",
     "atomic_claim": "Kỹ thuật này bảo đảm không sụp đổ (collapse) thông tin cấu trúc cú pháp cần thiết cho Extractor và không làm rò rỉ từ vựng.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2321,11 +2321,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P258-S02"
+    "parent_detected_id": "DET-P259-S02"
   },
   {
     "claim_id": "CLM-SEC-044",
-    "document_location": "Chương (Đoạn P261, câu S1)",
+    "document_location": "Chương (Đoạn P262, câu S1)",
     "atomic_claim": "Tuy nhiên, việc lưu giữ thông tin nhận dạng thô trong không gian vector tạo ra bề mặt tấn công quyền riêng tư không cần thiết.",
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
@@ -2335,11 +2335,11 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P261-S01"
+    "parent_detected_id": "DET-P262-S01"
   },
   {
     "claim_id": "CLM-SEC-045",
-    "document_location": "Chương (Đoạn P261, câu S3)",
+    "document_location": "Chương (Đoạn P262, câu S3)",
     "atomic_claim": "Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo H5 nhưng phải được kiểm chứng thực nghiệm tại Chương 3 (BOUNDARY-06: Privacy Claim Requires Attack-Based Empirical Evaluation).",
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
@@ -2349,11 +2349,11 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P261-S03"
+    "parent_detected_id": "DET-P262-S03"
   },
   {
     "claim_id": "CLM-SEC-046",
-    "document_location": "Chương (Đoạn P267, câu S1)",
+    "document_location": "Chương (Đoạn P268, câu S1)",
     "atomic_claim": "Đối nghịch này không truy cập trực tiếp dữ liệu thô mà tương tác với mô hình đã được triển khai hoặc với các vector biểu diễn  đã xuất ra.",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -2363,11 +2363,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P267-S01"
+    "parent_detected_id": "DET-P268-S01"
   },
   {
     "claim_id": "CLM-SEC-047",
-    "document_location": "Chương (Đoạn P274, câu S0)",
+    "document_location": "Chương (Đoạn P275, câu S0)",
     "atomic_claim": "Hai là, cơ chế tokenization tham số động có chọn lọc (Security-selective Parameter Tokenization): các tham số động đã được  xác nhận là mang ngữ nghĩa an ninh được tokenize thành các đơn vị học được theo kho từ vựng fit trên .",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2377,11 +2377,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P274-S00"
+    "parent_detected_id": "DET-P275-S00"
   },
   {
     "claim_id": "CLM-SEC-048",
-    "document_location": "Chương (Đoạn P275, câu S2)",
+    "document_location": "Chương (Đoạn P276, câu S2)",
     "atomic_claim": "Tại Chương 3, chuyên đề đánh giá nhiều mốc rotation horizon cố định (fixed horizons) để xây dựng đường biên Utility–Privacy frontier.",
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
@@ -2391,11 +2391,11 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P275-S02"
+    "parent_detected_id": "DET-P276-S02"
   },
   {
     "claim_id": "CLM-SEC-049",
-    "document_location": "Chương (Đoạn P276, câu S0)",
+    "document_location": "Chương (Đoạn P277, câu S0)",
     "atomic_claim": "Hợp đồng kỹ thuật tổng quát của cơ chế Controlled Linkability được phát biểu như sau: với mọi sự kiện đã được chuẩn hóa , sự kiện được biến đổi quyền riêng tư  được tạo ra bằng cách thay thế các trường nhận dạng thực thể bằng mã giả danh và áp dụng toán tử bảo vệ tham số an toàn  tuân thủ nguyên tắc: (i) các trường KNOWN EXCLUDE FIELD bị loại bỏ hoàn toàn; (ii) các tham số được  xác nhận được tokenize trên ; (iii) các tham số UNSEEN / UNCERTAIN được xử lý theo chính sách UNKNOWN-SAFE :",
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
@@ -2405,11 +2405,11 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P276-S00"
+    "parent_detected_id": "DET-P277-S00"
   },
   {
     "claim_id": "CLM-SEC-050",
-    "document_location": "Chương (Đoạn P278, câu S0)",
+    "document_location": "Chương (Đoạn P279, câu S0)",
     "atomic_claim": "Lưu ý rằng các tham số thời gian  và kiểu hành vi  được bảo toàn nguyên vẹn vì chúng không phải direct identifier, tuy nhiên các tham số này có thể hoạt động như quasi-identifier khi kết hợp với dữ liệu bên ngoài; rủi ro liên kết tương ứng cần được đánh giá theo CTRL-PRIV-001. Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo nghĩa của H5 so với hai đường cơ sở: (a) giữ nguyên định danh thô không có pseudonymization; và (b) ẩn danh hóa quá mức xóa bỏ cả liên kết thực thể cần thiết cho phân tích hành vi.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2419,11 +2419,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P278-S00"
+    "parent_detected_id": "DET-P279-S00"
   },
   {
     "claim_id": "CLM-SEC-051",
-    "document_location": "Chương (Đoạn P280, câu S0)",
+    "document_location": "Chương (Đoạn P281, câu S0)",
     "atomic_claim": "Sau khi các sự kiện được chuẩn hóa và bảo vệ quyền riêng tư theo Mục 2.2.1–2.2.2, bước tiếp theo là tổ chức chúng thành các đơn vị ngữ cảnh phục vụ các bộ trích xuất đặc trưng hạ nguồn tại Mục 2.3. Mục 2.2.3 giải quyết hai vấn đề liên quan chặt chẽ: (1) đảm bảo tính nhất quán Event-Time khi sự kiện đến từ nhiều nguồn có đồng hồ không đồng bộ; và (2) xây dựng cấu trúc cửa sổ ngữ cảnh đa tỷ lệ phù hợp với bản chất đa giai đoạn của chiến dịch APT.",
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
@@ -2433,11 +2433,11 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P280-S00"
+    "parent_detected_id": "DET-P281-S00"
   },
   {
     "claim_id": "CLM-SEC-052",
-    "document_location": "Chương (Đoạn P282, câu S1)",
+    "document_location": "Chương (Đoạn P283, câu S1)",
     "atomic_claim": "Lệch pha đồng hồ khiến các bản ghi telemetry tương ứng của cùng một sự kiện/tương tác quan sát được lại mang nhãn thời gian không nhất quán khi so sánh xuyên nguồn, làm xáo trộn thứ tự thời gian sự kiện dùng để xây dựng chuỗi và đồ thị hạ nguồn (lưu ý nguyên lý bất biến: quan hệ phụ thuộc ghi nhận trong log không đồng nhất với quan hệ nhân quả (nguyên lý: dependency != causal effect)).",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2447,11 +2447,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P282-S01"
+    "parent_detected_id": "DET-P283-S01"
   },
   {
     "claim_id": "CLM-SEC-053",
-    "document_location": "Chương (Đoạn P284, câu S1)",
+    "document_location": "Chương (Đoạn P285, câu S1)",
     "atomic_claim": "Phương pháp ước lượng cụ thể (crystal-synced event matching, NTP-based correction,...) là quyết định triển khai phụ thuộc môi trường và không ảnh hưởng đến hợp đồng tiền xử lý.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2461,11 +2461,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P284-S01"
+    "parent_detected_id": "DET-P285-S01"
   },
   {
     "claim_id": "CLM-SEC-054",
-    "document_location": "Chương (Đoạn P287, câu S1)",
+    "document_location": "Chương (Đoạn P288, câu S1)",
     "atomic_claim": "Một cửa sổ ngữ cảnh duy nhất không thể bao phủ đầy đủ tất cả tỷ lệ này mà không vi phạm ràng buộc bộ nhớ hữu hạn  từ Mục 2.1.2. Chuyên đề đề xuất cấu trúc cửa sổ ngữ cảnh ba tỷ lệ (Multi-scale Context Windows) như một giải pháp phân cấp:",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
@@ -2475,11 +2475,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P287-S01"
+    "parent_detected_id": "DET-P288-S01"
   },
   {
     "claim_id": "CLM-SEC-055",
-    "document_location": "Chương (Đoạn P289, câu S0)",
+    "document_location": "Chương (Đoạn P290, câu S0)",
     "atomic_claim": "Cửa sổ ngắn hạn  (Short-term Window): bao phủ chuỗi sự kiện gần nhất trong phạm vi thời gian ngắn (hyperparameter, ví dụ: vài phút đến hàng chục phút; khóa bằng Validation/operational budget tại Mục 2.3), cung cấp ngữ cảnh thực thi tức thời cho một tiến trình hoặc phiên làm việc.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2489,11 +2489,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P289-S00"
+    "parent_detected_id": "DET-P290-S00"
   },
   {
     "claim_id": "CLM-SEC-056",
-    "document_location": "Chương (Đoạn P290, câu S0)",
+    "document_location": "Chương (Đoạn P291, câu S0)",
     "atomic_claim": "Cửa sổ trung hạn  (Medium-term Window): bao phủ lịch sử hành vi của thực thể trong phạm vi thời gian trung (hyperparameter, ví dụ: vài giờ đến một ngày; khóa bằng Validation budget), phản ánh các pattern hành vi đặc trưng của người dùng/tiến trình và cung cấp ngữ cảnh phát hiện leo thang đặc quyền hoặc lateral movement.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2503,11 +2503,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P290-S00"
+    "parent_detected_id": "DET-P291-S00"
   },
   {
     "claim_id": "CLM-SEC-057",
-    "document_location": "Chương (Đoạn P291, câu S1)",
+    "document_location": "Chương (Đoạn P292, câu S1)",
     "atomic_claim": "Đây chính là đánh đổi cốt lõi Long-Horizon Context Trade-off đã được xác lập tại Mục 2.1.2: chi phí tính toán và bộ nhớ cụ thể của  phụ thuộc vào lựa chọn cấu trúc sketch tại Mục 2.3–2.4.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2517,11 +2517,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P291-S01"
+    "parent_detected_id": "DET-P292-S01"
   },
   {
     "claim_id": "CLM-SEC-058",
-    "document_location": "Chương (Đoạn P292, câu S1)",
+    "document_location": "Chương (Đoạn P293, câu S1)",
     "atomic_claim": "Phân cấp này đảm bảo cùng một evidence có thể xuất hiện ở nhiều scale (Ws, Wm, Wl) dưới dạng bài biểu diễn khác nhau, nhưng không có thông tin tương lai nào bị nạp vào cửa sổ hiện tại (nguyên lý Strictly Causal / Zero Lookahead từ Mục 2.1.3).",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2531,11 +2531,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P292-S01"
+    "parent_detected_id": "DET-P293-S01"
   },
   {
     "claim_id": "CLM-SEC-059",
-    "document_location": "Chương (Đoạn P300, câu S0)",
+    "document_location": "Chương (Đoạn P301, câu S0)",
     "atomic_claim": "Trong đó:  là các ma trận nhúng kiểu sự kiện và hành động tĩnh;  là nhúng thực thể chủ thể và đối tượng theo không gian giả danh có kiểm soát;  là nhúng các token tham số an ninh được giữ lại;  là mã hóa vị trí rời rạc; và  là hàm mã hóa thời gian liên tục điều hòa (Harmonic Time Encoding) dạng , kế thừa nguyên lý mã hóa thời gian liên tục trên đồ thị động  [35], cung cấp biểu diễn học được của khoảng thời gian tương đối  giữa các hành vi liên tiếp.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
@@ -2547,11 +2547,11 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P300-S00"
+    "parent_detected_id": "DET-P301-S00"
   },
   {
     "claim_id": "CLM-SEC-060",
-    "document_location": "Chương (Đoạn P305, câu S0)",
+    "document_location": "Chương (Đoạn P306, câu S0)",
     "atomic_claim": "Tác vụ dự đoán tham số an ninh bị che (Masked Parameter Prediction, ): Thiết kế đóng góp riêng của chuyên đề nhằm che ngẫu nhiên tập tham số bảo toàn an ninh  theo tỷ lệ  (khởi tạo tham chiếu 15% và được khóa cố định trên tập Validation trước khi thử nghiệm).",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2561,11 +2561,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P305-S00"
+    "parent_detected_id": "DET-P306-S00"
   },
   {
     "claim_id": "CLM-SEC-061",
-    "document_location": "Chương (Đoạn P305, câu S2)",
+    "document_location": "Chương (Đoạn P306, câu S2)",
     "atomic_claim": "Mục tiêu tái dựng được định nghĩa chuẩn xác là token đã qua chuẩn hóa và biến đổi bảo vệ quyền riêng tư  tại Mục 2.2 (gồm token thực thể giả danh hóa, token tham số an ninh chuẩn hóa hoặc token kiểu hóa UNKNOWN-SAFE), tuyệt đối không đặt mục tiêu là chuỗi nhạy cảm thô.",
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
@@ -2575,11 +2575,11 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P305-S02"
+    "parent_detected_id": "DET-P306-S02"
   },
   {
     "claim_id": "CLM-SEC-062",
-    "document_location": "Chương (Đoạn P314, câu S2)",
+    "document_location": "Chương (Đoạn P315, câu S2)",
     "atomic_claim": "Giả định kiến trúc gồm  tầng Transformer Encoder, độ dài chuỗi đầu vào , số chiều mô hình  và số chiều tầng truyền thẳng , độ phức tạp tính toán của bộ trích xuất tuần tự là , trong đó số hạng bậc hai phản ánh chi phí tính toán ma trận chú ý theo độ dài chuỗi.",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -2589,11 +2589,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P314-S02"
+    "parent_detected_id": "DET-P315-S02"
   },
   {
     "claim_id": "CLM-SEC-063",
-    "document_location": "Chương (Đoạn P316, câu S0)",
+    "document_location": "Chương (Đoạn P317, câu S0)",
     "atomic_claim": "Hình 2.2: Kiến trúc Bộ trích xuất tuần tự ngữ nghĩa Transformer và cơ chế học tự giám sát trên cửa sổ ngắn hạn (Nguồn: Tác giả đề xuất)",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
@@ -2603,11 +2603,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P316-S00"
+    "parent_detected_id": "DET-P317-S00"
   },
   {
     "claim_id": "CLM-SEC-064",
-    "document_location": "Chương (Đoạn P323, câu S0)",
+    "document_location": "Chương (Đoạn P324, câu S0)",
     "atomic_claim": "Thuộc tính cạnh: tích hợp các tham số an ninh đã được chuẩn hóa và bảo vệ quyền riêng tư (như số byte truyền nhận, cờ truy cập, mã trạng thái), gắn kèm vector thuộc tính .",
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
@@ -2617,11 +2617,11 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P323-S00"
+    "parent_detected_id": "DET-P324-S00"
   },
   {
     "claim_id": "CLM-SEC-065",
-    "document_location": "Chương (Đoạn P325, câu S0)",
+    "document_location": "Chương (Đoạn P326, câu S0)",
     "atomic_claim": "Quan hệ phụ thuộc quan sát được và ranh giới với quan hệ nhân quả",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2631,11 +2631,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P325-S00"
+    "parent_detected_id": "DET-P326-S00"
   },
   {
     "claim_id": "CLM-SEC-066",
-    "document_location": "Chương (Đoạn P326, câu S0)",
+    "document_location": "Chương (Đoạn P327, câu S0)",
     "atomic_claim": "Một ranh giới phương pháp luận căn bản cần được duy trì xuyên suốt chuyên đề là sự phân định giữa quan hệ phụ thuộc quan sát được (Observable Dependency) và quan hệ nhân quả thực sự (Causal Effect).",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2645,11 +2645,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P326-S00"
+    "parent_detected_id": "DET-P327-S00"
   },
   {
     "claim_id": "CLM-SEC-067",
-    "document_location": "Chương (Đoạn P326, câu S2)",
+    "document_location": "Chương (Đoạn P327, câu S2)",
     "atomic_claim": "Tuy nhiên, việc một tiến trình đọc tệp tin  rồi sau đó ghi vào tệp tin  không khẳng định một cách chắc chắn rằng nội dung trong  bị chi phối nhân quả bởi  (nguyên lý bất biến: dependency != causal effect).",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2659,11 +2659,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P326-S02"
+    "parent_detected_id": "DET-P327-S02"
   },
   {
     "claim_id": "CLM-SEC-068",
-    "document_location": "Chương (Đoạn P326, câu S3)",
+    "document_location": "Chương (Đoạn P327, câu S3)",
     "atomic_claim": "Chuyên đề không sử dụng thuật ngữ đồ thị nhân quả trừ khi các giả định nhận dạng nhân quả chặt chẽ được thỏa mãn, tránh các suy diễn sai lầm trong việc truy vết nguồn gốc tấn công.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2673,11 +2673,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P326-S03"
+    "parent_detected_id": "DET-P327-S03"
   },
   {
     "claim_id": "CLM-SEC-069",
-    "document_location": "Chương (Đoạn P328, câu S1)",
+    "document_location": "Chương (Đoạn P329, câu S1)",
     "atomic_claim": "Để xử lý các thách thức này trước khi nạp đồ thị vào mô hình học máy, chuyên đề đề xuất bốn cơ chế ứng viên kiểm soát độ chân thực đồ thị (Proposed Graph-Fidelity Candidates) hoạt động độc lập với bộ phát hiện:",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
@@ -2687,11 +2687,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P328-S01"
+    "parent_detected_id": "DET-P329-S01"
   },
   {
     "claim_id": "CLM-SEC-070",
-    "document_location": "Chương (Đoạn P331, câu S1)",
+    "document_location": "Chương (Đoạn P332, câu S1)",
     "atomic_claim": "Chuyên đề đề xuất hai cơ chế ứng viên giảm thiểu (Mitigation Candidates):",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
@@ -2701,11 +2701,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P331-S01"
+    "parent_detected_id": "DET-P332-S01"
   },
   {
     "claim_id": "CLM-SEC-071",
-    "document_location": "Chương (Đoạn P340, câu S0)",
+    "document_location": "Chương (Đoạn P341, câu S0)",
     "atomic_claim": "Tại mỗi sự kiện tương tác , thông điệp truyền từ đỉnh nguồn  sang đỉnh đích  được tính toán dựa trên trạng thái bộ nhớ của các đỉnh ngay trước mốc thời gian sự kiện, khoảng thời gian tương đối, vector nhúng kiểu quan hệ và thuộc tính cạnh an toàn:",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -2715,11 +2715,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P340-S00"
+    "parent_detected_id": "DET-P341-S00"
   },
   {
     "claim_id": "CLM-SEC-072",
-    "document_location": "Chương (Đoạn P342, câu S0)",
+    "document_location": "Chương (Đoạn P343, câu S0)",
     "atomic_claim": "Trong đó  và  là trạng thái bộ nhớ của  và  ngay trước event-time ;  là vector nhúng của loại quan hệ ;  là vector thuộc tính cạnh;  là độ lệch thời gian so với tương tác gần nhất của .",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -2729,11 +2729,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P342-S00"
+    "parent_detected_id": "DET-P343-S00"
   },
   {
     "claim_id": "CLM-SEC-073",
-    "document_location": "Chương (Đoạn P344, câu S0)",
+    "document_location": "Chương (Đoạn P345, câu S0)",
     "atomic_claim": "Trạng thái bộ nhớ của thực thể  được cập nhật qua tế bào hồi quy (như GRU Cell) từ trạng thái trước đó và thông điệp tổng hợp:",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2743,11 +2743,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P344-S00"
+    "parent_detected_id": "DET-P345-S00"
   },
   {
     "claim_id": "CLM-SEC-074",
-    "document_location": "Chương (Đoạn P349, câu S1)",
+    "document_location": "Chương (Đoạn P350, câu S1)",
     "atomic_claim": "Đầu giải mã phụ trợ  tái tạo lại vector thuộc tính an toàn quyền riêng tư  từ trạng thái ẩn  theo tiêu chuẩn hồi quy Mean Squared Error (MSE).",
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
@@ -2757,11 +2757,11 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P349-S01"
+    "parent_detected_id": "DET-P350-S01"
   },
   {
     "claim_id": "CLM-SEC-075",
-    "document_location": "Chương (Đoạn P349, câu S2)",
+    "document_location": "Chương (Đoạn P350, câu S2)",
     "atomic_claim": "Mục tiêu tái dựng được khóa chuẩn xác là , tức vector đặc trưng đỉnh kiểu hóa thu được SAU KHI đã áp dụng toàn diện quy trình chuẩn hóa, kiểm soát liên kết danh tính / giả danh hóa (Controlled Linkability / Pseudonymization) và chính sách UNKNOWN-SAFE tại Mục 2.2; tuyệt đối không đặt mục tiêu là tên người dùng thô, tên máy chủ thô, mã tiến trình thô, định danh đối tượng thô hay bất kỳ giá trị nhạy cảm nào trước biến đổi, bảo đảm tác vụ tự giám sát đồ thị tuân thủ nghiêm ngặt cùng hợp đồng bảo vệ quyền riêng tư như tác vụ MPP của chuỗi; truyền gradient cập nhật cho  và :",
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
@@ -2771,11 +2771,11 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P349-S02"
+    "parent_detected_id": "DET-P350-S02"
   },
   {
     "claim_id": "CLM-SEC-076",
-    "document_location": "Chương (Đoạn P353, câu S1)",
+    "document_location": "Chương (Đoạn P354, câu S1)",
     "atomic_claim": "Đầu hồi quy phụ trợ  tiếp nhận  và tối ưu hóa hàm Smooth L1 ) đối với đích , truyền gradient cho  và  (giúp mô hình học cấu trúc thứ tự và khoảng thời gian quan sát được giữa các sự kiện mà không hàm ý tác động nhân quả, tuân thủ nguyên tắc temporal order != causal effect và dependency != causal effect):",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -2785,11 +2785,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P353-S01"
+    "parent_detected_id": "DET-P354-S01"
   },
   {
     "claim_id": "CLM-SEC-077",
-    "document_location": "Chương (Đoạn P363, câu S2)",
+    "document_location": "Chương (Đoạn P364, câu S2)",
     "atomic_claim": "Chi phí tính toán của nhánh đồ thị được phân lập giữa chi phí xây dựng cửa sổ và chi phí xử lý gia số theo từng sự kiện: xây dựng đồ thị , tạo thông điệp , cập nhật trạng thái bộ nhớ với tập đỉnh nhận thông điệp  là , và tổng hợp đầu ra .",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2799,11 +2799,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P363-S02"
+    "parent_detected_id": "DET-P364-S02"
   },
   {
     "claim_id": "CLM-SEC-078",
-    "document_location": "Chương (Đoạn P365, câu S0)",
+    "document_location": "Chương (Đoạn P366, câu S0)",
     "atomic_claim": "Hình 2.3: Kiến trúc xây dựng đồ thị nguồn gốc phụ thuộc thời gian và Bộ trích xuất Temporal GNN (Nguồn: Tác giả đề xuất)",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
@@ -2813,11 +2813,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P365-S00"
+    "parent_detected_id": "DET-P366-S00"
   },
   {
     "claim_id": "CLM-SEC-079",
-    "document_location": "Chương (Đoạn P369, câu S1)",
+    "document_location": "Chương (Đoạn P370, câu S1)",
     "atomic_claim": "Tầng gióng hàng đa góc nhìn (Multi-View Alignment Plane) xây dựng cơ chế phương pháp luận giải quyết câu hỏi nghiên cứu  và , thiết lập nền tảng kỹ thuật nhằm phục vụ kiểm định giả thuyết  và  tại Chương 3. Để đạt được mục tiêu này, chuyên đề thiết lập một quy trình tối ưu hóa đa tầng chặt chẽ: (1) thiết lập không gian ngữ nghĩa chung mà không gây sụp đổ biểu diễn; (2) bảo toàn đối xứng thông tin đặc thù nội góc nhìn (Symmetric Multi-View Preservation); (3) kiểm soát nhiễu đặc quyền và hành vi quản trị viên thông qua ngữ cảnh hóa đa chiều (Risk-aware Admin-Noise Control); (4) cung cấp cơ chế phân bổ bằng chứng yếu qua mô hình học đa thể hiện (Multiple Instance Learning, MIL) tùy chọn; và (5) thích ứng linh hoạt với hiện tượng khuyết góc nhìn (Missing-View) trong môi trường phân tán mà không vi phạm nguyên tắc nhân quả thời gian.",
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
@@ -2827,11 +2827,11 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P369-S01"
+    "parent_detected_id": "DET-P370-S01"
   },
   {
     "claim_id": "CLM-SEC-080",
-    "document_location": "Chương (Đoạn P377, câu S0)",
+    "document_location": "Chương (Đoạn P378, câu S0)",
     "atomic_claim": "Tuyệt đối không sử dụng nhãn tấn công (Attack Labels) hay bất kỳ tín hiệu từ tập kiểm thử nào để định nghĩa cặp tương ứng trong Stage A.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2841,11 +2841,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P377-S00"
+    "parent_detected_id": "DET-P378-S00"
   },
   {
     "claim_id": "CLM-SEC-081",
-    "document_location": "Chương (Đoạn P386, câu S3)",
+    "document_location": "Chương (Đoạn P387, câu S3)",
     "atomic_claim": "Dựa trên đặc tính lý thuyết này của công bố gốc, nghiên cứu đề xuất giả thuyết thích nghi (Author Adaptation Hypothesis): việc loại bỏ nhu cầu lấy mẫu âm tường minh trong không gian telemetry log sẽ giúp giảm thiểu rủi ro âm tính giả (False Negatives), hạn chế việc ép các phiên telemetry bình thường độc lập nhưng có đặc trưng tương đồng ra xa nhau một cách nhân tạo.",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
@@ -2855,11 +2855,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P386-S03"
+    "parent_detected_id": "DET-P387-S03"
   },
   {
     "claim_id": "CLM-SEC-082",
-    "document_location": "Chương (Đoạn P406, câu S0)",
+    "document_location": "Chương (Đoạn P407, câu S0)",
     "atomic_claim": "Nguyên tắc bất biến: Hệ thống tuyệt đối không tự bịa đặt dữ liệu (Data Hallucination) cho góc nhìn bị thiếu, không sử dụng dữ liệu tương lai để nội suy và không sử dụng nhãn tấn công để bù đắp, tuân thủ nguyên tắc nhân quả thời gian của mặt phẳng suy luận dòng.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2869,11 +2869,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P406-S00"
+    "parent_detected_id": "DET-P407-S00"
   },
   {
     "claim_id": "CLM-SEC-083",
-    "document_location": "Chương (Đoạn P407, câu S0)",
+    "document_location": "Chương (Đoạn P408, câu S0)",
     "atomic_claim": "Lưu ý phương pháp luận về tính nhân quả: Khái niệm “Strictly Causal / Zero Lookahead” được định nghĩa chính xác theo nghĩa: hệ thống chỉ sử dụng dữ liệu đo kiểm trong quá khứ và hiện tại tại thời điểm suy luận dòng, tuyệt đối không sử dụng thông tin tương lai hay nhãn kiểm thử; khái niệm này KHÔNG hàm ý suy diễn quan hệ nhân quả (Causal-effect Inference) theo nghĩa thống kê can thiệp.",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -2883,11 +2883,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P407-S00"
+    "parent_detected_id": "DET-P408-S00"
   },
   {
     "claim_id": "CLM-SEC-084",
-    "document_location": "Chương (Đoạn P407, câu S1)",
+    "document_location": "Chương (Đoạn P408, câu S1)",
     "atomic_claim": "Trong an ninh mạng, sự phụ thuộc quan sát được không đồng nhất với tác động nhân quả.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2897,11 +2897,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P407-S01"
+    "parent_detected_id": "DET-P408-S01"
   },
   {
     "claim_id": "CLM-SEC-085",
-    "document_location": "Chương (Đoạn P409, câu S1)",
+    "document_location": "Chương (Đoạn P410, câu S1)",
     "atomic_claim": "Mục 2.4.2 thiết lập khung phương pháp luận nhận thức hành vi quản trị (Risk-aware Administrative Behavior) và các cơ chế kiểm soát nhiễu đặc quyền (Admin-Noise Controls, Đề xuất của đề tài / Ours) nhằm giải quyết trực tiếp câu hỏi nghiên cứu .",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
@@ -2911,11 +2911,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P409-S01"
+    "parent_detected_id": "DET-P410-S01"
   },
   {
     "claim_id": "CLM-SEC-086",
-    "document_location": "Chương (Đoạn P411, câu S0)",
+    "document_location": "Chương (Đoạn P412, câu S0)",
     "atomic_claim": "Trong môi trường vận hành công nghệ thông tin thực tế, các hoạt động quản trị viên (System Administration), ví dụ như cài đặt bản vá hàng loạt, sao lưu cơ sở dữ liệu định kỳ, bảo trì từ xa thông qua PowerShell, SSH, WMI, PsExec hay các kịch bản script tự động hóa phức tạp, thường xuyên tạo ra các chuỗi sự kiện có tần suất cao đột biến, quyền hạn cao (Privileged Execution) và cấu trúc lệnh khác lạ so với người dùng thông thường.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2925,11 +2925,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P411-S00"
+    "parent_detected_id": "DET-P412-S00"
   },
   {
     "claim_id": "CLM-SEC-087",
-    "document_location": "Chương (Đoạn P414, câu S0)",
+    "document_location": "Chương (Đoạn P415, câu S0)",
     "atomic_claim": "Ngữ cảnh công cụ và tham số (Tool & Parameter Structure): Biểu diễn cấu trúc cú pháp câu lệnh, tham số thực thi động và trạng thái chữ ký số (Signed/Unsigned State nếu quan sát được), phản ánh trung thực bản chất công cụ thực thi vào không gian vector.",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -2939,11 +2939,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P414-S00"
+    "parent_detected_id": "DET-P415-S00"
   },
   {
     "claim_id": "CLM-SEC-088",
-    "document_location": "Chương (Đoạn P419, câu S0)",
+    "document_location": "Chương (Đoạn P420, câu S0)",
     "atomic_claim": "Bảo đảm tính vững chắc (Robustness) của không gian vector biểu diễn, chuyên đề thiết lập các cơ chế kiểm soát biến gây nhiễu (Confounder Controls):",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -2953,11 +2953,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P419-S00"
+    "parent_detected_id": "DET-P420-S00"
   },
   {
     "claim_id": "CLM-SEC-089",
-    "document_location": "Chương (Đoạn P421, câu S0)",
+    "document_location": "Chương (Đoạn P422, câu S0)",
     "atomic_claim": "Cấm rò rỉ nhãn kiểm thử và đặc quyền giám sát (No Privileged Test Knowledge): Trong toàn bộ quá trình tiền xử lý và huấn luyện tự giám sát, hệ thống tuyệt đối không sử dụng bất kỳ thông tin nào về nhãn tấn công tương lai hay danh sách phân loại tĩnh từ tập kiểm thử, ngăn rò rỉ thông tin kiểm thử qua các kênh đã định nghĩa (Data Leakage Prevention).",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -2967,11 +2967,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P421-S00"
+    "parent_detected_id": "DET-P422-S00"
   },
   {
     "claim_id": "CLM-SEC-090",
-    "document_location": "Chương (Đoạn P425, câu S0)",
+    "document_location": "Chương (Đoạn P426, câu S0)",
     "atomic_claim": "Theo nguyên tắc kiểm toán tham số có gradient (Zero Orphan Parameters), Bảng 2.4 tổng hợp toàn bộ tập tham số huấn luyện của hệ thống, xác định rõ giai đoạn huấn luyện, hàm mục tiêu sinh gradient, thời điểm đóng băng và vai trò khi suy luận trực tuyến:",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -2981,11 +2981,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P425-S00"
+    "parent_detected_id": "DET-P426-S00"
   },
   {
     "claim_id": "CLM-SEC-091",
-    "document_location": "Chương (Đoạn P430, câu S3)",
+    "document_location": "Chương (Đoạn P431, câu S3)",
     "atomic_claim": "Tại thời điểm suy luận dòng (Stage C), chỉ các backbone  và các ma trận dung hợp chuẩn tắc được nạp để tính toán vector , bảo đảm nguyên tắc Zero Orphan Parameters và tối ưu tài nguyên thực thi trực tuyến.",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -2995,11 +2995,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P430-S03"
+    "parent_detected_id": "DET-P431-S03"
   },
   {
     "claim_id": "CLM-SEC-092",
-    "document_location": "Chương (Đoạn P460, câu S0)",
+    "document_location": "Chương (Đoạn P461, câu S0)",
     "atomic_claim": "Biến thể tùy chọn hỗ trợ MIL (Optional MIL-Assisted Variant): Nếu kịch bản triển khai thực tế có nhu cầu giám sát trực quan điểm bằng chứng , hệ thống định nghĩa riêng một biến thể hỗ trợ MIL, hoàn toàn phân định với Extractor chuẩn tắc.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -3009,11 +3009,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P460-S00"
+    "parent_detected_id": "DET-P461-S00"
   },
   {
     "claim_id": "CLM-SEC-093",
-    "document_location": "Chương (Đoạn P460, câu S1)",
+    "document_location": "Chương (Đoạn P461, câu S1)",
     "atomic_claim": "Tại Chương 3, chuyên đề sẽ báo cáo độc lập kết quả giữa ba cấu hình: SSL thuần túy (SSL-only), SSL kết hợp thích ứng MIL (SSL + MIL Adaptation), và Biến thể hỗ trợ MIL khi triển khai (MIL-assisted variant).",
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -3023,11 +3023,11 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P460-S01"
+    "parent_detected_id": "DET-P461-S01"
   },
   {
     "claim_id": "CLM-SEC-094",
-    "document_location": "Chương (Đoạn P461, câu S1)",
+    "document_location": "Chương (Đoạn P462, câu S1)",
     "atomic_claim": "Chuyên đề nhấn mạnh ranh giới khoa học: Trọng số  là tín hiệu gợi ý điều tra, TUYỆT ĐỐI KHÔNG PHẢI là xác suất tấn công độc hại và KHÔNG PHẢI là bằng chứng giải thích nhân quả.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -3037,11 +3037,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P461-S01"
+    "parent_detected_id": "DET-P462-S01"
   },
   {
     "claim_id": "CLM-SEC-095",
-    "document_location": "Chương (Đoạn P462, câu S0)",
+    "document_location": "Chương (Đoạn P463, câu S0)",
     "atomic_claim": "Biểu diễn thống nhất, giao diện đầu ra và độ phức tạp",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -3051,11 +3051,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P462-S00"
+    "parent_detected_id": "DET-P463-S00"
   },
   {
     "claim_id": "CLM-SEC-096",
-    "document_location": "Chương (Đoạn P474, câu S0)",
+    "document_location": "Chương (Đoạn P475, câu S0)",
     "atomic_claim": "Hình 2.4: Sơ đồ kiến trúc Gióng hàng đa góc nhìn, Kiểm soát sụp đổ và Tổng hợp biểu diễn thống nhất (Nguồn: Tác giả đề xuất)",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
@@ -3065,11 +3065,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P474-S00"
+    "parent_detected_id": "DET-P475-S00"
   },
   {
     "claim_id": "CLM-SEC-097",
-    "document_location": "Chương (Đoạn P475, câu S0)",
+    "document_location": "Chương (Đoạn P476, câu S0)",
     "atomic_claim": "Phân tích độ phức tạp tính toán và ngân sách streaming",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -3079,11 +3079,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P475-S00"
+    "parent_detected_id": "DET-P476-S00"
   },
   {
     "claim_id": "CLM-SEC-098",
-    "document_location": "Chương (Đoạn P481, câu S0)",
+    "document_location": "Chương (Đoạn P482, câu S0)",
     "atomic_claim": "Chi phí tính toán toàn trình của toàn bộ hệ thống bao gồm: tiền xử lý sự kiện thô, trích xuất chuỗi ngắn hạn, cập nhật đồ thị động, lan truyền thông điệp Temporal GNN, quản lý trạng thái bộ nhớ hữu hạn và tổng hợp dung hợp đa góc nhìn.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -3093,11 +3093,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P481-S00"
+    "parent_detected_id": "DET-P482-S00"
   },
   {
     "claim_id": "CLM-SEC-099",
-    "document_location": "Chương (Đoạn P481, câu S1)",
+    "document_location": "Chương (Đoạn P482, câu S1)",
     "atomic_claim": "Các chỉ số đo kiểm thực nghiệm toàn trình (thông lượng sự kiện/giây, độ trễ p50/p95, dung lượng RAM, VRAM và kích thước trạng thái trên mỗi thực thể) sẽ được đo lường thực nghiệm chi tiết tại Chương 3 nhằm kiểm định toàn diện giả thuyết .",
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
@@ -3107,11 +3107,11 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P481-S01"
+    "parent_detected_id": "DET-P482-S01"
   },
   {
     "claim_id": "CLM-SEC-100",
-    "document_location": "Chương (Đoạn P483, câu S0)",
+    "document_location": "Chương (Đoạn P484, câu S0)",
     "atomic_claim": "Chương này trình bày chi tiết công tác thực nghiệm, phương pháp luận đánh giá và các kết quả định lượng thu được nhằm kiểm chứng mô hình biểu diễn đồ thị sự kiện theo dòng thời gian liên tục (Temporal Graph View Encoder) đã đề xuất tại Chương 2. Mọi quy trình thực nghiệm đều tuân thủ các nguyên tắc kiểm toán độc lập: môi trường phần cứng và phần mềm được ghi nhận chính xác theo khóa môi trường, dữ liệu phân tách nhân quả chống rò rỉ thông tin, và kết quả được đối soát nguồn gốc độc lập trên từng hạt giống ngẫu nhiên.",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
@@ -3121,11 +3121,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P483-S00"
+    "parent_detected_id": "DET-P484-S00"
   },
   {
     "claim_id": "CLM-SEC-101",
-    "document_location": "Chương (Đoạn P483, câu S1)",
+    "document_location": "Chương (Đoạn P484, câu S1)",
     "atomic_claim": "Toàn bộ các phân tích trong chương này được dẫn xuất trực tiếp từ các bằng chứng thực nghiệm máy đọc được, phân định rõ ràng giữa kết quả quan sát thực tế, suy diễn khoa học và các giới hạn kỹ thuật nội tại.",
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -3135,11 +3135,11 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P483-S01"
+    "parent_detected_id": "DET-P484-S01"
   },
   {
     "claim_id": "CLM-SEC-102",
-    "document_location": "Chương (Đoạn P486, câu S0)",
+    "document_location": "Chương (Đoạn P487, câu S0)",
     "atomic_claim": "Bảo đảm tính minh bạch và khả năng tái lập thực nghiệm, toàn bộ quá trình tiền huấn luyện được thực thi trên môi trường máy trạm độc lập với thông số kỹ thuật được xác định theo đúng khóa môi trường thực thi STAGE-​A2-​LOCAL-​EXECUTION-​ENVIRONMENT-​V1.5.json.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -3149,11 +3149,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P486-S00"
+    "parent_detected_id": "DET-P487-S00"
   },
   {
     "claim_id": "CLM-SEC-103",
-    "document_location": "Chương (Đoạn P486, câu S1)",
+    "document_location": "Chương (Đoạn P487, câu S1)",
     "atomic_claim": "Hệ thống phần cứng trang bị card đồ họa NVIDIA GeForce RTX 3050 Ti Laptop GPU (dung lượng bộ nhớ 4.0 GB, Compute Capability 8.6, phiên bản driver 595.95, mã định danh UUID: GPU-​3f4d825d-​63ad-​0695-​1b32-​466308a00b8c).",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -3163,11 +3163,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P486-S01"
+    "parent_detected_id": "DET-P487-S01"
   },
   {
     "claim_id": "CLM-SEC-104",
-    "document_location": "Chương (Đoạn P486, câu S2)",
+    "document_location": "Chương (Đoạn P487, câu S2)",
     "atomic_claim": "Bộ xử lý trung tâm là Intel Core i5-12500H (12 Cores /​ 16 Threads) với bộ nhớ RAM hệ thống ghi nhận 15.71 GB.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -3177,11 +3177,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P486-S02"
+    "parent_detected_id": "DET-P487-S02"
   },
   {
     "claim_id": "CLM-SEC-105",
-    "document_location": "Chương (Đoạn P487, câu S1)",
+    "document_location": "Chương (Đoạn P488, câu S1)",
     "atomic_claim": "Đặc tả môi trường được niêm phong trong tệp bằng chứng experiments/​evidence/​stage-a2/​preexecution/​STAGE-​A2-​LOCAL-​EXECUTION-​ENVIRONMENT-​V1.5.json với mã băm SHA-256: 81d3ca48​65a95c75​cc234569​5091265f​948ad58e​705865a3​f8f780a9​bf09f362.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -3191,11 +3191,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P487-S01"
+    "parent_detected_id": "DET-P488-S01"
   },
   {
     "claim_id": "CLM-SEC-106",
-    "document_location": "Chương (Đoạn P490, câu S0)",
+    "document_location": "Chương (Đoạn P491, câu S0)",
     "atomic_claim": "Hai tầng benchmark và giao thức phân chia nhân quả chống rò rỉ",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -3205,11 +3205,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P490-S00"
+    "parent_detected_id": "DET-P491-S00"
   },
   {
     "claim_id": "CLM-SEC-107",
-    "document_location": "Chương (Đoạn P495, câu S0)",
+    "document_location": "Chương (Đoạn P496, câu S0)",
     "atomic_claim": "3. Phân vùng Kiểm thử Niêm phong: Được niêm phong cách ly mật mã thông qua cơ chế Tường lửa Dữ liệu Kiểm thử (SEALED_​CRYPTO_​FIREWALL).",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -3219,11 +3219,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P495-S00"
+    "parent_detected_id": "DET-P496-S00"
   },
   {
     "claim_id": "CLM-SEC-108",
-    "document_location": "Chương (Đoạn P496, câu S0)",
+    "document_location": "Chương (Đoạn P497, câu S0)",
     "atomic_claim": "Bảng 3.2: Phân chia tập dữ liệu HDFS theo giao thức nhân quả chống rò rỉ",
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -3233,11 +3233,11 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P496-S00"
+    "parent_detected_id": "DET-P497-S00"
   },
   {
     "claim_id": "CLM-SEC-109",
-    "document_location": "Chương (Đoạn P499, câu S0)",
+    "document_location": "Chương (Đoạn P500, câu S0)",
     "atomic_claim": "Theo khung đánh giá của luận văn, năng lực của vector biểu diễn đặc trưng log được kiểm chứng qua hệ thống thang đo ba tầng: (1) Thang đo Bản chất (Intrinsic Metrics) đo lường sai số dự đoán và độ phân kỳ phân phối trên không gian tự giám sát; (2) Thang đo Đầu dò (Probe Metrics) đánh giá năng lực phân tách tuyến tính các thuộc tính an ninh; và (3) Thang đo Vận hành (Operational Metrics) kiểm tra hiệu năng tính toán, độ trễ và thông lượng dòng sự kiện.",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
@@ -3247,11 +3247,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P499-S00"
+    "parent_detected_id": "DET-P500-S00"
   },
   {
     "claim_id": "CLM-SEC-110",
-    "document_location": "Chương (Đoạn P500, câu S0)",
+    "document_location": "Chương (Đoạn P501, câu S0)",
     "atomic_claim": "Kiến trúc thực nghiệm trong Stage A2 là mô hình TemporalGraphViewEncoder, bao gồm: bộ nhớ trạng thái thực thể động dựa trên tế bào GRUCell (d_mem=128), cơ chế chú ý thời gian đa đầu (Multi-Head Temporal Attention over causal event window), và phép chiếu thời gian liên tục điều hòa (Continuous Sinusoidal Time Projection phi(Delta t)).",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -3261,11 +3261,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P500-S00"
+    "parent_detected_id": "DET-P501-S00"
   },
   {
     "claim_id": "CLM-SEC-111",
-    "document_location": "Chương (Đoạn P510, câu S0)",
+    "document_location": "Chương (Đoạn P511, câu S0)",
     "atomic_claim": "Kết quả thực nghiệm và benchmarking",
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -3275,11 +3275,11 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P510-S00"
+    "parent_detected_id": "DET-P511-S00"
   },
   {
     "claim_id": "CLM-SEC-112",
-    "document_location": "Chương (Đoạn P511, câu S0)",
+    "document_location": "Chương (Đoạn P512, câu S0)",
     "atomic_claim": "Kết quả huấn luyện Stage A2 trên 5 hạt ngẫu nhiên thực nghiệm",
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -3289,11 +3289,11 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P511-S00"
+    "parent_detected_id": "DET-P512-S00"
   },
   {
     "claim_id": "CLM-SEC-113",
-    "document_location": "Chương (Đoạn P512, câu S0)",
+    "document_location": "Chương (Đoạn P513, câu S0)",
     "atomic_claim": "Đánh giá tính ổn định thống kê và loại trừ hiện tượng thiên lệch chọn lọc, chiến dịch thực nghiệm được tiến hành trên 5 hạt giống khởi tạo ngẫu nhiên độc lập: 999, 42, 7, 1337, và 2024. Dựa trên cấu hình Stage A2 chính thức hiện hành theo văn bản thẩm quyền experiments/​plans/​STAGE-​A2-​FINAL-​12-​EPOCH-​AUTHORITY.json (trần 12 epochs, 6.876 bước tối ưu hóa, 343 bước khởi động tuyến tính) kết hợp kiểm toán nguồn gốc thực thi độc lập từ nhật ký Git và các tệp bằng chứng máy đọc được, các đợt chạy được phân loại khoa học và minh bạch như sau: (1) Nhóm Lệch Giao thức (Protocol Deviation): Seed 999 (hoàn thành 12 epochs với mất mát kiểm định 0,6095 nhưng có sai lệch giao thức tiền thi hành khi văn bản ủy quyền commit 244e81a5 ràng buộc kế hoạch chứa 573 bước khởi động trong khi mã nguồn thực thi sử dụng 343 bước), Seed 42 (quỹ đạo chạy theo bộ lập lịch cũ và dừng sớm tại Epoch 4 theo quy tắc dừng sớm đã tiền đăng ký), và Seed 7 (khớp lịch trình 12 epochs nhưng tệp ủy quyền chỉ được commit lên Git sau thời điểm khởi chạy); và (2) Nhóm Đợt chạy Không chuẩn (Noncanonical): Seed 1337 (chạy theo lịch trình cũ, dừng tại Epoch 12 và thiếu các tệp biên bản thực thi bắt buộc METRICS.json, RUN-MANIFEST.json, TEST-FIREWALL.json) và Seed 2024 (chứa sai lệch mã băm commit và điều chỉnh lịch học giữa chừng).",
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -3303,11 +3303,11 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P512-S00"
+    "parent_detected_id": "DET-P513-S00"
   },
   {
     "claim_id": "CLM-SEC-114",
-    "document_location": "Chương (Đoạn P514, câu S1)",
+    "document_location": "Chương (Đoạn P515, câu S1)",
     "atomic_claim": "Các đợt có sai lệch được giữ lại để báo cáo minh bạch và được tách biệt khi tổng hợp kết quả chuẩn.",
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -3317,11 +3317,11 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P514-S01"
+    "parent_detected_id": "DET-P515-S01"
   },
   {
     "claim_id": "CLM-SEC-115",
-    "document_location": "Chương (Đoạn P517, câu S0)",
+    "document_location": "Chương (Đoạn P518, câu S0)",
     "atomic_claim": "Từ kết quả Bảng 3.3, toàn bộ 5 hạt giống thực nghiệm được bóc tách và đối soát nguồn gốc độc lập.",
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -3331,11 +3331,11 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P517-S00"
+    "parent_detected_id": "DET-P518-S00"
   },
   {
     "claim_id": "CLM-SEC-116",
-    "document_location": "Chương (Đoạn P517, câu S4)",
+    "document_location": "Chương (Đoạn P518, câu S4)",
     "atomic_claim": "Việc công khai các sai lệch nguồn gốc và duy trì trạng thái niêm phong của tập kiểm thử giúp tăng tính minh bạch và khả năng kiểm toán của quy trình thực nghiệm.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -3345,11 +3345,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P517-S04"
+    "parent_detected_id": "DET-P518-S04"
   },
   {
     "claim_id": "CLM-SEC-117",
-    "document_location": "Chương (Đoạn P519, câu S0)",
+    "document_location": "Chương (Đoạn P520, câu S0)",
     "atomic_claim": "Làm rõ vị trí đóng góp học thuật của khung biểu diễn đề xuất, Bảng 3.5 tiến hành đối sánh định tính về đặc tính phương pháp luận giữa mô hình của luận văn và các phương pháp trích xuất đặc trưng log tiêu biểu được công bố trên các diễn đàn bảo mật quốc tế.",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
@@ -3359,11 +3359,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P519-S00"
+    "parent_detected_id": "DET-P520-S00"
   },
   {
     "claim_id": "CLM-SEC-118",
-    "document_location": "Chương (Đoạn P520, câu S0)",
+    "document_location": "Chương (Đoạn P521, câu S0)",
     "atomic_claim": "Bảng 3.5: Đối sánh đặc tính phương pháp luận giữa khung biểu diễn đề xuất và các phương pháp cơ sở",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
@@ -3373,11 +3373,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P520-S00"
+    "parent_detected_id": "DET-P521-S00"
   },
   {
     "claim_id": "CLM-SEC-119",
-    "document_location": "Chương (Đoạn P524, câu S0)",
+    "document_location": "Chương (Đoạn P525, câu S0)",
     "atomic_claim": "Kết quả thực nghiệm trong chiến dịch huấn luyện Stage A2 ghi nhận sự phân hóa rõ nét giữa các quỹ đạo hội tụ.",
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -3387,11 +3387,11 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P524-S00"
+    "parent_detected_id": "DET-P525-S00"
   },
   {
     "claim_id": "CLM-SEC-120",
-    "document_location": "Chương (Đoạn P524, câu S1)",
+    "document_location": "Chương (Đoạn P525, câu S1)",
     "atomic_claim": "Trong khi Seed 7 và Seed 999 đạt được mức mất mát kiểm định thấp quanh 0,550–0,609 sau 12 epochs, thì Seed 42 đã kích hoạt cơ chế dừng sớm (Early Stopping) ngay tại Epoch 4 với giá trị mất mát kiểm định ghi nhận ở mức 6.081352 (do thỏa mãn điều kiện kiên nhẫn patience = 3/​3 epochs không cải thiện so với Epoch 1).",
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -3401,11 +3401,11 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P524-S01"
+    "parent_detected_id": "DET-P525-S01"
   },
   {
     "claim_id": "CLM-SEC-121",
-    "document_location": "Chương (Đoạn P526, câu S0)",
+    "document_location": "Chương (Đoạn P527, câu S0)",
     "atomic_claim": "Việc báo cáo trung thực kết quả của Seed 42 thể hiện sự tuân thủ nghiêm túc quy trình nghiên cứu khoa học: mọi quan sát thực tế đều được ghi nhận đầy đủ, không thực hiện hành vi loại bỏ kết quả bất lợi để làm đẹp số liệu.",
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -3415,11 +3415,11 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P526-S00"
+    "parent_detected_id": "DET-P527-S00"
   },
   {
     "claim_id": "CLM-SEC-122",
-    "document_location": "Chương (Đoạn P528, câu S0)",
+    "document_location": "Chương (Đoạn P529, câu S0)",
     "atomic_claim": "Đối chiếu kết quả tiền huấn luyện Stage A2 với năm giả thuyết khoa học xác lập tại Chương 2:",
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
@@ -3429,11 +3429,11 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P528-S00"
+    "parent_detected_id": "DET-P529-S00"
   },
   {
     "claim_id": "CLM-SEC-123",
-    "document_location": "Chương (Đoạn P529, câu S0)",
+    "document_location": "Chương (Đoạn P530, câu S0)",
     "atomic_claim": "1. Giả thuyết H1 (Parameter Semantic Fidelity): Trong Stage A2 trên tập HDFS, nhánh đồ thị tập trung học quan hệ thực thể; mất mát dự đoán cạnh () giảm từ ~0.59 xuống 0.1833, cung cấp bằng chứng bước đầu cho năng lực biểu diễn cấu trúc trước khi đánh giá mức độ bảo toàn tham số động ở các tác vụ hạ nguồn.",
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
@@ -3443,11 +3443,11 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P529-S00"
+    "parent_detected_id": "DET-P530-S00"
   },
   {
     "claim_id": "CLM-SEC-124",
-    "document_location": "Chương (Đoạn P532, câu S0)",
+    "document_location": "Chương (Đoạn P533, câu S0)",
     "atomic_claim": "4. Giả thuyết H4 (Bounded Operational Budget Feasibility): Kích thước lô hiệu dụng 1,024 sự kiện tiêu tốn dưới 550 MB bộ nhớ GPU, gợi ý tiềm năng bước đầu về dung lượng bộ nhớ.",
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
@@ -3457,11 +3457,11 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P532-S00"
+    "parent_detected_id": "DET-P533-S00"
   },
   {
     "claim_id": "CLM-SEC-125",
-    "document_location": "Chương (Đoạn P532, câu S1)",
+    "document_location": "Chương (Đoạn P533, câu S1)",
     "atomic_claim": "Tuy nhiên, cần thêm các phép đo thực nghiệm về độ trễ streaming và thông lượng thực tế trước khi kết luận về khả năng triển khai vận hành SOC.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -3471,11 +3471,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P532-S01"
+    "parent_detected_id": "DET-P533-S01"
   },
   {
     "claim_id": "CLM-SEC-126",
-    "document_location": "Chương (Đoạn P533, câu S0)",
+    "document_location": "Chương (Đoạn P534, câu S0)",
     "atomic_claim": "5. Giả thuyết H5 (Controlled Linkability & Utility–Privacy Frontier): Stage A2 áp dụng chính sách chuẩn hóa danh tính và mã giả danh theo Mục 2.2; các đánh giá tấn công suy luận thành viên và ranh giới Pareto giữa độ chính xác và quyền riêng tư được bảo lưu kiểm chứng ở mô hình hạ nguồn.",
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
@@ -3485,11 +3485,11 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P533-S00"
+    "parent_detected_id": "DET-P534-S00"
   },
   {
     "claim_id": "CLM-SEC-127",
-    "document_location": "Chương (Đoạn P537, câu S1)",
+    "document_location": "Chương (Đoạn P538, câu S1)",
     "atomic_claim": "Việc biểu diễn các thực thể hệ thống theo chuỗi tương tác thời gian liên tục mở ra khả năng gom cụm các sự kiện cảnh báo đơn lẻ có liên hệ nhân quả, hỗ trợ chuyên viên phân tích theo dõi ngữ cảnh sự cố theo đồ thị tương tác.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -3499,11 +3499,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P537-S01"
+    "parent_detected_id": "DET-P538-S01"
   },
   {
     "claim_id": "CLM-SEC-128",
-    "document_location": "Chương (Đoạn P542, câu S1)",
+    "document_location": "Chương (Đoạn P543, câu S1)",
     "atomic_claim": "Hiện tượng dừng sớm ở Seed 42 gợi ý sự cần thiết của việc nghiên cứu sâu hơn về các cơ chế khởi tạo trọng số hoặc kỹ thuật khởi động (warmup) thích nghi nhằm cải thiện độ ổn định tối ưu hóa.",
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -3513,11 +3513,11 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P542-S01"
+    "parent_detected_id": "DET-P543-S01"
   },
   {
     "claim_id": "CLM-SEC-129",
-    "document_location": "Chương (Đoạn P543, câu S1)",
+    "document_location": "Chương (Đoạn P544, câu S1)",
     "atomic_claim": "Giai đoạn Stage A2 mới hoàn thành tiền huấn luyện tự giám sát trên tập Train và Validation; nhiệm vụ tiếp theo là tiến hành đánh giá năng lực phát hiện tấn công trên tập dữ liệu kiểm thử niêm phong khi có ủy quyền chính thức.",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -3527,11 +3527,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P543-S01"
+    "parent_detected_id": "DET-P544-S01"
   },
   {
     "claim_id": "CLM-SEC-130",
-    "document_location": "Chương (Đoạn P547, câu S1)",
+    "document_location": "Chương (Đoạn P548, câu S1)",
     "atomic_claim": "Chuyên đề đề xuất khung kiến trúc biểu diễn đặc trưng, trong đó nhánh đồ thị sự kiện theo thời gian (TemporalGraphViewEncoder) tích hợp tế bào bộ nhớ GRU động và cơ chế chú ý thời gian đa đầu nhằm theo vết trạng thái biến đổi của thực thể.",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
@@ -3541,11 +3541,11 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P547-S01"
+    "parent_detected_id": "DET-P548-S01"
   },
   {
     "claim_id": "CLM-SEC-131",
-    "document_location": "Chương (Đoạn P548, câu S1)",
+    "document_location": "Chương (Đoạn P549, câu S1)",
     "atomic_claim": "Dựa trên cấu hình 12 epochs hiện hành, quá trình kiểm toán độc lập đã phân loại minh bạch toàn bộ 5 hạt giống thực nghiệm.",
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -3555,11 +3555,11 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P548-S01"
+    "parent_detected_id": "DET-P549-S01"
   },
   {
     "claim_id": "CLM-SEC-132",
-    "document_location": "Chương (Đoạn P548, câu S2)",
+    "document_location": "Chương (Đoạn P549, câu S2)",
     "atomic_claim": "Nhóm quan sát lệch giao thức (Seed 999 hoàn thành 12 epochs với mất mát kiểm định 0,609500 nhưng mang sai lệch về số bước khởi động so với văn bản ủy quyền tiền thi hành; Seed 7 đạt mất mát kiểm định tốt nhất 0,550259 nhưng văn bản ủy quyền commit sau khi khởi chạy; Seed 42 dừng sớm tại Epoch 4) ghi nhận mức mất mát kiểm định trung bình là 2.413704. Cùng với các đợt chạy không chuẩn (Seed 1337, Seed 2024), các kết quả cung cấp dữ liệu đối chiếu khách quan trong khi toàn bộ dữ liệu kiểm thử được duy trì niêm phong sau tường lửa mật mã (test_opened = false).",
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -3569,11 +3569,11 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P548-S02"
+    "parent_detected_id": "DET-P549-S02"
   },
   {
     "claim_id": "CLM-SEC-133",
-    "document_location": "Chương (Đoạn P549, câu S0)",
+    "document_location": "Chương (Đoạn P550, câu S0)",
     "atomic_claim": "Các kết quả đạt được cung cấp cơ sở kỹ thuật ban đầu để phục vụ các giai đoạn nghiên cứu tiếp theo, hướng tới việc hoàn thiện mô hình biểu diễn đa góc nhìn toàn phần và thử nghiệm đánh giá phát hiện tấn công trên dữ liệu kiểm thử khi được ủy quyền.",
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -3583,7 +3583,7 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P549-S00"
+    "parent_detected_id": "DET-P550-S00"
   },
   {
     "claim_id": "CLM-SEC-134",
@@ -3811,7 +3811,7 @@
   },
   {
     "claim_id": "CLM-SEC-150",
-    "document_location": "Chương (Đoạn P210, câu S0)",
+    "document_location": "Chương (Đoạn P211, câu S0)",
     "atomic_claim": "Trong đó  là biến ngẫu nhiên đại diện cho mục tiêu ngữ nghĩa an ninh tiềm ẩn (như nhãn hành vi độc hại, ý định thực thi tiến trình, phân loại quyền hạn truy cập);  là thước đo thông tin tương hỗ, với bộ ước lượng (Estimator) và giao thức thực nghiệm sẽ được thiết lập và khóa chặt chẽ tại Chương 3; giả thuyết chỉ kiểm tra tính trung thực ngữ nghĩa an ninh và không suy diễn tuyệt đối sang việc triệt tiêu sụp đổ biểu diễn.",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -3821,11 +3821,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P210-S00"
+    "parent_detected_id": "DET-P211-S00"
   },
   {
     "claim_id": "CLM-SEC-151",
-    "document_location": "Chương (Đoạn P243, câu S0)",
+    "document_location": "Chương (Đoạn P244, câu S0)",
     "atomic_claim": "Trong đó:  là mốc thời gian sự kiện theo đồng hồ hệ thống nguồn;  là kiểu hành vi kiểm toán (syscall, registry op, network op, auth op,...);  là thực thể chủ thể (Actor) gồm tiến trình, người dùng, dịch vụ;  là thực thể đối tượng (Object) gồm tệp tin, socket, registry key, tiến trình con;  là hành động cụ thể (read, write, execute, connect, create, delete,...);  là tập các tham số động có kiểu hóa cụ thể: đường dẫn tệp tin, địa chỉ IP và cổng đích, chuỗi đối số dòng lệnh, giá trị registry, tên người dùng đích, mã trả về, đáp ứng đúng yêu cầu của Hợp đồng Biểu diễn yêu cầu bảo toàn.",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -3835,11 +3835,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P243-S00"
+    "parent_detected_id": "DET-P244-S00"
   },
   {
     "claim_id": "CLM-SEC-152",
-    "document_location": "Chương (Đoạn P351, câu S1)",
+    "document_location": "Chương (Đoạn P352, câu S1)",
     "atomic_claim": "Đầu phân loại phụ trợ  tiếp nhận vector ghép  và tối ưu hóa hàm Categorical Cross-Entropy đối với nhãn quan hệ thực tế , truyền gradient cho  và :",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -3849,11 +3849,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P351-S01"
+    "parent_detected_id": "DET-P352-S01"
   },
   {
     "claim_id": "CLM-SEC-153",
-    "document_location": "Chương (Đoạn P371, câu S0)",
+    "document_location": "Chương (Đoạn P372, câu S0)",
     "atomic_claim": "Mục 2.4.1 thiết lập Hợp đồng Tương ứng (Correspondence Contract), phân định ranh giới giữa Không gian Biểu diễn (Representation Space) và Không gian Chiếu (Projection Space), cùng các cơ chế điều hòa chống sụp đổ biểu diễn.",
     "claim_class": "METHODOLOGY_SPECIFICATION",
     "evidence_class": "NONE",
@@ -3863,11 +3863,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P371-S00"
+    "parent_detected_id": "DET-P372-S00"
   },
   {
     "claim_id": "CLM-SEC-154",
-    "document_location": "Chương (Đoạn P373, câu S0)",
+    "document_location": "Chương (Đoạn P374, câu S0)",
     "atomic_claim": "Một cặp biểu diễn đa góc nhìn  được xem là một cặp tương ứng hợp lệ (Valid Correspondence Pair) nếu và chỉ nếu chúng thỏa mãn Hợp đồng Tương ứng dựa trên bộ siêu dữ liệu liên kết  đã thiết lập tại Mục 2.3:",
     "claim_class": "METHODOLOGY_SPECIFICATION",
     "evidence_class": "NONE",
@@ -3877,11 +3877,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P373-S00"
+    "parent_detected_id": "DET-P374-S00"
   },
   {
     "claim_id": "CLM-SEC-155",
-    "document_location": "Chương (Đoạn P382, câu S1)",
+    "document_location": "Chương (Đoạn P383, câu S1)",
     "atomic_claim": "Việc phân tách này thiết lập một ranh giới phương pháp luận nghiêm ngặt: Không gian Chiếu  chỉ phục vụ việc tính toán các hàm mất mát gióng hàng tự giám sát và sẽ bị loại bỏ sau khi kết thúc Stage A; trong khi Không gian Biểu diễn ,  và không gian biểu diễn thống nhất  được bảo toàn nguyên vẹn để cung cấp đặc trưng cho các tác vụ hạ nguồn ở Stage C.",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -3891,11 +3891,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P382-S01"
+    "parent_detected_id": "DET-P383-S01"
   },
   {
     "claim_id": "CLM-SEC-156",
-    "document_location": "Chương (Đoạn P423, câu S0)",
+    "document_location": "Chương (Đoạn P424, câu S0)",
     "atomic_claim": "Mục 2.4.3 tổng hợp toàn bộ đồ thị tối ưu hóa (Optimization Graph) của chuyên đề, thiết lập hàm mục tiêu tự giám sát thống nhất trong Stage A, đóng kín các luồng gradient cho toàn bộ tập tham số, và tích hợp mô đun Phân bổ Bằng chứng Yếu qua mô hình học đa thể hiện (MIL) tùy chọn trong Stage B.",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -3905,11 +3905,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P423-S00"
+    "parent_detected_id": "DET-P424-S00"
   },
   {
     "claim_id": "CLM-SEC-157",
-    "document_location": "Chương (Đoạn P431, câu S0)",
+    "document_location": "Chương (Đoạn P432, câu S0)",
     "atomic_claim": "Cung cấp tín hiệu học trực tiếp cho các ma trận dung hợp , vector trọng số gating  và các ma trận giải mã tuyến tính , chuyên đề thiết lập hàm mất mát tái tạo đa góc nhìn tự giám sát :",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -3919,11 +3919,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P431-S00"
+    "parent_detected_id": "DET-P432-S00"
   },
   {
     "claim_id": "CLM-SEC-158",
-    "document_location": "Chương (Đoạn P433, câu S0)",
+    "document_location": "Chương (Đoạn P434, câu S0)",
     "atomic_claim": "Định tuyến luồng gradient: Để ngăn chặn hiện tượng co-adaptation không kiểm soát khiến vector đích tự trôi dạt, chuyên đề thiết lập toán tử chặn gradient tường minh  và .",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -3933,11 +3933,11 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P433-S00"
+    "parent_detected_id": "DET-P434-S00"
   },
   {
     "claim_id": "CLM-SEC-159",
-    "document_location": "Chương (Đoạn P436, câu S0)",
+    "document_location": "Chương (Đoạn P437, câu S0)",
     "atomic_claim": "Các hệ số siêu tham số  là các trọng số điều hòa được thiết lập giá trị khởi tạo tham chiếu  và sẽ được tối ưu hóa, kiểm định độ nhạy thực nghiệm trên tập xác thực tại Chương 3.",
     "claim_class": "METHODOLOGY_SPECIFICATION",
     "evidence_class": "NONE",
@@ -3947,11 +3947,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P436-S00"
+    "parent_detected_id": "DET-P437-S00"
   },
   {
     "claim_id": "CLM-SEC-160",
-    "document_location": "Chương (Đoạn P448, câu S1)",
+    "document_location": "Chương (Đoạn P449, câu S1)",
     "atomic_claim": "Để giải quyết thách thức này, chuyên đề thiết lập mô đun Phân bổ Bằng chứng Yếu tùy chọn ở Stage B dựa trên khung tiếp cận Học Đa Thể Hiện.",
     "claim_class": "METHODOLOGY_SPECIFICATION",
     "evidence_class": "NONE",
@@ -3961,11 +3961,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P448-S01"
+    "parent_detected_id": "DET-P449-S01"
   },
   {
     "claim_id": "CLM-SEC-161",
-    "document_location": "Chương (Đoạn P465, câu S0)",
+    "document_location": "Chương (Đoạn P466, câu S0)",
     "atomic_claim": "Kết hợp sức mạnh biểu diễn vi mô từ chuỗi và quan hệ cấu trúc vĩ mô từ đồ thị mà không áp đặt giả định đồng nhất số chiều tùy tiện, chuyên đề thiết lập các ánh xạ tuyến tính chuẩn hóa sang không gian tương tác chung :",
     "claim_class": "METHODOLOGY_SPECIFICATION",
     "evidence_class": "NONE",
@@ -3975,11 +3975,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P465-S00"
+    "parent_detected_id": "DET-P466-S00"
   },
   {
     "claim_id": "CLM-SEC-162",
-    "document_location": "Chương (Đoạn P484, câu S0)",
+    "document_location": "Chương (Đoạn P485, câu S0)",
     "atomic_claim": "Thiết lập thực nghiệm và dữ liệu",
     "claim_class": "METHODOLOGY_SPECIFICATION",
     "evidence_class": "NONE",
@@ -3989,11 +3989,11 @@
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P484-S00"
+    "parent_detected_id": "DET-P485-S00"
   },
   {
     "claim_id": "CLM-SEC-163",
-    "document_location": "Chương (Đoạn P502, câu S0)",
+    "document_location": "Chương (Đoạn P503, câu S0)",
     "atomic_claim": "Mất mát Dự đoán Quan hệ Che giấu (Masked Relation Prediction Loss, ): Đo lường sai số phân loại quan hệ cạnh giữa các thực thể dựa trên hàm mất mát cross-entropy:",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
@@ -4003,7 +4003,7 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P502-S00"
+    "parent_detected_id": "DET-P503-S00"
   },
   {
     "claim_id": "CLM-SEC-P087-S01",
@@ -4300,8 +4300,8 @@
   },
   {
     "claim_id": "CLM-SEC-P206-S01",
-    "parent_detected_id": "DET-P206-S01",
-    "document_location": "Chương (Đoạn P206, câu S1)",
+    "parent_detected_id": "DET-P207-S01",
+    "document_location": "Chương (Đoạn P207, câu S1)",
     "atomic_claim": "Đánh giá chất lượng biểu diễn thông qua giao thức đóng băng tham số (Frozen Linear Probe: ) phục vụ phân loại và quy kết chiến thuật/kỹ thuật theo phân loại MITRE ATT&CK  [4], hoặc quy trình chấm điểm bất thường không giám sát tùy chọn (Optional Downstream Zero-Shot Anomaly Scoring Protocol).",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "NONE",
@@ -4317,8 +4317,8 @@
   },
   {
     "claim_id": "CLM-SEC-P240-S00",
-    "parent_detected_id": "DET-P240-S00",
-    "document_location": "Chương (Đoạn P240, câu S0)",
+    "parent_detected_id": "DET-P241-S00",
+    "document_location": "Chương (Đoạn P241, câu S0)",
     "atomic_claim": "Typed Schema và Security-aware Parameter Retention",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
@@ -4332,8 +4332,8 @@
   },
   {
     "claim_id": "CLM-SEC-P244-S00",
-    "parent_detected_id": "DET-P244-S00",
-    "document_location": "Chương (Đoạn P244, câu S0)",
+    "parent_detected_id": "DET-P245-S00",
+    "document_location": "Chương (Đoạn P245, câu S0)",
     "atomic_claim": "Tập kiểu sự kiện  và tập hành động  được định nghĩa tĩnh theo đặc tả nguồn thu thập (auditd syscall table, Windows Event ID taxonomy, Sysmon event types) và không phụ thuộc vào dữ liệu huấn luyện, do đó không phát sinh rủi ro rò rỉ vocabulary từ tập kiểm tra (CTRL-LEAK-001).",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
@@ -4347,8 +4347,8 @@
   },
   {
     "claim_id": "CLM-SEC-P249-S03",
-    "parent_detected_id": "DET-P249-S03",
-    "document_location": "Chương (Đoạn P249, câu S3)",
+    "parent_detected_id": "DET-P250-S03",
+    "document_location": "Chương (Đoạn P250, câu S3)",
     "atomic_claim": "Ngược lại, các trường metadata môi trường cục bộ không mang ngữ nghĩa an ninh (như PID tạm thời, timestamp mili-giây nội bộ không phải Event-Time, số sequence kernel) được phân loại là KNOWN EXCLUDE FIELD và bị loại bỏ (DROP) trước khi đưa vào Extractor.",
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
@@ -4362,8 +4362,8 @@
   },
   {
     "claim_id": "CLM-SEC-P258-S01",
-    "parent_detected_id": "DET-P258-S01",
-    "document_location": "Chương (Đoạn P258, câu S1)",
+    "parent_detected_id": "DET-P259-S01",
+    "document_location": "Chương (Đoạn P259, câu S1)",
     "atomic_claim": "Hệ thống phân định rạch ròi: (a) Các trường KNOWN EXCLUDE FIELD (metadata môi trường như PID, timestamp cục bộ mili-giây, số sequence nội bộ) được loại bỏ hoàn toàn trước khi đưa vào Extractor; (b) Các tham số UNSEEN hoặc chưa xác định rõ ngữ nghĩa an ninh xuất hiện trong tập Validation hoặc Test được giữ nguyên nhãn kiểu trường (field-type tag: PATH, IP, CMD, REG, USER) và bảo toàn vị trí cấu trúc của tham số trong bộ sáu, đồng thời thay thế giá trị chuỗi cụ thể bằng typed placeholder tương ứng (<UNK-PATH>, <UNK-IP>, <UNK-CMD>).",
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
@@ -4377,8 +4377,8 @@
   },
   {
     "claim_id": "CLM-SEC-P260-S00",
-    "parent_detected_id": "DET-P260-S00",
-    "document_location": "Chương (Đoạn P260, câu S0)",
+    "parent_detected_id": "DET-P261-S00",
+    "document_location": "Chương (Đoạn P261, câu S0)",
     "atomic_claim": "Mô hình đe dọa quyền riêng tư và Controlled Linkability",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
@@ -4392,8 +4392,8 @@
   },
   {
     "claim_id": "CLM-SEC-P269-S01",
-    "parent_detected_id": "DET-P269-S01",
-    "document_location": "Chương (Đoạn P269, câu S1)",
+    "parent_detected_id": "DET-P270-S01",
+    "document_location": "Chương (Đoạn P270, câu S1)",
     "atomic_claim": "[33] chứng minh tấn công nghịch đảo có thể khai thác thông tin đầu ra/độ tin cậy để tái cấu trúc thuộc tính dữ liệu; trong mô hình đe dọa thích ứng của đề tài (Threat-Model Adaptation), đối nghịch cố gắng khôi phục hoặc xấp xỉ các thuộc tính nhạy cảm tiềm năng (như tên người dùng, hostname, chuỗi lệnh) từ vector nhúng z.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "NONE",
@@ -4409,8 +4409,8 @@
   },
   {
     "claim_id": "CLM-SEC-P274-S01",
-    "parent_detected_id": "DET-P274-S01",
-    "document_location": "Chương (Đoạn P274, câu S1)",
+    "parent_detected_id": "DET-P275-S01",
+    "document_location": "Chương (Đoạn P275, câu S1)",
     "atomic_claim": "Các trường KNOWN EXCLUDE FIELD được loại bỏ hoàn toàn trước khi đưa vào ; trong khi các tham số UNSEEN / UNCERTAIN được xử lý theo chính sách UNKNOWN-SAFE (bảo toàn nhãn kiểu trường và vị trí cấu trúc, gán typed placeholder), không bị loại bỏ tùy tiện.",
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
@@ -4424,8 +4424,8 @@
   },
   {
     "claim_id": "CLM-SEC-P275-S01",
-    "parent_detected_id": "DET-P275-S01",
-    "document_location": "Chương (Đoạn P275, câu S1)",
+    "parent_detected_id": "DET-P276-S01",
+    "document_location": "Chương (Đoạn P276, câu S1)",
     "atomic_claim": "Rotation boundary phải được xác lập theo predefined operational policy hoặc được lựa chọn dựa trên tập Train/Validation, tuyệt đối không sử dụng thông tin từ true Test attack/campaign duration (loại trừ rủi ro test leakage).",
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
@@ -4439,8 +4439,8 @@
   },
   {
     "claim_id": "CLM-SEC-P278-S01",
-    "parent_detected_id": "DET-P278-S01",
-    "document_location": "Chương (Đoạn P278, câu S1)",
+    "parent_detected_id": "DET-P279-S01",
+    "document_location": "Chương (Đoạn P279, câu S1)",
     "atomic_claim": "Tuy nhiên, khẳng định sự vượt trội này yêu cầu kiểm thử thực nghiệm tường minh tại Chương 3 thông qua CTRL-PRIV-001: đánh giá MIA ([16]), tấn công nghịch đảo (theo nguyên lý Fredrikson et al.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "NONE",
@@ -4456,8 +4456,8 @@
   },
   {
     "claim_id": "CLM-SEC-P303-S02",
-    "parent_detected_id": "DET-P303-S02",
-    "document_location": "Chương (Đoạn P303, câu S2)",
+    "parent_detected_id": "DET-P304-S02",
+    "document_location": "Chương (Đoạn P304, câu S2)",
     "atomic_claim": "Mục tiêu (target) là nhãn kiểu sự kiện và hành động thực tế , tối ưu hóa qua hàm mất mát Categorical Cross-Entropy trung bình trên tập bị che, cung cấp gradient cập nhật trực tiếp cho  và :",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
@@ -4471,8 +4471,8 @@
   },
   {
     "claim_id": "CLM-SEC-P305-S03",
-    "parent_detected_id": "DET-P305-S03",
-    "document_location": "Chương (Đoạn P305, câu S3)",
+    "parent_detected_id": "DET-P306-S03",
+    "document_location": "Chương (Đoạn P306, câu S3)",
     "atomic_claim": "Hàm mất mát Categorical Cross-Entropy tính trung bình trên , truyền gradient cho  và :",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
@@ -4486,8 +4486,8 @@
   },
   {
     "claim_id": "CLM-SEC-P347-S00",
-    "parent_detected_id": "DET-P347-S00",
-    "document_location": "Chương (Đoạn P347, câu S0)",
+    "parent_detected_id": "DET-P348-S00",
+    "document_location": "Chương (Đoạn P348, câu S0)",
     "atomic_claim": "Mục tiêu tối ưu hóa các tham số  của mạng Temporal GNN trong Giai đoạn A1 mà không sử dụng nhãn tấn công hay thông tin tương lai, chuyên đề thiết lập hàm mục tiêu tự giám sát đồ thị động .",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
@@ -4501,8 +4501,8 @@
   },
   {
     "claim_id": "CLM-SEC-P349-S00",
-    "parent_detected_id": "DET-P349-S00",
-    "document_location": "Chương (Đoạn P349, câu S0)",
+    "parent_detected_id": "DET-P350-S00",
+    "document_location": "Chương (Đoạn P350, câu S0)",
     "atomic_claim": "Tác vụ tái tạo thuộc tính thực thể bị che (Masked Node Attribute Reconstruction, ): Che ngẫu nhiên một tỷ lệ  thuộc tính kiểu hóa của các thực thể hoạt động  (trong đó  là siêu tham số được kiểm soát, tinh chỉnh và khóa cố định trên tập Validation).",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
@@ -4516,8 +4516,8 @@
   },
   {
     "claim_id": "CLM-SEC-P351-S00",
-    "parent_detected_id": "DET-P351-S00",
-    "document_location": "Chương (Đoạn P351, câu S0)",
+    "parent_detected_id": "DET-P352-S00",
+    "document_location": "Chương (Đoạn P352, câu S0)",
     "atomic_claim": "Tác vụ dự đoán kiểu quan hệ cạnh bị che (Masked Edge Relation Prediction, ): Che nhãn quan hệ tương tác trên tập cạnh  theo tỷ lệ  (siêu tham số được kiểm soát, tinh chỉnh và khóa cố định trên tập Validation trước khi đánh giá Test).",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
@@ -4531,8 +4531,8 @@
   },
   {
     "claim_id": "CLM-SEC-P355-S00",
-    "parent_detected_id": "DET-P355-S00",
-    "document_location": "Chương (Đoạn P355, câu S0)",
+    "parent_detected_id": "DET-P356-S00",
+    "document_location": "Chương (Đoạn P356, câu S0)",
     "atomic_claim": "Các trọng số  là các siêu tham số cân bằng giữa các tác vụ phụ trợ.",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
@@ -4546,8 +4546,8 @@
   },
   {
     "claim_id": "CLM-SEC-P357-S01",
-    "parent_detected_id": "DET-P357-S01",
-    "document_location": "Chương (Đoạn P357, câu S1)",
+    "parent_detected_id": "DET-P358-S01",
+    "document_location": "Chương (Đoạn P358, câu S1)",
     "atomic_claim": "Chuyên đề đề xuất hai cơ chế ứng viên giảm thiểu (Mitigation Candidates):",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
@@ -4561,8 +4561,8 @@
   },
   {
     "claim_id": "CLM-SEC-P363-S01",
-    "parent_detected_id": "DET-P363-S01",
-    "document_location": "Chương (Đoạn P363, câu S1)",
+    "parent_detected_id": "DET-P364-S01",
+    "document_location": "Chương (Đoạn P364, câu S1)",
     "atomic_claim": "Về mặt khung đa tỷ lệ, cửa sổ dài hạn  đã thiết lập tại Mục 2.2.3.2 đóng vai trò cung cấp ngữ cảnh trạng thái dài hạn có chặn (Bounded Long-term Context Summary) cho hệ thống mà không làm phát sinh bộ trích xuất thứ ba độc lập.",
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
@@ -4576,8 +4576,8 @@
   },
   {
     "claim_id": "CLM-SEC-P386-S04",
-    "parent_detected_id": "DET-P386-S04",
-    "document_location": "Chương (Đoạn P386, câu S4)",
+    "parent_detected_id": "DET-P387-S04",
+    "document_location": "Chương (Đoạn P387, câu S4)",
     "atomic_claim": "Giả thuyết này sẽ được kiểm chứng thực nghiệm độc lập tại Chương 3 trong mối tương quan với hai phương pháp đối chứng (Ablation Baselines) là InfoNCE [38], [37] và Barlow Twins [11].",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "NONE",
@@ -4595,8 +4595,8 @@
   },
   {
     "claim_id": "CLM-SEC-P442-S00",
-    "parent_detected_id": "DET-P442-S00",
-    "document_location": "Chương (Đoạn P442, câu S0)",
+    "parent_detected_id": "DET-P443-S00",
+    "document_location": "Chương (Đoạn P443, câu S0)",
     "atomic_claim": "Trong đó  là siêu tham số ngưỡng chặn dưới an toàn, ngăn ngừa việc hạ trọng số về 0 (tính nhạy cảm của  sẽ được kiểm chứng thực nghiệm tại Chương 3).",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
@@ -4610,8 +4610,8 @@
   },
   {
     "claim_id": "CLM-SEC-P513-S00",
-    "parent_detected_id": "DET-P513-S00",
-    "document_location": "Chương (Đoạn P513, câu S0)",
+    "parent_detected_id": "DET-P514-S00",
+    "document_location": "Chương (Đoạn P514, câu S0)",
     "atomic_claim": "Bảng 3.3: Kết quả huấn luyện Stage A2 trên 5 hạt ngẫu nhiên thực nghiệm",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",

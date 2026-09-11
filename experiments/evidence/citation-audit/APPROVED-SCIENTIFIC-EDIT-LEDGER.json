@@ -1056,29 +1056,28 @@
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
-      2,
+      3,
       4
     ],
     "base_paragraph_indices": [
-      2,
+      3,
       4
     ],
     "current_indices": [
-      2,
-      4
+      3,
+      5
     ],
     "current_paragraph_indices": [
-      2,
-      4
+      3,
+      5
     ],
-    "old_text_sha256": "0c913a27d1155387f9ff4a2909099510fd1e2177ad42bd5329039bdcd9fe147d",
-    "new_text_sha256": "7d1ed0ad6973d6d5430ade518061ed247b7f96b022db1fd8e7fb04141ff13f68",
+    "old_text_sha256": "3c515b2227eb9381cadb57768a1bc2bc32c5c2be1b3dc3603860f4954e9825fa",
+    "new_text_sha256": "fb93a8d87d393348c34cf948c8df3e97ac665af466284904cef70bad7ddeb836",
     "old_text": [
-      "Biểu diễn đa góc nhìn và ranh giới Extractor–Detector",
       "Để thiết lập nền tảng lý thuyết vững chắc và giải quyết căn bản các khoảng trống phương pháp luận đã được xác lập trong Chương 1, Chương này đề xuất khung phương pháp biểu diễn đặc trưng log đa góc nhìn bảo toàn ngữ cảnh an toàn, vận hành trực tuyến trong môi trường xử lý dòng (Streaming Environment). Quá trình biểu diễn bắt đầu bằng việc hình thức hóa luồng nhật ký kiểm toán hệ thống thành một chuỗi sự kiện được gán nhãn thời gian: , trong đó mỗi sự kiện tuân thủ thống nhất lược đồ bộ sáu kiểu hóa (Typed Six-tuple, đặc tả chi tiết tại Mục 2.2.1), bao gồm mốc thời gian xuất hiện sự kiện (Event-Time), định danh kiểu sự kiện , thực thể tác nhân chủ động (Actor Entity như tiến trình gốc, tài khoản người dùng), thực thể đối tượng đích chịu tác động (Object Entity như tệp tin, cổng mạng, tiến trình con), hành động/thao tác thực hiện (Action như fork, execve, read, write, connect, registry_set), và tập hợp các tham số động có cấu trúc (đường dẫn tệp tin, tham số dòng lệnh thực thi, cổng mạng và địa chỉ IP kết nối) [1]."
     ],
     "new_text": [
-      "Về mặt nhận thức luận khoa học, các hàm mất mát (loss) là các tín hiệu tối ưu hóa nội tại của quá trình huấn luyện, không phải bằng chứng khoa học tự thân chứng minh năng lực an ninh trực tiếp. Việc giảm một hàm mất mát phụ trợ (auxiliary loss) chỉ chứng minh mô hình tối ưu tốt hơn trên tác vụ đại diện (surrogate task) và dữ liệu được quan sát; mọi kết luận về năng lực phát hiện xâm nhập downstream, tính vững chắc hay độ an toàn quyền riêng tư bắt buộc phải được thẩm định độc lập qua các phép đo thực nghiệm tương ứng. Biểu diễn đa góc nhìn và ranh giới Extractor–Detector",
+      "Về mặt nhận thức luận khoa học, các hàm mất mát (loss) là các tín hiệu tối ưu hóa nội tại của quá trình huấn luyện, không phải bằng chứng khoa học tự thân chứng minh năng lực an ninh trực tiếp. Việc giảm một hàm mất mát phụ trợ (auxiliary loss) chỉ chứng minh mô hình tối ưu tốt hơn trên tác vụ đại diện (surrogate task) và dữ liệu được quan sát; mọi kết luận về năng lực phát hiện xâm nhập downstream, tính vững chắc hay độ an toàn quyền riêng tư bắt buộc phải được thẩm định độc lập qua các phép đo thực nghiệm tương ứng.",
       "Trên cơ sở các khoảng trống phương pháp luận được xác lập tại Chương 1, Chương 2 đề xuất khung phương pháp biểu diễn đặc trưng log đa góc nhìn bảo toàn ngữ cảnh an toàn, vận hành trực tuyến trong môi trường xử lý dòng (Streaming Environment). Quá trình biểu diễn bắt đầu bằng việc hình thức hóa luồng nhật ký kiểm toán hệ thống thành một chuỗi sự kiện được gán nhãn thời gian: , trong đó mỗi sự kiện tuân thủ thống nhất lược đồ bộ sáu kiểu hóa (Typed Six-tuple, đặc tả chi tiết tại Mục 2.2.1), bao gồm mốc thời gian xuất hiện sự kiện (Event-Time), định danh kiểu sự kiện , thực thể tác nhân chủ động (Actor Entity như tiến trình gốc, tài khoản người dùng), thực thể đối tượng đích chịu tác động (Object Entity như tệp tin, cổng mạng, tiến trình con), hành động/thao tác thực hiện (Action như fork, execve, read, write, connect, registry_set), và tập hợp các tham số động có cấu trúc (đường dẫn tệp tin, tham số dòng lệnh thực thi, cổng mạng và địa chỉ IP kết nối) [1]."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
@@ -1105,12 +1104,12 @@
       7
     ],
     "current_indices": [
-      6,
-      7
+      7,
+      8
     ],
     "current_paragraph_indices": [
-      6,
-      7
+      7,
+      8
     ],
     "old_text_sha256": "c6f77cdd000767fe10056d9111467ac59484a1f42a7f4f1cb89ccb1719198df9",
     "new_text_sha256": "a3ef7b11d6b92a38cdbe3d5fed82f67dc46b861c68845875af5fb8a2c43bbd8e",
@@ -1140,12 +1139,12 @@
       14
     ],
     "current_indices": [
-      13,
-      14
+      14,
+      15
     ],
     "current_paragraph_indices": [
-      13,
-      14
+      14,
+      15
     ],
     "old_text_sha256": "ed31672b1d15a47b3e04cb6106cf0b8e42f5c4412993a53b4b34f10c2256fd04",
     "new_text_sha256": "87f5643fdb86e3b07e47c57b1f0c42973aa3af9ab0a7ffb75b36517b50ed447a",
@@ -1179,12 +1178,12 @@
       18
     ],
     "current_indices": [
-      16,
-      18
+      17,
+      19
     ],
     "current_paragraph_indices": [
-      16,
-      18
+      17,
+      19
     ],
     "old_text_sha256": "5005f30857216caf2d2ace4bb9df5ea17365147fa859570d076133b679e28602",
     "new_text_sha256": "9bfe9a63542ef4d26e24a90d33923c247ea8f56994a41748a96ad715997aae25",
@@ -1222,12 +1221,12 @@
       22
     ],
     "current_indices": [
-      21,
-      22
+      22,
+      23
     ],
     "current_paragraph_indices": [
-      21,
-      22
+      22,
+      23
     ],
     "old_text_sha256": "9eab2668909eb82ba1e426659f3b02d4680b3dbdb5ff1adbfb040af063792920",
     "new_text_sha256": "33c06ff57fe8331d7e3d040c2d0b893b8024d047d4a27854cef414b69dc6f472",
@@ -1261,12 +1260,12 @@
       25
     ],
     "current_indices": [
-      24,
-      25
+      25,
+      26
     ],
     "current_paragraph_indices": [
-      24,
-      25
+      25,
+      26
     ],
     "old_text_sha256": "fe7f0169c915c53911e53087a8f957a1c61ae68d467e7aeb42e1f08a057db5c8",
     "new_text_sha256": "8a8ee04e8c3ca12e63877b1bd98b7fcdf4b9ede3a39520324bd87af50e972419",
@@ -1296,12 +1295,12 @@
       30
     ],
     "current_indices": [
-      28,
-      30
+      29,
+      31
     ],
     "current_paragraph_indices": [
-      28,
-      30
+      29,
+      31
     ],
     "old_text_sha256": "f976eefe52c6034a4029fb709e84c2eba7eeb04b778d0ee70ff4023929dc3c93",
     "new_text_sha256": "f7c15db3a85caf33497fca2144dde3b803ad750904db7eebec78695baab2b550",
@@ -1333,12 +1332,12 @@
       38
     ],
     "current_indices": [
-      36,
-      38
+      37,
+      39
     ],
     "current_paragraph_indices": [
-      36,
-      38
+      37,
+      39
     ],
     "old_text_sha256": "1b3336d251cf09b71409b5f202d7a090d92fa613fe2e6c6c35b9f70b69465263",
     "new_text_sha256": "a8e2a7051ce56dfcdb4c29a555c6d65451be6cae7cd046f1264582bcb98a43a0",
@@ -1374,12 +1373,12 @@
       42
     ],
     "current_indices": [
-      40,
-      42
+      41,
+      43
     ],
     "current_paragraph_indices": [
-      40,
-      42
+      41,
+      43
     ],
     "old_text_sha256": "5a66f48a04f70bfad8e91927ade2121cd777cbbeb29d3505571a27e67bbeb766",
     "new_text_sha256": "2abde16208622adc70a69e0141ffea3150e88003783279722b5784c2d1a09041",
@@ -1415,12 +1414,12 @@
       50
     ],
     "current_indices": [
-      46,
-      50
+      47,
+      51
     ],
     "current_paragraph_indices": [
-      46,
-      50
+      47,
+      51
     ],
     "old_text_sha256": "21107a306461f2486d283b446f8b1456ee9d25a6ba1e0ce200fdf9c726dc696b",
     "new_text_sha256": "d65231f8af3df988728a136861b901f263c625f16008ac23020d27007ea09081",
@@ -1460,12 +1459,12 @@
       52
     ],
     "current_indices": [
-      51,
-      52
+      52,
+      53
     ],
     "current_paragraph_indices": [
-      51,
-      52
+      52,
+      53
     ],
     "old_text_sha256": "dc78cd3fe4dd7a17daa85f27fa0f09495aa159b6ccc37c4d7912f8269d76757a",
     "new_text_sha256": "5432d1f855fc11bf16eed2462575a607de846844ec40296ce7e58a5d9d94eaa9",
@@ -1495,12 +1494,12 @@
       60
     ],
     "current_indices": [
-      59,
-      60
+      60,
+      61
     ],
     "current_paragraph_indices": [
-      59,
-      60
+      60,
+      61
     ],
     "old_text_sha256": "4f265e1408d2f074eac1e5beda3230d612759bcee6afc0ca5c0eb686fb3fe0b1",
     "new_text_sha256": "bc8a1a2c9f41d2a729164c71c2a335170af541ad66f1e9d675ed6e7b60c1eb42",
@@ -1536,12 +1535,12 @@
       68
     ],
     "current_indices": [
-      62,
-      68
+      63,
+      69
     ],
     "current_paragraph_indices": [
-      62,
-      68
+      63,
+      69
     ],
     "old_text_sha256": "271302a8350bb754ec491f06b81111bf4ab9b16d13784bd4499466741bab8db2",
     "new_text_sha256": "cedaf5d95b8504448c5c67817b51250ef1508a4931d5517497f87574899161e7",
@@ -1587,12 +1586,12 @@
       70
     ],
     "current_indices": [
-      69,
-      70
+      70,
+      71
     ],
     "current_paragraph_indices": [
-      69,
-      70
+      70,
+      71
     ],
     "old_text_sha256": "fb9ecc1ce45ca2b21f6f12f0a9baf1d33ed35ed3bfa75bca470326df93d9d10d",
     "new_text_sha256": "62772f3830a592cf102ba1e1e1d3e0ee42059fedbb98f263af2f687cc4575bce",
@@ -1622,12 +1621,12 @@
       85
     ],
     "current_indices": [
-      84,
-      85
+      85,
+      86
     ],
     "current_paragraph_indices": [
-      84,
-      85
+      85,
+      86
     ],
     "old_text_sha256": "d9d4dbf1364c766be2f70b38137b58d6a434309ce29a29e4ad812c13d8b77dfb",
     "new_text_sha256": "b65815ac23abb14514f193e5f4df2a838e2b8eb8f3ba756ca7fe3596ea7875cc",
@@ -1661,12 +1660,12 @@
       88
     ],
     "current_indices": [
-      87,
-      88
+      88,
+      89
     ],
     "current_paragraph_indices": [
-      87,
-      88
+      88,
+      89
     ],
     "old_text_sha256": "ec78a6f61766254a5b9823ced421e6e7479b47c025e30a4fe673f3550f432427",
     "new_text_sha256": "f4161d282ed13149c0bedcb849571c7b955e05e06988c11909cdc42150ac69ed",
@@ -1696,12 +1695,12 @@
       92
     ],
     "current_indices": [
-      89,
-      92
+      90,
+      93
     ],
     "current_paragraph_indices": [
-      89,
-      92
+      90,
+      93
     ],
     "old_text_sha256": "dd9c7d2f66dfa77104ba9c6553b733a80a1ca87016565db98491ca2c038e628f",
     "new_text_sha256": "01d5cf2910ca3cbfc6f95f70c35db5c1720f0f435467a70ce02375d755f6cf05",
@@ -1739,12 +1738,12 @@
       110
     ],
     "current_indices": [
-      109,
-      110
+      110,
+      111
     ],
     "current_paragraph_indices": [
-      109,
-      110
+      110,
+      111
     ],
     "old_text_sha256": "1c488f8056103a4d05e5b7ad6aedd11b6827138bbef426b735776dd52d811113",
     "new_text_sha256": "04f5e3aeddb0480b757c73c6abb1b081c3dc94118f3c0a1dcf192a23ef5f36ae",
@@ -1774,12 +1773,12 @@
       113
     ],
     "current_indices": [
-      112,
-      113
+      113,
+      114
     ],
     "current_paragraph_indices": [
-      112,
-      113
+      113,
+      114
     ],
     "old_text_sha256": "016f038387827f94d4ce91bd9df2e8333e6c613fc69e8a2b9012f86496922468",
     "new_text_sha256": "280f8af997df082d52a2bceab57da78c7c2587a31c0041569d8cf58ba2ea7398",
@@ -1813,12 +1812,12 @@
       120
     ],
     "current_indices": [
-      119,
-      120
+      120,
+      121
     ],
     "current_paragraph_indices": [
-      119,
-      120
+      120,
+      121
     ],
     "old_text_sha256": "779638090a31d51d63abc9ba81139329e14ef5ba01fd283e5ed0d37f5a2b9933",
     "new_text_sha256": "5548eddbb8f4df0a8eadf79035c8ae8b241cffd59bc497a96b3c26d62cd5090d",
@@ -1852,12 +1851,12 @@
       127
     ],
     "current_indices": [
-      125,
-      127
+      126,
+      128
     ],
     "current_paragraph_indices": [
-      125,
-      127
+      126,
+      128
     ],
     "old_text_sha256": "0d6116e59e4e7cd942144bc7fc6b5baa271b6d4294460dcae03957ed46b34371",
     "new_text_sha256": "ee7071d8030ce482f207320ee27016b58d510a59657b0941885dc4b4e2e6c327",
@@ -1889,12 +1888,12 @@
       129
     ],
     "current_indices": [
-      128,
-      129
+      129,
+      130
     ],
     "current_paragraph_indices": [
-      128,
-      129
+      129,
+      130
     ],
     "old_text_sha256": "53e9eb927ecaae27f3523c590cbf12e1e7cc7442e1a085098386473218d0f0e2",
     "new_text_sha256": "da33d1a0634b9c27918718c909ae700b0f94bfda357dce39b1041607fa6a6571",
@@ -1924,12 +1923,12 @@
       132
     ],
     "current_indices": [
-      131,
-      132
+      132,
+      133
     ],
     "current_paragraph_indices": [
-      131,
-      132
+      132,
+      133
     ],
     "old_text_sha256": "e53a651d65ac217262a8cba9112528781848cc2ab1e71fb4c2b67e704b44ed40",
     "new_text_sha256": "280f8af997df082d52a2bceab57da78c7c2587a31c0041569d8cf58ba2ea7398",
@@ -1963,12 +1962,12 @@
       139
     ],
     "current_indices": [
-      138,
-      138
+      139,
+      139
     ],
     "current_paragraph_indices": [
-      138,
-      138
+      139,
+      139
     ],
     "old_text_sha256": "a39c7a0b48f33f3027a5cbcc72c74f9da80ed2e5344e5d244465e0f867545571",
     "new_text_sha256": null,
@@ -1996,12 +1995,12 @@
       142
     ],
     "current_indices": [
-      140,
-      141
+      141,
+      142
     ],
     "current_paragraph_indices": [
-      140,
-      141
+      141,
+      142
     ],
     "old_text_sha256": "90e970fb601810390bfc508919831683c2bb76c814db064cf879ee4369916d2f",
     "new_text_sha256": "6c2a7f5cb5794309cac4dda0692e5b553212ea8e4a418c070dd2d0b5e60d4dd8",
@@ -2035,12 +2034,12 @@
       150
     ],
     "current_indices": [
-      148,
-      149
+      149,
+      150
     ],
     "current_paragraph_indices": [
-      148,
-      149
+      149,
+      150
     ],
     "old_text_sha256": "e9b27e93e5c93e080bf1a7e84e0cecd0a7e53a9b31fb1d29bb81c2f8d273f93f",
     "new_text_sha256": "69105bd6998fe5587bec2ef47650a0c598e779bf72c53f7bd1e8f6522474b519",
@@ -2070,12 +2069,12 @@
       153
     ],
     "current_indices": [
-      150,
-      152
+      151,
+      153
     ],
     "current_paragraph_indices": [
-      150,
-      152
+      151,
+      153
     ],
     "old_text_sha256": "30385a27cb54daf1c694a7a75d721b323193ceaa0d7c9336214d8b44e4074b45",
     "new_text_sha256": "816233bd9fd99c0f060b2c27d02a7bbca1fed3ce0a5ddc30ecb64781a195f644",
@@ -2111,12 +2110,12 @@
       155
     ],
     "current_indices": [
-      153,
-      154
+      154,
+      155
     ],
     "current_paragraph_indices": [
-      153,
-      154
+      154,
+      155
     ],
     "old_text_sha256": "a247aa4074adc6c445982f4905d2e2df019eb5f6d19a216f890f1a67b29354f2",
     "new_text_sha256": "91fa953bbc1c364d9826b138989be70ad8404ac0449b1f50a24ce734d000f801",
@@ -2146,12 +2145,12 @@
       157
     ],
     "current_indices": [
-      155,
-      156
+      156,
+      157
     ],
     "current_paragraph_indices": [
-      155,
-      156
+      156,
+      157
     ],
     "old_text_sha256": "afee3121e61ff8a3577c132aa2b9238e2b85e4c5a691fd48e737c9e373a5d056",
     "new_text_sha256": "90e3c3dc515c700fb0f6ad4e79d33e038a85d48286c3d1450c9724dc6a59174c",
@@ -2181,12 +2180,12 @@
       161
     ],
     "current_indices": [
-      157,
-      160
+      158,
+      161
     ],
     "current_paragraph_indices": [
-      157,
-      160
+      158,
+      161
     ],
     "old_text_sha256": "25e6fad32ab0357e8fdc4250d077626929e6e2d9a583a0b35004ca8e57730759",
     "new_text_sha256": "5b20bc58c57128b76c989163701d15fd4c45f93802f53b1e9ffd78efa0efb088",
@@ -2220,12 +2219,12 @@
       166
     ],
     "current_indices": [
-      164,
-      165
+      165,
+      166
     ],
     "current_paragraph_indices": [
-      164,
-      165
+      165,
+      166
     ],
     "old_text_sha256": "ad85e30eb47ae06bc71e87a862c985b0537151f367cd50c67a86c1120bfc76cc",
     "new_text_sha256": "d45bdb76d5add204ec009469715bc92dfc1b9991ac01d02787872673d9e17fb3",
@@ -2255,12 +2254,12 @@
       172
     ],
     "current_indices": [
-      168,
-      171
+      169,
+      172
     ],
     "current_paragraph_indices": [
-      168,
-      171
+      169,
+      172
     ],
     "old_text_sha256": "958e72529e9424722fa0f24552b08f0c19f2b4c1df4062142dc81f271d34ccfe",
     "new_text_sha256": "fdfdec362cae211ed49e1838a5bad858394ef1f320f52caa75603a118e040425",
@@ -2294,12 +2293,12 @@
       174
     ],
     "current_indices": [
-      172,
-      173
+      173,
+      174
     ],
     "current_paragraph_indices": [
-      172,
-      173
+      173,
+      174
     ],
     "old_text_sha256": "430e70f989229b41839449f9a93a4b581486df4a7eefb171886f5e5137ec45dc",
     "new_text_sha256": "cfeec4297324a50ad85f34c6bc9da3adcd474396cc8f6869219b2a692f701479",
@@ -2329,12 +2328,12 @@
       185
     ],
     "current_indices": [
-      182,
-      184
+      183,
+      185
     ],
     "current_paragraph_indices": [
-      182,
-      184
+      183,
+      185
     ],
     "old_text_sha256": "638d1018621c244365f25d794f35ce0f05ca1c443d8ee893e681f0729c503aac",
     "new_text_sha256": "93ee3daf96914be3af55efa5ed9d76bebe02c47c374cdd5898269f50363539bd",
@@ -2366,12 +2365,12 @@
       188
     ],
     "current_indices": [
-      186,
-      187
+      187,
+      188
     ],
     "current_paragraph_indices": [
-      186,
-      187
+      187,
+      188
     ],
     "old_text_sha256": "e56bfa6bf2d01c2e488625530af045d99f8f111a15bd4bfdb7f73e8ec36595ed",
     "new_text_sha256": "43abaf4b4a021976a6fb3f2bb1f5798408f4977f73e75d3776a479f35a060136",
@@ -2401,12 +2400,12 @@
       190
     ],
     "current_indices": [
-      188,
-      189
+      189,
+      190
     ],
     "current_paragraph_indices": [
-      188,
-      189
+      189,
+      190
     ],
     "old_text_sha256": "c8452169b062313097063ff7b8660fc9244e9d7d91cd4a201ebc0e3b21efcc81",
     "new_text_sha256": "515ca2cabb627699f278e762c55816259a9dfdb003585c036aa88067d8d10d9a",
@@ -2440,12 +2439,12 @@
       196
     ],
     "current_indices": [
-      191,
-      195
+      192,
+      196
     ],
     "current_paragraph_indices": [
-      191,
-      195
+      192,
+      196
     ],
     "old_text_sha256": "c6b49500e741d511bac13a512a763971e3c7f209dcc1599c77efc8e51f210eb1",
     "new_text_sha256": "f33f858b22cd7cf6358f3407c0d42e866892ca09c05cc2c19c2799b030177028",
@@ -2485,12 +2484,12 @@
       198
     ],
     "current_indices": [
-      196,
-      197
+      197,
+      198
     ],
     "current_paragraph_indices": [
-      196,
-      197
+      197,
+      198
     ],
     "old_text_sha256": "a62fce5b0cd702c4f7390614b6e7c197993ce28325cfe0766c1171d5781f4dbd",
     "new_text_sha256": "7477df6ca9ae2aee3ed3b94bb7c7eb701c785ed7925ac02b63d1975951a42bfe",
@@ -2520,12 +2519,12 @@
       201
     ],
     "current_indices": [
-      198,
-      200
+      199,
+      201
     ],
     "current_paragraph_indices": [
-      198,
-      200
+      199,
+      201
     ],
     "old_text_sha256": "defd6db525730e74d839cc357ad0f0193426691b326962724c8bc4d9457061b9",
     "new_text_sha256": "5d7488626972315da96690ba57804fb7b8458d07ab093102a91628f401c46899",
@@ -2561,12 +2560,12 @@
       203
     ],
     "current_indices": [
-      201,
-      202
+      202,
+      203
     ],
     "current_paragraph_indices": [
-      201,
-      202
+      202,
+      203
     ],
     "old_text_sha256": "50604c7b599fc859bb13680f6657fab3362ca7967223e03e4aa7a405040286bd",
     "new_text_sha256": "e8173ba71095f845f231e2342091f7c7c6a31856eb8269628dfed8d9860b6906",
@@ -2600,12 +2599,12 @@
       205
     ],
     "current_indices": [
-      203,
-      204
+      204,
+      205
     ],
     "current_paragraph_indices": [
-      203,
-      204
+      204,
+      205
     ],
     "old_text_sha256": "d3111b40286e15db882c928e136133b61382e412b61307d293a4c84d93ece9ca",
     "new_text_sha256": "bb2dd2bfc02d30f4484181a7e0046d98243ba0289f87dbdec3704a078069b530",
@@ -2635,12 +2634,12 @@
       210
     ],
     "current_indices": [
-      208,
-      209
+      209,
+      210
     ],
     "current_paragraph_indices": [
-      208,
-      209
+      209,
+      210
     ],
     "old_text_sha256": "0a68b89f11ea7a39ce52c9b4f5eae24f01b9606fa94996151e110555563155c9",
     "new_text_sha256": "bc8aaeb2a7b0dbe5823e67bc5955d4163c58a408e077771889792bd287a8d453",
@@ -2674,12 +2673,12 @@
       212
     ],
     "current_indices": [
-      210,
-      211
+      211,
+      212
     ],
     "current_paragraph_indices": [
-      210,
-      211
+      211,
+      212
     ],
     "old_text_sha256": "d048b0a41adf048a8f475e679f1d01b1e572fceadad85d007f930132ea84966f",
     "new_text_sha256": "f7c0813651fb5b87b50a8f3f2acd5d7fc7d5268ee526fd50c8440221325bfedd",
@@ -2709,12 +2708,12 @@
       214
     ],
     "current_indices": [
-      212,
-      213
+      213,
+      214
     ],
     "current_paragraph_indices": [
-      212,
-      213
+      213,
+      214
     ],
     "old_text_sha256": "22f957cd14a697893a20af456414fa2d6bd1c1d56e8775add2487b1f766c31d5",
     "new_text_sha256": "4d77913ec35094670e892ddbdb59df682c95d956e5f01b72905118f5cacf0ab5",
@@ -2744,12 +2743,12 @@
       219
     ],
     "current_indices": [
-      216,
-      218
+      217,
+      219
     ],
     "current_paragraph_indices": [
-      216,
-      218
+      217,
+      219
     ],
     "old_text_sha256": "67ec62a4b9541c39226c2a2517f11532c7f361a917d33d5e0e3e43c5d8ec68ab",
     "new_text_sha256": "7b7d1a0f1bc35a19861bc007fcbd85a80842cc83b46c6048125783e49cf116f8",
@@ -2781,12 +2780,12 @@
       221
     ],
     "current_indices": [
-      219,
-      220
+      220,
+      221
     ],
     "current_paragraph_indices": [
-      219,
-      220
+      220,
+      221
     ],
     "old_text_sha256": "f68b4dcb5c5595b9f01a7896ad8b6fefef9890c4ded05f1941234ca02974fc02",
     "new_text_sha256": "950ce918be1d02a45cab63bce879d0d095476c8fceacf52c3b0efb23b21a24db",
@@ -2816,12 +2815,12 @@
       226
     ],
     "current_indices": [
-      223,
-      225
+      224,
+      226
     ],
     "current_paragraph_indices": [
-      223,
-      225
+      224,
+      226
     ],
     "old_text_sha256": "ad2a3664c7596e25ce301f286800dd8ca219fdd1106edcf66ea9c1c5cb1715e4",
     "new_text_sha256": "dc3b2f4ff14ef43a63ff18ca7c8e09717157a00fd2600df74d15a98d2ed11563",
@@ -2857,12 +2856,12 @@
       228
     ],
     "current_indices": [
-      226,
-      227
+      227,
+      228
     ],
     "current_paragraph_indices": [
-      226,
-      227
+      227,
+      228
     ],
     "old_text_sha256": "3017a3ea5406ea8174083b64b5cf85a5aabc6f0778f2bbd8fb7aab6cf9c5fee6",
     "new_text_sha256": "a86fdd58bb1bd77317470bc47dc41bedd87191099cff3bd1efc010e99139d1b2",
