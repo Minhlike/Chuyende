@@ -110,11 +110,13 @@ def compute_chapter_hashes():
         "79e944d34fb11bcb28f5340c4b018a96cc36d67b42e35b6267b91ace89029d5c",  # fix/thesis-citation-truth-final (p[117] LogHub [42], Xu [18])
         "8e550f959fb0c9b071e57da8a8ff62229a21364c480edfe9126e1219dbda1310",  # fix/thesis-citation-exhaustive-lock (p[117] TC E3 [12], E5 [43])
         "dc3ecb488e6860884a6e70b3d1da1750ed195fb8f516ccf0b6f989ec0d443c00",  # fix/thesis-first-principles-lock (Sec 1.4, R01-R07)
+        "92cc1d16b19fcc238a750ecc4a71930c86ed075a8b193f4ccb4c1735c23e45a4",  # fix/thesis-apply-edits (In-place proof chain, Sec 1.4 removed)
     }
     AUTH_CITATIONS_CH2_HASHES = {
         "c62e1ebe2a01b6668f24e5383abf74372d78c4cc758f1c5a264d6789a3cef855",
         "2b04c268b555b5a7c2fb345c882c096f6b70e649298928461ab4b509c7894dbd",  # fix/thesis-citation-integrity
         "34ddef8affccc36ef0cafc9349c6bd2f1d87eafb12ca483d3a65c2de867795f9",  # fix/thesis-first-principles-lock (Ref [44] over-smoothing, native OMML)
+        "e27062a8c6d248aec34ffa4bc84eab3e4e0c552b7b11171cd3d06fc20388a564",  # fix/thesis-apply-edits (Epistemic lock in Ch2)
     }
 
     # Verify that approved edit ledger exists if modified

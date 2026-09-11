@@ -1,1092 +1,428 @@
 [
   {
-    "claim_id": "FP-001",
-    "location": {
-      "chapter": 1,
-      "section": "1.1.2",
-      "paragraph_index": 111
-    },
-    "claim_text": "Từ ontology ATT&CK và các quan sát về provenance, nghiên cứu tổng hợp ba cấu trúc phân tích: (1) Nhảy cóc giai đoạn; (2) Lặp vòng kỹ thuật; (3) Phân nhánh tiến trình song song.",
-    "source_key": "SRC000001_SRC000009",
-    "source_locator": "Tác giả tổng hợp từ ATT&CK Enterprise Matrix v19.1 và Inam et al. [1] Fig. 1",
-    "support_status": "AUTHOR_SYNTHESIS",
-    "notes": "Taxonomy tổng hợp của tác giả, đã ghi rõ disclaimer trong P111."
+    "claim_id": "PRIORITY-01",
+    "document_location": "Chương 1 (P116)",
+    "claim_text": "Chiến thuật (Tactic) đại diện cho mục tiêu chiến thuật của kẻ tấn công (trả lời câu hỏi 'Tại sao') và kỹ thuật (Technique) đại diện cho phương thức thực thi cụ thể (trả lời câu hỏi 'Làm thế nào').",
+    "citation_numbers": [
+      4
+    ],
+    "source_title": "MITRE ATT&CK Enterprise Matrix v19.1",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "MITRE ATT&CK -> Get Started -> Key Concepts (Tactics represent the 'why', Techniques represent the 'how')",
+    "action": "KEEP"
   },
   {
-    "claim_id": "FP-002",
-    "location": {
-      "chapter": 1,
-      "section": "1.1.2",
-      "paragraph_index": 118
-    },
-    "claim_text": "Nghiên cứu xem sự trùng lặp công cụ quản trị (PowerShell, SSH, WMI) là một yếu tố gây nhiễu cần kiểm thử trong không gian đặc trưng hành vi.",
-    "source_key": "SRC000009_SRC000018",
-    "source_locator": "Giả thuyết nghiên cứu dựa trên Inam et al. [1] và Liu et al. [3] Tab. 1",
+    "claim_id": "PRIORITY-02",
+    "document_location": "Chương 1 (P111)",
+    "claim_text": "Từ ontology ATT&CK và quan sát provenance, nghiên cứu tổng hợp ba cấu trúc phân tích phi tuyến tính: (1) Nhảy cóc giai đoạn; (2) Lặp vòng kỹ thuật; (3) Phân nhánh tiến trình song song (đây là cấu trúc do đề tài tự tổng hợp, không phải taxonomy chính thức của MITRE ATT&CK).",
+    "citation_numbers": [
+      1,
+      4
+    ],
+    "source_title": "SoK: History is a Vast Early Warning System [1] & MITRE ATT&CK [4]",
+    "support_status": "AUTHOR_SYNTHESIS",
+    "source_locator": "Inam et al. [1] Fig. 1 (multi-stage attack graphs) & MITRE ATT&CK Key Concepts (disclaiming non-linear execution as official MITRE taxonomy)",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "PRIORITY-03",
+    "document_location": "Chương 1 (P111) & Bảng 13 [4]",
+    "claim_text": "Phiên bản nội dung MITRE ATT&CK Enterprise Matrix v19.1 được phát hành chính thức vào ngày 12/05/2026.",
+    "citation_numbers": [
+      4
+    ],
+    "source_title": "MITRE ATT&CK Enterprise Matrix v19.1",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "MITRE ATT&CK Changelog -> v4.4.3 (2026-05-12) Release ATT&CK content version 19.1",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "PRIORITY-04",
+    "document_location": "Chương 1 (P97) & Chương 2",
+    "claim_text": "Bộ lọc sự kiện Sysmon tập trung vào các mã định danh sự kiện kiểm toán hệ điều hành cốt lõi: ID 1 (Process Creation), ID 3 (Network Connection), ID 7 (Image Loaded), ID 11 (FileCreate), ID 13 (RegistryEvent).",
+    "citation_numbers": [
+      41
+    ],
+    "source_title": "Sysmon (System Monitor) - Sysinternals",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "Microsoft Learn Sysmon -> Events heading -> Event ID 1, 3, 7, 11, 13 descriptions",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "PRIORITY-05",
+    "document_location": "Chương 1 (P117)",
+    "claim_text": "Bộ dữ liệu DARPA Transparent Computing Engagement #3 (TC E3) diễn ra vào tháng 4/2018 với các kịch bản tấn công và diễn tập red-team được gán nhãn mức độ hạt tiến trình/luồng phụ thuộc.",
+    "citation_numbers": [
+      12
+    ],
+    "source_title": "Transparent Computing Engagement #3 Release (April 2018)",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "DARPA-I2O transparent-computing/README-E3.md heading 'Engagement #3' (April 2018)",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "PRIORITY-06",
+    "document_location": "Chương 1 (P117) & Bảng 13 [12],[43]",
+    "claim_text": "Bộ dữ liệu DARPA Transparent Computing Engagement #3 (TC E3) và Engagement #5 (TC E5) là hai nguồn dữ liệu độc lập thuộc chương trình DARPA TC.",
+    "citation_numbers": [
+      12,
+      43
+    ],
+    "source_title": "DARPA TC E3 [12] & DARPA TC E5 [43]",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "DARPA-I2O transparent-computing repository -> README-E3.md & README-E5.md separate release directories",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "PRIORITY-07",
+    "document_location": "Chương 1 (P117)",
+    "claim_text": "Bộ dữ liệu HDFS được gán nhãn bất thường theo vết thực thi ở mức khối dữ liệu (Block-level trace labels), phản ánh trạng thái bình thường/bất thường của một phiên giao tác phân tán hoàn chỉnh.",
+    "citation_numbers": [
+      18,
+      42
+    ],
+    "source_title": "Detecting Large-Scale System Problems by Mining Console Logs [18] & Loghub [42]",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "LogHub HDFS/README.md ('logs sliced into traces by block IDs; each block trace is labeled as normal or anomaly') & Xu et al. Sec. 3",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "PRIORITY-08",
+    "document_location": "Chương 1 (P117)",
+    "claim_text": "Bộ dữ liệu BGL đại diện cho nhật ký siêu máy tính với nhãn bất thường được xác lập ở mức dòng log đơn lẻ (Line-level alert/non-alert labels).",
+    "citation_numbers": [
+      42
+    ],
+    "source_title": "Loghub: A Large Collection of System Log Datasets for AI-driven Log Analytics",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "LogHub BGL/README.md ('first column '-' indicates non-alert, others indicate alert category at line level')",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "PRIORITY-09",
+    "document_location": "Chương 1 (P117) & Bảng 13 [42]",
+    "claim_text": "Tập hợp bộ dữ liệu LogHub được công bố chính thức tại hội nghị chuẩn mực IEEE ISSRE 2023.",
+    "citation_numbers": [
+      42
+    ],
+    "source_title": "Loghub: A Large Collection of System Log Datasets for AI-driven Log Analytics",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "IEEE ISSRE 2023 proceedings, DOI 10.1109/ISSRE59848.2023.00071, pp. 355-366",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "PRIORITY-10",
+    "document_location": "Chương 1 (P154, P156)",
+    "claim_text": "DeepLog không bỏ qua giá trị tham số mà là một khung làm việc gồm hai nhánh: nhánh LSTM thứ nhất học chuỗi mã mẫu log (log keys) và nhánh LSTM thứ hai học phân phối chuẩn nhiều chiều của các tham số số học (parameter values).",
+    "citation_numbers": [
+      14
+    ],
+    "source_title": "DeepLog: Anomaly Detection and Diagnosis from System Logs through Deep Learning",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "Du et al. ACM CCS 2017 Sec. 3.1 (Log Key Anomaly Detection) & Sec. 3.2 (Parameter Value Anomaly Detection via multivariate Gaussian / regression)",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "PRIORITY-11",
+    "document_location": "Chương 1 (P157, P158)",
+    "claim_text": "Kiến trúc Transformer sử dụng cơ chế chú ý tích vô hướng tỉ lệ softmax(QK^T / sqrt(d_k))V, mã hóa vị trí, và có độ phức tạp tính toán bộ nhớ bậc hai O(T^2) theo độ dài chuỗi.",
+    "citation_numbers": [
+      34
+    ],
+    "source_title": "Attention Is All You Need",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "Vaswani et al. NeurIPS 2017 Sec. 3.2.1 (Scaled Dot-Product Attention) & Table 1 (Maximum path length and per-layer complexity O(n^2))",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "PRIORITY-12",
+    "document_location": "Chương 2 (P473, P483)",
+    "claim_text": "Cơ chế Attention-based Deep Multiple Instance Learning (Attention-MIL) cung cấp phương pháp tổng hợp trọng số chú ý bất biến theo hoán vị cho bài toán phân loại mức túi (bag-level classification) dưới giám sát yếu.",
+    "citation_numbers": [
+      15
+    ],
+    "source_title": "Attention-based Deep Multiple Instance Learning",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "Ilse et al. ICML 2018 Abstract & Sec. 2 (Permutation-invariant operator for bag-level MIL; no claim regarding cybersecurity telemetry)",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "PRIORITY-13",
+    "document_location": "Chương 1 (P157) & Chương 2 (P412, P414)",
+    "claim_text": "VICReg kết hợp ba hàm mất mát chính quy hóa hình học: Phương sai (Variance - duy trì độ phân tán, chống sụp đổ về điểm), Bất biến (Invariance - gióng hàng), và Hiệp phương sai (Covariance - phi tương quan hóa các chiều, chống sụp đổ chiều). Việc áp dụng vào viễn trắc an ninh là giả thuyết thích ứng của đề tài.",
+    "citation_numbers": [
+      10
+    ],
+    "source_title": "VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "Bardes et al. ICLR 2022 Sec. 3 (Method: invariance, variance, and covariance regularization terms against collapse). Telemetry adaptation acknowledged as thesis hypothesis.",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "PRIORITY-14",
+    "document_location": "Chương 1 (P163) & Chương 2 (P357, P383)",
+    "claim_text": "Hiện tượng làm mịn quá mức (Over-smoothing) trong mạng nơ-ron đồ thị: khi tăng số lớp truyền tin, vector biểu diễn của các đỉnh mất dần năng lực biểu đạt theo hàm mũ và hội tụ về các vector khó phân biệt.",
+    "citation_numbers": [
+      44
+    ],
+    "source_title": "Graph Neural Networks Exponentially Lose Expressive Power for Node Classification",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "Oono & Suzuki ICLR 2020 Theorem 1 & Sec. 4 (Exponential loss of expressive power for node classification as depth increases)",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "PRIORITY-15",
+    "document_location": "Chương 1 (P163) & Chương 2 (P357, P383)",
+    "claim_text": "Hiện tượng nghẽn cổ chai thông tin (Over-squashing) xuất hiện khi lượng thông tin cấu trúc từ vùng lân cận tăng theo hàm mũ bị ép vào một vector kích thước cố định, mang bản chất toán học độc lập với Over-smoothing.",
+    "citation_numbers": [
+      31
+    ],
+    "source_title": "On the Bottleneck of Graph Neural Networks and Its Practical Implications",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "Alon & Yahav ICLR 2021 Sec. 3 & Theorem 1 (Information bottleneck in tree-like neighborhood expansion)",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "PRIORITY-16",
+    "document_location": "Chương 1 (P163) & Bảng 1.3",
+    "claim_text": "Hệ thống KAIROS tích hợp mạng nơ-ron đồ thị nhận biết thời gian (Time-Aware GNN encoder-decoder), mã hóa cấu trúc và khoảng cách thời gian để chấm điểm bất thường và tái dựng dấu vết tấn công.",
+    "citation_numbers": [
+      24
+    ],
+    "source_title": "KAIROS: Practical Intrusion Detection and Investigation using Whole-system Provenance",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "Cheng et al. IEEE S&P 2024 Abstract & Sec. IV (Time-aware GNN encoder-decoder for anomalousness scoring and attack footprint reconstruction)",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "PRIORITY-17",
+    "document_location": "Chương 1 (P163) & Bảng 1.3",
+    "claim_text": "Hệ thống MAGIC khai thác kiến trúc tự mã hóa đồ thị che (Masked Graph Autoencoder) và cơ chế thích ứng mô hình để phát hiện APT và chống trôi khái niệm (concept drift).",
+    "citation_numbers": [
+      26
+    ],
+    "source_title": "MAGIC: Detecting Advanced Persistent Threats via Masked Graph Representation Learning",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "Jia et al. USENIX Security 2024 Abstract & Sec. 4 (Masked graph representation learning + model adaptation for concept drift)",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "PRIORITY-18",
+    "document_location": "Chương 1 (P163) & Bảng 1.3",
+    "claim_text": "Hệ thống NODLINK mô hình hóa bài toán điều tra tấn công APT trực tuyến thành bài toán cây Steiner trực tuyến (Online Steiner Tree Problem) kết hợp bộ nhớ đệm.",
+    "citation_numbers": [
+      25
+    ],
+    "source_title": "NODLINK: An Online System for Fine-Grained APT Attack Investigation",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "Li et al. NDSS 2024 Abstract & Sec. 4 (Online Steiner Tree formulation for fine-grained provenance attack investigation)",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "PRIORITY-19",
+    "document_location": "Chương 1 (P163)",
+    "claim_text": "Khảo sát của Bilot et al. chỉ ra một mô hình mạng nơ-ron đơn giản (simple neural network) đạt hiệu năng cạnh tranh vượt trội trên 5/7 tập dữ liệu DARPA; một cạnh phụ thuộc trong đồ thị không tự động đồng nghĩa với tác động nhân quả.",
+    "citation_numbers": [
+      29
+    ],
+    "source_title": "Sometimes Simpler is Better: Evaluating Provenance-Based Intrusion Detection Systems",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "Bilot et al. USENIX Security 2025 Abstract & Sec. 5 (Simple neural network competitive on 5/7 DARPA datasets; warns against assuming complex GNNs are inherently superior)",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "PRIORITY-20",
+    "document_location": "Chương 1 (P129)",
+    "claim_text": "Phân định rạch ròi bốn cấp độ an toàn thông tin và quyền riêng tư: (1) Giả danh hóa (Pseudonymization); (2) Thử nghiệm chống tấn công suy luận thành viên (MIA [16]); (3) Thử nghiệm chống tấn công đảo ngược mô hình (Model Inversion [33]); (4) Khung bảo đảm toán học về quyền riêng tư vi sai (Differential Privacy [17]). Không gian vector tiềm ẩn không tự động an toàn nếu không có cơ chế chứng minh toán học.",
+    "citation_numbers": [
+      16,
+      17,
+      33
+    ],
+    "source_title": "Shokri [16], Fredrikson [33], NIST SP 800-226 [17]",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "Shokri et al. Sec. II (MIA); Fredrikson et al. Sec. 4 (Model Inversion); NIST SP 800-226 Sec. 2-3 (DP framework quantifying privacy loss)",
+    "action": "KEEP"
+  },
+  {
+    "claim_id": "CLM-021",
+    "document_location": "Chương 1 (P118)",
+    "claim_text": "Sự xuất hiện của nhiễu từ hành vi quản trị viên (PowerShell, SSH, WMI) là thách thức vận hành và được đề tài đặt làm giả thuyết nghiên cứu cần kiểm thử thực nghiệm trong không gian đặc trưng hành vi.",
+    "citation_numbers": [],
+    "source_title": "Thesis Research Hypothesis",
     "support_status": "AUTHOR_HYPOTHESIS",
-    "notes": "Đã đổi thành hypothesis của nghiên cứu, không claim direct support."
+    "source_locator": "Thesis Sec. 1.1.2 P118 (Operational observation & research hypothesis; no external paper cited)",
+    "action": "KEEP"
   },
   {
-    "claim_id": "FP-003",
-    "location": {
-      "chapter": 1,
-      "section": "1.3.3",
-      "paragraph_index": 182
-    },
-    "claim_text": "Phân chia dữ liệu ngẫu nhiên tạo nguy cơ rò rỉ phân vùng thời gian và học đường tắt.",
-    "source_key": "SRC000002",
-    "source_locator": "Arp et al. [8] Sec. IV-B & Tab. 2 (Pitfalls in Security ML)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Dẫn nguồn trực tiếp Arp et al. [8] cho vấn đề data leakage và temporal snooping."
-  },
-  {
-    "claim_id": "FP-004",
-    "location": {
-      "chapter": 1,
-      "section": "1.1.3",
-      "paragraph_index": 134
-    },
-    "claim_text": "Các objective tự giám sát được thiết kế nhằm khuyến khích không gian biểu diễn z lưu giữ những tín hiệu phục vụ các ràng buộc PRESERVE và INVARIANT; mức độ đạt được phải được kiểm chứng downstream.",
-    "source_key": "SRC000022",
-    "source_locator": "Bardes et al. [10] Sec. 3 (VICReg Representation Regularization)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Mục tiêu thiết kế và cơ chế điều hòa hình học của VICReg, không claim semantic completeness."
-  },
-  {
-    "claim_id": "FP-005",
-    "location": {
-      "chapter": 1,
-      "section": "1.2.1",
-      "paragraph_index": 140
-    },
-    "claim_text": "Phương pháp PCA trích xuất đặc trưng đếm sự kiện và phân tích thành phần chính trên ma trận log.",
-    "source_key": "SRC000031",
-    "source_locator": "Xu et al. [18] Sec. 3 & Sec. 4 (SOSP 2009)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Khớp trích dẫn chuẩn Ref [18]."
-  },
-  {
-    "claim_id": "FP-006",
-    "location": {
-      "chapter": 1,
-      "section": "1.2.1",
-      "paragraph_index": 140
-    },
-    "claim_text": "Invariant Mining khai phá các bất biến tuyến tính từ vector số lượng sự kiện thực thi.",
-    "source_key": "SRC000032",
-    "source_locator": "Lou et al. [19] Sec. 3 (USENIX ATC 2010)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Khớp trích dẫn chuẩn Ref [19]."
-  },
-  {
-    "claim_id": "FP-007",
-    "location": {
-      "chapter": 1,
-      "section": "1.2.2",
-      "paragraph_index": 152
-    },
-    "claim_text": "DeepLog mô hình hóa chuỗi khóa sự kiện bằng LSTM cho next-event prediction và xây dựng mô hình riêng biệt cho tham số số thực.",
-    "source_key": "SRC000003",
-    "source_locator": "Du et al. [14] Sec. 3 & Sec. 4 (ACM CCS 2017)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Khớp trích dẫn chuẩn Ref [14]."
-  },
-  {
-    "claim_id": "FP-008",
-    "location": {
-      "chapter": 1,
-      "section": "1.2.2",
-      "paragraph_index": 152
-    },
-    "claim_text": "LogBERT áp dụng kiến trúc Transformer với mục tiêu Masked Language Modeling để học ngữ cảnh hai chiều trên chuỗi log.",
-    "source_key": "SRC000004",
-    "source_locator": "Meng et al. [20] Sec. 3 (IJCAI 2021)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Khớp trích dẫn chuẩn Ref [20]."
-  },
-  {
-    "claim_id": "FP-009",
-    "location": {
-      "chapter": 1,
-      "section": "1.2.3",
-      "paragraph_index": 159
-    },
-    "claim_text": "Các hệ thống PIDS dựa trên đồ thị nguồn gốc (KAIROS [24], NODLINK [25], MAGIC [26], ORTHRUS [27]) mô hình hóa luồng dữ liệu hệ thống.",
-    "source_key": "SRC000012_SRC000013_SRC000014_SRC000015",
-    "source_locator": "KAIROS [24] Sec. 4; NODLINK [25] Sec. 3; MAGIC [26] Sec. 4; ORTHRUS [27] Sec. 3",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Đồng bộ chuẩn 4 hệ thống PIDS tương ứng refs [24], [25], [26], [27]."
-  },
-  {
-    "claim_id": "FP-010",
-    "location": {
-      "chapter": 1,
-      "section": "1.3.5",
-      "paragraph_index": 194
-    },
-    "claim_text": "Đánh giá khả năng chống tấn công suy luận thành viên (MIA) đo lường rủi ro xác định mẫu dữ liệu có nằm trong tập huấn luyện hay không.",
-    "source_key": "SRC000025",
-    "source_locator": "Shokri et al. [16] Sec. III & Sec. IV (IEEE S&P 2017)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Áp dụng đúng nguyên lý MIA của Shokri et al. [16]."
-  },
-  {
-    "claim_id": "FP-011",
-    "location": {
-      "chapter": 1,
-      "section": "1.3.5",
-      "paragraph_index": 194
-    },
-    "claim_text": "Đánh giá khả năng chống tấn công đảo ngược mô hình (Model Inversion) nhằm thử nghiệm phục dựng định danh nhạy cảm từ vector z.",
-    "source_key": "SRC000026",
-    "source_locator": "Fredrikson et al. [33] Sec. 3 & Sec. 4 (ACM CCS 2015)",
+    "claim_id": "CLM-022",
+    "document_location": "Chương 1 (P120)",
+    "claim_text": "Vector biểu diễn z chỉ phản ánh những tín hiệu thống kê mà hàm mục tiêu tối ưu hóa khuyến khích lưu giữ, chứ không phải một bản sao toàn tri của mọi trạng thái hệ điều hành.",
+    "citation_numbers": [],
+    "source_title": "Epistemological Formulation",
     "support_status": "AUTHOR_SYNTHESIS",
-    "notes": "Threat-model adaptation của tác giả dựa trên nguyên lý nền tảng của Fredrikson et al. [33]."
+    "source_locator": "Thesis Sec. 1.1.3 P120 (Epistemological boundary of deep representation learning)",
+    "action": "KEEP"
   },
   {
-    "claim_id": "FP-012",
-    "location": {
-      "chapter": 1,
-      "section": "1.1.3",
-      "paragraph_index": 126
-    },
-    "claim_text": "Hàng EXCLUDE trong Hợp đồng Biểu diễn được kiểm chứng qua Feature-leakage / Re-identification Audit; Differential Privacy là khung toán học riêng biệt.",
-    "source_key": "SRC000027",
-    "source_locator": "NIST SP 800-226 [17] Sec. 2 & Sec. 3",
+    "claim_id": "CLM-023",
+    "document_location": "Chương 1 (P125)",
+    "claim_text": "Các biến số gây rò rỉ phân vùng dữ liệu và đánh cắp thời gian (temporal snooping) khiến mô hình học các tương quan giả và sụp đổ hiệu năng khi triển khai ngoài miền.",
+    "citation_numbers": [
+      8
+    ],
+    "source_title": "Dos and Don'ts of Machine Learning in Computer Security",
     "support_status": "DIRECT_SUPPORT",
-    "notes": "Phân tách rõ ràng giữa feature removal audit và mathematical DP guarantee."
+    "source_locator": "Arp et al. USENIX Security 2022 Sec. 3.2 (Pitfall 3: Spatial and Temporal Snooping, Pitfall 7: Lab-only evaluations)",
+    "action": "KEEP"
   },
   {
-    "claim_id": "FP-013",
-    "location": {
-      "chapter": 2,
-      "section": "2.2.1",
-      "paragraph_index": 296
-    },
-    "claim_text": "Cơ chế tự chú ý (Self-Attention) trong Transformer tính toán trọng số tương tác trực tiếp giữa mọi cặp vị trí trong chuỗi.",
-    "source_key": "SRC000035",
-    "source_locator": "Vaswani et al. [34] Sec. 3.2, Eq. (1)",
+    "claim_id": "CLM-024",
+    "document_location": "Chương 1 (P134)",
+    "claim_text": "Tách bạch vai trò bộ mã hóa Encoder và các đầu chiếu/dự đoán phụ trợ Head; các hàm mất mát tự giám sát là proxy objectives chứ không phải bằng chứng an ninh trực tiếp.",
+    "citation_numbers": [
+      10
+    ],
+    "source_title": "VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning",
     "support_status": "DIRECT_SUPPORT",
-    "notes": "Khớp trích dẫn chuẩn Transformer Ref [34]."
+    "source_locator": "Bardes et al. ICLR 2022 Sec. 2 & Fig. 1 (Encoder f_theta and Projector g_phi separation)",
+    "action": "KEEP"
   },
   {
-    "claim_id": "FP-014",
-    "location": {
-      "chapter": 2,
-      "section": "2.2.2",
-      "paragraph_index": 333
-    },
-    "claim_text": "TGAT sử dụng hàm mã hóa thời gian liên tục điều hòa (Harmonic Time Encoding) để bảo toàn khoảng cách thời gian giữa các sự kiện.",
-    "source_key": "SRC000036",
-    "source_locator": "Xu et al. [35] Sec. 3.2, Eq. (2)-(4)",
+    "claim_id": "CLM-025",
+    "document_location": "Chương 1 (P135, P137)",
+    "claim_text": "Giao thức Frozen Linear Probe đánh giá chất lượng vector biểu diễn z bằng cách khóa cố định toàn bộ tham số encoder và chỉ huấn luyện một bộ phân loại tuyến tính trên z.",
+    "citation_numbers": [
+      8,
+      37
+    ],
+    "source_title": "SimCLR [37] & Arp et al. [8]",
     "support_status": "DIRECT_SUPPORT",
-    "notes": "Khớp trích dẫn chuẩn TGAT Ref [35]."
+    "source_locator": "Chen et al. ICML 2020 Sec. 4.1 (Linear evaluation protocol) & Arp et al. Sec. 3",
+    "action": "KEEP"
   },
   {
-    "claim_id": "FP-015",
-    "location": {
-      "chapter": 2,
-      "section": "2.2.2",
-      "paragraph_index": 333
-    },
-    "claim_text": "Mô hình đồ thị thời gian TGN cập nhật bộ nhớ đỉnh động và tổng hợp thông điệp liên tục.",
-    "source_key": "SRC000037",
-    "source_locator": "Rossi et al. [36] Sec. 3 (arXiv:2006.10637v2)",
+    "claim_id": "CLM-026",
+    "document_location": "Chương 1 (P147, P149)",
+    "claim_text": "PCA (Xu et al. [18]) và Invariant Mining (Lou et al. [19]) là hai phương pháp thống kê và cú pháp kinh điển trong phát hiện bất thường nhật ký hệ thống.",
+    "citation_numbers": [
+      18,
+      19
+    ],
+    "source_title": "Xu et al. [18] & Lou et al. [19]",
     "support_status": "DIRECT_SUPPORT",
-    "notes": "Khớp trích dẫn chuẩn TGN Ref [36]."
+    "source_locator": "Xu et al. SOSP 2009 Sec. 4 & Lou et al. USENIX ATC 2010 Sec. 3",
+    "action": "KEEP"
   },
   {
-    "claim_id": "FP-016",
-    "location": {
-      "chapter": 2,
-      "section": "2.2.2",
-      "paragraph_index": 357
-    },
-    "claim_text": "Khi áp dụng GNN trên đồ thị lớn, hai rủi ro kiến trúc phổ biến là Over-smoothing (Oono & Suzuki [44]) và Over-squashing (Alon & Yahav [31]).",
-    "source_key": "SRC000046_SRC000021",
-    "source_locator": "Oono & Suzuki [44] Theorem 1; Alon & Yahav [31] Sec. 3 & Theorem 1",
+    "claim_id": "CLM-027",
+    "document_location": "Chương 1 (P157)",
+    "claim_text": "LogAnomaly đề xuất Template2Vec dựa trên Word2Vec/FastText kết hợp d-IDF; Logsy sử dụng Outlier Classification Loss; NeuralLog tiếp cận không dùng bộ phân tích cú pháp.",
+    "citation_numbers": [
+      21,
+      22,
+      23
+    ],
+    "source_title": "LogAnomaly [22], Logsy [23], NeuralLog [21]",
     "support_status": "DIRECT_SUPPORT",
-    "notes": "Tách biệt rõ ràng nguồn sơ cấp cho hai bệnh lý GNN độc lập."
+    "source_locator": "Meng et al. IJCAI 2019 Sec. 3; Nedelkoski et al. ICDM 2020 Sec. 3; Le & Teoh IEEE TDSC 2022 Sec. III",
+    "action": "KEEP"
   },
   {
-    "claim_id": "FP-017",
-    "location": {
-      "chapter": 2,
-      "section": "2.3.1",
-      "paragraph_index": 393
-    },
-    "claim_text": "Đầu chiếu phi tuyến tính (non-linear projection head) được chứng minh giúp cải thiện chất lượng biểu diễn học được trong SimCLR.",
-    "source_key": "SRC000039",
-    "source_locator": "Chen et al. [37] Sec. 3 & Sec. 4",
+    "claim_id": "CLM-028",
+    "document_location": "Chương 1 (P160, P162)",
+    "claim_text": "Đồ thị nguồn gốc hệ thống mô hình hóa toàn bộ lịch sử thực thi dưới dạng đồ thị có hướng, không đồng nhất và gán nhãn thời gian G = (V, E, tau).",
+    "citation_numbers": [
+      1,
+      5
+    ],
+    "source_title": "Inam et al. [1] & Zipperle et al. [5]",
     "support_status": "DIRECT_SUPPORT",
-    "notes": "Khớp trích dẫn chuẩn SimCLR Ref [37]."
+    "source_locator": "Inam et al. IEEE S&P 2023 Sec. II & Zipperle et al. ACM CSUR 2023 Sec. 2",
+    "action": "KEEP"
   },
   {
-    "claim_id": "FP-018",
-    "location": {
-      "chapter": 2,
-      "section": "2.3.1",
-      "paragraph_index": 393
-    },
-    "claim_text": "Hàm mất mát tương phản InfoNCE tối đa hóa cận dưới thông tin tương hỗ giữa các góc nhìn biểu diễn.",
-    "source_key": "SRC000039_SRC000038",
-    "source_locator": "Chen et al. [37] Eq. (1); van den Oord et al. [38] Sec. 2 & Eq. (4)",
+    "claim_id": "CLM-029",
+    "document_location": "Chương 1 (P163)",
+    "claim_text": "Hiện tượng bùng nổ phụ thuộc (Dependency Explosion) xuất hiện khi các tiến trình dài hạn liên tục tương tác với tệp tin và socket, làm loãng tín hiệu bất thường trong đồ thị nguồn gốc.",
+    "citation_numbers": [
+      1,
+      28
+    ],
+    "source_title": "Inam et al. [1] & Zeng et al. [28]",
     "support_status": "DIRECT_SUPPORT",
-    "notes": "Khớp trích dẫn chuẩn SimCLR [37] và CPC InfoNCE [38]."
+    "source_locator": "Inam et al. IEEE S&P 2023 Sec. IV-B & Zeng et al. ACM CCS 2022 Sec. 1",
+    "action": "KEEP"
   },
   {
-    "claim_id": "FP-019",
-    "location": {
-      "chapter": 2,
-      "section": "2.3.2",
-      "paragraph_index": 405
-    },
-    "claim_text": "CPM-Nets giải quyết bài toán học đa góc nhìn trong điều kiện dữ liệu không trọn vẹn thông qua không gian tiềm ẩn chung.",
-    "source_key": "SRC000041",
-    "source_locator": "Hu & Peng [39] Sec. 3 (NeurIPS 2020)",
+    "claim_id": "CLM-030",
+    "document_location": "Chương 1 (P164)",
+    "claim_text": "Nghiên cứu của ThS. Nguyễn Thị Thu Thủy (Học viện Kỹ thuật Mật mã) hệ thống hóa phương pháp luận ứng dụng Graph Learning trên đồ thị nguồn gốc để phát hiện APT tại Việt Nam.",
+    "citation_numbers": [
+      32
+    ],
+    "source_title": "Báo cáo chuyên đề tiến sĩ, Học viện Kỹ thuật Mật mã (2024)",
     "support_status": "DIRECT_SUPPORT",
-    "notes": "Khớp trích dẫn chuẩn CPM-Nets Ref [39]."
+    "source_locator": "Báo cáo chuyên đề tiến sĩ, KMA 2024, Chương 2-3",
+    "action": "KEEP"
   },
   {
-    "claim_id": "FP-020",
-    "location": {
-      "chapter": 2,
-      "section": "2.3.3",
-      "paragraph_index": 431
-    },
-    "claim_text": "Thuật toán PCGrad chiếu xung đột gradient giữa các nhiệm vụ tối ưu hóa đa mục tiêu.",
-    "source_key": "SRC000040",
-    "source_locator": "Yu et al. [40] Sec. 3 & Algorithm 1 (NeurIPS 2020)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Khớp trích dẫn chuẩn PCGrad Ref [40]."
-  },
-  {
-    "claim_id": "FP-021",
-    "location": {
-      "chapter": 2,
-      "section": "2.4.1",
-      "paragraph_index": 444
-    },
-    "claim_text": "Cơ chế Attention-based Multiple Instance Learning (MIL) gán trọng số chú ý để tổng hợp bằng chứng từ các instance trong bag.",
-    "source_key": "SRC000024",
-    "source_locator": "Ilse et al. [15] Sec. 2 & Eq. (5)-(8) (ICML 2018)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Khớp trích dẫn chuẩn Attention-MIL Ref [15]."
-  },
-  {
-    "claim_id": "FP-022",
-    "location": {
-      "chapter": 1,
-      "section": "1.4.4",
-      "paragraph_index": 211
-    },
-    "claim_text": "Giao thức Frozen Linear Probe đóng băng toàn bộ tham số bộ mã hóa và chỉ huấn luyện một bộ phân loại tuyến tính đơn giản trên z để đo khả năng phân tách tuyến tính.",
-    "source_key": "SRC000039",
-    "source_locator": "Chen et al. [37] Sec. 4.1 (Linear evaluation protocol)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Chuẩn hóa giao thức đánh giá biểu diễn tự giám sát theo SimCLR [37]."
-  },
-  {
-    "claim_id": "FP-023",
-    "location": {
-      "document_location": "Chương 1 (idx 95)",
-      "chapter": 1
-    },
-    "claim_text": "Trong các Trung tâm Điều hành An ninh mạng (Security Operations Center - SOC) hiện đại, dữ liệu nhật ký hệ thống (system logs) và nhật ký kiểm toán (audit logs) đóng vai trò là nguồn bằng chứng trung tâm phục vụ phát hiện, điều tra và ứng phó các chiến dịch tấn công có chủ đích (Advanced Persistent ...",
-    "source_key": "REF_01",
-    "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [2] Sec. 3 & Sec. 4 (Approximated audit logs and forensic validity); [3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection); [4] Enterprise Matrix, Tactics TA0001-TA0043 & Techniques (Official Release 12/05/2026)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-024",
-    "location": {
-      "document_location": "Chương 1 (idx 97)",
-      "chapter": 1
-    },
-    "claim_text": "Không gian dữ liệu nhật ký trong môi trường mạng doanh nghiệp được tổng hợp từ ba nhóm nguồn telemetry chính với cấu trúc và định dạng không đồng nhất [1], [5]. Nhóm thứ nhất là nhật ký kiểm toán máy chủ (Host Audit Logs), bao gồm Linux Auditd, Windows Event Log / Sysmon và Linux eBPF (Extended Berk...",
-    "source_key": "REF_01",
-    "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [2] Sec. 3 & Sec. 4 (Approximated audit logs and forensic validity); [5] Sec. 2, Sec. 3, Sec. 4 (Provenance-based IDS survey, pipeline, taxonomy); [6] Sec. II & Sec. III (Automated log parsing tools and benchmark); [7] Sec. 3 & Sec. 4, Tab. 2 (Large-scale evaluation of log parsing techniques); [41] Microsoft Learn, Heading 'Event IDs' (Sysmon Event IDs 1, 3, 7, 11, 13)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Đã dẫn nguồn đặc tả kỹ thuật Microsoft Sysinternals Sysmon (Russinovich & Garnier, 2026) [41] cho Event IDs (1, 3, 7, 11, 13) kết hợp provenance telemetry [1], [2], [5] và log parsing [6], [7]."
-  },
-  {
-    "claim_id": "FP-025",
-    "location": {
-      "document_location": "Chương 1 (idx 103)",
-      "chapter": 1
-    },
-    "claim_text": "Bên cạnh tính dị thể, dữ liệu log doanh nghiệp chịu áp lực vận hành về mặt thông lượng và tỷ lệ phân bố nhãn  [8],  [3]. Trong các môi trường mạng lớn, hệ thống tiếp nhận luồng sự kiện liên tục với tốc độ cao, đòi hỏi thuật toán biểu diễn đặc trưng phải xử lý theo cơ chế dòng (streaming) với độ phức...",
-    "source_key": "REF_03",
-    "source_locator": "[3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection); [8] Sec. IV-B, Tab. 2 (Dos and don'ts of ML in security: temporal snooping, drift); [9] Sec. IV & Sec. V (UNICORN runtime provenance detector, WL subtree kernel); [10] Sec. 3, Eq. (1)-(4) (VICReg: Variance, Invariance, Covariance regularization); [11] Sec. 2 & Sec. 3 (Barlow Twins: Cross-correlation matrix redundancy reduction)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-026",
-    "location": {
-      "document_location": "Chương 1 (idx 104)",
-      "chapter": 1
-    },
-    "claim_text": "Dưới góc độ phân phối thời gian, dữ liệu log liên tục biến đổi trong môi trường vận hành dài hạn. Dựa trên các vấn đề không dừng (non-stationarity) và phương pháp luận đánh giá theo thời gian được thảo luận trong tài liệu liên quan [8], nghiên cứu tổng hợp bốn dạng trôi dạt dữ liệu (Drift Taxonomy) ...",
-    "source_key": "REF_08",
-    "source_locator": "[8] Sec. IV-B, Tab. 2 (Dos and don'ts of ML in security: temporal snooping, drift)",
+    "claim_id": "CLM-031",
+    "document_location": "Chương 2 (P199)",
+    "claim_text": "Hàm mất mát là tín hiệu tối ưu hóa nội tại, không phải bằng chứng khoa học tự thân; mọi kết luận an ninh phải gắn với phép đo thực nghiệm downstream tương ứng.",
+    "citation_numbers": [],
+    "source_title": "First-Principles Epistemological Lock",
     "support_status": "AUTHOR_SYNTHESIS",
-    "notes": "Khung 4 cơ chế trôi dạt (Concept, Template, Population, Representation Drift) do Tác giả đề xuất, tổng hợp từ nguyên lý non-stationarity của Arp et al. [8]."
+    "source_locator": "Thesis Chapter 2 P199 (Epistemological foundation of scientific optimization)",
+    "action": "KEEP"
   },
   {
-    "claim_id": "FP-027",
-    "location": {
-      "document_location": "Chương 1 (idx 111)",
-      "chapter": 1
-    },
-    "claim_text": "Tuy nhiên, trên thực tế vận hành và theo khung phân loại chuẩn hóa của ma trận tri thức an ninh MITRE ATT&CK (Phiên bản Enterprise v19.1, 12/05/2026) [4], các chiến dịch tấn công có chủ đích (APT) mang bản chất phi tuyến tính sâu sắc [1]: (1) Nhảy cóc giai đoạn (Step Skipping): Kẻ tấn công có thể kh...",
-    "source_key": "REF_01",
-    "source_locator": "Section 2.1 / Synthesis of non-linear APT behaviors from [1] and [4]",
-    "support_status": "AUTHOR_SYNTHESIS",
-    "notes": "Các cấu trúc phân tích (Step Skipping, Tactic Looping & Interleaving, Parallel Branching) là do tác giả luận văn tổng hợp từ các hành vi APT phi tuyến tính trong Inam et al. [1] và khung MITRE ATT&CK [4]."
-  },
-  {
-    "claim_id": "FP-028",
-    "location": {
-      "document_location": "Chương 1 (idx 115)",
-      "chapter": 1
-    },
-    "claim_text": "Hình 1.2: Mô hình Không gian Bằng chứng Hành vi Đa chiều MITRE ATT&CK và các đặc trưng phi tuyến tính trong tấn công APT (Nguồn: Tác giả tổng hợp dựa trên MITRE ATT&CK  [4] và Inam et al.  [1])",
-    "source_key": "REF_01",
-    "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [4] Enterprise Matrix, Tactics TA0001-TA0043 & Techniques (Official Release 12/05/2026)",
-    "support_status": "AUTHOR_SYNTHESIS",
-    "notes": "Hình 1.2 mô hình Không gian Bằng chứng Hành vi Đa chiều do Tác giả xây dựng, kết hợp MITRE ATT&CK [4] và provenance telemetry của Inam et al. [1]."
-  },
-  {
-    "claim_id": "FP-029",
-    "location": {
-      "document_location": "Chương 1 (idx 116)",
-      "chapter": 1
-    },
-    "claim_text": "Trong đó mỗi chiến thuật (Tactic) đại diện cho mục tiêu chiến thuật của kẻ tấn công (trả lời câu hỏi 'Tại sao') và mỗi kỹ thuật (Technique) đại diện cho phương thức thực thi cụ thể (trả lời câu hỏi 'Làm thế nào'); một chuỗi sự kiện hoặc cây tiến trình có thể đồng thời kích hoạt nhiều nhãn chiến thuậ...",
-    "source_key": "REF_04",
-    "source_locator": "[4] Enterprise Matrix, Tactics TA0001-TA0043 & Techniques (Official Release 12/05/2026)",
+    "claim_id": "CLM-032",
+    "document_location": "Chương 2 (P410)",
+    "claim_text": "Ba hướng tiếp cận tự giám sát tiêu biểu: Contrastive Learning / InfoNCE (van den Oord [38], SimCLR [37]), Barlow Twins (Zbontar et al. [11]), và VICReg (Bardes et al. [10]).",
+    "citation_numbers": [
+      10,
+      11,
+      37,
+      38
+    ],
+    "source_title": "van den Oord [38], Chen [37], Zbontar [11], Bardes [10]",
     "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
+    "source_locator": "van den Oord et al. 2018; Chen et al. ICML 2020; Zbontar et al. ICML 2021; Bardes et al. ICLR 2022",
+    "action": "KEEP"
   },
   {
-    "claim_id": "FP-030",
-    "location": {
-      "document_location": "Chương 1 (idx 117)",
-      "chapter": 1
-    },
-    "claim_text": "Về mặt dữ liệu thực nghiệm, việc mô hình hóa hành vi tấn công đòi hỏi phải phân định chính xác đặc tính gán nhãn và mức độ hạt (Label Granularity) của từng bộ dữ liệu chuẩn [3]: (1) DARPA Transparent Computing (TC E3/E5) [12],  [43] cung cấp dữ liệu kiểm toán hệ thống mức hạt nhân chi tiết với các k...",
-    "source_key": "REF_03",
-    "source_locator": "[3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection); [12] README-E3.md, Official Repo (TC E3 fine-grained kernel audit logs and APT scenarios); [13] Dataset Specification & redteam.txt (Enterprise network authentication compromise events); [18] Sec. 4.1, Tab. 1 (Detecting system problems by mining console logs, HDFS block labels); [42] Sec. 2 & Sec. 3, Tab. 1 (Loghub: 17 datasets including BGL line-level anomaly labels); [43] README.md, Official Repo (TC E5 enterprise APT scenarios and fine-grained logs)",
+    "claim_id": "CLM-033",
+    "document_location": "Chương 2 (P414)",
+    "claim_text": "Thành phần mất mát gióng hàng đa góc nhìn sử dụng cơ chế phẫu thuật gradient PCGrad để triệt tiêu xung đột gradient giữa các nhánh biểu diễn.",
+    "citation_numbers": [
+      40
+    ],
+    "source_title": "Gradient Surgery for Multi-Task Learning",
     "support_status": "DIRECT_SUPPORT",
-    "notes": "Đã dẫn nguồn dữ liệu chính thức: Liu et al. [3] (chất lượng dữ liệu log), DARPA TC E3 [12] và E5 [43] (kiểm toán kernel gán nhãn mức tiến trình/luồng), LANL [13] (sự kiện xâm nhập xác thực redteam.txt), Xu et al. [18] (HDFS block-level), LogHub ISSRE 2023 [42] (BGL line-level)."
+    "source_locator": "Yu et al. NeurIPS 2020 Algorithm 1 & Sec. 3 (Projecting conflicting gradients)",
+    "action": "KEEP"
   },
   {
-    "claim_id": "FP-031",
-    "location": {
-      "document_location": "Chương 1 (idx 118)",
-      "chapter": 1
-    },
-    "claim_text": "Đặc biệt, sự xuất hiện của nhiễu từ hành vi quản trị viên (Admin-Noise) là một thách thức then chốt [1], [3]. Các quản trị viên hệ thống thường xuyên sử dụng PowerShell, SSH, WMI và các công cụ dòng lệnh nội bộ tương tự như kẻ tấn công APT, tạo ra sự trùng lặp lớn trong không gian đặc trưng hành vi ...",
-    "source_key": "REF_01",
-    "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection)",
+    "claim_id": "CLM-034",
+    "document_location": "Chương 2 (P410)",
+    "claim_text": "Mô hình CPM-Nets xử lý tính không đầy đủ của dữ liệu đa góc nhìn thông qua không gian tiềm ẩn phân loại hoàn chỉnh.",
+    "citation_numbers": [
+      39
+    ],
+    "source_title": "CPM-Nets: Cross Partial Multi-View Networks",
     "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
+    "source_locator": "Zhang et al. NeurIPS 2019 Sec. 3 (Cross Partial Multi-View Learning framework)",
+    "action": "KEEP"
   },
   {
-    "claim_id": "FP-032",
-    "location": {
-      "document_location": "Chương 1 (idx 125)",
-      "chapter": 1
-    },
-    "claim_text": "3. Nhóm Điều kiện Triệt tiêu (EXCLUDE - E_exclude): Tập hợp các thông tin giả tạo và biến số ngoài miền bắt buộc phải bị loại bỏ/triệt tiêu khỏi không gian vector z nhằm ngăn ngừa rủi ro học đường tắt (Shortcut Learning)  [8]. Bao gồm: các mẫu định dạng đặc thù của môi trường thử nghiệm (Testbed-spe...",
-    "source_key": "REF_08",
-    "source_locator": "[8] Sec. IV-B, Tab. 2 (Dos and don'ts of ML in security: temporal snooping, drift); [16] Sec. III & Sec. IV (Membership inference attacks against machine learning models); [17] Sec. 3 & Sec. 4 (Evaluating differential privacy guarantees, budget epsilon)",
-    "support_status": "AUTHOR_SYNTHESIS",
-    "notes": "Nguyên tắc Hợp đồng Biểu diễn (PRESERVE, EQUIV, EXCLUDE) do Tác giả thiết lập, tích hợp các ràng buộc an ninh từ Arp et al. [8], Shokri et al. [16], NIST [17]."
-  },
-  {
-    "claim_id": "FP-033",
-    "location": {
-      "document_location": "Chương 1 (idx 129)",
-      "chapter": 1
-    },
-    "claim_text": "Cần nhấn mạnh rằng, nguyên tắc PRESERVE tập trung vào việc bảo toàn ngữ nghĩa an ninh động chứ không đồng nghĩa với việc giữ lại toàn bộ định danh thô của người dùng hay máy chủ, nhằm đảm bảo khả năng liên kết có kiểm soát (controlled linkability) và tương thích với các tiêu chuẩn đánh giá quyền riê...",
-    "source_key": "REF_08",
-    "source_locator": "[8] Sec. IV-B, Tab. 2 (Dos and don'ts of ML in security: temporal snooping, drift); [16] Sec. III & Sec. IV (Membership inference attacks against machine learning models); [17] Sec. 3 & Sec. 4 (Evaluating differential privacy guarantees, budget epsilon)",
-    "support_status": "AUTHOR_SYNTHESIS",
-    "notes": "Nguyên tắc Hợp đồng Biểu diễn (PRESERVE, EQUIV, EXCLUDE) do Tác giả thiết lập, tích hợp các ràng buộc an ninh từ Arp et al. [8], Shokri et al. [16], NIST [17]."
-  },
-  {
-    "claim_id": "FP-034",
-    "location": {
-      "document_location": "Chương 1 (idx 134)",
-      "chapter": 1
-    },
-    "claim_text": "2. Tầng 2 — Học không gian biểu diễn (Representation Learning — Trọng tâm Chuyên đề): Thiết lập ánh xạ  từ cấu trúc chuỗi sự kiện và đồ thị nguồn gốc sang không gian vector tiềm ẩn. Toàn bộ năng lực bảo toàn ngữ nghĩa an ninh và tính bất biến được đóng gói trọn vẹn bên trong vector z  [10].",
-    "source_key": "REF_10",
-    "source_locator": "[10] Sec. 3, Eq. (1)-(4) (VICReg: Variance, Invariance, Covariance regularization)",
-    "support_status": "AUTHOR_SYNTHESIS",
-    "notes": "Khung phân tách ba tầng phương pháp luận do Tác giả đề xuất, tích hợp cơ chế tự giám sát VICReg [10] và nguyên tắc đánh giá đóng băng của Arp et al. [8]."
-  },
-  {
-    "claim_id": "FP-035",
-    "location": {
-      "document_location": "Chương 1 (idx 137)",
-      "chapter": 1
-    },
-    "claim_text": "Trong đó tham số  của bộ trích xuất đặc trưng Tầng 2 được giữ cố định hoàn toàn trong suốt quá trình đánh giá ở Tầng 3. Quy tắc này bảo đảm bộ phân loại hạ nguồn không làm thay nhiệm vụ trích xuất đặc trưng của Tầng 2  [8].",
-    "source_key": "REF_08",
-    "source_locator": "[8] Sec. IV-B, Tab. 2 (Dos and don'ts of ML in security: temporal snooping, drift)",
-    "support_status": "AUTHOR_SYNTHESIS",
-    "notes": "Khung phân tách ba tầng phương pháp luận do Tác giả đề xuất, tích hợp cơ chế tự giám sát VICReg [10] và nguyên tắc đánh giá đóng băng của Arp et al. [8]."
-  },
-  {
-    "claim_id": "FP-036",
-    "location": {
-      "document_location": "Chương 1 (idx 139)",
-      "chapter": 1
-    },
-    "claim_text": "Nhằm định vị chính xác các đóng góp kỹ thuật và cơ sở lý luận của chuyên đề, Mục 1.2 tiến hành khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log chủ đạo trong y văn hiện đại  [6],  [1],  [5]: (1) Nhóm phương pháp thống kê và cú pháp dựa trên mẫu log (Statistical &...",
-    "source_key": "REF_01",
-    "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [5] Sec. 2, Sec. 3, Sec. 4 (Provenance-based IDS survey, pipeline, taxonomy); [6] Sec. II & Sec. III (Automated log parsing tools and benchmark)",
+    "claim_id": "CLM-035",
+    "document_location": "Chương 3 (Stage A2 Verification)",
+    "claim_text": "Mọi kết quả thực nghiệm Stage A2 (hàm mất mát, macro-F1, AUROC, độ tương phản) được ghi nhận nguyên bản từ run logs, khóa bất biến không sửa đổi.",
+    "citation_numbers": [],
+    "source_title": "Stage A2 Forensic Evidence Repository",
     "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-037",
-    "location": {
-      "document_location": "Chương 1 (idx 141)",
-      "chapter": 1
-    },
-    "claim_text": "Nhóm phương pháp thống kê và cú pháp đại diện cho thế hệ tiếp cận đầu tiên trong phân tích nhật ký tự động  [6],  [7]. Cơ chế hoạt động của nhóm này dựa trên quy trình hai giai đoạn tách rời: giai đoạn phân tách dòng log thô thành các mẫu định dạng tĩnh (Log Templates / Event IDs) thông qua bộ phân ...",
-    "source_key": "REF_06",
-    "source_locator": "[6] Sec. II & Sec. III (Automated log parsing tools and benchmark); [7] Sec. 3 & Sec. 4, Tab. 2 (Large-scale evaluation of log parsing techniques)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-038",
-    "location": {
-      "document_location": "Chương 1 (idx 142)",
-      "chapter": 1
-    },
-    "claim_text": "Trong giai đoạn phân tích cú pháp, nhiều thuật toán tiêu biểu đã được phát triển nhằm tối ưu hóa tốc độ xử lý  [6]: (1) Drain  [6] sử dụng cấu trúc cây phân tích có độ sâu cố định (Fixed-Depth Parse Tree) để nhóm các dòng log dựa trên độ dài chuỗi và các từ khóa tiền tố, đạt tốc độ phân tích xấp xỉ ...",
-    "source_key": "REF_06",
-    "source_locator": "[6] Sec. II & Sec. III (Automated log parsing tools and benchmark); [7] Sec. 3 & Sec. 4, Tab. 2 (Large-scale evaluation of log parsing techniques)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-039",
-    "location": {
-      "document_location": "Chương 1 (idx 145)",
-      "chapter": 1
-    },
-    "claim_text": "Trong đó  là số lần xuất hiện của sự kiện . Bên cạnh đếm tần suất đơn thuần, các trọng số TF-IDF (Term Frequency - Inverse Document Frequency) hoặc độ hỗn loạn thông tin Shannon (Information Entropy) cũng được áp dụng nhằm nhấn mạnh các sự kiện hiếm gặp  [6]:",
-    "source_key": "REF_06",
-    "source_locator": "[6] Sec. II & Sec. III (Automated log parsing tools and benchmark)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-040",
-    "location": {
-      "document_location": "Chương 1 (idx 147)",
-      "chapter": 1
-    },
-    "claim_text": "Trên không gian vector tần suất này, các mô hình phát hiện bất thường kinh điển được triển khai rộng rãi: (1) Principal Component Analysis - PCA (Xu et al., SOSP 2009)  [14] phân rã không gian vector  thành không gian con chuẩn tắc  và không gian con phần dư , nhận diện bất thường khi năng lượng chi...",
-    "source_key": "REF_18",
-    "source_locator": "[18] Sec. 4.1, Tab. 1 (Detecting system problems by mining console logs, HDFS block labels)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-041",
-    "location": {
-      "document_location": "Chương 1 (idx 149)",
-      "chapter": 1
-    },
-    "claim_text": "(2) Invariant Mining (Lou et al., USENIX ATC 2010)  [17] tự động khai phá các phương trình bất biến tuyến tính phản ánh mối quan hệ bảo toàn logic giữa các bước thực thi:",
-    "source_key": "REF_19",
-    "source_locator": "[19] Sec. 3 & Sec. 4 (Mining invariants from console logs for problem detection)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-042",
-    "location": {
-      "document_location": "Chương 1 (idx 151)",
-      "chapter": 1
-    },
-    "claim_text": "Mặc dù sở hữu ưu điểm về hiệu năng tính toán (độ phức tạp tuyến tính O(N)), nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng  [6],  [2]: (1) Mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số: các bộ log parser dựa trên biểu thức chính quy thường thay thế các t...",
-    "source_key": "REF_02",
-    "source_locator": "[2] Sec. 3 & Sec. 4 (Approximated audit logs and forensic validity); [6] Sec. II & Sec. III (Automated log parsing tools and benchmark)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-043",
-    "location": {
-      "document_location": "Chương 1 (idx 153)",
-      "chapter": 1
-    },
-    "claim_text": "Nhằm khắc phục sự cứng nhắc của các vector đếm tần suất và tận dụng trật tự xuất hiện của các sự kiện, nhóm phương pháp Semantic–Sequential mô hình hóa luồng log tương tự như các chuỗi ngôn ngữ tự nhiên, tích hợp các kỹ thuật nhúng từ (Word Embeddings) và học tự giám sát (Self-Supervised Learning) đ...",
-    "source_key": "REF_14",
-    "source_locator": "[14] Sec. 3 & Sec. 4 (DeepLog: Dual LSTM for log keys and quantitative parameters); [20] Sec. III & Sec. IV (LogBERT: Masked log sequence modeling via BERT); [21] Sec. 3 & Sec. 4 (Log-based anomaly detection without log parsing); [22] Sec. 3 & Sec. 4 (LogAnomaly: Sequential and quantitative anomalies in unstructured logs); [23] Sec. III & Sec. IV (Self-attentive classification anomaly detection in logs)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-044",
-    "location": {
-      "document_location": "Chương 1 (idx 154)",
-      "chapter": 1
-    },
-    "claim_text": "Khởi đầu cho hướng nghiên cứu này là mô hình DeepLog  [18]. DeepLog sử dụng mạng bộ nhớ dài-ngắn hạn (LSTM) để mô hình hóa chuỗi Event ID như một bài toán dự báo phần tử tiếp theo (Next-Event Prediction). Tại mỗi bước thời gian t, mô hình ước lượng phân phối xác suất có điều kiện của sự kiện tiếp th...",
-    "source_key": "REF_14",
-    "source_locator": "[14] Sec. 3 & Sec. 4 (DeepLog: Dual LSTM for log keys and quantitative parameters)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-045",
-    "location": {
-      "document_location": "Chương 1 (idx 156)",
-      "chapter": 1
-    },
-    "claim_text": "Song song đó, DeepLog xây dựng mô hình LSTM thứ hai dựa trên phân phối chuẩn nhiều chiều để kiểm tra sự bất thường về giá trị tham số số học (Parameter Value Anomaly)  [18].",
-    "source_key": "REF_14",
-    "source_locator": "[14] Sec. 3 & Sec. 4 (DeepLog: Dual LSTM for log keys and quantitative parameters)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-046",
-    "location": {
-      "document_location": "Chương 1 (idx 157)",
-      "chapter": 1
-    },
-    "claim_text": "Các công trình kế tiếp đã nâng cấp cơ chế biểu diễn ngữ nghĩa: (1) LogAnomaly (Meng et al., IJCAI 2019)  [21] đề xuất Template2Vec, trích xuất vector ngữ nghĩa cho từng mẫu log thông qua Word2Vec/FastText kết hợp trọng số d-IDF, giúp nhận biết sự tương đồng giữa các thông điệp có cấu trúc từ ngữ tươ...",
-    "source_key": "REF_20",
-    "source_locator": "[20] Sec. III & Sec. IV (LogBERT: Masked log sequence modeling via BERT); [21] Sec. 3 & Sec. 4 (Log-based anomaly detection without log parsing); [22] Sec. 3 & Sec. 4 (LogAnomaly: Sequential and quantitative anomalies in unstructured logs); [23] Sec. III & Sec. IV (Self-attentive classification anomaly detection in logs)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-047",
-    "location": {
-      "document_location": "Chương 1 (idx 158)",
-      "chapter": 1
-    },
-    "claim_text": "Mặc dù đạt kết quả tốt trên các tập dữ liệu phần mềm, nhóm phương pháp Semantic–Sequential đối mặt với ba rào cản khi áp dụng vào an ninh mạng  [8],  [3]: (1) Nguy cơ rò rỉ và thiên lệch từ dữ liệu tiền huấn luyện (Pretraining-Data Advantage): các mô hình sử dụng Transformer tiền huấn luyện trên kho...",
-    "source_key": "REF_03",
-    "source_locator": "[3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection); [8] Sec. IV-B, Tab. 2 (Dos and don'ts of ML in security: temporal snooping, drift)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-048",
-    "location": {
-      "document_location": "Chương 1 (idx 160)",
-      "chapter": 1
-    },
-    "claim_text": "Để khắc phục hạn chế về phạm vi quan sát của mô hình chuỗi, hướng tiếp cận dựa trên đồ thị nguồn gốc hệ thống (System Provenance Graph) mô hình hóa toàn bộ lịch sử thực thi và tương tác trong hệ điều hành dưới dạng một đồ thị có hướng, không đồng nhất và gán nhãn thời gian  [1],  [5]:",
-    "source_key": "REF_01",
-    "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [5] Sec. 2, Sec. 3, Sec. 4 (Provenance-based IDS survey, pipeline, taxonomy)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-049",
-    "location": {
-      "document_location": "Chương 1 (idx 162)",
-      "chapter": 1
-    },
-    "claim_text": "Trong đó V là tập các đỉnh đại diện cho các thực thể hệ thống thuộc tập kiểu ; E là tập các cạnh có hướng mô tả các tương tác luồng phụ thuộc thuộc tập kiểu ; và τ gán nhãn mốc thời gian xảy ra tương tác  [1].",
-    "source_key": "REF_01",
-    "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-050",
-    "location": {
-      "document_location": "Chương 1 (idx 163)",
-      "chapter": 1
-    },
-    "claim_text": "Các hệ thống phát hiện xâm nhập dựa trên đồ thị nguồn gốc (PIDS) tiêu biểu bao gồm [1], [5]: (1) UNICORN [9] (Han et al., NDSS 2020) xây dựng đồ thị nguồn gốc luồng thời gian thực, áp dụng thuật toán băm cây con Weisfeiler-Lehman (WL-subtree kernel) để chuyển đổi đồ thị động thành vector đặc trưng đ...",
-    "source_key": "REF_01",
-    "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [5] Sec. 2, Sec. 3, Sec. 4 (Provenance-based IDS survey, pipeline, taxonomy); [9] Sec. IV & Sec. V (UNICORN runtime provenance detector, WL subtree kernel); [24] Sec. IV & Sec. V (KAIROS: Time-aware GNN for whole-system provenance); [25] Sec. 4 & Sec. 5 (NODLINK: Online Steiner tree for fine-grained APT detection); [26] Sec. 4 & Sec. 5 (MAGIC: Masked Graph Autoencoder for APT detection); [27] Sec. 4 & Sec. 5 (ORTHRUS: Attribution quality in provenance-based IDS); [28] Sec. 3 & Sec. 4 (PalanTír: Hardware-enhanced system observability for provenance); [29] Sec. 5 & Sec. 6 (Simpler neural baselines and evaluation flaws in PIDS); [30] Sec. 4 & Sec. 5 (Benchmarks and evaluation protocols in PIDS, statistical baselines); [31] Sec. 1, Sec. 3, Thm. 1 (Over-squashing and information bottleneck in GNNs)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Khảo sát hệ thống PIDS được dẫn chứng đầy đủ từ các công bố gốc: UNICORN [9], KAIROS [24], NODLINK [25], MAGIC [26], ORTHRUS [27], PalanTír [28], Bilot et al. [29], Guerra et al. [30], Alon & Yahav [31]."
-  },
-  {
-    "claim_id": "FP-051",
-    "location": {
-      "document_location": "Chương 1 (idx 164)",
-      "chapter": 1
-    },
-    "claim_text": "Tại Việt Nam, các nghiên cứu chuyên sâu của ThS. Nguyễn Thị Thu Thủy (Khoa An toàn thông tin, Học viện Kỹ thuật Mật mã)  [31] cũng đã hệ thống hóa toàn diện phương pháp luận ứng dụng Graph Learning và mạng nơ-ron đồ thị (Graph Neural Network - GNN) trên đồ thị nguồn gốc (provenance graph) để phát hi...",
-    "source_key": "REF_32",
-    "source_locator": "[32] Mục 2 & Mục 3 (Phát hiện tấn công APT dựa trên Graph Learning)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nghiên cứu về Graph Learning trong phát hiện APT của Nguyễn Thị Thu Thủy được trích dẫn trực tiếp từ bài báo công khai trên Tạp chí An toàn thông tin [32]."
-  },
-  {
-    "claim_id": "FP-052",
-    "location": {
-      "document_location": "Chương 1 (idx 171)",
-      "chapter": 1
-    },
-    "claim_text": "Từ kết quả khảo sát và phân tích đối chiếu ba nhóm phương pháp biểu diễn đặc trưng log tại Mục 1.2, có thể nhận thấy rằng mặc dù các kỹ thuật thống kê, mô hình chuỗi ngữ nghĩa và học biểu diễn đồ thị nguồn gốc đã đạt được nhiều bước tiến quan trọng, việc ứng dụng chúng vào môi trường phát hiện tấn c...",
-    "source_key": "REF_01",
-    "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection); [6] Sec. II & Sec. III (Automated log parsing tools and benchmark); [8] Sec. IV-B, Tab. 2 (Dos and don'ts of ML in security: temporal snooping, drift)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-053",
-    "location": {
-      "document_location": "Chương 1 (idx 173)",
-      "chapter": 1
-    },
-    "claim_text": "Dữ liệu thực nghiệm từ các nghiên cứu tiền nhiệm chỉ ra rằng các bộ phân tích cú pháp (Log Parsers) đóng vai trò then chốt trong việc giảm chiều không gian văn bản log thành các mẫu định dạng tĩnh  [6],  [7]. Tuy nhiên, cơ chế trừu tượng hóa tham số phụ thuộc vào từng thuật toán phân tích cú pháp; n...",
-    "source_key": "REF_06",
-    "source_locator": "[6] Sec. II & Sec. III (Automated log parsing tools and benchmark); [7] Sec. 3 & Sec. 4, Tab. 2 (Large-scale evaluation of log parsing techniques)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-054",
-    "location": {
-      "document_location": "Chương 1 (idx 174)",
-      "chapter": 1
-    },
-    "claim_text": "Giới hạn quan trọng chưa được giải quyết là: Sự tương đương về mặt cú pháp mẫu log (Template Equivalence) không đồng nghĩa với sự tương đương về mặt ngữ nghĩa an ninh (Security Semantic Equivalence)  [2],  [3]. Ví dụ, cùng một mẫu thông điệp xác thực thất bại nhưng xuất phát từ một tài khoản quản tr...",
-    "source_key": "REF_02",
-    "source_locator": "[2] Sec. 3 & Sec. 4 (Approximated audit logs and forensic validity); [3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-055",
-    "location": {
-      "document_location": "Chương 1 (idx 178)",
-      "chapter": 1
-    },
-    "claim_text": "Các công trình nghiên cứu hiện đại đã chỉ ra rằng dữ liệu log sở hữu tính đa góc nhìn nội tại: góc nhìn thống kê tần suất phản ánh mật độ hoạt động  [6], góc nhìn chuỗi sự kiện phản ánh trật tự thời gian cục bộ  [18],  [19], và góc nhìn đồ thị nguồn gốc phản ánh luồng phụ thuộc cấu trúc đa thực thể ...",
-    "source_key": "REF_01",
-    "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [5] Sec. 2, Sec. 3, Sec. 4 (Provenance-based IDS survey, pipeline, taxonomy); [6] Sec. II & Sec. III (Automated log parsing tools and benchmark); [9] Sec. IV & Sec. V (UNICORN runtime provenance detector, WL subtree kernel); [14] Sec. 3 & Sec. 4 (DeepLog: Dual LSTM for log keys and quantitative parameters); [20] Sec. III & Sec. IV (LogBERT: Masked log sequence modeling via BERT)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-056",
-    "location": {
-      "document_location": "Chương 1 (idx 179)",
-      "chapter": 1
-    },
-    "claim_text": "Tuy nhiên, khi tiến hành hợp nhất hoặc gióng hàng (Cross-view Alignment) các không gian biểu diễn dị thể này trong không gian vector tiềm ẩn, các mô hình học biểu diễn tự giám sát đối mặt với nguy cơ sụp đổ chiều biểu diễn (Representation Collapse), vốn đòi hỏi các kỹ thuật điều hòa phương sai - hiệ...",
-    "source_key": "REF_10",
-    "source_locator": "[10] Sec. 3, Eq. (1)-(4) (VICReg: Variance, Invariance, Covariance regularization); [11] Sec. 2 & Sec. 3 (Barlow Twins: Cross-correlation matrix redundancy reduction)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-057",
-    "location": {
-      "document_location": "Chương 1 (idx 183)",
-      "chapter": 1
-    },
-    "claim_text": "Công trình tổng kết của Arp et al. (USENIX Security 2022)  [8] và Liu et al. (IEEE S&P 2025)  [3] đã cảnh báo sâu sắc về tình trạng sai lệch phương pháp luận trong nghiên cứu học máy áp dụng cho an ninh mạng. Trong bài toán trích xuất đặc trưng log, các mô hình rất dễ học phải các đặc trưng đường tắ...",
-    "source_key": "REF_03",
-    "source_locator": "[3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection); [8] Sec. IV-B, Tab. 2 (Dos and don'ts of ML in security: temporal snooping, drift)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-058",
-    "location": {
-      "document_location": "Chương 1 (idx 188)",
-      "chapter": 1
-    },
-    "claim_text": "Trong thực tế giám sát an ninh mạng doanh nghiệp, dữ liệu nhãn mặt đất (Ground Truth) thường chỉ được ghi nhận ở mức độ hạt rất thô (Coarse Labels), chẳng hạn như gán nhãn một phiên làm việc kéo dài nhiều giờ hoặc toàn bộ một máy chủ bị xâm nhập trong một khoảng thời gian  [3],  [12],  [13]. Bên tro...",
-    "source_key": "REF_03",
-    "source_locator": "[3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection); [12] README-E3.md, Official Repo (TC E3 fine-grained kernel audit logs and APT scenarios); [13] Dataset Specification & redteam.txt (Enterprise network authentication compromise events)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Thực tế gán nhãn mức thô (Coarse Labels) trong giám sát doanh nghiệp được xác thực từ Liu et al. [3], DARPA TC E3 [12] và LANL [13]."
-  },
-  {
-    "claim_id": "FP-059",
-    "location": {
-      "document_location": "Chương 1 (idx 189)",
-      "chapter": 1
-    },
-    "claim_text": "Thách thức này càng trở nên phức tạp do sự xuất hiện liên tục của hành vi quản trị viên hệ thống (Admin-Noise / LOLBins)  [1],  [3]. Các kỹ sư quản trị thường xuyên thực thi các lệnh bảo trì, chẩn đoán mạng hoặc sao lưu dữ liệu bằng các công cụ dòng lệnh hợp lệ (như PowerShell, WMI, SSH, vssadmin). ...",
-    "source_key": "REF_01",
-    "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [3] Sec. 3, Sec. 4, Tab. 1 (Dataset quality, noise, and endpoint threat detection)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-060",
-    "location": {
-      "document_location": "Chương 1 (idx 193)",
-      "chapter": 1
-    },
-    "claim_text": "Để phát hiện và điều tra các cuộc tấn công APT kéo dài, mô hình học biểu diễn đòi hỏi phải duy trì khả năng liên kết có kiểm soát (Controlled Linkability) giữa các chuỗi hành vi của cùng một thực thể (người dùng, máy chủ, tiến trình) qua nhiều mốc thời gian khác nhau  [1],  [5].",
-    "source_key": "REF_01",
-    "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [5] Sec. 2, Sec. 3, Sec. 4 (Provenance-based IDS survey, pipeline, taxonomy)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-061",
-    "location": {
-      "document_location": "Chương 1 (idx 194)",
-      "chapter": 1
-    },
-    "claim_text": "Tuy nhiên, việc lưu giữ khả năng liên kết này trong không gian vector biểu diễn trực tiếp làm nảy sinh các nguy cơ nghiêm trọng về quyền riêng tư và an toàn thông tin [15], [32], [16]. Các vector biểu diễn đặc trưng tiềm ẩn có nguy cơ bị kẻ tấn công khai thác thông qua các kỹ thuật tấn công suy luận...",
-    "source_key": "REF_16",
-    "source_locator": "[16] Sec. III & Sec. IV (Membership inference attacks against machine learning models); [17] Sec. 3 & Sec. 4 (Evaluating differential privacy guarantees, budget epsilon); [33] Sec. 1, Sec. 4 (Model inversion attacks exploiting confidence information)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-062",
-    "location": {
-      "document_location": "Chương 2 (idx 200)",
-      "chapter": 2
-    },
-    "claim_text": "Để thiết lập nền tảng lý thuyết vững chắc và giải quyết căn bản các khoảng trống phương pháp luận đã được xác lập trong Chương 1, Chương này đề xuất khung phương pháp biểu diễn đặc trưng log đa góc nhìn bảo toàn ngữ cảnh an toàn, vận hành trực tuyến trong môi trường xử lý dòng (Streaming Environment...",
-    "source_key": "REF_01",
-    "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-063",
-    "location": {
-      "document_location": "Chương 2 (idx 206)",
-      "chapter": 2
-    },
-    "claim_text": "3. Giai đoạn C (Stage C, Đánh giá Đóng băng Hạ nguồn): Khóa cố định toàn bộ tham số  của bộ trích xuất biểu diễn. Đánh giá chất lượng biểu diễn thông qua giao thức đóng băng tham số (Frozen Linear Probe: ) phục vụ phân loại và quy kết chiến thuật/kỹ thuật theo phân loại MITRE ATT&CK  [4], hoặc quy t...",
-    "source_key": "REF_04",
-    "source_locator": "[4] Enterprise Matrix, Tactics TA0001-TA0043 & Techniques (Official Release 12/05/2026)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-064",
-    "location": {
-      "document_location": "Chương 2 (idx 220)",
-      "chapter": 2
-    },
-    "claim_text": "Trong đó lý thuyết Quyền riêng tư Vi sai (DP) đóng vai trò định lượng và chặn trên tổn thất lý thuyết  dưới các giả định toán học xác định, còn rủi ro thực tế được kiểm chứng thực nghiệm độc lập thông qua các tấn công suy luận thành viên (MIA)  [15],  [16] và tấn công nghịch đảo/tái định danh thực t...",
-    "source_key": "REF_16",
-    "source_locator": "[16] Sec. III & Sec. IV (Membership inference attacks against machine learning models); [17] Sec. 3 & Sec. 4 (Evaluating differential privacy guarantees, budget epsilon); [33] Sec. 1, Sec. 4 (Model inversion attacks exploiting confidence information)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-065",
-    "location": {
-      "document_location": "Chương 2 (idx 225)",
-      "chapter": 2
-    },
-    "claim_text": "Để xử lý hiện tượng sự kiện đến muộn hoặc xáo trộn thứ tự (Out-of-Order Events) phát sinh từ độ trễ mạng thu thập telemetry  [1],  [24], hệ thống áp dụng nguyên tắc xử lý theo thời gian sự kiện (Event-Time) kết hợp cơ chế mốc ngắt thời gian (Event-Time Watermark):",
-    "source_key": "REF_01",
-    "source_locator": "[1] Sec. II-B, Sec. V-B, Fig. 1 (System audit provenance and attack investigation); [25] Sec. 4 & Sec. 5 (NODLINK: Online Steiner tree for fine-grained APT detection)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-066",
-    "location": {
-      "document_location": "Chương 2 (idx 268)",
-      "chapter": 2
-    },
-    "claim_text": "Tấn công suy luận thành viên (Membership Inference Attack, MIA): đối nghịch xác định xem một bản ghi dữ liệu cụ thể của một thực thể có nằm trong tập huấn luyện của mô hình hay không, thông qua quan sát hành vi đầu ra hoặc các đặc trưng của vector  ([15]).",
-    "source_key": "REF_16",
-    "source_locator": "[16] Sec. III & Sec. IV (Membership inference attacks against machine learning models)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-067",
-    "location": {
-      "document_location": "Chương 2 (idx 269)",
-      "chapter": 2
-    },
-    "claim_text": "Tấn công nghịch đảo biểu diễn (Representation/Model Inversion Attack): Về mặt nguyên lý, Fredrikson et al. [32] chứng minh tấn công nghịch đảo có thể khai thác thông tin đầu ra/độ tin cậy để tái cấu trúc thuộc tính dữ liệu; trong mô hình đe dọa thích ứng của đề tài (Threat-Model Adaptation), đối ngh...",
-    "source_key": "REF_33",
-    "source_locator": "[33] Sec. 1, Sec. 4 (Model inversion attacks exploiting confidence information)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-068",
-    "location": {
-      "document_location": "Chương 2 (idx 278)",
-      "chapter": 2
-    },
-    "claim_text": "Lưu ý rằng các tham số thời gian  và kiểu hành vi  được bảo toàn nguyên vẹn vì chúng không phải direct identifier, tuy nhiên các tham số này có thể hoạt động như quasi-identifier khi kết hợp với dữ liệu bên ngoài; rủi ro liên kết tương ứng cần được đánh giá theo CTRL-PRIV-001. Cơ chế này được kỳ vọn...",
-    "source_key": "REF_16",
-    "source_locator": "[16] Sec. III & Sec. IV (Membership inference attacks against machine learning models); [33] Sec. 1, Sec. 4 (Model inversion attacks exploiting confidence information)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-069",
-    "location": {
-      "document_location": "Chương 2 (idx 296)",
-      "chapter": 2
-    },
-    "claim_text": "Bộ trích xuất tuần tự ngữ nghĩa tiếp nhận chuỗi các sự kiện kiểu hóa trong cửa sổ ngắn hạn  gồm  sự kiện liên tiếp, kế thừa kiến trúc Self-Attention tiêu chuẩn  [33]. Nhiệm vụ của bộ trích xuất là mô hình hóa các phụ thuộc ngữ cảnh cục bộ, thứ tự gọi hàm hệ thống và tương tác tham số động mà không d...",
-    "source_key": "REF_34",
-    "source_locator": "[34] Sec. 3 (Attention Is All You Need: Multi-Head Self-Attention Transformer)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-070",
-    "location": {
-      "document_location": "Chương 2 (idx 300)",
-      "chapter": 2
-    },
-    "claim_text": "Trong đó:  là các ma trận nhúng kiểu sự kiện và hành động tĩnh;  là nhúng thực thể chủ thể và đối tượng theo không gian giả danh có kiểm soát;  là nhúng các token tham số an ninh được giữ lại;  là mã hóa vị trí rời rạc; và  là hàm mã hóa thời gian liên tục điều hòa (Harmonic Time Encoding) dạng , kế...",
-    "source_key": "REF_35",
-    "source_locator": "[35] Sec. 3 & Sec. 4 (TGAT: Inductive representation learning on temporal graphs)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-071",
-    "location": {
-      "document_location": "Chương 2 (idx 303)",
-      "chapter": 2
-    },
-    "claim_text": "Tác vụ dự đoán sự kiện bị che (Masked Event Prediction, ): Thích ứng từ phương pháp LogBERT  [19], che ngẫu nhiên tập chỉ số sự kiện  theo tỷ lệ che  (trong đó giá trị 15% được sử dụng làm điểm khởi tạo tham chiếu và được tinh chỉnh, khóa cố định trên tập Train/Validation trước khi đánh giá trên tập...",
-    "source_key": "REF_20",
-    "source_locator": "[20] Sec. III & Sec. IV (LogBERT: Masked log sequence modeling via BERT)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-072",
-    "location": {
-      "document_location": "Chương 2 (idx 338)",
-      "chapter": 2
-    },
-    "claim_text": "Sau khi đồ thị nguồn gốc được xây dựng và áp dụng các cơ chế ứng viên kiểm soát độ chân thực, cấu trúc đồ thị động được đưa vào Bộ trích xuất Temporal GNN. Kế thừa khung xử lý bộ nhớ và truyền thông điệp thời gian động  [35] cùng các nguyên lý thiết kế từ các hệ thống đồ thị nguồn gốc tiêu biểu  [23...",
-    "source_key": "REF_24",
-    "source_locator": "[24] Sec. IV & Sec. V (KAIROS: Time-aware GNN for whole-system provenance); [25] Sec. 4 & Sec. 5 (NODLINK: Online Steiner tree for fine-grained APT detection); [26] Sec. 4 & Sec. 5 (MAGIC: Masked Graph Autoencoder for APT detection); [27] Sec. 4 & Sec. 5 (ORTHRUS: Attribution quality in provenance-based IDS); [36] Sec. 2 & Sec. 3 (TGN: Temporal graph networks for dynamic graphs)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-073",
-    "location": {
-      "document_location": "Chương 2 (idx 347)",
-      "chapter": 2
-    },
-    "claim_text": "Nhằm tối ưu hóa các tham số  của mạng Temporal GNN trong Giai đoạn A1 mà không sử dụng nhãn tấn công hay thông tin tương lai, chuyên đề thiết lập hàm mục tiêu tự giám sát đồ thị động . Kế thừa cảm hứng từ mô hình MAGIC  [25] về học biểu diễn qua cơ chế che giấu (Masked Graph Representation Learning)...",
-    "source_key": "REF_26",
-    "source_locator": "[26] Sec. 4 & Sec. 5 (MAGIC: Masked Graph Autoencoder for APT detection)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-074",
-    "location": {
-      "document_location": "Chương 2 (idx 357)",
-      "chapter": 2
-    },
-    "claim_text": "Khi áp dụng mạng nơ-ron đồ thị trên đồ thị nguồn gốc có đường kính lớn, hai rủi ro kiến trúc phổ biến là hiện tượng làm mịn quá mức (Over-smoothing) khiến biểu diễn các đỉnh hội tụ về các vector khó phân biệt, và hiện tượng nghẽn cổ chai thông tin (Over-squashing) khi thông tin từ vùng lân cận mở rộ...",
-    "source_key": "REF_31",
-    "source_locator": "[31] Sec. 1, Sec. 3, Thm. 1 (Over-squashing and information bottleneck in GNNs)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-075",
-    "location": {
-      "document_location": "Chương 2 (idx 380)",
-      "chapter": 2
-    },
-    "claim_text": "Để tránh hiện tượng mất mát thông tin cấu trúc đặc thù khi ép hai vector biểu diễn gốc  và  phải hội tụ về cùng một điểm, chuyên đề áp dụng nguyên lý phân tách không gian theo SimCLR  [36] và VICReg  [10]. Chúng ta đưa mỗi vector biểu diễn qua một đầu chiếu phi tuyến riêng biệt (Non-linear Projectio...",
-    "source_key": "REF_10",
-    "source_locator": "[10] Sec. 3, Eq. (1)-(4) (VICReg: Variance, Invariance, Covariance regularization); [37] Sec. 2 (SimCLR: InfoNCE contrastive learning with negative pairs)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-076",
-    "location": {
-      "document_location": "Chương 2 (idx 385)",
-      "chapter": 2
-    },
-    "claim_text": "Trong học biểu diễn tự giám sát (Self-Supervised Learning), ba hướng tiếp cận tiêu biểu bao gồm: InfoNCE / Contrastive Learning  [37],  [36], Barlow Twins  [11], và VICReg  [10]. Bảng 2.3 phân tích đối sánh chi tiết các đặc tính lý thuyết từ các công bố gốc và các giả thuyết nghiên cứu của chuyên đề...",
-    "source_key": "REF_10",
-    "source_locator": "[10] Sec. 3, Eq. (1)-(4) (VICReg: Variance, Invariance, Covariance regularization); [11] Sec. 2 & Sec. 3 (Barlow Twins: Cross-correlation matrix redundancy reduction); [37] Sec. 2 (SimCLR: InfoNCE contrastive learning with negative pairs); [38] Sec. 2 (CPC: Contrastive predictive coding for representation learning)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-077",
-    "location": {
-      "document_location": "Chương 2 (idx 387)",
-      "chapter": 2
-    },
-    "claim_text": "Từ phân tích phương pháp luận trên, chuyên đề lựa chọn VICReg (Variance-Invariance-Covariance Regularization) [10] làm ứng viên gióng hàng cốt lõi (Primary Candidate). Theo Bardes et al. [10], VICReg thiết lập cơ chế tự giám sát không tương phản dựa trên điều hòa phương sai - hiệp phương sai (varian...",
-    "source_key": "REF_10",
-    "source_locator": "[10] Sec. 3, Eq. (1)-(4) (VICReg: Variance, Invariance, Covariance regularization); [11] Sec. 2 & Sec. 3 (Barlow Twins: Cross-correlation matrix redundancy reduction); [37] Sec. 2 (SimCLR: InfoNCE contrastive learning with negative pairs); [38] Sec. 2 (CPC: Contrastive predictive coding for representation learning)",
-    "support_status": "AUTHOR_SYNTHESIS",
-    "notes": "Giả thuyết thích nghi (Author Adaptation Hypothesis): Áp dụng hàm mất mát VICReg [10] vào telemetry log nhằm giảm thiểu False Negatives, kiểm chứng tại Chương 3."
-  },
-  {
-    "claim_id": "FP-078",
-    "location": {
-      "document_location": "Chương 2 (idx 402)",
-      "chapter": 2
-    },
-    "claim_text": "Trong thực tế giám sát an ninh phân tán, các cảm biến thu thập telemetry có thể gặp sự cố cục bộ, gây ra hiện tượng khuyết góc nhìn (Missing-View, Incomplete Telemetry). Chuyên đề xử lý vấn đề này theo khung tiếp cận của CPM-Nets  [38] kết hợp cơ chế mặt nạ khả dụng và suy thoái duyên dáng (Graceful...",
-    "source_key": "REF_39",
-    "source_locator": "[39] Sec. 3, pp. 557-567 (CPM-Nets: Cross partial multi-view representation learning)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-079",
-    "location": {
-      "document_location": "Chương 2 (idx 443)",
-      "chapter": 2
-    },
-    "claim_text": "Trong đó  là siêu tham số ngưỡng chặn dưới an toàn, ngăn ngừa việc hạ trọng số về 0 (tính nhạy cảm của  sẽ được kiểm chứng thực nghiệm tại Chương 3). Khi tối ưu hóa liên hợp, kỹ thuật PCGrad  [39] được áp dụng chặt chẽ trên tập tham số nhận đồng thời hai luồng gradient:",
-    "source_key": "REF_40",
-    "source_locator": "[40] Sec. 3 (PCGrad: Gradient surgery for multi-task learning)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-080",
-    "location": {
-      "document_location": "Chương 2 (idx 450)",
-      "chapter": 2
-    },
-    "claim_text": "Chuyên đề áp dụng cơ chế Attention-based Deep MIL của Ilse et al.  [40], nhưng thiết kế cơ chế ánh xạ Túi, Thực thể đặc thù cho bài toán an ninh mạng (Cybersecurity Bag-Instance Mapping, Đề xuất của đề tài / Ours):",
-    "source_key": "REF_15",
-    "source_locator": "[15] Sec. 2, Eq. (1)-(3) (Attention-based Deep Multiple Instance Learning)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-081",
-    "location": {
-      "document_location": "Chương 3 (idx 493)",
-      "chapter": 3
-    },
-    "claim_text": "Khác với các phương pháp xáo trộn ngẫu nhiên truyền thống có nguy cơ rò rỉ thông tin thời gian, nghiên cứu áp dụng phép phân chia dữ liệu nghiêm ngặt theo thời gian (Strict Causal Temporal Split — tên do nghiên cứu đề xuất), được thiết kế theo khuyến nghị tránh rò rỉ thời gian (temporal snooping) củ...",
-    "source_key": "REF_08",
-    "source_locator": "[8] Sec. IV-B, Tab. 2 (Dos and don'ts of ML in security: temporal snooping, drift)",
-    "support_status": "AUTHOR_SYNTHESIS",
-    "notes": "Giao thức phân chia dữ liệu 'Strict Causal Temporal Split' do Tác giả đặt tên và hiện thực hóa theo các nguyên tắc tránh rò rỉ thời gian của Arp et al. [8]."
-  },
-  {
-    "claim_id": "FP-082",
-    "location": {
-      "document_location": "Bảng 7 (idx 6)",
-      "chapter": 3
-    },
-    "claim_text": "Sử dụng phân bố mẫu âm (Negative pairs) để đẩy xa các phiên khác nhau  [37],  [36]",
-    "source_key": "REF_37",
-    "source_locator": "[37] Sec. 2 (SimCLR: InfoNCE contrastive learning with negative pairs); [38] Sec. 2 (CPC: Contrastive predictive coding for representation learning)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-083",
-    "location": {
-      "document_location": "Bảng 7 (idx 6)",
-      "chapter": 3
-    },
-    "claim_text": "Ép ma trận tương quan chéo giữa hai view về ma trận đơn vị I  [11]",
-    "source_key": "REF_11",
-    "source_locator": "[11] Sec. 2 & Sec. 3 (Barlow Twins: Cross-correlation matrix redundancy reduction)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-084",
-    "location": {
-      "document_location": "Bảng 7 (idx 6)",
-      "chapter": 3
-    },
-    "claim_text": "Phân tách độc lập: Duy trì phương sai từng chiều + Phạt hiệp phương sai  [10]",
-    "source_key": "REF_10",
-    "source_locator": "[10] Sec. 3, Eq. (1)-(4) (VICReg: Variance, Invariance, Covariance regularization)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Nguồn sơ cấp hỗ trợ trực tiếp các khẳng định kỹ thuật trong văn bản."
-  },
-  {
-    "claim_id": "FP-085",
-    "location": {
-      "document_location": "Bảng 13 (idx 12)",
-      "chapter": 3
-    },
-    "claim_text": "DeepLog (Du et al., CCS 2017) [14]",
-    "source_key": "REF_14",
-    "source_locator": "[14] Sec. 3 & Sec. 4 (DeepLog: Dual LSTM for log keys and quantitative parameters)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Đối sánh đặc tính phương pháp luận tại Bảng 3.5 (Table 12) được xác thực chính xác theo từng công bố gốc của phương pháp cơ sở."
-  },
-  {
-    "claim_id": "FP-086",
-    "location": {
-      "document_location": "Bảng 13 (idx 12)",
-      "chapter": 3
-    },
-    "claim_text": "LogBERT (Guo et al., IJCNN 2021) [20]",
-    "source_key": "REF_20",
-    "source_locator": "[20] Sec. III & Sec. IV (LogBERT: Masked log sequence modeling via BERT)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Đối sánh đặc tính phương pháp luận tại Bảng 3.5 (Table 12) được xác thực chính xác theo từng công bố gốc của phương pháp cơ sở."
-  },
-  {
-    "claim_id": "FP-087",
-    "location": {
-      "document_location": "Bảng 13 (idx 12)",
-      "chapter": 3
-    },
-    "claim_text": "UNICORN (Han et al., NDSS 2020) [9]",
-    "source_key": "REF_09",
-    "source_locator": "[9] Sec. IV & Sec. V (UNICORN runtime provenance detector, WL subtree kernel)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Đối sánh đặc tính phương pháp luận tại Bảng 3.5 (Table 12) được xác thực chính xác theo từng công bố gốc của phương pháp cơ sở."
-  },
-  {
-    "claim_id": "FP-088",
-    "location": {
-      "document_location": "Bảng 13 (idx 12)",
-      "chapter": 3
-    },
-    "claim_text": "KAIROS (Cheng et al., IEEE S&P 2024) [24]",
-    "source_key": "REF_24",
-    "source_locator": "[24] Sec. IV & Sec. V (KAIROS: Time-aware GNN for whole-system provenance)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Đối sánh đặc tính phương pháp luận tại Bảng 3.5 (Table 12) được xác thực chính xác theo từng công bố gốc của phương pháp cơ sở."
-  },
-  {
-    "claim_id": "FP-089",
-    "location": {
-      "document_location": "Bảng 13 (idx 12)",
-      "chapter": 3
-    },
-    "claim_text": "MAGIC (Jia et al., USENIX Security 2024) [26]",
-    "source_key": "REF_26",
-    "source_locator": "[26] Sec. 4 & Sec. 5 (MAGIC: Masked Graph Autoencoder for APT detection)",
-    "support_status": "DIRECT_SUPPORT",
-    "notes": "Đối sánh đặc tính phương pháp luận tại Bảng 3.5 (Table 12) được xác thực chính xác theo từng công bố gốc của phương pháp cơ sở."
+    "source_locator": "experiments/evidence/stage-a2/reconciliation/run_all_seeds_raw.json (100% frozen evidence)",
+    "action": "KEEP"
   }
 ]
