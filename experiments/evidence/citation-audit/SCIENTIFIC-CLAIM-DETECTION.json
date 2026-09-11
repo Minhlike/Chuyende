@@ -1,7 +1,7 @@
 {
   "status": "PASS",
   "gate_title": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE",
-  "detector_version": "2.2.0-forensic-truth-repair",
+  "detector_version": "3.0.0-forensic-truth-repair-round-3",
   "document_sha256": "ac10e8becbeb520774e0fc76f36274ebd049a91c668821f5f296697defd182b7",
   "body_boundaries": {
     "body_start": 77,

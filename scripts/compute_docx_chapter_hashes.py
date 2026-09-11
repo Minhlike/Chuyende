@@ -33,35 +33,60 @@ def normalize_text(text):
     nfc = unicodedata.normalize('NFC', text).strip()
     return ' '.join(nfc.split())
 
-def extract_chapter_paragraphs(doc):
+def extract_chapter_paragraphs(doc, require_ch3=True):
+    """
+    Extract chapter paragraph text lines for CH1 and CH2.
+
+    Anchoring:
+    - CH1 start: unique Heading 1 containing 'TỔNG QUAN VỀ PHƯƠNG PHÁP TRÍCH XUẤT'
+    - CH2 start: unique Heading 1 containing 'PHƯƠNG PHÁP BIỂU DIỄN ĐẶC TRƯNG LOG'
+    - CH3 start: unique Heading 1 containing 'THỰC NGHIỆM' (used as CH2 termination)
+
+    require_ch3=True (default, for current doc):
+      Requires exactly 1 CH3 anchor with CH1 < CH2 < CH3 ordering.
+      Conclusion/references/UH1 are NOT accepted as CH2 termination (AMBIGUOUS_CHAPTER_TERMINATION=0).
+
+    require_ch3=False (for historical baseline doc that only covers CH1+CH2):
+      CH2 extends to end of document.
+    """
     paragraphs = doc.paragraphs
     c1_matches = []
     c2_matches = []
-    c2_end_matches = []
+    c3_matches = []  # CH3 start = CH2 termination (unique)
 
     for idx, p in enumerate(paragraphs):
         txt = p.text.strip()
         style_name = p.style.name if p.style else ''
-        
-        # Collect ALL candidates to detect duplicate heading anomalies
+
         if idx >= 70 and style_name == 'Heading 1' and 'TỔNG QUAN VỀ PHƯƠNG PHÁP TRÍCH XUẤT' in txt:
             c1_matches.append(idx)
         elif idx > 150 and style_name == 'Heading 1' and 'PHƯƠNG PHÁP BIỂU DIỄN ĐẶC TRƯNG LOG' in txt:
             c2_matches.append(idx)
-        elif (idx > 400 and (
-            ('THỰC NGHIỆM' in txt and style_name == 'Heading 1') or 
-            (txt in ['Kết luận', 'KẾT LUẬN', 'Tài liệu tham khảo', 'TÀI LIỆU THAM KHẢO'] or style_name == 'UH1')
-        )):
-            c2_end_matches.append(idx)
+        elif idx > 400 and style_name == 'Heading 1' and 'THỰC NGHIỆM' in txt:
+            c3_matches.append(idx)
 
-    assert len(c1_matches) == 1, f'Expected exactly 1 C1 start heading, got {c1_matches}'
-    assert len(c2_matches) == 1, f'Expected exactly 1 C2 start heading, got {c2_matches}'
-    valid_c2_ends = [idx for idx in c2_end_matches if idx > c2_matches[0]]
-    assert len(valid_c2_ends) >= 1, f'Expected at least one valid C2 termination heading, got {valid_c2_ends}'
+    assert len(c1_matches) == 1, f'AMBIGUOUS_CHAPTER_TERMINATION: Expected exactly 1 CH1 start, got {c1_matches}'
+    assert len(c2_matches) == 1, f'AMBIGUOUS_CHAPTER_TERMINATION: Expected exactly 1 CH2 start, got {c2_matches}'
 
     c1_start = c1_matches[0]
     c2_start = c2_matches[0]
-    c2_end = min(valid_c2_ends)
+
+    if require_ch3:
+        assert len(c3_matches) == 1, (
+            f'AMBIGUOUS_CHAPTER_TERMINATION: Expected exactly 1 CH3 start '
+            f'(THUC NGHIEM Heading 1), got {c3_matches}'
+        )
+        c2_end = c3_matches[0]  # CH3 heading is exclusive upper bound for CH2
+        assert c1_start < c2_start < c2_end, (
+            f'AMBIGUOUS_CHAPTER_TERMINATION: Ordering violated: '
+            f'CH1={c1_start}, CH2={c2_start}, CH3={c2_end}'
+        )
+    else:
+        # Immutable historical baseline doc (covers CH1 and CH2 only, terminating before Conclusion)
+        kl_matches = [idx for idx, p in enumerate(paragraphs) if p.text.strip() in ['Kết luận', 'KẾT LUẬN']]
+        assert len(kl_matches) == 1, f'Expected exactly 1 baseline termination heading, got {kl_matches}'
+        c2_end = kl_matches[0]
+        assert c1_start < c2_start < c2_end
 
     ch1_lines = [normalize_text(p.text) for p in paragraphs[c1_start:c2_start] if normalize_text(p.text)]
     ch2_lines = [normalize_text(p.text) for p in paragraphs[c2_start:c2_end] if normalize_text(p.text)]
@@ -122,8 +147,8 @@ def audit_and_verify():
     hist_doc = docx.Document(io.BytesIO(res.stdout))
     curr_doc = docx.Document(str(docx_path))
 
-    b_ch1, b_ch2, b_h1, b_h2, b_s1, b_s2, b_e2 = extract_chapter_paragraphs(hist_doc)
-    c_ch1, c_ch2, c_h1, c_h2, c_s1, c_s2, c_e2 = extract_chapter_paragraphs(curr_doc)
+    b_ch1, b_ch2, b_h1, b_h2, b_s1, b_s2, b_e2 = extract_chapter_paragraphs(hist_doc, require_ch3=False)
+    c_ch1, c_ch2, c_h1, c_h2, c_s1, c_s2, c_e2 = extract_chapter_paragraphs(curr_doc, require_ch3=True)
 
     ch1_hunks = compute_hunks(b_ch1, c_ch1, 1)
     ch2_hunks = compute_hunks(b_ch2, c_ch2, 2)
@@ -213,7 +238,19 @@ def audit_and_verify():
         'current_docx_size': len(current_doc_bytes)
     }
 
-    # Atomic write for verification output
+    # ---------------------------------------------------------------
+    # FAIL-BEFORE-MUTATION (AUTHORITATIVE_OUTPUT_MUTATION_BEFORE_PASS=0)
+    # All computation is complete in memory. Assert PASS FIRST.
+    # Only write authoritative files after confirming PASS.
+    # ---------------------------------------------------------------
+    assert verification_status == 'PASS', (
+        f'[FAIL-BEFORE-MUTATION] Verification FAILED: '
+        f'unmatched={unmatched_hunks}, unused={unused_ledger}, '
+        f'non_bijective={non_bijective_ledger_matches}. '
+        f'Authoritative output files are NOT modified.'
+    )
+
+    # Atomic write for verification output (only reached on PASS)
     out_verification_path = repo_root / 'experiments/evidence/citation-audit/CHAPTER-DIFF-LEDGER-VERIFICATION.json'
     tmp_verification_path = out_verification_path.with_suffix('.tmp')
     with open(tmp_verification_path, 'w', encoding='utf-8') as vf:
@@ -251,22 +288,22 @@ def audit_and_verify():
             json.dump(prov_record, rpf, indent=2, ensure_ascii=False)
         tmp_root_prov.replace(root_prov)
 
+    # Item 7: Reporting language
     print('\n==================================================')
     print('CHAPTER DIFF LEDGER VERIFICATION SUMMARY')
     print('==================================================')
-    print(f'Status:                     {verification_status}')
-    print(f'Total Diff Hunks:           {len(total_computed_hunks)} (CH1: {len(ch1_hunks)}, CH2: {len(ch2_hunks)})')
-    print(f'Ledger Entries:             {len(ledger_items)}')
-    print(f'Matched Diff Hunks:         {matched_hunks}')
-    print(f'Unmatched Diff Hunks:       {unmatched_hunks}')
-    print(f'Unused Ledger Entries:      {unused_ledger}')
-    print(f'Non-Bijective Matches:      {non_bijective_ledger_matches}')
-    print(f'Self-Attested Fields Used:  0')
+    print(f'Status:                              {verification_status}')
+    print(f'Gate:                                CHAPTER_DIFF_LEDGER_VERIFICATION')
+    print(f'AMBIGUOUS_CHAPTER_TERMINATION:       0')
+    print(f'AUTHORITATIVE_OUTPUT_MUTATION_BEFORE_PASS: 0')
+    print(f'Total Diff Hunks:                    {len(total_computed_hunks)} (CH1: {len(ch1_hunks)}, CH2: {len(ch2_hunks)})')
+    print(f'Ledger Entries:                      {len(ledger_items)}')
+    print(f'Matched Diff Hunks:                  {matched_hunks}')
+    print(f'Unmatched Diff Hunks:                {unmatched_hunks}')
+    print(f'Unused Ledger Entries:               {unused_ledger}')
+    print(f'Non-Bijective Matches:               {non_bijective_ledger_matches}')
+    print(f'Self-Attested Fields Used:           0')
     print('==================================================')
-
-    assert verification_status == 'PASS', (
-        f'Verification failed: unmatched={unmatched_hunks}, unused={unused_ledger}, non_bijective={non_bijective_ledger_matches}'
-    )
     return verification_result
 
 if __name__ == '__main__':

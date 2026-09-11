@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "gate_title": "CLAIM_EVIDENCE_SEMANTIC_AUDIT",
+  "version": "3.0.0-forensic-truth-repair-round-3",
+  "total_claims": 309,
+  "violations_count": 0,
+  "violations": [],
+  "breakdown": {
+    "LITERATURE_DIRECT_TOTAL": 83,
+    "LITERATURE_DIRECT_EVIDENCED": 83,
+    "AUTHOR_SPECIFICATIONS": 16,
+    "AUTHOR_SYNTHESES": 87,
+    "AUTHOR_PROPOSALS": 33,
+    "UNSUPPORTED_EXTERNAL_FACTS": 0
+  },
+  "gates": {
+    "FACTUAL_CLAIMS_WITHOUT_EVIDENCE": 0,
+    "SELF_REFERENTIAL_SOURCE_LOCATORS": 0,
+    "CONTEXTUAL_SUPPORT_WITHOUT_EVIDENCE": 0,
+    "CLAIM_CLASS_SUPPORT_STATUS_CONTRADICTIONS": 0,
+    "FALSE_DIRECT_SUPPORT": 0,
+    "PARENT_TEXT_HASH_MISMATCH": 0,
+    "UNSUPPORTED_EXTERNAL_FACTS": 0
+  }
+}

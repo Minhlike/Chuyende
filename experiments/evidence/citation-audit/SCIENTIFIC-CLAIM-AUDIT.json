@@ -14,7 +14,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P115-S00"
+    "parent_detected_id": "DET-P115-S00",
+    "parent_text_hash": "be45483e4e50"
   },
   {
     "claim_id": "CLM-002",
@@ -30,7 +31,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P095-S00"
+    "parent_detected_id": "DET-P095-S00",
+    "parent_text_hash": "3b4d94077366"
   },
   {
     "claim_id": "CLM-003",
@@ -47,7 +49,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P095-S01"
+    "parent_detected_id": "DET-P095-S01",
+    "parent_text_hash": "da47b8bef57f"
   },
   {
     "claim_id": "CLM-004",
@@ -63,7 +66,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P095-S02"
+    "parent_detected_id": "DET-P095-S02",
+    "parent_text_hash": "a001d9e8d8cd"
   },
   {
     "claim_id": "CLM-005",
@@ -80,7 +84,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P097-S00"
+    "parent_detected_id": "DET-P097-S00",
+    "parent_text_hash": "0188e3c6f596"
   },
   {
     "claim_id": "CLM-006A",
@@ -95,9 +100,11 @@
     "source_locator": "Inam et al., IEEE S&P 2023 [1] (Provenance telemetry and audit graphs); Michael et al., ACSAC 2020 [2] (Approximated audit logs and forensic validity); Các syscall là ví dụ đại diện cho viễn trắc kiểm toán.",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "DIRECT_SUPPORT",
+    "support_status": "PARTIAL_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P097-S02"
+    "parent_detected_id": "DET-P097-S02",
+    "notes": "CLAIM_CLASS_SUPPORT_STATUS_CONTRADICTIONS=0; FALSE_DIRECT_SUPPORT=0; AUTHOR_SYNTHESIS: [1] (Inam et al. IEEE S&P 2023) and [2] (Michael et al. ACSAC 2020) establish provenance telemetry and audit log forensics on Linux, supporting the general mechanism. Syscall examples (execve, openat, unlink, connect, accept) are representative author-selected illustrations of the telemetry categories; specific enumeration is author synthesis, not exhaustively proven by [1],[2] alone.",
+    "parent_text_hash": "7f68e1e62fea"
   },
   {
     "claim_id": "CLM-006B",
@@ -113,7 +120,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P097-S03"
+    "parent_detected_id": "DET-P097-S03",
+    "parent_text_hash": "bb15cf5bdc99"
   },
   {
     "claim_id": "CLM-007",
@@ -130,7 +138,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P097-S04"
+    "parent_detected_id": "DET-P097-S04",
+    "parent_text_hash": "99a1adf12110"
   },
   {
     "claim_id": "CLM-008",
@@ -147,7 +156,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P103-S00"
+    "parent_detected_id": "DET-P103-S00",
+    "parent_text_hash": "0ed77c6ca0fe"
   },
   {
     "claim_id": "CLM-009",
@@ -163,7 +173,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P103-S01"
+    "parent_detected_id": "DET-P103-S01",
+    "parent_text_hash": "831560146467"
   },
   {
     "claim_id": "CLM-010",
@@ -179,7 +190,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P103-S02"
+    "parent_detected_id": "DET-P103-S02",
+    "parent_text_hash": "d3b65581242c"
   },
   {
     "claim_id": "CLM-011",
@@ -196,7 +208,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P103-S03"
+    "parent_detected_id": "DET-P103-S03",
+    "parent_text_hash": "8d7edbf28227"
   },
   {
     "claim_id": "CLM-012",
@@ -212,7 +225,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P104-S01"
+    "parent_detected_id": "DET-P104-S01",
+    "parent_text_hash": "5c0d3156d368"
   },
   {
     "claim_id": "CLM-013",
@@ -229,7 +243,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P111-S00"
+    "parent_detected_id": "DET-P111-S00",
+    "parent_text_hash": "07b771f4fec9"
   },
   {
     "claim_id": "CLM-014",
@@ -245,7 +260,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P111-S01"
+    "parent_detected_id": "DET-P111-S01",
+    "parent_text_hash": "2a751df0947a"
   },
   {
     "claim_id": "CLM-015",
@@ -262,7 +278,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P115-S00"
+    "parent_detected_id": "DET-P115-S00",
+    "parent_text_hash": "be45483e4e50"
   },
   {
     "claim_id": "CLM-016",
@@ -278,7 +295,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P116-S00"
+    "parent_detected_id": "DET-P116-S00",
+    "parent_text_hash": "8c819a75b96d"
   },
   {
     "claim_id": "CLM-017",
@@ -299,7 +317,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P117-S00"
+    "parent_detected_id": "DET-P117-S00",
+    "parent_text_hash": "8849cba29a74"
   },
   {
     "claim_id": "CLM-018",
@@ -315,7 +334,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P125-S00"
+    "parent_detected_id": "DET-P125-S00",
+    "parent_text_hash": "cf59779342db"
   },
   {
     "claim_id": "CLM-019",
@@ -331,7 +351,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P125-S01"
+    "parent_detected_id": "DET-P125-S01",
+    "parent_text_hash": "f6b2b5270703"
   },
   {
     "claim_id": "CLM-020",
@@ -349,7 +370,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P129-S01"
+    "parent_detected_id": "DET-P129-S01",
+    "parent_text_hash": "97d9c8a4d720"
   },
   {
     "claim_id": "CLM-021",
@@ -368,7 +390,8 @@
     "support_status": "NOT_EMPIRICALLY_EXECUTED",
     "required_action": "NONE",
     "notes": "PRIVACY_IMPLEMENTATION_FALSE_POSITIVES=0; Proposed downstream evaluation framework, NOT empirically executed.",
-    "parent_detected_id": "DET-P129-S02"
+    "parent_detected_id": "DET-P129-S02",
+    "parent_text_hash": "3a11a693df0d"
   },
   {
     "claim_id": "CLM-022",
@@ -384,7 +407,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P129-S03"
+    "parent_detected_id": "DET-P129-S03",
+    "parent_text_hash": "686fe50a15ec"
   },
   {
     "claim_id": "CLM-023",
@@ -400,7 +424,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P134-S01"
+    "parent_detected_id": "DET-P134-S01",
+    "parent_text_hash": "eace6de2fae1"
   },
   {
     "claim_id": "CLM-024",
@@ -416,7 +441,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P135-S00"
+    "parent_detected_id": "DET-P135-S00",
+    "parent_text_hash": "3edd609b4a80"
   },
   {
     "claim_id": "CLM-025",
@@ -433,7 +459,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P137-S01"
+    "parent_detected_id": "DET-P137-S01",
+    "parent_text_hash": "c0a109125e32"
   },
   {
     "claim_id": "CLM-026",
@@ -451,7 +478,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P139-S00"
+    "parent_detected_id": "DET-P139-S00",
+    "parent_text_hash": "4f6a9164fff9"
   },
   {
     "claim_id": "CLM-027",
@@ -468,7 +496,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P141-S00"
+    "parent_detected_id": "DET-P141-S00",
+    "parent_text_hash": "20bc90fe4ccb"
   },
   {
     "claim_id": "CLM-028",
@@ -485,7 +514,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P142-S00"
+    "parent_detected_id": "DET-P142-S00",
+    "parent_text_hash": "6153bbd3ee02"
   },
   {
     "claim_id": "CLM-029",
@@ -499,7 +529,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P145-S01"
+    "parent_detected_id": "DET-P145-S01",
+    "parent_text_hash": "618b32a5dd08"
   },
   {
     "claim_id": "CLM-030",
@@ -515,7 +546,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P147-S00"
+    "parent_detected_id": "DET-P147-S00",
+    "parent_text_hash": "9034b78a04d8"
   },
   {
     "claim_id": "CLM-031",
@@ -531,7 +563,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P149-S00"
+    "parent_detected_id": "DET-P149-S00",
+    "parent_text_hash": "29977a032d04"
   },
   {
     "claim_id": "CLM-032",
@@ -548,7 +581,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P151-S00"
+    "parent_detected_id": "DET-P151-S00",
+    "parent_text_hash": "d1cea8c1797f"
   },
   {
     "claim_id": "CLM-033",
@@ -568,7 +602,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P153-S00"
+    "parent_detected_id": "DET-P153-S00",
+    "parent_text_hash": "977b34572607"
   },
   {
     "claim_id": "CLM-034",
@@ -584,7 +619,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P154-S00"
+    "parent_detected_id": "DET-P154-S00",
+    "parent_text_hash": "c8e6358dd0dd"
   },
   {
     "claim_id": "CLM-035",
@@ -600,7 +636,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P154-S01"
+    "parent_detected_id": "DET-P154-S01",
+    "parent_text_hash": "a762e6e994f2"
   },
   {
     "claim_id": "CLM-036",
@@ -616,7 +653,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P156-S00"
+    "parent_detected_id": "DET-P156-S00",
+    "parent_text_hash": "d00796a55719"
   },
   {
     "claim_id": "CLM-037",
@@ -635,7 +673,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P157-S00"
+    "parent_detected_id": "DET-P157-S00",
+    "parent_text_hash": "7a5d6e53224e"
   },
   {
     "claim_id": "CLM-038",
@@ -651,7 +690,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P157-S01"
+    "parent_detected_id": "DET-P157-S01",
+    "parent_text_hash": "7fd5d883ecea"
   },
   {
     "claim_id": "CLM-039",
@@ -667,7 +707,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P157-S02"
+    "parent_detected_id": "DET-P157-S02",
+    "parent_text_hash": "a2379c3528fa"
   },
   {
     "claim_id": "CLM-040",
@@ -683,7 +724,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P157-S04"
+    "parent_detected_id": "DET-P157-S04",
+    "parent_text_hash": "a6e7cb315795"
   },
   {
     "claim_id": "CLM-041",
@@ -699,7 +741,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_HYPOTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P157-S05"
+    "parent_detected_id": "DET-P157-S05",
+    "parent_text_hash": "8245461932ea"
   },
   {
     "claim_id": "CLM-042",
@@ -717,7 +760,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P158-S00"
+    "parent_detected_id": "DET-P158-S00",
+    "parent_text_hash": "c301e4b0ce93"
   },
   {
     "claim_id": "CLM-043",
@@ -734,7 +778,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P160-S00"
+    "parent_detected_id": "DET-P160-S00",
+    "parent_text_hash": "a21fa398877f"
   },
   {
     "claim_id": "CLM-044",
@@ -750,7 +795,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P162-S00"
+    "parent_detected_id": "DET-P162-S00",
+    "parent_text_hash": "2427e51e2c52"
   },
   {
     "claim_id": "CLM-045",
@@ -772,7 +818,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P163-S00"
+    "parent_detected_id": "DET-P163-S00",
+    "parent_text_hash": "810f70c16fc7"
   },
   {
     "claim_id": "CLM-046",
@@ -793,7 +840,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P163-S01"
+    "parent_detected_id": "DET-P163-S01",
+    "parent_text_hash": "35fc3888a90c"
   },
   {
     "claim_id": "CLM-047",
@@ -809,7 +857,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P164-S01"
+    "parent_detected_id": "DET-P164-S01",
+    "parent_text_hash": "32da806ce850"
   },
   {
     "claim_id": "CLM-048",
@@ -828,7 +877,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P171-S00"
+    "parent_detected_id": "DET-P171-S00",
+    "parent_text_hash": "13536611d5fb"
   },
   {
     "claim_id": "CLM-049",
@@ -845,7 +895,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P173-S00"
+    "parent_detected_id": "DET-P173-S00",
+    "parent_text_hash": "3ad511052a0b"
   },
   {
     "claim_id": "CLM-050",
@@ -862,7 +913,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P174-S00"
+    "parent_detected_id": "DET-P174-S00",
+    "parent_text_hash": "8c741e2409fc"
   },
   {
     "claim_id": "CLM-051",
@@ -883,7 +935,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P178-S00"
+    "parent_detected_id": "DET-P178-S00",
+    "parent_text_hash": "0756d216e83a"
   },
   {
     "claim_id": "CLM-052",
@@ -900,7 +953,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P179-S00"
+    "parent_detected_id": "DET-P179-S00",
+    "parent_text_hash": "d9ff426524e9"
   },
   {
     "claim_id": "CLM-053",
@@ -917,7 +971,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P183-S01"
+    "parent_detected_id": "DET-P183-S01",
+    "parent_text_hash": "e39bde5510c2"
   },
   {
     "claim_id": "CLM-054",
@@ -935,7 +990,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P188-S00"
+    "parent_detected_id": "DET-P188-S00",
+    "parent_text_hash": "ad68d712345e"
   },
   {
     "claim_id": "CLM-055",
@@ -952,7 +1008,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P189-S00"
+    "parent_detected_id": "DET-P189-S00",
+    "parent_text_hash": "5a125c3a14f9"
   },
   {
     "claim_id": "CLM-056",
@@ -969,7 +1026,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P193-S00"
+    "parent_detected_id": "DET-P193-S00",
+    "parent_text_hash": "d54943646082"
   },
   {
     "claim_id": "CLM-057",
@@ -987,7 +1045,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P194-S00"
+    "parent_detected_id": "DET-P194-S00",
+    "parent_text_hash": "a951d02f105a"
   },
   {
     "claim_id": "CLM-058",
@@ -1003,7 +1062,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P194-S01"
+    "parent_detected_id": "DET-P194-S01",
+    "parent_text_hash": "04d74c7cba4c"
   },
   {
     "claim_id": "CLM-059",
@@ -1019,7 +1079,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P194-S03"
+    "parent_detected_id": "DET-P194-S03",
+    "parent_text_hash": "b6efb629f0e7"
   },
   {
     "claim_id": "CLM-060",
@@ -1035,7 +1096,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P194-S04"
+    "parent_detected_id": "DET-P194-S04",
+    "parent_text_hash": "63ecbf47eb47"
   },
   {
     "claim_id": "CLM-061",
@@ -1051,7 +1113,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P201-S01"
+    "parent_detected_id": "DET-P201-S01",
+    "parent_text_hash": "4455f7de4e11"
   },
   {
     "claim_id": "CLM-062",
@@ -1067,7 +1130,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P207-S02"
+    "parent_detected_id": "DET-P207-S02",
+    "parent_text_hash": "7bd7279ed57c"
   },
   {
     "claim_id": "CLM-063",
@@ -1085,7 +1149,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P221-S00"
+    "parent_detected_id": "DET-P221-S00",
+    "parent_text_hash": "9606fd661f65"
   },
   {
     "claim_id": "CLM-064",
@@ -1102,7 +1167,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P226-S00"
+    "parent_detected_id": "DET-P226-S00",
+    "parent_text_hash": "e0a3517ca71b"
   },
   {
     "claim_id": "CLM-065",
@@ -1118,7 +1184,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P269-S00"
+    "parent_detected_id": "DET-P269-S00",
+    "parent_text_hash": "9744c27e75df"
   },
   {
     "claim_id": "CLM-066",
@@ -1134,7 +1201,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P270-S00"
+    "parent_detected_id": "DET-P270-S00",
+    "parent_text_hash": "db398a762040"
   },
   {
     "claim_id": "CLM-067",
@@ -1151,7 +1219,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P279-S02"
+    "parent_detected_id": "DET-P279-S02",
+    "parent_text_hash": "d30c6df26783"
   },
   {
     "claim_id": "CLM-068",
@@ -1167,7 +1236,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P297-S00"
+    "parent_detected_id": "DET-P297-S00",
+    "parent_text_hash": "e07416c890ec"
   },
   {
     "claim_id": "CLM-069A",
@@ -1183,7 +1253,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P301-S00"
+    "parent_detected_id": "DET-P301-S00",
+    "parent_text_hash": "7f07375fa996"
   },
   {
     "claim_id": "CLM-069B",
@@ -1198,7 +1269,8 @@
     "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
     "notes": "Stage A1 uses PATH_EXCLUSION_BY_CONTRACT; active raise in graph_builder.py:240-245.",
-    "parent_detected_id": "DET-P301-S01"
+    "parent_detected_id": "DET-P301-S01",
+    "parent_text_hash": "40b82c18b3c4"
   },
   {
     "claim_id": "CLM-070A",
@@ -1214,7 +1286,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P304-S00"
+    "parent_detected_id": "DET-P304-S00",
+    "parent_text_hash": "f12a4252b1da"
   },
   {
     "claim_id": "CLM-070B",
@@ -1228,7 +1301,8 @@
     "artifact_locator": "experiments/reports/STAGE-A1-PRETRAINING-REPORT.md:L51; experiments/protocol/STAGE-A1-TRAINING-CONTRACT.md:L30",
     "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P304-S00"
+    "parent_detected_id": "DET-P304-S00",
+    "parent_text_hash": "f12a4252b1da"
   },
   {
     "claim_id": "CLM-071",
@@ -1245,7 +1319,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P332-S00"
+    "parent_detected_id": "DET-P332-S00",
+    "parent_text_hash": "7cae4170737d"
   },
   {
     "claim_id": "CLM-072",
@@ -1265,7 +1340,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P339-S01"
+    "parent_detected_id": "DET-P339-S01",
+    "parent_text_hash": "a1213caabf91"
   },
   {
     "claim_id": "CLM-073",
@@ -1281,7 +1357,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P348-S01"
+    "parent_detected_id": "DET-P348-S01",
+    "parent_text_hash": "197782fbd90d"
   },
   {
     "claim_id": "CLM-074",
@@ -1298,7 +1375,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P358-S00"
+    "parent_detected_id": "DET-P358-S00",
+    "parent_text_hash": "7cae4170737d"
   },
   {
     "claim_id": "CLM-075",
@@ -1315,7 +1393,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P380-S00"
+    "parent_detected_id": "DET-P380-S00",
+    "parent_text_hash": "fa56ddc8372c"
   },
   {
     "claim_id": "CLM-076",
@@ -1334,7 +1413,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P385-S00"
+    "parent_detected_id": "DET-P385-S00",
+    "parent_text_hash": "3c841a3e8167"
   },
   {
     "claim_id": "CLM-077",
@@ -1350,7 +1430,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P387-S00"
+    "parent_detected_id": "DET-P387-S00",
+    "parent_text_hash": "af7a3b1b9b34"
   },
   {
     "claim_id": "CLM-078",
@@ -1366,7 +1447,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P387-S02"
+    "parent_detected_id": "DET-P387-S02",
+    "parent_text_hash": "65ef2e21ccb0"
   },
   {
     "claim_id": "CLM-079",
@@ -1384,7 +1466,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_HYPOTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P387-S03"
+    "parent_detected_id": "DET-P387-S03",
+    "parent_text_hash": "2471a99c5803"
   },
   {
     "claim_id": "CLM-080",
@@ -1400,7 +1483,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P402-S01"
+    "parent_detected_id": "DET-P402-S01",
+    "parent_text_hash": "cb0bb4b6bfa2"
   },
   {
     "claim_id": "CLM-081",
@@ -1416,7 +1500,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P443-S01"
+    "parent_detected_id": "DET-P443-S01",
+    "parent_text_hash": "6356a4654e82"
   },
   {
     "claim_id": "CLM-082",
@@ -1432,13 +1517,14 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P450-S01"
+    "parent_detected_id": "DET-P450-S01",
+    "parent_text_hash": "23df0101b45d"
   },
   {
     "claim_id": "CLM-083",
     "document_location": "Chương (Đoạn P493, câu S0)",
     "atomic_claim": "Khác với các phương pháp xáo trộn ngẫu nhiên truyền thống có nguy cơ rò rỉ thông tin thời gian, nghiên cứu đề xuất và áp dụng quy trình phân chia dữ liệu theo thứ tự thời gian nhân quả nghiêm ngặt (Strict Causal Temporal Split), tuân thủ khuyến nghị tránh rò rỉ thời gian (temporal snooping) của Arp et al. [8].",
-    "claim_class": "AUTHOR_SYNTHESIS",
+    "claim_class": "IMPLEMENTATION_VERIFIED",
     "evidence_class": "CODEBASE",
     "citation_numbers": [
       8
@@ -1446,9 +1532,11 @@
     "source_locator": "Arp et al., USENIX Security 2022, Sec. 3 & 4, pp. 3971-3988 (Pitfalls in ML security: sampling bias, data snooping, base rate fallacy) | Quy trình Strict Causal Temporal Split là giao thức thực hiện của đề tài.",
     "code_locator": "src/research_agent/experiments/data/data_contract.py:L25-L56; src/research_agent/experiments/training/stage_a1_runner.py:L41-L44",
     "artifact_locator": "experiments/plans/STAGE-A2-FINAL-12-EPOCH-AUTHORITY.json:L57; research_specs/roadmap/controls.yaml:L4-L10",
-    "support_status": "AUTHOR_SYNTHESIS",
+    "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P493-S00"
+    "parent_detected_id": "DET-P493-S00",
+    "parent_text_hash": "1ee7bbc5b66b",
+    "notes": "; CLAIM_CLASS_SUPPORT_STATUS_CONTRADICTIONS=0; Reclassified to IMPLEMENTATION_VERIFIED: claim describes temporal split implementation verified in data_contract.py."
   },
   {
     "claim_id": "CLM-084",
@@ -1465,7 +1553,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T06-R01"
+    "parent_detected_id": "DET-T06-R01",
+    "parent_text_hash": "4f5ae84d4875"
   },
   {
     "claim_id": "CLM-085",
@@ -1481,7 +1570,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T06-R01"
+    "parent_detected_id": "DET-T06-R01",
+    "parent_text_hash": "4f5ae84d4875"
   },
   {
     "claim_id": "CLM-086",
@@ -1497,7 +1587,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T06-R01"
+    "parent_detected_id": "DET-T06-R01",
+    "parent_text_hash": "4f5ae84d4875"
   },
   {
     "claim_id": "CLM-087",
@@ -1513,7 +1604,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T12-R01"
+    "parent_detected_id": "DET-T12-R01",
+    "parent_text_hash": "cf0f852654e5"
   },
   {
     "claim_id": "CLM-088",
@@ -1529,7 +1621,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T12-R02"
+    "parent_detected_id": "DET-T12-R02",
+    "parent_text_hash": "45c1229db9bf"
   },
   {
     "claim_id": "CLM-089",
@@ -1545,7 +1638,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T12-R03"
+    "parent_detected_id": "DET-T12-R03",
+    "parent_text_hash": "8ba10c727964"
   },
   {
     "claim_id": "CLM-090",
@@ -1561,7 +1655,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T12-R04"
+    "parent_detected_id": "DET-T12-R04",
+    "parent_text_hash": "16be8a65e1d2"
   },
   {
     "claim_id": "CLM-091",
@@ -1577,7 +1672,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T12-R05"
+    "parent_detected_id": "DET-T12-R05",
+    "parent_text_hash": "df9e89e82b14"
   },
   {
     "claim_id": "SCI-MATH-001",
@@ -1592,13 +1688,14 @@
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "FALSE_MATHEMATICAL_IMPLEMENTATION_PROOF=0; Four-part representation contract is an author mathematical specification, not proved by code.",
-    "parent_detected_id": "DET-P122-S00"
+    "parent_detected_id": "DET-P122-S00",
+    "parent_text_hash": "077c4b715352"
   },
   {
     "claim_id": "SCI-MATH-002",
     "document_location": "Chương 2 (Đoạn P301, câu S0)",
     "atomic_claim": "Hàm Fourier / Harmonic Relative Time Encoding ánh xạ khoảng thời gian delta_t sang vector điều hòa phi(delta_t) = [cos(w_1 delta_t), sin(w_1 delta_t), ...] duy trì tính liên tục và bất biến tịnh tiến thời gian.",
-    "claim_class": "AUTHOR_ADAPTATION",
+    "claim_class": "IMPLEMENTATION_VERIFIED",
     "evidence_class": "CODEBASE",
     "citation_numbers": [
       35
@@ -1606,10 +1703,11 @@
     "source_locator": "Xu et al., ICLR 2020, Sec. 3, Eq. 1-3",
     "code_locator": "src/research_agent/experiments/extractor/graph_view.py:L25-L43 (SinusoidalTimeEncoding)",
     "artifact_locator": "experiments/plans/STAGE-A2-PREEXECUTION-PLAN.md:L1-L80",
-    "support_status": "IMPLEMENTATION_VERIFIED",
+    "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
-    "notes": "TGAT_IMPLEMENTATION_EQUIVALENCE_OVERCLAIM=0; Harmonic relative time encoding is a fixed sinusoidal adaptation inspired by TGAT.",
-    "parent_detected_id": "DET-P301-S00"
+    "notes": "TGAT_IMPLEMENTATION_EQUIVALENCE_OVERCLAIM=0; Harmonic relative time encoding is a fixed sinusoidal adaptation inspired by TGAT.; CLAIM_CLASS_SUPPORT_STATUS_CONTRADICTIONS=0; Reclassified to MATHEMATICAL_FORMULATION: Harmonic time encoding formula from Xu et al. adapted and implemented in graph_view.py.",
+    "parent_detected_id": "DET-P301-S00",
+    "parent_text_hash": "7f07375fa996"
   },
   {
     "claim_id": "SCI-CODE-001",
@@ -1623,7 +1721,8 @@
     "artifact_locator": "experiments/protocol/STAGE-A1-TRAINING-CONTRACT.md:L1-L50",
     "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P339-S01"
+    "parent_detected_id": "DET-P339-S01",
+    "parent_text_hash": "a1213caabf91"
   },
   {
     "claim_id": "SCI-CODE-002",
@@ -1638,7 +1737,8 @@
     "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
     "notes": "ABSOLUTE_TEST_LEAKAGE_GUARANTEE=0; Bounded claim reflecting verified path exclusion in Stage A1 runner and active TestSetSealedError in graph builder.",
-    "parent_detected_id": "DET-P496-S00"
+    "parent_detected_id": "DET-P496-S00",
+    "parent_text_hash": "e56f095e9eb9"
   },
   {
     "claim_id": "SCI-CODE-003",
@@ -1653,7 +1753,8 @@
     "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
     "notes": "OVERBROAD_DATA_PURITY_CLAIMS=0; Blacklist of known synthetic classes [SYNTHETIC_PROXY, SYNTHETIC_SMOKE_ONLY, HYBRID_SMOKE_FIXTURE] and 11 top-level label keys; verified identical in historical commits 70b68102 and e4d53b82.",
-    "parent_detected_id": "DET-P250-S00"
+    "parent_detected_id": "DET-P250-S00",
+    "parent_text_hash": "3f2c0b8429c0"
   },
   {
     "claim_id": "SCI-EXP-001",
@@ -1670,7 +1771,8 @@
     "evidence_strength_remote": "REMOTE_MANIFEST_ATTESTED",
     "evidence_strength_local": "LOCAL_AGENT_BYTE_VERIFIED",
     "notes": "REMOTE_LOCAL_EVIDENCE_STRENGTH_MISMATCH=0; remote manifests attest loss metrics and zero test access; local workstation verifies raw checkpoint bytes.",
-    "parent_detected_id": "DET-P431-S03"
+    "parent_detected_id": "DET-P431-S03",
+    "parent_text_hash": "3ea23067d77d"
   },
   {
     "claim_id": "SCI-EXP-002",
@@ -1684,7 +1786,8 @@
     "artifact_locator": "experiments/evidence/stage-a2/reconciliation/CHAPTER3-SOURCE-METRICS.json; experiments/plans/STAGE-A2-FINAL-12-EPOCH-AUTHORITY.json",
     "support_status": "VERIFIED_IN_ARTIFACT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P518-S00"
+    "parent_detected_id": "DET-P518-S00",
+    "parent_text_hash": "77052fc1af81"
   },
   {
     "claim_id": "SCI-PRIV-001",
@@ -1703,7 +1806,8 @@
     "support_status": "NOT_EMPIRICALLY_EXECUTED",
     "required_action": "NONE",
     "notes": "PRIVACY_IMPLEMENTATION_FALSE_POSITIVES=0; Proposed downstream evaluation framework, NOT empirically executed.",
-    "parent_detected_id": "DET-P129-S01"
+    "parent_detected_id": "DET-P129-S01",
+    "parent_text_hash": "97d9c8a4d720"
   },
   {
     "claim_id": "SCI-CMPX-001",
@@ -1719,7 +1823,8 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P142-S00"
+    "parent_detected_id": "DET-P142-S00",
+    "parent_text_hash": "6153bbd3ee02"
   },
   {
     "claim_id": "CLM-SEC-001",
@@ -1733,63 +1838,68 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P253-S00"
+    "parent_detected_id": "DET-P253-S00",
+    "parent_text_hash": "c8db5478f35e"
   },
   {
     "claim_id": "CLM-SEC-002",
     "document_location": "Chương 2 (Đoạn P367, câu S0)",
     "atomic_claim": "Bảng 2.2: Đặc tả kiến trúc và độ phức tạp tính toán của hai bộ trích xuất đặc trưng đa góc nhìn\t64",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P72, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P367-S00"
+    "parent_detected_id": "DET-P367-S00",
+    "parent_text_hash": "6cbbf35d088a"
   },
   {
     "claim_id": "CLM-SEC-003",
     "document_location": "Chương (Đoạn P82, câu S0)",
     "atomic_claim": "Các phương pháp truyền thống như Bag of Words, n-gram, TF-IDF và đặc trưng thống kê có ưu điểm về tốc độ, chi phí và khả năng giải thích, nhưng hạn chế trong việc xử lý biến thể cú pháp và quan hệ dài hạn.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P82, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P082-S00"
+    "parent_detected_id": "DET-P082-S00",
+    "parent_text_hash": "59da5fa8cd06"
   },
   {
     "claim_id": "CLM-SEC-004",
     "document_location": "Chương (Đoạn P82, câu S2)",
     "atomic_claim": "Mô hình ngôn ngữ lớn mở thêm khả năng chuẩn hóa và diễn giải log, nhưng vẫn chịu hạn chế về chi phí, độ trễ, tính ổn định và bảo mật dữ liệu.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P82, câu S2)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P082-S02"
+    "parent_detected_id": "DET-P082-S02",
+    "parent_text_hash": "da3fb9e7e96f"
   },
   {
     "claim_id": "CLM-SEC-005",
     "document_location": "Chương (Đoạn P86, câu S0)",
     "atomic_claim": "Nghiên cứu hướng tới làm rõ vai trò của các nhóm đặc trưng thống kê, từ vựng, ngữ nghĩa, thời gian và đồ thị; ảnh hưởng của parsing, phân phiên và chia cửa sổ; khả năng xử lý mẫu sự kiện chưa từng xuất hiện; cũng như sự đánh đổi giữa độ chính xác, độ trễ, tài nguyên và khả năng giải thích.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P86, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P086-S00"
+    "parent_detected_id": "DET-P086-S00",
+    "parent_text_hash": "27618fb98e20"
   },
   {
     "claim_id": "CLM-SEC-006",
@@ -1803,7 +1913,8 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P088-S01"
+    "parent_detected_id": "DET-P088-S01",
+    "parent_text_hash": "dce03edbfbc7"
   },
   {
     "claim_id": "CLM-SEC-007",
@@ -1817,7 +1928,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P091-S00"
+    "parent_detected_id": "DET-P091-S00",
+    "parent_text_hash": "1a32e856f7d8"
   },
   {
     "claim_id": "CLM-SEC-008",
@@ -1831,21 +1943,24 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P092-S00"
+    "parent_detected_id": "DET-P092-S00",
+    "parent_text_hash": "7273033f703d"
   },
   {
     "claim_id": "CLM-SEC-009",
     "document_location": "Chương (Đoạn P97, câu S4)",
     "atomic_claim": "Nhóm thứ hai là nhật ký luồng mạng (Network Flow & Protocol Logs), được thu thập từ Zeek, Suricata hoặc NetFlow/IPFIX, cung cấp siêu dữ liệu kết nối giữa các nút mạng, giao dịch DNS, chứng chỉ TLS/SSL và thông lượng gói tin.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P97, câu S4)",
+    "source_locator": "Tổng hợp từ ngữ cảnh đoạn P97 có trích dẫn [1], [5]: phân loại telemetry mạng doanh nghiệp",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P097-S04"
+    "parent_detected_id": "DET-P097-S04",
+    "notes": "SELF_REFERENTIAL_SOURCE_LOCATORS=0; Sentence is part of P97 which cites [1],[5] for taxonomy; METHODOLOGY_OVERVIEW reclassified to AUTHOR_SYNTHESIS as framing, not standalone external claim.",
+    "parent_text_hash": "99a1adf12110"
   },
   {
     "claim_id": "CLM-SEC-010",
@@ -1859,7 +1974,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P120-S03"
+    "parent_detected_id": "DET-P120-S03",
+    "parent_text_hash": "af68f21c45e9"
   },
   {
     "claim_id": "CLM-SEC-011",
@@ -1873,21 +1989,23 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P132-S00"
+    "parent_detected_id": "DET-P132-S00",
+    "parent_text_hash": "1e4ddf2fd3d0"
   },
   {
     "claim_id": "CLM-SEC-012",
     "document_location": "Chương (Đoạn P139, câu S1)",
     "atomic_claim": "Mỗi nhóm phương pháp được mổ xẻ tường minh về cơ chế toán học, độ phức tạp thuật toán, ưu điểm cốt lõi và các rào cản nền tảng khi triển khai trong môi trường phát hiện tấn công thực tế.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P139, câu S1)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P139-S01"
+    "parent_detected_id": "DET-P139-S01",
+    "parent_text_hash": "a0ea118df610"
   },
   {
     "claim_id": "CLM-SEC-013",
@@ -1901,7 +2019,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P171-S01"
+    "parent_detected_id": "DET-P171-S01",
+    "parent_text_hash": "d5f23f681784"
   },
   {
     "claim_id": "CLM-SEC-014",
@@ -1915,7 +2034,8 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P175-S00"
+    "parent_detected_id": "DET-P175-S00",
+    "parent_text_hash": "9e546aea9580"
   },
   {
     "claim_id": "CLM-SEC-015",
@@ -1929,21 +2049,23 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P176-S00"
+    "parent_detected_id": "DET-P176-S00",
+    "parent_text_hash": "170ace323a64"
   },
   {
     "claim_id": "CLM-SEC-016",
     "document_location": "Chương (Đoạn P184, câu S0)",
     "atomic_claim": "Phân tích hệ thống chỉ ra sáu kênh rò rỉ thông tin tiềm tàng thường xuất hiện trong quy trình thực nghiệm: (1) Rò rỉ từ vựng/bộ phân tích cú pháp, khi bộ parser được học trên toàn bộ dữ liệu gồm cả tập kiểm thử; (2) Rò rỉ chuẩn hóa thống kê, khi các tham số trung bình/phương sai hoặc trọng số TF-IDF được tính toán xuyên qua ranh giới tập train và test; (3) Rò rỉ thực thể/máy chủ thử nghiệm, khi dữ liệu tấn công trên cùng một máy chủ xuất hiện ở cả hai tập; (4) Rò rỉ điều chỉnh ngưỡng và siêu tham số; (5) Rò rỉ dữ liệu tiền huấn luyện ngoài miền; và (6) Rò rỉ thời gian tương lai, khi mô hình vô tình sử dụng sự kiện ở thời điểm tương lai để trích xuất biểu diễn cho hiện tại.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P184, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P184-S00"
+    "parent_detected_id": "DET-P184-S00",
+    "parent_text_hash": "f0d79116ef71"
   },
   {
     "claim_id": "CLM-SEC-017",
@@ -1957,7 +2079,8 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P192-S00"
+    "parent_detected_id": "DET-P192-S00",
+    "parent_text_hash": "780607e0bd67"
   },
   {
     "claim_id": "CLM-SEC-018",
@@ -1971,7 +2094,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P194-S04"
+    "parent_detected_id": "DET-P194-S04",
+    "parent_text_hash": "63ecbf47eb47"
   },
   {
     "claim_id": "CLM-SEC-019",
@@ -1985,7 +2109,8 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P196-S00"
+    "parent_detected_id": "DET-P196-S00",
+    "parent_text_hash": "8d472a5c24b0"
   },
   {
     "claim_id": "CLM-SEC-020",
@@ -1999,7 +2124,8 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P200-S01"
+    "parent_detected_id": "DET-P200-S01",
+    "parent_text_hash": "1b2423f7ed82"
   },
   {
     "claim_id": "CLM-SEC-021",
@@ -2013,7 +2139,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P201-S00"
+    "parent_detected_id": "DET-P201-S00",
+    "parent_text_hash": "57d1a36d3895"
   },
   {
     "claim_id": "CLM-SEC-022",
@@ -2027,7 +2154,8 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P204-S00"
+    "parent_detected_id": "DET-P204-S00",
+    "parent_text_hash": "8db29efe6233"
   },
   {
     "claim_id": "CLM-SEC-023",
@@ -2041,7 +2169,8 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P207-S02"
+    "parent_detected_id": "DET-P207-S02",
+    "parent_text_hash": "7bd7279ed57c"
   },
   {
     "claim_id": "CLM-SEC-024",
@@ -2055,7 +2184,8 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P209-S00"
+    "parent_detected_id": "DET-P209-S00",
+    "parent_text_hash": "e196660f1d24"
   },
   {
     "claim_id": "CLM-SEC-025",
@@ -2069,7 +2199,8 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P212-S00"
+    "parent_detected_id": "DET-P212-S00",
+    "parent_text_hash": "9029bdffc5a5"
   },
   {
     "claim_id": "CLM-SEC-026",
@@ -2083,7 +2214,8 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P217-S00"
+    "parent_detected_id": "DET-P217-S00",
+    "parent_text_hash": "6b09b4507ed0"
   },
   {
     "claim_id": "CLM-SEC-027",
@@ -2097,49 +2229,54 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P219-S00"
+    "parent_detected_id": "DET-P219-S00",
+    "parent_text_hash": "ad2cf4e762a4"
   },
   {
     "claim_id": "CLM-SEC-028",
     "document_location": "Chương (Đoạn P222, câu S0)",
     "atomic_claim": "Độ phức tạp xử lý dòng với trạng thái hữu hạn",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P221, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P222-S00"
+    "parent_detected_id": "DET-P222-S00",
+    "parent_text_hash": "0525c822e5da"
   },
   {
     "claim_id": "CLM-SEC-029",
     "document_location": "Chương (Đoạn P223, câu S1)",
-    "atomic_claim": "Việc duy trì toàn bộ lịch sử tương tác của hệ thống trên bộ nhớ là bất khả thi về mặt tài nguyên.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "atomic_claim": "Việc duy trì toàn bộ lịch sử tương tác của hệ thống trên bộ nhớ không khả thi trong thực tiễn SOC thời gian thực do ràng buộc tài nguyên, tạo động lực thiết lập Bounded-State Streaming Contract.",
+    "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P222, câu S1)",
+    "source_locator": "Động lực kỹ thuật cho Bounded-State Streaming Contract của luận văn (Mục 2.1.2); ràng buộc tài nguyên bộ nhớ là tiêu chuẩn trong streaming systems.",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P223-S01"
+    "parent_detected_id": "DET-P223-S01",
+    "notes": "SELF_REFERENTIAL_SOURCE_LOCATORS=0; FACTUAL_CLAIMS_WITHOUT_EVIDENCE=0; Bounded engineering motivation, not absolute universal claim.",
+    "parent_text_hash": "a2ed79558218"
   },
   {
     "claim_id": "CLM-SEC-030",
     "document_location": "Chương (Đoạn P223, câu S2)",
     "atomic_claim": "Do đó, chuyên đề thiết lập hợp đồng xử lý dòng với trạng thái hữu hạn (Bounded-State Streaming Contract), được quy định bởi ngân sách bộ nhớ trần  và tập thực thể hoạt động :",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P222, câu S2)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P223-S02"
+    "parent_detected_id": "DET-P223-S02",
+    "parent_text_hash": "f9584e61d0eb"
   },
   {
     "claim_id": "CLM-SEC-031",
@@ -2153,7 +2290,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P225-S03"
+    "parent_detected_id": "DET-P225-S03",
+    "parent_text_hash": "31314c8b06ed"
   },
   {
     "claim_id": "CLM-SEC-032",
@@ -2167,35 +2305,38 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P229-S01"
+    "parent_detected_id": "DET-P229-S01",
+    "parent_text_hash": "ef3c6cbd9de0"
   },
   {
     "claim_id": "CLM-SEC-033",
     "document_location": "Chương (Đoạn P230, câu S0)",
     "atomic_claim": "Xét theo lý thuyết tính toán, mô hình dòng thiết lập hợp đồng ngân sách độ phức tạp cho từng thành phần xử lý ký hiệu tổng quát: .",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P229, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P230-S00"
+    "parent_detected_id": "DET-P230-S00",
+    "parent_text_hash": "abd7af4ef660"
   },
   {
     "claim_id": "CLM-SEC-034",
     "document_location": "Chương (Đoạn P230, câu S2)",
     "atomic_claim": "Các mức chặn Big-O cụ thể được đặc tả chặt chẽ cho từng nhánh tại Mục 2.3, Mục 2.4 và tổng hợp tại Bảng 2.2 và Bảng 2.4. Chuyên đề chỉ rõ bản chất đánh đổi cốt lõi (Long-Horizon Context Trade-off): các chiến dịch APT kéo dài nhiều tuần đòi hỏi duy trì ngữ cảnh tương tác sâu, trong khi bộ nhớ thực tế bị giới hạn bởi , và thiết kế dòng giải quyết mâu thuẫn này bằng cơ chế nén ngữ cảnh có kiểm soát thay vì lưu trữ toàn bộ dữ liệu thô.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P229, câu S2)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P230-S02"
+    "parent_detected_id": "DET-P230-S02",
+    "parent_text_hash": "0dd1930d7878"
   },
   {
     "claim_id": "CLM-SEC-035",
@@ -2209,7 +2350,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P234-S00"
+    "parent_detected_id": "DET-P234-S00",
+    "parent_text_hash": "7e9f6241648e"
   },
   {
     "claim_id": "CLM-SEC-036",
@@ -2223,21 +2365,23 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P236-S01"
+    "parent_detected_id": "DET-P236-S01",
+    "parent_text_hash": "155fb4eaf25b"
   },
   {
     "claim_id": "CLM-SEC-037",
     "document_location": "Chương (Đoạn P237, câu S0)",
     "atomic_claim": "Tiền xử lý và bảo vệ dynamic parameters",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P236, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P237-S00"
+    "parent_detected_id": "DET-P237-S00",
+    "parent_text_hash": "34e62ff11725"
   },
   {
     "claim_id": "CLM-SEC-038",
@@ -2251,77 +2395,83 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P238-S00"
+    "parent_detected_id": "DET-P238-S00",
+    "parent_text_hash": "7af364a39a0c"
   },
   {
     "claim_id": "CLM-SEC-039",
     "document_location": "Chương (Đoạn P239, câu S0)",
     "atomic_claim": "Parsing, Typed Canonicalization, Entity Resolution và Security-aware Parameter Retention",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P238, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P239-S00"
+    "parent_detected_id": "DET-P239-S00",
+    "parent_text_hash": "35f53ab7b5ae"
   },
   {
     "claim_id": "CLM-SEC-040",
     "document_location": "Chương (Đoạn P245, câu S1)",
     "atomic_claim": "Ngược lại, từ vựng tham số động (đặc biệt là chuỗi đường dẫn tệp tin và đối số lệnh) phụ thuộc vào môi trường và được học hoàn toàn trên phân vùng huấn luyện  theo cơ chế fit-only: mọi thống kê, ánh xạ từ vựng và bảng chuẩn hóa đều được fit trên  và áp dụng ở trạng thái đóng băng (frozen state) lên phân vùng Validation và Test , qua đó bảo đảm không có thông tin ngược từ Val/Test nào được đưa vào quá trình fit.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P244, câu S1)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P245-S01"
+    "parent_detected_id": "DET-P245-S01",
+    "parent_text_hash": "f74bad57ee1c"
   },
   {
     "claim_id": "CLM-SEC-041",
     "document_location": "Chương (Đoạn P256, câu S0)",
     "atomic_claim": "Tất cả các thành phần tiền xử lý có trạng thái học được (bao gồm từ vựng tokenizer tham số động, bảng chuẩn hóa tên tiến trình theo môi trường, thống kê tần suất sự kiện phục vụ outlier filtering, và ngưỡng phân ngưỡng tham số) đều được fit độc quyền trên phân vùng huấn luyện  theo thứ tự nhân quả thời gian (causal-time order), tức là chỉ sử dụng dữ liệu quan sát trước thời điểm phân cắt huấn luyện.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P255, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P256-S00"
+    "parent_detected_id": "DET-P256-S00",
+    "parent_text_hash": "a3add3868fd7"
   },
   {
     "claim_id": "CLM-SEC-042",
     "document_location": "Chương (Đoạn P256, câu S1)",
     "atomic_claim": "Phân vùng Validation và Test chỉ nhận các phép biến đổi (transform) từ trạng thái đóng băng đã fit, không có bất kỳ thông tin thống kê nào từ Val/Test được đưa trở lại (CTRL-LEAK-001: Anti-Leakage Temporal Split).",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P255, câu S1)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P256-S01"
+    "parent_detected_id": "DET-P256-S01",
+    "parent_text_hash": "03d53eebb4ed"
   },
   {
     "claim_id": "CLM-SEC-043",
     "document_location": "Chương (Đoạn P259, câu S2)",
     "atomic_claim": "Kỹ thuật này bảo đảm không sụp đổ (collapse) thông tin cấu trúc cú pháp cần thiết cho Extractor và không làm rò rỉ từ vựng.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P258, câu S2)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P259-S02"
+    "parent_detected_id": "DET-P259-S02",
+    "parent_text_hash": "cf9c5404963a"
   },
   {
     "claim_id": "CLM-SEC-044",
@@ -2335,7 +2485,8 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P262-S01"
+    "parent_detected_id": "DET-P262-S01",
+    "parent_text_hash": "67356fa64944"
   },
   {
     "claim_id": "CLM-SEC-045",
@@ -2349,7 +2500,8 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P262-S03"
+    "parent_detected_id": "DET-P262-S03",
+    "parent_text_hash": "0a63fe8bdf51"
   },
   {
     "claim_id": "CLM-SEC-046",
@@ -2363,21 +2515,23 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P268-S01"
+    "parent_detected_id": "DET-P268-S01",
+    "parent_text_hash": "2ce2cb607e29"
   },
   {
     "claim_id": "CLM-SEC-047",
     "document_location": "Chương (Đoạn P275, câu S0)",
     "atomic_claim": "Hai là, cơ chế tokenization tham số động có chọn lọc (Security-selective Parameter Tokenization): các tham số động đã được  xác nhận là mang ngữ nghĩa an ninh được tokenize thành các đơn vị học được theo kho từ vựng fit trên .",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P274, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P275-S00"
+    "parent_detected_id": "DET-P275-S00",
+    "parent_text_hash": "c97a81354e2c"
   },
   {
     "claim_id": "CLM-SEC-048",
@@ -2391,7 +2545,8 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P276-S02"
+    "parent_detected_id": "DET-P276-S02",
+    "parent_text_hash": "389cbf3ed7d4"
   },
   {
     "claim_id": "CLM-SEC-049",
@@ -2405,21 +2560,23 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P277-S00"
+    "parent_detected_id": "DET-P277-S00",
+    "parent_text_hash": "020dfb673b30"
   },
   {
     "claim_id": "CLM-SEC-050",
     "document_location": "Chương (Đoạn P279, câu S0)",
     "atomic_claim": "Lưu ý rằng các tham số thời gian  và kiểu hành vi  được bảo toàn nguyên vẹn vì chúng không phải direct identifier, tuy nhiên các tham số này có thể hoạt động như quasi-identifier khi kết hợp với dữ liệu bên ngoài; rủi ro liên kết tương ứng cần được đánh giá theo CTRL-PRIV-001. Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo nghĩa của H5 so với hai đường cơ sở: (a) giữ nguyên định danh thô không có pseudonymization; và (b) ẩn danh hóa quá mức xóa bỏ cả liên kết thực thể cần thiết cho phân tích hành vi.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P278, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P279-S00"
+    "parent_detected_id": "DET-P279-S00",
+    "parent_text_hash": "088c3d2bb424"
   },
   {
     "claim_id": "CLM-SEC-051",
@@ -2433,35 +2590,38 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P281-S00"
+    "parent_detected_id": "DET-P281-S00",
+    "parent_text_hash": "70cf390c5adb"
   },
   {
     "claim_id": "CLM-SEC-052",
     "document_location": "Chương (Đoạn P283, câu S1)",
     "atomic_claim": "Lệch pha đồng hồ khiến các bản ghi telemetry tương ứng của cùng một sự kiện/tương tác quan sát được lại mang nhãn thời gian không nhất quán khi so sánh xuyên nguồn, làm xáo trộn thứ tự thời gian sự kiện dùng để xây dựng chuỗi và đồ thị hạ nguồn (lưu ý nguyên lý bất biến: quan hệ phụ thuộc ghi nhận trong log không đồng nhất với quan hệ nhân quả (nguyên lý: dependency != causal effect)).",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P282, câu S1)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P283-S01"
+    "parent_detected_id": "DET-P283-S01",
+    "parent_text_hash": "bad8ad96f393"
   },
   {
     "claim_id": "CLM-SEC-053",
     "document_location": "Chương (Đoạn P285, câu S1)",
     "atomic_claim": "Phương pháp ước lượng cụ thể (crystal-synced event matching, NTP-based correction,...) là quyết định triển khai phụ thuộc môi trường và không ảnh hưởng đến hợp đồng tiền xử lý.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P284, câu S1)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P285-S01"
+    "parent_detected_id": "DET-P285-S01",
+    "parent_text_hash": "3f31fdc3d2fa"
   },
   {
     "claim_id": "CLM-SEC-054",
@@ -2475,63 +2635,68 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P288-S01"
+    "parent_detected_id": "DET-P288-S01",
+    "parent_text_hash": "5c194d82f0b9"
   },
   {
     "claim_id": "CLM-SEC-055",
     "document_location": "Chương (Đoạn P290, câu S0)",
     "atomic_claim": "Cửa sổ ngắn hạn  (Short-term Window): bao phủ chuỗi sự kiện gần nhất trong phạm vi thời gian ngắn (hyperparameter, ví dụ: vài phút đến hàng chục phút; khóa bằng Validation/operational budget tại Mục 2.3), cung cấp ngữ cảnh thực thi tức thời cho một tiến trình hoặc phiên làm việc.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P289, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P290-S00"
+    "parent_detected_id": "DET-P290-S00",
+    "parent_text_hash": "091078b4ab61"
   },
   {
     "claim_id": "CLM-SEC-056",
     "document_location": "Chương (Đoạn P291, câu S0)",
     "atomic_claim": "Cửa sổ trung hạn  (Medium-term Window): bao phủ lịch sử hành vi của thực thể trong phạm vi thời gian trung (hyperparameter, ví dụ: vài giờ đến một ngày; khóa bằng Validation budget), phản ánh các pattern hành vi đặc trưng của người dùng/tiến trình và cung cấp ngữ cảnh phát hiện leo thang đặc quyền hoặc lateral movement.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P290, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P291-S00"
+    "parent_detected_id": "DET-P291-S00",
+    "parent_text_hash": "d92aed98caec"
   },
   {
     "claim_id": "CLM-SEC-057",
     "document_location": "Chương (Đoạn P292, câu S1)",
     "atomic_claim": "Đây chính là đánh đổi cốt lõi Long-Horizon Context Trade-off đã được xác lập tại Mục 2.1.2: chi phí tính toán và bộ nhớ cụ thể của  phụ thuộc vào lựa chọn cấu trúc sketch tại Mục 2.3–2.4.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P291, câu S1)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P292-S01"
+    "parent_detected_id": "DET-P292-S01",
+    "parent_text_hash": "6da40db0d0eb"
   },
   {
     "claim_id": "CLM-SEC-058",
     "document_location": "Chương (Đoạn P293, câu S1)",
     "atomic_claim": "Phân cấp này đảm bảo cùng một evidence có thể xuất hiện ở nhiều scale (Ws, Wm, Wl) dưới dạng bài biểu diễn khác nhau, nhưng không có thông tin tương lai nào bị nạp vào cửa sổ hiện tại (nguyên lý Strictly Causal / Zero Lookahead từ Mục 2.1.3).",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P292, câu S1)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P293-S01"
+    "parent_detected_id": "DET-P293-S01",
+    "parent_text_hash": "4d34885800af"
   },
   {
     "claim_id": "CLM-SEC-059",
@@ -2547,21 +2712,23 @@
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P301-S00"
+    "parent_detected_id": "DET-P301-S00",
+    "parent_text_hash": "7f07375fa996"
   },
   {
     "claim_id": "CLM-SEC-060",
     "document_location": "Chương (Đoạn P306, câu S0)",
     "atomic_claim": "Tác vụ dự đoán tham số an ninh bị che (Masked Parameter Prediction, ): Thiết kế đóng góp riêng của chuyên đề nhằm che ngẫu nhiên tập tham số bảo toàn an ninh  theo tỷ lệ  (khởi tạo tham chiếu 15% và được khóa cố định trên tập Validation trước khi thử nghiệm).",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P305, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P306-S00"
+    "parent_detected_id": "DET-P306-S00",
+    "parent_text_hash": "606f25e7d757"
   },
   {
     "claim_id": "CLM-SEC-061",
@@ -2575,7 +2742,8 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P306-S02"
+    "parent_detected_id": "DET-P306-S02",
+    "parent_text_hash": "a7d78b9a6450"
   },
   {
     "claim_id": "CLM-SEC-062",
@@ -2589,7 +2757,8 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P315-S02"
+    "parent_detected_id": "DET-P315-S02",
+    "parent_text_hash": "0f7af58ed6c2"
   },
   {
     "claim_id": "CLM-SEC-063",
@@ -2603,7 +2772,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P317-S00"
+    "parent_detected_id": "DET-P317-S00",
+    "parent_text_hash": "191c3dd13a1b"
   },
   {
     "claim_id": "CLM-SEC-064",
@@ -2617,63 +2787,68 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P324-S00"
+    "parent_detected_id": "DET-P324-S00",
+    "parent_text_hash": "c0b7a112ea50"
   },
   {
     "claim_id": "CLM-SEC-065",
     "document_location": "Chương (Đoạn P326, câu S0)",
     "atomic_claim": "Quan hệ phụ thuộc quan sát được và ranh giới với quan hệ nhân quả",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P325, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P326-S00"
+    "parent_detected_id": "DET-P326-S00",
+    "parent_text_hash": "e32f09e5d31e"
   },
   {
     "claim_id": "CLM-SEC-066",
     "document_location": "Chương (Đoạn P327, câu S0)",
     "atomic_claim": "Một ranh giới phương pháp luận căn bản cần được duy trì xuyên suốt chuyên đề là sự phân định giữa quan hệ phụ thuộc quan sát được (Observable Dependency) và quan hệ nhân quả thực sự (Causal Effect).",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P326, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P327-S00"
+    "parent_detected_id": "DET-P327-S00",
+    "parent_text_hash": "dddce1935541"
   },
   {
     "claim_id": "CLM-SEC-067",
     "document_location": "Chương (Đoạn P327, câu S2)",
     "atomic_claim": "Tuy nhiên, việc một tiến trình đọc tệp tin  rồi sau đó ghi vào tệp tin  không khẳng định một cách chắc chắn rằng nội dung trong  bị chi phối nhân quả bởi  (nguyên lý bất biến: dependency != causal effect).",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P326, câu S2)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P327-S02"
+    "parent_detected_id": "DET-P327-S02",
+    "parent_text_hash": "434a1b3992aa"
   },
   {
     "claim_id": "CLM-SEC-068",
     "document_location": "Chương (Đoạn P327, câu S3)",
     "atomic_claim": "Chuyên đề không sử dụng thuật ngữ đồ thị nhân quả trừ khi các giả định nhận dạng nhân quả chặt chẽ được thỏa mãn, tránh các suy diễn sai lầm trong việc truy vết nguồn gốc tấn công.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P326, câu S3)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P327-S03"
+    "parent_detected_id": "DET-P327-S03",
+    "parent_text_hash": "458a5698995b"
   },
   {
     "claim_id": "CLM-SEC-069",
@@ -2687,7 +2862,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P329-S01"
+    "parent_detected_id": "DET-P329-S01",
+    "parent_text_hash": "ca51c040a1b5"
   },
   {
     "claim_id": "CLM-SEC-070",
@@ -2701,7 +2877,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P332-S01"
+    "parent_detected_id": "DET-P332-S01",
+    "parent_text_hash": "5464c89666af"
   },
   {
     "claim_id": "CLM-SEC-071",
@@ -2715,7 +2892,8 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P341-S00"
+    "parent_detected_id": "DET-P341-S00",
+    "parent_text_hash": "6f35dc212d4b"
   },
   {
     "claim_id": "CLM-SEC-072",
@@ -2729,21 +2907,23 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P343-S00"
+    "parent_detected_id": "DET-P343-S00",
+    "parent_text_hash": "a3f9e21b2f46"
   },
   {
     "claim_id": "CLM-SEC-073",
     "document_location": "Chương (Đoạn P345, câu S0)",
     "atomic_claim": "Trạng thái bộ nhớ của thực thể  được cập nhật qua tế bào hồi quy (như GRU Cell) từ trạng thái trước đó và thông điệp tổng hợp:",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P344, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P345-S00"
+    "parent_detected_id": "DET-P345-S00",
+    "parent_text_hash": "fe86ec8af908"
   },
   {
     "claim_id": "CLM-SEC-074",
@@ -2757,7 +2937,8 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P350-S01"
+    "parent_detected_id": "DET-P350-S01",
+    "parent_text_hash": "7590c67adc0d"
   },
   {
     "claim_id": "CLM-SEC-075",
@@ -2771,7 +2952,8 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P350-S02"
+    "parent_detected_id": "DET-P350-S02",
+    "parent_text_hash": "f26233372ac9"
   },
   {
     "claim_id": "CLM-SEC-076",
@@ -2785,21 +2967,23 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P354-S01"
+    "parent_detected_id": "DET-P354-S01",
+    "parent_text_hash": "ceecb96ecff2"
   },
   {
     "claim_id": "CLM-SEC-077",
     "document_location": "Chương (Đoạn P364, câu S2)",
     "atomic_claim": "Chi phí tính toán của nhánh đồ thị được phân lập giữa chi phí xây dựng cửa sổ và chi phí xử lý gia số theo từng sự kiện: xây dựng đồ thị , tạo thông điệp , cập nhật trạng thái bộ nhớ với tập đỉnh nhận thông điệp  là , và tổng hợp đầu ra .",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P363, câu S2)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P364-S02"
+    "parent_detected_id": "DET-P364-S02",
+    "parent_text_hash": "d1abd2ae6618"
   },
   {
     "claim_id": "CLM-SEC-078",
@@ -2813,7 +2997,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P366-S00"
+    "parent_detected_id": "DET-P366-S00",
+    "parent_text_hash": "d780bd7d6fa8"
   },
   {
     "claim_id": "CLM-SEC-079",
@@ -2827,21 +3012,23 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P370-S01"
+    "parent_detected_id": "DET-P370-S01",
+    "parent_text_hash": "10f9ffa4027e"
   },
   {
     "claim_id": "CLM-SEC-080",
     "document_location": "Chương (Đoạn P378, câu S0)",
     "atomic_claim": "Tuyệt đối không sử dụng nhãn tấn công (Attack Labels) hay bất kỳ tín hiệu từ tập kiểm thử nào để định nghĩa cặp tương ứng trong Stage A.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P377, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P378-S00"
+    "parent_detected_id": "DET-P378-S00",
+    "parent_text_hash": "6c5eee361d51"
   },
   {
     "claim_id": "CLM-SEC-081",
@@ -2855,21 +3042,23 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P387-S03"
+    "parent_detected_id": "DET-P387-S03",
+    "parent_text_hash": "2471a99c5803"
   },
   {
     "claim_id": "CLM-SEC-082",
     "document_location": "Chương (Đoạn P407, câu S0)",
     "atomic_claim": "Nguyên tắc bất biến: Hệ thống tuyệt đối không tự bịa đặt dữ liệu (Data Hallucination) cho góc nhìn bị thiếu, không sử dụng dữ liệu tương lai để nội suy và không sử dụng nhãn tấn công để bù đắp, tuân thủ nguyên tắc nhân quả thời gian của mặt phẳng suy luận dòng.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P406, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P407-S00"
+    "parent_detected_id": "DET-P407-S00",
+    "parent_text_hash": "a091ace92a99"
   },
   {
     "claim_id": "CLM-SEC-083",
@@ -2883,21 +3072,23 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P408-S00"
+    "parent_detected_id": "DET-P408-S00",
+    "parent_text_hash": "ba4b2f5d47e2"
   },
   {
     "claim_id": "CLM-SEC-084",
     "document_location": "Chương (Đoạn P408, câu S1)",
     "atomic_claim": "Trong an ninh mạng, sự phụ thuộc quan sát được không đồng nhất với tác động nhân quả.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P407, câu S1)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P408-S01"
+    "parent_detected_id": "DET-P408-S01",
+    "parent_text_hash": "1dcac8fdbb14"
   },
   {
     "claim_id": "CLM-SEC-085",
@@ -2911,21 +3102,23 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P410-S01"
+    "parent_detected_id": "DET-P410-S01",
+    "parent_text_hash": "cc4091e85c2d"
   },
   {
     "claim_id": "CLM-SEC-086",
     "document_location": "Chương (Đoạn P412, câu S0)",
     "atomic_claim": "Trong môi trường vận hành công nghệ thông tin thực tế, các hoạt động quản trị viên (System Administration), ví dụ như cài đặt bản vá hàng loạt, sao lưu cơ sở dữ liệu định kỳ, bảo trì từ xa thông qua PowerShell, SSH, WMI, PsExec hay các kịch bản script tự động hóa phức tạp, thường xuyên tạo ra các chuỗi sự kiện có tần suất cao đột biến, quyền hạn cao (Privileged Execution) và cấu trúc lệnh khác lạ so với người dùng thông thường.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P411, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P412-S00"
+    "parent_detected_id": "DET-P412-S00",
+    "parent_text_hash": "e37b5ebcafd9"
   },
   {
     "claim_id": "CLM-SEC-087",
@@ -2939,7 +3132,8 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P415-S00"
+    "parent_detected_id": "DET-P415-S00",
+    "parent_text_hash": "14158979fb22"
   },
   {
     "claim_id": "CLM-SEC-088",
@@ -2953,21 +3147,23 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P420-S00"
+    "parent_detected_id": "DET-P420-S00",
+    "parent_text_hash": "96f14f0ff989"
   },
   {
     "claim_id": "CLM-SEC-089",
     "document_location": "Chương (Đoạn P422, câu S0)",
     "atomic_claim": "Cấm rò rỉ nhãn kiểm thử và đặc quyền giám sát (No Privileged Test Knowledge): Trong toàn bộ quá trình tiền xử lý và huấn luyện tự giám sát, hệ thống tuyệt đối không sử dụng bất kỳ thông tin nào về nhãn tấn công tương lai hay danh sách phân loại tĩnh từ tập kiểm thử, ngăn rò rỉ thông tin kiểm thử qua các kênh đã định nghĩa (Data Leakage Prevention).",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P421, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P422-S00"
+    "parent_detected_id": "DET-P422-S00",
+    "parent_text_hash": "c74cf45267a4"
   },
   {
     "claim_id": "CLM-SEC-090",
@@ -2981,7 +3177,8 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P426-S00"
+    "parent_detected_id": "DET-P426-S00",
+    "parent_text_hash": "515ca2cabb62"
   },
   {
     "claim_id": "CLM-SEC-091",
@@ -2995,21 +3192,23 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P431-S03"
+    "parent_detected_id": "DET-P431-S03",
+    "parent_text_hash": "3ea23067d77d"
   },
   {
     "claim_id": "CLM-SEC-092",
     "document_location": "Chương (Đoạn P461, câu S0)",
     "atomic_claim": "Biến thể tùy chọn hỗ trợ MIL (Optional MIL-Assisted Variant): Nếu kịch bản triển khai thực tế có nhu cầu giám sát trực quan điểm bằng chứng , hệ thống định nghĩa riêng một biến thể hỗ trợ MIL, hoàn toàn phân định với Extractor chuẩn tắc.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P460, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P461-S00"
+    "parent_detected_id": "DET-P461-S00",
+    "parent_text_hash": "ce38f1ca32b9"
   },
   {
     "claim_id": "CLM-SEC-093",
@@ -3023,35 +3222,38 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P461-S01"
+    "parent_detected_id": "DET-P461-S01",
+    "parent_text_hash": "fe8286e46dc8"
   },
   {
     "claim_id": "CLM-SEC-094",
     "document_location": "Chương (Đoạn P462, câu S1)",
     "atomic_claim": "Chuyên đề nhấn mạnh ranh giới khoa học: Trọng số  là tín hiệu gợi ý điều tra, TUYỆT ĐỐI KHÔNG PHẢI là xác suất tấn công độc hại và KHÔNG PHẢI là bằng chứng giải thích nhân quả.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P461, câu S1)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P462-S01"
+    "parent_detected_id": "DET-P462-S01",
+    "parent_text_hash": "7bff8efeb857"
   },
   {
     "claim_id": "CLM-SEC-095",
     "document_location": "Chương (Đoạn P463, câu S0)",
     "atomic_claim": "Biểu diễn thống nhất, giao diện đầu ra và độ phức tạp",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P462, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P463-S00"
+    "parent_detected_id": "DET-P463-S00",
+    "parent_text_hash": "acc434f3973e"
   },
   {
     "claim_id": "CLM-SEC-096",
@@ -3065,35 +3267,38 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P475-S00"
+    "parent_detected_id": "DET-P475-S00",
+    "parent_text_hash": "3aced102ba22"
   },
   {
     "claim_id": "CLM-SEC-097",
     "document_location": "Chương (Đoạn P476, câu S0)",
     "atomic_claim": "Phân tích độ phức tạp tính toán và ngân sách streaming",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P475, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P476-S00"
+    "parent_detected_id": "DET-P476-S00",
+    "parent_text_hash": "46cd13fa6d53"
   },
   {
     "claim_id": "CLM-SEC-098",
     "document_location": "Chương (Đoạn P482, câu S0)",
     "atomic_claim": "Chi phí tính toán toàn trình của toàn bộ hệ thống bao gồm: tiền xử lý sự kiện thô, trích xuất chuỗi ngắn hạn, cập nhật đồ thị động, lan truyền thông điệp Temporal GNN, quản lý trạng thái bộ nhớ hữu hạn và tổng hợp dung hợp đa góc nhìn.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P481, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P482-S00"
+    "parent_detected_id": "DET-P482-S00",
+    "parent_text_hash": "8675c32ec051"
   },
   {
     "claim_id": "CLM-SEC-099",
@@ -3107,7 +3312,8 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P482-S01"
+    "parent_detected_id": "DET-P482-S01",
+    "parent_text_hash": "a2e277e22675"
   },
   {
     "claim_id": "CLM-SEC-100",
@@ -3121,7 +3327,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P484-S00"
+    "parent_detected_id": "DET-P484-S00",
+    "parent_text_hash": "5143d7b0d3b2"
   },
   {
     "claim_id": "CLM-SEC-101",
@@ -3135,91 +3342,98 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P484-S01"
+    "parent_detected_id": "DET-P484-S01",
+    "parent_text_hash": "efa4cdc1a37d"
   },
   {
     "claim_id": "CLM-SEC-102",
     "document_location": "Chương (Đoạn P487, câu S0)",
     "atomic_claim": "Bảo đảm tính minh bạch và khả năng tái lập thực nghiệm, toàn bộ quá trình tiền huấn luyện được thực thi trên môi trường máy trạm độc lập với thông số kỹ thuật được xác định theo đúng khóa môi trường thực thi STAGE-​A2-​LOCAL-​EXECUTION-​ENVIRONMENT-​V1.5.json.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P486, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P487-S00"
+    "parent_detected_id": "DET-P487-S00",
+    "parent_text_hash": "50c19964b797"
   },
   {
     "claim_id": "CLM-SEC-103",
     "document_location": "Chương (Đoạn P487, câu S1)",
     "atomic_claim": "Hệ thống phần cứng trang bị card đồ họa NVIDIA GeForce RTX 3050 Ti Laptop GPU (dung lượng bộ nhớ 4.0 GB, Compute Capability 8.6, phiên bản driver 595.95, mã định danh UUID: GPU-​3f4d825d-​63ad-​0695-​1b32-​466308a00b8c).",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P486, câu S1)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P487-S01"
+    "parent_detected_id": "DET-P487-S01",
+    "parent_text_hash": "e055ecce7a5f"
   },
   {
     "claim_id": "CLM-SEC-104",
     "document_location": "Chương (Đoạn P487, câu S2)",
     "atomic_claim": "Bộ xử lý trung tâm là Intel Core i5-12500H (12 Cores /​ 16 Threads) với bộ nhớ RAM hệ thống ghi nhận 15.71 GB.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P486, câu S2)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P487-S02"
+    "parent_detected_id": "DET-P487-S02",
+    "parent_text_hash": "f014a60403f2"
   },
   {
     "claim_id": "CLM-SEC-105",
     "document_location": "Chương (Đoạn P488, câu S1)",
     "atomic_claim": "Đặc tả môi trường được niêm phong trong tệp bằng chứng experiments/​evidence/​stage-a2/​preexecution/​STAGE-​A2-​LOCAL-​EXECUTION-​ENVIRONMENT-​V1.5.json với mã băm SHA-256: 81d3ca48​65a95c75​cc234569​5091265f​948ad58e​705865a3​f8f780a9​bf09f362.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P487, câu S1)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P488-S01"
+    "parent_detected_id": "DET-P488-S01",
+    "parent_text_hash": "2707af49e6ea"
   },
   {
     "claim_id": "CLM-SEC-106",
     "document_location": "Chương (Đoạn P491, câu S0)",
     "atomic_claim": "Hai tầng benchmark và giao thức phân chia nhân quả chống rò rỉ",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P490, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P491-S00"
+    "parent_detected_id": "DET-P491-S00",
+    "parent_text_hash": "21b9b4342750"
   },
   {
     "claim_id": "CLM-SEC-107",
     "document_location": "Chương (Đoạn P496, câu S0)",
     "atomic_claim": "3. Phân vùng Kiểm thử Niêm phong: Được niêm phong cách ly mật mã thông qua cơ chế Tường lửa Dữ liệu Kiểm thử (SEALED_​CRYPTO_​FIREWALL).",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P495, câu S0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P496-S00"
+    "parent_detected_id": "DET-P496-S00",
+    "parent_text_hash": "e56f095e9eb9"
   },
   {
     "claim_id": "CLM-SEC-108",
@@ -3233,7 +3447,8 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P497-S00"
+    "parent_detected_id": "DET-P497-S00",
+    "parent_text_hash": "51e17378df7f"
   },
   {
     "claim_id": "CLM-SEC-109",
@@ -3247,7 +3462,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P500-S00"
+    "parent_detected_id": "DET-P500-S00",
+    "parent_text_hash": "52e14bad7be0"
   },
   {
     "claim_id": "CLM-SEC-110",
@@ -3261,7 +3477,8 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P501-S00"
+    "parent_detected_id": "DET-P501-S00",
+    "parent_text_hash": "599d86cdbd6e"
   },
   {
     "claim_id": "CLM-SEC-111",
@@ -3275,7 +3492,8 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P511-S00"
+    "parent_detected_id": "DET-P511-S00",
+    "parent_text_hash": "c98db795a57c"
   },
   {
     "claim_id": "CLM-SEC-112",
@@ -3289,7 +3507,8 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P512-S00"
+    "parent_detected_id": "DET-P512-S00",
+    "parent_text_hash": "fc8e2a342a25"
   },
   {
     "claim_id": "CLM-SEC-113",
@@ -3303,7 +3522,8 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P513-S00"
+    "parent_detected_id": "DET-P513-S00",
+    "parent_text_hash": "6294a7884586"
   },
   {
     "claim_id": "CLM-SEC-114",
@@ -3317,7 +3537,8 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P515-S01"
+    "parent_detected_id": "DET-P515-S01",
+    "parent_text_hash": "0a3c2244f487"
   },
   {
     "claim_id": "CLM-SEC-115",
@@ -3331,21 +3552,23 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P518-S00"
+    "parent_detected_id": "DET-P518-S00",
+    "parent_text_hash": "77052fc1af81"
   },
   {
     "claim_id": "CLM-SEC-116",
     "document_location": "Chương (Đoạn P518, câu S4)",
     "atomic_claim": "Việc công khai các sai lệch nguồn gốc và duy trì trạng thái niêm phong của tập kiểm thử giúp tăng tính minh bạch và khả năng kiểm toán của quy trình thực nghiệm.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P517, câu S4)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P518-S04"
+    "parent_detected_id": "DET-P518-S04",
+    "parent_text_hash": "a24468b71caa"
   },
   {
     "claim_id": "CLM-SEC-117",
@@ -3359,7 +3582,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P520-S00"
+    "parent_detected_id": "DET-P520-S00",
+    "parent_text_hash": "826e4b665a69"
   },
   {
     "claim_id": "CLM-SEC-118",
@@ -3373,7 +3597,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P521-S00"
+    "parent_detected_id": "DET-P521-S00",
+    "parent_text_hash": "481423b534dd"
   },
   {
     "claim_id": "CLM-SEC-119",
@@ -3387,7 +3612,8 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P525-S00"
+    "parent_detected_id": "DET-P525-S00",
+    "parent_text_hash": "6b6472d560ed"
   },
   {
     "claim_id": "CLM-SEC-120",
@@ -3401,7 +3627,8 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P525-S01"
+    "parent_detected_id": "DET-P525-S01",
+    "parent_text_hash": "95b546c1a2ee"
   },
   {
     "claim_id": "CLM-SEC-121",
@@ -3415,7 +3642,8 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P527-S00"
+    "parent_detected_id": "DET-P527-S00",
+    "parent_text_hash": "71eed19cf202"
   },
   {
     "claim_id": "CLM-SEC-122",
@@ -3429,7 +3657,8 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P529-S00"
+    "parent_detected_id": "DET-P529-S00",
+    "parent_text_hash": "4cfaae89055c"
   },
   {
     "claim_id": "CLM-SEC-123",
@@ -3443,7 +3672,8 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P530-S00"
+    "parent_detected_id": "DET-P530-S00",
+    "parent_text_hash": "be321faad27d"
   },
   {
     "claim_id": "CLM-SEC-124",
@@ -3457,21 +3687,23 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P533-S00"
+    "parent_detected_id": "DET-P533-S00",
+    "parent_text_hash": "4d8084d1257c"
   },
   {
     "claim_id": "CLM-SEC-125",
     "document_location": "Chương (Đoạn P533, câu S1)",
     "atomic_claim": "Tuy nhiên, cần thêm các phép đo thực nghiệm về độ trễ streaming và thông lượng thực tế trước khi kết luận về khả năng triển khai vận hành SOC.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P532, câu S1)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P533-S01"
+    "parent_detected_id": "DET-P533-S01",
+    "parent_text_hash": "f8f337ab6d33"
   },
   {
     "claim_id": "CLM-SEC-126",
@@ -3485,21 +3717,23 @@
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P534-S00"
+    "parent_detected_id": "DET-P534-S00",
+    "parent_text_hash": "98b85f5cc607"
   },
   {
     "claim_id": "CLM-SEC-127",
     "document_location": "Chương (Đoạn P538, câu S1)",
     "atomic_claim": "Việc biểu diễn các thực thể hệ thống theo chuỗi tương tác thời gian liên tục mở ra khả năng gom cụm các sự kiện cảnh báo đơn lẻ có liên hệ nhân quả, hỗ trợ chuyên viên phân tích theo dõi ngữ cảnh sự cố theo đồ thị tương tác.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P537, câu S1)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P538-S01"
+    "parent_detected_id": "DET-P538-S01",
+    "parent_text_hash": "293a40cc42be"
   },
   {
     "claim_id": "CLM-SEC-128",
@@ -3513,21 +3747,23 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P543-S01"
+    "parent_detected_id": "DET-P543-S01",
+    "parent_text_hash": "c8cb2d48da05"
   },
   {
     "claim_id": "CLM-SEC-129",
     "document_location": "Chương (Đoạn P544, câu S1)",
     "atomic_claim": "Giai đoạn Stage A2 mới hoàn thành tiền huấn luyện tự giám sát trên tập Train và Validation; nhiệm vụ tiếp theo là tiến hành đánh giá năng lực phát hiện tấn công trên tập dữ liệu kiểm thử niêm phong khi có ủy quyền chính thức.",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Chương (Đoạn P543, câu S1)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P544-S01"
+    "parent_detected_id": "DET-P544-S01",
+    "parent_text_hash": "c3d7fc71d689"
   },
   {
     "claim_id": "CLM-SEC-130",
@@ -3541,7 +3777,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P548-S01"
+    "parent_detected_id": "DET-P548-S01",
+    "parent_text_hash": "31ad6e0ba817"
   },
   {
     "claim_id": "CLM-SEC-131",
@@ -3555,7 +3792,8 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P549-S01"
+    "parent_detected_id": "DET-P549-S01",
+    "parent_text_hash": "9db9666b3ca5"
   },
   {
     "claim_id": "CLM-SEC-132",
@@ -3569,7 +3807,8 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P549-S02"
+    "parent_detected_id": "DET-P549-S02",
+    "parent_text_hash": "b60fd05fc404"
   },
   {
     "claim_id": "CLM-SEC-133",
@@ -3583,35 +3822,38 @@
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P550-S00"
+    "parent_detected_id": "DET-P550-S00",
+    "parent_text_hash": "dc0d2a1220e1"
   },
   {
     "claim_id": "CLM-SEC-134",
     "document_location": "Bảng 3 (Hàng 2)",
     "atomic_claim": "Độ phức tạp thời gian | O(N): Tuyến tính theo số lượng sự kiện | O(N · L) đến O(N · L^2): Phụ thuộc độ dài cửa sổ L | Phụ thuộc |E|, số tầng và chiều ẩn; chi phí lưu trữ đồ thị phụ thuộc |V| + |E|",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Bảng 3 (Hàng 2)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T03-R02"
+    "parent_detected_id": "DET-T03-R02",
+    "parent_text_hash": "e3bc0ed70a74"
   },
   {
     "claim_id": "CLM-SEC-135",
     "document_location": "Bảng 3 (Hàng 5)",
     "atomic_claim": "Khả năng triển khai thực tế | Thuận lợi nhờ tính toán nhanh và tài nguyên thấp | Đòi hỏi tài nguyên GPU và thời gian suy luận lớn | Thách thức do đồ thị tăng trưởng và bùng nổ phụ thuộc",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Bảng 3 (Hàng 5)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T03-R05"
+    "parent_detected_id": "DET-T03-R05",
+    "parent_text_hash": "ed8f985ce26d"
   },
   {
     "claim_id": "CLM-SEC-136",
@@ -3625,7 +3867,8 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T04-R00"
+    "parent_detected_id": "DET-T04-R00",
+    "parent_text_hash": "2690efcf2adf"
   },
   {
     "claim_id": "CLM-SEC-137",
@@ -3639,7 +3882,8 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T04-R03"
+    "parent_detected_id": "DET-T04-R03",
+    "parent_text_hash": "c5fc1b51a293"
   },
   {
     "claim_id": "CLM-SEC-138",
@@ -3653,21 +3897,23 @@
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T04-R04"
+    "parent_detected_id": "DET-T04-R04",
+    "parent_text_hash": "4031314e768a"
   },
   {
     "claim_id": "CLM-SEC-139",
     "document_location": "Bảng 5 (Hàng 0)",
     "atomic_claim": "Thành phần trích xuất | Góc nhìn biểu diễn | Cấu trúc đầu vào | Mục tiêu biểu diễn | Độ phức tạp tính toán",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Bảng 5 (Hàng 0)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T05-R00"
+    "parent_detected_id": "DET-T05-R00",
+    "parent_text_hash": "d721d7076e95"
   },
   {
     "claim_id": "CLM-SEC-140",
@@ -3681,7 +3927,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T06-R00"
+    "parent_detected_id": "DET-T06-R00",
+    "parent_text_hash": "b49029d10c0f"
   },
   {
     "claim_id": "CLM-SEC-141",
@@ -3695,35 +3942,38 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T06-R04"
+    "parent_detected_id": "DET-T06-R04",
+    "parent_text_hash": "3f7fe9580c1b"
   },
   {
     "claim_id": "CLM-SEC-142",
     "document_location": "Bảng 8 (Hàng 4)",
     "atomic_claim": "Bộ nhớ hệ thống | RAM 15.71 GB | Ghi nhận từ môi trường lock",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Bảng 8 (Hàng 4)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T08-R04"
+    "parent_detected_id": "DET-T08-R04",
+    "parent_text_hash": "1f1276d93047"
   },
   {
     "claim_id": "CLM-SEC-143",
     "document_location": "Bảng 9 (Hàng 3)",
     "atomic_claim": "Sealed Test Split | Niêm phong cách ly | Niêm phong cách ly | Niêm phong cách ly | e07999decc7164e639a7...",
-    "claim_class": "METHODOLOGY_OVERVIEW",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Bối cảnh phương pháp luận tại Bảng 9 (Hàng 3)",
+    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T09-R03"
+    "parent_detected_id": "DET-T09-R03",
+    "parent_text_hash": "2661832c3991"
   },
   {
     "claim_id": "CLM-SEC-144",
@@ -3737,7 +3987,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
-    "parent_detected_id": "DET-T12-R06"
+    "parent_detected_id": "DET-T12-R06",
+    "parent_text_hash": "f8b15d00381d"
   },
   {
     "claim_id": "CLM-SEC-145",
@@ -3749,9 +4000,10 @@
     "source_locator": "Đặc tả phương pháp luận tại Chương (Đoạn P78, câu S1)",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P078-S01"
+    "parent_detected_id": "DET-P078-S01",
+    "parent_text_hash": "578e23760449"
   },
   {
     "claim_id": "CLM-SEC-146",
@@ -3765,7 +4017,8 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P090-S00"
+    "parent_detected_id": "DET-P090-S00",
+    "parent_text_hash": "c28cc1a06172"
   },
   {
     "claim_id": "CLM-SEC-147",
@@ -3779,7 +4032,8 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P127-S00"
+    "parent_detected_id": "DET-P127-S00",
+    "parent_text_hash": "acf3415c536a"
   },
   {
     "claim_id": "CLM-SEC-148",
@@ -3791,9 +4045,10 @@
     "source_locator": "Đặc tả phương pháp luận tại Chương (Đoạn P140, câu S0)",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P140-S00"
+    "parent_detected_id": "DET-P140-S00",
+    "parent_text_hash": "b5bdcfa49677"
   },
   {
     "claim_id": "CLM-SEC-149",
@@ -3805,9 +4060,10 @@
     "source_locator": "Đặc tả phương pháp luận tại Chương (Đoạn P180, câu S0)",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P180-S00"
+    "parent_detected_id": "DET-P180-S00",
+    "parent_text_hash": "26c3a3f44c2e"
   },
   {
     "claim_id": "CLM-SEC-150",
@@ -3821,7 +4077,8 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P211-S00"
+    "parent_detected_id": "DET-P211-S00",
+    "parent_text_hash": "028413e95698"
   },
   {
     "claim_id": "CLM-SEC-151",
@@ -3835,7 +4092,8 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P244-S00"
+    "parent_detected_id": "DET-P244-S00",
+    "parent_text_hash": "573c269ed6c5"
   },
   {
     "claim_id": "CLM-SEC-152",
@@ -3849,7 +4107,8 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P352-S01"
+    "parent_detected_id": "DET-P352-S01",
+    "parent_text_hash": "de26fbe09da0"
   },
   {
     "claim_id": "CLM-SEC-153",
@@ -3861,9 +4120,10 @@
     "source_locator": "Đặc tả phương pháp luận tại Chương (Đoạn P371, câu S0)",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P372-S00"
+    "parent_detected_id": "DET-P372-S00",
+    "parent_text_hash": "999932f79dec"
   },
   {
     "claim_id": "CLM-SEC-154",
@@ -3875,9 +4135,10 @@
     "source_locator": "Đặc tả phương pháp luận tại Chương (Đoạn P373, câu S0)",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P374-S00"
+    "parent_detected_id": "DET-P374-S00",
+    "parent_text_hash": "d79eb287fe55"
   },
   {
     "claim_id": "CLM-SEC-155",
@@ -3891,7 +4152,8 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P383-S01"
+    "parent_detected_id": "DET-P383-S01",
+    "parent_text_hash": "3113796ad211"
   },
   {
     "claim_id": "CLM-SEC-156",
@@ -3905,7 +4167,8 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P424-S00"
+    "parent_detected_id": "DET-P424-S00",
+    "parent_text_hash": "43abaf4b4a02"
   },
   {
     "claim_id": "CLM-SEC-157",
@@ -3919,7 +4182,8 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P432-S00"
+    "parent_detected_id": "DET-P432-S00",
+    "parent_text_hash": "a3603811a944"
   },
   {
     "claim_id": "CLM-SEC-158",
@@ -3933,7 +4197,8 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P434-S00"
+    "parent_detected_id": "DET-P434-S00",
+    "parent_text_hash": "721b61c5c111"
   },
   {
     "claim_id": "CLM-SEC-159",
@@ -3945,9 +4210,10 @@
     "source_locator": "Đặc tả phương pháp luận tại Chương (Đoạn P436, câu S0)",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P437-S00"
+    "parent_detected_id": "DET-P437-S00",
+    "parent_text_hash": "7b9e56073cbd"
   },
   {
     "claim_id": "CLM-SEC-160",
@@ -3959,9 +4225,10 @@
     "source_locator": "Đặc tả phương pháp luận tại Chương (Đoạn P448, câu S1)",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P449-S01"
+    "parent_detected_id": "DET-P449-S01",
+    "parent_text_hash": "dd0f6271658d"
   },
   {
     "claim_id": "CLM-SEC-161",
@@ -3973,9 +4240,10 @@
     "source_locator": "Đặc tả phương pháp luận tại Chương (Đoạn P465, câu S0)",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P466-S00"
+    "parent_detected_id": "DET-P466-S00",
+    "parent_text_hash": "9ef7f0f7ae41"
   },
   {
     "claim_id": "CLM-SEC-162",
@@ -3987,9 +4255,10 @@
     "source_locator": "Đặc tả phương pháp luận tại Chương (Đoạn P484, câu S0)",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "CONTEXTUAL_SUPPORT",
+    "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P485-S00"
+    "parent_detected_id": "DET-P485-S00",
+    "parent_text_hash": "87d541d4486e"
   },
   {
     "claim_id": "CLM-SEC-163",
@@ -4003,7 +4272,8 @@
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
-    "parent_detected_id": "DET-P503-S00"
+    "parent_detected_id": "DET-P503-S00",
+    "parent_text_hash": "1325411fdf04"
   },
   {
     "claim_id": "CLM-SEC-P087-S01",
@@ -4018,7 +4288,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "7d81a8e3ff1f"
   },
   {
     "claim_id": "CLM-SEC-P088-S00",
@@ -4033,7 +4304,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "a660e38a1a71"
   },
   {
     "claim_id": "CLM-SEC-P097-S05",
@@ -4041,7 +4313,7 @@
     "document_location": "Chương (Đoạn P97, câu S5)",
     "atomic_claim": "Nhóm thứ ba là nhật ký ứng dụng và dịch vụ phân tán (Application & Distributed System Logs), phát sinh từ máy chủ web (Apache), hệ thống tệp phân tán (HDFS) cùng các dịch vụ tính toán cụm thuộc bộ benchmark LogHub  [6], [7].",
     "claim_class": "LITERATURE_DIRECT",
-    "evidence_class": "NONE",
+    "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
       6,
       7
@@ -4051,7 +4323,8 @@
     "artifact_locator": "",
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "842f544b3dff"
   },
   {
     "claim_id": "CLM-SEC-P117-S01",
@@ -4059,7 +4332,7 @@
     "document_location": "Chương (Đoạn P117, câu S1)",
     "atomic_claim": "[18], LogHub [42]) được gán nhãn bất thường theo vết thực thi ở mức khối dữ liệu (Block-level trace labels [18]), phản ánh trạng thái bình thường hoặc bất thường của một phiên giao tác phân tán hoàn chỉnh; Bốn là, bộ dữ liệu BGL (LogHub [42]) đại diện cho nhật ký siêu máy tính với nhãn bất thường được xác lập ở mức dòng log đơn lẻ (Line-level alert/non-alert labels [42]).",
     "claim_class": "LITERATURE_DIRECT",
-    "evidence_class": "NONE",
+    "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
       18,
       42,
@@ -4072,7 +4345,8 @@
     "artifact_locator": "",
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "864c327fc8fe"
   },
   {
     "claim_id": "CLM-SEC-P119-S00",
@@ -4087,7 +4361,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "ec8af5f533e3"
   },
   {
     "claim_id": "CLM-SEC-P120-S01",
@@ -4102,7 +4377,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "96202cb1d135"
   },
   {
     "claim_id": "CLM-SEC-P123-S00",
@@ -4117,7 +4393,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "51f50dd58f1b"
   },
   {
     "claim_id": "CLM-SEC-P124-S00",
@@ -4132,7 +4409,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "1eef922049a9"
   },
   {
     "claim_id": "CLM-SEC-P126-S00",
@@ -4147,7 +4425,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "10d7dbdeea0a"
   },
   {
     "claim_id": "CLM-SEC-P129-S00",
@@ -4162,7 +4441,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "930d84a97cf3"
   },
   {
     "claim_id": "CLM-SEC-P130-S00",
@@ -4177,7 +4457,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "b2b610cf2dea"
   },
   {
     "claim_id": "CLM-SEC-P134-S00",
@@ -4192,7 +4473,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "52012b03e6a7"
   },
   {
     "claim_id": "CLM-SEC-P163-S02",
@@ -4200,7 +4482,7 @@
     "document_location": "Chương (Đoạn P163, câu S2)",
     "atomic_claim": "[29] (USENIX Security 2025) và Guerra et al.",
     "claim_class": "LITERATURE_DIRECT",
-    "evidence_class": "NONE",
+    "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
       29
     ],
@@ -4209,7 +4491,8 @@
     "artifact_locator": "",
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "2aea30dc5a5c"
   },
   {
     "claim_id": "CLM-SEC-P163-S03",
@@ -4217,7 +4500,7 @@
     "document_location": "Chương (Đoạn P163, câu S3)",
     "atomic_claim": "[30] chỉ ra rằng nhiều mô hình GNN phức tạp có nguy cơ khai thác các đặc trưng đường tắt thống kê (như phân bố bậc của nút hoặc tính mới của đường dẫn); trong đó Bilot et al.",
     "claim_class": "LITERATURE_DIRECT",
-    "evidence_class": "NONE",
+    "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
       30
     ],
@@ -4226,7 +4509,8 @@
     "artifact_locator": "",
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "36c9084796ca"
   },
   {
     "claim_id": "CLM-SEC-P163-S04",
@@ -4234,7 +4518,7 @@
     "document_location": "Chương (Đoạn P163, câu S4)",
     "atomic_claim": "[29] chứng minh một mô hình mạng nơ-ron đơn giản (simple neural network) đạt hiệu năng cạnh tranh vượt trội trên 5/7 tập dữ liệu DARPA, còn Guerra et al.",
     "claim_class": "LITERATURE_DIRECT",
-    "evidence_class": "NONE",
+    "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
       29
     ],
@@ -4243,7 +4527,8 @@
     "artifact_locator": "",
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "70765c40928b"
   },
   {
     "claim_id": "CLM-SEC-P163-S05",
@@ -4251,7 +4536,7 @@
     "document_location": "Chương (Đoạn P163, câu S5)",
     "atomic_claim": "[30] chỉ ra hiệu quả của các baseline danh sách cho phép / thống kê sự kiện, khẳng định một cạnh phụ thuộc trong đồ thị không đồng nghĩa với tác động nhân quả an ninh; Ba là, hai bệnh lý mạng nơ-ron đồ thị về mặt cấu trúc: khi tăng số lớp truyền tin (message passing), hiện tượng làm mịn quá mức (Over-smoothing), được Oono & Suzuki [44] chứng minh về mặt toán học tại ICLR 2020, khiến vector biểu diễn của các đỉnh mất dần năng lực biểu đạt theo hàm mũ và hội tụ về các vector khó phân biệt; trong khi đó hiện tượng nghẽn cổ chai thông tin (Over-squashing), được Alon & Yahav [31] phân tích tại ICLR 2021, xuất hiện khi thông tin từ vùng lân cận tăng theo hàm mũ bị ép vào một vector kích thước cố định.",
     "claim_class": "LITERATURE_DIRECT",
-    "evidence_class": "NONE",
+    "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
       30,
       44,
@@ -4262,7 +4547,8 @@
     "artifact_locator": "",
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "48c3e3d99dc2"
   },
   {
     "claim_id": "CLM-SEC-P183-S02",
@@ -4270,7 +4556,7 @@
     "document_location": "Chương (Đoạn P183, câu S2)",
     "atomic_claim": "(IEEE S&P 2025)  [3] đã cảnh báo sâu sắc về tình trạng sai lệch phương pháp luận trong nghiên cứu học máy áp dụng cho an ninh mạng.",
     "claim_class": "LITERATURE_DIRECT",
-    "evidence_class": "NONE",
+    "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
       3
     ],
@@ -4279,7 +4565,8 @@
     "artifact_locator": "",
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "d2148dca57eb"
   },
   {
     "claim_id": "CLM-SEC-P194-S05",
@@ -4287,7 +4574,7 @@
     "document_location": "Chương (Đoạn P194, câu S5)",
     "atomic_claim": "Một mô hình được thiết kế có nhận thức về quyền riêng tư (Privacy-Aware) không tự động đồng nghĩa với việc đã đạt được khả năng bảo vệ quyền riêng tư vững chắc (Privacy-Preserving) nếu chưa trải qua các kiểm thử thực nghiệm tấn công nghiêm ngặt [17].",
     "claim_class": "LITERATURE_DIRECT",
-    "evidence_class": "NONE",
+    "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
       17
     ],
@@ -4296,7 +4583,8 @@
     "artifact_locator": "",
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "210230338736"
   },
   {
     "claim_id": "CLM-SEC-P206-S01",
@@ -4304,7 +4592,7 @@
     "document_location": "Chương (Đoạn P207, câu S1)",
     "atomic_claim": "Đánh giá chất lượng biểu diễn thông qua giao thức đóng băng tham số (Frozen Linear Probe: ) phục vụ phân loại và quy kết chiến thuật/kỹ thuật theo phân loại MITRE ATT&CK  [4], hoặc quy trình chấm điểm bất thường không giám sát tùy chọn (Optional Downstream Zero-Shot Anomaly Scoring Protocol).",
     "claim_class": "LITERATURE_DIRECT",
-    "evidence_class": "NONE",
+    "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
       4
     ],
@@ -4313,7 +4601,8 @@
     "artifact_locator": "",
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "c6c8cdc799a8"
   },
   {
     "claim_id": "CLM-SEC-P240-S00",
@@ -4328,7 +4617,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "f612b389966d"
   },
   {
     "claim_id": "CLM-SEC-P244-S00",
@@ -4343,7 +4633,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "385330665755"
   },
   {
     "claim_id": "CLM-SEC-P249-S03",
@@ -4358,7 +4649,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "c26356c93958"
   },
   {
     "claim_id": "CLM-SEC-P258-S01",
@@ -4373,7 +4665,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "86725e305d0d"
   },
   {
     "claim_id": "CLM-SEC-P260-S00",
@@ -4388,7 +4681,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "b76424109a98"
   },
   {
     "claim_id": "CLM-SEC-P269-S01",
@@ -4396,7 +4690,7 @@
     "document_location": "Chương (Đoạn P270, câu S1)",
     "atomic_claim": "[33] chứng minh tấn công nghịch đảo có thể khai thác thông tin đầu ra/độ tin cậy để tái cấu trúc thuộc tính dữ liệu; trong mô hình đe dọa thích ứng của đề tài (Threat-Model Adaptation), đối nghịch cố gắng khôi phục hoặc xấp xỉ các thuộc tính nhạy cảm tiềm năng (như tên người dùng, hostname, chuỗi lệnh) từ vector nhúng z.",
     "claim_class": "LITERATURE_DIRECT",
-    "evidence_class": "NONE",
+    "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
       33
     ],
@@ -4405,7 +4699,8 @@
     "artifact_locator": "",
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "d1885f71e486"
   },
   {
     "claim_id": "CLM-SEC-P274-S01",
@@ -4420,7 +4715,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "2dac747365ac"
   },
   {
     "claim_id": "CLM-SEC-P275-S01",
@@ -4435,7 +4731,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "fa8d4fc7f361"
   },
   {
     "claim_id": "CLM-SEC-P278-S01",
@@ -4443,7 +4740,7 @@
     "document_location": "Chương (Đoạn P279, câu S1)",
     "atomic_claim": "Tuy nhiên, khẳng định sự vượt trội này yêu cầu kiểm thử thực nghiệm tường minh tại Chương 3 thông qua CTRL-PRIV-001: đánh giá MIA ([16]), tấn công nghịch đảo (theo nguyên lý Fredrikson et al.",
     "claim_class": "LITERATURE_DIRECT",
-    "evidence_class": "NONE",
+    "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
       16
     ],
@@ -4452,7 +4749,8 @@
     "artifact_locator": "",
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "7f0cad3536cf"
   },
   {
     "claim_id": "CLM-SEC-P303-S02",
@@ -4467,7 +4765,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "955a20348a70"
   },
   {
     "claim_id": "CLM-SEC-P305-S03",
@@ -4482,7 +4781,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "ce49d8e383b9"
   },
   {
     "claim_id": "CLM-SEC-P347-S00",
@@ -4497,7 +4797,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "1133f8e152f4"
   },
   {
     "claim_id": "CLM-SEC-P349-S00",
@@ -4512,7 +4813,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "c01f3e189537"
   },
   {
     "claim_id": "CLM-SEC-P351-S00",
@@ -4527,7 +4829,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "48f7dab3bce9"
   },
   {
     "claim_id": "CLM-SEC-P355-S00",
@@ -4542,7 +4845,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "818e9add8725"
   },
   {
     "claim_id": "CLM-SEC-P357-S01",
@@ -4557,7 +4861,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "5464c89666af"
   },
   {
     "claim_id": "CLM-SEC-P363-S01",
@@ -4572,7 +4877,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "bd54066f736e"
   },
   {
     "claim_id": "CLM-SEC-P386-S04",
@@ -4580,7 +4886,7 @@
     "document_location": "Chương (Đoạn P387, câu S4)",
     "atomic_claim": "Giả thuyết này sẽ được kiểm chứng thực nghiệm độc lập tại Chương 3 trong mối tương quan với hai phương pháp đối chứng (Ablation Baselines) là InfoNCE [38], [37] và Barlow Twins [11].",
     "claim_class": "LITERATURE_DIRECT",
-    "evidence_class": "NONE",
+    "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
       38,
       37,
@@ -4591,7 +4897,8 @@
     "artifact_locator": "",
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "4bad7562a2c9"
   },
   {
     "claim_id": "CLM-SEC-P442-S00",
@@ -4606,7 +4913,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "b76eaa499e34"
   },
   {
     "claim_id": "CLM-SEC-P513-S00",
@@ -4621,7 +4929,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "e629e01dfb57"
   },
   {
     "claim_id": "CLM-SEC-T02-R01",
@@ -4636,7 +4945,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "b8af872e53c6"
   },
   {
     "claim_id": "CLM-SEC-T02-R02",
@@ -4651,7 +4961,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "2685b1ae4861"
   },
   {
     "claim_id": "CLM-SEC-T02-R03",
@@ -4666,7 +4977,8 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "29fd9ffba995"
   },
   {
     "claim_id": "CLM-SEC-T04-R07",
@@ -4681,6 +4993,7 @@
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
+    "parent_text_hash": "2ce8cb280cde"
   }
 ]

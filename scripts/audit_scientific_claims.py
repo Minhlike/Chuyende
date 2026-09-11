@@ -181,7 +181,7 @@ def scan_and_audit():
     detection_result = {
         'status': verification_status,
         'gate_title': 'RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE',
-        'detector_version': '2.2.0-forensic-truth-repair',
+        'detector_version': '3.0.0-forensic-truth-repair-round-3',
         'document_sha256': doc_sha256,
         'body_boundaries': {
             'body_start': body_start,
@@ -203,29 +203,43 @@ def scan_and_audit():
         'detected_candidates': candidates
     }
 
-    # Fail before mutation: Atomic file write via temporary file
+    # ---------------------------------------------------------------
+    # FAIL-BEFORE-MUTATION (AUTHORITATIVE_OUTPUT_MUTATION_BEFORE_PASS=0)
+    # All computation is complete in memory. Assert PASS FIRST.
+    # Only write SCIENTIFIC-CLAIM-DETECTION.json after confirming PASS.
+    # ---------------------------------------------------------------
+    assert verification_status == 'PASS', (
+        f'[FAIL-BEFORE-MUTATION] Scanner reconciliation FAILED: '
+        f'missing_parents={missing_parent_detected_id}, '
+        f'orphans={orphan_audit_records}, '
+        f'unaudited={unaudited_detected_claims}. '
+        f'Authoritative output files are NOT modified.'
+    )
+
+    # Atomic file write via temporary file (only reached on PASS)
     tmp_path = detection_path.with_suffix('.tmp')
     with open(tmp_path, 'w', encoding='utf-8') as df:
         json.dump(detection_result, df, indent=2, ensure_ascii=False)
     tmp_path.replace(detection_path)
 
+    # Item 7: Reporting language — RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE only.
+    # Do NOT report "all scientific claims are truthful" based on scanner coverage.
     print('\n==================================================')
     print('RULE-BASED SCIENTIFIC CLAIM COVERAGE SUMMARY')
     print('==================================================')
     print(f'Status:                         {verification_status}')
+    print(f'Gate:                           RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE')
+    print(f'NOTE: This gate verifies candidate-to-claim ID mapping only,')
+    print(f'      NOT semantic truth of individual claim content.')
+    print(f'      Semantic truth is audited by CLAIM-EVIDENCE-SEMANTIC-AUDIT.')
     print(f'Body Start / End:               P{body_start} -> P{body_end} (Scanned: {body_end - body_start + 1})')
-    print(f'Detected Candidates:            {len(candidates)}')
-    print(f'Audited Atomic Claims:          {len(audits)}')
+    print(f'Rule-Based Candidates:          {len(candidates)}')
+    print(f'Atomic Claims Reconciled:       {len(audits)}')
     print(f'Missing Parent Detected ID:     {missing_parent_detected_id}')
     print(f'Orphan Audit Records:           {orphan_audit_records}')
     print(f'Unaudited Detected Claims:      {unaudited_detected_claims}')
     print(f'Count Reconciliation Errors:    {count_reconciliation_errors}')
     print('==================================================')
-
-    assert verification_status == 'PASS', (
-        f'Scanner reconciliation failed: missing_parents={missing_parent_detected_id}, '
-        f'orphans={orphan_audit_records}, unaudited={unaudited_detected_claims}'
-    )
     return detection_result
 
 if __name__ == '__main__':
