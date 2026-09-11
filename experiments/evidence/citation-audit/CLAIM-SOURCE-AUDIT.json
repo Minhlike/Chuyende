@@ -215,7 +215,7 @@
     ],
     "source_title": "What We Talk About When We Talk About Logs: Understanding the Effects of Dataset Quality on Endpoint Threat Detection Research; Transparent Computing Engagement 3 Data Release (and 4 others)",
     "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Liu et al., IEEE S&P 2025, Sec. III & V, pp. 112-129 (Dataset quality, noise, and evaluation pitfalls) | DARPA-I2O Transparent Computing README-E3.md -> Engagement #3 (April 2018 provenance data release) | Kent, Los Alamos National Laboratory, 2015, DOI 10.17021/1179829 (Multi-Source Cyber-Security Events dataset) | Xu et al., ACM SOSP 2009, Sec. 3 & 4, pp. 117-132 (Mining console logs and PCA for large-scale system problem detection) | Zhu et al., IEEE ISSRE 2023, Sec. 2, pp. 355-366 (Loghub: System log datasets collection for AI-driven analytics) | DARPA-I2O Transparent Computing README-E5.md -> Engagement #5 (April 2020 data release)",
+    "source_locator": "Liu et al., IEEE S&P 2025, Sec. III & V, pp. 112-129 (Dataset quality, noise, and evaluation pitfalls) | DARPA-I2O Transparent Computing README-E3.md (commit e94c9f29b8a9c32f0e764366797eb216648195a8) -> Engagement #3 (April 2018 provenance data release) | Kent, Los Alamos National Laboratory, 2015, DOI 10.17021/1179829 (Multi-Source Cyber-Security Events dataset) | Xu et al., ACM SOSP 2009, Sec. 3 & 4, pp. 117-132 (Mining console logs and PCA for large-scale system problem detection) | Zhu et al., IEEE ISSRE 2023, Sec. 2, pp. 355-366 (Loghub: System log datasets collection for AI-driven analytics) | DARPA-I2O Transparent Computing README.md (commit 244ae2401032ce92ac3b72f49b8039cae67d60d6) -> Engagement #5 (April 2020 data release)",
     "action": "KEEP"
   },
   {
@@ -577,7 +577,7 @@
     ],
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions; Provenance-based Intrusion Detection Systems: A Survey (and 5 others)",
     "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs) | Zipperle et al., ACM CSUR 2023, Sec. 2 & 3, Article 135 (Provenance-based IDS architecture and taxonomy) | Han et al., NDSS 2020, Sec. 3 & 4 (UNICORN: Graph-based runtime provenance analysis for APT detection) | Cheng et al., IEEE S&P 2024, Sec. IV & V, pp. 3533-3551 (KAIROS: GNN encoder-decoder and temporal evolution of provenance graphs) | Li et al., NDSS 2024, Sec. 3 & 4 (NODLINK: Online fine-grained APT attack detection via Steiner Tree problem formulation) | Jia et al., USENIX Security 2024, Sec. 4 & 5, pp. 5197-5214 (MAGIC: Masked graph representation learning and model adaptation) | Jiang et al., USENIX Security 2025, Sec. 4 & 5, pp. 7173-7192 (ORTHRUS: Attribution quality in provenance-based IDS)",
+    "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs) | Zipperle et al., ACM CSUR 2023, Sec. 2 & 3, Article 135 (Provenance-based IDS architecture and taxonomy) | Han et al., NDSS 2020, Sec. 3 & 4 (UNICORN: Graph-based runtime provenance analysis for APT detection) | Cheng et al., IEEE S&P 2024, Sec. IV & V, pp. 3533-3551 (KAIROS: GNN encoder-decoder and temporal evolution of provenance graphs) | Li et al., NDSS 2024, Sec. 3 & 4 (NODLINK: Online fine-grained APT attack detection via Steiner Tree problem formulation) | Jia et al., USENIX Security 2024, Sec. 4 & 5, pp. 5197-5214 (presentation/jia-zian: MAGIC Masked graph representation learning and model adaptation) | Jiang et al., USENIX Security 2025, Sec. 4 & 5, pp. 7173-7192 (ORTHRUS: Attribution quality in provenance-based IDS)",
     "action": "KEEP"
   },
   {
@@ -594,7 +594,7 @@
     ],
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions; PalanTír: Optimizing Attack Provenance with Hardware-enhanced System Observability (and 4 others)",
     "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs) | Zeng et al., ACM CCS 2022, Sec. 3 & 4, pp. 3135-3149 (PalanTír: Hardware-enhanced system observability for attack provenance) | Bilot et al., USENIX Security 2025, Abstract & Sec. 5, pp. 7193-7212 (Comprehensive analysis of provenance IDS: simple neural network reaches SOTA on 5/7 DARPA datasets) | Guerra et al., arXiv:2608.01454v1, Sec. 3 & 4 (Benchmarking protocols shaping conclusions in provenance IDS) | Alon & Yahav, ICLR 2021, Sec. 3 & 4 (On the Bottleneck of Graph Neural Networks and over-squashing) | Oono & Suzuki, ICLR 2020, Theorem 1 & Sec. 4 (Graph Neural Networks Exponentially Lose Expressive Power for Node Classification: over-smoothing analysis)",
+    "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs) | Zeng et al., ACM CCS 2022, Sec. 3 & 4, pp. 3135-3149 (PalanTír: Hardware-enhanced system observability for attack provenance) | Bilot et al., USENIX Security 2025, Abstract & Sec. 5, pp. 7193-7212 (Comprehensive analysis of provenance IDS: simple neural network reaches SOTA on 5/7 DARPA datasets) | Guerra et al., arXiv:2608.01454v1, Sec. 3 & 4 (Benchmarking protocols shaping conclusions in provenance IDS) | Alon & Yahav, ICLR 2021, Sec. 3 & 4 (OpenReview: i80OPhOCVH2: On the Bottleneck of Graph Neural Networks and over-squashing) | Oono & Suzuki, ICLR 2020, Theorem 1 & Sec. 4 (Graph Neural Networks Exponentially Lose Expressive Power for Node Classification: over-smoothing analysis)",
     "action": "KEEP"
   },
   {
@@ -704,7 +704,7 @@
     ],
     "source_title": "What We Talk About When We Talk About Logs: Understanding the Effects of Dataset Quality on Endpoint Threat Detection Research; Transparent Computing Engagement 3 Data Release (and 1 others)",
     "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Liu et al., IEEE S&P 2025, Sec. III & V, pp. 112-129 (Dataset quality, noise, and evaluation pitfalls) | DARPA-I2O Transparent Computing README-E3.md -> Engagement #3 (April 2018 provenance data release) | Kent, Los Alamos National Laboratory, 2015, DOI 10.17021/1179829 (Multi-Source Cyber-Security Events dataset)",
+    "source_locator": "Liu et al., IEEE S&P 2025, Sec. III & V, pp. 112-129 (Dataset quality, noise, and evaluation pitfalls) | DARPA-I2O Transparent Computing README-E3.md (commit e94c9f29b8a9c32f0e764366797eb216648195a8) -> Engagement #3 (April 2018 provenance data release) | Kent, Los Alamos National Laboratory, 2015, DOI 10.17021/1179829 (Multi-Source Cyber-Security Events dataset)",
     "action": "KEEP"
   },
   {
@@ -917,7 +917,7 @@
     ],
     "source_title": "On the Bottleneck of Graph Neural Networks and its Practical Implications; Graph Neural Networks Exponentially Lose Expressive Power for Node Classification",
     "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Alon & Yahav, ICLR 2021, Sec. 3 & 4 (On the Bottleneck of Graph Neural Networks and over-squashing) | Oono & Suzuki, ICLR 2020, Theorem 1 & Sec. 4 (Graph Neural Networks Exponentially Lose Expressive Power for Node Classification: over-smoothing analysis)",
+    "source_locator": "Alon & Yahav, ICLR 2021, Sec. 3 & 4 (OpenReview: i80OPhOCVH2: On the Bottleneck of Graph Neural Networks and over-squashing) | Oono & Suzuki, ICLR 2020, Theorem 1 & Sec. 4 (Graph Neural Networks Exponentially Lose Expressive Power for Node Classification: over-smoothing analysis)",
     "action": "KEEP"
   },
   {
@@ -933,7 +933,7 @@
     ],
     "source_title": "KAIROS: Practical Intrusion Detection and Investigation using Whole-system Provenance; NODLINK: An Online System for Fine-Grained APT Attack Detection and Investigation (and 3 others)",
     "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Cheng et al., IEEE S&P 2024, Sec. IV & V, pp. 3533-3551 (KAIROS: GNN encoder-decoder and temporal evolution of provenance graphs) | Li et al., NDSS 2024, Sec. 3 & 4 (NODLINK: Online fine-grained APT attack detection via Steiner Tree problem formulation) | Jia et al., USENIX Security 2024, Sec. 4 & 5, pp. 5197-5214 (MAGIC: Masked graph representation learning and model adaptation) | Jiang et al., USENIX Security 2025, Sec. 4 & 5, pp. 7173-7192 (ORTHRUS: Attribution quality in provenance-based IDS) | Rossi et al., arXiv:2006.10637v2, Sec. 3 (Temporal Graph Networks for dynamic graphs)",
+    "source_locator": "Cheng et al., IEEE S&P 2024, Sec. IV & V, pp. 3533-3551 (KAIROS: GNN encoder-decoder and temporal evolution of provenance graphs) | Li et al., NDSS 2024, Sec. 3 & 4 (NODLINK: Online fine-grained APT attack detection via Steiner Tree problem formulation) | Jia et al., USENIX Security 2024, Sec. 4 & 5, pp. 5197-5214 (presentation/jia-zian: MAGIC Masked graph representation learning and model adaptation) | Jiang et al., USENIX Security 2025, Sec. 4 & 5, pp. 7173-7192 (ORTHRUS: Attribution quality in provenance-based IDS) | Rossi et al., arXiv:2006.10637v2, Sec. 3 (Temporal Graph Networks for dynamic graphs)",
     "action": "KEEP"
   },
   {
@@ -945,7 +945,7 @@
     ],
     "source_title": "MAGIC: Detecting Advanced Persistent Threats via Masked Graph Representation Learning",
     "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Jia et al., USENIX Security 2024, Sec. 4 & 5, pp. 5197-5214 (MAGIC: Masked graph representation learning and model adaptation)",
+    "source_locator": "Jia et al., USENIX Security 2024, Sec. 4 & 5, pp. 5197-5214 (presentation/jia-zian: MAGIC Masked graph representation learning and model adaptation)",
     "action": "KEEP"
   },
   {
@@ -958,7 +958,7 @@
     ],
     "source_title": "On the Bottleneck of Graph Neural Networks and its Practical Implications; Graph Neural Networks Exponentially Lose Expressive Power for Node Classification",
     "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Alon & Yahav, ICLR 2021, Sec. 3 & 4 (On the Bottleneck of Graph Neural Networks and over-squashing) | Oono & Suzuki, ICLR 2020, Theorem 1 & Sec. 4 (Graph Neural Networks Exponentially Lose Expressive Power for Node Classification: over-smoothing analysis)",
+    "source_locator": "Alon & Yahav, ICLR 2021, Sec. 3 & 4 (OpenReview: i80OPhOCVH2: On the Bottleneck of Graph Neural Networks and over-squashing) | Oono & Suzuki, ICLR 2020, Theorem 1 & Sec. 4 (Graph Neural Networks Exponentially Lose Expressive Power for Node Classification: over-smoothing analysis)",
     "action": "KEEP"
   },
   {
@@ -1036,7 +1036,7 @@
     ],
     "source_title": "CPM-Nets: Cross Partial Multi-View Networks",
     "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Zhang et al., NeurIPS 2019, Sec. 3, pp. 557-567 (CPM-Nets: Cross Partial Multi-View Networks for missing views)",
+    "source_locator": "Zhang et al., NeurIPS 2019, Sec. 3, pp. 557-567 (NeurIPS hash: 11b9842e0a271ff252c1903e7132cd68: CPM-Nets Cross Partial Multi-View Networks)",
     "action": "KEEP"
   },
   {
@@ -1048,7 +1048,7 @@
     ],
     "source_title": "Gradient Surgery for Multi-Task Learning",
     "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Yu et al., NeurIPS 2020, Sec. 3, pp. 5824-5836 (Gradient Surgery for Multi-Task Learning: PCGrad orthogonal projection)",
+    "source_locator": "Yu et al., NeurIPS 2020, Sec. 3, pp. 5824-5836 (NeurIPS hash: 3fe78a8acf5fda99de95303940a2420c: PCGrad Gradient Surgery for Multi-Task Learning)",
     "action": "KEEP"
   },
   {
@@ -1169,7 +1169,7 @@
     ],
     "source_title": "MAGIC: Detecting Advanced Persistent Threats via Masked Graph Representation Learning",
     "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Jia et al., USENIX Security 2024, Sec. 4 & 5, pp. 5197-5214 (MAGIC: Masked graph representation learning and model adaptation)",
+    "source_locator": "Jia et al., USENIX Security 2024, Sec. 4 & 5, pp. 5197-5214 (presentation/jia-zian: MAGIC Masked graph representation learning and model adaptation)",
     "action": "KEEP"
   }
 ]
