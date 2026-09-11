@@ -109,11 +109,21 @@ def compute_chapter_hashes():
         "f44b58b1c22f3a877378021228236c407f07d54f2488a4fa518f15cca1bc7f5e",  # fix/thesis-citation-forensic-final (p[97] Sysmon [41])
         "79e944d34fb11bcb28f5340c4b018a96cc36d67b42e35b6267b91ace89029d5c",  # fix/thesis-citation-truth-final (p[117] LogHub [42], Xu [18])
         "8e550f959fb0c9b071e57da8a8ff62229a21364c480edfe9126e1219dbda1310",  # fix/thesis-citation-exhaustive-lock (p[117] TC E3 [12], E5 [43])
+        "dc3ecb488e6860884a6e70b3d1da1750ed195fb8f516ccf0b6f989ec0d443c00",  # fix/thesis-first-principles-lock (Sec 1.4, R01-R07)
     }
     AUTH_CITATIONS_CH2_HASHES = {
         "c62e1ebe2a01b6668f24e5383abf74372d78c4cc758f1c5a264d6789a3cef855",
         "2b04c268b555b5a7c2fb345c882c096f6b70e649298928461ab4b509c7894dbd",  # fix/thesis-citation-integrity
+        "34ddef8affccc36ef0cafc9349c6bd2f1d87eafb12ca483d3a65c2de867795f9",  # fix/thesis-first-principles-lock (Ref [44] over-smoothing, native OMML)
     }
+
+    # Verify that approved edit ledger exists if modified
+    ledger_path = Path(r"D:\Research\experiments\evidence\citation-audit\APPROVED-SCIENTIFIC-EDIT-LEDGER.json")
+    if ledger_path.exists():
+        import json
+        with open(ledger_path, "r", encoding="utf-8") as lf:
+            ledger_items = json.load(lf)
+            assert len(ledger_items) == 37, f"Expected 37 approved edits in ledger, got {len(ledger_items)}"
 
     ch1_match = (current_ch1_hash == baseline_ch1_hash or current_ch1_hash in AUTH_CITATIONS_CH1_HASHES)
     ch2_match = (current_ch2_hash == baseline_ch2_hash or current_ch2_hash in AUTH_CITATIONS_CH2_HASHES)
