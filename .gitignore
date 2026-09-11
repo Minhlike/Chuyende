@@ -178,3 +178,9 @@ runtime/qa_*
 visual_check_*.png
 fig_page_*.png
 lo_build/
+
+# Agent configurations and local thesis backups
+.agents/
+*Bản sao lưu dự phòng*
+*.bak
+

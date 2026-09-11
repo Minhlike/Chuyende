@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ATTT_Scientific_Prose_Auditor_v2_2_Rules",
+  "version": "2.2.0",
+  "reference_article": "Khúc Hữu Hùng, Tạp chí An toàn thông tin, 19/08/2026",
+  "modes": [
+    "AUDIT_ONLY",
+    "VERIFY_REFERENCES",
+    "PREVIEW_REWRITE",
+    "APPLY_REWRITE"
+  ],
+  "default_mode": "AUDIT_ONLY",
+  "hard_gates": [
+    "REFERENCE_INTEGRITY",
+    "HYPOTHESIS_ID_CONSISTENCY",
+    "CLAIM_EVIDENCE_PROPORTIONALITY",
+    "EPISTEMIC_ACCOUNTABILITY",
+    "SPECIFICITY",
+    "NO_NEW_CLAIMS",
+    "CITATION_PRESERVATION",
+    "OMML_INTEGRITY"
+  ],
+  "provenance_categories": [
+    "CITED_LITERATURE",
+    "AUTHOR_PROPOSAL",
+    "OBSERVED_RESULT",
+    "DERIVED_RESULT",
+    "ASSUMPTION",
+    "LIMITATION",
+    "REQUIREMENT",
+    "INTERPRETATION",
+    "UNKNOWN"
+  ],
+  "opener_regex": "^\\s*(?:\\d+[\\.\\)]\\s*|-\\s*|\\*\\s*)?(Về mặt|Nhằm|Để|Trong bối cảnh|Đáng chú ý(?: là)?|Cần nhấn mạnh rằng|Có thể thấy rằng|Từ đó|Qua đó|Bên cạnh đó|Đồng thời|Mặt khác)\\b",
+  "clustering_thresholds": {
+    "consecutive_window_size": 3,
+    "consecutive_count_trigger": 2,
+    "dense_window_size": 20,
+    "dense_count_trigger": 3
+  },
+  "inflated_words": [
+    "cốt lõi",
+    "toàn diện",
+    "tường minh",
+    "chặt chẽ",
+    "tuyệt đối",
+    "nghiêm ngặt",
+    "vững chắc",
+    "then chốt"
+  ],
+  "ownerless_phrases": [
+    "có thể thấy rằng",
+    "có thể khẳng định",
+    "được đánh giá là",
+    "được xem là",
+    "có thể coi là",
+    "rõ ràng là"
+  ],
+  "docx_protection_classes": [
+    "PLAIN_TEXT",
+    "MIXED_PROTECTED",
+    "PROTECTED_ONLY",
+    "FIELD_OR_DRAWING"
+  ]
+}

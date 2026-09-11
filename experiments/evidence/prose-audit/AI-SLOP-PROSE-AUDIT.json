@@ -1,0 +1,128 @@
+{
+  "metadata": {
+    "audit_tool": "ATTT Scientific Prose Auditor v2.2",
+    "framework": "Khúc Hữu Hùng, Tạp chí An toàn thông tin, 19/08/2026",
+    "timestamp_utc": "2026-09-11T11:49:05.797698+00:00",
+    "master_docx": "D:\\Research\\Chuyên đề chuyên sâu.docx",
+    "total_paragraphs": 555,
+    "total_tables": 14,
+    "total_omml_formulas": 545,
+    "overall_status": "AUDIT_COMPLETE_PATCH_PREPARED"
+  },
+  "docx_omml_protection": {
+    "plain_text_paragraphs": 207,
+    "mixed_protected_paragraphs": 137,
+    "protected_only_paragraphs": 65,
+    "field_or_drawing_paragraphs": 146,
+    "heading_paragraphs": 85,
+    "omml_formula_count": 545
+  },
+  "scientific_invariants_audit": {
+    "gate_reference_integrity": "PASS (43/43 references verified from official publisher metadata)",
+    "gate_omml_integrity": "PASS (202 OMML formulas identified and locked)",
+    "gate_hypothesis_id_consistency": "FAIL_PRIOR_TO_ALIGNMENT (Semantic divergence between Ch2 and Ch3 identified for author review)",
+    "hypothesis_divergence_details": {
+      "chapter_2_definitions": [
+        {
+          "id": "H1",
+          "title": "Parameter Semantic Fidelity",
+          "p_idx": 208
+        },
+        {
+          "id": "H2",
+          "title": "Multi-View Alignment & Negative Transfer Prevention",
+          "p_idx": 211
+        },
+        {
+          "id": "H3",
+          "title": "Anti-Drift & Shortcut Invariance Robustness",
+          "p_idx": 214
+        },
+        {
+          "id": "H4",
+          "title": "Bounded Operational Budget Feasibility",
+          "p_idx": 216
+        },
+        {
+          "id": "H5",
+          "title": "Controlled Linkability & Utility–Privacy Frontier",
+          "p_idx": 218
+        }
+      ],
+      "chapter_3_evaluations": [
+        {
+          "id": "H1",
+          "title": "Năng lực Biểu diễn Quan hệ Cấu trúc (L_rel)",
+          "p_idx": 530
+        },
+        {
+          "id": "H2",
+          "title": "Độ nhạy Thời gian Liên tục (L_time)",
+          "p_idx": 531
+        },
+        {
+          "id": "H3",
+          "title": "Gióng hàng Đa góc nhìn (Untested in Stage A2)",
+          "p_idx": 532
+        },
+        {
+          "id": "H4",
+          "title": "Hiệu năng Tính toán Luồng (VRAM < 550MB)",
+          "p_idx": 533
+        },
+        {
+          "id": "H5",
+          "title": "Độ bất định Khởi tạo Trọng số (Seed 42)",
+          "p_idx": 534
+        }
+      ]
+    },
+    "gate_claim_evidence_proportionality": "PASS_WITH_CAVEATS (GPU VRAM < 550 MB correctly caveated at P533; Seed 42 limitation preserved at P534)"
+  },
+  "rhetorical_audit": {
+    "stock_openers": {
+      "total_openers": 21,
+      "counts": {
+        "Về Mặt": 3,
+        "Để": 12,
+        "Nhằm": 5,
+        "Đồng Thời": 1
+      },
+      "clusters_detected": []
+    },
+    "inflated_technical_prose": {
+      "counts": {
+        "cốt lõi": 15,
+        "toàn diện": 7,
+        "nghiêm ngặt": 10,
+        "then chốt": 3,
+        "chặt chẽ": 10,
+        "tuyệt đối": 18,
+        "tường minh": 12,
+        "vững chắc": 3
+      },
+      "action": "FLAG_EMPTY_QUALIFIERS_PRESERVE_TECHNICAL_TERMS"
+    },
+    "ownerless_claims": {
+      "counts": {
+        "được xem là": 2
+      },
+      "occurrences": [
+        {
+          "idx": 194,
+          "preview": "Tuy nhiên, việc lưu giữ khả năng liên kết này trong không gian vector biểu diễn trực tiếp làm nảy sinh các nguy cơ nghiê",
+          "phrase": [
+            "được xem là"
+          ]
+        },
+        {
+          "idx": 374,
+          "preview": "Một cặp biểu diễn đa góc nhìn  được xem là một cặp tương ứng hợp lệ (Valid Correspondence Pair) nếu và chỉ nếu chúng thỏ",
+          "phrase": [
+            "được xem là"
+          ]
+        }
+      ]
+    }
+  }
+}

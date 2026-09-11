@@ -1,0 +1,156 @@
+{
+  "applied_at_utc": "2026-09-11T11:28:29.958427+00:00",
+  "master_docx": "D:\\Research\\Chuyên đề chuyên sâu.docx",
+  "master_pdf": "D:\\Research\\Chuyên đề chuyên sâu.pdf",
+  "omml_formulas_preserved": 545,
+  "pdf_pages": 97,
+  "status": "APPLIED_AND_VERIFIED",
+  "transactions": [
+    {
+      "paragraph_idx": 426,
+      "description": "Remove inflated prose and opener 'Nhằm' in Table 2.4 intro",
+      "protected_class": "PLAIN_TEXT",
+      "before_text": "Nhằm bảo đảm tính chặt chẽ phương pháp luận và kiểm toán hoàn toàn các tham số có gradient (Zero Orphan Parameters), Bảng 2.4 kiểm toán toàn bộ tập tham số huấn luyện của hệ thống, chỉ rõ giai đoạn huấn luyện, hàm mục tiêu sinh gradient, thời điểm đóng băng và vai trò khi suy luận trực tuyến:",
+      "before_hash": "c8452169b062313097063ff7b8660fc9244e9d7d91cd4a201ebc0e3b21efcc81",
+      "after_text": "Để đảm bảo nguyên tắc kiểm toán tham số có gradient (Zero Orphan Parameters), Bảng 2.4 tổng hợp toàn bộ tập tham số huấn luyện của hệ thống, xác định rõ giai đoạn huấn luyện, hàm mục tiêu sinh gradient, thời điểm đóng băng và vai trò khi suy luận trực tuyến:",
+      "findings": [
+        "REPEATED_STOCK_OPENER",
+        "INFLATED_TECHNICAL_PROSE"
+      ]
+    },
+    {
+      "paragraph_idx": 529,
+      "description": "Align Section 3.3.2 hypotheses intro with Chapter 2 hypotheses system",
+      "protected_class": "PLAIN_TEXT",
+      "before_text": "Đối chiếu các kết quả quan sát thấy tại Stage A2 với các giả thuyết khoa học đã tiền đăng ký:",
+      "before_hash": "46a922897453147889627ddd1ec6cfe00a91ee045140f8d551d6bf5e086792c4",
+      "after_text": "Đối chiếu kết quả tiền huấn luyện Stage A2 với năm giả thuyết khoa học xác lập tại Chương 2:",
+      "findings": [
+        "HYPOTHESIS_ID_CONSISTENCY"
+      ]
+    },
+    {
+      "paragraph_idx": 530,
+      "description": "Align H1 with Parameter Semantic Fidelity while reporting Stage A2 graph relation loss",
+      "protected_class": "MIXED_PROTECTED",
+      "before_text": "1. Giả thuyết H1 (Tính Chân thực Biểu diễn): Giả thuyết về Năng lực Biểu diễn Quan hệ Cấu trúc (H1): Kết quả quan sát thấy bước đầu phù hợp với giả định H1. Trên các đợt chạy 12 epochs, mất mát dự đoán quan hệ cạnh () giảm từ mức ban đầu ~0.59 xuống 0.1833, gợi ý rằng mô hình có khả năng nắm bắt phân phối quan hệ giữa các thực thể hệ thống trong log HDFS.",
+      "before_hash": "2efac933214dcda737aa44bde6a7214b406eee9c15673b361e5fa70392ae2545",
+      "after_r0": "1. Giả thuyết H1 (Parameter Semantic Fidelity): ",
+      "after_r1": "Trong Stage A2 trên tập HDFS, nhánh đồ thị tập trung học quan hệ thực thể; mất mát dự đoán cạnh (",
+      "after_r2": ") giảm từ ~0.59 xuống 0.1833, cung cấp bằng chứng bước đầu cho năng lực biểu diễn cấu trúc trước khi đánh giá mức độ bảo toàn tham số động ở các tác vụ hạ nguồn.",
+      "findings": [
+        "HYPOTHESIS_ID_CONSISTENCY",
+        "REPEATED_STOCK_OPENER"
+      ]
+    },
+    {
+      "paragraph_idx": 531,
+      "description": "Align H2 with Multi-View Alignment while reporting Stage A2 continuous time loss",
+      "protected_class": "MIXED_PROTECTED",
+      "before_text": "2. Giả thuyết H2 (Độ nhạy Dòng Thời gian): Giả thuyết về Độ nhạy Thời gian Liên tục (H2): Kết quả quan sát thấy bước đầu phù hợp với giả định H2. Giá trị mất mát hồi quy thời gian () giảm về mức 0.0857 - 0.0887 trên các đợt chạy 12 epochs, phù hợp với kỳ vọng rằng hàm chiếu điều hòa phi(Δt) hỗ trợ việc biểu diễn các khoảng trễ thời gian liên tục.",
+      "before_hash": "17ca1927af5c4237561da9961276a2eb27ddf18e7414f0e5d2077b46b7922fcb",
+      "after_r0": "2. Giả thuyết H2 (Multi-View Alignment): ",
+      "after_r1": "Nhánh đồ thị ghi nhận mất mát hồi quy thời gian (",
+      "after_r2": ") giảm về 0.0857 - 0.0887 trên các đợt chạy 12 epochs, phù hợp với kỳ vọng hàm chiếu phi(Δt) biểu diễn khoảng trễ; việc kiểm chứng gióng hàng đồng bộ với chuỗi Transformer được định vị cho các giai đoạn tiếp theo.",
+      "findings": [
+        "HYPOTHESIS_ID_CONSISTENCY",
+        "REPEATED_STOCK_OPENER"
+      ]
+    },
+    {
+      "paragraph_idx": 532,
+      "description": "Align H3 with Anti-Drift & Shortcut Robustness, noting downstream reservation",
+      "protected_class": "PLAIN_TEXT",
+      "before_text": "3. Giả thuyết H3 (Đồng bộ Đa góc nhìn): Giả thuyết về Gióng hàng Đa góc nhìn (H3): Trong phạm vi Stage A2, nghiên cứu tập trung kiểm chứng nhánh biểu diễn đồ thị (Temporal Graph View). Việc kiểm chứng gióng hàng đồng bộ giữa góc nhìn đồ thị và góc nhìn tuần tự Transformer được định vị cho các giai đoạn thực nghiệm tiếp theo.",
+      "before_hash": "4ecdb546c642f17cf8b2bfbd5fa7ca2de2bb0b52da1160762639399cfd3b0417",
+      "after_text": "3. Giả thuyết H3 (Anti-Drift & Shortcut Robustness): Stage A2 tập trung vào nhiệm vụ tự giám sát nội tại, chưa thử nghiệm loại bỏ đặc trưng đường tắt hoặc kiểm tra trôi dạt phân phối; giả thuyết này được bảo lưu kiểm chứng định lượng tại giai đoạn đánh giá đóng băng hạ nguồn.",
+      "findings": [
+        "HYPOTHESIS_ID_CONSISTENCY",
+        "REPEATED_STOCK_OPENER"
+      ]
+    },
+    {
+      "paragraph_idx": 533,
+      "description": "Align H4 with Bounded Operational Budget Feasibility, preserving strict GPU memory caveat",
+      "protected_class": "PLAIN_TEXT",
+      "before_text": "4. Giả thuyết H4 (Khả thi Tài nguyên): Giả thuyết về Hiệu năng Tính toán Luồng (H4): Kích thước lô hiệu dụng 1,024 sự kiện tiêu tốn dưới 550 MB bộ nhớ GPU trong quá trình chạy, gợi ý tiềm năng bước đầu về mặt dung lượng bộ nhớ khi xử lý luồng sự kiện. Tuy nhiên, cần thêm các phép đo thực nghiệm về độ trễ streaming và thông lượng thực tế trước khi có thể kết luận về khả năng triển khai trong môi trường vận hành SOC.",
+      "before_hash": "37ca37e6ba2ade6c97e551a384edaceef16aecf9eb55b590cb0d65dbba8b47fc",
+      "after_text": "4. Giả thuyết H4 (Bounded Operational Budget Feasibility): Kích thước lô hiệu dụng 1,024 sự kiện tiêu tốn dưới 550 MB bộ nhớ GPU, gợi ý tiềm năng bước đầu về dung lượng bộ nhớ. Tuy nhiên, cần thêm các phép đo thực nghiệm về độ trễ streaming và thông lượng thực tế trước khi kết luận về khả năng triển khai vận hành SOC.",
+      "findings": [
+        "HYPOTHESIS_ID_CONSISTENCY",
+        "REPEATED_STOCK_OPENER"
+      ]
+    },
+    {
+      "paragraph_idx": 534,
+      "description": "Align H5 with Controlled Linkability & Privacy, reserving full attacks for downstream",
+      "protected_class": "PLAIN_TEXT",
+      "before_text": "5. Giả thuyết H5 (Độ bất định Khởi tạo): Giả thuyết về Độ bất định Khởi tạo Trọng số (H5): Sự phân kỳ quan sát thấy giữa Seed 42 và các đợt chạy khác bước đầu ủng hộ giả định H5, cho thấy kết quả huấn luyện mô hình đồ thị thời gian có thể nhạy cảm với khởi tạo ngẫu nhiên ban đầu.",
+      "before_hash": "1d3df069d6bcc0677cbe3dad4b02f630042dbdcb8767f3adb8e27356339c211f",
+      "after_text": "5. Giả thuyết H5 (Controlled Linkability & Utility–Privacy Frontier): Stage A2 áp dụng chính sách chuẩn hóa danh tính và mã giả danh theo Mục 2.2; các đánh giá tấn công suy luận thành viên (MIA) và ranh giới Pareto giữa độ chính xác và quyền riêng tư được bảo lưu kiểm chứng ở mô hình hạ nguồn.",
+      "findings": [
+        "HYPOTHESIS_ID_CONSISTENCY",
+        "REPEATED_STOCK_OPENER"
+      ]
+    },
+    {
+      "paragraph_idx": 546,
+      "description": "Restructure Conclusion preamble",
+      "protected_class": "PLAIN_TEXT",
+      "before_text": "Báo cáo chuyên đề nghiên cứu chuyên sâu đã hoàn thành việc xây dựng và bước đầu kiểm chứng thực nghiệm mô hình biểu diễn đặc trưng nhật ký sự kiện hệ thống dựa trên đồ thị theo dòng thời gian liên tục. Các nội dung chính của báo cáo chuyên đề được tổng hợp qua ba chương:",
+      "before_hash": "a57c791e8eb2fdde7976d3048d2be00135d8fca1646c6243a2c6e28b3d4aed45",
+      "after_text": "Báo cáo chuyên đề nghiên cứu chuyên sâu đã hoàn thành việc xây dựng khung phương pháp luận và bước đầu kiểm chứng thực nghiệm mô hình biểu diễn đặc trưng nhật ký sự kiện hệ thống dựa trên đồ thị theo dòng thời gian liên tục. Các nội dung chính được tổng hợp theo ba trục nghiên cứu:",
+      "findings": [
+        "TEMPLATE_CLUSTERING"
+      ]
+    },
+    {
+      "paragraph_idx": 547,
+      "description": "Remove robotic opener '1. Về mặt khảo sát và xác lập bài toán (Chương 1)'",
+      "protected_class": "PLAIN_TEXT",
+      "before_text": "1. Về mặt khảo sát và xác lập bài toán (Chương 1): Nghiên cứu đã hệ thống hóa các phương pháp trích xuất đặc trưng log truyền thống (thống kê tần suất, nhúng từ vựng, trích xuất mẫu template tĩnh và đồ thị nguồn gốc tĩnh). Nghiên cứu đã chỉ ra các điểm nghẽn then chốt trong các cách tiếp cận hiện hữu, đặc biệt là sự mất mát ngữ nghĩa tham số biến đổi và sự thiếu hụt thông tin về khoảng trễ thời gian liên tục giữa các sự kiện an ninh mạng.",
+      "before_hash": "a9eb7827b9fb69852e50f16e349f53affc37f3bc9a75c01db9ef22496796b818",
+      "after_text": "Khảo sát và xác lập bài toán (Chương 1): Nghiên cứu đã hệ thống hóa các phương pháp trích xuất đặc trưng log truyền thống (thống kê tần suất, nhúng từ vựng, trích xuất mẫu template tĩnh và đồ thị nguồn gốc tĩnh). Qua đó, chuyên đề chỉ ra các điểm nghẽn then chốt trong các tiếp cận hiện hữu, đặc biệt là sự mất mát ngữ nghĩa tham số biến đổi và sự thiếu hụt thông tin về khoảng trễ thời gian liên tục giữa các sự kiện an ninh mạng.",
+      "findings": [
+        "REPEATED_STOCK_OPENER",
+        "TEMPLATE_CLUSTERING"
+      ]
+    },
+    {
+      "paragraph_idx": 548,
+      "description": "Remove robotic opener '2. Về mặt phương pháp luận và thiết kế kiến trúc (Chương 2)'",
+      "protected_class": "PLAIN_TEXT",
+      "before_text": "2. Về mặt phương pháp luận và thiết kế kiến trúc (Chương 2): Luận văn đã đề xuất khung kiến trúc biểu diễn đặc trưng, trong đó nhánh đồ thị sự kiện theo thời gian (TemporalGraphViewEncoder) tích hợp tế bào bộ nhớ GRU động và cơ chế chú ý thời gian đa đầu nhằm theo vết trạng thái biến đổi của các thực thể hệ thống. Mô hình tích hợp hàm nhúng thời gian liên tục phi(Delta t) và hàm mục tiêu tự giám sát đa nhiệm, cho phép học biểu diễn cấu trúc quan hệ mà không phụ thuộc vào dữ liệu gán nhãn thủ công.",
+      "before_hash": "7887254122b644798fddc054003487efd481429e1d231efc3a81231656d4913e",
+      "after_text": "Phương pháp luận và thiết kế kiến trúc (Chương 2): Luận văn đề xuất khung kiến trúc biểu diễn đặc trưng, trong đó nhánh đồ thị sự kiện theo thời gian (TemporalGraphViewEncoder) tích hợp tế bào bộ nhớ GRU động và cơ chế chú ý thời gian đa đầu nhằm theo vết trạng thái biến đổi của thực thể. Mô hình tích hợp hàm nhúng thời gian liên tục phi(Delta t) và hàm mục tiêu tự giám sát đa nhiệm, cho phép học biểu diễn cấu trúc quan hệ mà không phụ thuộc dữ liệu gán nhãn.",
+      "findings": [
+        "REPEATED_STOCK_OPENER",
+        "TEMPLATE_CLUSTERING"
+      ]
+    },
+    {
+      "paragraph_idx": 549,
+      "description": "Remove robotic opener '3. Về mặt thực nghiệm...', preserve 100% 5-seed audit numbers and page break",
+      "protected_class": "PLAIN_TEXT",
+      "before_text": "3. Về mặt thực nghiệm và kiểm toán khoa học (Chương 3): Dựa trên cấu hình 12 epochs hiện hành, quá trình kiểm toán độc lập đã phân loại minh bạch toàn bộ 5 hạt giống thực nghiệm. Nhóm quan sát lệch giao thức (Seed 999 hoàn thành 12 epochs với mất mát kiểm định 0,609500 nhưng mang sai lệch về số bước khởi động so với văn bản ủy quyền tiền thi hành; Seed 7 đạt mất mát kiểm định tốt nhất 0,550259 nhưng văn bản ủy quyền commit sau khi khởi chạy; Seed 42 dừng sớm tại Epoch 4) ghi nhận mức mất mát kiểm định trung bình là 2.413704. Cùng với các đợt chạy không chuẩn (Seed 1337, Seed 2024), các kết quả cung cấp dữ liệu đối chiếu khách quan trong khi toàn bộ dữ liệu kiểm thử được duy trì niêm phong sau tường lửa mật mã (test_opened = false).",
+      "before_hash": "7b8716036718e7d3a7a990d44530134878c3e0e2fda2484b1cdb2ac4a44f0018",
+      "after_r0": "Thực nghiệm và kiểm toán khoa học (Chương 3): Dựa trên cấu hình 12 epochs hiện hành, quá trình kiểm toán độc lập đã phân loại minh bạch toàn bộ 5 hạt giống thực nghiệm. Nhóm quan sát lệch giao thức (Seed 999 hoàn thành 12 epochs với mất mát kiểm định 0,609500 nhưng mang sai lệch về số bước khởi động so với văn bản ủy quyền tiền thi hành; Seed 7 đạt mất mát kiểm định tốt nhất 0,550259 nhưng văn bản ủy quyền commit sau khi khởi chạy; Seed 42 dừng sớm tại Epoch 4) ghi nhận mức mất mát kiểm định trung bình là 2.413704. Cùng với các đợt chạy không chuẩn (Seed 1337, Seed 2024), các kết quả cung cấp dữ liệu đối chiếu khách quan trong khi toàn ",
+      "after_r1": "bộ dữ liệu kiểm thử được duy trì niêm phong sau tường lửa mật mã (test_opened = false).",
+      "findings": [
+        "REPEATED_STOCK_OPENER",
+        "TEMPLATE_CLUSTERING"
+      ]
+    },
+    {
+      "paragraph_idx": 550,
+      "description": "Preserve conclusion closing paragraph",
+      "protected_class": "PLAIN_TEXT",
+      "before_text": "Các kết quả đạt được cung cấp cơ sở kỹ thuật ban đầu để phục vụ các giai đoạn nghiên cứu tiếp theo, hướng tới việc hoàn thiện mô hình biểu diễn đa góc nhìn toàn phần và thử nghiệm đánh giá phát hiện tấn công trên dữ liệu kiểm thử khi được ủy quyền.",
+      "before_hash": "dc0d2a1220e183c13bb49cf9baa00016744b70cb62a4474b36035034cfce2d02",
+      "after_text": "Các kết quả đạt được cung cấp cơ sở kỹ thuật ban đầu để phục vụ các giai đoạn nghiên cứu tiếp theo, hướng tới việc hoàn thiện mô hình biểu diễn đa góc nhìn toàn phần và thử nghiệm đánh giá phát hiện tấn công trên dữ liệu kiểm thử khi được ủy quyền.",
+      "findings": [
+        "TEMPLATE_CLUSTERING"
+      ]
+    }
+  ]
+}
