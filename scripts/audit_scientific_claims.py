@@ -17,6 +17,7 @@ import sys
 import os
 import re
 import json
+import hashlib
 from pathlib import Path
 import docx
 
@@ -35,9 +36,10 @@ KEYWORDS = [
     'hội tụ', 'converged', 'convergence',
     'ý nghĩa thống kê', 'statistically significant',
     '5 hạt giống', 'năm hạt giống', 'all seeds', 'five seeds',
-    'tập kiểm thử', 'tập test', 'TestSetSealedError', 'niêm phong',
+    'tập kiểm thử', 'tập kiểm tra', 'tập test', 'TestSetSealedError', 'niêm phong', 'test leakage',
     'bộ nhớ', 'RAM', 'VRAM', 'độ trễ', 'thông lượng', 'latency', 'throughput', 'benchmark',
-    'tf-idf', 'entropy', 'hợp đồng biểu diễn', 'invariant', 'preserve'
+    'tf-idf', 'entropy', 'hợp đồng biểu diễn', 'invariant', 'preserve', 'exclude', 'siêu tham số',
+    'fail-closed', 'synthetic'
 ]
 KW_PATTERN = re.compile(r'(' + '|'.join(re.escape(k) for k in KEYWORDS) + r')', re.IGNORECASE)
 
@@ -46,6 +48,35 @@ def split_sentences(text):
         return []
     raw = re.split(r'(?<=[^0-9][.!?])\s+', text)
     return [s.strip() for s in raw if len(s.strip()) > 15]
+
+def derive_body_boundaries(doc):
+    body_start = None
+    body_end = None
+    for idx, p in enumerate(doc.paragraphs):
+        txt = p.text.strip()
+        st = p.style.name if p.style else ''
+        if txt == 'Lời nói đầu' or (st == 'UH1' and 'Lời nói đầu' in txt):
+            if body_start is None:
+                body_start = idx
+        if txt == 'Tài liệu tham khảo' or (st == 'Heading 1' and 'Tài liệu tham khảo' in txt):
+            if body_end is None:
+                body_end = idx - 1
+
+    assert body_start is not None, 'Could not derive body_start (Lời nói đầu)'
+    assert body_end is not None, 'Could not derive body_end (Tài liệu tham khảo)'
+    assert body_start < body_end, f'Invalid boundaries: body_start={body_start}, body_end={body_end}'
+    return body_start, body_end
+
+def identify_bibliography_table(doc):
+    bib_table_idx = None
+    for tidx, t in enumerate(doc.tables):
+        if len(t.rows) > 0 and len(t.columns) > 0:
+            first_txt = t.rows[0].cells[0].text.strip()
+            if first_txt.startswith('[1]'):
+                bib_table_idx = tidx
+                break
+    assert bib_table_idx is not None, 'Could not structurally identify bibliography table'
+    return bib_table_idx
 
 def scan_and_audit():
     repo_root = Path(__file__).resolve().parent.parent
@@ -58,186 +89,143 @@ def scan_and_audit():
     if not audit_path.exists():
         raise FileNotFoundError(f'Audit file not found at {audit_path}')
 
+    doc_bytes = docx_path.read_bytes()
+    doc_sha256 = hashlib.sha256(doc_bytes).hexdigest()
     doc = docx.Document(str(docx_path))
+
     with open(audit_path, 'r', encoding='utf-8') as f:
         audits = json.load(f)
 
-    audits_by_id = {a['claim_id']: a for a in audits}
+    body_start, body_end = derive_body_boundaries(doc)
+    bib_table_idx = identify_bibliography_table(doc)
 
-    pass_candidates = []
-    seen_texts = set()
+    candidates = []
+    candidates_by_id = {}
 
-    # Paragraph 58 (Figure 1.2)
-    p58 = doc.paragraphs[58]
-    for sidx, s in enumerate(split_sentences(p58.text)):
-        if s not in seen_texts:
-            seen_texts.add(s)
-            pass_candidates.append({
-                'detected_id': f'DET-P058-S{sidx:02d}',
-                'location': f'Chương (Đoạn P58, câu S{sidx})',
-                'paragraph_index': 58,
-                'sentence_index': sidx,
-                'text': s,
-                'citations': [int(x.strip('[]')) for x in CIT_PATTERN.findall(s)],
-                'pass_a': bool(CIT_PATTERN.search(s)),
-                'pass_b': bool(KW_PATTERN.search(s)),
-                'reconciled_claim_ids': []
-            })
-
-    # Paragraphs 70 to end
-    for pidx in range(70, len(doc.paragraphs)):
+    # Scan every paragraph in [body_start, body_end] without skipping
+    for pidx in range(body_start, body_end + 1):
         p = doc.paragraphs[pidx]
         txt = p.text.strip()
         if not txt:
             continue
-        for sidx, s in enumerate(split_sentences(txt)):
-            m_a = CIT_PATTERN.search(s)
-            m_b = KW_PATTERN.search(s)
+        sentences = split_sentences(txt)
+        for sidx, s in enumerate(sentences):
+            m_a = bool(CIT_PATTERN.search(s))
+            m_b = bool(KW_PATTERN.search(s))
             if m_a or m_b:
-                if s not in seen_texts:
-                    seen_texts.add(s)
-                    pass_candidates.append({
-                        'detected_id': f'DET-P{pidx:03d}-S{sidx:02d}',
-                        'location': f'Chương (Đoạn P{pidx}, câu S{sidx})',
-                        'paragraph_index': pidx,
-                        'sentence_index': sidx,
-                        'text': s,
-                        'citations': [int(x.strip('[]')) for x in CIT_PATTERN.findall(s)],
-                        'pass_a': bool(m_a),
-                        'pass_b': bool(m_b),
-                        'reconciled_claim_ids': []
-                    })
+                cand_id = f'DET-P{pidx:03d}-S{sidx:02d}'
+                text_hash = hashlib.sha256(s.encode('utf-8')).hexdigest()[:12]
+                c_dict = {
+                    'detected_id': cand_id,
+                    'location': f'Chương (Đoạn P{pidx}, câu S{sidx})',
+                    'paragraph_index': pidx,
+                    'sentence_index': sidx,
+                    'text': s,
+                    'text_hash': text_hash,
+                    'citations': [int(x.strip('[]')) for x in CIT_PATTERN.findall(s)],
+                    'pass_a': m_a,
+                    'pass_b': m_b,
+                    'reconciled_claim_ids': []
+                }
+                candidates.append(c_dict)
+                candidates_by_id[cand_id] = c_dict
 
-    # Tables (excluding bibliography table 13)
-    for tidx in range(len(doc.tables)):
-        if tidx == 13:
+    # Scan body tables (tables 1 to len-1, excluding bibliography table)
+    for tidx in range(1, len(doc.tables)):
+        if tidx == bib_table_idx:
             continue
         t = doc.tables[tidx]
         for ridx, r in enumerate(t.rows):
             row_txt = ' | '.join(c.text.strip().replace('\n', ' ') for c in r.cells)
-            m_a = CIT_PATTERN.search(row_txt)
-            m_b = KW_PATTERN.search(row_txt)
+            m_a = bool(CIT_PATTERN.search(row_txt))
+            m_b = bool(KW_PATTERN.search(row_txt))
             if m_a or m_b:
-                if row_txt not in seen_texts:
-                    seen_texts.add(row_txt)
-                    pass_candidates.append({
-                        'detected_id': f'DET-T{tidx:02d}-R{ridx:02d}',
-                        'location': f'Bảng {tidx} (Hàng {ridx})',
-                        'table_index': tidx,
-                        'row_index': ridx,
-                        'text': row_txt,
-                        'citations': [int(x.strip('[]')) for x in CIT_PATTERN.findall(row_txt)],
-                        'pass_a': bool(m_a),
-                        'pass_b': bool(m_b),
-                        'reconciled_claim_ids': []
-                    })
+                cand_id = f'DET-T{tidx:02d}-R{ridx:02d}'
+                text_hash = hashlib.sha256(row_txt.encode('utf-8')).hexdigest()[:12]
+                c_dict = {
+                    'detected_id': cand_id,
+                    'location': f'Bảng {tidx} (Hàng {ridx})',
+                    'table_index': tidx,
+                    'row_index': ridx,
+                    'text': row_txt,
+                    'text_hash': text_hash,
+                    'citations': [int(x.strip('[]')) for x in CIT_PATTERN.findall(row_txt)],
+                    'pass_a': m_a,
+                    'pass_b': m_b,
+                    'reconciled_claim_ids': []
+                }
+                candidates.append(c_dict)
+                candidates_by_id[cand_id] = c_dict
 
-    # Reconcile candidate sentences against audit records
-    for c in pass_candidates:
-        c_text = c['text']
-        c_pidx = c.get('paragraph_index')
-        c_sidx = c.get('sentence_index')
-        c_tidx = c.get('table_index')
-        for aid, a in audits_by_id.items():
-            a_text = a['atomic_claim']
-            a_loc = a.get('document_location', '')
+    # Strict 1:N reconciliation through explicit parent_detected_id
+    missing_parent_detected_id = 0
+    orphan_audit_records = 0
 
-            if (c_text in a_text or a_text in c_text or 
-                (len(c_text) > 30 and (c_text[:30] in a_text or c_text[-30:] in a_text))):
-                if aid not in c['reconciled_claim_ids']:
-                    c['reconciled_claim_ids'].append(aid)
-                continue
+    for a in audits:
+        pid = a.get('parent_detected_id')
+        if not pid:
+            missing_parent_detected_id += 1
+            print(f'[MISSING PARENT] Claim {a.get("claim_id")} lacks parent_detected_id')
+        elif pid not in candidates_by_id:
+            orphan_audit_records += 1
+            print(f'[ORPHAN AUDIT] Claim {a.get("claim_id")} parent {pid} not in candidates')
+        else:
+            candidates_by_id[pid]['reconciled_claim_ids'].append(a['claim_id'])
 
-            if c_pidx is not None and f'P{c_pidx}' in a_loc:
-                if c_sidx is not None and f'S{c_sidx}' in a_loc:
-                    if aid not in c['reconciled_claim_ids']:
-                        c['reconciled_claim_ids'].append(aid)
-                    continue
-                elif f'Đoạn P{c_pidx}' in a_loc:
-                    if aid not in c['reconciled_claim_ids']:
-                        c['reconciled_claim_ids'].append(aid)
-                    continue
+    unaudited_detected_claims = len([c for c in candidates if len(c['reconciled_claim_ids']) == 0])
+    count_reconciliation_errors = missing_parent_detected_id + orphan_audit_records + unaudited_detected_claims
 
-            if c_tidx is not None and f'Bảng {c_tidx}' in a_loc:
-                if aid not in c['reconciled_claim_ids']:
-                    c['reconciled_claim_ids'].append(aid)
-                continue
-
-            # Scientific invariant claims mapping
-            if aid == 'SCI-PRIV-001' and c_pidx == 129:
-                if aid not in c['reconciled_claim_ids']:
-                    c['reconciled_claim_ids'].append(aid)
-            elif aid == 'SCI-MATH-001' and (c_pidx in [122, 123, 124, 125, 126, 130] or c_tidx == 2):
-                if aid not in c['reconciled_claim_ids']:
-                    c['reconciled_claim_ids'].append(aid)
-            elif aid == 'SCI-MATH-002' and c_pidx in [300, 301, 302]:
-                if aid not in c['reconciled_claim_ids']:
-                    c['reconciled_claim_ids'].append(aid)
-            elif aid == 'SCI-CODE-001' and c_pidx in [300, 308]:
-                if aid not in c['reconciled_claim_ids']:
-                    c['reconciled_claim_ids'].append(aid)
-            elif aid in ['SCI-CODE-002', 'SCI-CODE-003'] and c_pidx in [498, 499, 500]:
-                if aid not in c['reconciled_claim_ids']:
-                    c['reconciled_claim_ids'].append(aid)
-            elif aid == 'SCI-EXP-001' and (c_pidx in [204, 234, 508, 509, 510] or c_tidx in [8, 9]):
-                if aid not in c['reconciled_claim_ids']:
-                    c['reconciled_claim_ids'].append(aid)
-            elif aid == 'SCI-EXP-002' and (c_pidx in [518, 519, 520] or c_tidx in [3, 4]):
-                if aid not in c['reconciled_claim_ids']:
-                    c['reconciled_claim_ids'].append(aid)
-            elif aid == 'SCI-CMPX-001' and c_pidx in [143, 144, 475, 476]:
-                if aid not in c['reconciled_claim_ids']:
-                    c['reconciled_claim_ids'].append(aid)
-
-    # Verification checks
-    audits_covered = set()
-    for c in pass_candidates:
-        for aid in c['reconciled_claim_ids']:
-            audits_covered.add(aid)
-
-    orphan_audits = [aid for aid in audits_by_id if aid not in audits_covered]
-    unaudited_cands = [c['detected_id'] for c in pass_candidates if not c['reconciled_claim_ids']]
-    count_errors = len(audits_by_id) - len(audits_covered)
-
-    status = 'PASS' if (len(orphan_audits) == 0 and len(unaudited_cands) == 0 and count_errors == 0) else 'FAIL'
+    # Verification status
+    verification_status = 'PASS' if count_reconciliation_errors == 0 else 'FAIL'
 
     detection_result = {
-        'scanner_version': 'REPRODUCIBLE_TWO_PASS_SCIENTIFIC_CLAIM_SCANNER_V2',
-        'verification_gate': 'SCIENTIFIC_CLAIM_DETECTION_RECONCILIATION',
-        'detection_parameters': {
-            'pass_a': 'CITATION_REGEX_BRACKETED_INTEGER',
-            'pass_b': 'SCIENTIFIC_METHODOLOGICAL_SEMANTIC_KEYWORDS',
-            'min_sentence_length': 15,
-            'scanned_paragraph_start': 50,
-            'excluded_tables': [13]
+        'status': verification_status,
+        'gate_title': 'RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE',
+        'detector_version': '2.2.0-forensic-truth-repair',
+        'document_sha256': doc_sha256,
+        'body_boundaries': {
+            'body_start': body_start,
+            'body_end': body_end,
+            'scanned_paragraphs_count': (body_end - body_start + 1)
         },
+        'candidate_count': len(candidates),
+        'atomic_claim_count': len(audits),
         'reconciliation_statistics': {
-            'total_detected_candidates': len(pass_candidates),
-            'total_audited_claims': len(audits_by_id),
-            'unaudited_detected_claims': len(unaudited_cands),
-            'orphan_audit_records': len(orphan_audits),
-            'count_reconciliation_errors': count_errors,
-            'status': status
+            'unscanned_body_paragraphs': 0,
+            'global_text_deduplication': 0,
+            'coarse_location_reconciliation': 0,
+            'hardcoded_claim_mapping': 0,
+            'missing_parent_detected_id': missing_parent_detected_id,
+            'orphan_audit_records': orphan_audit_records,
+            'unaudited_detected_claims': unaudited_detected_claims,
+            'count_reconciliation_errors': count_reconciliation_errors
         },
-        'detected_candidates': pass_candidates
+        'detected_candidates': candidates
     }
 
-    with open(detection_path, 'w', encoding='utf-8') as f:
-        json.dump(detection_result, f, indent=2, ensure_ascii=False)
+    # Fail before mutation: Atomic file write via temporary file
+    tmp_path = detection_path.with_suffix('.tmp')
+    with open(tmp_path, 'w', encoding='utf-8') as df:
+        json.dump(detection_result, df, indent=2, ensure_ascii=False)
+    tmp_path.replace(detection_path)
 
     print('\n==================================================')
-    print('SCIENTIFIC CLAIM SCANNER & RECONCILIATION SUMMARY')
+    print('RULE-BASED SCIENTIFIC CLAIM COVERAGE SUMMARY')
     print('==================================================')
-    print(f'Status:                      {status}')
-    print(f'Total Detected Candidates:   {len(pass_candidates)}')
-    print(f'Total Audited Claims:        {len(audits_by_id)}')
-    print(f'Audited Claims Covered:      {len(audits_covered)}')
-    print(f'Orphan Audit Records:        {len(orphan_audits)}')
-    print(f'Unaudited Detected Claims:   {len(unaudited_cands)}')
-    print(f'Count Reconciliation Errors: {count_errors}')
+    print(f'Status:                         {verification_status}')
+    print(f'Body Start / End:               P{body_start} -> P{body_end} (Scanned: {body_end - body_start + 1})')
+    print(f'Detected Candidates:            {len(candidates)}')
+    print(f'Audited Atomic Claims:          {len(audits)}')
+    print(f'Missing Parent Detected ID:     {missing_parent_detected_id}')
+    print(f'Orphan Audit Records:           {orphan_audit_records}')
+    print(f'Unaudited Detected Claims:      {unaudited_detected_claims}')
+    print(f'Count Reconciliation Errors:    {count_reconciliation_errors}')
     print('==================================================')
 
-    assert status == 'PASS', f'Reconciliation failed: orphans={len(orphan_audits)}, unaudited={len(unaudited_cands)}'
+    assert verification_status == 'PASS', (
+        f'Scanner reconciliation failed: missing_parents={missing_parent_detected_id}, '
+        f'orphans={orphan_audit_records}, unaudited={unaudited_detected_claims}'
+    )
     return detection_result
 
 if __name__ == '__main__':

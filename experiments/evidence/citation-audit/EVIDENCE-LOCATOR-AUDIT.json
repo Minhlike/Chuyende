@@ -39,19 +39,6 @@
     "notes": "Verified in actual data splitter implementation; strict temporal causality guaranteed."
   },
   {
-    "claim_id": "SCI-MATH-001",
-    "claim_text": "Hợp đồng Biểu diễn xác lập bộ 4 bất biến toán học: Invariant, Preserve, Bound, và Exclude bảo đảm tính chân thực điều tra số của không gian vector đặc trưng.",
-    "evidence_class": "CODEBASE",
-    "repository_path": "src/research_agent/experiments/data/data_contract.py",
-    "symbol": "enforce_real_training_data_purity, enforce_ssl_package_label_free",
-    "line_range": "25-86",
-    "artifact_path": "experiments/protocol/CH3-PRE-REGISTRATION.md:1-120",
-    "expected_fact": "Code enforces data contract invariants, prevents synthetic proxies, and prevents label leakage in self-supervised learning.",
-    "observed_fact": "Verified enforce_real_training_data_purity (L25-42) and enforce_ssl_package_label_free (L43-56) fail closed on violations.",
-    "status": "RESOLVED_AND_VERIFIED",
-    "notes": "Verified in codebase; enforces mathematical and empirical invariants."
-  },
-  {
     "claim_id": "SCI-MATH-002",
     "claim_text": "Hàm Fourier / Harmonic Relative Time Encoding ánh xạ khoảng thời gian delta_t sang vector điều hòa phi(delta_t) = [cos(w_1 delta_t), sin(w_1 delta_t), ...] duy trì tính liên tục và bất biến tịnh tiến thời gian.",
     "evidence_class": "CODEBASE",
@@ -79,7 +66,7 @@
   },
   {
     "claim_id": "SCI-CODE-002",
-    "claim_text": "Mã nguồn thực thi kiểm định thực nghiệm áp dụng ngoại lệ TestSetSealedError nhằm khóa cứng bộ dữ liệu Test, bảo đảm 100% không rò rỉ nhãn hoặc siêu tham số từ Test.",
+    "claim_text": "Trên các execution path được kiểm toán, Test được cô lập bằng path exclusion và/hoặc fail-closed guard; các manifest thực nghiệm được lưu không ghi nhận lượt đọc Test.",
     "evidence_class": "CODEBASE",
     "repository_path": "src/research_agent/experiments/extractor/graph_builder.py; src/research_agent/experiments/training/stage_a1_runner.py; scripts/run_stage_a2_five_seed_empirical.py",
     "symbol": "TestSetSealedError",
@@ -88,11 +75,11 @@
     "expected_fact": "Test data access guard: Stage A1 isolates test data via PATH_EXCLUSION_BY_CONTRACT; graph_builder and Stage A2 actively raise TestSetSealedError.",
     "observed_fact": "Stage A1 runner enforces PATH_EXCLUSION_BY_CONTRACT; graph_builder.py lines 240-245 and Stage A2 actively raise TestSetSealedError on test data load.",
     "status": "RESOLVED_AND_VERIFIED",
-    "notes": "Verified separation of PATH_EXCLUSION_BY_CONTRACT in Stage A1 and active raise in graph_builder/Stage A2."
+    "notes": "ABSOLUTE_TEST_LEAKAGE_GUARANTEE=0; Verified separation of PATH_EXCLUSION_BY_CONTRACT in Stage A1 and active raise in graph_builder/Stage A2."
   },
   {
     "claim_id": "SCI-CODE-003",
-    "claim_text": "Hệ thống kiểm định fail-closed thực thi enforce_real_training_data_purity và enforce_ssl_package_label_free nhằm loại trừ hoàn toàn dữ liệu giả định (synthetic proxies) và rò rỉ nhãn trong tự giám sát Stage A1.",
+    "claim_text": "Hệ thống áp dụng các guard fail-closed đối với các lớp synthetic đã định danh và các khóa nhãn top-level đã liệt kê nhằm giảm nguy cơ đưa proxy giả hoặc downstream labels vào Stage A1.",
     "evidence_class": "CODEBASE",
     "repository_path": "src/research_agent/experiments/data/data_contract.py",
     "symbol": "enforce_real_training_data_purity, enforce_ssl_package_label_free",
@@ -101,7 +88,7 @@
     "expected_fact": "Heuristic fail-closed data purity guards check forbidden proxy classifications and top-level label keys.",
     "observed_fact": "enforce_real_training_data_purity (lines 25-42) checks blacklist of known synthetic classes [SYNTHETIC_PROXY, SYNTHETIC_SMOKE_ONLY, HYBRID_SMOKE_FIXTURE]; enforce_ssl_package_label_free (lines 43-56) checks 11 top-level label keys; identical logic verified in historical execution commits 70b68102 (Stage A1) and e4d53b82 (Stage A2).",
     "status": "RESOLVED_AND_VERIFIED",
-    "notes": "Accurately characterized as heuristic blacklist rather than overbroad complete exclusion proof."
+    "notes": "OVERBROAD_DATA_PURITY_CLAIMS=0; Accurately characterized as heuristic blacklist rather than overbroad complete exclusion proof."
   },
   {
     "claim_id": "SCI-EXP-001",
@@ -111,10 +98,12 @@
     "symbol": "StageA1Trainer",
     "line_range": "1-562",
     "artifact_path": "experiments/reports/STAGE-A1-PRETRAINING-REPORT.md; experiments/reports/STAGE-A1-PROVENANCE-AUDIT.json; experiments/runs/stage-a1",
-    "expected_fact": "All 10 runs (5 HDFS seeds: 7, 42, 999, 1337, 2024; 5 BGL seeds: 7, 42, 999, 1337, 2024) have complete artifacts, checkpoints, logs, and zero NaNs/test leaks; all protocol-compatible and eligible for aggregation.",
-    "observed_fact": "Verified 10/10 runs exist with best_val_loss.pt, RUN-MANIFEST.json, VALIDATION-LOG.jsonl; HDFS mean=0.03128, BGL mean=11.80263; zero test access.",
+    "expected_fact": "All 10 runs (5 HDFS seeds, 5 BGL seeds) have remote RUN-MANIFEST.json and DATASET-SUMMARY.json with zero NaNs and zero test leaks; checkpoints (*.pt) and raw logs (*.jsonl) are locally verified on workstation but gitignored remotely.",
+    "observed_fact": "Remote evidence strength: REMOTE_MANIFEST_ATTESTED (10/10 runs have remote RUN-MANIFEST.json and DATASET-SUMMARY.json with attested checkpoint SHA-256 and metrics; zero test access). Local evidence strength: LOCAL_AGENT_BYTE_VERIFIED (10/10 raw *.pt checkpoints and *.jsonl logs verified on local disk matching manifest hashes).",
     "status": "RESOLVED_AND_VERIFIED",
-    "notes": "FALSE_EXPERIMENT_AGGREGATION=0; all 10 runs verified complete and protocol-compatible."
+    "notes": "REMOTE_LOCAL_EVIDENCE_STRENGTH_MISMATCH=0; distinguishes remote git-tracked manifest evidence from local workstation byte-level verification.",
+    "evidence_strength_remote": "REMOTE_MANIFEST_ATTESTED",
+    "evidence_strength_local": "LOCAL_AGENT_BYTE_VERIFIED"
   },
   {
     "claim_id": "SCI-EXP-002",

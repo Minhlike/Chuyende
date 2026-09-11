@@ -3,7 +3,15 @@
     "hunk_id": "HUNK-CH1-001",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      2,
+      3
+    ],
     "base_paragraph_indices": [
+      2,
+      3
+    ],
+    "current_indices": [
       2,
       3
     ],
@@ -20,7 +28,11 @@
       "Trong các Trung tâm Điều hành An ninh mạng (Security Operations Center, SOC) hiện đại, dữ liệu nhật ký hệ thống và nhật ký kiểm toán đóng vai trò là nguồn bằng chứng trung tâm phục vụ phát hiện, điều tra và ứng phó các chiến dịch tấn công có chủ đích (Advanced Persistent Threats, APT) [1]. Khác với văn bản ngôn ngữ tự nhiên thông thường hoặc tín hiệu thị giác máy tính, dữ liệu log sở hữu cấu trúc bán cấu trúc, mang tính phụ thuộc thời gian nghiêm ngặt, phản ánh các quan hệ phụ thuộc thực thi giữa các tiến trình và tài nguyên hệ điều hành, đồng thời chứa đựng các ngữ nghĩa an ninh đặc thù [2], [3]. Mục 1.1 tập trung hình thức hóa bài toán biểu diễn đặc trưng log phục vụ phát hiện tấn công đa giai đoạn, phân tích bản chất không gian dữ liệu doanh nghiệp, xác lập mô hình hành vi phi tuyến tính trên ma trận MITRE ATT&CK [4] và thiết lập khung Hợp đồng Biểu diễn nhằm bảo toàn các bất biến an toàn cho không gian vector đặc trưng ."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -30,7 +42,15 @@
     "hunk_id": "HUNK-CH1-002",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      4,
+      5
+    ],
     "base_paragraph_indices": [
+      4,
+      5
+    ],
+    "current_indices": [
       4,
       5
     ],
@@ -47,7 +67,11 @@
       "Không gian dữ liệu nhật ký trong môi trường mạng doanh nghiệp được tổng hợp từ ba nhóm nguồn telemetry chính với cấu trúc và định dạng không đồng nhất [1], [5]. Nhóm thứ nhất là nhật ký kiểm toán máy chủ và viễn trắc nguồn gốc (Host Audit & Provenance Telemetry). Trên các hệ thống Linux, các cơ chế thu thập viễn trắc nguồn gốc và kiểm toán mức nhân (như Linux Auditd hoặc eBPF) ghi nhận các sự kiện lời gọi hệ thống (system calls) — tiêu biểu như khởi tạo tiến trình (execve), thao tác tệp tin (open, openat, unlink) và kết nối socket mạng (connect, accept) — để phục vụ điều tra số và xây dựng đồ thị quan hệ nhân quả [2], [1]. Trong khi đó, trên môi trường Windows, Microsoft Sysinternals Sysmon cung cấp viễn trắc an ninh mức hệ điều hành thông qua các sự kiện định danh chuẩn hóa theo đặc tả kỹ thuật chính thức của Russinovich & Garnier [41], tiêu biểu gồm: khởi tạo tiến trình (ProcessCreate - Event ID 1), kết nối mạng (NetworkConnect - Event ID 3), nạp thư viện động (ImageLoaded - Event ID 7), tạo tệp tin (FileCreate - Event ID 11), và thao tác cấu hình registry (RegistryEvent - Event ID 13). Nhóm thứ hai là nhật ký luồng mạng (Network Flow & Protocol Logs), được thu thập từ Zeek, Suricata hoặc NetFlow/IPFIX, cung cấp siêu dữ liệu kết nối giữa các nút mạng, giao dịch DNS, chứng chỉ TLS/SSL và thông lượng gói tin. Nhóm thứ ba là nhật ký ứng dụng và dịch vụ phân tán (Application & Distributed System Logs), phát sinh từ máy chủ web (Apache), hệ thống tệp phân tán (HDFS) cùng các dịch vụ tính toán cụm thuộc bộ benchmark LogHub [6], [7]."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -57,7 +81,15 @@
     "hunk_id": "HUNK-CH1-003",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      8,
+      10
+    ],
     "base_paragraph_indices": [
+      8,
+      10
+    ],
+    "current_indices": [
       8,
       10
     ],
@@ -76,7 +108,11 @@
       "Dưới góc độ phân phối thời gian, dữ liệu log liên tục biến đổi trong môi trường vận hành dài hạn. Dựa trên các vấn đề không dừng (non-stationarity) và phương pháp luận đánh giá theo thời gian được thảo luận trong tài liệu liên quan [8], nghiên cứu tổng hợp bốn dạng trôi dạt dữ liệu (Drift Taxonomy) phục vụ khung phân tích của chuyên đề (Tác giả tổng hợp):"
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -86,7 +122,15 @@
     "hunk_id": "HUNK-CH1-004",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      16,
+      17
+    ],
     "base_paragraph_indices": [
+      16,
+      17
+    ],
+    "current_indices": [
       16,
       17
     ],
@@ -103,7 +147,11 @@
       "Tuy nhiên, trên thực tế vận hành và theo khung phân loại chuẩn hóa của ma trận tri thức an ninh MITRE ATT&CK [4], các chiến dịch tấn công có chủ đích (APT) mang bản chất phi tuyến tính sâu sắc [1]. Cần lưu ý rằng MITRE khuyến nghị ATT&CK không phải là một danh mục kiểm tra đầy đủ (checklist) khép kín; từ ontology ATT&CK và các quan sát về đồ thị nguồn gốc hệ thống [1], nghiên cứu tổng hợp ba cấu trúc phân tích đặc thù sau (đây là cấu trúc phân loại do đề tài tự tổng hợp, không phải taxonomy chính thức của MITRE ATT&CK): Một là, cấu trúc nhảy cóc giai đoạn (Step Skipping): Kẻ tấn công có thể khai thác trực tiếp lỗ hổng thực thi mã từ xa để trích xuất dữ liệu ra ngoài mà không cần thiết lập cơ chế duy trì hay di chuyển ngang; Hai là, cấu trúc lặp vòng kỹ thuật (Tactic Looping & Interleaving): Kỹ thuật thu thập thông tin nội bộ (Discovery) thường được lặp lại nhiều lần xen kẽ giữa các bước leo thang đặc quyền và chiếm đoạt thông tin xác thực; Ba là, cấu trúc phân nhánh tiến trình song song (Parallel Branching): Kẻ tấn công có thể khởi tạo đồng thời nhiều luồng tiến trình con độc lập trên các tiến trình hợp lệ khác nhau nhằm phân tán sự theo dõi của hệ thống phòng thủ."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -113,7 +161,15 @@
     "hunk_id": "HUNK-CH1-005",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      19,
+      22
+    ],
     "base_paragraph_indices": [
+      19,
+      22
+    ],
+    "current_indices": [
       19,
       22
     ],
@@ -134,7 +190,11 @@
       "Đặc biệt, sự xuất hiện của nhiễu từ hành vi quản trị viên (Admin-Noise) là một thách thức vận hành thực tế. Các quản trị viên hệ thống thường xuyên sử dụng các công cụ hợp lệ như PowerShell, SSH, WMI và các lệnh nội bộ tương tự như kỹ thuật kẻ tấn công sử dụng; hiện tượng này được đề tài xác lập dưới dạng một giả thuyết nghiên cứu cần kiểm thử thực nghiệm trong không gian đặc trưng hành vi, đòi hỏi mô hình học sâu không dừng lại ở các mẫu cú pháp bề mặt mà phải nắm bắt được tương quan phụ thuộc cấu trúc và ngữ cảnh thực thi sâu."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -144,7 +204,15 @@
     "hunk_id": "HUNK-CH1-006",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      23,
+      24
+    ],
     "base_paragraph_indices": [
+      23,
+      24
+    ],
+    "current_indices": [
       23,
       24
     ],
@@ -161,7 +229,9 @@
       "Khắc phục hạn chế của các nghiên cứu tiền nhiệm vốn thường đồng nhất việc trích xuất đặc trưng với thuật toán phân loại cụ thể, chuyên đề tiếp cận bài toán dưới góc nhìn của học biểu diễn sâu (Deep Representation Learning). Trong học sâu, mô hình thiết lập một ánh xạ hàm tham số chuyển đổi dữ liệu nhật ký hệ thống đa góc nhìn sang không gian vector tiềm ẩn. Điểm cốt lõi về mặt nhận thức luận là vector biểu diễn z chỉ phản ánh những thuộc tính và quy luật thống kê mà hàm mục tiêu tối ưu hóa (optimization objective) khuyến khích lưu giữ, chứ không phải một bản sao toàn tri của mọi trạng thái hệ điều hành; những thông tin không xuất hiện trong dữ liệu quan sát hoặc không được objective thúc đẩy có thể không tồn tại trong z. Do đó, để định hình không gian biểu diễn phục vụ mục tiêu an ninh, chuyên đề đề xuất một khung khái niệm chính thức mang tên Hợp đồng Biểu diễn (Representation Contract), ký hiệu là , đóng vai trò như một bản đặc tả các ràng buộc toán học và ngữ nghĩa giữa dữ liệu thô và không gian vector tiềm ẩn z:"
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -169,7 +239,15 @@
     "hunk_id": "HUNK-CH1-007",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      25,
+      28
+    ],
     "base_paragraph_indices": [
+      25,
+      28
+    ],
+    "current_indices": [
       25,
       28
     ],
@@ -190,7 +268,11 @@
       "Ba là, nhóm Điều kiện Triệt tiêu (EXCLUDE, E_exclude): Tập hợp các thông tin giả tạo và biến số ngoài miền bắt buộc phải bị loại bỏ/triệt tiêu khỏi không gian vector z nhằm ngăn ngừa rủi ro học đường tắt (Shortcut Learning) [8]. Bao gồm: các mẫu định dạng đặc thù của môi trường thử nghiệm (Testbed-specific artifacts), các biến số gây rò rỉ phân vùng dữ liệu và đánh cắp thời gian (Partition-leakage and temporal snooping variables như dấu thời gian tuyệt đối của máy thí nghiệm, hostname cố định của môi trường lab) [8], và các đặc trưng tương quan giả (Spurious correlations) có thể khiến mô hình đạt độ chính xác ảo trên tập kiểm thử nhưng thất bại khi triển khai thực tế."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -200,7 +282,15 @@
     "hunk_id": "HUNK-CH1-008",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      30,
+      31
+    ],
     "base_paragraph_indices": [
+      30,
+      31
+    ],
+    "current_indices": [
       30,
       31
     ],
@@ -217,7 +307,12 @@
       "Nguyên tắc PRESERVE tập trung vào việc bảo toàn ngữ nghĩa an ninh động chứ không đồng nghĩa với việc giữ lại toàn bộ định danh thô của người dùng hay máy chủ. Về mặt bảo vệ quyền riêng tư, chuyên đề phân định rạch ròi bốn cấp độ an toàn thông tin và không đồng nhất khả năng phòng thủ giữa các cấp độ này: Một là, cơ chế giả danh hóa (Pseudonymization) thông qua việc ánh xạ các định danh nhạy cảm (như username, IP, hostname) sang không gian mã băm hoặc chỉ số trừu tượng nhằm kiểm soát khả năng liên kết (controlled linkability); Hai là, đề xuất quy trình đánh giá khả năng chống tấn công suy luận thành viên (Membership Inference Attack - MIA) [16] nhằm đánh giá xem kẻ tấn công có thể xác định một bản ghi nhật ký cụ thể có thuộc tập huấn luyện hay không; Ba là, đề xuất quy trình đánh giá khả năng chống tấn công đảo ngược mô hình (Model Inversion Attack) [33] nhằm đánh giá rủi ro khôi phục thông tin cấu hình từ vector biểu diễn tiềm ẩn; Bốn là, khung bảo đảm toán học về quyền riêng tư vi sai (Differential Privacy - DP) theo hướng dẫn chuẩn mực của NIST SP 800-226 [17]. Cần khẳng định rằng vector biểu diễn tiềm ẩn không tự động an toàn về quyền riêng tư nếu không có cơ chế chứng minh toán học tường minh; chuyên đề đề xuất khung đánh giá an toàn thông tin bao gồm các thử nghiệm MIA hay Model Inversion được định vị cho giai đoạn đánh giá mô hình hạ nguồn [16], [33], kết hợp khung lý thuyết DP định hướng lượng hóa độ mất mát quyền riêng tư [17]. Tương tự, nguyên tắc EXCLUDE thiết lập các ràng buộc phủ định đối với các giả định đường tắt đã biết và các biến số gây rò rỉ phân vùng [8], thay vì giả định rằng mọi đường tắt đều có thể nhận biết trước khi thực nghiệm."
     ],
     "category": "PRIVACY_SCOPE_CALIBRATION",
+    "reason": "Distinguish proposed evaluation framework from executed experiments in thesis, avoiding privacy false positives.",
     "scientific_justification": "Distinguish proposed evaluation framework from executed experiments in thesis, avoiding privacy false positives.",
+    "claim_ids": [
+      "CLM-021",
+      "SCI-PRIV-001"
+    ],
     "associated_claims": [
       "CLM-021",
       "SCI-PRIV-001"
@@ -228,7 +323,15 @@
     "hunk_id": "HUNK-CH1-009",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      33,
+      37
+    ],
     "base_paragraph_indices": [
+      33,
+      37
+    ],
+    "current_indices": [
       33,
       37
     ],
@@ -251,7 +354,11 @@
       "Trong đó tham số của bộ mã hóa Tầng 2 được giữ cố định hoàn toàn trong suốt quá trình đánh giá ở Tầng 3, chỉ có các tham số của bộ phân loại tuyến tính được huấn luyện để đo lường khả năng truy xuất tuyến tính (linear accessibility) của thông tin an ninh trong vector z. Quy tắc này bảo đảm bộ phân loại hạ nguồn không làm thay nhiệm vụ trích xuất đặc trưng của Tầng 2 và phản ánh trung thực năng lực của không gian biểu diễn [8], [37]."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -261,7 +368,15 @@
     "hunk_id": "HUNK-CH1-010",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      38,
+      39
+    ],
     "base_paragraph_indices": [
+      38,
+      39
+    ],
+    "current_indices": [
       38,
       39
     ],
@@ -278,7 +393,11 @@
       "Phục vụ việc định vị chính xác các đóng góp kỹ thuật và cơ sở lý luận của chuyên đề, Mục 1.2 tiến hành khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log chủ đạo trong y văn hiện đại [6], [1], [5]: (1) Nhóm phương pháp thống kê và cú pháp dựa trên mẫu log (Statistical & Syntactic Parsing-Based); (2) Nhóm phương pháp biểu diễn ngữ nghĩa chuỗi thời gian (Semantic–Sequential & Transformer-Based); và (3) Nhóm phương pháp học biểu diễn đồ thị nguồn gốc (Provenance Graph Representation Learning). Mỗi nhóm phương pháp được mổ xẻ tường minh về cơ chế toán học, độ phức tạp thuật toán, ưu điểm cốt lõi và các rào cản nền tảng khi triển khai trong môi trường phát hiện tấn công thực tế."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -288,7 +407,15 @@
     "hunk_id": "HUNK-CH1-011",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      40,
+      42
+    ],
     "base_paragraph_indices": [
+      40,
+      42
+    ],
+    "current_indices": [
       40,
       42
     ],
@@ -307,7 +434,9 @@
       "Trong giai đoạn phân tích cú pháp, nhiều thuật toán tiêu biểu đã được phát triển nhằm tối ưu hóa tốc độ xử lý [6]: (1) Drain [6] sử dụng cấu trúc cây phân tích có độ sâu cố định (Fixed-Depth Parse Tree) để nhóm các dòng log dựa trên độ dài chuỗi và các từ khóa tiền tố, trong kết quả đo chuẩn thực nghiệm của Zhu et al., thời gian xử lý của Drain tăng gần tuyến tính theo kích thước tập dữ liệu log đối với luồng dữ liệu lớn; (2) Spell [6] áp dụng thuật toán tìm chuỗi con chung dài nhất (Longest Common Subsequence - LCS) theo cơ chế dòng để trích xuất động các thành phần tĩnh của thông điệp log; (3) LenMa và AEL [6], [7] lần lượt khai thác chiều dài các từ tố và tần suất xuất hiện của từ khóa để phân cụm và tách biến số ra khỏi chuỗi mẫu."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -315,7 +444,15 @@
     "hunk_id": "HUNK-CH1-012",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      43,
+      45
+    ],
     "base_paragraph_indices": [
+      43,
+      45
+    ],
+    "current_indices": [
       43,
       45
     ],
@@ -334,7 +471,9 @@
       "Trên không gian vector tần suất này, các mô hình phát hiện bất thường kinh điển được triển khai rộng rãi: (1) Principal Component Analysis (PCA) (Xu et al., SOSP 2009) [18] phân rã không gian vector thành không gian con chuẩn tắc và không gian con phần dư , nhận diện bất thường khi năng lượng chiếu lên phần dư vượt ngưỡng kiểm định:"
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -342,7 +481,15 @@
     "hunk_id": "HUNK-CH1-013",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      46,
+      47
+    ],
     "base_paragraph_indices": [
+      46,
+      47
+    ],
+    "current_indices": [
       46,
       47
     ],
@@ -359,7 +506,11 @@
       "Mặc dù sở hữu ưu thế về tốc độ xử lý trong thực tiễn, nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng [6], [2]: (1) Mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số: các bộ log parser dựa trên biểu thức chính quy thường thay thế các tham số biến động (địa chỉ IP, đường dẫn tệp tin, tham số dòng lệnh) bằng ký tự đại diện <*> khiến nhiều thông tin an ninh mang tính phân biệt cao bị lược bỏ; (2) Lan truyền và khuếch đại sai số cú pháp (Parser Error Propagation): khi gặp các định dạng log mới chưa từng xuất hiện (unseen logs), parser có thể phân tách không chính xác, dẫn đến hiện tượng sinh ra các mẫu sự kiện giả lập hoặc gộp nhầm các sự kiện khác biệt, làm xáo trộn cấu trúc không gian vector x."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -369,7 +520,15 @@
     "hunk_id": "HUNK-CH1-014",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      48,
+      50
+    ],
     "base_paragraph_indices": [
+      48,
+      50
+    ],
+    "current_indices": [
       48,
       50
     ],
@@ -388,7 +547,9 @@
       "Khởi đầu cho hướng nghiên cứu này là mô hình DeepLog [14]. DeepLog không chỉ phân tích chuỗi mã sự kiện log mà còn là một khung làm việc toàn diện gồm hai thành phần mô hình hóa: Một là, mô hình LSTM thứ nhất học biểu diễn chuỗi các mẫu log (Log-Key Anomaly Detection) nhằm phát hiện các sự kiện sai lệch khỏi trật tự thực thi bình thường theo phân phối có điều kiện ; Hai là, mô hình LSTM thứ hai kết hợp phân phối chuẩn nhiều chiều để kiểm tra sự bất thường về giá trị tham số số học (Parameter Value Anomaly Detection) [14]."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -396,7 +557,15 @@
     "hunk_id": "HUNK-CH1-015",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      51,
+      53
+    ],
     "base_paragraph_indices": [
+      51,
+      53
+    ],
+    "current_indices": [
       51,
       53
     ],
@@ -415,7 +584,11 @@
       "Mặc dù đạt kết quả tốt trên các tập dữ liệu phần mềm, nhóm phương pháp Semantic–Sequential đối mặt với ba rào cản khi áp dụng vào an ninh mạng [8], [3]: (1) Nguy cơ rò rỉ và thiên lệch từ dữ liệu tiền huấn luyện (Pretraining-Data Advantage): các mô hình sử dụng Transformer tiền huấn luyện trên kho văn bản tổng quát có nguy cơ tận dụng tri thức ngoài miền; khi đánh giá trong điều kiện phân vùng nghiêm ngặt, năng lực phân tách thực tế cần được kiểm chứng cẩn trọng [8]; (2) Chi phí tài nguyên tính toán: cơ chế Self-Attention trong Transformer [34] có độ phức tạp tính toán và bộ nhớ bậc hai theo độ dài chuỗi hoặc kích thước cửa sổ, đòi hỏi tài nguyên tính toán đáng kể khi triển khai trên luồng dữ liệu thời gian thực có lưu lượng lớn; (3) Giới hạn phạm vi quan sát đơn luồng: mô hình chuỗi chủ yếu theo dõi các sự kiện trên một dòng thời gian cục bộ, gặp khó khăn khi mô hình hóa trực tiếp các mối liên hệ phụ thuộc đan xen đa tiến trình, đa thực thể và vượt ranh giới máy chủ."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -425,7 +598,15 @@
     "hunk_id": "HUNK-CH1-016",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      54,
+      55
+    ],
     "base_paragraph_indices": [
+      54,
+      55
+    ],
+    "current_indices": [
       54,
       55
     ],
@@ -442,7 +623,11 @@
       "Khắc phục hạn chế về phạm vi quan sát của mô hình chuỗi, hướng tiếp cận dựa trên đồ thị nguồn gốc hệ thống (System Provenance Graph) mô hình hóa toàn bộ lịch sử thực thi và tương tác trong hệ điều hành dưới dạng một đồ thị có hướng, không đồng nhất và gán nhãn thời gian [1], [5]:"
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -452,9 +637,17 @@
     "hunk_id": "HUNK-CH1-017",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      56,
+      57
+    ],
     "base_paragraph_indices": [
       56,
       57
+    ],
+    "current_indices": [
+      56,
+      58
     ],
     "current_paragraph_indices": [
       56,
@@ -470,7 +663,11 @@
       "Tại Việt Nam, các nghiên cứu chuyên sâu của ThS. Nguyễn Thị Thu Thủy (Khoa An toàn thông tin, Học viện Kỹ thuật Mật mã) [32] cũng đã hệ thống hóa toàn diện phương pháp luận ứng dụng Graph Learning và mạng nơ-ron đồ thị (Graph Neural Network, GNN) trên đồ thị nguồn gốc (provenance graph) để phát hiện các chiến dịch tấn công APT đa giai đoạn; đồng thời phân tích sâu sắc các thách thức về hiện tượng bùng nổ phụ thuộc, tính đa góc nhìn và yêu cầu bảo toàn tính nhân quả khi phân tích luồng sự kiện kiểm toán hệ thống."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -480,9 +677,17 @@
     "hunk_id": "HUNK-CH1-018",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      61,
+      62
+    ],
     "base_paragraph_indices": [
       61,
       62
+    ],
+    "current_indices": [
+      62,
+      63
     ],
     "current_paragraph_indices": [
       62,
@@ -497,7 +702,11 @@
       "Từ kết quả khảo sát và phân tích đối chiếu ba nhóm phương pháp biểu diễn đặc trưng log tại Mục 1.2, có thể nhận thấy rằng mặc dù các kỹ thuật thống kê, mô hình chuỗi ngữ nghĩa và học biểu diễn đồ thị nguồn gốc đã đạt được nhiều bước tiến quan trọng, việc ứng dụng chúng vào môi trường phát hiện tấn công mạng doanh nghiệp thực tế vẫn đối mặt với những rào cản nền tảng chưa được giải quyết thấu đáo [8], [6], [1], [3]. Nhằm thiết lập cơ sở khoa học vững chắc và định hình phạm vi nghiên cứu, chuyên đề tổng kết năm khoảng trống nghiên cứu cốt lõi tương ứng với năm câu hỏi nghiên cứu (RQ) định hướng cho toàn bộ các đề xuất phương pháp luận tiếp theo."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -507,9 +716,17 @@
     "hunk_id": "HUNK-CH1-019",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      63,
+      64
+    ],
     "base_paragraph_indices": [
       63,
       64
+    ],
+    "current_indices": [
+      64,
+      65
     ],
     "current_paragraph_indices": [
       64,
@@ -524,7 +741,9 @@
       "Dữ liệu thực nghiệm từ các nghiên cứu tiền nhiệm chỉ ra rằng các bộ phân tích cú pháp đóng vai trò then chốt trong việc giảm chiều không gian văn bản log thành các mẫu định dạng tĩnh [6], [7]. Tuy nhiên, cơ chế trừu tượng hóa tham số phụ thuộc vào từng thuật toán phân tích cú pháp; nhiều pipeline tiền xử lý thay thế hoặc khái quát hóa một phần các tham số biến động (như địa chỉ IP, tên tài khoản, đường dẫn tệp tin, cổng mạng, tham số dòng lệnh) thành các biến đại diện (wildcard/template variables) nhằm tạo ra các mẫu log dùng chung."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -532,9 +751,17 @@
     "hunk_id": "HUNK-CH1-020",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      66,
+      67
+    ],
     "base_paragraph_indices": [
       66,
       67
+    ],
+    "current_indices": [
+      67,
+      68
     ],
     "current_paragraph_indices": [
       67,
@@ -549,7 +776,11 @@
       "Câu hỏi nghiên cứu 1 (RQ1, Representation Fidelity): Có thể xây dựng representation loại bỏ nhiễu cú pháp nhưng vẫn bảo toàn các dynamic parameters có ý nghĩa an toàn quan trọng (dưới sự kiểm soát rò rỉ và quyền riêng tư) hay không?"
     ],
     "category": "MATHEMATICAL_FORMULATION_PRECISION",
+    "reason": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
     "scientific_justification": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
+    "claim_ids": [
+      "MATH-DYNAMICS"
+    ],
     "associated_claims": [
       "MATH-DYNAMICS"
     ],
@@ -559,9 +790,17 @@
     "hunk_id": "HUNK-CH1-021",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      69,
+      70
+    ],
     "base_paragraph_indices": [
       69,
       70
+    ],
+    "current_indices": [
+      70,
+      71
     ],
     "current_paragraph_indices": [
       70,
@@ -576,7 +815,9 @@
       "Tuy nhiên, khi tiến hành hợp nhất hoặc gióng hàng (Cross-view Alignment) các không gian biểu diễn dị thể này trong không gian vector tiềm ẩn, các mô hình học biểu diễn tự giám sát đối mặt với nguy cơ sụp đổ chiều biểu diễn (Representation Collapse), vốn đòi hỏi các kỹ thuật điều hòa phương sai và hiệp phương sai hoặc giảm dư thừa đặc trưng để duy trì tính đa dạng (như các nguyên lý được gợi mở trong VICReg [10] và Barlow Twins [11]). Đồng thời, trong phạm vi bài toán biểu diễn an ninh mạng doanh nghiệp, quá trình gióng hàng đa góc nhìn còn đặt ra các thách thức chuyên biệt: (1) Nguy cơ chuyển giao tiêu cực (Negative Transfer), khi sự kết hợp giữa các góc nhìn làm suy giảm độ chính xác tổng thể do nhiễu từ một góc nhìn lấn át tín hiệu hữu ích của góc nhìn khác; và (2) Vấn đề góc nhìn bị khuyết hoặc tương ứng từng phần (Missing-view & Partial Correspondence), nảy sinh khi một số luồng telemetry bị chậm trễ, thất thoát gói tin hoặc không có liên kết 1-1 đồng thời giữa chuỗi sự kiện và đồ thị nguồn gốc."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -584,9 +825,17 @@
     "hunk_id": "HUNK-CH1-022",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      71,
+      72
+    ],
     "base_paragraph_indices": [
       71,
       72
+    ],
+    "current_indices": [
+      72,
+      73
     ],
     "current_paragraph_indices": [
       72,
@@ -601,7 +850,11 @@
       "Câu hỏi nghiên cứu 2 (RQ2, Cross-View Alignment): Có thể căn chỉnh các view dị thể mà không gây representation collapse, negative transfer, đồng thời vẫn bảo toàn thông tin hữu ích đặc thù của từng view hay không?"
     ],
     "category": "MATHEMATICAL_FORMULATION_PRECISION",
+    "reason": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
     "scientific_justification": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
+    "claim_ids": [
+      "MATH-DYNAMICS"
+    ],
     "associated_claims": [
       "MATH-DYNAMICS"
     ],
@@ -611,9 +864,17 @@
     "hunk_id": "HUNK-CH1-023",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      74,
+      77
+    ],
     "base_paragraph_indices": [
       74,
       77
+    ],
+    "current_indices": [
+      75,
+      78
     ],
     "current_paragraph_indices": [
       75,
@@ -632,7 +893,9 @@
       "Câu hỏi nghiên cứu 3 (RQ3, Validity Without Shortcuts): Representation có còn hữu ích sau khi loại bỏ shortcut của dataset và khi phân phối dữ liệu thay đổi hay không?"
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -640,9 +903,17 @@
     "hunk_id": "HUNK-CH1-024",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      78,
+      79
+    ],
     "base_paragraph_indices": [
       78,
       79
+    ],
+    "current_indices": [
+      79,
+      80
     ],
     "current_paragraph_indices": [
       79,
@@ -657,7 +928,11 @@
       "Trong thực tế giám sát an ninh mạng doanh nghiệp, dữ liệu nhãn thực tế thường chỉ được ghi nhận ở mức độ hạt rất thô (Coarse Labels), chẳng hạn như gán nhãn một phiên làm việc kéo dài nhiều giờ hoặc toàn bộ một máy chủ bị xâm nhập trong một khoảng thời gian [3], [12], [13]. Bên trong phiên làm việc đó, phần lớn các dòng log vẫn là các thao tác hệ thống bình thường, và chỉ có một số lượng rất nhỏ sự kiện thực sự phản ánh kỹ thuật tấn công."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -667,9 +942,17 @@
     "hunk_id": "HUNK-CH1-025",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      81,
+      82
+    ],
     "base_paragraph_indices": [
       81,
       82
+    ],
+    "current_indices": [
+      82,
+      83
     ],
     "current_paragraph_indices": [
       82,
@@ -684,7 +967,9 @@
       "Câu hỏi nghiên cứu 4 (RQ4, Weak Evidence Attribution): Có thể gán đúng attack evidence dưới coarse labels mà không học nhầm các hành vi quản trị hợp pháp thành malicious hay không?"
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -692,9 +977,17 @@
     "hunk_id": "HUNK-CH1-026",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      83,
+      85
+    ],
     "base_paragraph_indices": [
       83,
       85
+    ],
+    "current_indices": [
+      84,
+      86
     ],
     "current_paragraph_indices": [
       84,
@@ -711,7 +1004,12 @@
       "Tuy nhiên, việc lưu giữ khả năng liên kết này trong không gian vector biểu diễn trực tiếp làm nảy sinh các nguy cơ nghiêm trọng về quyền riêng tư và an toàn thông tin [16], [33], [17]. Các vector biểu diễn đặc trưng tiềm ẩn có nguy cơ bị kẻ tấn công khai thác thông qua các kỹ thuật tấn công suy luận thành viên (Membership Inference Attacks - MIA [16]) để xác định xem dữ liệu của một thực thể có nằm trong tập huấn luyện hay không. Về mặt lý thuyết nguồn gốc, nghiên cứu kinh điển của Fredrikson et al. [33] đã chứng minh tấn công nghịch đảo mô hình (Model Inversion Attacks) có thể khai thác thông tin đầu ra và độ tin cậy để suy diễn lại các đặc trưng nhạy cảm của dữ liệu đầu vào. Trong bối cảnh mô hình biểu diễn nhật ký của đề tài (Mô hình đe dọa do nghiên cứu đề xuất / Threat Model Adaptation), các định danh như tên người dùng, tên máy chủ và chuỗi đối số dòng lệnh là các thuộc tính nhạy cảm tiềm năng cần phải kiểm thử thực nghiệm trước nguy cơ bị khôi phục hoặc xấp xỉ từ không gian vector biểu diễn. Một mô hình được thiết kế có nhận thức về quyền riêng tư (Privacy-Aware) không tự động đồng nghĩa với việc đã đạt được khả năng bảo vệ quyền riêng tư vững chắc (Privacy-Preserving) nếu chưa trải qua các kiểm thử thực nghiệm tấn công nghiêm ngặt [17]."
     ],
     "category": "PRIVACY_SCOPE_CALIBRATION",
+    "reason": "Distinguish proposed evaluation framework from executed experiments in thesis, avoiding privacy false positives.",
     "scientific_justification": "Distinguish proposed evaluation framework from executed experiments in thesis, avoiding privacy false positives.",
+    "claim_ids": [
+      "CLM-021",
+      "SCI-PRIV-001"
+    ],
     "associated_claims": [
       "CLM-021",
       "SCI-PRIV-001"
@@ -722,9 +1020,17 @@
     "hunk_id": "HUNK-CH1-027",
     "chapter": 1,
     "opcode": "replace",
+    "base_indices": [
+      86,
+      87
+    ],
     "base_paragraph_indices": [
       86,
       87
+    ],
+    "current_indices": [
+      87,
+      88
     ],
     "current_paragraph_indices": [
       87,
@@ -739,7 +1045,9 @@
       "Câu hỏi nghiên cứu 5 (RQ5, Privacy-Security Trade-Off): Đâu là sự cân bằng chấp nhận được giữa entity continuity và privacy leakage để representation vẫn hữu ích cho phân tích an toàn?"
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -747,7 +1055,15 @@
     "hunk_id": "HUNK-CH2-001",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      2,
+      4
+    ],
     "base_paragraph_indices": [
+      2,
+      4
+    ],
+    "current_indices": [
       2,
       4
     ],
@@ -766,7 +1082,11 @@
       "Trên cơ sở các khoảng trống phương pháp luận được xác lập tại Chương 1, Chương 2 đề xuất khung phương pháp biểu diễn đặc trưng log đa góc nhìn bảo toàn ngữ cảnh an toàn, vận hành trực tuyến trong môi trường xử lý dòng (Streaming Environment). Quá trình biểu diễn bắt đầu bằng việc hình thức hóa luồng nhật ký kiểm toán hệ thống thành một chuỗi sự kiện được gán nhãn thời gian: , trong đó mỗi sự kiện tuân thủ thống nhất lược đồ bộ sáu kiểu hóa (Typed Six-tuple, đặc tả chi tiết tại Mục 2.2.1), bao gồm mốc thời gian xuất hiện sự kiện (Event-Time), định danh kiểu sự kiện , thực thể tác nhân chủ động (Actor Entity như tiến trình gốc, tài khoản người dùng), thực thể đối tượng đích chịu tác động (Object Entity như tệp tin, cổng mạng, tiến trình con), hành động/thao tác thực hiện (Action như fork, execve, read, write, connect, registry_set), và tập hợp các tham số động có cấu trúc (đường dẫn tệp tin, tham số dòng lệnh thực thi, cổng mạng và địa chỉ IP kết nối) [1]."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -776,7 +1096,15 @@
     "hunk_id": "HUNK-CH2-002",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      6,
+      7
+    ],
     "base_paragraph_indices": [
+      6,
+      7
+    ],
+    "current_indices": [
       6,
       7
     ],
@@ -793,7 +1121,9 @@
       "1. Giai đoạn A (Stage A, Pretraining Tự giám sát Ngoại tuyến): Huấn luyện bộ trích xuất hoàn toàn theo cơ chế tự giám sát trên dữ liệu nền tảng lịch sử mà không tiếp cận bất kỳ nhãn tấn công hay tín hiệu phân loại hạ nguồn nào, học các bất biến cấu trúc và trật tự thời gian nội tại."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -801,7 +1131,15 @@
     "hunk_id": "HUNK-CH2-003",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      13,
+      14
+    ],
     "base_paragraph_indices": [
+      13,
+      14
+    ],
+    "current_indices": [
       13,
       14
     ],
@@ -818,7 +1156,11 @@
       "Trong đó là ngưỡng phương sai duy trì độ đa dạng không gian (ngăn ngừa sụp đổ biểu diễn), là ngưỡng bảo toàn thông tin đặc thù từng góc nhìn, và mức độ suy giảm do chuyển giao tiêu cực được khống chế theo các ngưỡng xác lập trước thực nghiệm (các kỹ thuật cụ thể như InfoNCE, VICReg hay Barlow Twins được xem xét là ứng viên kỹ thuật tại Mục 2.4)."
     ],
     "category": "MATHEMATICAL_FORMULATION_PRECISION",
+    "reason": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
     "scientific_justification": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
+    "claim_ids": [
+      "MATH-DYNAMICS"
+    ],
     "associated_claims": [
       "MATH-DYNAMICS"
     ],
@@ -828,7 +1170,15 @@
     "hunk_id": "HUNK-CH2-004",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      16,
+      18
+    ],
     "base_paragraph_indices": [
+      16,
+      18
+    ],
+    "current_indices": [
       16,
       18
     ],
@@ -847,7 +1197,12 @@
       "Trong đó lý thuyết Quyền riêng tư Vi sai (DP) đóng vai trò định lượng và chặn trên tổn thất lý thuyết dưới các giả định toán học xác định, còn rủi ro thực tế được kiểm chứng thực nghiệm độc lập thông qua các tấn công suy luận thành viên (MIA) [16], [17] và tấn công nghịch đảo/tái định danh thực thể [33]."
     ],
     "category": "PRIVACY_SCOPE_CALIBRATION",
+    "reason": "Distinguish proposed evaluation framework from executed experiments in thesis, avoiding privacy false positives.",
     "scientific_justification": "Distinguish proposed evaluation framework from executed experiments in thesis, avoiding privacy false positives.",
+    "claim_ids": [
+      "CLM-021",
+      "SCI-PRIV-001"
+    ],
     "associated_claims": [
       "CLM-021",
       "SCI-PRIV-001"
@@ -858,7 +1213,15 @@
     "hunk_id": "HUNK-CH2-005",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      21,
+      22
+    ],
     "base_paragraph_indices": [
+      21,
+      22
+    ],
+    "current_indices": [
       21,
       22
     ],
@@ -875,7 +1238,11 @@
       "Xử lý hiện tượng sự kiện đến muộn hoặc xáo trộn thứ tự (Out-of-Order Events) phát sinh từ độ trễ mạng thu thập telemetry [1], [25], chuyên đề đề xuất nguyên tắc xử lý theo thời gian sự kiện kết hợp cơ chế mốc ngắt thời gian (Event-Time Watermark):"
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -885,7 +1252,15 @@
     "hunk_id": "HUNK-CH2-006",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      24,
+      25
+    ],
     "base_paragraph_indices": [
+      24,
+      25
+    ],
+    "current_indices": [
       24,
       25
     ],
@@ -902,7 +1277,9 @@
       "Xét theo lý thuyết tính toán, mô hình dòng thiết lập hợp đồng ngân sách độ phức tạp cho từng thành phần xử lý ký hiệu tổng quát: . Trong đó các hàm chi phí phụ thuộc vào kiến trúc và cấu trúc dữ liệu cụ thể (ví dụ chi phí tự chú ý nếu dùng Transformer chuẩn hoặc nếu dùng biến thể tuyến tính, chi phí truyền tin đồ thị lân cận phụ thuộc số lớp và bậc đỉnh , chi phí cập nhật chỉ mục trạng thái nếu sử dụng cây cân bằng). Các mức chặn Big-O cụ thể được đặc tả chặt chẽ cho từng nhánh tại Mục 2.3, Mục 2.4 và tổng hợp tại Bảng 2.2 và Bảng 2.4. Chuyên đề chỉ rõ bản chất đánh đổi cốt lõi (Long-Horizon Context Trade-off): các chiến dịch APT kéo dài nhiều tuần đòi hỏi duy trì ngữ cảnh tương tác sâu, trong khi bộ nhớ thực tế bị giới hạn bởi , và thiết kế dòng giải quyết mâu thuẫn này bằng cơ chế nén ngữ cảnh có kiểm soát thay vì lưu trữ toàn bộ dữ liệu thô."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -910,7 +1287,15 @@
     "hunk_id": "HUNK-CH2-007",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      28,
+      30
+    ],
     "base_paragraph_indices": [
+      28,
+      30
+    ],
+    "current_indices": [
       28,
       30
     ],
@@ -929,7 +1314,9 @@
       "2. Mặt phẳng Suy luận Dòng: Vận hành trực tuyến (Online) trên luồng sự kiện đang diễn ra . Mặt phẳng này tiếp nhận trọng số đã đóng băng hoàn toàn , cập nhật trạng thái bộ nhớ hữu hạn theo các chính sách TTL, Eviction và Watermarking, sau đó trích xuất vector đóng gói theo cơ chế đơn lượt đơn hướng (Strictly Causal, Zero Lookahead), cung cấp đầu vào tức thời cho các bộ dò tuyến tính đóng băng Giai đoạn C phục vụ phát hiện và quy kết chiến thuật/kỹ thuật MITRE ATT&CK."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -937,7 +1324,15 @@
     "hunk_id": "HUNK-CH2-008",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      36,
+      38
+    ],
     "base_paragraph_indices": [
+      36,
+      38
+    ],
+    "current_indices": [
       36,
       38
     ],
@@ -956,7 +1351,11 @@
       "Tập kiểu sự kiện và tập hành động được định nghĩa tĩnh theo đặc tả nguồn thu thập (auditd syscall table, Windows Event ID taxonomy, Sysmon event types) và không phụ thuộc vào dữ liệu huấn luyện, do đó không phát sinh rủi ro rò rỉ vocabulary từ tập kiểm tra (CTRL-LEAK-001). Ngược lại, từ vựng tham số động (đặc biệt là chuỗi đường dẫn tệp tin và đối số lệnh) phụ thuộc vào môi trường và được học hoàn toàn trên phân vùng huấn luyện theo cơ chế fit-only: mọi thống kê, ánh xạ từ vựng và bảng chuẩn hóa đều được fit trên và áp dụng ở trạng thái đóng băng (frozen state) lên phân vùng Validation và Test , qua đó bảo đảm không có thông tin ngược từ Val/Test nào được đưa vào quá trình fit."
     ],
     "category": "MATHEMATICAL_FORMULATION_PRECISION",
+    "reason": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
     "scientific_justification": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
+    "claim_ids": [
+      "MATH-DYNAMICS"
+    ],
     "associated_claims": [
       "MATH-DYNAMICS"
     ],
@@ -966,7 +1365,15 @@
     "hunk_id": "HUNK-CH2-009",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      40,
+      42
+    ],
     "base_paragraph_indices": [
+      40,
+      42
+    ],
+    "current_indices": [
       40,
       42
     ],
@@ -975,19 +1382,23 @@
       42
     ],
     "old_text_sha256": "5a66f48a04f70bfad8e91927ade2121cd777cbbeb29d3505571a27e67bbeb766",
-    "new_text_sha256": "3c53b1dd5113799d5f66179386386ddb459db9ab6902c66eb7fe5fa7420c6cc7",
+    "new_text_sha256": "2abde16208622adc70a69e0141ffea3150e88003783279722b5784c2d1a09041",
     "old_text": [
       "Vị từ được xác lập dựa trên kiểu ngữ nghĩa trường (field semantic type) và tính phù hợp an ninh xác định tiền nghiệm (a priori security relevance) hoặc được cấu hình độc quyền trên phân vùng theo đặc tả miền, tuyệt đối không phụ thuộc vào nhãn tấn công hay thống kê tập kiểm tra (loại trừ hoàn toàn rủi ro test leakage). Cụ thể, đánh giá đối với các trường mang thông tin tương tác hệ thống trọng yếu: địa chỉ IP và cổng mạng, đường dẫn tệp tin thực thi/cấu hình, chuỗi đối số dòng lệnh, khóa registry, định danh tiến trình cha–con và tài khoản người dùng đích. Các quy tắc như kiểm tra dải IP mạng, khóa registry khởi động, hay cờ đặc quyền nếu được áp dụng chỉ đóng vai trò là các đặc trưng chính sách miền tùy chọn (optional domain-policy features) hỗ trợ chuẩn hóa biểu diễn, tuyệt đối không phải là bộ phán quyết tiên tri (oracle) để phân biệt hành vi độc hại; ranh giới Extractor–Detector được duy trì nghiêm ngặt (Extractor không phải là rule-based detector). Ngược lại, các trường metadata môi trường cục bộ không mang ngữ nghĩa an ninh (như PID tạm thời, timestamp mili-giây nội bộ không phải Event-Time, số sequence kernel) được phân loại là KNOWN EXCLUDE FIELD và bị loại bỏ (DROP) trước khi đưa vào Extractor. Đối với các tham số chưa từng thấy hoặc chưa rõ ngữ nghĩa (UNSEEN / UNCERTAIN), hệ thống áp dụng chính sách UNKNOWN-SAFE (bảo toàn nhãn kiểu trường và cấu trúc, gán typed placeholder), không thực hiện loại bỏ mặc định.",
       "Hàm chuẩn hóa Áp dụng các phép biến đổi định dạng tường minh: chuẩn hóa đường dẫn, các ký hiệu separator, junction thừa, chuẩn hóa phân cách; chuẩn hóa địa chỉ IP về dạng chính tắc (loại bỏ zero-padding, khai triển IPv6 viết tắt); chuẩn hóa timestamp về UTC epoch; lower-casing không phân biệt hoa thường với tên lệnh trên Windows. Quan trọng là hàm phi(·) không được phép loại bỏ thông tin ngữ nghĩa an ninh dưới danh nghĩa 'nhiễu cú pháp': ví dụ, khoảng trắng trong đối số lệnh không được thu gọn nếu điều đó phá vỡ khả năng tái tạo ý định lệnh. Ranh giới giữa nhiễu định dạng và tham số an ninh được ghi nhận tường minh và không thay đổi trong suốt quá trình thực nghiệm."
     ],
     "new_text": [
-      "Vị từ được xác lập dựa trên kiểu ngữ nghĩa trường (field semantic type) và tính phù hợp an ninh xác định tiền nghiệm (a priori security relevance) hoặc được cấu hình độc quyền trên phân vùng theo đặc tả miền, tuyệt đối không phụ thuộc vào nhãn tấn công hay thống kê tập kiểm tra (loại trừ hoàn toàn rủi ro test leakage). Cụ thể, đánh giá đối với các trường mang thông tin tương tác hệ thống trọng yếu: địa chỉ IP và cổng mạng, đường dẫn tệp tin thực thi/cấu hình, chuỗi đối số dòng lệnh, khóa registry, định danh tiến trình cha và con và tài khoản người dùng đích. Các quy tắc như kiểm tra dải IP mạng, khóa registry khởi động, hay cờ đặc quyền nếu được áp dụng chỉ đóng vai trò là các đặc trưng chính sách miền tùy chọn (optional domain-policy features) hỗ trợ chuẩn hóa biểu diễn, tuyệt đối không phải là bộ phán quyết tiên tri (oracle) để phân biệt hành vi độc hại; ranh giới Extractor–Detector được duy trì nghiêm ngặt (Extractor không phải là rule-based detector). Ngược lại, các trường metadata môi trường cục bộ không mang ngữ nghĩa an ninh (như PID tạm thời, timestamp mili-giây nội bộ không phải Event-Time, số sequence kernel) được phân loại là KNOWN EXCLUDE FIELD và bị loại bỏ (DROP) trước khi đưa vào Extractor. Đối với các tham số chưa từng thấy hoặc chưa rõ ngữ nghĩa (UNSEEN / UNCERTAIN), hệ thống áp dụng chính sách UNKNOWN-SAFE (bảo toàn nhãn kiểu trường và cấu trúc, gán typed placeholder), không thực hiện loại bỏ mặc định.",
+      "Vị từ được xác lập dựa trên kiểu ngữ nghĩa trường (field semantic type) và tính phù hợp an ninh xác định tiền nghiệm (a priori security relevance) hoặc được cấu hình độc quyền trên phân vùng theo đặc tả miền, tuyệt đối không phụ thuộc vào nhãn tấn công hay thống kê tập kiểm tra (ngăn ngừa rủi ro test leakage trên các trường được kiểm toán). Cụ thể, đánh giá đối với các trường mang thông tin tương tác hệ thống trọng yếu: địa chỉ IP và cổng mạng, đường dẫn tệp tin thực thi/cấu hình, chuỗi đối số dòng lệnh, khóa registry, định danh tiến trình cha và con và tài khoản người dùng đích. Các quy tắc như kiểm tra dải IP mạng, khóa registry khởi động, hay cờ đặc quyền nếu được áp dụng chỉ đóng vai trò là các đặc trưng chính sách miền tùy chọn (optional domain-policy features) hỗ trợ chuẩn hóa biểu diễn, tuyệt đối không phải là bộ phán quyết tiên tri (oracle) để phân biệt hành vi độc hại; ranh giới Extractor–Detector được duy trì nghiêm ngặt (Extractor không phải là rule-based detector). Ngược lại, các trường metadata môi trường cục bộ không mang ngữ nghĩa an ninh (như PID tạm thời, timestamp mili-giây nội bộ không phải Event-Time, số sequence kernel) được phân loại là KNOWN EXCLUDE FIELD và bị loại bỏ (DROP) trước khi đưa vào Extractor. Đối với các tham số chưa từng thấy hoặc chưa rõ ngữ nghĩa (UNSEEN / UNCERTAIN), hệ thống áp dụng chính sách UNKNOWN-SAFE (bảo toàn nhãn kiểu trường và cấu trúc, gán typed placeholder), không thực hiện loại bỏ mặc định.",
       "Hàm chuẩn hóa Áp dụng các phép biến đổi định dạng tường minh: chuẩn hóa đường dẫn, các ký hiệu separator, junction thừa, chuẩn hóa phân cách; chuẩn hóa địa chỉ IP về dạng chính tắc (loại bỏ zero-padding, khai triển IPv6 viết tắt); chuẩn hóa timestamp về UTC epoch; lower-casing không phân biệt hoa thường với tên lệnh trên Windows. Quan trọng là hàm phi(·) không được phép loại bỏ thông tin ngữ nghĩa an ninh dưới danh nghĩa “nhiễu cú pháp”: ví dụ, khoảng trắng trong đối số lệnh không được thu gọn nếu điều đó phá vỡ khả năng tái tạo ý định lệnh. Ranh giới giữa nhiễu định dạng và tham số an ninh được ghi nhận tường minh và không thay đổi trong suốt quá trình thực nghiệm."
     ],
-    "category": "MATHEMATICAL_FORMULATION_PRECISION",
-    "scientific_justification": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
+    "category": "DATA_PURITY_AND_TEST_LEAKAGE_BOUNDING",
+    "reason": "Bound data purity claim to prevent overbroad test leakage guarantees.",
+    "scientific_justification": "Bound data purity claim to prevent overbroad test leakage guarantees.",
+    "claim_ids": [
+      "SCI-CODE-003"
+    ],
     "associated_claims": [
-      "MATH-DYNAMICS"
+      "SCI-CODE-003"
     ],
     "verified": true
   },
@@ -995,7 +1406,15 @@
     "hunk_id": "HUNK-CH2-010",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      46,
+      50
+    ],
     "base_paragraph_indices": [
+      46,
+      50
+    ],
+    "current_indices": [
       46,
       50
     ],
@@ -1018,7 +1437,11 @@
       "Bốn là, ranh giới leakage-safe được kiểm tra tự động trong pipeline thực nghiệm: mọi phép fit nào truy cập dữ liệu ngoài đều bị phát hiện và báo lỗi trước khi chạy thực nghiệm (xem CTRL-LEAK-001)."
     ],
     "category": "MATHEMATICAL_FORMULATION_PRECISION",
+    "reason": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
     "scientific_justification": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
+    "claim_ids": [
+      "MATH-DYNAMICS"
+    ],
     "associated_claims": [
       "MATH-DYNAMICS"
     ],
@@ -1028,7 +1451,15 @@
     "hunk_id": "HUNK-CH2-011",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      51,
+      52
+    ],
     "base_paragraph_indices": [
+      51,
+      52
+    ],
+    "current_indices": [
       51,
       52
     ],
@@ -1045,7 +1476,9 @@
       "Các vector biểu diễn đặc trưng và các sự kiện đã được chuẩn hóa tất yếu mang thông tin nhận dạng thực thể, xem đây là điều kiện cần thiết để duy trì ngữ cảnh hành vi và phục vụ phân tích tấn công đa giai đoạn (kế thừa H5 từ Mục 2.1). Tuy nhiên, việc lưu giữ thông tin nhận dạng thô trong không gian vector tạo ra bề mặt tấn công quyền riêng tư không cần thiết. Mục 2.2.2 hình thức hóa mô hình đe dọa và xác lập cơ chế liên kết có kiểm soát như một hợp đồng kỹ thuật. Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo H5 nhưng phải được kiểm chứng thực nghiệm tại Chương 3 (BOUNDARY-06: Privacy Claim Requires Attack-Based Empirical Evaluation)."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1053,7 +1486,15 @@
     "hunk_id": "HUNK-CH2-012",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      59,
+      60
+    ],
     "base_paragraph_indices": [
+      59,
+      60
+    ],
+    "current_indices": [
       59,
       60
     ],
@@ -1070,7 +1511,12 @@
       "Tấn công nghịch đảo biểu diễn (Representation/Model Inversion Attack): Về mặt nguyên lý, Fredrikson et al. [33] chứng minh tấn công nghịch đảo có thể khai thác thông tin đầu ra/độ tin cậy để tái cấu trúc thuộc tính dữ liệu; trong mô hình đe dọa thích ứng của đề tài (Threat-Model Adaptation), đối nghịch cố gắng khôi phục hoặc xấp xỉ các thuộc tính nhạy cảm tiềm năng (như tên người dùng, hostname, chuỗi lệnh) từ vector nhúng z."
     ],
     "category": "PRIVACY_SCOPE_CALIBRATION",
+    "reason": "Distinguish proposed evaluation framework from executed experiments in thesis, avoiding privacy false positives.",
     "scientific_justification": "Distinguish proposed evaluation framework from executed experiments in thesis, avoiding privacy false positives.",
+    "claim_ids": [
+      "CLM-021",
+      "SCI-PRIV-001"
+    ],
     "associated_claims": [
       "CLM-021",
       "SCI-PRIV-001"
@@ -1081,7 +1527,15 @@
     "hunk_id": "HUNK-CH2-013",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      62,
+      68
+    ],
     "base_paragraph_indices": [
+      62,
+      68
+    ],
+    "current_indices": [
       62,
       68
     ],
@@ -1108,7 +1562,12 @@
       "Lưu ý rằng các tham số thời gian và kiểu hành vi được bảo toàn nguyên vẹn vì chúng không phải direct identifier, tuy nhiên các tham số này có thể hoạt động như quasi-identifier khi kết hợp với dữ liệu bên ngoài; rủi ro liên kết tương ứng cần được đánh giá theo CTRL-PRIV-001. Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo nghĩa của H5 so với hai đường cơ sở: (a) giữ nguyên định danh thô không có pseudonymization; và (b) ẩn danh hóa quá mức xóa bỏ cả liên kết thực thể cần thiết cho phân tích hành vi. Tuy nhiên, khẳng định sự vượt trội này yêu cầu kiểm thử thực nghiệm tường minh tại Chương 3 thông qua CTRL-PRIV-001: đánh giá MIA ([16]), tấn công nghịch đảo (theo nguyên lý Fredrikson et al. [33] áp dụng cho các thuộc tính nhạy cảm của log), và tấn công tái định danh; không thể đưa ra kết luận chỉ từ lý thuyết DP hoặc thiết kế pseudonymization."
     ],
     "category": "PRIVACY_SCOPE_CALIBRATION",
+    "reason": "Distinguish proposed evaluation framework from executed experiments in thesis, avoiding privacy false positives.",
     "scientific_justification": "Distinguish proposed evaluation framework from executed experiments in thesis, avoiding privacy false positives.",
+    "claim_ids": [
+      "CLM-021",
+      "SCI-PRIV-001"
+    ],
     "associated_claims": [
       "CLM-021",
       "SCI-PRIV-001"
@@ -1119,7 +1578,15 @@
     "hunk_id": "HUNK-CH2-014",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      69,
+      70
+    ],
     "base_paragraph_indices": [
+      69,
+      70
+    ],
+    "current_indices": [
       69,
       70
     ],
@@ -1136,7 +1603,9 @@
       "Sau khi các sự kiện được chuẩn hóa và bảo vệ quyền riêng tư theo Mục 2.2.1–2.2.2, bước tiếp theo là tổ chức chúng thành các đơn vị ngữ cảnh phục vụ các bộ trích xuất đặc trưng hạ nguồn tại Mục 2.3. Mục 2.2.3 giải quyết hai vấn đề liên quan chặt chẽ: (1) đảm bảo tính nhất quán Event-Time khi sự kiện đến từ nhiều nguồn có đồng hồ không đồng bộ; và (2) xây dựng cấu trúc cửa sổ ngữ cảnh đa tỷ lệ phù hợp với bản chất đa giai đoạn của chiến dịch APT. Cơ chế mốc ngắt thời gian và tham số đã được xác lập tại Mục 2.1.2; Mục 2.2.3 kế thừa và áp dụng các định nghĩa đó mà không tái định nghĩa lại."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1144,7 +1613,15 @@
     "hunk_id": "HUNK-CH2-015",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      84,
+      85
+    ],
     "base_paragraph_indices": [
+      84,
+      85
+    ],
+    "current_indices": [
       84,
       85
     ],
@@ -1161,7 +1638,11 @@
       "Bộ trích xuất tuần tự ngữ nghĩa tiếp nhận chuỗi các sự kiện kiểu hóa trong cửa sổ ngắn hạn gồm sự kiện liên tiếp, kế thừa kiến trúc Self-Attention tiêu chuẩn [34]. Nhiệm vụ của bộ trích xuất là mô hình hóa các phụ thuộc ngữ cảnh cục bộ, thứ tự gọi hàm hệ thống và tương tác tham số động mà không dựa trên bất kỳ nhãn phân loại tấn công nào ở hạ nguồn."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -1171,7 +1652,15 @@
     "hunk_id": "HUNK-CH2-016",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      87,
+      88
+    ],
     "base_paragraph_indices": [
+      87,
+      88
+    ],
+    "current_indices": [
       87,
       88
     ],
@@ -1188,7 +1677,9 @@
       "Trong đó: là các ma trận nhúng kiểu sự kiện và hành động tĩnh; là nhúng thực thể chủ thể và đối tượng theo không gian giả danh có kiểm soát; là nhúng các token tham số an ninh được giữ lại; là mã hóa vị trí rời rạc; và là hàm mã hóa thời gian liên tục điều hòa (Harmonic Time Encoding) dạng , kế thừa nguyên lý mã hóa thời gian liên tục trên đồ thị động [35], cung cấp biểu diễn học được của khoảng thời gian tương đối giữa các hành vi liên tiếp. Toàn bộ các siêu tham số cấu trúc như số tầng encoder , số đầu chú ý , số chiều ẩn , số chiều lan truyền và tỷ lệ dropout đều được xác lập dựa trên tập huấn luyện và kiểm định (Train/Validation), không sử dụng nhãn kiểm tra."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1196,7 +1687,15 @@
     "hunk_id": "HUNK-CH2-017",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      89,
+      92
+    ],
     "base_paragraph_indices": [
+      89,
+      92
+    ],
+    "current_indices": [
       89,
       92
     ],
@@ -1217,7 +1716,11 @@
       "Tác vụ dự đoán tham số an ninh bị che (Masked Parameter Prediction, ): Thiết kế đóng góp riêng của chuyên đề nhằm che ngẫu nhiên tập tham số bảo toàn an ninh theo tỷ lệ (khởi tạo tham chiếu 15% và được khóa cố định trên tập Validation trước khi thử nghiệm). Đầu dự đoán phụ trợ dự đoán token tham số mục tiêu . Mục tiêu tái dựng được định nghĩa chuẩn xác là token đã qua chuẩn hóa và biến đổi bảo vệ quyền riêng tư tại Mục 2.2 (gồm token thực thể giả danh hóa, token tham số an ninh chuẩn hóa hoặc token kiểu hóa UNKNOWN-SAFE), tuyệt đối không đặt mục tiêu là chuỗi nhạy cảm thô. Hàm mất mát Categorical Cross-Entropy tính trung bình trên , truyền gradient cho và :"
     ],
     "category": "MATHEMATICAL_FORMULATION_PRECISION",
+    "reason": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
     "scientific_justification": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
+    "claim_ids": [
+      "MATH-DYNAMICS"
+    ],
     "associated_claims": [
       "MATH-DYNAMICS"
     ],
@@ -1227,7 +1730,15 @@
     "hunk_id": "HUNK-CH2-018",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      109,
+      110
+    ],
     "base_paragraph_indices": [
+      109,
+      110
+    ],
+    "current_indices": [
       109,
       110
     ],
@@ -1244,7 +1755,9 @@
       "Trong môi trường thực tế, đồ thị nguồn gốc thường đối mặt với hiện tượng bùng nổ phụ thuộc và ô nhiễm liên kết từ các thực thể tồn tại lâu (Long-lived Entities như dịch vụ hệ thống, tiến trình nền). Để xử lý các thách thức này trước khi nạp đồ thị vào mô hình học máy, chuyên đề đề xuất bốn cơ chế ứng viên kiểm soát độ chân thực đồ thị (Proposed Graph-Fidelity Candidates) hoạt động độc lập với bộ phát hiện:"
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1252,7 +1765,15 @@
     "hunk_id": "HUNK-CH2-019",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      112,
+      113
+    ],
     "base_paragraph_indices": [
+      112,
+      113
+    ],
+    "current_indices": [
       112,
       113
     ],
@@ -1269,7 +1790,11 @@
       "Khi áp dụng mạng nơ-ron đồ thị trên đồ thị nguồn gốc có đường kính lớn, hai rủi ro kiến trúc phổ biến là hiện tượng làm mịn quá mức (Over-smoothing, Oono & Suzuki [44]) khiến biểu diễn các đỉnh hội tụ về các vector khó phân biệt, và hiện tượng nghẽn cổ chai thông tin (Over-squashing, Alon & Yahav [31]) khi thông tin từ vùng lân cận mở rộng theo hàm mũ bị ép vào một vector kích thước cố định. Chuyên đề đề xuất hai cơ chế ứng viên giảm thiểu (Mitigation Candidates):"
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -1279,7 +1804,15 @@
     "hunk_id": "HUNK-CH2-020",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      119,
+      120
+    ],
     "base_paragraph_indices": [
+      119,
+      120
+    ],
+    "current_indices": [
       119,
       120
     ],
@@ -1296,7 +1829,11 @@
       "Sau khi đồ thị nguồn gốc được xây dựng và áp dụng các cơ chế ứng viên kiểm soát độ chân thực, cấu trúc đồ thị động được đưa vào Bộ trích xuất Temporal GNN. Kế thừa khung xử lý bộ nhớ và truyền thông điệp thời gian động [36] cùng các nguyên lý thiết kế từ các hệ thống đồ thị nguồn gốc tiêu biểu [24], [25], [26], [27], chuyên đề hình thức hóa cơ chế truyền thông điệp thời gian có kiểu hóa (Typed Temporal Message Passing) phù hợp với dữ liệu log bảo toàn ngữ cảnh an ninh."
     ],
     "category": "MATHEMATICAL_FORMULATION_PRECISION",
+    "reason": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
     "scientific_justification": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
+    "claim_ids": [
+      "MATH-DYNAMICS"
+    ],
     "associated_claims": [
       "MATH-DYNAMICS"
     ],
@@ -1306,7 +1843,15 @@
     "hunk_id": "HUNK-CH2-021",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      125,
+      127
+    ],
     "base_paragraph_indices": [
+      125,
+      127
+    ],
+    "current_indices": [
       125,
       127
     ],
@@ -1325,7 +1870,9 @@
       "Tác vụ tái tạo thuộc tính thực thể bị che (Masked Node Attribute Reconstruction, ): Che ngẫu nhiên một tỷ lệ thuộc tính kiểu hóa của các thực thể hoạt động (trong đó là siêu tham số được kiểm soát, tinh chỉnh và khóa cố định trên tập Validation). Đầu giải mã phụ trợ tái tạo lại vector thuộc tính an toàn quyền riêng tư từ trạng thái ẩn theo tiêu chuẩn hồi quy Mean Squared Error (MSE). Mục tiêu tái dựng được khóa chuẩn xác là , tức vector đặc trưng đỉnh kiểu hóa thu được SAU KHI đã áp dụng toàn diện quy trình chuẩn hóa, kiểm soát liên kết danh tính / giả danh hóa (Controlled Linkability / Pseudonymization) và chính sách UNKNOWN-SAFE tại Mục 2.2; tuyệt đối không đặt mục tiêu là tên người dùng thô, tên máy chủ thô, mã tiến trình thô, định danh đối tượng thô hay bất kỳ giá trị nhạy cảm nào trước biến đổi, bảo đảm tác vụ tự giám sát đồ thị tuân thủ nghiêm ngặt cùng hợp đồng bảo vệ quyền riêng tư như tác vụ MPP của chuỗi; truyền gradient cập nhật cho và :"
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1333,7 +1880,15 @@
     "hunk_id": "HUNK-CH2-022",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      128,
+      129
+    ],
     "base_paragraph_indices": [
+      128,
+      129
+    ],
+    "current_indices": [
       128,
       129
     ],
@@ -1350,7 +1905,9 @@
       "Tác vụ dự đoán khoảng cách thời gian tương đối (Relative Temporal Gap Prediction, ): Dự đoán độ lệch thời gian tương tác giữa các cặp đỉnh tương tác trong tập cạnh hoạt động . Đầu hồi quy phụ trợ tiếp nhận và tối ưu hóa hàm Smooth L1 ) đối với đích , truyền gradient cho và (giúp mô hình học cấu trúc thứ tự và khoảng thời gian quan sát được giữa các sự kiện mà không hàm ý tác động nhân quả, tuân thủ nguyên tắc temporal order != causal effect và dependency != causal effect):"
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1358,7 +1915,15 @@
     "hunk_id": "HUNK-CH2-023",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      131,
+      132
+    ],
     "base_paragraph_indices": [
+      131,
+      132
+    ],
+    "current_indices": [
       131,
       132
     ],
@@ -1375,7 +1940,11 @@
       "Khi áp dụng mạng nơ-ron đồ thị trên đồ thị nguồn gốc có đường kính lớn, hai rủi ro kiến trúc phổ biến là hiện tượng làm mịn quá mức (Over-smoothing, Oono & Suzuki [44]) khiến biểu diễn các đỉnh hội tụ về các vector khó phân biệt, và hiện tượng nghẽn cổ chai thông tin (Over-squashing, Alon & Yahav [31]) khi thông tin từ vùng lân cận mở rộng theo hàm mũ bị ép vào một vector kích thước cố định. Chuyên đề đề xuất hai cơ chế ứng viên giảm thiểu (Mitigation Candidates):"
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
+    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
     "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "claim_ids": [
+      "CIT-INTEGRITY"
+    ],
     "associated_claims": [
       "CIT-INTEGRITY"
     ],
@@ -1385,9 +1954,17 @@
     "hunk_id": "HUNK-CH2-024",
     "chapter": 2,
     "opcode": "delete",
+    "base_indices": [
+      138,
+      139
+    ],
     "base_paragraph_indices": [
       138,
       139
+    ],
+    "current_indices": [
+      138,
+      138
     ],
     "current_paragraph_indices": [
       138,
@@ -1400,7 +1977,9 @@
     ],
     "new_text": [],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1408,9 +1987,17 @@
     "hunk_id": "HUNK-CH2-025",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      141,
+      142
+    ],
     "base_paragraph_indices": [
       141,
       142
+    ],
+    "current_indices": [
+      140,
+      141
     ],
     "current_paragraph_indices": [
       140,
@@ -1425,7 +2012,11 @@
       "Sau khi hai bộ trích xuất độc lập tại Mục 2.3 sản sinh hai vector đặc trưng ẩn (nắm bắt thứ tự vi mô, tham số an ninh và nhịp điệu thời gian trên cửa sổ ngắn hạn ) và (nắm bắt cấu trúc phụ thuộc quan sát được, luồng truyền lan thông tin và quan hệ phụ thuộc cấu trúc, thời gian trên cửa sổ trung hạn ), thách thức khoa học trung tâm là làm thế nào để dung hợp và gióng hàng hai nguồn thông tin dị thể này thành một vector biểu diễn thống nhất canonical . Tầng gióng hàng đa góc nhìn (Multi-View Alignment Plane) xây dựng cơ chế phương pháp luận giải quyết câu hỏi nghiên cứu và , thiết lập nền tảng kỹ thuật nhằm phục vụ kiểm định giả thuyết và tại Chương 3. Để đạt được mục tiêu này, chuyên đề thiết lập một quy trình tối ưu hóa đa tầng chặt chẽ: (1) thiết lập không gian ngữ nghĩa chung mà không gây sụp đổ biểu diễn; (2) bảo toàn đối xứng thông tin đặc thù nội góc nhìn (Symmetric Multi-View Preservation); (3) kiểm soát nhiễu đặc quyền và hành vi quản trị viên thông qua ngữ cảnh hóa đa chiều (Risk-aware Admin-Noise Control); (4) cung cấp cơ chế phân bổ bằng chứng yếu qua mô hình học đa thể hiện (Multiple Instance Learning, MIL) tùy chọn; và (5) thích ứng linh hoạt với hiện tượng khuyết góc nhìn (Missing-View) trong môi trường phân tán mà không vi phạm nguyên tắc nhân quả thời gian."
     ],
     "category": "MATHEMATICAL_FORMULATION_PRECISION",
+    "reason": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
     "scientific_justification": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
+    "claim_ids": [
+      "MATH-DYNAMICS"
+    ],
     "associated_claims": [
       "MATH-DYNAMICS"
     ],
@@ -1435,9 +2026,17 @@
     "hunk_id": "HUNK-CH2-026",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      149,
+      150
+    ],
     "base_paragraph_indices": [
       149,
       150
+    ],
+    "current_indices": [
+      148,
+      149
     ],
     "current_paragraph_indices": [
       148,
@@ -1452,7 +2051,9 @@
       "Tuyệt đối không sử dụng nhãn tấn công (Attack Labels) hay bất kỳ tín hiệu từ tập kiểm thử nào để định nghĩa cặp tương ứng trong Stage A. Các cặp tương ứng được hình thành hoàn toàn tự nhiên từ tiến trình vận hành hệ thống thực tế. Các trường hợp chỉ giao thoa một phần thực thể hoặc thời gian được xếp vào nhóm Tương ứng Cục bộ (Partial Correspondence), trong khi các trường hợp thiếu hụt một trong hai nguồn được xử lý qua cơ chế Góc nhìn Khuyết."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1460,9 +2061,17 @@
     "hunk_id": "HUNK-CH2-027",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      151,
+      153
+    ],
     "base_paragraph_indices": [
       151,
       153
+    ],
+    "current_indices": [
+      150,
+      152
     ],
     "current_paragraph_indices": [
       150,
@@ -1479,7 +2088,11 @@
       "Trong đó và là các mạng MLP hai tầng có chuẩn hóa LayerNorm và hàm kích hoạt phi tuyến GELU; là số chiều của Không gian Chiếu. Việc phân tách này thiết lập một ranh giới phương pháp luận nghiêm ngặt: Không gian Chiếu chỉ phục vụ việc tính toán các hàm mất mát gióng hàng tự giám sát và sẽ bị loại bỏ sau khi kết thúc Stage A; trong khi Không gian Biểu diễn , và không gian biểu diễn thống nhất được bảo toàn nguyên vẹn để cung cấp đặc trưng cho các tác vụ hạ nguồn ở Stage C."
     ],
     "category": "MATHEMATICAL_FORMULATION_PRECISION",
+    "reason": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
     "scientific_justification": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
+    "claim_ids": [
+      "MATH-DYNAMICS"
+    ],
     "associated_claims": [
       "MATH-DYNAMICS"
     ],
@@ -1489,9 +2102,17 @@
     "hunk_id": "HUNK-CH2-028",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      154,
+      155
+    ],
     "base_paragraph_indices": [
       154,
       155
+    ],
+    "current_indices": [
+      153,
+      154
     ],
     "current_paragraph_indices": [
       153,
@@ -1506,7 +2127,9 @@
       "Trong học biểu diễn tự giám sát, ba hướng tiếp cận tiêu biểu bao gồm: InfoNCE / Contrastive Learning [38], [37], Barlow Twins [11], và VICReg [10]. Bảng 2.3 phân tích đối sánh chi tiết các đặc tính lý thuyết từ các công bố gốc và các giả thuyết nghiên cứu của chuyên đề đối với dữ liệu telemetry an ninh:"
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1514,9 +2137,17 @@
     "hunk_id": "HUNK-CH2-029",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      156,
+      157
+    ],
     "base_paragraph_indices": [
       156,
       157
+    ],
+    "current_indices": [
+      155,
+      156
     ],
     "current_paragraph_indices": [
       155,
@@ -1531,7 +2162,9 @@
       "Từ phân tích phương pháp luận trên, chuyên đề lựa chọn VICReg (Variance-Invariance-Covariance Regularization) [10] làm ứng viên gióng hàng cốt lõi (Primary Candidate). Theo Bardes et al. [10], VICReg thiết lập cơ chế tự giám sát không tương phản dựa trên điều hòa phương sai và hiệp phương sai (variance/covariance regularization) để ngăn ngừa sụp đổ biểu diễn mà không cần khai thác các cặp mẫu âm (negative pairs). Dựa trên đặc tính lý thuyết này của công bố gốc, nghiên cứu đề xuất giả thuyết thích nghi (Author Adaptation Hypothesis): việc loại bỏ nhu cầu lấy mẫu âm tường minh trong không gian telemetry log sẽ giúp giảm thiểu rủi ro âm tính giả (False Negatives), hạn chế việc ép các phiên telemetry bình thường độc lập nhưng có đặc trưng tương đồng ra xa nhau một cách nhân tạo. Giả thuyết này sẽ được kiểm chứng thực nghiệm độc lập tại Chương 3 trong mối tương quan với hai phương pháp đối chứng (Ablation Baselines) là InfoNCE [38], [37] và Barlow Twins [11]."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1539,9 +2172,17 @@
     "hunk_id": "HUNK-CH2-030",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      158,
+      161
+    ],
     "base_paragraph_indices": [
       158,
       161
+    ],
+    "current_indices": [
+      157,
+      160
     ],
     "current_paragraph_indices": [
       157,
@@ -1560,7 +2201,9 @@
       "Số hạng Phương sai (Variance Regularization, ): Sử dụng hàm bản lề để duy trì độ lệch chuẩn của từng chiều đặc trưng trên toàn bộ lô huấn luyện lớn hơn một ngưỡng tối thiểu (giá trị khởi tạo tham chiếu , được tối ưu hóa trên tập xác thực), kiểm soát nguy cơ sụp đổ điểm (Point Collapse):"
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1568,9 +2211,17 @@
     "hunk_id": "HUNK-CH2-031",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      165,
+      166
+    ],
     "base_paragraph_indices": [
       165,
       166
+    ],
+    "current_indices": [
+      164,
+      165
     ],
     "current_paragraph_indices": [
       164,
@@ -1585,7 +2236,9 @@
       "Trong thực tế giám sát an ninh phân tán, các cảm biến thu thập telemetry có thể gặp sự cố cục bộ, gây ra hiện tượng khuyết góc nhìn (Missing-View, Incomplete Telemetry). Chuyên đề xử lý vấn đề này theo khung tiếp cận của CPM-Nets [39] kết hợp cơ chế mặt nạ khả dụng và suy thoái duyên dáng (Graceful Degradation) do chuyên đề đề xuất:"
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1593,9 +2246,17 @@
     "hunk_id": "HUNK-CH2-032",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      169,
+      172
+    ],
     "base_paragraph_indices": [
       169,
       172
+    ],
+    "current_indices": [
+      168,
+      171
     ],
     "current_paragraph_indices": [
       168,
@@ -1614,7 +2275,9 @@
       "Lưu ý phương pháp luận về tính nhân quả: Khái niệm “Strictly Causal / Zero Lookahead” được định nghĩa chính xác theo nghĩa: hệ thống chỉ sử dụng dữ liệu đo kiểm trong quá khứ và hiện tại tại thời điểm suy luận dòng, tuyệt đối không sử dụng thông tin tương lai hay nhãn kiểm thử; khái niệm này KHÔNG hàm ý suy diễn quan hệ nhân quả (Causal-effect Inference) theo nghĩa thống kê can thiệp. Trong an ninh mạng, sự phụ thuộc quan sát được không đồng nhất với tác động nhân quả."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1622,9 +2285,17 @@
     "hunk_id": "HUNK-CH2-033",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      173,
+      174
+    ],
     "base_paragraph_indices": [
       173,
       174
+    ],
+    "current_indices": [
+      172,
+      173
     ],
     "current_paragraph_indices": [
       172,
@@ -1639,7 +2310,9 @@
       "Một yếu tố gây nhiễu quan trọng trong giám sát an ninh là sự chồng lấn giữa hoạt động quản trị hợp thức và hành vi tấn công. Mục 2.4.2 thiết lập khung phương pháp luận nhận thức hành vi quản trị (Risk-aware Administrative Behavior) và các cơ chế kiểm soát nhiễu đặc quyền (Admin-Noise Controls, Đề xuất của đề tài / Ours) nhằm giải quyết trực tiếp câu hỏi nghiên cứu ."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1647,9 +2320,17 @@
     "hunk_id": "HUNK-CH2-034",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      183,
+      185
+    ],
     "base_paragraph_indices": [
       183,
       185
+    ],
+    "current_indices": [
+      182,
+      184
     ],
     "current_paragraph_indices": [
       182,
@@ -1666,7 +2347,9 @@
       "Cấm học đường tắt định danh (No Identity / Role Shortcuts): Hệ thống tuyệt đối không sử dụng tên người dùng thô hoặc chuỗi ký tự chức danh làm đặc trưng đầu vào trực tiếp. Mọi định danh thực thể đều được chuẩn hóa và bảo vệ qua cơ chế Kiểm soát Liên kết Danh tính (Controlled Linkability, Mục 2.2.2), ngăn chặn mô hình học mối liên hệ giả tạo rằng “tài khoản Admin luôn an toàn” hoặc “tài khoản Guest luôn đáng ngờ”."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1674,9 +2357,17 @@
     "hunk_id": "HUNK-CH2-035",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      187,
+      188
+    ],
     "base_paragraph_indices": [
       187,
       188
+    ],
+    "current_indices": [
+      186,
+      187
     ],
     "current_paragraph_indices": [
       186,
@@ -1691,7 +2382,9 @@
       "Mục 2.4.3 tổng hợp toàn bộ đồ thị tối ưu hóa (Optimization Graph) của chuyên đề, thiết lập hàm mục tiêu tự giám sát thống nhất trong Stage A, đóng kín các luồng gradient cho toàn bộ tập tham số, và tích hợp mô đun Phân bổ Bằng chứng Yếu qua mô hình học đa thể hiện (MIL) tùy chọn trong Stage B."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1699,9 +2392,17 @@
     "hunk_id": "HUNK-CH2-036",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      189,
+      190
+    ],
     "base_paragraph_indices": [
       189,
       190
+    ],
+    "current_indices": [
+      188,
+      189
     ],
     "current_paragraph_indices": [
       188,
@@ -1716,7 +2417,11 @@
       "Theo nguyên tắc kiểm toán tham số có gradient (Zero Orphan Parameters), Bảng 2.4 tổng hợp toàn bộ tập tham số huấn luyện của hệ thống, xác định rõ giai đoạn huấn luyện, hàm mục tiêu sinh gradient, thời điểm đóng băng và vai trò khi suy luận trực tuyến:"
     ],
     "category": "METHODOLOGY_SPECIFICATION",
+    "reason": "Clarify architecture constraints, loss routing, and parameter optimization bounds.",
     "scientific_justification": "Clarify architecture constraints, loss routing, and parameter optimization bounds.",
+    "claim_ids": [
+      "METHOD-SPEC"
+    ],
     "associated_claims": [
       "METHOD-SPEC"
     ],
@@ -1726,9 +2431,17 @@
     "hunk_id": "HUNK-CH2-037",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      192,
+      196
+    ],
     "base_paragraph_indices": [
       192,
       196
+    ],
+    "current_indices": [
+      191,
+      195
     ],
     "current_paragraph_indices": [
       191,
@@ -1749,7 +2462,11 @@
       "Định tuyến luồng gradient: Để ngăn chặn hiện tượng co-adaptation không kiểm soát khiến vector đích tự trôi dạt, chuyên đề thiết lập toán tử chặn gradient tường minh và . Hàm mất mát chỉ truyền gradient cập nhật cho các tham số tầng dung hợp và bộ giải mã () mà TUYỆT ĐỐI KHÔNG cập nhật ngược lại các trọng số backbone và . Trong quá trình tinh chỉnh liên hợp ở Stage A2, hai bộ trích xuất backbone và chỉ nhận luồng gradient duy nhất từ hàm gióng hàng kết hợp với hàm bảo toàn đối xứng ."
     ],
     "category": "MATHEMATICAL_FORMULATION_PRECISION",
+    "reason": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
     "scientific_justification": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
+    "claim_ids": [
+      "MATH-DYNAMICS"
+    ],
     "associated_claims": [
       "MATH-DYNAMICS"
     ],
@@ -1759,9 +2476,17 @@
     "hunk_id": "HUNK-CH2-038",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      197,
+      198
+    ],
     "base_paragraph_indices": [
       197,
       198
+    ],
+    "current_indices": [
+      196,
+      197
     ],
     "current_paragraph_indices": [
       196,
@@ -1776,7 +2501,9 @@
       "Các hệ số siêu tham số là các trọng số điều hòa được thiết lập giá trị khởi tạo tham chiếu và sẽ được tối ưu hóa, kiểm định độ nhạy thực nghiệm trên tập xác thực tại Chương 3."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1784,9 +2511,17 @@
     "hunk_id": "HUNK-CH2-039",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      199,
+      201
+    ],
     "base_paragraph_indices": [
       199,
       201
+    ],
+    "current_indices": [
+      198,
+      200
     ],
     "current_paragraph_indices": [
       198,
@@ -1803,7 +2538,11 @@
       "Trong đó là siêu tham số ngưỡng chặn dưới an toàn, ngăn ngừa việc hạ trọng số về 0 (tính nhạy cảm của sẽ được kiểm chứng thực nghiệm tại Chương 3). Khi tối ưu hóa liên hợp, chuyên đề đề xuất áp dụng kỹ thuật phẫu thuật gradient PCGrad [40] trên tập tham số nhận đồng thời hai luồng gradient:"
     ],
     "category": "METHODOLOGY_SPECIFICATION",
+    "reason": "Clarify architecture constraints, loss routing, and parameter optimization bounds.",
     "scientific_justification": "Clarify architecture constraints, loss routing, and parameter optimization bounds.",
+    "claim_ids": [
+      "METHOD-SPEC"
+    ],
     "associated_claims": [
       "METHOD-SPEC"
     ],
@@ -1813,9 +2552,17 @@
     "hunk_id": "HUNK-CH2-040",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      202,
+      203
+    ],
     "base_paragraph_indices": [
       202,
       203
+    ],
+    "current_indices": [
+      201,
+      202
     ],
     "current_paragraph_indices": [
       201,
@@ -1830,7 +2577,11 @@
       "Kỹ thuật chiếu trực giao PCGrad giúp giảm thiểu xung đột gradient giữa mục tiêu gióng hàng liên góc nhìn và mục tiêu bảo toàn đặc thù nội góc nhìn theo tiêu chuẩn cosine; hiệu quả thực tế trong việc hạn chế hiện tượng chuyển giao tiêu cực sẽ được kiểm định qua phân tích triệt tiêu tại Chương 3."
     ],
     "category": "MATHEMATICAL_FORMULATION_PRECISION",
+    "reason": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
     "scientific_justification": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
+    "claim_ids": [
+      "MATH-DYNAMICS"
+    ],
     "associated_claims": [
       "MATH-DYNAMICS"
     ],
@@ -1840,9 +2591,17 @@
     "hunk_id": "HUNK-CH2-041",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      204,
+      205
+    ],
     "base_paragraph_indices": [
       204,
       205
+    ],
+    "current_indices": [
+      203,
+      204
     ],
     "current_paragraph_indices": [
       203,
@@ -1857,7 +2616,9 @@
       "Trong các kịch bản an ninh thực tế, nhãn tấn công thường chỉ sẵn có ở mức độ thô, ví dụ: một phiên làm việc, một máy chủ, hoặc một cửa sổ chiến dịch kéo dài được xác định là bị xâm nhập (nhãn túi ), nhưng không thể xác định chính xác sự kiện log đơn lẻ nào là hành vi tấn công. Để giải quyết thách thức này, chuyên đề thiết lập mô đun Phân bổ Bằng chứng Yếu tùy chọn ở Stage B dựa trên khung tiếp cận Học Đa Thể Hiện."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1865,9 +2626,17 @@
     "hunk_id": "HUNK-CH2-042",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      209,
+      210
+    ],
     "base_paragraph_indices": [
       209,
       210
+    ],
+    "current_indices": [
+      208,
+      209
     ],
     "current_paragraph_indices": [
       208,
@@ -1882,7 +2651,11 @@
       "Phân định ranh giới giữa Khung trích xuất chuẩn tắc và Đầu phân lớp phụ trợ MIL: Cơ chế Gated Attention-MIL trang bị một đầu phân lớp túi phụ trợ . Trong quy trình chuẩn hóa của chuyên đề:"
     ],
     "category": "METHODOLOGY_SPECIFICATION",
+    "reason": "Clarify architecture constraints, loss routing, and parameter optimization bounds.",
     "scientific_justification": "Clarify architecture constraints, loss routing, and parameter optimization bounds.",
+    "claim_ids": [
+      "METHOD-SPEC"
+    ],
     "associated_claims": [
       "METHOD-SPEC"
     ],
@@ -1892,9 +2665,17 @@
     "hunk_id": "HUNK-CH2-043",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      211,
+      212
+    ],
     "base_paragraph_indices": [
       211,
       212
+    ],
+    "current_indices": [
+      210,
+      211
     ],
     "current_paragraph_indices": [
       210,
@@ -1909,7 +2690,9 @@
       "Giai đoạn Stage C chuẩn tắc: Hệ thống hoàn toàn loại bỏ đầu phân lớp cùng cấu trúc phân loại túi, đóng băng bộ trích xuất đặc trưng thuần túy để chỉ xuất gói biểu diễn chuẩn tắc chứa vector canonical cho các mô hình hạ nguồn độc lập."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1917,9 +2700,17 @@
     "hunk_id": "HUNK-CH2-044",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      213,
+      214
+    ],
     "base_paragraph_indices": [
       213,
       214
+    ],
+    "current_indices": [
+      212,
+      213
     ],
     "current_paragraph_indices": [
       212,
@@ -1934,7 +2725,9 @@
       "Ý nghĩa phương pháp luận của trọng số chú ý : Trọng số phản ánh mức độ đóng góp bằng chứng yếu (Weak Evidence Attribution Score) của cửa sổ quan sát thứ đối với trạng thái bất thường chung của toàn bộ túi. Chuyên đề nhấn mạnh ranh giới khoa học: Trọng số là tín hiệu gợi ý điều tra, TUYỆT ĐỐI KHÔNG PHẢI là xác suất tấn công độc hại và KHÔNG PHẢI là bằng chứng giải thích nhân quả."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1942,9 +2735,17 @@
     "hunk_id": "HUNK-CH2-045",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      217,
+      219
+    ],
     "base_paragraph_indices": [
       217,
       219
+    ],
+    "current_indices": [
+      216,
+      218
     ],
     "current_paragraph_indices": [
       216,
@@ -1961,7 +2762,9 @@
       "Trong đó và là các ma trận chiếu tuyến tính phục vụ dung hợp; ký hiệu biểu thị tích Hadamard trên không gian cùng số chiều nhằm nắm bắt tương tác phi tuyến bậc hai giữa hai góc nhìn. Vector biểu diễn thống nhất canonical được tổng hợp thông qua cơ chế Dung hợp có Cổng thích ứng:"
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1969,9 +2772,17 @@
     "hunk_id": "HUNK-CH2-046",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      220,
+      221
+    ],
     "base_paragraph_indices": [
       220,
       221
+    ],
+    "current_indices": [
+      219,
+      220
     ],
     "current_paragraph_indices": [
       219,
@@ -1986,7 +2797,9 @@
       "Gói biểu diễn tạo thành giao diện đầu ra duy nhất của toàn bộ Khung Trích xuất Đặc trưng Đa góc nhìn. Phù hợp với ranh giới phân định tầng tại Mục 1.1.3, Extractor tuyệt đối không chứa logic phát hiện bất thường hay ngưỡng phân lớp an ninh. Gói biểu diễn được bàn giao nguyên vẹn sang Stage C phục vụ các đầu dò tuyến tính đóng băng và quy trình chấm điểm bất thường không giám sát tùy chọn (Optional Downstream Zero-Shot Anomaly Scoring Protocol, trong đó hàm đo khoảng cách/năng lượng, phân bố nền và chính sách ngưỡng được tiền đăng ký và khóa cố định trên tập Train/Validation tại Chương 3)."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   },
@@ -1994,9 +2807,17 @@
     "hunk_id": "HUNK-CH2-047",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      224,
+      226
+    ],
     "base_paragraph_indices": [
       224,
       226
+    ],
+    "current_indices": [
+      223,
+      225
     ],
     "current_paragraph_indices": [
       223,
@@ -2013,7 +2834,11 @@
       "Chi phí suy luận trực tuyến: Trong giai đoạn vận hành dòng, các đầu chiếu và các mô đun mất mát được ngắt bỏ hoàn toàn. Chi phí dung hợp và tổng hợp đầu ra đa góc nhìn tăng thêm (Incremental Fusion/Readout Cost), sau khi đã có và , chỉ bao gồm các phép nhân ma trận, vector tuyến tính và cổng gating."
     ],
     "category": "METHODOLOGY_SPECIFICATION",
+    "reason": "Clarify architecture constraints, loss routing, and parameter optimization bounds.",
     "scientific_justification": "Clarify architecture constraints, loss routing, and parameter optimization bounds.",
+    "claim_ids": [
+      "METHOD-SPEC"
+    ],
     "associated_claims": [
       "METHOD-SPEC"
     ],
@@ -2023,9 +2848,17 @@
     "hunk_id": "HUNK-CH2-048",
     "chapter": 2,
     "opcode": "replace",
+    "base_indices": [
+      227,
+      228
+    ],
     "base_paragraph_indices": [
       227,
       228
+    ],
+    "current_indices": [
+      226,
+      227
     ],
     "current_paragraph_indices": [
       226,
@@ -2040,7 +2873,9 @@
       "Chi phí tính toán toàn trình của toàn bộ hệ thống bao gồm: tiền xử lý sự kiện thô, trích xuất chuỗi ngắn hạn, cập nhật đồ thị động, lan truyền thông điệp Temporal GNN, quản lý trạng thái bộ nhớ hữu hạn và tổng hợp dung hợp đa góc nhìn. Các chỉ số đo kiểm thực nghiệm toàn trình (thông lượng sự kiện/giây, độ trễ p50/p95, dung lượng RAM, VRAM và kích thước trạng thái trên mỗi thực thể) sẽ được đo lường thực nghiệm chi tiết tại Chương 3 nhằm kiểm định toàn diện giả thuyết ."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
+    "reason": "Refine prose and align terminology with scientific auditing standards.",
     "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
+    "claim_ids": [],
     "associated_claims": [],
     "verified": true
   }

@@ -1,7 +1,7 @@
 [
   {
     "claim_id": "CLM-001",
-    "document_location": "Chương (Đoạn P58, câu S0)",
+    "document_location": "Chương 1 (Đoạn P115, câu S0)",
     "atomic_claim": "hình 1.2: Mô hình Không gian Bằng chứng Hành vi Đa chiều MITRE ATT&CK và các đặc trưng phi tuyến tính trong tấn công APT (Nguồn: Tác giả tổng hợp dựa trên MITRE ATT&CK [4] và Inam et al. [1])\t15",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
@@ -13,7 +13,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P115-S00"
   },
   {
     "claim_id": "CLM-002",
@@ -28,7 +29,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P095-S00"
   },
   {
     "claim_id": "CLM-003",
@@ -44,7 +46,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P095-S01"
   },
   {
     "claim_id": "CLM-004",
@@ -59,7 +62,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P095-S02"
   },
   {
     "claim_id": "CLM-005",
@@ -75,7 +79,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P097-S00"
   },
   {
     "claim_id": "CLM-006A",
@@ -91,7 +96,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P097-S02"
   },
   {
     "claim_id": "CLM-006B",
@@ -106,7 +112,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P097-S03"
   },
   {
     "claim_id": "CLM-007",
@@ -122,7 +129,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P097-S04"
   },
   {
     "claim_id": "CLM-008",
@@ -138,7 +146,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P103-S00"
   },
   {
     "claim_id": "CLM-009",
@@ -153,7 +162,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P103-S01"
   },
   {
     "claim_id": "CLM-010",
@@ -168,7 +178,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P103-S02"
   },
   {
     "claim_id": "CLM-011",
@@ -184,7 +195,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P103-S03"
   },
   {
     "claim_id": "CLM-012",
@@ -199,7 +211,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P104-S01"
   },
   {
     "claim_id": "CLM-013",
@@ -215,7 +228,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P111-S00"
   },
   {
     "claim_id": "CLM-014",
@@ -230,7 +244,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P111-S01"
   },
   {
     "claim_id": "CLM-015",
@@ -246,7 +261,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P115-S00"
   },
   {
     "claim_id": "CLM-016",
@@ -261,7 +277,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P116-S00"
   },
   {
     "claim_id": "CLM-017",
@@ -281,7 +298,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P117-S00"
   },
   {
     "claim_id": "CLM-018",
@@ -296,7 +314,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P125-S00"
   },
   {
     "claim_id": "CLM-019",
@@ -311,7 +330,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P125-S01"
   },
   {
     "claim_id": "CLM-020",
@@ -328,12 +348,13 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P129-S01"
   },
   {
     "claim_id": "CLM-021",
-    "document_location": "Chương (Đoạn P129, câu S2)",
-    "atomic_claim": "Cần khẳng định rằng vector biểu diễn tiềm ẩn không tự động an toàn về quyền riêng tư nếu không có cơ chế chứng minh toán học tường minh; việc áp dụng các phép thử nghiệm MIA hay Model Inversion là các bước kiểm chứng thực nghiệm độc lập của đề tài [16], [33], trong khi khung DP cung cấp công cụ định lượng độ mất mát quyền riêng tư [17].",
+    "document_location": "Chương 1 (Đoạn P129, câu S2)",
+    "atomic_claim": "MIA và Model Inversion được đề xuất như các phép đánh giá hạ nguồn [16], [33], kết hợp khung lý thuyết DP định hướng lượng hóa độ mất mát quyền riêng tư [17]; chưa được thực thi trong phạm vi thực nghiệm hiện tại.",
     "claim_class": "AUTHOR_PROPOSED_EVALUATION_FRAMEWORK",
     "evidence_class": "NONE",
     "citation_numbers": [
@@ -346,7 +367,8 @@
     "artifact_locator": "",
     "support_status": "NOT_EMPIRICALLY_EXECUTED",
     "required_action": "NONE",
-    "notes": "PRIVACY_IMPLEMENTATION_FALSE_POSITIVES=0; Proposed evaluation framework, NOT empirically executed."
+    "notes": "PRIVACY_IMPLEMENTATION_FALSE_POSITIVES=0; Proposed downstream evaluation framework, NOT empirically executed.",
+    "parent_detected_id": "DET-P129-S02"
   },
   {
     "claim_id": "CLM-022",
@@ -361,11 +383,12 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P129-S03"
   },
   {
     "claim_id": "CLM-023",
-    "document_location": "Chương (Đoạn P134, câu S2)",
+    "document_location": "Chương 1 (Đoạn P134, câu S1)",
     "atomic_claim": "Các hàm mất mát tự giám sát (như dự đoán tham số bị che, dự đoán sự kiện tiếp theo, dự đoán quan hệ đồ thị và căn chỉnh thời gian) được thiết kế như các Mục tiêu tối ưu hóa (optimization objectives) cụ thể để khuyến khích không gian biểu diễn z lưu giữ những tín hiệu phục vụ các ràng buộc PRESERVE và INVARIANT; chúng không phải là bằng chứng khoa học trực tiếp chứng minh mô hình đã tự động hiểu an ninh hay nhân quả, và mức độ đạt được bắt buộc phải được kiểm chứng downstream [10].",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
@@ -376,7 +399,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P134-S01"
   },
   {
     "claim_id": "CLM-024",
@@ -391,7 +415,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P135-S00"
   },
   {
     "claim_id": "CLM-025",
@@ -407,7 +432,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P137-S01"
   },
   {
     "claim_id": "CLM-026",
@@ -424,7 +450,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P139-S00"
   },
   {
     "claim_id": "CLM-027",
@@ -440,7 +467,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P141-S00"
   },
   {
     "claim_id": "CLM-028",
@@ -456,7 +484,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P142-S00"
   },
   {
     "claim_id": "CLM-029",
@@ -469,7 +498,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P145-S01"
   },
   {
     "claim_id": "CLM-030",
@@ -484,7 +514,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P147-S00"
   },
   {
     "claim_id": "CLM-031",
@@ -499,7 +530,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P149-S00"
   },
   {
     "claim_id": "CLM-032",
@@ -515,7 +547,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P151-S00"
   },
   {
     "claim_id": "CLM-033",
@@ -534,7 +567,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P153-S00"
   },
   {
     "claim_id": "CLM-034",
@@ -549,7 +583,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P154-S00"
   },
   {
     "claim_id": "CLM-035",
@@ -564,7 +599,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P154-S01"
   },
   {
     "claim_id": "CLM-036",
@@ -579,7 +615,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P156-S00"
   },
   {
     "claim_id": "CLM-037",
@@ -597,7 +634,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P157-S00"
   },
   {
     "claim_id": "CLM-038",
@@ -612,7 +650,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P157-S01"
   },
   {
     "claim_id": "CLM-039",
@@ -627,7 +666,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P157-S02"
   },
   {
     "claim_id": "CLM-040",
@@ -642,7 +682,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P157-S04"
   },
   {
     "claim_id": "CLM-041",
@@ -657,7 +698,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_HYPOTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P157-S05"
   },
   {
     "claim_id": "CLM-042",
@@ -674,7 +716,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P158-S00"
   },
   {
     "claim_id": "CLM-043",
@@ -690,7 +733,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P160-S00"
   },
   {
     "claim_id": "CLM-044",
@@ -705,7 +749,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P162-S00"
   },
   {
     "claim_id": "CLM-045",
@@ -726,7 +771,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P163-S00"
   },
   {
     "claim_id": "CLM-046",
@@ -746,7 +792,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P163-S01"
   },
   {
     "claim_id": "CLM-047",
@@ -761,7 +808,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P164-S01"
   },
   {
     "claim_id": "CLM-048",
@@ -779,7 +827,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P171-S00"
   },
   {
     "claim_id": "CLM-049",
@@ -795,7 +844,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P173-S00"
   },
   {
     "claim_id": "CLM-050",
@@ -811,7 +861,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P174-S00"
   },
   {
     "claim_id": "CLM-051",
@@ -831,7 +882,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P178-S00"
   },
   {
     "claim_id": "CLM-052",
@@ -847,7 +899,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P179-S00"
   },
   {
     "claim_id": "CLM-053",
@@ -863,7 +916,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P183-S01"
   },
   {
     "claim_id": "CLM-054",
@@ -880,7 +934,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P188-S00"
   },
   {
     "claim_id": "CLM-055",
@@ -896,7 +951,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P189-S00"
   },
   {
     "claim_id": "CLM-056",
@@ -912,7 +968,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P193-S00"
   },
   {
     "claim_id": "CLM-057",
@@ -929,7 +986,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P194-S00"
   },
   {
     "claim_id": "CLM-058",
@@ -944,7 +1002,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P194-S01"
   },
   {
     "claim_id": "CLM-059",
@@ -959,7 +1018,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P194-S03"
   },
   {
     "claim_id": "CLM-060",
@@ -974,7 +1034,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P194-S04"
   },
   {
     "claim_id": "CLM-061",
@@ -989,7 +1050,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P200-S01"
   },
   {
     "claim_id": "CLM-062",
@@ -1004,7 +1066,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P206-S02"
   },
   {
     "claim_id": "CLM-063",
@@ -1021,7 +1084,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P220-S00"
   },
   {
     "claim_id": "CLM-064",
@@ -1037,7 +1101,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P225-S00"
   },
   {
     "claim_id": "CLM-065",
@@ -1052,7 +1117,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P268-S00"
   },
   {
     "claim_id": "CLM-066",
@@ -1067,7 +1133,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P269-S00"
   },
   {
     "claim_id": "CLM-067",
@@ -1083,7 +1150,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P278-S02"
   },
   {
     "claim_id": "CLM-068",
@@ -1098,7 +1166,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P296-S00"
   },
   {
     "claim_id": "CLM-069A",
@@ -1113,7 +1182,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P300-S00"
   },
   {
     "claim_id": "CLM-069B",
@@ -1127,7 +1197,8 @@
     "artifact_locator": "experiments/protocol/STAGE-A1-TRAINING-CONTRACT.md:L1-L40",
     "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
-    "notes": "Stage A1 uses PATH_EXCLUSION_BY_CONTRACT; active raise in graph_builder.py:240-245."
+    "notes": "Stage A1 uses PATH_EXCLUSION_BY_CONTRACT; active raise in graph_builder.py:240-245.",
+    "parent_detected_id": "DET-P300-S01"
   },
   {
     "claim_id": "CLM-070A",
@@ -1142,7 +1213,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P303-S00"
   },
   {
     "claim_id": "CLM-070B",
@@ -1155,7 +1227,8 @@
     "code_locator": "src/research_agent/experiments/training/stage_a1_runner.py:L51; src/research_agent/experiments/extractor/sequence_view.py:L164-L185",
     "artifact_locator": "experiments/reports/STAGE-A1-PRETRAINING-REPORT.md:L51; experiments/protocol/STAGE-A1-TRAINING-CONTRACT.md:L30",
     "support_status": "VERIFIED_IN_CODE",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P303-S00"
   },
   {
     "claim_id": "CLM-071",
@@ -1171,7 +1244,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P331-S00"
   },
   {
     "claim_id": "CLM-072",
@@ -1190,7 +1264,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P338-S01"
   },
   {
     "claim_id": "CLM-073",
@@ -1205,7 +1280,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P347-S01"
   },
   {
     "claim_id": "CLM-074",
@@ -1221,7 +1297,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P357-S00"
   },
   {
     "claim_id": "CLM-075",
@@ -1237,7 +1314,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P379-S00"
   },
   {
     "claim_id": "CLM-076",
@@ -1255,7 +1333,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P384-S00"
   },
   {
     "claim_id": "CLM-077",
@@ -1270,7 +1349,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P386-S00"
   },
   {
     "claim_id": "CLM-078",
@@ -1285,7 +1365,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P386-S02"
   },
   {
     "claim_id": "CLM-079",
@@ -1302,7 +1383,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_HYPOTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P386-S03"
   },
   {
     "claim_id": "CLM-080",
@@ -1317,7 +1399,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P401-S01"
   },
   {
     "claim_id": "CLM-081",
@@ -1332,7 +1415,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P442-S01"
   },
   {
     "claim_id": "CLM-082",
@@ -1347,7 +1431,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P449-S01"
   },
   {
     "claim_id": "CLM-083",
@@ -1362,7 +1447,8 @@
     "code_locator": "src/research_agent/experiments/data/data_contract.py:L25-L56; src/research_agent/experiments/training/stage_a1_runner.py:L41-L44",
     "artifact_locator": "experiments/plans/STAGE-A2-FINAL-12-EPOCH-AUTHORITY.json:L57; research_specs/roadmap/controls.yaml:L4-L10",
     "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P492-S00"
   },
   {
     "claim_id": "CLM-084",
@@ -1378,7 +1464,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T06-R01"
   },
   {
     "claim_id": "CLM-085",
@@ -1393,7 +1480,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T06-R01"
   },
   {
     "claim_id": "CLM-086",
@@ -1408,7 +1496,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T06-R01"
   },
   {
     "claim_id": "CLM-087",
@@ -1423,7 +1512,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T12-R01"
   },
   {
     "claim_id": "CLM-088",
@@ -1438,7 +1528,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T12-R02"
   },
   {
     "claim_id": "CLM-089",
@@ -1453,7 +1544,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T12-R03"
   },
   {
     "claim_id": "CLM-090",
@@ -1468,7 +1560,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T12-R04"
   },
   {
     "claim_id": "CLM-091",
@@ -1483,24 +1576,27 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T12-R05"
   },
   {
     "claim_id": "SCI-MATH-001",
-    "document_location": "Chương 1 (Mục 1.1.4, Hợp đồng Biểu diễn)",
-    "atomic_claim": "Hợp đồng Biểu diễn xác lập bộ 4 bất biến toán học: Invariant, Preserve, Bound, và Exclude bảo đảm tính chân thực điều tra số của không gian vector đặc trưng.",
-    "claim_class": "MATHEMATICAL_FORMULATION",
-    "evidence_class": "PROOF_DERIVATION",
+    "document_location": "Chương 1 (Đoạn P122, câu S0)",
+    "atomic_claim": "Hợp đồng Biểu diễn định nghĩa và yêu cầu bộ bốn ràng buộc toán học: Invariant, Preserve, Bound, và Exclude nhằm định hướng không gian vector đặc trưng.",
+    "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
+    "evidence_class": "NONE",
     "citation_numbers": [],
     "source_locator": "Thiết lập toán học hình thức của đề tài (Mục 1.1.4, Hợp đồng Biểu diễn)",
-    "code_locator": "src/research_agent/experiments/data/data_contract.py:L25-L56",
-    "artifact_locator": "experiments/protocol/CH3-PRE-REGISTRATION.md:L1-L120",
-    "support_status": "SYNTHESIZED_SUPPORT",
-    "required_action": "NONE"
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "FALSE_MATHEMATICAL_IMPLEMENTATION_PROOF=0; Four-part representation contract is an author mathematical specification, not proved by code.",
+    "parent_detected_id": "DET-P122-S00"
   },
   {
     "claim_id": "SCI-MATH-002",
-    "document_location": "Chương 2 (Mục 2.2.1, Mã hóa Thời gian Liên tục)",
+    "document_location": "Chương 2 (Đoạn P300, câu S0)",
     "atomic_claim": "Hàm Fourier / Harmonic Relative Time Encoding ánh xạ khoảng thời gian delta_t sang vector điều hòa phi(delta_t) = [cos(w_1 delta_t), sin(w_1 delta_t), ...] duy trì tính liên tục và bất biến tịnh tiến thời gian.",
     "claim_class": "AUTHOR_ADAPTATION",
     "evidence_class": "CODEBASE",
@@ -1512,11 +1608,12 @@
     "artifact_locator": "experiments/plans/STAGE-A2-PREEXECUTION-PLAN.md:L1-L80",
     "support_status": "IMPLEMENTATION_VERIFIED",
     "required_action": "NONE",
-    "notes": "TGAT_IMPLEMENTATION_EQUIVALENCE_OVERCLAIM=0; Harmonic relative time encoding is a fixed sinusoidal adaptation inspired by TGAT."
+    "notes": "TGAT_IMPLEMENTATION_EQUIVALENCE_OVERCLAIM=0; Harmonic relative time encoding is a fixed sinusoidal adaptation inspired by TGAT.",
+    "parent_detected_id": "DET-P300-S00"
   },
   {
     "claim_id": "SCI-CODE-001",
-    "document_location": "Chương 2 (Mục 2.2.2, Ngân hàng Bộ nhớ Thực thể Bounded Entity Memory Bank)",
+    "document_location": "Chương 2 (Đoạn P338, câu S1)",
     "atomic_claim": "Ngân hàng bộ nhớ thực thể giới hạn LRU (BoundedEntityMemoryBank) kiểm soát trần tài nguyên bộ nhớ tối đa max_entities=10000, ngăn chặn bùng nổ tài nguyên theo O(K_max).",
     "claim_class": "IMPLEMENTATION_VERIFIED",
     "evidence_class": "CODEBASE",
@@ -1525,25 +1622,28 @@
     "code_locator": "src/research_agent/experiments/extractor/graph_view.py:L45-L60 (BoundedEntityMemoryBank)",
     "artifact_locator": "experiments/protocol/STAGE-A1-TRAINING-CONTRACT.md:L1-L50",
     "support_status": "VERIFIED_IN_CODE",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P338-S01"
   },
   {
     "claim_id": "SCI-CODE-002",
-    "document_location": "Chương 3 (Mục 3.1.2, Tường lửa Bộ Dữ liệu Kiểm tra TestSetSealedError)",
-    "atomic_claim": "Mã nguồn thực thi kiểm định thực nghiệm áp dụng ngoại lệ TestSetSealedError nhằm khóa cứng bộ dữ liệu Test, bảo đảm 100% không rò rỉ nhãn hoặc siêu tham số từ Test.",
+    "document_location": "Chương 3 (Đoạn P495, câu S0)",
+    "atomic_claim": "Trên các execution path được kiểm toán, Test được cô lập bằng path exclusion và/hoặc fail-closed guard; các manifest thực nghiệm được lưu không ghi nhận lượt đọc Test.",
     "claim_class": "IMPLEMENTATION_VERIFIED",
     "evidence_class": "CODEBASE",
     "citation_numbers": [],
-    "source_locator": "Giao thức bảo vệ tính khách quan thực nghiệm của đề tài",
+    "source_locator": "Giao thức bảo vệ tính khách quan thực nghiệm của đề tài (PATH_EXCLUSION_BY_CONTRACT trong Stage A1; TestSetSealedError trong graph_builder/Stage A2).",
     "code_locator": "src/research_agent/experiments/training/stage_a1_runner.py:L41-L44 (TestSetSealedError)",
     "artifact_locator": "experiments/evidence/stage-a2/reconciliation/CHAPTER3-SOURCE-METRICS.json:dataset_split.test",
     "support_status": "VERIFIED_IN_CODE",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "notes": "ABSOLUTE_TEST_LEAKAGE_GUARANTEE=0; Bounded claim reflecting verified path exclusion in Stage A1 runner and active TestSetSealedError in graph builder.",
+    "parent_detected_id": "DET-P495-S00"
   },
   {
     "claim_id": "SCI-CODE-003",
-    "document_location": "Chương 3 (Mục 3.1.2, Purity Contract & Label Leakage Guard)",
-    "atomic_claim": "Hệ thống kiểm định fail-closed thực thi enforce_real_training_data_purity và enforce_ssl_package_label_free nhằm loại trừ hoàn toàn dữ liệu giả định (synthetic proxies) và rò rỉ nhãn trong tự giám sát Stage A1.",
+    "document_location": "Chương 2 (Đoạn P249, câu S0)",
+    "atomic_claim": "Hệ thống áp dụng các guard fail-closed đối với các lớp synthetic đã định danh và các khóa nhãn top-level đã liệt kê nhằm giảm nguy cơ đưa proxy giả hoặc downstream labels vào Stage A1.",
     "claim_class": "IMPLEMENTATION_VERIFIED",
     "evidence_class": "CODEBASE",
     "citation_numbers": [],
@@ -1552,11 +1652,12 @@
     "artifact_locator": "experiments/protocol/STAGE-A1-TRAINING-CONTRACT.md",
     "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
-    "notes": "OVERBROAD_DATA_PURITY_CLAIMS=0; Blacklist of known synthetic classes and top-level keys; verified identical in historical commits 70b68102 and e4d53b82."
+    "notes": "OVERBROAD_DATA_PURITY_CLAIMS=0; Blacklist of known synthetic classes [SYNTHETIC_PROXY, SYNTHETIC_SMOKE_ONLY, HYBRID_SMOKE_FIXTURE] and 11 top-level label keys; verified identical in historical commits 70b68102 and e4d53b82.",
+    "parent_detected_id": "DET-P249-S00"
   },
   {
     "claim_id": "SCI-EXP-001",
-    "document_location": "Chương 3 (Mục 3.2.1, Bảng 8 & Bảng 9 - Huấn luyện Tiền kỳ Stage A1)",
+    "document_location": "Chương 2 (Đoạn P430, câu S3)",
     "atomic_claim": "Mô hình tiền huấn luyện Stage A1 tự giám sát chuỗi đạt điểm hội tụ loss L_seq trên tập Validation trên cả hai tập HDFS và BGL qua 5 hạt giống thực nghiệm độc lập.",
     "claim_class": "EXPERIMENT_ARTIFACT_VERIFIED",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -1565,11 +1666,15 @@
     "code_locator": "src/research_agent/experiments/training/stage_a1_runner.py:L1-L562",
     "artifact_locator": "experiments/reports/STAGE-A1-PRETRAINING-REPORT.md; experiments/evidence/stage-a2/reconciliation/CHAPTER3-SOURCE-METRICS.json",
     "support_status": "VERIFIED_IN_ARTIFACT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "evidence_strength_remote": "REMOTE_MANIFEST_ATTESTED",
+    "evidence_strength_local": "LOCAL_AGENT_BYTE_VERIFIED",
+    "notes": "REMOTE_LOCAL_EVIDENCE_STRENGTH_MISMATCH=0; remote manifests attest loss metrics and zero test access; local workstation verifies raw checkpoint bytes.",
+    "parent_detected_id": "DET-P430-S03"
   },
   {
     "claim_id": "SCI-EXP-002",
-    "document_location": "Chương 3 (Mục 3.3.1, Bảng 3.3 & Bảng 3.4 - Stage A2 Authority)",
+    "document_location": "Chương 3 (Đoạn P517, câu S0)",
     "atomic_claim": "Giai đoạn tiền huấn luyện đa góc nhìn Stage A2 đạt điểm dừng CEILING_REACHED tại epoch 12 với L_total_val=1.4580 và EARLY_STOPPING tại epoch 7 với L_total_val=1.5831, bảo toàn 100% tính nguyên vẹn số liệu nguồn gốc.",
     "claim_class": "EXPERIMENT_ARTIFACT_VERIFIED",
     "evidence_class": "EXPERIMENT_ARTIFACT",
@@ -1578,12 +1683,13 @@
     "code_locator": "src/research_agent/experiments/models/temporal_graph_view_encoder.py:L1-L320",
     "artifact_locator": "experiments/evidence/stage-a2/reconciliation/CHAPTER3-SOURCE-METRICS.json; experiments/plans/STAGE-A2-FINAL-12-EPOCH-AUTHORITY.json",
     "support_status": "VERIFIED_IN_ARTIFACT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P517-S00"
   },
   {
     "claim_id": "SCI-PRIV-001",
-    "document_location": "Chương 1 (Mục 1.1.3, Bốn cấp độ Bảo vệ Quyền riêng tư)",
-    "atomic_claim": "Luận văn thiết lập khung 4 cấp độ an toàn quyền riêng tư phân định rõ: Giả danh hóa (Pseudonymization), Thử nghiệm MIA [16], Thử nghiệm Model Inversion [33], và Bảo đảm toán học Vi sai (Differential Privacy theo NIST SP 800-226 [17]).",
+    "document_location": "Chương 1 (Đoạn P129, câu S1)",
+    "atomic_claim": "MIA và Model Inversion được đề xuất như các phép đánh giá hạ nguồn [16], [33], kết hợp khung lý thuyết DP định hướng lượng hóa độ mất mát quyền riêng tư [17]; chưa được thực thi trong phạm vi thực nghiệm hiện tại.",
     "claim_class": "AUTHOR_PROPOSED_EVALUATION_FRAMEWORK",
     "evidence_class": "NONE",
     "citation_numbers": [
@@ -1596,11 +1702,12 @@
     "artifact_locator": "",
     "support_status": "NOT_EMPIRICALLY_EXECUTED",
     "required_action": "NONE",
-    "notes": "PRIVACY_IMPLEMENTATION_FALSE_POSITIVES=0; Proposed evaluation framework, NOT empirically executed."
+    "notes": "PRIVACY_IMPLEMENTATION_FALSE_POSITIVES=0; Proposed downstream evaluation framework, NOT empirically executed.",
+    "parent_detected_id": "DET-P129-S01"
   },
   {
     "claim_id": "SCI-CMPX-001",
-    "document_location": "Chương 1 (Mục 1.2.1, Đánh giá Hiệu năng Phân tích Cú pháp Drain)",
+    "document_location": "Chương 1 (Đoạn P142, câu S0)",
     "atomic_claim": "Trong benchmark của Zhu et al. [6], thời gian xử lý của Drain tăng gần tuyến tính theo kích thước log, mang lại ưu thế thông lượng vận hành thực nghiệm mà không khẳng định chứng minh độ phức tạp tiệm cận hình thức.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
@@ -1611,11 +1718,12 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P142-S00"
   },
   {
     "claim_id": "CLM-SEC-001",
-    "document_location": "Chương (Đoạn P71, câu S0)",
+    "document_location": "Chương 2 (Đoạn P252, câu S0)",
     "atomic_claim": "Bảng 2.1: Chính sách RETAIN / NORMALIZE / PRIVACY-PROTECT / UNKNOWN-SAFE cho các trường của bộ sáu kiểu hóa\t42",
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
@@ -1624,11 +1732,12 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P252-S00"
   },
   {
     "claim_id": "CLM-SEC-002",
-    "document_location": "Chương (Đoạn P72, câu S0)",
+    "document_location": "Chương 2 (Đoạn P366, câu S0)",
     "atomic_claim": "Bảng 2.2: Đặc tả kiến trúc và độ phức tạp tính toán của hai bộ trích xuất đặc trưng đa góc nhìn\t64",
     "claim_class": "METHODOLOGY_OVERVIEW",
     "evidence_class": "NONE",
@@ -1637,7 +1746,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P366-S00"
   },
   {
     "claim_id": "CLM-SEC-003",
@@ -1650,7 +1760,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P082-S00"
   },
   {
     "claim_id": "CLM-SEC-004",
@@ -1663,7 +1774,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P082-S02"
   },
   {
     "claim_id": "CLM-SEC-005",
@@ -1676,7 +1788,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P086-S00"
   },
   {
     "claim_id": "CLM-SEC-006",
@@ -1689,7 +1802,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P088-S01"
   },
   {
     "claim_id": "CLM-SEC-007",
@@ -1702,7 +1816,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P091-S00"
   },
   {
     "claim_id": "CLM-SEC-008",
@@ -1715,7 +1830,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P092-S00"
   },
   {
     "claim_id": "CLM-SEC-009",
@@ -1728,7 +1844,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P097-S04"
   },
   {
     "claim_id": "CLM-SEC-010",
@@ -1741,7 +1858,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P120-S03"
   },
   {
     "claim_id": "CLM-SEC-011",
@@ -1754,7 +1872,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P132-S00"
   },
   {
     "claim_id": "CLM-SEC-012",
@@ -1767,7 +1886,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P139-S01"
   },
   {
     "claim_id": "CLM-SEC-013",
@@ -1780,7 +1900,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P171-S01"
   },
   {
     "claim_id": "CLM-SEC-014",
@@ -1793,7 +1914,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P175-S00"
   },
   {
     "claim_id": "CLM-SEC-015",
@@ -1806,7 +1928,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P176-S00"
   },
   {
     "claim_id": "CLM-SEC-016",
@@ -1819,7 +1942,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P184-S00"
   },
   {
     "claim_id": "CLM-SEC-017",
@@ -1832,7 +1956,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P192-S00"
   },
   {
     "claim_id": "CLM-SEC-018",
@@ -1845,7 +1970,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P194-S04"
   },
   {
     "claim_id": "CLM-SEC-019",
@@ -1858,7 +1984,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P196-S00"
   },
   {
     "claim_id": "CLM-SEC-020",
@@ -1871,7 +1998,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P199-S01"
   },
   {
     "claim_id": "CLM-SEC-021",
@@ -1884,7 +2012,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P200-S00"
   },
   {
     "claim_id": "CLM-SEC-022",
@@ -1897,7 +2026,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P203-S00"
   },
   {
     "claim_id": "CLM-SEC-023",
@@ -1910,7 +2040,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P206-S02"
   },
   {
     "claim_id": "CLM-SEC-024",
@@ -1923,7 +2054,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P208-S00"
   },
   {
     "claim_id": "CLM-SEC-025",
@@ -1936,7 +2068,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P211-S00"
   },
   {
     "claim_id": "CLM-SEC-026",
@@ -1949,7 +2082,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P216-S00"
   },
   {
     "claim_id": "CLM-SEC-027",
@@ -1962,7 +2096,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P218-S00"
   },
   {
     "claim_id": "CLM-SEC-028",
@@ -1975,7 +2110,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P221-S00"
   },
   {
     "claim_id": "CLM-SEC-029",
@@ -1988,7 +2124,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P222-S01"
   },
   {
     "claim_id": "CLM-SEC-030",
@@ -2001,7 +2138,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P222-S02"
   },
   {
     "claim_id": "CLM-SEC-031",
@@ -2014,7 +2152,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P224-S03"
   },
   {
     "claim_id": "CLM-SEC-032",
@@ -2027,7 +2166,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P228-S01"
   },
   {
     "claim_id": "CLM-SEC-033",
@@ -2040,7 +2180,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P229-S00"
   },
   {
     "claim_id": "CLM-SEC-034",
@@ -2053,7 +2194,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P229-S02"
   },
   {
     "claim_id": "CLM-SEC-035",
@@ -2066,7 +2208,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P233-S00"
   },
   {
     "claim_id": "CLM-SEC-036",
@@ -2079,7 +2222,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P235-S01"
   },
   {
     "claim_id": "CLM-SEC-037",
@@ -2092,7 +2236,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P236-S00"
   },
   {
     "claim_id": "CLM-SEC-038",
@@ -2105,7 +2250,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P237-S00"
   },
   {
     "claim_id": "CLM-SEC-039",
@@ -2118,7 +2264,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P238-S00"
   },
   {
     "claim_id": "CLM-SEC-040",
@@ -2131,7 +2278,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P244-S01"
   },
   {
     "claim_id": "CLM-SEC-041",
@@ -2144,7 +2292,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P255-S00"
   },
   {
     "claim_id": "CLM-SEC-042",
@@ -2157,7 +2306,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P255-S01"
   },
   {
     "claim_id": "CLM-SEC-043",
@@ -2170,7 +2320,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P258-S02"
   },
   {
     "claim_id": "CLM-SEC-044",
@@ -2183,7 +2334,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P261-S01"
   },
   {
     "claim_id": "CLM-SEC-045",
@@ -2196,7 +2348,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P261-S03"
   },
   {
     "claim_id": "CLM-SEC-046",
@@ -2209,7 +2362,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P267-S01"
   },
   {
     "claim_id": "CLM-SEC-047",
@@ -2222,7 +2376,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P274-S00"
   },
   {
     "claim_id": "CLM-SEC-048",
@@ -2235,7 +2390,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P275-S02"
   },
   {
     "claim_id": "CLM-SEC-049",
@@ -2248,7 +2404,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P276-S00"
   },
   {
     "claim_id": "CLM-SEC-050",
@@ -2261,7 +2418,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P278-S00"
   },
   {
     "claim_id": "CLM-SEC-051",
@@ -2274,7 +2432,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P280-S00"
   },
   {
     "claim_id": "CLM-SEC-052",
@@ -2287,7 +2446,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P282-S01"
   },
   {
     "claim_id": "CLM-SEC-053",
@@ -2300,7 +2460,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P284-S01"
   },
   {
     "claim_id": "CLM-SEC-054",
@@ -2313,7 +2474,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P287-S01"
   },
   {
     "claim_id": "CLM-SEC-055",
@@ -2326,7 +2488,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P289-S00"
   },
   {
     "claim_id": "CLM-SEC-056",
@@ -2339,7 +2502,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P290-S00"
   },
   {
     "claim_id": "CLM-SEC-057",
@@ -2352,7 +2516,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P291-S01"
   },
   {
     "claim_id": "CLM-SEC-058",
@@ -2365,7 +2530,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P292-S01"
   },
   {
     "claim_id": "CLM-SEC-059",
@@ -2380,7 +2546,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "DIRECT_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P300-S00"
   },
   {
     "claim_id": "CLM-SEC-060",
@@ -2393,7 +2560,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P305-S00"
   },
   {
     "claim_id": "CLM-SEC-061",
@@ -2406,7 +2574,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P305-S02"
   },
   {
     "claim_id": "CLM-SEC-062",
@@ -2419,7 +2588,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P314-S02"
   },
   {
     "claim_id": "CLM-SEC-063",
@@ -2432,7 +2602,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P316-S00"
   },
   {
     "claim_id": "CLM-SEC-064",
@@ -2445,7 +2616,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P323-S00"
   },
   {
     "claim_id": "CLM-SEC-065",
@@ -2458,7 +2630,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P325-S00"
   },
   {
     "claim_id": "CLM-SEC-066",
@@ -2471,7 +2644,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P326-S00"
   },
   {
     "claim_id": "CLM-SEC-067",
@@ -2484,7 +2658,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P326-S02"
   },
   {
     "claim_id": "CLM-SEC-068",
@@ -2497,7 +2672,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P326-S03"
   },
   {
     "claim_id": "CLM-SEC-069",
@@ -2510,7 +2686,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P328-S01"
   },
   {
     "claim_id": "CLM-SEC-070",
@@ -2523,7 +2700,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P331-S01"
   },
   {
     "claim_id": "CLM-SEC-071",
@@ -2536,7 +2714,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P340-S00"
   },
   {
     "claim_id": "CLM-SEC-072",
@@ -2549,7 +2728,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P342-S00"
   },
   {
     "claim_id": "CLM-SEC-073",
@@ -2562,7 +2742,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P344-S00"
   },
   {
     "claim_id": "CLM-SEC-074",
@@ -2575,7 +2756,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P349-S01"
   },
   {
     "claim_id": "CLM-SEC-075",
@@ -2588,7 +2770,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P349-S02"
   },
   {
     "claim_id": "CLM-SEC-076",
@@ -2601,7 +2784,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P353-S01"
   },
   {
     "claim_id": "CLM-SEC-077",
@@ -2614,7 +2798,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P363-S02"
   },
   {
     "claim_id": "CLM-SEC-078",
@@ -2627,7 +2812,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P365-S00"
   },
   {
     "claim_id": "CLM-SEC-079",
@@ -2640,7 +2826,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P369-S01"
   },
   {
     "claim_id": "CLM-SEC-080",
@@ -2653,7 +2840,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P377-S00"
   },
   {
     "claim_id": "CLM-SEC-081",
@@ -2666,7 +2854,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P386-S03"
   },
   {
     "claim_id": "CLM-SEC-082",
@@ -2679,7 +2868,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P406-S00"
   },
   {
     "claim_id": "CLM-SEC-083",
@@ -2692,7 +2882,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P407-S00"
   },
   {
     "claim_id": "CLM-SEC-084",
@@ -2705,7 +2896,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P407-S01"
   },
   {
     "claim_id": "CLM-SEC-085",
@@ -2718,7 +2910,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P409-S01"
   },
   {
     "claim_id": "CLM-SEC-086",
@@ -2731,7 +2924,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P411-S00"
   },
   {
     "claim_id": "CLM-SEC-087",
@@ -2744,7 +2938,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P414-S00"
   },
   {
     "claim_id": "CLM-SEC-088",
@@ -2757,7 +2952,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P419-S00"
   },
   {
     "claim_id": "CLM-SEC-089",
@@ -2770,7 +2966,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P421-S00"
   },
   {
     "claim_id": "CLM-SEC-090",
@@ -2783,7 +2980,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P425-S00"
   },
   {
     "claim_id": "CLM-SEC-091",
@@ -2796,7 +2994,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P430-S03"
   },
   {
     "claim_id": "CLM-SEC-092",
@@ -2809,7 +3008,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P460-S00"
   },
   {
     "claim_id": "CLM-SEC-093",
@@ -2822,7 +3022,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P460-S01"
   },
   {
     "claim_id": "CLM-SEC-094",
@@ -2835,7 +3036,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P461-S01"
   },
   {
     "claim_id": "CLM-SEC-095",
@@ -2848,7 +3050,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P462-S00"
   },
   {
     "claim_id": "CLM-SEC-096",
@@ -2861,7 +3064,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P474-S00"
   },
   {
     "claim_id": "CLM-SEC-097",
@@ -2874,7 +3078,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P475-S00"
   },
   {
     "claim_id": "CLM-SEC-098",
@@ -2887,7 +3092,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P481-S00"
   },
   {
     "claim_id": "CLM-SEC-099",
@@ -2900,7 +3106,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P481-S01"
   },
   {
     "claim_id": "CLM-SEC-100",
@@ -2913,7 +3120,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P483-S00"
   },
   {
     "claim_id": "CLM-SEC-101",
@@ -2926,7 +3134,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P483-S01"
   },
   {
     "claim_id": "CLM-SEC-102",
@@ -2939,7 +3148,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P486-S00"
   },
   {
     "claim_id": "CLM-SEC-103",
@@ -2952,7 +3162,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P486-S01"
   },
   {
     "claim_id": "CLM-SEC-104",
@@ -2965,7 +3176,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P486-S02"
   },
   {
     "claim_id": "CLM-SEC-105",
@@ -2978,7 +3190,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P487-S01"
   },
   {
     "claim_id": "CLM-SEC-106",
@@ -2991,7 +3204,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P490-S00"
   },
   {
     "claim_id": "CLM-SEC-107",
@@ -3004,7 +3218,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P495-S00"
   },
   {
     "claim_id": "CLM-SEC-108",
@@ -3017,7 +3232,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P496-S00"
   },
   {
     "claim_id": "CLM-SEC-109",
@@ -3030,7 +3246,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P499-S00"
   },
   {
     "claim_id": "CLM-SEC-110",
@@ -3043,7 +3260,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P500-S00"
   },
   {
     "claim_id": "CLM-SEC-111",
@@ -3056,7 +3274,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P510-S00"
   },
   {
     "claim_id": "CLM-SEC-112",
@@ -3069,7 +3288,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P511-S00"
   },
   {
     "claim_id": "CLM-SEC-113",
@@ -3082,7 +3302,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P512-S00"
   },
   {
     "claim_id": "CLM-SEC-114",
@@ -3095,7 +3316,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P514-S01"
   },
   {
     "claim_id": "CLM-SEC-115",
@@ -3108,7 +3330,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P517-S00"
   },
   {
     "claim_id": "CLM-SEC-116",
@@ -3121,7 +3344,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P517-S04"
   },
   {
     "claim_id": "CLM-SEC-117",
@@ -3134,7 +3358,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P519-S00"
   },
   {
     "claim_id": "CLM-SEC-118",
@@ -3147,7 +3372,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P520-S00"
   },
   {
     "claim_id": "CLM-SEC-119",
@@ -3160,7 +3386,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P524-S00"
   },
   {
     "claim_id": "CLM-SEC-120",
@@ -3173,7 +3400,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P524-S01"
   },
   {
     "claim_id": "CLM-SEC-121",
@@ -3186,7 +3414,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P526-S00"
   },
   {
     "claim_id": "CLM-SEC-122",
@@ -3199,7 +3428,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P528-S00"
   },
   {
     "claim_id": "CLM-SEC-123",
@@ -3212,7 +3442,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P529-S00"
   },
   {
     "claim_id": "CLM-SEC-124",
@@ -3225,7 +3456,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P532-S00"
   },
   {
     "claim_id": "CLM-SEC-125",
@@ -3238,7 +3470,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P532-S01"
   },
   {
     "claim_id": "CLM-SEC-126",
@@ -3251,7 +3484,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P533-S00"
   },
   {
     "claim_id": "CLM-SEC-127",
@@ -3264,7 +3498,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P537-S01"
   },
   {
     "claim_id": "CLM-SEC-128",
@@ -3277,7 +3512,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P542-S01"
   },
   {
     "claim_id": "CLM-SEC-129",
@@ -3290,7 +3526,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P543-S01"
   },
   {
     "claim_id": "CLM-SEC-130",
@@ -3303,7 +3540,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P547-S01"
   },
   {
     "claim_id": "CLM-SEC-131",
@@ -3316,7 +3554,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P548-S01"
   },
   {
     "claim_id": "CLM-SEC-132",
@@ -3329,7 +3568,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P548-S02"
   },
   {
     "claim_id": "CLM-SEC-133",
@@ -3342,7 +3582,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P549-S00"
   },
   {
     "claim_id": "CLM-SEC-134",
@@ -3355,7 +3596,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T03-R02"
   },
   {
     "claim_id": "CLM-SEC-135",
@@ -3368,7 +3610,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T03-R05"
   },
   {
     "claim_id": "CLM-SEC-136",
@@ -3381,7 +3624,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T04-R00"
   },
   {
     "claim_id": "CLM-SEC-137",
@@ -3394,7 +3638,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T04-R03"
   },
   {
     "claim_id": "CLM-SEC-138",
@@ -3407,7 +3652,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T04-R04"
   },
   {
     "claim_id": "CLM-SEC-139",
@@ -3420,7 +3666,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T05-R00"
   },
   {
     "claim_id": "CLM-SEC-140",
@@ -3433,7 +3680,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T06-R00"
   },
   {
     "claim_id": "CLM-SEC-141",
@@ -3446,7 +3694,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T06-R04"
   },
   {
     "claim_id": "CLM-SEC-142",
@@ -3459,7 +3708,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T08-R04"
   },
   {
     "claim_id": "CLM-SEC-143",
@@ -3472,7 +3722,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T09-R03"
   },
   {
     "claim_id": "CLM-SEC-144",
@@ -3485,7 +3736,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-T12-R06"
   },
   {
     "claim_id": "CLM-SEC-145",
@@ -3498,7 +3750,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P078-S01"
   },
   {
     "claim_id": "CLM-SEC-146",
@@ -3511,7 +3764,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P090-S00"
   },
   {
     "claim_id": "CLM-SEC-147",
@@ -3524,7 +3778,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P127-S00"
   },
   {
     "claim_id": "CLM-SEC-148",
@@ -3537,7 +3792,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P140-S00"
   },
   {
     "claim_id": "CLM-SEC-149",
@@ -3550,7 +3806,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P180-S00"
   },
   {
     "claim_id": "CLM-SEC-150",
@@ -3563,7 +3820,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P210-S00"
   },
   {
     "claim_id": "CLM-SEC-151",
@@ -3576,7 +3834,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P243-S00"
   },
   {
     "claim_id": "CLM-SEC-152",
@@ -3589,7 +3848,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P351-S01"
   },
   {
     "claim_id": "CLM-SEC-153",
@@ -3602,7 +3862,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P371-S00"
   },
   {
     "claim_id": "CLM-SEC-154",
@@ -3615,7 +3876,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P373-S00"
   },
   {
     "claim_id": "CLM-SEC-155",
@@ -3628,7 +3890,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P382-S01"
   },
   {
     "claim_id": "CLM-SEC-156",
@@ -3641,7 +3904,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P423-S00"
   },
   {
     "claim_id": "CLM-SEC-157",
@@ -3654,7 +3918,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P431-S00"
   },
   {
     "claim_id": "CLM-SEC-158",
@@ -3667,7 +3932,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P433-S00"
   },
   {
     "claim_id": "CLM-SEC-159",
@@ -3680,7 +3946,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P436-S00"
   },
   {
     "claim_id": "CLM-SEC-160",
@@ -3693,7 +3960,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P448-S01"
   },
   {
     "claim_id": "CLM-SEC-161",
@@ -3706,7 +3974,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P465-S00"
   },
   {
     "claim_id": "CLM-SEC-162",
@@ -3719,7 +3988,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "CONTEXTUAL_SUPPORT",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P484-S00"
   },
   {
     "claim_id": "CLM-SEC-163",
@@ -3732,6 +4002,685 @@
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
-    "required_action": "NONE"
+    "required_action": "NONE",
+    "parent_detected_id": "DET-P502-S00"
+  },
+  {
+    "claim_id": "CLM-SEC-P087-S01",
+    "parent_detected_id": "DET-P087-S01",
+    "document_location": "Chương (Đoạn P87, câu S1)",
+    "atomic_claim": "Hiệu quả được đánh giá bằng các chỉ số phù hợp với dữ liệu mất cân bằng, đồng thời xem xét cảnh báo sai, độ trễ, tài nguyên và khả năng giải thích.",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SYNTHESIS",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P088-S00",
+    "parent_detected_id": "DET-P088-S00",
+    "document_location": "Chương (Đoạn P88, câu S0)",
+    "atomic_claim": "Về phương diện khoa học, đề tài hướng tới thiết lập hệ thống phân loại đa chiều cho các phương pháp trích xuất đặc trưng, làm rõ ranh giới giữa phát hiện bất thường hệ thống và phát hiện tấn công, đồng thời xác định yêu cầu đối với một biểu diễn log có khả năng bảo toàn ngữ nghĩa, thời gian và quan hệ.",
+    "claim_class": "AUTHOR_PROPOSAL",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đề xuất phương pháp luận của luận văn",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P097-S05",
+    "parent_detected_id": "DET-P097-S05",
+    "document_location": "Chương (Đoạn P97, câu S5)",
+    "atomic_claim": "Nhóm thứ ba là nhật ký ứng dụng và dịch vụ phân tán (Application & Distributed System Logs), phát sinh từ máy chủ web (Apache), hệ thống tệp phân tán (HDFS) cùng các dịch vụ tính toán cụm thuộc bộ benchmark LogHub  [6], [7].",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "NONE",
+    "citation_numbers": [
+      6,
+      7
+    ],
+    "source_locator": "Tài liệu tham khảo [6, 7]",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "SUPPORTED_BY_CITATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P117-S01",
+    "parent_detected_id": "DET-P117-S01",
+    "document_location": "Chương (Đoạn P117, câu S1)",
+    "atomic_claim": "[18], LogHub [42]) được gán nhãn bất thường theo vết thực thi ở mức khối dữ liệu (Block-level trace labels [18]), phản ánh trạng thái bình thường hoặc bất thường của một phiên giao tác phân tán hoàn chỉnh; Bốn là, bộ dữ liệu BGL (LogHub [42]) đại diện cho nhật ký siêu máy tính với nhãn bất thường được xác lập ở mức dòng log đơn lẻ (Line-level alert/non-alert labels [42]).",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "NONE",
+    "citation_numbers": [
+      18,
+      42,
+      18,
+      42,
+      42
+    ],
+    "source_locator": "Tài liệu tham khảo [18, 42, 18, 42, 42]",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "SUPPORTED_BY_CITATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P119-S00",
+    "parent_detected_id": "DET-P119-S00",
+    "document_location": "Chương (Đoạn P119, câu S0)",
+    "atomic_claim": "Các mức biểu diễn dữ liệu và Hợp đồng Biểu diễn (Representation Contract)",
+    "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P120-S01",
+    "parent_detected_id": "DET-P120-S01",
+    "document_location": "Chương (Đoạn P120, câu S1)",
+    "atomic_claim": "Trong học sâu, mô hình thiết lập một ánh xạ hàm tham số chuyển đổi dữ liệu nhật ký hệ thống đa góc nhìn sang không gian vector tiềm ẩn.",
+    "claim_class": "AUTHOR_PROPOSAL",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đề xuất phương pháp luận của luận văn",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P123-S00",
+    "parent_detected_id": "DET-P123-S00",
+    "document_location": "Chương (Đoạn P123, câu S0)",
+    "atomic_claim": "Một là, nhóm Điều kiện Bảo toàn (PRESERVE, P_preserve): Tập hợp các thuộc tính và tương quan an ninh bắt buộc phải được bảo toàn nguyên vẹn trong không gian vector biểu diễn.",
+    "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P124-S00",
+    "parent_detected_id": "DET-P124-S00",
+    "document_location": "Chương (Đoạn P124, câu S0)",
+    "atomic_claim": "Hai là, nhóm Điều kiện Bất biến (INVARIANT, I_invariant): Tập hợp các biến đổi hình thức hoặc biến động môi trường mà không gian vector z phải duy trì tính bất biến.",
+    "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P126-S00",
+    "parent_detected_id": "DET-P126-S00",
+    "document_location": "Chương (Đoạn P126, câu S0)",
+    "atomic_claim": "Các đặc tả chi tiết của Hợp đồng Biểu diễn được hệ thống hóa trong Bảng 1.2:",
+    "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P129-S00",
+    "parent_detected_id": "DET-P129-S00",
+    "document_location": "Chương (Đoạn P129, câu S0)",
+    "atomic_claim": "Nguyên tắc PRESERVE tập trung vào việc bảo toàn ngữ nghĩa an ninh động chứ không đồng nghĩa với việc giữ lại toàn bộ định danh thô của người dùng hay máy chủ.",
+    "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P130-S00",
+    "parent_detected_id": "DET-P130-S00",
+    "document_location": "Chương (Đoạn P130, câu S0)",
+    "atomic_claim": "Đi đôi với Hợp đồng Biểu diễn được quy định trong Bảng 1.2, chuyên đề thiết lập nguyên tắc phân định ranh giới phương pháp luận ba tầng độc lập, được mô hình hóa tổng quát trong Hình 1.3:",
+    "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P134-S00",
+    "parent_detected_id": "DET-P134-S00",
+    "document_location": "Chương (Đoạn P134, câu S0)",
+    "atomic_claim": "2. Tầng 2 tập trung học không gian biểu diễn, giữ vai trò trọng tâm của Chuyên đề: Thiết lập kiến trúc encoder  và các đầu chiếu/dự đoán phụ trợ (projection/prediction heads) để chuyển đổi cấu trúc chuỗi sự kiện và đồ thị nguồn gốc sang không gian vector tiềm ẩn.",
+    "claim_class": "AUTHOR_PROPOSAL",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đề xuất phương pháp luận của luận văn",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P163-S02",
+    "parent_detected_id": "DET-P163-S02",
+    "document_location": "Chương (Đoạn P163, câu S2)",
+    "atomic_claim": "[29] (USENIX Security 2025) và Guerra et al.",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "NONE",
+    "citation_numbers": [
+      29
+    ],
+    "source_locator": "Tài liệu tham khảo [29]",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "SUPPORTED_BY_CITATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P163-S03",
+    "parent_detected_id": "DET-P163-S03",
+    "document_location": "Chương (Đoạn P163, câu S3)",
+    "atomic_claim": "[30] chỉ ra rằng nhiều mô hình GNN phức tạp có nguy cơ khai thác các đặc trưng đường tắt thống kê (như phân bố bậc của nút hoặc tính mới của đường dẫn); trong đó Bilot et al.",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "NONE",
+    "citation_numbers": [
+      30
+    ],
+    "source_locator": "Tài liệu tham khảo [30]",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "SUPPORTED_BY_CITATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P163-S04",
+    "parent_detected_id": "DET-P163-S04",
+    "document_location": "Chương (Đoạn P163, câu S4)",
+    "atomic_claim": "[29] chứng minh một mô hình mạng nơ-ron đơn giản (simple neural network) đạt hiệu năng cạnh tranh vượt trội trên 5/7 tập dữ liệu DARPA, còn Guerra et al.",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "NONE",
+    "citation_numbers": [
+      29
+    ],
+    "source_locator": "Tài liệu tham khảo [29]",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "SUPPORTED_BY_CITATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P163-S05",
+    "parent_detected_id": "DET-P163-S05",
+    "document_location": "Chương (Đoạn P163, câu S5)",
+    "atomic_claim": "[30] chỉ ra hiệu quả của các baseline danh sách cho phép / thống kê sự kiện, khẳng định một cạnh phụ thuộc trong đồ thị không đồng nghĩa với tác động nhân quả an ninh; Ba là, hai bệnh lý mạng nơ-ron đồ thị về mặt cấu trúc: khi tăng số lớp truyền tin (message passing), hiện tượng làm mịn quá mức (Over-smoothing), được Oono & Suzuki [44] chứng minh về mặt toán học tại ICLR 2020, khiến vector biểu diễn của các đỉnh mất dần năng lực biểu đạt theo hàm mũ và hội tụ về các vector khó phân biệt; trong khi đó hiện tượng nghẽn cổ chai thông tin (Over-squashing), được Alon & Yahav [31] phân tích tại ICLR 2021, xuất hiện khi thông tin từ vùng lân cận tăng theo hàm mũ bị ép vào một vector kích thước cố định.",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "NONE",
+    "citation_numbers": [
+      30,
+      44,
+      31
+    ],
+    "source_locator": "Tài liệu tham khảo [30, 44, 31]",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "SUPPORTED_BY_CITATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P183-S02",
+    "parent_detected_id": "DET-P183-S02",
+    "document_location": "Chương (Đoạn P183, câu S2)",
+    "atomic_claim": "(IEEE S&P 2025)  [3] đã cảnh báo sâu sắc về tình trạng sai lệch phương pháp luận trong nghiên cứu học máy áp dụng cho an ninh mạng.",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "NONE",
+    "citation_numbers": [
+      3
+    ],
+    "source_locator": "Tài liệu tham khảo [3]",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "SUPPORTED_BY_CITATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P194-S05",
+    "parent_detected_id": "DET-P194-S05",
+    "document_location": "Chương (Đoạn P194, câu S5)",
+    "atomic_claim": "Một mô hình được thiết kế có nhận thức về quyền riêng tư (Privacy-Aware) không tự động đồng nghĩa với việc đã đạt được khả năng bảo vệ quyền riêng tư vững chắc (Privacy-Preserving) nếu chưa trải qua các kiểm thử thực nghiệm tấn công nghiêm ngặt [17].",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "NONE",
+    "citation_numbers": [
+      17
+    ],
+    "source_locator": "Tài liệu tham khảo [17]",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "SUPPORTED_BY_CITATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P206-S01",
+    "parent_detected_id": "DET-P206-S01",
+    "document_location": "Chương (Đoạn P206, câu S1)",
+    "atomic_claim": "Đánh giá chất lượng biểu diễn thông qua giao thức đóng băng tham số (Frozen Linear Probe: ) phục vụ phân loại và quy kết chiến thuật/kỹ thuật theo phân loại MITRE ATT&CK  [4], hoặc quy trình chấm điểm bất thường không giám sát tùy chọn (Optional Downstream Zero-Shot Anomaly Scoring Protocol).",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "NONE",
+    "citation_numbers": [
+      4
+    ],
+    "source_locator": "Tài liệu tham khảo [4]",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "SUPPORTED_BY_CITATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P240-S00",
+    "parent_detected_id": "DET-P240-S00",
+    "document_location": "Chương (Đoạn P240, câu S0)",
+    "atomic_claim": "Typed Schema và Security-aware Parameter Retention",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SYNTHESIS",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P244-S00",
+    "parent_detected_id": "DET-P244-S00",
+    "document_location": "Chương (Đoạn P244, câu S0)",
+    "atomic_claim": "Tập kiểu sự kiện  và tập hành động  được định nghĩa tĩnh theo đặc tả nguồn thu thập (auditd syscall table, Windows Event ID taxonomy, Sysmon event types) và không phụ thuộc vào dữ liệu huấn luyện, do đó không phát sinh rủi ro rò rỉ vocabulary từ tập kiểm tra (CTRL-LEAK-001).",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SYNTHESIS",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P249-S03",
+    "parent_detected_id": "DET-P249-S03",
+    "document_location": "Chương (Đoạn P249, câu S3)",
+    "atomic_claim": "Ngược lại, các trường metadata môi trường cục bộ không mang ngữ nghĩa an ninh (như PID tạm thời, timestamp mili-giây nội bộ không phải Event-Time, số sequence kernel) được phân loại là KNOWN EXCLUDE FIELD và bị loại bỏ (DROP) trước khi đưa vào Extractor.",
+    "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P258-S01",
+    "parent_detected_id": "DET-P258-S01",
+    "document_location": "Chương (Đoạn P258, câu S1)",
+    "atomic_claim": "Hệ thống phân định rạch ròi: (a) Các trường KNOWN EXCLUDE FIELD (metadata môi trường như PID, timestamp cục bộ mili-giây, số sequence nội bộ) được loại bỏ hoàn toàn trước khi đưa vào Extractor; (b) Các tham số UNSEEN hoặc chưa xác định rõ ngữ nghĩa an ninh xuất hiện trong tập Validation hoặc Test được giữ nguyên nhãn kiểu trường (field-type tag: PATH, IP, CMD, REG, USER) và bảo toàn vị trí cấu trúc của tham số trong bộ sáu, đồng thời thay thế giá trị chuỗi cụ thể bằng typed placeholder tương ứng (<UNK-PATH>, <UNK-IP>, <UNK-CMD>).",
+    "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P260-S00",
+    "parent_detected_id": "DET-P260-S00",
+    "document_location": "Chương (Đoạn P260, câu S0)",
+    "atomic_claim": "Mô hình đe dọa quyền riêng tư và Controlled Linkability",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SYNTHESIS",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P269-S01",
+    "parent_detected_id": "DET-P269-S01",
+    "document_location": "Chương (Đoạn P269, câu S1)",
+    "atomic_claim": "[33] chứng minh tấn công nghịch đảo có thể khai thác thông tin đầu ra/độ tin cậy để tái cấu trúc thuộc tính dữ liệu; trong mô hình đe dọa thích ứng của đề tài (Threat-Model Adaptation), đối nghịch cố gắng khôi phục hoặc xấp xỉ các thuộc tính nhạy cảm tiềm năng (như tên người dùng, hostname, chuỗi lệnh) từ vector nhúng z.",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "NONE",
+    "citation_numbers": [
+      33
+    ],
+    "source_locator": "Tài liệu tham khảo [33]",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "SUPPORTED_BY_CITATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P274-S01",
+    "parent_detected_id": "DET-P274-S01",
+    "document_location": "Chương (Đoạn P274, câu S1)",
+    "atomic_claim": "Các trường KNOWN EXCLUDE FIELD được loại bỏ hoàn toàn trước khi đưa vào ; trong khi các tham số UNSEEN / UNCERTAIN được xử lý theo chính sách UNKNOWN-SAFE (bảo toàn nhãn kiểu trường và vị trí cấu trúc, gán typed placeholder), không bị loại bỏ tùy tiện.",
+    "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P275-S01",
+    "parent_detected_id": "DET-P275-S01",
+    "document_location": "Chương (Đoạn P275, câu S1)",
+    "atomic_claim": "Rotation boundary phải được xác lập theo predefined operational policy hoặc được lựa chọn dựa trên tập Train/Validation, tuyệt đối không sử dụng thông tin từ true Test attack/campaign duration (loại trừ rủi ro test leakage).",
+    "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P278-S01",
+    "parent_detected_id": "DET-P278-S01",
+    "document_location": "Chương (Đoạn P278, câu S1)",
+    "atomic_claim": "Tuy nhiên, khẳng định sự vượt trội này yêu cầu kiểm thử thực nghiệm tường minh tại Chương 3 thông qua CTRL-PRIV-001: đánh giá MIA ([16]), tấn công nghịch đảo (theo nguyên lý Fredrikson et al.",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "NONE",
+    "citation_numbers": [
+      16
+    ],
+    "source_locator": "Tài liệu tham khảo [16]",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "SUPPORTED_BY_CITATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P303-S02",
+    "parent_detected_id": "DET-P303-S02",
+    "document_location": "Chương (Đoạn P303, câu S2)",
+    "atomic_claim": "Mục tiêu (target) là nhãn kiểu sự kiện và hành động thực tế , tối ưu hóa qua hàm mất mát Categorical Cross-Entropy trung bình trên tập bị che, cung cấp gradient cập nhật trực tiếp cho  và :",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SYNTHESIS",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P305-S03",
+    "parent_detected_id": "DET-P305-S03",
+    "document_location": "Chương (Đoạn P305, câu S3)",
+    "atomic_claim": "Hàm mất mát Categorical Cross-Entropy tính trung bình trên , truyền gradient cho  và :",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SYNTHESIS",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P347-S00",
+    "parent_detected_id": "DET-P347-S00",
+    "document_location": "Chương (Đoạn P347, câu S0)",
+    "atomic_claim": "Mục tiêu tối ưu hóa các tham số  của mạng Temporal GNN trong Giai đoạn A1 mà không sử dụng nhãn tấn công hay thông tin tương lai, chuyên đề thiết lập hàm mục tiêu tự giám sát đồ thị động .",
+    "claim_class": "AUTHOR_PROPOSAL",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đề xuất phương pháp luận của luận văn",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P349-S00",
+    "parent_detected_id": "DET-P349-S00",
+    "document_location": "Chương (Đoạn P349, câu S0)",
+    "atomic_claim": "Tác vụ tái tạo thuộc tính thực thể bị che (Masked Node Attribute Reconstruction, ): Che ngẫu nhiên một tỷ lệ  thuộc tính kiểu hóa của các thực thể hoạt động  (trong đó  là siêu tham số được kiểm soát, tinh chỉnh và khóa cố định trên tập Validation).",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SYNTHESIS",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P351-S00",
+    "parent_detected_id": "DET-P351-S00",
+    "document_location": "Chương (Đoạn P351, câu S0)",
+    "atomic_claim": "Tác vụ dự đoán kiểu quan hệ cạnh bị che (Masked Edge Relation Prediction, ): Che nhãn quan hệ tương tác trên tập cạnh  theo tỷ lệ  (siêu tham số được kiểm soát, tinh chỉnh và khóa cố định trên tập Validation trước khi đánh giá Test).",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SYNTHESIS",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P355-S00",
+    "parent_detected_id": "DET-P355-S00",
+    "document_location": "Chương (Đoạn P355, câu S0)",
+    "atomic_claim": "Các trọng số  là các siêu tham số cân bằng giữa các tác vụ phụ trợ.",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SYNTHESIS",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P357-S01",
+    "parent_detected_id": "DET-P357-S01",
+    "document_location": "Chương (Đoạn P357, câu S1)",
+    "atomic_claim": "Chuyên đề đề xuất hai cơ chế ứng viên giảm thiểu (Mitigation Candidates):",
+    "claim_class": "AUTHOR_PROPOSAL",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đề xuất phương pháp luận của luận văn",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P363-S01",
+    "parent_detected_id": "DET-P363-S01",
+    "document_location": "Chương (Đoạn P363, câu S1)",
+    "atomic_claim": "Về mặt khung đa tỷ lệ, cửa sổ dài hạn  đã thiết lập tại Mục 2.2.3.2 đóng vai trò cung cấp ngữ cảnh trạng thái dài hạn có chặn (Bounded Long-term Context Summary) cho hệ thống mà không làm phát sinh bộ trích xuất thứ ba độc lập.",
+    "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P386-S04",
+    "parent_detected_id": "DET-P386-S04",
+    "document_location": "Chương (Đoạn P386, câu S4)",
+    "atomic_claim": "Giả thuyết này sẽ được kiểm chứng thực nghiệm độc lập tại Chương 3 trong mối tương quan với hai phương pháp đối chứng (Ablation Baselines) là InfoNCE [38], [37] và Barlow Twins [11].",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "NONE",
+    "citation_numbers": [
+      38,
+      37,
+      11
+    ],
+    "source_locator": "Tài liệu tham khảo [38, 37, 11]",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "SUPPORTED_BY_CITATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P442-S00",
+    "parent_detected_id": "DET-P442-S00",
+    "document_location": "Chương (Đoạn P442, câu S0)",
+    "atomic_claim": "Trong đó  là siêu tham số ngưỡng chặn dưới an toàn, ngăn ngừa việc hạ trọng số về 0 (tính nhạy cảm của  sẽ được kiểm chứng thực nghiệm tại Chương 3).",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SYNTHESIS",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-P513-S00",
+    "parent_detected_id": "DET-P513-S00",
+    "document_location": "Chương (Đoạn P513, câu S0)",
+    "atomic_claim": "Bảng 3.3: Kết quả huấn luyện Stage A2 trên 5 hạt ngẫu nhiên thực nghiệm",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SYNTHESIS",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-T02-R01",
+    "parent_detected_id": "DET-T02-R01",
+    "document_location": "Bảng 2 (Hàng 1)",
+    "atomic_claim": "PRESERVE (Bảo toàn) | Bảo tồn đầy đủ tín hiệu ngữ cảnh an ninh phân biệt | Ngữ nghĩa tham số động, trật tự thời gian và quan hệ phụ thuộc, tô-pô đồ thị, nhãn ATT&CK | Linear Probing, Mutual Information",
+    "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-T02-R02",
+    "parent_detected_id": "DET-T02-R02",
+    "document_location": "Bảng 2 (Hàng 2)",
+    "atomic_claim": "INVARIANT (Bất biến) | Duy trì bất biến trước biến đổi hình thức và trôi dạt vô hại | Định dạng timestamp, PID ngẫu nhiên, hoán vị cú pháp vô hại | Invariance Loss, Data Augmentation",
+    "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-T02-R03",
+    "parent_detected_id": "DET-T02-R03",
+    "document_location": "Bảng 2 (Hàng 3)",
+    "atomic_claim": "EXCLUDE (Triệt tiêu) | Loại bỏ rò rỉ phân vùng và biến số học đường tắt | Artifacts môi trường lab, hostname cố định, thông tin định danh nhạy cảm (PII) | Snooping Test, Feature-leakage / Re-identification Audit",
+    "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
+  },
+  {
+    "claim_id": "CLM-SEC-T04-R07",
+    "parent_detected_id": "DET-T04-R07",
+    "document_location": "Bảng 4 (Hàng 7)",
+    "atomic_claim": "(KNOWN EXCLUDE) | Trường xác định không mang ngữ nghĩa an ninh (PID, timestamp cục bộ, sequence kernel) | DROP trước Extractor | Loại bỏ hoàn toàn trước khi đưa vào",
+    "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "code_locator": "",
+    "artifact_locator": "",
+    "support_status": "AUTHOR_SPECIFICATION",
+    "required_action": "NONE",
+    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate."
   }
 ]

@@ -354,7 +354,7 @@
   {
     "claim_id": "CLM-021",
     "document_location": "Chương (Đoạn P129, câu S2)",
-    "claim_text": "Cần khẳng định rằng vector biểu diễn tiềm ẩn không tự động an toàn về quyền riêng tư nếu không có cơ chế chứng minh toán học tường minh; việc áp dụng các phép thử nghiệm MIA hay Model Inversion là các bước kiểm chứng thực nghiệm độc lập của đề tài [16], [33], trong khi khung DP cung cấp công cụ định lượng độ mất mát quyền riêng tư [17].",
+    "claim_text": "MIA và Model Inversion được đề xuất như các phép đánh giá hạ nguồn [16], [33], kết hợp khung lý thuyết DP định hướng lượng hóa độ mất mát quyền riêng tư [17]; chưa được thực thi trong phạm vi thực nghiệm hiện tại.",
     "citation_numbers": [
       16,
       17,
