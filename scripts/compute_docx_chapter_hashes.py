@@ -111,12 +111,14 @@ def compute_chapter_hashes():
         "8e550f959fb0c9b071e57da8a8ff62229a21364c480edfe9126e1219dbda1310",  # fix/thesis-citation-exhaustive-lock (p[117] TC E3 [12], E5 [43])
         "dc3ecb488e6860884a6e70b3d1da1750ed195fb8f516ccf0b6f989ec0d443c00",  # fix/thesis-first-principles-lock (Sec 1.4, R01-R07)
         "92cc1d16b19fcc238a750ecc4a71930c86ed075a8b193f4ccb4c1735c23e45a4",  # fix/thesis-apply-edits (In-place proof chain, Sec 1.4 removed)
+        "676a5e2edc57ca8511f55e924603a43b9983149addb019bb1a4a7616703a3037",  # fix/thesis-apply-edits (Semantic truth repair: Linux/Sysmon P97, Drain P142, TFIDF P145)
     }
     AUTH_CITATIONS_CH2_HASHES = {
         "c62e1ebe2a01b6668f24e5383abf74372d78c4cc758f1c5a264d6789a3cef855",
         "2b04c268b555b5a7c2fb345c882c096f6b70e649298928461ab4b509c7894dbd",  # fix/thesis-citation-integrity
         "34ddef8affccc36ef0cafc9349c6bd2f1d87eafb12ca483d3a65c2de867795f9",  # fix/thesis-first-principles-lock (Ref [44] over-smoothing, native OMML)
         "e27062a8c6d248aec34ffa4bc84eab3e4e0c552b7b11171cd3d06fc20388a564",  # fix/thesis-apply-edits (Epistemic lock in Ch2)
+        "dbc32969b7097e7d030a90a609a1a79571172010b55272d5ad26badb75b913cf",  # fix/thesis-apply-edits (Semantic truth repair: Watermark P225, 15% mask P303, Degradation P401, PCGrad P442)
     }
 
     # Verify that approved edit ledger exists if modified

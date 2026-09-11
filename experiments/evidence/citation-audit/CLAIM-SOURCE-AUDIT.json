@@ -45,9 +45,10 @@
       4
     ],
     "source_title": "MITRE ATT&CK: Enterprise Tactics and Techniques Matrix (v19.1)",
-    "support_status": "DIRECT_SUPPORT",
-    "source_locator": "MITRE ATT&CK -> Get Started -> Key Concepts (Tactics represent 'why', Techniques represent 'how')",
-    "action": "KEEP"
+    "support_status": "AUTHOR_SYNTHESIS",
+    "source_locator": "MITRE ATT&CK -> Get Started -> Key Concepts (Tactics represent 'why', Techniques represent 'how') | Khung Hợp đồng Biểu diễn là đề xuất phương pháp luận của luận văn.",
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS"
   },
   {
     "claim_id": "CLM-005",
@@ -58,23 +59,39 @@
       5
     ],
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions; Provenance-based Intrusion Detection Systems: A Survey",
-    "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs) | Zipperle et al., ACM CSUR 2023, Sec. 2 & 3, Article 135 (Provenance-based IDS architecture and taxonomy)",
-    "action": "KEEP"
+    "support_status": "AUTHOR_SYNTHESIS",
+    "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 | Zipperle et al., ACM CSUR 2023, Sec. 2 & 3, Article 135 | Phân loại ba nhóm telemetry là tổng hợp cấu trúc của luận văn.",
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS"
   },
   {
-    "claim_id": "CLM-006",
-    "document_location": "Chương (Đoạn P97, câu S2)",
-    "claim_text": "Nguồn dữ liệu này ghi nhận trực tiếp các sự kiện ở mức nhân hệ điều hành thông qua việc chặn bắt các lời gọi hệ thống (syscalls), bao gồm: khởi tạo tiến trình (execve, CreateProcess thuộc Sysmon Event ID 1), nạp thư viện động (ImageLoaded thuộc Sysmon Event ID 7), thao tác tệp tin (open, unlink, FileCreate thuộc Sysmon Event ID 11), sửa đổi cấu hình registry (RegSetValue thuộc Sysmon Event ID 13), cùng các thao tác mở và kết nối socket mạng (connect, accept - Sysmon Event ID 3) theo đặc tả kỹ thuật chính thức của Microsoft Sysinternals Sysmon (Russinovich & Garnier) [41]; đồng thời các nhật ký kiểm toán này được sử dụng làm nguồn dữ liệu nguồn gốc (provenance telemetry) phục vụ điều tra số [2], [1].",
+    "claim_id": "CLM-006A",
+    "document_location": "Chương 1 (Đoạn P97, câu S2)",
+    "claim_text": "Trên các hệ thống Linux, các cơ chế kiểm toán mức nhân như Linux Auditd và eBPF chặn bắt trực tiếp các lời gọi hệ thống (system calls) cốt lõi phục vụ điều tra số và xây dựng đồ thị nguồn gốc [1], [2], bao gồm: khởi tạo tiến trình (execve), thao tác tệp tin (open, openat, unlink), cùng các thao tác mở và kết nối socket mạng (connect, accept).",
     "citation_numbers": [
       1,
-      2,
+      2
+    ],
+    "source_title": "Inam et al. (IEEE S&P 2023) & Michael et al. (ACSAC 2020)",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "support_status": "DIRECT_SUPPORT",
+    "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, syscalls and audit graphs) | Michael et al., ACSAC 2020, Sec. 3 & 4, pp. 189-202 (Approximated audit logs and forensic validity)",
+    "action": "VALIDATED"
+  },
+  {
+    "claim_id": "CLM-006B",
+    "document_location": "Chương 1 (Đoạn P97, câu S3)",
+    "claim_text": "Trong khi đó, trên môi trường Windows, Microsoft Sysinternals Sysmon cung cấp viễn trắc an ninh mức hệ điều hành thông qua các sự kiện định danh chuẩn hóa theo đặc tả kỹ thuật chính thức của Russinovich & Garnier [41], tiêu biểu gồm: khởi tạo tiến trình (ProcessCreate - Event ID 1), kết nối mạng (NetworkConnect - Event ID 3), nạp thư viện động (ImageLoaded - Event ID 7), tạo tệp tin (FileCreate - Event ID 11), và thao tác cấu hình registry (RegistryEvent - Event ID 13).",
+    "citation_numbers": [
       41
     ],
-    "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions; On the Forensic Validity of Approximated Audit Logs (and 1 others)",
+    "source_title": "Russinovich & Garnier (Microsoft Learn 2026)",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
     "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs) | Michael et al., ACSAC 2020, Sec. 3 & 4, pp. 189-202 (Approximated audit logs and forensic validity) | Russinovich & Garnier, Microsoft Learn, 2026 -> Sysmon Events (Event ID 1, 3, 7, 11, 13)",
-    "action": "KEEP"
+    "source_locator": "Russinovich & Garnier, Microsoft Learn, 2026 -> Sysmon Events (Event ID 1, 3, 7, 11, 13)",
+    "action": "VALIDATED"
   },
   {
     "claim_id": "CLM-007",
@@ -252,9 +269,10 @@
       33
     ],
     "source_title": "Membership Inference Attacks Against Machine Learning Models; Guidelines for Evaluating Differential Privacy Guarantees (and 1 others)",
-    "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Shokri et al., IEEE S&P 2017, Sec. II & III, pp. 3-18 (Membership Inference Attacks against machine learning models) | Near et al., NIST Special Publication 800-226, 2025, Sec. 2 & 3 (Evaluating differential privacy guarantees) | Fredrikson et al., ACM CCS 2015, Sec. 3 & 4, pp. 1322-1333 (Model Inversion attacks exploiting confidence information)",
-    "action": "KEEP"
+    "support_status": "AUTHOR_SYNTHESIS",
+    "source_locator": "Khung phân định bốn cấp độ an toàn thông tin là đóng góp tổng hợp phương pháp luận của luận văn; tích hợp kỹ thuật MIA [16] (Shokri et al.), Model Inversion [33] (Fredrikson et al.), và Differential Privacy [17] (NIST SP 800-226).",
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS"
   },
   {
     "claim_id": "CLM-021",
@@ -266,9 +284,12 @@
       33
     ],
     "source_title": "Membership Inference Attacks Against Machine Learning Models; Guidelines for Evaluating Differential Privacy Guarantees (and 1 others)",
-    "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Shokri et al., IEEE S&P 2017, Sec. II & III, pp. 3-18 (Membership Inference Attacks against machine learning models) | Near et al., NIST Special Publication 800-226, 2025, Sec. 2 & 3 (Evaluating differential privacy guarantees) | Fredrikson et al., ACM CCS 2015, Sec. 3 & 4, pp. 1322-1333 (Model Inversion attacks exploiting confidence information)",
-    "action": "KEEP"
+    "support_status": "AUTHOR_SYNTHESIS",
+    "source_locator": "Kiểm chứng thực nghiệm độc lập MIA [16], Model Inversion [33] và khung định lượng độ mất mát quyền riêng tư vi sai DP [17] là quy trình thực nghiệm của đề tài.",
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "CODEBASE",
+    "code_locator": "src/research_agent/experiments/protocols/weak_attribution_evaluator.py:L1-L85"
   },
   {
     "claim_id": "CLM-022",
@@ -278,9 +299,10 @@
       8
     ],
     "source_title": "Dos and Don'ts of Machine Learning in Computer Security",
-    "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Arp et al., USENIX Security 2022, Sec. 3 & 4, pp. 3971-3988 (Pitfalls in ML security: sampling bias, data snooping, base rate fallacy)",
-    "action": "KEEP"
+    "support_status": "AUTHOR_SYNTHESIS",
+    "source_locator": "Nguyên tắc EXCLUDE thiết lập ràng buộc phủ định chống đường tắt là thiết kế của đề tài, kế thừa phân tích cạm bẫy rò rỉ từ Arp et al. [8].",
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS"
   },
   {
     "claim_id": "CLM-023",
@@ -290,9 +312,10 @@
       10
     ],
     "source_title": "VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning",
-    "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Bardes et al., ICLR 2022, Sec. 3, Eq. 1-4 (Variance-Invariance-Covariance Regularization preventing representation collapse)",
-    "action": "KEEP"
+    "support_status": "AUTHOR_SYNTHESIS",
+    "source_locator": "Thiết kế các hàm mục tiêu tự giám sát liên kết với ràng buộc hợp đồng biểu diễn là đóng góp phương pháp luận của đề tài, tích hợp nguyên lý chống suy thoái biểu diễn từ Bardes et al. [10].",
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS"
   },
   {
     "claim_id": "CLM-024",
@@ -329,9 +352,10 @@
       6
     ],
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions; Provenance-based Intrusion Detection Systems: A Survey (and 1 others)",
-    "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs) | Zipperle et al., ACM CSUR 2023, Sec. 2 & 3, Article 135 (Provenance-based IDS architecture and taxonomy) | Zhu et al., ICSE-SEIP 2019, Sec. 3 & 4, pp. 121-130 (Automated log parsers: Drain, Spell, LenMa, AEL and benchmark evaluation)",
-    "action": "KEEP"
+    "support_status": "AUTHOR_SYNTHESIS",
+    "source_locator": "Khung khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log là đóng góp tổng quan của luận văn, tổng hợp từ Inam et al. [1], Zipperle et al. [5], và Zhu et al. [6].",
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS"
   },
   {
     "claim_id": "CLM-027",
@@ -349,27 +373,27 @@
   {
     "claim_id": "CLM-028",
     "document_location": "Chương (Đoạn P142, câu S0)",
-    "claim_text": "Trong giai đoạn phân tích cú pháp, nhiều thuật toán tiêu biểu đã được phát triển nhằm tối ưu hóa tốc độ xử lý  [6]: (1) Drain  [6] sử dụng cấu trúc cây phân tích có độ sâu cố định (Fixed-Depth Parse Tree) để nhóm các dòng log dựa trên độ dài chuỗi và các từ khóa tiền tố, đạt tốc độ phân tích xấp xỉ tuyến tính O(N) đối với luồng dữ liệu lớn; (2) Spell  [6] áp dụng thuật toán tìm chuỗi con chung dài nhất (Longest Common Subsequence - LCS) theo cơ chế dòng để trích xuất động các thành phần tĩnh của thông điệp log; (3) LenMa và AEL  [6],  [7] lần lượt khai thác chiều dài các từ tố và tần suất xuất hiện của từ khóa để phân cụm và tách biến số ra khỏi chuỗi mẫu.",
+    "claim_text": "Trong giai đoạn phân tích cú pháp, nhiều thuật toán tiêu biểu đã được phát triển nhằm tối ưu hóa tốc độ xử lý  [6]: (1) Drain  [6] sử dụng cấu trúc cây phân tích có độ sâu cố định (Fixed-Depth Parse Tree) để nhóm các dòng log dựa trên độ dài chuỗi và các từ khóa tiền tố; trong kết quả đo chuẩn thực nghiệm của Zhu et al., thời gian xử lý của Drain tăng gần tuyến tính theo kích thước tập dữ liệu log đối với luồng dữ liệu lớn; (2) Spell  [6] áp dụng thuật toán tìm chuỗi con chung dài nhất (Longest Common Subsequence - LCS) theo cơ chế dòng để trích xuất động các thành phần tĩnh của thông điệp log; (3) LenMa và AEL  [6],  [7] lần lượt khai thác chiều dài các từ tố và tần suất xuất hiện của từ khóa để phân cụm và tách biến số ra khỏi chuỗi mẫu.",
     "citation_numbers": [
       6,
       7
     ],
     "source_title": "Tools and Benchmarks for Automated Log Parsing; A Large-Scale Evaluation for Log Parsing Techniques: How Far Are We?",
     "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Zhu et al., ICSE-SEIP 2019, Sec. 3 & 4, pp. 121-130 (Automated log parsers: Drain, Spell, LenMa, AEL and benchmark evaluation) | Jiang et al., ISSTA 2024, Sec. 3 & 5, pp. 223-234 (Evaluation of log parsers: efficiency, robustness and template matching)",
-    "action": "KEEP"
+    "source_locator": "Zhu et al., ICSE-SEIP 2019, Sec. 3 & 4, pp. 121-130 (Automated log parsers: Drain empirical near-linear time scaling across log sizes, Spell, LenMa, AEL benchmark evaluation) | Jiang et al., ISSTA 2024, Sec. 3 & 5, pp. 223-234",
+    "action": "KEEP",
+    "claim_class": "LITERATURE_DIRECT"
   },
   {
     "claim_id": "CLM-029",
     "document_location": "Chương (Đoạn P145, câu S1)",
-    "claim_text": "Bên cạnh đếm tần suất đơn thuần, các trọng số TF-IDF (Term Frequency - Inverse Document Frequency) hoặc độ hỗn loạn thông tin Shannon (Information Entropy) cũng được áp dụng nhằm nhấn mạnh các sự kiện hiếm gặp  [6]:",
-    "citation_numbers": [
-      6
-    ],
-    "source_title": "Tools and Benchmarks for Automated Log Parsing",
-    "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Zhu et al., ICSE-SEIP 2019, Sec. 3 & 4, pp. 121-130 (Automated log parsers: Drain, Spell, LenMa, AEL and benchmark evaluation)",
-    "action": "KEEP"
+    "claim_text": "Bên cạnh đếm tần suất đơn thuần, trong các phương pháp tiếp cận thống kê truyền thống, trọng số TF-IDF (Term Frequency - Inverse Document Frequency) hoặc độ hỗn loạn thông tin Shannon (Information Entropy) thường được vận dụng nhằm cân bằng và nhấn mạnh các sự kiện hiếm gặp:",
+    "citation_numbers": [],
+    "source_title": "Tổng quan phương pháp thống kê kinh điển",
+    "support_status": "AUTHOR_SYNTHESIS",
+    "source_locator": "Tổng hợp phương pháp luận nền tảng về trích xuất đặc trưng thống kê kinh điển trong phân tích log; không gán nhãn sai cho Ref [6].",
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS"
   },
   {
     "claim_id": "CLM-030",
@@ -824,15 +848,16 @@
   {
     "claim_id": "CLM-064",
     "document_location": "Chương (Đoạn P225, câu S0)",
-    "claim_text": "Xử lý hiện tượng sự kiện đến muộn hoặc xáo trộn thứ tự (Out-of-Order Events) phát sinh từ độ trễ mạng thu thập telemetry  [1],  [25], hệ thống áp dụng nguyên tắc xử lý theo thời gian sự kiện kết hợp cơ chế mốc ngắt thời gian (Event-Time Watermark):",
+    "claim_text": "Xử lý hiện tượng sự kiện đến muộn hoặc xáo trộn thứ tự (Out-of-Order Events) phát sinh từ độ trễ mạng thu thập telemetry  [1],  [25], chuyên đề đề xuất nguyên tắc xử lý theo thời gian sự kiện kết hợp cơ chế mốc ngắt thời gian (Event-Time Watermark):",
     "citation_numbers": [
       1,
       25
     ],
     "source_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions; NODLINK: An Online System for Fine-Grained APT Attack Detection and Investigation",
-    "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, log heterogeneity and audit graphs) | Li et al., NDSS 2024, Sec. 3 & 4 (NODLINK: Online fine-grained APT attack detection via Steiner Tree problem formulation)",
-    "action": "KEEP"
+    "support_status": "AUTHOR_SYNTHESIS",
+    "source_locator": "Inam et al. [1] & Li et al. [25] cung cấp bằng chứng y văn về thách thức độ trễ mạng và thứ tự sự kiện trong đồ thị nguồn gốc; Cơ chế Event-Time Watermark là giải pháp phương pháp luận do chuyên đề đề xuất.",
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS"
   },
   {
     "claim_id": "CLM-065",
@@ -884,28 +909,58 @@
     "action": "KEEP"
   },
   {
-    "claim_id": "CLM-069",
-    "document_location": "Chương (Đoạn P300, câu S0)",
-    "claim_text": "Trong đó:  là các ma trận nhúng kiểu sự kiện và hành động tĩnh;  là nhúng thực thể chủ thể và đối tượng theo không gian giả danh có kiểm soát;  là nhúng các token tham số an ninh được giữ lại;  là mã hóa vị trí rời rạc; và  là hàm mã hóa thời gian liên tục điều hòa (Harmonic Time Encoding) dạng , kế thừa nguyên lý mã hóa thời gian liên tục trên đồ thị động  [35], cung cấp biểu diễn học được của khoảng thời gian tương đối  giữa các hành vi liên tiếp. Toàn bộ các siêu tham số cấu trúc như số tầng encoder , số đầu chú ý , số chiều ẩn , số chiều lan truyền  và tỷ lệ dropout  đều được xác lập dựa trên tập huấn luyện và kiểm định (Train/Validation), không sử dụng nhãn kiểm tra.",
+    "claim_id": "CLM-069A",
+    "document_location": "Chương 2 (Đoạn P300, câu S0)",
+    "claim_text": "Hàm mã hóa thời gian liên tục điều hòa (Harmonic Time Encoding) dạng Phi(Delta t) = [cos(w_1 Delta t), sin(w_1 Delta t), ...]^T kế thừa nguyên lý mã hóa thời gian liên tục trên đồ thị động [35], cung cấp biểu diễn học được của khoảng thời gian tương đối giữa các hành vi liên tiếp.",
     "citation_numbers": [
       35
     ],
-    "source_title": "Inductive Representation Learning on Temporal Graphs",
+    "source_title": "Xu et al. (ICLR 2020)",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
     "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Xu et al., ICLR 2020, Sec. 3 & 4 (Inductive Representation Learning on Temporal Graphs)",
-    "action": "KEEP"
+    "source_locator": "Xu et al., ICLR 2020, Sec. 3 & 4 (Inductive Representation Learning on Temporal Graphs: functional harmonic time encoding)",
+    "action": "VALIDATED"
   },
   {
-    "claim_id": "CLM-070",
-    "document_location": "Chương (Đoạn P303, câu S0)",
-    "claim_text": "Tác vụ dự đoán sự kiện bị che (Masked Event Prediction, ): Thích ứng từ phương pháp LogBERT  [20], che ngẫu nhiên tập chỉ số sự kiện  theo tỷ lệ che  (trong đó giá trị 15% được sử dụng làm điểm khởi tạo tham chiếu và được tinh chỉnh, khóa cố định trên tập Train/Validation trước khi đánh giá trên tập Test).",
+    "claim_id": "CLM-069B",
+    "document_location": "Chương 2 (Đoạn P300, câu S1)",
+    "claim_text": "Toàn bộ các siêu tham số cấu trúc như số tầng encoder L=4, số đầu chú ý H=4, số chiều ẩn d=128, số chiều lan truyền d_ff=512 và tỷ lệ dropout p=0.10 đều được xác lập dựa trên tập huấn luyện và kiểm định (Train/Validation), tuyệt đối không sử dụng nhãn kiểm tra.",
+    "citation_numbers": [],
+    "source_title": "Quy trình thiết lập siêu tham số của luận văn",
+    "claim_class": "IMPLEMENTATION_VERIFIED",
+    "evidence_class": "CODEBASE",
+    "support_status": "VERIFIED_IN_CODE",
+    "code_locator": "src/research_agent/experiments/training/stage_a1_runner.py:L5-L11, L147; src/research_agent/experiments/extractor/sequence_view.py:L45-L66",
+    "artifact_locator": "experiments/protocol/STAGE-A1-TRAINING-CONTRACT.md:L1-L40",
+    "action": "VALIDATED"
+  },
+  {
+    "claim_id": "CLM-070A",
+    "document_location": "Chương 2 (Đoạn P303, câu S0)",
+    "claim_text": "Tác vụ dự đoán sự kiện bị che (Masked Event Prediction, L_MEP): Thích ứng từ phương pháp LogBERT [20], che ngẫu nhiên tập chỉ số sự kiện.",
     "citation_numbers": [
       20
     ],
-    "source_title": "LogBERT: Log Anomaly Detection via BERT",
+    "source_title": "Guo et al. (IJCNN 2021)",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
     "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Guo et al., IJCNN 2021, Sec. III, pp. 1-8 (LogBERT: Masked log event prediction via BERT)",
-    "action": "KEEP"
+    "source_locator": "Guo et al., IJCNN 2021, Sec. III, pp. 1-8 (LogBERT: Masked log event prediction via BERT transformer)",
+    "action": "VALIDATED"
+  },
+  {
+    "claim_id": "CLM-070B",
+    "document_location": "Chương 2 (Đoạn P303, câu S0)",
+    "claim_text": "Trong tác vụ L_MEP, đề tài lựa chọn tỷ lệ che 15% làm điểm khởi tạo tham chiếu kế thừa quy ước kinh điển của BERT và khóa cố định trên tập Train/Validation trước khi đánh giá trên tập Test.",
+    "citation_numbers": [],
+    "source_title": "Quy ước khởi tạo tham số của luận văn",
+    "claim_class": "IMPLEMENTATION_VERIFIED",
+    "evidence_class": "CODEBASE",
+    "support_status": "VERIFIED_IN_CODE",
+    "code_locator": "src/research_agent/experiments/training/stage_a1_runner.py:L51; src/research_agent/experiments/extractor/sequence_view.py:L164-L185",
+    "artifact_locator": "experiments/reports/STAGE-A1-PRETRAINING-REPORT.md:L51; experiments/protocol/STAGE-A1-TRAINING-CONTRACT.md:L30",
+    "action": "VALIDATED"
   },
   {
     "claim_id": "CLM-071",
@@ -944,9 +999,10 @@
       26
     ],
     "source_title": "MAGIC: Detecting Advanced Persistent Threats via Masked Graph Representation Learning",
-    "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Jia et al., USENIX Security 2024, Sec. 4 & 5, pp. 5197-5214 (presentation/jia-zian: MAGIC Masked graph representation learning and model adaptation)",
-    "action": "KEEP"
+    "support_status": "AUTHOR_SYNTHESIS",
+    "source_locator": "Jia et al., USENIX Security 2024, Sec. 4 & 5, pp. 5197-5214 (presentation/jia-zian: MAGIC) | Mở rộng cho đồ thị nguồn gốc động theo thời gian (Adapted / Ours) là đóng góp phương pháp luận của đề tài.",
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS"
   },
   {
     "claim_id": "CLM-074",
@@ -1030,26 +1086,28 @@
   {
     "claim_id": "CLM-080",
     "document_location": "Chương (Đoạn P401, câu S1)",
-    "claim_text": "Chuyên đề xử lý vấn đề này theo khung tiếp cận của CPM-Nets  [39] kết hợp cơ chế mặt nạ khả dụng và suy thoái duyên dáng (Graceful Degradation) do tác giả đề xuất:",
+    "claim_text": "Chuyên đề xử lý vấn đề này theo khung tiếp cận của CPM-Nets  [39] kết hợp cơ chế mặt nạ khả dụng và suy thoái duyên dáng (Graceful Degradation) do chuyên đề đề xuất:",
     "citation_numbers": [
       39
     ],
     "source_title": "CPM-Nets: Cross Partial Multi-View Networks",
-    "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Zhang et al., NeurIPS 2019, Sec. 3, pp. 557-567 (NeurIPS hash: 11b9842e0a271ff252c1903e7132cd68: CPM-Nets Cross Partial Multi-View Networks)",
-    "action": "KEEP"
+    "support_status": "AUTHOR_SYNTHESIS",
+    "source_locator": "Zhang et al., NeurIPS 2019, Sec. 3, pp. 557-567 (CPM-Nets) | Cơ chế mặt nạ khả dụng và suy thoái duyên dáng (Graceful Degradation) là đề xuất phương pháp luận của chuyên đề.",
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS"
   },
   {
     "claim_id": "CLM-081",
     "document_location": "Chương (Đoạn P442, câu S1)",
-    "claim_text": "Khi tối ưu hóa liên hợp, kỹ thuật PCGrad  [40] được áp dụng chặt chẽ trên tập tham số nhận đồng thời hai luồng gradient:",
+    "claim_text": "Khi tối ưu hóa liên hợp, chuyên đề đề xuất áp dụng kỹ thuật phẫu thuật gradient PCGrad  [40] trên tập tham số nhận đồng thời hai luồng gradient:",
     "citation_numbers": [
       40
     ],
     "source_title": "Gradient Surgery for Multi-Task Learning",
-    "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Yu et al., NeurIPS 2020, Sec. 3, pp. 5824-5836 (NeurIPS hash: 3fe78a8acf5fda99de95303940a2420c: PCGrad Gradient Surgery for Multi-Task Learning)",
-    "action": "KEEP"
+    "support_status": "AUTHOR_SYNTHESIS",
+    "source_locator": "Yu et al., NeurIPS 2020, Sec. 3, pp. 5824-5836 (PCGrad: Gradient Surgery for Multi-Task Learning) | Đề xuất áp dụng kỹ thuật PCGrad trong tối ưu hóa liên hợp là thiết kế của chuyên đề.",
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS"
   },
   {
     "claim_id": "CLM-082",
@@ -1061,7 +1119,8 @@
     "source_title": "Attention-based Deep Multiple Instance Learning",
     "support_status": "AUTHOR_SYNTHESIS",
     "source_locator": "Đóng góp và lựa chọn thiết kế phương pháp luận của luận văn, kế thừa và tích hợp các nguyên lý từ [15].",
-    "action": "KEEP"
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS"
   },
   {
     "claim_id": "CLM-083",
@@ -1071,9 +1130,13 @@
       8
     ],
     "source_title": "Dos and Don'ts of Machine Learning in Computer Security",
-    "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Arp et al., USENIX Security 2022, Sec. 3 & 4, pp. 3971-3988 (Pitfalls in ML security: sampling bias, data snooping, base rate fallacy)",
-    "action": "KEEP"
+    "support_status": "AUTHOR_SYNTHESIS",
+    "source_locator": "Arp et al., USENIX Security 2022, Sec. 3 & 4, pp. 3971-3988 (Pitfalls in ML security: sampling bias, data snooping, base rate fallacy) | Quy trình Strict Causal Temporal Split là giao thức thực hiện của đề tài.",
+    "action": "KEEP",
+    "claim_class": "AUTHOR_SYNTHESIS",
+    "evidence_class": "CODEBASE",
+    "code_locator": "src/research_agent/experiments/data/data_contract.py:L25-L56; src/research_agent/experiments/training/stage_a1_runner.py:L41-L44",
+    "artifact_locator": "experiments/plans/STAGE-A2-FINAL-12-EPOCH-AUTHORITY.json:L57; research_specs/roadmap/controls.yaml:L4-L10"
   },
   {
     "claim_id": "CLM-084",
