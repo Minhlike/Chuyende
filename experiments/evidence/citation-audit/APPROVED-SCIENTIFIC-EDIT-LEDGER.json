@@ -20,12 +20,12 @@
       3
     ],
     "old_text_sha256": "9731609d3ab53e4c831597462ef0fad8d069fa2206c7234e54964694a52dbb09",
-    "new_text_sha256": "72b0308e68f465a3962f516f314fd352366c2197f5edb20b256b97f984ccf25c",
+    "new_text_sha256": "341f4d00be6c70ba626c38bfeb95cbcb06e69ca571c75665369740dac3911731",
     "old_text": [
       "Trong các Trung tâm Điều hành An ninh mạng (Security Operations Center - SOC) hiện đại, dữ liệu nhật ký hệ thống (system logs) và nhật ký kiểm toán (audit logs) đóng vai trò là nguồn bằng chứng trung tâm phục vụ phát hiện, điều tra và ứng phó các chiến dịch tấn công có chủ đích (Advanced Persistent Threats - APT) [1]. Khác với văn bản ngôn ngữ tự nhiên thông thường hoặc tín hiệu thị giác máy tính, dữ liệu log sở hữu cấu trúc bán hình thức (semi-structured), mang tính phụ thuộc thời gian nghiêm ngặt, phản ánh các quan hệ phụ thuộc thực thi giữa các tiến trình và tài nguyên hệ điều hành, đồng thời chứa đựng các ngữ nghĩa an ninh đặc thù [2], [3]. Mục 1.1 tập trung hình thức hóa bài toán biểu diễn đặc trưng log phục vụ phát hiện tấn công đa giai đoạn, phân tích bản chất không gian dữ liệu doanh nghiệp, xác lập mô hình hành vi phi tuyến tính trên ma trận MITRE ATT&CK (Phiên bản Enterprise v19.1, 28/04/2026) [4] và thiết lập khung Hợp đồng Biểu diễn (Representation Contract) nhằm bảo toàn các bất biến an toàn cho không gian vector đặc trưng ."
     ],
     "new_text": [
-      "Trong các Trung tâm Điều hành An ninh mạng (Security Operations Center, SOC) hiện đại, dữ liệu nhật ký hệ thống và nhật ký kiểm toán đóng vai trò là nguồn bằng chứng trung tâm phục vụ phát hiện, điều tra và ứng phó các chiến dịch tấn công có chủ đích (Advanced Persistent Threats, APT) [1]. Khác với văn bản ngôn ngữ tự nhiên thông thường hoặc tín hiệu thị giác máy tính, dữ liệu log sở hữu cấu trúc bán cấu trúc, mang tính phụ thuộc thời gian nghiêm ngặt, phản ánh các quan hệ phụ thuộc thực thi giữa các tiến trình và tài nguyên hệ điều hành, đồng thời chứa đựng các ngữ nghĩa an ninh đặc thù [2], [3]. Mục 1.1 tập trung hình thức hóa bài toán biểu diễn đặc trưng log phục vụ phát hiện tấn công đa giai đoạn, phân tích bản chất không gian dữ liệu doanh nghiệp, xác lập mô hình hành vi phi tuyến tính trên ma trận MITRE ATT&CK [4] và thiết lập khung Hợp đồng Biểu diễn nhằm bảo toàn các bất biến an toàn cho không gian vector đặc trưng ."
+      "Trong các trung tâm điều hành an ninh mạng (SOC), dữ liệu nhật ký hệ điều hành và nhật ký kiểm toán là nguồn bằng chứng trung tâm phục vụ phát hiện, điều tra và đối phó các cuộc tấn công có chủ đích kéo dài [1]. Khác với văn bản ngôn ngữ tự nhiên hay tín hiệu hình ảnh, dữ liệu nhật ký có cấu trúc bán cấu trúc, phụ thuộc thứ tự thời gian, phản ánh quan hệ phụ thuộc thực thi giữa các tiến trình và tài nguyên hệ thống, đồng thời mang ngữ nghĩa an ninh chuyên biệt [2], [3]. Mục 1.1 hình thức hóa bài toán biểu diễn đặc trưng nhật ký phục vụ phát hiện tấn công đa giai đoạn, phân tích đặc tính không gian dữ liệu doanh nghiệp, xác lập mô hình hành vi dựa trên ma trận MITRE ATT&CK [4] và thiết lập Hợp đồng Biểu diễn nhằm bảo toàn các ràng buộc an toàn cho không gian vector đặc trưng."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
     "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
@@ -59,12 +59,12 @@
       5
     ],
     "old_text_sha256": "210db47bcdc6df3c0e7a4ca60db7641bbbe58877f74077f0068eb07f041dcc12",
-    "new_text_sha256": "4228c6d7e8fb1ec9fd813db751b5bce5ef251c26f455981cf77349b09404268c",
+    "new_text_sha256": "f2e100b669820d8fcf1fefb0e8cc35087ac605a9bd10e8e50f8dd5da93f16ac4",
     "old_text": [
       "Không gian dữ liệu nhật ký trong môi trường mạng doanh nghiệp được tổng hợp từ ba nhóm nguồn telemetry chính với cấu trúc và định dạng không đồng nhất [1], [5]. Nhóm thứ nhất là nhật ký kiểm toán máy chủ (Host Audit Logs), bao gồm Linux Auditd, Windows Event Log / Sysmon và Linux eBPF (Extended Berkeley Packet Filter). Nguồn dữ liệu này ghi nhận trực tiếp các sự kiện ở mức nhân hệ điều hành thông qua việc chặn bắt các lời gọi hệ thống (syscalls), bao gồm: khởi tạo tiến trình (execve, CreateProcess - Sysmon Event ID 1), nạp thư viện động (ImageLoaded - Sysmon Event ID 7), thao tác tệp tin (open, unlink, FileCreate - Sysmon Event ID 11), sửa đổi cấu hình registry (RegSetValue - Sysmon Event ID 13), cùng các thao tác mở và kết nối socket mạng (connect, accept - Sysmon Event ID 3) [2], [1]. Nhóm thứ hai là nhật ký luồng mạng (Network Flow & Protocol Logs), được thu thập từ Zeek, Suricata hoặc NetFlow/IPFIX, cung cấp siêu dữ liệu kết nối giữa các nút mạng, giao dịch DNS, chứng chỉ TLS/SSL và thông lượng gói tin. Nhóm thứ ba là nhật ký ứng dụng và dịch vụ (Application & Service Logs), phát sinh từ máy chủ web (Nginx, Apache), cơ sở dữ liệu, dịch vụ phân tán (HDFS) cùng hệ thống điều phối container (Kubernetes Audit Logs) [6], [7]."
     ],
     "new_text": [
-      "Không gian dữ liệu nhật ký trong môi trường mạng doanh nghiệp được tổng hợp từ ba nhóm nguồn telemetry chính với cấu trúc và định dạng không đồng nhất [1], [5]. Nhóm thứ nhất là nhật ký kiểm toán máy chủ và viễn trắc nguồn gốc (Host Audit & Provenance Telemetry). Trên các hệ thống Linux, các cơ chế thu thập viễn trắc nguồn gốc và kiểm toán mức nhân (như Linux Auditd hoặc eBPF) ghi nhận các sự kiện lời gọi hệ thống (system calls) — tiêu biểu như khởi tạo tiến trình (execve), thao tác tệp tin (open, openat, unlink) và kết nối socket mạng (connect, accept) — để phục vụ điều tra số và xây dựng đồ thị quan hệ nhân quả [2], [1]. Trong khi đó, trên môi trường Windows, Microsoft Sysinternals Sysmon cung cấp viễn trắc an ninh mức hệ điều hành thông qua các sự kiện định danh chuẩn hóa theo đặc tả kỹ thuật chính thức của Russinovich & Garnier [41], tiêu biểu gồm: khởi tạo tiến trình (ProcessCreate - Event ID 1), kết nối mạng (NetworkConnect - Event ID 3), nạp thư viện động (ImageLoaded - Event ID 7), tạo tệp tin (FileCreate - Event ID 11), và thao tác cấu hình registry (RegistryEvent - Event ID 13). Nhóm thứ hai là nhật ký luồng mạng (Network Flow & Protocol Logs), được thu thập từ Zeek, Suricata hoặc NetFlow/IPFIX, cung cấp siêu dữ liệu kết nối giữa các nút mạng, giao dịch DNS, chứng chỉ TLS/SSL và thông lượng gói tin. Nhóm thứ ba là nhật ký ứng dụng và dịch vụ phân tán (Application & Distributed System Logs), phát sinh từ máy chủ web (Apache), hệ thống tệp phân tán (HDFS) cùng các dịch vụ tính toán cụm thuộc bộ benchmark LogHub [6], [7]."
+      "Không gian dữ liệu nhật ký trong môi trường mạng doanh nghiệp được tổng hợp từ ba nhóm nguồn dữ liệu chính với cấu trúc và định dạng không đồng nhất [1], [5]. Nhóm thứ nhất là nhật ký kiểm toán máy chủ và viễn trắc nguồn gốc. Trên các hệ thống Linux, các cơ chế thu thập viễn trắc nguồn gốc và kiểm toán mức nhân (như Linux Auditd hoặc eBPF) ghi nhận các sự kiện lời gọi hệ thống (tiêu biểu như khởi tạo tiến trình execve, thao tác tệp tin open, openat, unlink và kết nối mạng connect, accept) để phục vụ điều tra số và xây dựng đồ thị quan hệ nhân quả [2], [1]. Trong khi đó, trên môi trường Windows, Microsoft Sysinternals Sysmon cung cấp viễn trắc an ninh mức hệ điều hành thông qua các sự kiện định danh chuẩn hóa theo đặc tả kỹ thuật chính thức của Russinovich & Garnier [41], tiêu biểu gồm: khởi tạo tiến trình (ProcessCreate - Event ID 1), kết nối mạng (NetworkConnect - Event ID 3), nạp thư viện động (ImageLoaded - Event ID 7), tạo tệp tin (FileCreate - Event ID 11), và thao tác cấu hình registry (RegistryEvent - Event ID 13). Nhóm thứ hai là nhật ký luồng mạng, được thu thập từ Zeek, Suricata hoặc NetFlow/IPFIX, cung cấp siêu dữ liệu kết nối giữa các nút mạng, giao dịch DNS, chứng chỉ TLS/SSL và thông lượng gói tin. Nhóm thứ ba là nhật ký ứng dụng và dịch vụ phân tán, phát sinh từ máy chủ web Apache, hệ thống tệp phân tán HDFS cùng các dịch vụ tính toán cụm thuộc bộ benchmark LogHub [6], [7]."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
     "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
@@ -83,38 +83,46 @@
     "opcode": "replace",
     "base_indices": [
       8,
-      10
+      14
     ],
     "base_paragraph_indices": [
       8,
-      10
+      14
     ],
     "current_indices": [
       8,
-      10
+      14
     ],
     "current_paragraph_indices": [
       8,
-      10
+      14
     ],
-    "old_text_sha256": "48b512ba42522ba914f85fb1dcd066a412ed8eef5d7fe551525fe43922dc8f11",
-    "new_text_sha256": "41ced47c03770463d89762b4f3790e52d2aeaaad6eb4a84a4e60376e8571aeef",
+    "old_text_sha256": "238456f5214df6ba1e6d0123f35db0d0b5f281c485d71cfbf2e543b706477adf",
+    "new_text_sha256": "b68bdf3e6fb77984ea88d7baa32e20642d4db9ce35bdfc106c1bba1e94c094d2",
     "old_text": [
       "Bên cạnh tính dị thể, dữ liệu log doanh nghiệp chịu áp lực vận hành về mặt thông lượng và tỷ lệ phân bố nhãn [8], [3]. Trong các môi trường mạng lớn, hệ thống tiếp nhận luồng sự kiện liên tục với tốc độ cao, đòi hỏi thuật toán biểu diễn đặc trưng phải xử lý theo cơ chế dòng (streaming) với độ phức tạp tính toán tuyến tính O(N) mà không đòi hỏi lưu giữ toàn bộ lịch sử đồ thị trong bộ nhớ truy cập ngẫu nhiên [9]. Đồng thời, tỷ lệ các dòng log liên quan đến hành vi tấn công trong thực tế thường rất nhỏ so với lưu lượng thông thường, tạo ra sự mất cân bằng nhãn sâu sắc khiến các hàm mất mát học máy thông thường có xu hướng xem nhẹ nhóm thiểu số [8]. Trong khi đó, việc suy thoái không gian vector (sụp đổ chiều biểu diễn) nảy sinh khi các mô hình tự giám sát không áp dụng các cơ chế điều hòa phương sai - hiệp phương sai phù hợp để duy trì tính đa dạng của các chiều đặc trưng [10], [11].",
-      "Dưới góc độ phân phối thời gian, dữ liệu log liên tục biến đổi trong môi trường vận hành dài hạn. Để tránh các sai lệch phương pháp luận khi đánh giá mô hình, chuyên đề phân định tường minh bốn cơ chế trôi dạt dữ liệu (Drift Taxonomy) [8]:"
+      "Dưới góc độ phân phối thời gian, dữ liệu log liên tục biến đổi trong môi trường vận hành dài hạn. Để tránh các sai lệch phương pháp luận khi đánh giá mô hình, chuyên đề phân định tường minh bốn cơ chế trôi dạt dữ liệu (Drift Taxonomy) [8]:",
+      "Concept Drift: Bản chất hành vi và mục đích tấn công thay đổi theo thời gian mặc dù cấu trúc định dạng log không đổi: .",
+      "Template Drift: Việc nâng cấp phần mềm, cập nhật bản vá hoặc thay đổi cấu hình làm biến đổi cấu trúc chuỗi mẫu log: .",
+      "Population Drift: Lưu lượng người dùng, tần suất giao tác nghiệp vụ hoặc cơ cấu dịch vụ hệ thống biến động theo chu kỳ: .",
+      "Representation Drift: Không gian vector tiềm ẩn z bị suy giảm năng lực phân tách do dữ liệu đầu vào trôi dạt khỏi vùng phân phối huấn luyện ban đầu: ."
     ],
     "new_text": [
-      "Bên cạnh tính dị thể, dữ liệu log doanh nghiệp chịu áp lực vận hành về mặt thông lượng và tỷ lệ phân bố nhãn [8], [3]. Trong các môi trường mạng lớn, hệ thống tiếp nhận luồng sự kiện liên tục với tốc độ cao, đặt ra yêu cầu giám sát theo cơ chế thời gian thực (runtime streaming) như cách tiếp cận phác họa đồ thị của UNICORN [9], đồng thời đối mặt với thách thức kiểm soát tài nguyên bộ nhớ khi xử lý các đồ thị nguồn gốc kéo dài. Đồng thời, tỷ lệ các dòng log liên quan đến hành vi tấn công trong thực tế thường rất nhỏ so với lưu lượng thông thường, tạo ra sự mất cân bằng nhãn sâu sắc khiến các hàm mất mát học máy thông thường có xu hướng xem nhẹ nhóm thiểu số [8]. Trong khi đó, việc suy thoái không gian vector (sụp đổ chiều biểu diễn) nảy sinh khi các mô hình tự giám sát không áp dụng các cơ chế điều hòa phương sai và hiệp phương sai phù hợp để duy trì tính đa dạng của các chiều đặc trưng [10], [11].",
-      "Dưới góc độ phân phối thời gian, dữ liệu log liên tục biến đổi trong môi trường vận hành dài hạn. Dựa trên các vấn đề không dừng (non-stationarity) và phương pháp luận đánh giá theo thời gian được thảo luận trong tài liệu liên quan [8], nghiên cứu tổng hợp bốn dạng trôi dạt dữ liệu (Drift Taxonomy) phục vụ khung phân tích của chuyên đề (Tác giả tổng hợp):"
+      "Bên cạnh tính dị thể giữa các nguồn thu thập, dữ liệu nhật ký doanh nghiệp còn chịu áp lực lớn về mặt thông lượng và tỷ lệ phân bố nhãn [8], [3]. Hệ thống tiếp nhận luồng sự kiện liên tục với tốc độ cao, đòi hỏi cơ chế xử lý dòng trực tiếp như cách tiếp cận phác họa đồ thị của UNICORN [9], đồng thời đặt ra yêu cầu kiểm soát tài nguyên bộ nhớ khi theo dõi các đồ thị nguồn gốc kéo dài. Tỷ lệ các dòng nhật ký liên quan đến hành vi tấn công trong thực tế thường rất nhỏ so với lưu lượng vận hành nền, tạo ra sự mất cân bằng dữ liệu sâu sắc khiến các thuật toán học máy thông thường có xu hướng bỏ qua nhóm thiểu số [8]. Bên cạnh đó, hiện tượng sụp đổ chiều biểu diễn có nguy cơ xuất hiện khi mô hình tự giám sát không có cơ chế điều hòa phương sai và hiệp phương sai phù hợp để duy trì độ phong phú của các chiều vector [10], [11].",
+      "Dưới góc độ phân phối thời gian, dữ liệu nhật ký liên tục biến động trong quá trình vận hành dài hạn. Dựa trên bản chất không dừng của luồng dữ liệu và phương pháp luận đánh giá theo thời gian [8], bốn dạng trôi dạt dữ liệu được phân định như sau:",
+      "Một là, trôi dạt khái niệm (Concept Drift): Bản chất hành vi và mục tiêu tấn công thay đổi theo thời gian dù cấu trúc định dạng nhật ký không biến đổi: .",
+      "Hai là, trôi dạt mẫu định dạng (Template Drift): Việc nâng cấp phần mềm, cập nhật bản vá hoặc thay đổi cấu hình làm biến đổi cấu trúc các chuỗi mẫu nhật ký: .",
+      "Ba là, trôi dạt quần thể (Population Drift): Lưu lượng người dùng, tần suất giao tác nghiệp vụ hoặc cơ cấu dịch vụ hệ thống biến động theo chu kỳ vận hành: .",
+      "Bốn là, trôi dạt không gian biểu diễn (Representation Drift): Không gian vector tiềm ẩn z bị suy giảm năng lực phân tách do dữ liệu đầu vào trôi xa khỏi phân phối huấn luyện ban đầu: ."
     ],
-    "category": "CITATION_REPAIR_AND_NORMALIZATION",
-    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
-    "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
+    "category": "PROSE_REFINEMENT",
+    "reason": "Basic-first scientific argumentation and ATTT v2.2 academic prose refinement",
+    "scientific_justification": "Basic-first scientific argumentation and ATTT v2.2 academic prose refinement",
     "claim_ids": [
-      "CIT-INTEGRITY"
+      "PROSE-QUALITY"
     ],
     "associated_claims": [
-      "CIT-INTEGRITY"
+      "PROSE-QUALITY"
     ],
     "verified": true
   },
@@ -178,7 +186,7 @@
       22
     ],
     "old_text_sha256": "8224d1335a09643ab5a1529632b50fa92088210268d5958524a97d2ec023c738",
-    "new_text_sha256": "bbbf60783c98399c7fe8c644e1f55f80dcacd5ae5afcb1ac1e88189a9d0766d7",
+    "new_text_sha256": "58c71bbc33566662359febd602523388276f4cb6847e14a27da89c9a6b85b749",
     "old_text": [
       "Trong đó mỗi chiến thuật (Tactic) đại diện cho mục tiêu chiến thuật của kẻ tấn công (trả lời câu hỏi 'Tại sao') và mỗi kỹ thuật (Technique) đại diện cho phương thức thực thi cụ thể (trả lời câu hỏi 'Làm thế nào'); một chuỗi sự kiện hoặc cây tiến trình có thể đồng thời kích hoạt nhiều nhãn chiến thuật và kỹ thuật tại cùng một thời điểm quan sát [4].",
       "Về mặt dữ liệu thực nghiệm, việc mô hình hóa hành vi tấn công đòi hỏi phải phân định chính xác đặc tính gán nhãn và mức độ hạt (Label Granularity) của từng bộ dữ liệu chuẩn [3]: (1) DARPA Transparent Computing (TC E3/E5) [12] cung cấp dữ liệu kiểm toán hệ thống mức hạt nhân chi tiết với các kịch bản APT thực tế được gán nhãn ở mức độ hạt tiến trình/luồng phụ thuộc (Fine-grained Ground Truth); (2) LANL Unified Host and Network Dataset (Kent, 2015) [13] phản ánh môi trường mạng doanh nghiệp quy mô lớn với hàng tỷ sự kiện xác thực và luồng mạng, trong đó nhãn mặt đất thực nghiệm được xác lập từ tệp redteam.txt ghi nhận các sự kiện xác thực bị xâm nhập cụ thể của đội Red Team (Authentication Compromise Events) theo mốc thời gian và tài khoản/máy chủ xác định; (3) HDFS và BGL Datasets [14], [6] đại diện cho nhật ký hệ thống phân tán và siêu máy tính, được gán nhãn bất thường ở mức khối dữ liệu (Block-level) hoặc mức dòng log đơn lẻ.",
@@ -187,7 +195,7 @@
     "new_text": [
       "Trong đó mỗi chiến thuật (Tactic) đại diện cho mục tiêu chiến thuật của kẻ tấn công (trả lời câu hỏi “Tại sao”) và mỗi kỹ thuật (Technique) đại diện cho phương thức thực thi cụ thể (trả lời câu hỏi “Làm thế nào”); một chuỗi sự kiện hoặc cây tiến trình có thể đồng thời kích hoạt nhiều nhãn chiến thuật và kỹ thuật tại cùng một thời điểm quan sát [4].",
       "Xét theo dữ liệu thực nghiệm, việc mô hình hóa hành vi tấn công đòi hỏi phải phân định chuẩn xác đặc tính gán nhãn và mức độ hạt (Label Granularity) của từng bộ dữ liệu chuẩn [3]: Một là, bộ dữ liệu DARPA Transparent Computing Engagement #3 (TC E3, diễn ra vào tháng 4/2018) [12] và Engagement #5 (TC E5) [43] cung cấp dữ liệu kiểm toán hệ thống mức hạt nhân chi tiết, trong đó các kịch bản tấn công và diễn tập red-team trong các engagement của chương trình được gán nhãn ở mức độ hạt tiến trình/luồng phụ thuộc (Fine-grained Ground Truth); Hai là, bộ dữ liệu LANL Unified Host and Network Dataset (Kent, 2015) [13] phản ánh môi trường mạng doanh nghiệp quy mô lớn với hàng tỷ sự kiện xác thực và luồng mạng, trong đó nhãn mặt đất thực nghiệm được xác lập từ tệp redteam.txt ghi nhận các sự kiện xác thực bị xâm nhập cụ thể của đội Red Team (Authentication Compromise Events) theo mốc thời gian và tài khoản/máy chủ xác định; Ba là, bộ dữ liệu HDFS (Xu et al. [18], LogHub [42]) được gán nhãn bất thường theo vết thực thi ở mức khối dữ liệu (Block-level trace labels [18]), phản ánh trạng thái bình thường hoặc bất thường của một phiên giao tác phân tán hoàn chỉnh; Bốn là, bộ dữ liệu BGL (LogHub [42]) đại diện cho nhật ký siêu máy tính với nhãn bất thường được xác lập ở mức dòng log đơn lẻ (Line-level alert/non-alert labels [42]).",
-      "Đặc biệt, sự xuất hiện của nhiễu từ hành vi quản trị viên (Admin-Noise) là một thách thức vận hành thực tế. Các quản trị viên hệ thống thường xuyên sử dụng các công cụ hợp lệ như PowerShell, SSH, WMI và các lệnh nội bộ tương tự như kỹ thuật kẻ tấn công sử dụng; hiện tượng này được đề tài xác lập dưới dạng một giả thuyết nghiên cứu cần kiểm thử thực nghiệm trong không gian đặc trưng hành vi, đòi hỏi mô hình học sâu không dừng lại ở các mẫu cú pháp bề mặt mà phải nắm bắt được tương quan phụ thuộc cấu trúc và ngữ cảnh thực thi sâu."
+      "Đặc biệt, sự xuất hiện của hoạt động quản trị viên hệ thống là một thách thức vận hành thực tế. Các kỹ sư quản trị thường xuyên sử dụng các công cụ hợp lệ của hệ điều hành như PowerShell, SSH, WMI tương tự như công cụ kẻ tấn công khai thác; hiện tượng này đòi hỏi mô hình học sâu không dừng lại ở các mẫu cú pháp bề mặt mà phải nắm bắt được tương quan phụ thuộc cấu trúc và ngữ cảnh thực thi."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
     "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
@@ -256,16 +264,16 @@
       28
     ],
     "old_text_sha256": "7a24b2e8cddc1015b5c19c9b5b064382b733279144b3d6a8319b60589ed8751f",
-    "new_text_sha256": "8d0358e7d4ec07b3a304479e18b0f2020ce462b177f9fdc123d1a5573013c63b",
+    "new_text_sha256": "75e505f91c988a96f311c5423e74bd9d8fdad0d34d31a2d07043a2f6e3bf2b74",
     "old_text": [
       "1. Nhóm Điều kiện Bảo toàn (PRESERVE - P_preserve): Tập hợp các thuộc tính và tương quan an ninh bắt buộc phải được bảo toàn nguyên vẹn trong không gian vector biểu diễn. Bao gồm: ngữ nghĩa sâu của các tham số dòng lệnh quan trọng, trật tự thời gian và mối quan hệ phụ thuộc thực thi giữa các thực thể hệ thống (Process-File-Socket), cấu trúc tô-pô cục bộ của đồ thị nguồn gốc và các đặc trưng nhận diện chiến thuật/kỹ thuật MITRE ATT&CK.",
       "2. Nhóm Điều kiện Bất biến (INVARIANT - I_invariant): Tập hợp các biến đổi hình thức hoặc biến động môi trường mà không gian vector z phải duy trì tính bất biến. Bao gồm: sự biến đổi cú pháp vô hại của các chuỗi văn bản log (định dạng dấu thời gian, khoảng trắng, thứ tự các trường không mang nghĩa an ninh), sự xáo trộn mã định danh tiến trình ngẫu nhiên (PID/PPID), tên tài khoản người dùng hoặc địa chỉ IP cục bộ không ảnh hưởng đến bản chất luồng thực thi, và các biến động định kỳ về khối lượng lưu lượng nền (Workload fluctuations).",
       "3. Nhóm Điều kiện Triệt tiêu (EXCLUDE - E_exclude): Tập hợp các thông tin giả tạo và biến số ngoài miền bắt buộc phải bị loại bỏ/triệt tiêu khỏi không gian vector z nhằm ngăn ngừa rủi ro học đường tắt (Shortcut Learning) [8]. Bao gồm: các mẫu định dạng đặc thù của môi trường thử nghiệm (Testbed-specific artifacts), các biến số gây rò rỉ phân vùng (Partition-leakage variables như dấu thời gian tuyệt đối của máy thí nghiệm, hostname cố định của môi trường lab) [16], [17], và các đặc trưng tương quan giả (Spurious correlations) có thể khiến mô hình đạt độ chính xác ảo trên tập kiểm thử nhưng thất bại khi triển khai thực tế."
     ],
     "new_text": [
-      "Một là, nhóm Điều kiện Bảo toàn (PRESERVE, P_preserve): Tập hợp các thuộc tính và tương quan an ninh bắt buộc phải được bảo toàn nguyên vẹn trong không gian vector biểu diễn. Bao gồm: ngữ nghĩa sâu của các tham số dòng lệnh quan trọng, trật tự thời gian và mối quan hệ phụ thuộc thực thi giữa các thực thể hệ thống (Process-File-Socket), cấu trúc tô-pô cục bộ của đồ thị nguồn gốc và các đặc trưng nhận diện chiến thuật/kỹ thuật MITRE ATT&CK.",
-      "Hai là, nhóm Điều kiện Bất biến (INVARIANT, I_invariant): Tập hợp các biến đổi hình thức hoặc biến động môi trường mà không gian vector z phải duy trì tính bất biến. Bao gồm: sự biến đổi cú pháp vô hại của các chuỗi văn bản log (định dạng dấu thời gian, khoảng trắng, thứ tự các trường không mang nghĩa an ninh), sự xáo trộn mã định danh tiến trình ngẫu nhiên (PID/PPID), tên tài khoản người dùng hoặc địa chỉ IP cục bộ không ảnh hưởng đến bản chất luồng thực thi, và các biến động định kỳ về khối lượng lưu lượng nền (Workload fluctuations).",
-      "Ba là, nhóm Điều kiện Triệt tiêu (EXCLUDE, E_exclude): Tập hợp các thông tin giả tạo và biến số ngoài miền bắt buộc phải bị loại bỏ/triệt tiêu khỏi không gian vector z nhằm ngăn ngừa rủi ro học đường tắt (Shortcut Learning) [8]. Bao gồm: các mẫu định dạng đặc thù của môi trường thử nghiệm (Testbed-specific artifacts), các biến số gây rò rỉ phân vùng dữ liệu và đánh cắp thời gian (Partition-leakage and temporal snooping variables như dấu thời gian tuyệt đối của máy thí nghiệm, hostname cố định của môi trường lab) [8], và các đặc trưng tương quan giả (Spurious correlations) có thể khiến mô hình đạt độ chính xác ảo trên tập kiểm thử nhưng thất bại khi triển khai thực tế."
+      "Một là, nhóm Điều kiện Bảo toàn (PRESERVE): Tập hợp các thuộc tính và tương quan an ninh bắt buộc phải được bảo toàn trong không gian vector biểu diễn, bao gồm ngữ nghĩa của các tham số dòng lệnh quan trọng, trật tự thời gian và quan hệ phụ thuộc thực thi giữa các tiến trình, tệp tin và kết nối mạng, cấu trúc cục bộ của đồ thị nguồn gốc cùng các đặc trưng nhận diện chiến thuật và kỹ thuật MITRE ATT&CK.",
+      "Hai là, nhóm Điều kiện Bất biến (INVARIANT): Tập hợp các biến đổi hình thức mà không gian vector z phải duy trì tính bất biến, bao gồm sự thay đổi cú pháp vô hại của chuỗi nhật ký (định dạng thời gian, khoảng trắng, thứ tự các trường không mang nghĩa an ninh), sự ngẫu nhiên hóa mã định danh tiến trình (PID/PPID), tên tài khoản cục bộ không ảnh hưởng đến bản chất luồng thực thi và các biến động chu kỳ của lưu lượng nền.",
+      "Ba là, nhóm Điều kiện Triệt tiêu (EXCLUDE): Tập hợp các thông tin giả tạo và biến số ngoài miền bắt buộc phải bị loại bỏ khỏi không gian vector z nhằm ngăn ngừa rủi ro học đường tắt [8]. Bao gồm các mẫu định dạng đặc thù của môi trường thử nghiệm lab, các biến số gây rò rỉ phân vùng và dấu thời gian tuyệt đối của máy thử nghiệm [8], cùng các tương quan ngẫu nhiên có thể khiến mô hình đạt điểm số ảo trên tập kiểm thử nhưng suy giảm năng lực khi vận hành thực tế."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
     "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
@@ -340,7 +348,7 @@
       37
     ],
     "old_text_sha256": "dab50f05f731faaaa179459426310d408243006e7c426f5c3148e2ad19ca773d",
-    "new_text_sha256": "473a786261e948898c06406f672f8c64a8deba202b73db4796ee263ce744a889",
+    "new_text_sha256": "1933e20182b5334413370392cd5224aac14fd95a3f5800b79ac154449120b59f",
     "old_text": [
       "1. Tầng 1 — Trích xuất đặc trưng cơ sở (Feature Extraction): Đảm nhiệm tiền xử lý dữ liệu thô, phân tích cú pháp sơ bộ, chuẩn hóa kiểu dữ liệu trường và làm sạch dữ liệu. Tầng này không gánh vác nhiệm vụ học biểu diễn ngữ cảnh an ninh sâu.",
       "2. Tầng 2 — Học không gian biểu diễn (Representation Learning — Trọng tâm Chuyên đề): Thiết lập ánh xạ từ cấu trúc chuỗi sự kiện và đồ thị nguồn gốc sang không gian vector tiềm ẩn. Toàn bộ năng lực bảo toàn ngữ nghĩa an ninh và tính bất biến được đóng gói trọn vẹn bên trong vector z [10].",
@@ -348,10 +356,10 @@
       "Trong đó tham số của bộ trích xuất đặc trưng Tầng 2 được giữ cố định hoàn toàn trong suốt quá trình đánh giá ở Tầng 3. Quy tắc này bảo đảm bộ phân loại hạ nguồn không làm thay nhiệm vụ trích xuất đặc trưng của Tầng 2 [8]."
     ],
     "new_text": [
-      "1. Tầng 1 phụ trách trích xuất đặc trưng cơ sở: Đảm nhiệm tiền xử lý dữ liệu thô, phân tích cú pháp sơ bộ, chuẩn hóa kiểu dữ liệu trường và làm sạch dữ liệu. Tầng này không gánh vác nhiệm vụ học biểu diễn ngữ cảnh an ninh sâu.",
-      "2. Tầng 2 tập trung học không gian biểu diễn, giữ vai trò trọng tâm của Chuyên đề: Thiết lập kiến trúc encoder và các đầu chiếu/dự đoán phụ trợ (projection/prediction heads) để chuyển đổi cấu trúc chuỗi sự kiện và đồ thị nguồn gốc sang không gian vector tiềm ẩn. Các hàm mất mát tự giám sát (như dự đoán tham số bị che, dự đoán sự kiện tiếp theo, dự đoán quan hệ đồ thị và căn chỉnh thời gian) được thiết kế như các mục tiêu tối ưu hóa (optimization objectives) cụ thể để khuyến khích không gian biểu diễn z lưu giữ những tín hiệu phục vụ các ràng buộc PRESERVE và INVARIANT; chúng không phải là bằng chứng khoa học trực tiếp chứng minh mô hình đã tự động hiểu an ninh hay nhân quả, và mức độ đạt được bắt buộc phải được kiểm chứng downstream [10].",
-      "3. Tầng 3 thực hiện phát hiện và phân loại hạ nguồn (Downstream Detection): Đánh giá chất lượng của vector biểu diễn z thông qua giao thức đóng băng encoder và huấn luyện đầu phân loại tuyến tính (Frozen Linear Probing theo chuẩn mực SimCLR [37]):",
-      "Trong đó tham số của bộ mã hóa Tầng 2 được giữ cố định hoàn toàn trong suốt quá trình đánh giá ở Tầng 3, chỉ có các tham số của bộ phân loại tuyến tính được huấn luyện để đo lường khả năng truy xuất tuyến tính (linear accessibility) của thông tin an ninh trong vector z. Quy tắc này bảo đảm bộ phân loại hạ nguồn không làm thay nhiệm vụ trích xuất đặc trưng của Tầng 2 và phản ánh trung thực năng lực của không gian biểu diễn [8], [37]."
+      "Một là, Tầng 1 phụ trách trích xuất đặc trưng cơ sở: Đảm nhiệm tiền xử lý dữ liệu thô, phân tích cú pháp sơ bộ, chuẩn hóa kiểu dữ liệu trường và làm sạch dữ liệu ban đầu. Tầng này không gánh vác nhiệm vụ học biểu diễn ngữ cảnh an ninh sâu.",
+      "Hai là, Tầng 2 học không gian biểu diễn tự giám sát: Thiết lập kiến trúc bộ mã hóa cùng các đầu chiếu phụ trợ để chuyển đổi chuỗi sự kiện và đồ thị nguồn gốc sang không gian vector tiềm ẩn. Các hàm mất mát tự giám sát (như dự đoán tham số bị che, dự đoán sự kiện tiếp theo, dự đoán quan hệ đồ thị và căn chỉnh thời gian) đóng vai trò là các mục tiêu tối ưu hóa hình thức nhằm định hướng không gian vector z lưu giữ tín hiệu phục vụ các ràng buộc PRESERVE và INVARIANT; các hàm mục tiêu này là công cụ tối ưu hóa hình thức chứ không cấu thành bằng chứng trực tiếp chứng minh mô hình đã tự động hiểu bản chất an ninh hay nhân quả, và chất lượng biểu diễn bắt buộc phải được đánh giá qua các tác vụ hạ nguồn [10].",
+      "Ba là, Tầng 3 thực hiện đánh giá phát hiện hạ nguồn: Đánh giá chất lượng của vector biểu diễn z thông qua giao thức đóng băng bộ mã hóa và huấn luyện bộ phân loại tuyến tính (Frozen Linear Probing theo chuẩn mực SimCLR [37]):",
+      "Trong đó tham số của bộ mã hóa Tầng 2 được giữ cố định hoàn toàn trong suốt quá trình đánh giá ở Tầng 3, chỉ có các tham số của bộ phân loại tuyến tính được huấn luyện để đo lường khả năng truy xuất tuyến tính của thông tin an ninh trong vector z. Quy tắc này bảo đảm bộ phân loại hạ nguồn không làm thay nhiệm vụ trích xuất đặc trưng của Tầng 2 và phản ánh trung thực năng lực của không gian biểu diễn [8], [37]."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
     "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
@@ -694,12 +702,12 @@
       63
     ],
     "old_text_sha256": "72f482d95fb150f5f6ce9fe88629cd8338a29d448d7087845723181a47ad1a86",
-    "new_text_sha256": "7df530b15e0b8e806363077b2bab134ba96ebccfa1d8c587025890ff639e7a67",
+    "new_text_sha256": "0a83fda2d52f1fda1a8d2bfe1973290495e064e011940d3ae6360ba81e844bf3",
     "old_text": [
       "Từ kết quả khảo sát và phân tích đối chiếu ba nhóm phương pháp biểu diễn đặc trưng log tại Mục 1.2, có thể nhận thấy rằng mặc dù các kỹ thuật thống kê, mô hình chuỗi ngữ nghĩa và học biểu diễn đồ thị nguồn gốc đã đạt được nhiều bước tiến quan trọng, việc ứng dụng chúng vào môi trường phát hiện tấn công mạng doanh nghiệp thực tế vẫn đối mặt với những rào cản nền tảng chưa được giải quyết thấu đáo [8], [6], [1], [3]. Nhằm thiết lập cơ sở khoa học vững chắc và định hình phạm vi nghiên cứu, chuyên đề tổng kết năm khoảng trống nghiên cứu cốt lõi (Research Gaps) tương ứng với năm câu hỏi nghiên cứu (Research Questions - RQ) định hướng cho toàn bộ các đề xuất phương pháp luận tiếp theo."
     ],
     "new_text": [
-      "Từ kết quả khảo sát và phân tích đối chiếu ba nhóm phương pháp biểu diễn đặc trưng log tại Mục 1.2, có thể nhận thấy rằng mặc dù các kỹ thuật thống kê, mô hình chuỗi ngữ nghĩa và học biểu diễn đồ thị nguồn gốc đã đạt được nhiều bước tiến quan trọng, việc ứng dụng chúng vào môi trường phát hiện tấn công mạng doanh nghiệp thực tế vẫn đối mặt với những rào cản nền tảng chưa được giải quyết thấu đáo [8], [6], [1], [3]. Nhằm thiết lập cơ sở khoa học vững chắc và định hình phạm vi nghiên cứu, chuyên đề tổng kết năm khoảng trống nghiên cứu cốt lõi tương ứng với năm câu hỏi nghiên cứu (RQ) định hướng cho toàn bộ các đề xuất phương pháp luận tiếp theo."
+      "Kết quả khảo sát và phân tích đối chiếu ba nhóm phương pháp biểu diễn đặc trưng log tại Mục 1.2 cho thấy dù các kỹ thuật thống kê, mô hình chuỗi ngữ nghĩa và học biểu diễn đồ thị nguồn gốc đã giải quyết được từng khía cạnh phân tích riêng lẻ, việc triển khai chúng vào môi trường giám sát an ninh mạng doanh nghiệp thực tế vẫn bộc lộ các mâu thuẫn cơ bản về mặt biểu diễn [8], [6], [1], [3]. Để xác định phạm vi nghiên cứu và làm rõ cơ chế cần hoàn thiện, chuyên đề tổng hợp năm khoảng trống nghiên cứu kèm theo năm câu hỏi nghiên cứu tương ứng làm định hướng cho các đề xuất phương pháp luận tiếp theo:"
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
     "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
@@ -718,33 +726,43 @@
     "opcode": "replace",
     "base_indices": [
       63,
-      64
+      67
     ],
     "base_paragraph_indices": [
       63,
-      64
+      67
     ],
     "current_indices": [
       64,
-      65
+      68
     ],
     "current_paragraph_indices": [
       64,
-      65
+      68
     ],
-    "old_text_sha256": "8c677997f4196891794d8464ce9a1d646e2c6e6ce03948f0627b8c4f5aa68572",
-    "new_text_sha256": "19a282543cb480f7f4333712e1d9c8a9234d67679700ea6ffdb21299eaf9ae17",
+    "old_text_sha256": "471cfd94b7305485a7ea0d74b295f2bdf7e07e2c21717525cba9161e4de669ed",
+    "new_text_sha256": "23a1eeb5118377670b13f4e562328ca6dc053bf501c6426d47142c67de97d671",
     "old_text": [
-      "Dữ liệu thực nghiệm từ các nghiên cứu tiền nhiệm chỉ ra rằng các bộ phân tích cú pháp (Log Parsers) đóng vai trò then chốt trong việc giảm chiều không gian văn bản log thành các mẫu định dạng tĩnh [6], [7]. Tuy nhiên, cơ chế trừu tượng hóa tham số phụ thuộc vào từng thuật toán phân tích cú pháp; nhiều pipeline tiền xử lý thay thế hoặc khái quát hóa một phần các tham số biến động (như địa chỉ IP, tên tài khoản, đường dẫn tệp tin, cổng mạng, tham số dòng lệnh) thành các biến đại diện (wildcard/template variables) nhằm tạo ra các mẫu log dùng chung."
+      "Dữ liệu thực nghiệm từ các nghiên cứu tiền nhiệm chỉ ra rằng các bộ phân tích cú pháp (Log Parsers) đóng vai trò then chốt trong việc giảm chiều không gian văn bản log thành các mẫu định dạng tĩnh [6], [7]. Tuy nhiên, cơ chế trừu tượng hóa tham số phụ thuộc vào từng thuật toán phân tích cú pháp; nhiều pipeline tiền xử lý thay thế hoặc khái quát hóa một phần các tham số biến động (như địa chỉ IP, tên tài khoản, đường dẫn tệp tin, cổng mạng, tham số dòng lệnh) thành các biến đại diện (wildcard/template variables) nhằm tạo ra các mẫu log dùng chung.",
+      "Giới hạn quan trọng chưa được giải quyết là: Sự tương đương về mặt cú pháp mẫu log (Template Equivalence) không đồng nghĩa với sự tương đương về mặt ngữ nghĩa an ninh (Security Semantic Equivalence) [2], [3]. Ví dụ, cùng một mẫu thông điệp xác thực thất bại nhưng xuất phát từ một tài khoản quản trị viên đặc quyền root trong mạng nội bộ mang mức độ nghiêm trọng an ninh hoàn toàn khác so với từ một tài khoản người dùng thông thường; hoặc hai dòng lệnh powershell.exe thực thi lệnh quản trị hợp lệ và tải mã độc mã hóa base64 đều bị ánh xạ về cùng một Event ID tiến trình. Khi bộ trích xuất đặc trưng triệt tiêu toàn bộ các tham số động này, không gian biểu diễn bị mất đi phần lớn các tín hiệu ngữ cảnh quan trọng để phân biệt hành vi độc hại với hành vi thông thường.",
+      "Khoảng trống nghiên cứu này đặt ra thách thức: Làm thế nào để thiết lập một cơ chế trích xuất đặc trưng có khả năng lọc bỏ các nhiễu cú pháp vô hại nhưng vẫn bảo toàn các tham số động mang ngữ nghĩa an ninh trọng yếu (dưới sự kiểm soát rò rỉ đường tắt và rủi ro quyền riêng tư) trong không gian vector biểu diễn? Từ đó, câu hỏi nghiên cứu thứ nhất được xác lập:",
+      "Câu hỏi nghiên cứu 1 (RQ1 — Representation Fidelity): Có thể xây dựng representation loại bỏ nhiễu cú pháp nhưng vẫn bảo toàn các dynamic parameters có ý nghĩa an toàn quan trọng (dưới sự kiểm soát rò rỉ và quyền riêng tư) hay không?"
     ],
     "new_text": [
-      "Dữ liệu thực nghiệm từ các nghiên cứu tiền nhiệm chỉ ra rằng các bộ phân tích cú pháp đóng vai trò then chốt trong việc giảm chiều không gian văn bản log thành các mẫu định dạng tĩnh [6], [7]. Tuy nhiên, cơ chế trừu tượng hóa tham số phụ thuộc vào từng thuật toán phân tích cú pháp; nhiều pipeline tiền xử lý thay thế hoặc khái quát hóa một phần các tham số biến động (như địa chỉ IP, tên tài khoản, đường dẫn tệp tin, cổng mạng, tham số dòng lệnh) thành các biến đại diện (wildcard/template variables) nhằm tạo ra các mẫu log dùng chung."
+      "Dữ liệu thực nghiệm từ các nghiên cứu tiền nhiệm chỉ ra rằng các bộ phân tích cú pháp đóng vai trò giảm số chiều từ vựng bùng nổ của nhật ký hệ thống bằng cách gom cụm văn bản thành các khuôn mẫu định dạng tĩnh [6], [7]. Tuy nhiên, cơ chế trừu tượng hóa tham số phụ thuộc vào từng thuật toán phân tích cú pháp; nhiều quy trình tiền xử lý thay thế các tham số biến động (như địa chỉ IP, tên tài khoản, đường dẫn tệp tin và tham số dòng lệnh) thành các ký tự đại diện nhằm tạo ra các mẫu log dùng chung.",
+      "Giới hạn quan trọng chưa được giải quyết là sự tương đương về mặt cú pháp mẫu nhật ký không đồng nghĩa với sự tương đương về mặt ngữ nghĩa an ninh [2], [3]. Một mẫu thông báo xác thực thất bại phát sinh từ tài khoản quản trị viên root trong mạng nội bộ mang ý nghĩa an ninh khác hoàn toàn so với cùng thông báo đó phát sinh từ tài khoản người dùng thông thường; tương tự, hai lệnh gọi powershell.exe thực thi bảo trì định kỳ và tải mã độc mã hóa base64 đều có thể bị ánh xạ về cùng một mã định danh sự kiện tiến trình.",
+      "Khoảng trống nghiên cứu này đặt ra thách thức: làm thế nào để thiết lập cơ chế trích xuất đặc trưng có khả năng lọc bỏ các nhiễu cú pháp vô hại nhưng vẫn bảo toàn các tham số động mang ngữ nghĩa an ninh trọng yếu (dưới sự kiểm soát rò rỉ đường tắt và rủi ro quyền riêng tư) trong không gian vector biểu diễn? Từ đó, câu hỏi nghiên cứu thứ nhất được xác lập:",
+      "Câu hỏi nghiên cứu 1 (RQ1, Representation Fidelity): Có thể xây dựng representation loại bỏ nhiễu cú pháp nhưng vẫn bảo toàn các dynamic parameters có ý nghĩa an toàn quan trọng (dưới sự kiểm soát rò rỉ và quyền riêng tư) hay không?"
     ],
-    "category": "PROSE_AUDIT_STYLE_REFINEMENT",
-    "reason": "Refine prose and align terminology with scientific auditing standards.",
-    "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
-    "claim_ids": [],
-    "associated_claims": [],
+    "category": "PROSE_REFINEMENT",
+    "reason": "Basic-first scientific argumentation and ATTT v2.2 academic prose refinement",
+    "scientific_justification": "Basic-first scientific argumentation and ATTT v2.2 academic prose refinement",
+    "claim_ids": [
+      "PROSE-QUALITY"
+    ],
+    "associated_claims": [
+      "PROSE-QUALITY"
+    ],
     "verified": true
   },
   {
@@ -752,37 +770,43 @@
     "chapter": 1,
     "opcode": "replace",
     "base_indices": [
-      66,
-      67
+      68,
+      72
     ],
     "base_paragraph_indices": [
-      66,
-      67
+      68,
+      72
     ],
     "current_indices": [
-      67,
-      68
+      69,
+      73
     ],
     "current_paragraph_indices": [
-      67,
-      68
+      69,
+      73
     ],
-    "old_text_sha256": "2848ea33160f903bc0188aebc52509c51371c4dd5735641afe631af19c8178f4",
-    "new_text_sha256": "170ace323a641fe184efe2ccaa175cc7b6b5ae69bdc13de835d8bc456d3c4eb6",
+    "old_text_sha256": "db92c26b571fe086a294d2e05b6949bc761258b2e71bfa218b91fcedfc208f6e",
+    "new_text_sha256": "4d8c530839b9535abc7cfa86dacae03496abab7606e43c8c159f2969d2f54d0f",
     "old_text": [
-      "Câu hỏi nghiên cứu 1 (RQ1 — Representation Fidelity): Có thể xây dựng representation loại bỏ nhiễu cú pháp nhưng vẫn bảo toàn các dynamic parameters có ý nghĩa an toàn quan trọng (dưới sự kiểm soát rò rỉ và quyền riêng tư) hay không?"
+      "Các công trình nghiên cứu hiện đại đã chỉ ra rằng dữ liệu log sở hữu tính đa góc nhìn nội tại: góc nhìn thống kê tần suất phản ánh mật độ hoạt động [6], góc nhìn chuỗi sự kiện phản ánh trật tự thời gian cục bộ [14], [20], và góc nhìn đồ thị nguồn gốc phản ánh luồng phụ thuộc cấu trúc đa thực thể [1], [5], [9]. Việc kết hợp các góc nhìn này được kỳ vọng sẽ cung cấp bức tranh toàn cảnh về chiến dịch tấn công.",
+      "Tuy nhiên, khi tiến hành hợp nhất hoặc gióng hàng (Cross-view Alignment) các không gian biểu diễn dị thể này trong không gian vector tiềm ẩn, các mô hình học biểu diễn tự giám sát đối mặt với nguy cơ sụp đổ chiều biểu diễn (Representation Collapse), vốn đòi hỏi các kỹ thuật điều hòa phương sai - hiệp phương sai hoặc giảm dư thừa đặc trưng để duy trì tính đa dạng (như các nguyên lý được gợi mở trong VICReg [10] và Barlow Twins [11]). Đồng thời, trong phạm vi bài toán biểu diễn an ninh mạng doanh nghiệp, quá trình gióng hàng đa góc nhìn còn đặt ra các thách thức chuyên biệt: (1) Nguy cơ chuyển giao tiêu cực (Negative Transfer), khi sự kết hợp giữa các góc nhìn làm suy giảm độ chính xác tổng thể do nhiễu từ một góc nhìn lấn át tín hiệu hữu ích của góc nhìn khác; và (2) Vấn đề góc nhìn bị khuyết hoặc tương ứng từng phần (Missing-view & Partial Correspondence), nảy sinh khi một số luồng telemetry bị chậm trễ, thất thoát gói tin hoặc không có liên kết 1-1 đồng thời giữa chuỗi sự kiện và đồ thị nguồn gốc.",
+      "Khoảng trống nghiên cứu cốt lõi ở đây là: Việc gióng hàng đồng thời các góc nhìn dị thể đòi hỏi thiết lập một cơ chế toán học phù hợp để ngăn ngừa sụp đổ biểu diễn và kiểm soát chuyển giao tiêu cực, đồng thời vẫn bảo tồn được các thông tin đặc thù hữu ích của từng góc nhìn riêng biệt. Do đó, câu hỏi nghiên cứu thứ hai được xác lập:",
+      "Câu hỏi nghiên cứu 2 (RQ2 — Cross-View Alignment): Có thể căn chỉnh các view dị thể mà không gây representation collapse, negative transfer, đồng thời vẫn bảo toàn thông tin hữu ích đặc thù của từng view hay không?"
     ],
     "new_text": [
-      "Câu hỏi nghiên cứu 1 (RQ1, Representation Fidelity): Có thể xây dựng representation loại bỏ nhiễu cú pháp nhưng vẫn bảo toàn các dynamic parameters có ý nghĩa an toàn quan trọng (dưới sự kiểm soát rò rỉ và quyền riêng tư) hay không?"
+      "Hoạt động của một hệ thống có thể được quan sát qua nhiều lăng kính dữ liệu dị thể: góc nhìn thống kê tần suất phản ánh mật độ sự kiện [6], góc nhìn chuỗi sự kiện phản ánh trật tự thời gian cục bộ [14], [20], và góc nhìn đồ thị nguồn gốc phản ánh cấu trúc phụ thuộc nhân quả giữa các thực thể [1], [5], [9]. Việc kết hợp đồng thời các góc nhìn này hướng tới mục tiêu cung cấp đầy đủ ngữ cảnh về toàn bộ chuỗi hành vi tấn công.",
+      "Khi đưa các góc nhìn dị thể này vào không gian vector tiềm ẩn chung qua các hàm mất mát tự giám sát, mô hình đối mặt với nguy cơ sụp đổ chiều biểu diễn, tức xu hướng ánh xạ mọi đầu vào thành các vector hằng số tầm thường, vốn đòi hỏi cơ chế điều hòa phương sai và hiệp phương sai để duy trì độ đa dạng không gian [10], [11]; bên cạnh đó, việc gióng hàng trong môi trường an ninh mạng còn gặp phải hai trở ngại thực tế: Một là, rủi ro chuyển giao tiêu cực, xảy ra khi nhiễu từ chuỗi sự kiện lấn át hoặc làm suy giảm tín hiệu cấu trúc nhân quả của đồ thị nguồn gốc; Hai là, hiện tượng dữ liệu bị khuyết hoặc tương ứng từng phần, phát sinh do độ trễ truyền thông, gói tin bị thất thoát hoặc thiếu liên kết 1–1 đồng thời giữa các luồng thu thập.",
+      "Khoảng trống nghiên cứu ở đây là: việc gióng hàng đồng thời các góc nhìn dị thể đòi hỏi thiết lập cơ chế kiểm soát toán học phù hợp để vừa chống sụp đổ biểu diễn và hạn chế chuyển giao tiêu cực, đồng thời vẫn bảo tồn được các thông tin đặc thù hữu ích của từng góc nhìn riêng biệt. Do đó, câu hỏi nghiên cứu thứ hai được xác lập:",
+      "Câu hỏi nghiên cứu 2 (RQ2, Cross-View Alignment): Có thể căn chỉnh các view dị thể mà không gây representation collapse, negative transfer, đồng thời vẫn bảo toàn thông tin hữu ích đặc thù của từng view hay không?"
     ],
-    "category": "MATHEMATICAL_FORMULATION_PRECISION",
-    "reason": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
-    "scientific_justification": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
+    "category": "PROSE_REFINEMENT",
+    "reason": "Basic-first scientific argumentation and ATTT v2.2 academic prose refinement",
+    "scientific_justification": "Basic-first scientific argumentation and ATTT v2.2 academic prose refinement",
     "claim_ids": [
-      "MATH-DYNAMICS"
+      "PROSE-QUALITY"
     ],
     "associated_claims": [
-      "MATH-DYNAMICS"
+      "PROSE-QUALITY"
     ],
     "verified": true
   },
@@ -791,34 +815,44 @@
     "chapter": 1,
     "opcode": "replace",
     "base_indices": [
-      69,
-      70
+      73,
+      77
     ],
     "base_paragraph_indices": [
-      69,
-      70
+      73,
+      77
     ],
     "current_indices": [
-      70,
-      71
+      74,
+      78
     ],
     "current_paragraph_indices": [
-      70,
-      71
+      74,
+      78
     ],
-    "old_text_sha256": "22becc0292adfbdd426cec61e29e3eaa1c16060a909b9314edf2d71c6487273f",
-    "new_text_sha256": "55a8956ea90ad68a11ed95983583c7d71ada127d976c9bcf8e351c72442a3670",
+    "old_text_sha256": "32472781d8cb003ba21fe6809af15024ff0cb9da758ec8d0984a8eef4a40db14",
+    "new_text_sha256": "a96767b4f28daba5bd3467489a2dded28fb88e0b8681097ec5065764f3c7dc09",
     "old_text": [
-      "Tuy nhiên, khi tiến hành hợp nhất hoặc gióng hàng (Cross-view Alignment) các không gian biểu diễn dị thể này trong không gian vector tiềm ẩn, các mô hình học biểu diễn tự giám sát đối mặt với nguy cơ sụp đổ chiều biểu diễn (Representation Collapse), vốn đòi hỏi các kỹ thuật điều hòa phương sai - hiệp phương sai hoặc giảm dư thừa đặc trưng để duy trì tính đa dạng (như các nguyên lý được gợi mở trong VICReg [10] và Barlow Twins [11]). Đồng thời, trong phạm vi bài toán biểu diễn an ninh mạng doanh nghiệp, quá trình gióng hàng đa góc nhìn còn đặt ra các thách thức chuyên biệt: (1) Nguy cơ chuyển giao tiêu cực (Negative Transfer), khi sự kết hợp giữa các góc nhìn làm suy giảm độ chính xác tổng thể do nhiễu từ một góc nhìn lấn át tín hiệu hữu ích của góc nhìn khác; và (2) Vấn đề góc nhìn bị khuyết hoặc tương ứng từng phần (Missing-view & Partial Correspondence), nảy sinh khi một số luồng telemetry bị chậm trễ, thất thoát gói tin hoặc không có liên kết 1-1 đồng thời giữa chuỗi sự kiện và đồ thị nguồn gốc."
+      "Công trình tổng kết của Arp et al. (USENIX Security 2022) [8] và Liu et al. (IEEE S&P 2025) [3] đã cảnh báo sâu sắc về tình trạng sai lệch phương pháp luận trong nghiên cứu học máy áp dụng cho an ninh mạng. Trong bài toán trích xuất đặc trưng log, các mô hình rất dễ học phải các đặc trưng đường tắt giả định (Dataset Shortcuts) có tương quan ngẫu nhiên với nhãn độc hại trong tập huấn luyện nhưng không phản ánh bản chất tấn công thực tế.",
+      "Phân tích hệ thống chỉ ra sáu kênh rò rỉ thông tin tiềm tàng (Leakage Pathways) thường xuất hiện trong quy trình thực nghiệm: (1) Rò rỉ từ vựng/bộ phân tích cú pháp (Parser/Vocabulary Leakage), khi bộ parser được học trên toàn bộ dữ liệu gồm cả tập kiểm thử; (2) Rò rỉ chuẩn hóa thống kê (Normalization/Statistics Leakage), khi các tham số trung bình/phương sai hoặc trọng số TF-IDF được tính toán xuyên qua ranh giới tập train và test; (3) Rò rỉ thực thể/máy chủ thử nghiệm (Host/Entity/Campaign Holdout Leakage), khi dữ liệu tấn công trên cùng một máy chủ xuất hiện ở cả hai tập; (4) Rò rỉ điều chỉnh ngưỡng và siêu tham số (Threshold/Hyperparameter Leakage); (5) Rò rỉ dữ liệu tiền huấn luyện ngoài miền (Pretraining Data Leakage); và (6) Rò rỉ thời gian tương lai (Future Temporal Information Leakage), khi mô hình vô tình sử dụng sự kiện ở thời điểm tương lai để trích xuất biểu diễn cho hiện tại.",
+      "Khoảng trống nghiên cứu quan trọng là: Làm thế nào để phân định tường minh giữa tín hiệu an ninh hợp lệ (Legitimate Security Signal) và đặc trưng đường tắt nhân tạo (Dataset Shortcut Artifacts), đồng thời đảm bảo không gian biểu diễn duy trì được năng lực phân tách khi dữ liệu vận hành bị trôi dạt phân phối theo thời gian? Chuyên đề xác lập câu hỏi nghiên cứu thứ ba:",
+      "Câu hỏi nghiên cứu 3 (RQ3 — Validity Without Shortcuts): Representation có còn hữu ích sau khi loại bỏ shortcut của dataset và khi phân phối dữ liệu thay đổi hay không?"
     ],
     "new_text": [
-      "Tuy nhiên, khi tiến hành hợp nhất hoặc gióng hàng (Cross-view Alignment) các không gian biểu diễn dị thể này trong không gian vector tiềm ẩn, các mô hình học biểu diễn tự giám sát đối mặt với nguy cơ sụp đổ chiều biểu diễn (Representation Collapse), vốn đòi hỏi các kỹ thuật điều hòa phương sai và hiệp phương sai hoặc giảm dư thừa đặc trưng để duy trì tính đa dạng (như các nguyên lý được gợi mở trong VICReg [10] và Barlow Twins [11]). Đồng thời, trong phạm vi bài toán biểu diễn an ninh mạng doanh nghiệp, quá trình gióng hàng đa góc nhìn còn đặt ra các thách thức chuyên biệt: (1) Nguy cơ chuyển giao tiêu cực (Negative Transfer), khi sự kết hợp giữa các góc nhìn làm suy giảm độ chính xác tổng thể do nhiễu từ một góc nhìn lấn át tín hiệu hữu ích của góc nhìn khác; và (2) Vấn đề góc nhìn bị khuyết hoặc tương ứng từng phần (Missing-view & Partial Correspondence), nảy sinh khi một số luồng telemetry bị chậm trễ, thất thoát gói tin hoặc không có liên kết 1-1 đồng thời giữa chuỗi sự kiện và đồ thị nguồn gốc."
+      "Công trình tổng kết của Arp et al. [8] và Liu et al. [3] đã cảnh báo sâu sắc về tình trạng sai lệch phương pháp luận trong nghiên cứu học máy áp dụng cho an ninh mạng. Trong bài toán trích xuất đặc trưng log, các mô hình rất dễ học phải các đặc trưng đường tắt giả định (Dataset Shortcuts) có tương quan ngẫu nhiên với nhãn độc hại trong tập huấn luyện nhưng không phản ánh bản chất tấn công thực tế.",
+      "Khảo sát thực nghiệm chỉ ra sáu kênh rò rỉ thông tin thường gặp trong quy trình đánh giá mô hình: Một là, rò rỉ từ vựng, xảy ra khi bộ phân tích cú pháp hoặc bộ tách từ được xây dựng trên toàn bộ dữ liệu bao gồm cả phần kiểm thử; Hai là, rò rỉ chuẩn hóa thống kê, khi các đại lượng trung bình, phương sai hoặc trọng số tần suất được tính toán xuyên qua ranh giới giữa tập huấn luyện và kiểm thử; Ba là, rò rỉ thực thể máy chủ, khi dấu vết tấn công trên cùng một máy chủ hoặc địa chỉ IP xuất hiện đồng thời ở cả hai tập; Bốn là, rò rỉ điều chỉnh siêu tham số, khi ngưỡng quyết định được tinh chỉnh dựa trên dữ liệu đánh giá; Năm là, rò rỉ dữ liệu tiền huấn luyện ngoài miền, dẫn đến ước lượng sai lệch về khả năng khái quát hóa; và Sáu là, rò rỉ thời gian tương lai, khi mô hình sử dụng các sự kiện xảy ra sau để trích xuất biểu diễn cho các sự kiện xảy ra trước.",
+      "Khoảng trống nghiên cứu đặt ra là: làm thế nào để phân định rõ ràng giữa tín hiệu an ninh hợp lệ và các đặc trưng đường tắt nhân tạo, đồng thời duy trì năng lực phân tách của không gian vector khi dữ liệu thực tế trôi dạt phân phối theo thời gian. Chuyên đề xác lập câu hỏi nghiên cứu thứ ba:",
+      "Câu hỏi nghiên cứu 3 (RQ3, Validity Without Shortcuts): Representation có còn hữu ích sau khi loại bỏ shortcut của dataset và khi phân phối dữ liệu thay đổi hay không?"
     ],
-    "category": "PROSE_AUDIT_STYLE_REFINEMENT",
-    "reason": "Refine prose and align terminology with scientific auditing standards.",
-    "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
-    "claim_ids": [],
-    "associated_claims": [],
+    "category": "PROSE_REFINEMENT",
+    "reason": "Basic-first scientific argumentation and ATTT v2.2 academic prose refinement",
+    "scientific_justification": "Basic-first scientific argumentation and ATTT v2.2 academic prose refinement",
+    "claim_ids": [
+      "PROSE-QUALITY"
+    ],
+    "associated_claims": [
+      "PROSE-QUALITY"
+    ],
     "verified": true
   },
   {
@@ -826,37 +860,43 @@
     "chapter": 1,
     "opcode": "replace",
     "base_indices": [
-      71,
-      72
+      78,
+      82
     ],
     "base_paragraph_indices": [
-      71,
-      72
+      78,
+      82
     ],
     "current_indices": [
-      72,
-      73
+      79,
+      83
     ],
     "current_paragraph_indices": [
-      72,
-      73
+      79,
+      83
     ],
-    "old_text_sha256": "d7e46a66834144fc6d5dbd829ad0fc9ff2c58a0543cb60cca989fcf075c7f235",
-    "new_text_sha256": "d082c1474d2c6b326434b3aa9a8c5e46737dc2ace8c15032f179c00dafb7923e",
+    "old_text_sha256": "ab1366a67249aff3a92db0d29a0f94250ecf9a8ec6a347ac554441929f5edeac",
+    "new_text_sha256": "491fc7d27a452827400fc35ec3a9b683e7e39b1c9c4b8066c3cbbb10379b6eaf",
     "old_text": [
-      "Câu hỏi nghiên cứu 2 (RQ2 — Cross-View Alignment): Có thể căn chỉnh các view dị thể mà không gây representation collapse, negative transfer, đồng thời vẫn bảo toàn thông tin hữu ích đặc thù của từng view hay không?"
+      "Trong thực tế giám sát an ninh mạng doanh nghiệp, dữ liệu nhãn mặt đất (Ground Truth) thường chỉ được ghi nhận ở mức độ hạt rất thô (Coarse Labels), chẳng hạn như gán nhãn một phiên làm việc kéo dài nhiều giờ hoặc toàn bộ một máy chủ bị xâm nhập trong một khoảng thời gian [3], [12], [13]. Bên trong phiên làm việc đó, phần lớn các dòng log vẫn là các thao tác hệ thống bình thường, và chỉ có một số lượng rất nhỏ sự kiện thực sự phản ánh kỹ thuật tấn công.",
+      "Thách thức này càng trở nên phức tạp do sự xuất hiện liên tục của hành vi quản trị viên hệ thống (Admin-Noise / LOLBins) [1], [3]. Các kỹ sư quản trị thường xuyên thực thi các lệnh bảo trì, chẩn đoán mạng hoặc sao lưu dữ liệu bằng các công cụ dòng lệnh hợp lệ (như PowerShell, WMI, SSH, vssadmin). Các hành vi này sở hữu cấu trúc cú pháp và quyền hạn thực thi tương đồng với kỹ thuật của kẻ tấn công, nhưng hoàn toàn mang mục đích hợp pháp (Benign-but-risky). Một hành vi bất thường hoặc hiếm gặp không tự thân đồng nghĩa với hành vi tấn công độc hại (Unusual ≠ Malicious, Anomaly ≠ Attack).",
+      "Khoảng trống nghiên cứu ở đây là: Làm thế nào để phân bổ chính xác bằng chứng tấn công yếu (Weak Evidence Attribution) từ các nhãn mức thô mà không học nhầm các hành vi quản trị hợp pháp thành độc hại? Đây là cơ sở để xác lập câu hỏi nghiên cứu thứ tư:",
+      "Câu hỏi nghiên cứu 4 (RQ4 — Weak Evidence Attribution): Có thể gán đúng attack evidence dưới coarse labels mà không học nhầm các hành vi quản trị hợp pháp thành malicious hay không?"
     ],
     "new_text": [
-      "Câu hỏi nghiên cứu 2 (RQ2, Cross-View Alignment): Có thể căn chỉnh các view dị thể mà không gây representation collapse, negative transfer, đồng thời vẫn bảo toàn thông tin hữu ích đặc thù của từng view hay không?"
+      "Trong thực tế giám sát an ninh mạng doanh nghiệp, dữ liệu nhãn thường chỉ được ghi nhận ở mức độ hạt rất thô (Coarse Labels), chẳng hạn như gán nhãn một phiên làm việc kéo dài nhiều giờ hoặc toàn bộ một máy chủ bị xâm nhập trong một khoảng thời gian [3], [12], [13]. Bên trong phiên làm việc đó, phần lớn các dòng nhật ký vẫn là các thao tác hệ thống bình thường, và chỉ có một số lượng rất nhỏ sự kiện thực sự phản ánh kỹ thuật tấn công.",
+      "Thách thức này càng trở nên phức tạp do sự xuất hiện liên tục của hành vi quản trị viên hệ thống [1], [3]. Các kỹ sư quản trị thường xuyên thực thi các lệnh bảo trì, chẩn đoán mạng hoặc sao lưu dữ liệu bằng các công cụ dòng lệnh hợp lệ của hệ điều hành (như PowerShell, WMI hay SSH). Những hành vi này chia sẻ cùng cú pháp câu lệnh và quyền thực thi với các kỹ thuật tấn công lợi dụng công cụ sẵn có nhưng hoàn toàn mang mục đích vận hành hợp pháp. Một hành vi bất thường hoặc ít xuất hiện không tự thân đồng nghĩa với hành vi tấn công độc hại.",
+      "Khoảng trống nghiên cứu là: làm thế nào để phân bổ đúng bằng chứng tấn công từ nhãn mức thô xuống các sự kiện mấu chốt mà không học nhầm các thao tác quản trị hợp pháp thành hành vi độc hại. Đây là cơ sở để xác lập câu hỏi nghiên cứu thứ tư:",
+      "Câu hỏi nghiên cứu 4 (RQ4, Weak Evidence Attribution): Có thể gán đúng attack evidence dưới coarse labels mà không học nhầm các hành vi quản trị hợp pháp thành malicious hay không?"
     ],
-    "category": "MATHEMATICAL_FORMULATION_PRECISION",
-    "reason": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
-    "scientific_justification": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
+    "category": "PROSE_REFINEMENT",
+    "reason": "Basic-first scientific argumentation and ATTT v2.2 academic prose refinement",
+    "scientific_justification": "Basic-first scientific argumentation and ATTT v2.2 academic prose refinement",
     "claim_ids": [
-      "MATH-DYNAMICS"
+      "PROSE-QUALITY"
     ],
     "associated_claims": [
-      "MATH-DYNAMICS"
+      "PROSE-QUALITY"
     ],
     "verified": true
   },
@@ -865,194 +905,48 @@
     "chapter": 1,
     "opcode": "replace",
     "base_indices": [
-      74,
-      77
-    ],
-    "base_paragraph_indices": [
-      74,
-      77
-    ],
-    "current_indices": [
-      75,
-      78
-    ],
-    "current_paragraph_indices": [
-      75,
-      78
-    ],
-    "old_text_sha256": "0ee52691694cb41b50f12da18596dfc9fba244825c9e7a12ab7a350577fe0e60",
-    "new_text_sha256": "37ec0b0ee733284abb98d4ae47eb94b326be50db048cac2156c60e6d3932cca0",
-    "old_text": [
-      "Phân tích hệ thống chỉ ra sáu kênh rò rỉ thông tin tiềm tàng (Leakage Pathways) thường xuất hiện trong quy trình thực nghiệm: (1) Rò rỉ từ vựng/bộ phân tích cú pháp (Parser/Vocabulary Leakage), khi bộ parser được học trên toàn bộ dữ liệu gồm cả tập kiểm thử; (2) Rò rỉ chuẩn hóa thống kê (Normalization/Statistics Leakage), khi các tham số trung bình/phương sai hoặc trọng số TF-IDF được tính toán xuyên qua ranh giới tập train và test; (3) Rò rỉ thực thể/máy chủ thử nghiệm (Host/Entity/Campaign Holdout Leakage), khi dữ liệu tấn công trên cùng một máy chủ xuất hiện ở cả hai tập; (4) Rò rỉ điều chỉnh ngưỡng và siêu tham số (Threshold/Hyperparameter Leakage); (5) Rò rỉ dữ liệu tiền huấn luyện ngoài miền (Pretraining Data Leakage); và (6) Rò rỉ thời gian tương lai (Future Temporal Information Leakage), khi mô hình vô tình sử dụng sự kiện ở thời điểm tương lai để trích xuất biểu diễn cho hiện tại.",
-      "Khoảng trống nghiên cứu quan trọng là: Làm thế nào để phân định tường minh giữa tín hiệu an ninh hợp lệ (Legitimate Security Signal) và đặc trưng đường tắt nhân tạo (Dataset Shortcut Artifacts), đồng thời đảm bảo không gian biểu diễn duy trì được năng lực phân tách khi dữ liệu vận hành bị trôi dạt phân phối theo thời gian? Chuyên đề xác lập câu hỏi nghiên cứu thứ ba:",
-      "Câu hỏi nghiên cứu 3 (RQ3 — Validity Without Shortcuts): Representation có còn hữu ích sau khi loại bỏ shortcut của dataset và khi phân phối dữ liệu thay đổi hay không?"
-    ],
-    "new_text": [
-      "Phân tích hệ thống chỉ ra sáu kênh rò rỉ thông tin tiềm tàng thường xuất hiện trong quy trình thực nghiệm: (1) Rò rỉ từ vựng/bộ phân tích cú pháp, khi bộ parser được học trên toàn bộ dữ liệu gồm cả tập kiểm thử; (2) Rò rỉ chuẩn hóa thống kê, khi các tham số trung bình/phương sai hoặc trọng số TF-IDF được tính toán xuyên qua ranh giới tập train và test; (3) Rò rỉ thực thể/máy chủ thử nghiệm, khi dữ liệu tấn công trên cùng một máy chủ xuất hiện ở cả hai tập; (4) Rò rỉ điều chỉnh ngưỡng và siêu tham số; (5) Rò rỉ dữ liệu tiền huấn luyện ngoài miền; và (6) Rò rỉ thời gian tương lai, khi mô hình vô tình sử dụng sự kiện ở thời điểm tương lai để trích xuất biểu diễn cho hiện tại.",
-      "Khoảng trống nghiên cứu quan trọng là: Làm thế nào để phân định tường minh giữa tín hiệu an ninh hợp lệ và đặc trưng đường tắt nhân tạo, đồng thời đảm bảo không gian biểu diễn duy trì được năng lực phân tách khi dữ liệu vận hành bị trôi dạt phân phối theo thời gian? Chuyên đề xác lập câu hỏi nghiên cứu thứ ba:",
-      "Câu hỏi nghiên cứu 3 (RQ3, Validity Without Shortcuts): Representation có còn hữu ích sau khi loại bỏ shortcut của dataset và khi phân phối dữ liệu thay đổi hay không?"
-    ],
-    "category": "PROSE_AUDIT_STYLE_REFINEMENT",
-    "reason": "Refine prose and align terminology with scientific auditing standards.",
-    "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
-    "claim_ids": [],
-    "associated_claims": [],
-    "verified": true
-  },
-  {
-    "hunk_id": "HUNK-CH1-024",
-    "chapter": 1,
-    "opcode": "replace",
-    "base_indices": [
-      78,
-      79
-    ],
-    "base_paragraph_indices": [
-      78,
-      79
-    ],
-    "current_indices": [
-      79,
-      80
-    ],
-    "current_paragraph_indices": [
-      79,
-      80
-    ],
-    "old_text_sha256": "8e8e95b9d1ebbc85870a5c720ea98c391bdb7dee77be650bf2dfe243a19d3bbe",
-    "new_text_sha256": "693608c45ad95365590f4ae372e33cc261f4e7e9feb89886dcdca93a5935f2d9",
-    "old_text": [
-      "Trong thực tế giám sát an ninh mạng doanh nghiệp, dữ liệu nhãn mặt đất (Ground Truth) thường chỉ được ghi nhận ở mức độ hạt rất thô (Coarse Labels), chẳng hạn như gán nhãn một phiên làm việc kéo dài nhiều giờ hoặc toàn bộ một máy chủ bị xâm nhập trong một khoảng thời gian [3], [12], [13]. Bên trong phiên làm việc đó, phần lớn các dòng log vẫn là các thao tác hệ thống bình thường, và chỉ có một số lượng rất nhỏ sự kiện thực sự phản ánh kỹ thuật tấn công."
-    ],
-    "new_text": [
-      "Trong thực tế giám sát an ninh mạng doanh nghiệp, dữ liệu nhãn thực tế thường chỉ được ghi nhận ở mức độ hạt rất thô (Coarse Labels), chẳng hạn như gán nhãn một phiên làm việc kéo dài nhiều giờ hoặc toàn bộ một máy chủ bị xâm nhập trong một khoảng thời gian [3], [12], [13]. Bên trong phiên làm việc đó, phần lớn các dòng log vẫn là các thao tác hệ thống bình thường, và chỉ có một số lượng rất nhỏ sự kiện thực sự phản ánh kỹ thuật tấn công."
-    ],
-    "category": "CITATION_REPAIR_AND_NORMALIZATION",
-    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
-    "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
-    "claim_ids": [
-      "CIT-INTEGRITY"
-    ],
-    "associated_claims": [
-      "CIT-INTEGRITY"
-    ],
-    "verified": true
-  },
-  {
-    "hunk_id": "HUNK-CH1-025",
-    "chapter": 1,
-    "opcode": "replace",
-    "base_indices": [
-      81,
-      82
-    ],
-    "base_paragraph_indices": [
-      81,
-      82
-    ],
-    "current_indices": [
-      82,
-      83
-    ],
-    "current_paragraph_indices": [
-      82,
-      83
-    ],
-    "old_text_sha256": "7910f3befc83567bb87c71065e3cdc07a3c0c63ee17625f6ccc88a83200cc7ca",
-    "new_text_sha256": "21824ac0dd9ae18b56063c240030b0ee7ffbaa4db7936392b6256fed6f0a4ed7",
-    "old_text": [
-      "Câu hỏi nghiên cứu 4 (RQ4 — Weak Evidence Attribution): Có thể gán đúng attack evidence dưới coarse labels mà không học nhầm các hành vi quản trị hợp pháp thành malicious hay không?"
-    ],
-    "new_text": [
-      "Câu hỏi nghiên cứu 4 (RQ4, Weak Evidence Attribution): Có thể gán đúng attack evidence dưới coarse labels mà không học nhầm các hành vi quản trị hợp pháp thành malicious hay không?"
-    ],
-    "category": "PROSE_AUDIT_STYLE_REFINEMENT",
-    "reason": "Refine prose and align terminology with scientific auditing standards.",
-    "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
-    "claim_ids": [],
-    "associated_claims": [],
-    "verified": true
-  },
-  {
-    "hunk_id": "HUNK-CH1-026",
-    "chapter": 1,
-    "opcode": "replace",
-    "base_indices": [
       83,
-      85
+      87
     ],
     "base_paragraph_indices": [
       83,
-      85
+      87
     ],
     "current_indices": [
       84,
-      86
+      88
     ],
     "current_paragraph_indices": [
       84,
-      86
+      88
     ],
-    "old_text_sha256": "84a898986dbaafd39e95db1a6d05f1b668c7d53146bfa64eca982fd99f502d34",
-    "new_text_sha256": "29bcfa9045794ff3e0d1f371667c2ce79752d844557e2f667b8d1f4332c3c513",
+    "old_text_sha256": "4876a0dafedad87c4e4af222fcdc277040605132f488e7696f594602ad249ee4",
+    "new_text_sha256": "a988d70c0335467e0b671c1d274f8fc55bf5c03abfabd7b09c67dfe5629d680f",
     "old_text": [
       "Để phát hiện và điều tra các cuộc tấn công APT kéo dài, mô hình học biểu diễn đòi hỏi phải duy trì khả năng liên kết có kiểm soát (Controlled Linkability) giữa các chuỗi hành vi của cùng một thực thể (người dùng, máy chủ, tiến trình) qua nhiều mốc thời gian khác nhau [1], [5].",
-      "Tuy nhiên, việc lưu giữ khả năng liên kết này trong không gian vector biểu diễn trực tiếp làm nảy sinh các nguy cơ nghiêm trọng về quyền riêng tư và an toàn thông tin [16], [32], [17]. Các vector biểu diễn đặc trưng tiềm ẩn có nguy cơ bị kẻ tấn công khai thác thông qua các kỹ thuật tấn công suy luận thành viên (Membership Inference Attacks - MIA [16]) để xác định xem dữ liệu của một thực thể có nằm trong tập huấn luyện hay không, hoặc tấn công nghịch đảo biểu diễn (Representation / Model Inversion Attacks [32]) nhằm khôi phục lại các định danh nhạy cảm của người dùng và cấu hình mạng nội bộ. Cần nhấn mạnh rằng, một mô hình được thiết kế có nhận thức về quyền riêng tư (Privacy-Aware) không tự động đồng nghĩa với việc đã đạt được khả năng bảo vệ quyền riêng tư vững chắc (Privacy-Preserving) nếu chưa trải qua các kiểm thử thực nghiệm tấn công nghiêm ngặt [17]."
-    ],
-    "new_text": [
-      "Nhiệm vụ phát hiện và điều tra các cuộc tấn công APT kéo dài đòi hỏi mô hình học biểu diễn phải duy trì khả năng liên kết có kiểm soát giữa các chuỗi hành vi của cùng một thực thể (người dùng, máy chủ, tiến trình) qua nhiều mốc thời gian khác nhau [1], [5].",
-      "Tuy nhiên, việc lưu giữ khả năng liên kết này trong không gian vector biểu diễn trực tiếp làm nảy sinh các nguy cơ nghiêm trọng về quyền riêng tư và an toàn thông tin [16], [33], [17]. Các vector biểu diễn đặc trưng tiềm ẩn có nguy cơ bị kẻ tấn công khai thác thông qua các kỹ thuật tấn công suy luận thành viên (Membership Inference Attacks - MIA [16]) để xác định xem dữ liệu của một thực thể có nằm trong tập huấn luyện hay không. Về mặt lý thuyết nguồn gốc, nghiên cứu kinh điển của Fredrikson et al. [33] đã chứng minh tấn công nghịch đảo mô hình (Model Inversion Attacks) có thể khai thác thông tin đầu ra và độ tin cậy để suy diễn lại các đặc trưng nhạy cảm của dữ liệu đầu vào. Trong bối cảnh mô hình biểu diễn nhật ký của đề tài (Mô hình đe dọa do nghiên cứu đề xuất / Threat Model Adaptation), các định danh như tên người dùng, tên máy chủ và chuỗi đối số dòng lệnh là các thuộc tính nhạy cảm tiềm năng cần phải kiểm thử thực nghiệm trước nguy cơ bị khôi phục hoặc xấp xỉ từ không gian vector biểu diễn. Một mô hình được thiết kế có nhận thức về quyền riêng tư (Privacy-Aware) không tự động đồng nghĩa với việc đã đạt được khả năng bảo vệ quyền riêng tư vững chắc (Privacy-Preserving) nếu chưa trải qua các kiểm thử thực nghiệm tấn công nghiêm ngặt [17]."
-    ],
-    "category": "PRIVACY_SCOPE_CALIBRATION",
-    "reason": "Distinguish proposed evaluation framework from executed experiments in thesis, avoiding privacy false positives.",
-    "scientific_justification": "Distinguish proposed evaluation framework from executed experiments in thesis, avoiding privacy false positives.",
-    "claim_ids": [
-      "CLM-021",
-      "SCI-PRIV-001"
-    ],
-    "associated_claims": [
-      "CLM-021",
-      "SCI-PRIV-001"
-    ],
-    "verified": true
-  },
-  {
-    "hunk_id": "HUNK-CH1-027",
-    "chapter": 1,
-    "opcode": "replace",
-    "base_indices": [
-      86,
-      87
-    ],
-    "base_paragraph_indices": [
-      86,
-      87
-    ],
-    "current_indices": [
-      87,
-      88
-    ],
-    "current_paragraph_indices": [
-      87,
-      88
-    ],
-    "old_text_sha256": "ac957026eb462b4623754e5bcf9f96dc844ab2c1ece6e7b44d462b9d47e4068b",
-    "new_text_sha256": "8d472a5c24b05c7861a574952b11f0fb07d8e2458dfc10fd6f840e3cbe1d5900",
-    "old_text": [
+      "Tuy nhiên, việc lưu giữ khả năng liên kết này trong không gian vector biểu diễn trực tiếp làm nảy sinh các nguy cơ nghiêm trọng về quyền riêng tư và an toàn thông tin [16], [32], [17]. Các vector biểu diễn đặc trưng tiềm ẩn có nguy cơ bị kẻ tấn công khai thác thông qua các kỹ thuật tấn công suy luận thành viên (Membership Inference Attacks - MIA [16]) để xác định xem dữ liệu của một thực thể có nằm trong tập huấn luyện hay không, hoặc tấn công nghịch đảo biểu diễn (Representation / Model Inversion Attacks [32]) nhằm khôi phục lại các định danh nhạy cảm của người dùng và cấu hình mạng nội bộ. Cần nhấn mạnh rằng, một mô hình được thiết kế có nhận thức về quyền riêng tư (Privacy-Aware) không tự động đồng nghĩa với việc đã đạt được khả năng bảo vệ quyền riêng tư vững chắc (Privacy-Preserving) nếu chưa trải qua các kiểm thử thực nghiệm tấn công nghiêm ngặt [17].",
+      "Khoảng trống nghiên cứu này đòi hỏi phải phân tích tường minh mối quan hệ đánh đổi: Đâu là điểm cân bằng giữa năng lực duy trì liên kết thực thể phục vụ phân tích an ninh và mức độ rò rỉ thông tin riêng tư của không gian vector đặc trưng? Từ đó, câu hỏi nghiên cứu thứ năm được xác lập:",
       "Câu hỏi nghiên cứu 5 (RQ5 — Privacy-Security Trade-Off): Đâu là sự cân bằng chấp nhận được giữa entity continuity và privacy leakage để representation vẫn hữu ích cho phân tích an toàn?"
     ],
     "new_text": [
+      "Nhiệm vụ phát hiện và điều tra các cuộc tấn công APT kéo dài đòi hỏi mô hình học biểu diễn phải duy trì khả năng liên kết có kiểm soát giữa các chuỗi hành vi của cùng một thực thể (người dùng, máy chủ, tiến trình) qua nhiều mốc thời gian khác nhau [1], [5].",
+      "Tuy nhiên, việc lưu giữ khả năng liên kết này trong không gian vector biểu diễn trực tiếp làm nảy sinh các nguy cơ nghiêm trọng về quyền riêng tư và an toàn thông tin [16], [33], [17]. Các vector biểu diễn đặc trưng tiềm ẩn có nguy cơ bị kẻ tấn công khai thác thông qua các kỹ thuật tấn công suy luận thành viên (Membership Inference Attacks - MIA [16]) để xác định xem dữ liệu của một thực thể có nằm trong tập huấn luyện hay không. Về mặt lý thuyết nguồn gốc, nghiên cứu kinh điển của Fredrikson et al. [33] đã chứng minh tấn công nghịch đảo mô hình (Model Inversion Attacks) có thể khai thác thông tin đầu ra và độ tin cậy để suy diễn lại các đặc trưng nhạy cảm của dữ liệu đầu vào. Trong bối cảnh mô hình biểu diễn nhật ký của đề tài (Mô hình đe dọa do nghiên cứu đề xuất / Threat Model Adaptation), các định danh như tên người dùng, tên máy chủ và chuỗi đối số dòng lệnh là các thuộc tính nhạy cảm tiềm năng cần phải kiểm thử thực nghiệm trước nguy cơ bị khôi phục hoặc xấp xỉ từ không gian vector biểu diễn. Một mô hình được thiết kế có nhận thức về quyền riêng tư (Privacy-Aware) không tự động đồng nghĩa với việc đã đạt được khả năng bảo vệ quyền riêng tư vững chắc (Privacy-Preserving) nếu chưa trải qua các kiểm thử thực nghiệm tấn công nghiêm ngặt [17].",
+      "Khoảng trống nghiên cứu này đòi hỏi phải phân tích mối quan hệ đánh đổi: Đâu là điểm cân bằng giữa năng lực duy trì liên kết thực thể phục vụ phân tích an ninh và mức độ rò rỉ thông tin riêng tư của không gian vector đặc trưng? Từ đó, câu hỏi nghiên cứu thứ năm được xác lập:",
       "Câu hỏi nghiên cứu 5 (RQ5, Privacy-Security Trade-Off): Đâu là sự cân bằng chấp nhận được giữa entity continuity và privacy leakage để representation vẫn hữu ích cho phân tích an toàn?"
     ],
-    "category": "PROSE_AUDIT_STYLE_REFINEMENT",
-    "reason": "Refine prose and align terminology with scientific auditing standards.",
-    "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
-    "claim_ids": [],
-    "associated_claims": [],
+    "category": "PROSE_REFINEMENT",
+    "reason": "Basic-first scientific argumentation and ATTT v2.2 academic prose refinement",
+    "scientific_justification": "Basic-first scientific argumentation and ATTT v2.2 academic prose refinement",
+    "claim_ids": [
+      "PROSE-QUALITY"
+    ],
+    "associated_claims": [
+      "PROSE-QUALITY"
+    ],
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-001",
+    "hunk_id": "HUNK-CH2-024",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1072,12 +966,12 @@
       5
     ],
     "old_text_sha256": "3c515b2227eb9381cadb57768a1bc2bc32c5c2be1b3dc3603860f4954e9825fa",
-    "new_text_sha256": "fb93a8d87d393348c34cf948c8df3e97ac665af466284904cef70bad7ddeb836",
+    "new_text_sha256": "cbc28fcfde04a8714447fc19f7bbf10deed8db8ee3858b0f557801e13a46fd45",
     "old_text": [
       "Để thiết lập nền tảng lý thuyết vững chắc và giải quyết căn bản các khoảng trống phương pháp luận đã được xác lập trong Chương 1, Chương này đề xuất khung phương pháp biểu diễn đặc trưng log đa góc nhìn bảo toàn ngữ cảnh an toàn, vận hành trực tuyến trong môi trường xử lý dòng (Streaming Environment). Quá trình biểu diễn bắt đầu bằng việc hình thức hóa luồng nhật ký kiểm toán hệ thống thành một chuỗi sự kiện được gán nhãn thời gian: , trong đó mỗi sự kiện tuân thủ thống nhất lược đồ bộ sáu kiểu hóa (Typed Six-tuple, đặc tả chi tiết tại Mục 2.2.1), bao gồm mốc thời gian xuất hiện sự kiện (Event-Time), định danh kiểu sự kiện , thực thể tác nhân chủ động (Actor Entity như tiến trình gốc, tài khoản người dùng), thực thể đối tượng đích chịu tác động (Object Entity như tệp tin, cổng mạng, tiến trình con), hành động/thao tác thực hiện (Action như fork, execve, read, write, connect, registry_set), và tập hợp các tham số động có cấu trúc (đường dẫn tệp tin, tham số dòng lệnh thực thi, cổng mạng và địa chỉ IP kết nối) [1]."
     ],
     "new_text": [
-      "Về mặt nhận thức luận khoa học, các hàm mất mát (loss) là các tín hiệu tối ưu hóa nội tại của quá trình huấn luyện, không phải bằng chứng khoa học tự thân chứng minh năng lực an ninh trực tiếp. Việc giảm một hàm mất mát phụ trợ (auxiliary loss) chỉ chứng minh mô hình tối ưu tốt hơn trên tác vụ đại diện (surrogate task) và dữ liệu được quan sát; mọi kết luận về năng lực phát hiện xâm nhập downstream, tính vững chắc hay độ an toàn quyền riêng tư bắt buộc phải được thẩm định độc lập qua các phép đo thực nghiệm tương ứng.",
+      "Các hàm mất mát trong quá trình huấn luyện tự giám sát là những tín hiệu tối ưu hóa nội tại, không phải bằng chứng khoa học tự thân chứng minh năng lực an ninh trực tiếp. Việc giảm một hàm mất mát phụ trợ (auxiliary loss) chỉ chứng minh mô hình tối ưu tốt hơn trên tác vụ đại diện (surrogate task) và dữ liệu được quan sát; mọi kết luận về năng lực phát hiện xâm nhập downstream, tính vững chắc hay độ an toàn quyền riêng tư bắt buộc phải được thẩm định độc lập qua các phép đo thực nghiệm tương ứng.",
       "Trên cơ sở các khoảng trống phương pháp luận được xác lập tại Chương 1, Chương 2 đề xuất khung phương pháp biểu diễn đặc trưng log đa góc nhìn bảo toàn ngữ cảnh an toàn, vận hành trực tuyến trong môi trường xử lý dòng (Streaming Environment). Quá trình biểu diễn bắt đầu bằng việc hình thức hóa luồng nhật ký kiểm toán hệ thống thành một chuỗi sự kiện được gán nhãn thời gian: , trong đó mỗi sự kiện tuân thủ thống nhất lược đồ bộ sáu kiểu hóa (Typed Six-tuple, đặc tả chi tiết tại Mục 2.2.1), bao gồm mốc thời gian xuất hiện sự kiện (Event-Time), định danh kiểu sự kiện , thực thể tác nhân chủ động (Actor Entity như tiến trình gốc, tài khoản người dùng), thực thể đối tượng đích chịu tác động (Object Entity như tệp tin, cổng mạng, tiến trình con), hành động/thao tác thực hiện (Action như fork, execve, read, write, connect, registry_set), và tập hợp các tham số động có cấu trúc (đường dẫn tệp tin, tham số dòng lệnh thực thi, cổng mạng và địa chỉ IP kết nối) [1]."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
@@ -1092,42 +986,50 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-002",
+    "hunk_id": "HUNK-CH2-025",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
       6,
-      7
+      9
     ],
     "base_paragraph_indices": [
       6,
-      7
+      9
     ],
     "current_indices": [
       7,
-      8
+      10
     ],
     "current_paragraph_indices": [
       7,
-      8
+      10
     ],
-    "old_text_sha256": "c6f77cdd000767fe10056d9111467ac59484a1f42a7f4f1cb89ccb1719198df9",
-    "new_text_sha256": "a3ef7b11d6b92a38cdbe3d5fed82f67dc46b861c68845875af5fb8a2c43bbd8e",
+    "old_text_sha256": "3f0d6d3349247791cb2b1e8f9ffba5e3f4bf0ae4c969a8e2c93d6534af845e75",
+    "new_text_sha256": "2b67d3174f911b1ab0511e81ed5bb4d0927293e176f0f2ba9579b69c3d44745b",
     "old_text": [
-      "1. Giai đoạn A (Stage A, Pretraining Tự giám sát Ngoại tuyến): Huấn luyện bộ trích xuất hoàn toàn theo cơ chế tự giám sát (Self-Supervised Learning) trên dữ liệu nền tảng lịch sử mà không tiếp cận bất kỳ nhãn tấn công hay tín hiệu phân loại hạ nguồn nào, học các bất biến cấu trúc và trật tự thời gian nội tại."
+      "1. Giai đoạn A (Stage A, Pretraining Tự giám sát Ngoại tuyến): Huấn luyện bộ trích xuất hoàn toàn theo cơ chế tự giám sát (Self-Supervised Learning) trên dữ liệu nền tảng lịch sử mà không tiếp cận bất kỳ nhãn tấn công hay tín hiệu phân loại hạ nguồn nào, học các bất biến cấu trúc và trật tự thời gian nội tại.",
+      "2. Giai đoạn B (Stage B, Thích ứng Bằng chứng Yếu / Tùy chọn): Khi môi trường giám sát cung cấp các nhãn mức thô (Coarse/Bag-level Labels), một mục tiêu học đa thể hiện có trọng số chú ý (Attention-based Multiple Instance Learning) có thể được kích hoạt trong pha thích ứng riêng biệt nhằm tinh chỉnh phân bổ trọng số cho các bằng chứng thưa thớt mà không làm sai lệch tính chất tự giám sát của Stage A.",
+      "3. Giai đoạn C (Stage C, Đánh giá Đóng băng Hạ nguồn): Khóa cố định toàn bộ tham số của bộ trích xuất biểu diễn. Đánh giá chất lượng biểu diễn thông qua giao thức đóng băng tham số (Frozen Linear Probe: ) phục vụ phân loại và quy kết chiến thuật/kỹ thuật theo phân loại MITRE ATT&CK [4], hoặc quy trình chấm điểm bất thường không giám sát tùy chọn (Optional Downstream Zero-Shot Anomaly Scoring Protocol). Trong đó, hàm tính điểm bất thường, phép đo khoảng cách/năng lượng, phân bố nền chuẩn, phương pháp hiệu chuẩn và chính sách ngưỡng/ngân sách cảnh báo đều được đăng ký trước và khóa cố định trên tập Train/Validation tại Chương 3 trước khi mở tập Test. Bộ trích xuất Extractor tuyệt đối độc lập và không phụ thuộc vào bất kỳ bộ dò Detector cụ thể nào."
     ],
     "new_text": [
-      "1. Giai đoạn A (Stage A, Pretraining Tự giám sát Ngoại tuyến): Huấn luyện bộ trích xuất hoàn toàn theo cơ chế tự giám sát trên dữ liệu nền tảng lịch sử mà không tiếp cận bất kỳ nhãn tấn công hay tín hiệu phân loại hạ nguồn nào, học các bất biến cấu trúc và trật tự thời gian nội tại."
+      "Một là, Giai đoạn A (Stage A - Tiền huấn luyện tự giám sát ngoại tuyến): Huấn luyện bộ trích xuất hoàn toàn theo cơ chế tự giám sát trên dữ liệu nền tảng lịch sử mà không tiếp cận bất kỳ nhãn tấn công hay tín hiệu phân loại hạ nguồn nào, học các bất biến cấu trúc và trật tự thời gian nội tại.",
+      "Hai là, Giai đoạn B (Stage B - Thích ứng bằng chứng yếu tùy chọn): Khi môi trường giám sát cung cấp các nhãn an ninh mức thô (như phiên làm việc hoặc máy chủ bị xâm nhập), mô hình kích hoạt đầu dự đoán bằng chứng yếu để hướng dẫn không gian vector tập trung vào các sự kiện mấu chốt cấu thành cuộc tấn công, hạn chế nguy cơ học nhầm các thao tác quản trị hợp pháp.",
+      "Ba là, Giai đoạn C (Stage C - Đánh giá đóng băng hạ nguồn): Khóa cố định toàn bộ tham số của bộ trích xuất biểu diễn. Đánh giá chất lượng biểu diễn thông qua giao thức đóng băng tham số (Frozen Linear Probe: ) phục vụ phân loại và quy kết chiến thuật/kỹ thuật theo phân loại MITRE ATT&CK [4], hoặc quy trình chấm điểm bất thường không giám sát tùy chọn (Optional Downstream Zero-Shot Anomaly Scoring Protocol). Trong đó, hàm tính điểm bất thường, phép đo khoảng cách/năng lượng, phân bố nền chuẩn, phương pháp hiệu chuẩn và chính sách ngưỡng/ngân sách cảnh báo đều được đăng ký trước và khóa cố định trên tập Train/Validation tại Chương 3 trước khi mở tập Test. Bộ trích xuất Extractor tuyệt đối độc lập và không phụ thuộc vào bất kỳ bộ dò Detector cụ thể nào."
     ],
-    "category": "PROSE_AUDIT_STYLE_REFINEMENT",
-    "reason": "Refine prose and align terminology with scientific auditing standards.",
-    "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
-    "claim_ids": [],
-    "associated_claims": [],
+    "category": "PROSE_REFINEMENT",
+    "reason": "Basic-first scientific argumentation and ATTT v2.2 academic prose refinement",
+    "scientific_justification": "Basic-first scientific argumentation and ATTT v2.2 academic prose refinement",
+    "claim_ids": [
+      "PROSE-QUALITY"
+    ],
+    "associated_claims": [
+      "PROSE-QUALITY"
+    ],
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-003",
+    "hunk_id": "HUNK-CH2-026",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1166,7 +1068,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-004",
+    "hunk_id": "HUNK-CH2-027",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1209,7 +1111,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-005",
+    "hunk_id": "HUNK-CH2-028",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1248,7 +1150,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-006",
+    "hunk_id": "HUNK-CH2-029",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1283,7 +1185,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-007",
+    "hunk_id": "HUNK-CH2-030",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1303,14 +1205,14 @@
       31
     ],
     "old_text_sha256": "f976eefe52c6034a4029fb709e84c2eba7eeb04b778d0ee70ff4023929dc3c93",
-    "new_text_sha256": "f7c15db3a85caf33497fca2144dde3b803ad750904db7eebec78695baab2b550",
+    "new_text_sha256": "e991d62cd6544534f5da1ce38e605fa4a9709883579491ec1b14853a3831edee",
     "old_text": [
       "1. Mặt phẳng Huấn luyện (Training Plane / Offline Self-Supervised): Vận hành ngoại tuyến (Offline) trên kho dữ liệu telemetry lịch sử . Mặt phẳng này thực hiện trích xuất song song hai góc nhìn (chuỗi sự kiện và đồ thị nguồn gốc), tối ưu hóa hàm mất mát gióng hàng đa góc nhìn kết hợp các số hạng điều hòa bất biến để tìm kiếm bộ trọng số tối ưu tại Giai đoạn A, đồng thời hỗ trợ pha thích ứng bằng chứng yếu Giai đoạn B (nếu có nhãn mức thô). Quá trình tiền huấn luyện hoàn toàn không sử dụng nhãn tấn công và không can thiệp vào luồng vận hành thời gian thực.",
       "2. Mặt phẳng Suy luận Dòng (Streaming Inference Plane / Online Causal): Vận hành trực tuyến (Online) trên luồng sự kiện đang diễn ra . Mặt phẳng này tiếp nhận trọng số đã đóng băng hoàn toàn , cập nhật trạng thái bộ nhớ hữu hạn theo các chính sách TTL, Eviction và Watermarking, sau đó trích xuất vector đóng gói theo cơ chế đơn lượt đơn hướng (Strictly Causal, Zero Lookahead), cung cấp đầu vào tức thời cho các bộ dò tuyến tính đóng băng Giai đoạn C phục vụ phát hiện và quy kết chiến thuật/kỹ thuật MITRE ATT&CK."
     ],
     "new_text": [
-      "1. Mặt phẳng Huấn luyện: Vận hành ngoại tuyến (Offline) trên kho dữ liệu telemetry lịch sử . Mặt phẳng này thực hiện trích xuất song song hai góc nhìn (chuỗi sự kiện và đồ thị nguồn gốc), tối ưu hóa hàm mất mát gióng hàng đa góc nhìn kết hợp các số hạng điều hòa bất biến để tìm kiếm bộ trọng số tối ưu tại Giai đoạn A, đồng thời hỗ trợ pha thích ứng bằng chứng yếu Giai đoạn B (nếu có nhãn mức thô). Quá trình tiền huấn luyện hoàn toàn không sử dụng nhãn tấn công và không can thiệp vào luồng vận hành thời gian thực.",
-      "2. Mặt phẳng Suy luận Dòng: Vận hành trực tuyến (Online) trên luồng sự kiện đang diễn ra . Mặt phẳng này tiếp nhận trọng số đã đóng băng hoàn toàn , cập nhật trạng thái bộ nhớ hữu hạn theo các chính sách TTL, Eviction và Watermarking, sau đó trích xuất vector đóng gói theo cơ chế đơn lượt đơn hướng (Strictly Causal, Zero Lookahead), cung cấp đầu vào tức thời cho các bộ dò tuyến tính đóng băng Giai đoạn C phục vụ phát hiện và quy kết chiến thuật/kỹ thuật MITRE ATT&CK."
+      "Một là, mặt phẳng huấn luyện ngoại tuyến: Vận hành trên kho dữ liệu telemetry lịch sử . Mặt phẳng này thực hiện trích xuất song song hai góc nhìn (chuỗi sự kiện và đồ thị nguồn gốc), tối ưu hóa hàm mất mát gióng hàng đa góc nhìn kết hợp các số hạng điều hòa bất biến để tìm kiếm bộ trọng số tối ưu tại Giai đoạn A, đồng thời hỗ trợ pha thích ứng bằng chứng yếu Giai đoạn B (nếu có nhãn mức thô). Quá trình tiền huấn luyện hoàn toàn không sử dụng nhãn tấn công và không can thiệp vào luồng vận hành thời gian thực.",
+      "Hai là, mặt phẳng suy luận dòng trực tuyến: Vận hành trên luồng sự kiện đang diễn ra . Mặt phẳng này tiếp nhận trọng số đã đóng băng hoàn toàn , cập nhật trạng thái bộ nhớ hữu hạn theo các chính sách TTL, loại bỏ và đánh dấu thời gian, sau đó trích xuất vector đóng gói theo cơ chế đơn lượt đơn hướng không nhìn trước thời gian (Strictly Causal, Zero Lookahead), cung cấp đầu vào tức thời cho các bộ dò tuyến tính đóng băng Giai đoạn C phục vụ phát hiện và quy kết chiến thuật/kỹ thuật MITRE ATT&CK."
     ],
     "category": "PROSE_AUDIT_STYLE_REFINEMENT",
     "reason": "Refine prose and align terminology with scientific auditing standards.",
@@ -1320,7 +1222,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-008",
+    "hunk_id": "HUNK-CH2-031",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1361,7 +1263,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-009",
+    "hunk_id": "HUNK-CH2-032",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1402,7 +1304,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-010",
+    "hunk_id": "HUNK-CH2-033",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1447,7 +1349,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-011",
+    "hunk_id": "HUNK-CH2-034",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1482,7 +1384,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-012",
+    "hunk_id": "HUNK-CH2-035",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1523,7 +1425,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-013",
+    "hunk_id": "HUNK-CH2-036",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1574,7 +1476,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-014",
+    "hunk_id": "HUNK-CH2-037",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1609,7 +1511,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-015",
+    "hunk_id": "HUNK-CH2-038",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1648,7 +1550,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-016",
+    "hunk_id": "HUNK-CH2-039",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1683,7 +1585,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-017",
+    "hunk_id": "HUNK-CH2-040",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1726,7 +1628,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-018",
+    "hunk_id": "HUNK-CH2-041",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1761,7 +1663,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-019",
+    "hunk_id": "HUNK-CH2-042",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1800,7 +1702,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-020",
+    "hunk_id": "HUNK-CH2-043",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1839,7 +1741,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-021",
+    "hunk_id": "HUNK-CH2-044",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1876,7 +1778,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-022",
+    "hunk_id": "HUNK-CH2-045",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1911,7 +1813,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-023",
+    "hunk_id": "HUNK-CH2-046",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -1950,7 +1852,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-024",
+    "hunk_id": "HUNK-CH2-047",
     "chapter": 2,
     "opcode": "delete",
     "base_indices": [
@@ -1983,7 +1885,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-025",
+    "hunk_id": "HUNK-CH2-048",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2022,7 +1924,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-026",
+    "hunk_id": "HUNK-CH2-049",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2057,7 +1959,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-027",
+    "hunk_id": "HUNK-CH2-050",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2098,7 +2000,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-028",
+    "hunk_id": "HUNK-CH2-051",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2133,7 +2035,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-029",
+    "hunk_id": "HUNK-CH2-052",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2168,7 +2070,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-030",
+    "hunk_id": "HUNK-CH2-053",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2207,7 +2109,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-031",
+    "hunk_id": "HUNK-CH2-054",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2242,7 +2144,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-032",
+    "hunk_id": "HUNK-CH2-055",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2281,7 +2183,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-033",
+    "hunk_id": "HUNK-CH2-056",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2316,7 +2218,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-034",
+    "hunk_id": "HUNK-CH2-057",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2353,7 +2255,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-035",
+    "hunk_id": "HUNK-CH2-058",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2388,7 +2290,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-036",
+    "hunk_id": "HUNK-CH2-059",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2427,7 +2329,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-037",
+    "hunk_id": "HUNK-CH2-060",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2472,7 +2374,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-038",
+    "hunk_id": "HUNK-CH2-061",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2507,7 +2409,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-039",
+    "hunk_id": "HUNK-CH2-062",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2548,7 +2450,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-040",
+    "hunk_id": "HUNK-CH2-063",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2587,7 +2489,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-041",
+    "hunk_id": "HUNK-CH2-064",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2622,7 +2524,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-042",
+    "hunk_id": "HUNK-CH2-065",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2661,7 +2563,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-043",
+    "hunk_id": "HUNK-CH2-066",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2696,7 +2598,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-044",
+    "hunk_id": "HUNK-CH2-067",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2731,7 +2633,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-045",
+    "hunk_id": "HUNK-CH2-068",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2768,7 +2670,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-046",
+    "hunk_id": "HUNK-CH2-069",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2803,7 +2705,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-047",
+    "hunk_id": "HUNK-CH2-070",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
@@ -2844,7 +2746,7 @@
     "verified": true
   },
   {
-    "hunk_id": "HUNK-CH2-048",
+    "hunk_id": "HUNK-CH2-071",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
