@@ -9,13 +9,14 @@
       1,
       4
     ],
-    "source_locator": "Tác giả luận văn tổng hợp cấu trúc phân tích từ các nguồn y văn [1, 4]; không phải taxonomy nguyên bản của từng bài báo đơn lẻ.",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P115-S00",
-    "parent_text_hash": "be45483e4e50"
+    "parent_text_hash": "be45483e4e50",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-002",
@@ -32,7 +33,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P095-S00",
-    "parent_text_hash": "3b4d94077366"
+    "parent_text_hash": "3b4d94077366",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-003",
@@ -50,7 +52,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P095-S01",
-    "parent_text_hash": "da47b8bef57f"
+    "parent_text_hash": "da47b8bef57f",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-004",
@@ -61,13 +64,14 @@
     "citation_numbers": [
       4
     ],
-    "source_locator": "MITRE ATT&CK -> Get Started -> Key Concepts (Tactics represent 'why', Techniques represent 'how') | Khung Hợp đồng Biểu diễn là đề xuất phương pháp luận của luận văn.",
+    "source_locator": "DOCUMENT_DESCRIPTION (Tổng quan cấu trúc tài liệu của chuyên đề)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P095-S02",
-    "parent_text_hash": "a001d9e8d8cd"
+    "parent_text_hash": "a001d9e8d8cd",
+    "factuality_class": "DOCUMENT_DESCRIPTION"
   },
   {
     "claim_id": "CLM-005",
@@ -85,7 +89,8 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P097-S00",
-    "parent_text_hash": "0188e3c6f596"
+    "parent_text_hash": "0188e3c6f596",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-006A",
@@ -104,7 +109,8 @@
     "required_action": "NONE",
     "parent_detected_id": "DET-P097-S02",
     "notes": "CLAIM_CLASS_SUPPORT_STATUS_CONTRADICTIONS=0; FALSE_DIRECT_SUPPORT=0; AUTHOR_SYNTHESIS: [1] (Inam et al. IEEE S&P 2023) and [2] (Michael et al. ACSAC 2020) establish provenance telemetry and audit log forensics on Linux, supporting the general mechanism. Syscall examples (execve, openat, unlink, connect, accept) are representative author-selected illustrations of the telemetry categories; specific enumeration is author synthesis, not exhaustively proven by [1],[2] alone.",
-    "parent_text_hash": "7f68e1e62fea"
+    "parent_text_hash": "7f68e1e62fea",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-006B",
@@ -121,7 +127,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P097-S03",
-    "parent_text_hash": "bb15cf5bdc99"
+    "parent_text_hash": "bb15cf5bdc99",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-007",
@@ -139,7 +146,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P097-S04",
-    "parent_text_hash": "99a1adf12110"
+    "parent_text_hash": "99a1adf12110",
+    "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
     "claim_id": "CLM-008",
@@ -157,7 +165,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P103-S00",
-    "parent_text_hash": "0ed77c6ca0fe"
+    "parent_text_hash": "0ed77c6ca0fe",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-009",
@@ -174,7 +183,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P103-S01",
-    "parent_text_hash": "831560146467"
+    "parent_text_hash": "831560146467",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-010",
@@ -191,7 +201,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P103-S02",
-    "parent_text_hash": "d3b65581242c"
+    "parent_text_hash": "d3b65581242c",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-011",
@@ -209,7 +220,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P103-S03",
-    "parent_text_hash": "8d7edbf28227"
+    "parent_text_hash": "8d7edbf28227",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-012",
@@ -220,13 +232,14 @@
     "citation_numbers": [
       8
     ],
-    "source_locator": "Tác giả luận văn tổng hợp cấu trúc phân tích từ các nguồn y văn [8]; không phải taxonomy nguyên bản của từng bài báo đơn lẻ.",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P104-S01",
-    "parent_text_hash": "5c0d3156d368"
+    "parent_text_hash": "5c0d3156d368",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-013",
@@ -244,7 +257,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P111-S00",
-    "parent_text_hash": "07b771f4fec9"
+    "parent_text_hash": "07b771f4fec9",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-014",
@@ -255,13 +269,14 @@
     "citation_numbers": [
       1
     ],
-    "source_locator": "Tác giả luận văn tổng hợp cấu trúc phân tích từ các nguồn y văn [1]; không phải taxonomy nguyên bản của từng bài báo đơn lẻ.",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P111-S01",
-    "parent_text_hash": "2a751df0947a"
+    "parent_text_hash": "2a751df0947a",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-015",
@@ -273,13 +288,14 @@
       1,
       4
     ],
-    "source_locator": "Tác giả luận văn tổng hợp cấu trúc phân tích từ các nguồn y văn [1, 4]; không phải taxonomy nguyên bản của từng bài báo đơn lẻ.",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P115-S00",
-    "parent_text_hash": "be45483e4e50"
+    "parent_text_hash": "be45483e4e50",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-016",
@@ -296,7 +312,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P116-S00",
-    "parent_text_hash": "8c819a75b96d"
+    "parent_text_hash": "8c819a75b96d",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-017",
@@ -318,7 +335,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P117-S00",
-    "parent_text_hash": "8849cba29a74"
+    "parent_text_hash": "8849cba29a74",
+    "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
     "claim_id": "CLM-018",
@@ -335,7 +353,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P125-S00",
-    "parent_text_hash": "cf59779342db"
+    "parent_text_hash": "cf59779342db",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-019",
@@ -352,7 +371,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P125-S01",
-    "parent_text_hash": "f6b2b5270703"
+    "parent_text_hash": "f6b2b5270703",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-020",
@@ -371,7 +391,8 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P129-S01",
-    "parent_text_hash": "97d9c8a4d720"
+    "parent_text_hash": "97d9c8a4d720",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-021",
@@ -384,14 +405,15 @@
       17,
       33
     ],
-    "source_locator": "Đề xuất quy trình đánh giá và định vị phương pháp luận cho mô hình hạ nguồn; chưa thực nghiệm tấn công trong phạm vi chuyên đề.",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "NOT_EMPIRICALLY_EXECUTED",
     "required_action": "NONE",
     "notes": "PRIVACY_IMPLEMENTATION_FALSE_POSITIVES=0; Proposed downstream evaluation framework, NOT empirically executed.",
     "parent_detected_id": "DET-P129-S02",
-    "parent_text_hash": "3a11a693df0d"
+    "parent_text_hash": "3a11a693df0d",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-022",
@@ -408,7 +430,8 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P129-S03",
-    "parent_text_hash": "686fe50a15ec"
+    "parent_text_hash": "686fe50a15ec",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-023",
@@ -425,7 +448,8 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P134-S01",
-    "parent_text_hash": "eace6de2fae1"
+    "parent_text_hash": "eace6de2fae1",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-024",
@@ -442,7 +466,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P135-S00",
-    "parent_text_hash": "3edd609b4a80"
+    "parent_text_hash": "3edd609b4a80",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-025",
@@ -460,7 +485,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P137-S01",
-    "parent_text_hash": "c0a109125e32"
+    "parent_text_hash": "c0a109125e32",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-026",
@@ -479,7 +505,8 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P139-S00",
-    "parent_text_hash": "4f6a9164fff9"
+    "parent_text_hash": "4f6a9164fff9",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-027",
@@ -497,7 +524,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P141-S00",
-    "parent_text_hash": "20bc90fe4ccb"
+    "parent_text_hash": "20bc90fe4ccb",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-028",
@@ -515,7 +543,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P142-S00",
-    "parent_text_hash": "6153bbd3ee02"
+    "parent_text_hash": "6153bbd3ee02",
+    "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
     "claim_id": "CLM-029",
@@ -524,13 +553,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp phương pháp luận nền tảng về trích xuất đặc trưng thống kê kinh điển trong phân tích log; không gán nhãn sai cho Ref [6].",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P145-S01",
-    "parent_text_hash": "618b32a5dd08"
+    "parent_text_hash": "618b32a5dd08",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-030",
@@ -547,7 +577,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P147-S00",
-    "parent_text_hash": "9034b78a04d8"
+    "parent_text_hash": "9034b78a04d8",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-031",
@@ -564,7 +595,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P149-S00",
-    "parent_text_hash": "29977a032d04"
+    "parent_text_hash": "29977a032d04",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-032",
@@ -582,7 +614,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P151-S00",
-    "parent_text_hash": "d1cea8c1797f"
+    "parent_text_hash": "d1cea8c1797f",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-033",
@@ -603,7 +636,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P153-S00",
-    "parent_text_hash": "977b34572607"
+    "parent_text_hash": "977b34572607",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-034",
@@ -620,7 +654,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P154-S00",
-    "parent_text_hash": "c8e6358dd0dd"
+    "parent_text_hash": "c8e6358dd0dd",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-035",
@@ -637,7 +672,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P154-S01",
-    "parent_text_hash": "a762e6e994f2"
+    "parent_text_hash": "a762e6e994f2",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-036",
@@ -654,7 +690,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P156-S00",
-    "parent_text_hash": "d00796a55719"
+    "parent_text_hash": "d00796a55719",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-037",
@@ -674,7 +711,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P157-S00",
-    "parent_text_hash": "7a5d6e53224e"
+    "parent_text_hash": "7a5d6e53224e",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-038",
@@ -691,7 +729,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P157-S01",
-    "parent_text_hash": "7fd5d883ecea"
+    "parent_text_hash": "7fd5d883ecea",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-039",
@@ -708,7 +747,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P157-S02",
-    "parent_text_hash": "a2379c3528fa"
+    "parent_text_hash": "a2379c3528fa",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-040",
@@ -725,7 +765,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P157-S04",
-    "parent_text_hash": "a6e7cb315795"
+    "parent_text_hash": "a6e7cb315795",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-041",
@@ -736,13 +777,14 @@
     "citation_numbers": [
       10
     ],
-    "source_locator": "Giả thuyết nghiên cứu của luận văn được xây dựng trên cơ sở các phát hiện từ [10]; được kiểm chứng tại Chương 3.",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_HYPOTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P157-S05",
-    "parent_text_hash": "8245461932ea"
+    "parent_text_hash": "8245461932ea",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-042",
@@ -761,7 +803,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P158-S00",
-    "parent_text_hash": "c301e4b0ce93"
+    "parent_text_hash": "c301e4b0ce93",
+    "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
     "claim_id": "CLM-043",
@@ -779,7 +822,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P160-S00",
-    "parent_text_hash": "a21fa398877f"
+    "parent_text_hash": "a21fa398877f",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-044",
@@ -796,7 +840,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P162-S00",
-    "parent_text_hash": "2427e51e2c52"
+    "parent_text_hash": "2427e51e2c52",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-045",
@@ -819,7 +864,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P163-S00",
-    "parent_text_hash": "810f70c16fc7"
+    "parent_text_hash": "810f70c16fc7",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-046",
@@ -841,7 +887,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P163-S01",
-    "parent_text_hash": "35fc3888a90c"
+    "parent_text_hash": "35fc3888a90c",
+    "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
     "claim_id": "CLM-047",
@@ -858,7 +905,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P164-S01",
-    "parent_text_hash": "32da806ce850"
+    "parent_text_hash": "32da806ce850",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-048",
@@ -878,7 +926,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P171-S00",
-    "parent_text_hash": "13536611d5fb"
+    "parent_text_hash": "13536611d5fb",
+    "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
     "claim_id": "CLM-049",
@@ -896,7 +945,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P173-S00",
-    "parent_text_hash": "3ad511052a0b"
+    "parent_text_hash": "3ad511052a0b",
+    "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
     "claim_id": "CLM-050",
@@ -914,7 +964,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P174-S00",
-    "parent_text_hash": "8c741e2409fc"
+    "parent_text_hash": "8c741e2409fc",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-051",
@@ -936,7 +987,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P178-S00",
-    "parent_text_hash": "0756d216e83a"
+    "parent_text_hash": "0756d216e83a",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-052",
@@ -954,7 +1006,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P179-S00",
-    "parent_text_hash": "d9ff426524e9"
+    "parent_text_hash": "d9ff426524e9",
+    "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
     "claim_id": "CLM-053",
@@ -972,7 +1025,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P183-S01",
-    "parent_text_hash": "e39bde5510c2"
+    "parent_text_hash": "e39bde5510c2",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-054",
@@ -991,7 +1045,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P188-S00",
-    "parent_text_hash": "ad68d712345e"
+    "parent_text_hash": "ad68d712345e",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-055",
@@ -1009,7 +1064,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P189-S00",
-    "parent_text_hash": "5a125c3a14f9"
+    "parent_text_hash": "5a125c3a14f9",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-056",
@@ -1027,7 +1083,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P193-S00",
-    "parent_text_hash": "d54943646082"
+    "parent_text_hash": "d54943646082",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-057",
@@ -1046,7 +1103,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P194-S00",
-    "parent_text_hash": "a951d02f105a"
+    "parent_text_hash": "a951d02f105a",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-058",
@@ -1063,7 +1121,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P194-S01",
-    "parent_text_hash": "04d74c7cba4c"
+    "parent_text_hash": "04d74c7cba4c",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-059",
@@ -1080,7 +1139,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P194-S03",
-    "parent_text_hash": "b6efb629f0e7"
+    "parent_text_hash": "b6efb629f0e7",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-060",
@@ -1097,7 +1157,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P194-S04",
-    "parent_text_hash": "63ecbf47eb47"
+    "parent_text_hash": "63ecbf47eb47",
+    "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
     "claim_id": "CLM-061",
@@ -1114,7 +1175,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P201-S01",
-    "parent_text_hash": "4455f7de4e11"
+    "parent_text_hash": "4455f7de4e11",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-062",
@@ -1131,7 +1193,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P207-S02",
-    "parent_text_hash": "7bd7279ed57c"
+    "parent_text_hash": "7bd7279ed57c",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-063",
@@ -1150,7 +1213,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P221-S00",
-    "parent_text_hash": "9606fd661f65"
+    "parent_text_hash": "9606fd661f65",
+    "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
     "claim_id": "CLM-064",
@@ -1168,7 +1232,8 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P226-S00",
-    "parent_text_hash": "e0a3517ca71b"
+    "parent_text_hash": "e0a3517ca71b",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-065",
@@ -1185,7 +1250,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P269-S00",
-    "parent_text_hash": "9744c27e75df"
+    "parent_text_hash": "9744c27e75df",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-066",
@@ -1202,25 +1268,24 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P270-S00",
-    "parent_text_hash": "db398a762040"
+    "parent_text_hash": "db398a762040",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-067",
     "document_location": "Chương (Đoạn P279, câu S2)",
-    "atomic_claim": "Tuy nhiên, khẳng định sự vượt trội này yêu cầu kiểm thử thực nghiệm tường minh tại Chương 3 thông qua CTRL-PRIV-001: đánh giá MIA ([16]), tấn công nghịch đảo (theo nguyên lý Fredrikson et al. [33] áp dụng cho các thuộc tính nhạy cảm của log), và tấn công tái định danh; không thể đưa ra kết luận chỉ từ lý thuyết DP hoặc thiết kế pseudonymization.",
-    "claim_class": "LITERATURE_DIRECT",
-    "evidence_class": "PRIMARY_PAPER",
-    "citation_numbers": [
-      16,
-      33
-    ],
-    "source_locator": "Shokri et al., IEEE S&P 2017, Sec. II & III, pp. 3-18 (Membership Inference Attacks against machine learning models) | Fredrikson et al., ACM CCS 2015, Sec. 3 & 4, pp. 1322-1333 (Model Inversion attacks exploiting confidence information)",
+    "atomic_claim": "Tuy nhiên, khẳng định sự vượt trội này là một giả thuyết nghiên cứu yêu cầu kiểm thử thực nghiệm tường minh ở các mô hình hạ nguồn thông qua giao thức CTRL-PRIV-001 (đánh giá MIA [16], tấn công nghịch đảo theo nguyên lý Fredrikson et al. [33], và tấn công tái định danh); chưa được thực thi trong phạm vi thực nghiệm của chuyên đề hiện tại.",
+    "claim_class": "AUTHOR_PROPOSAL",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "AUTHOR_PROPOSAL (Giao thức CTRL-PRIV-001 định vị cho kiểm thử thực nghiệm mô hình hạ nguồn)",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "DIRECT_SUPPORT",
+    "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P279-S02",
-    "parent_text_hash": "d30c6df26783"
+    "parent_text_hash": "0944914e5d5f",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-068",
@@ -1237,7 +1302,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P297-S00",
-    "parent_text_hash": "e07416c890ec"
+    "parent_text_hash": "e07416c890ec",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-069A",
@@ -1254,7 +1320,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P301-S00",
-    "parent_text_hash": "7f07375fa996"
+    "parent_text_hash": "7f07375fa996",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-069B",
@@ -1263,14 +1330,15 @@
     "claim_class": "IMPLEMENTATION_VERIFIED",
     "evidence_class": "CODEBASE",
     "citation_numbers": [],
-    "source_locator": "",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "Stage A1: PATH_EXCLUSION_BY_CONTRACT (stage_a1_runner.py:174-215); graph_builder.py:240-245 (active raise TestSetSealedError)",
     "artifact_locator": "experiments/protocol/STAGE-A1-TRAINING-CONTRACT.md:L1-L40",
     "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
     "notes": "Stage A1 uses PATH_EXCLUSION_BY_CONTRACT; active raise in graph_builder.py:240-245.",
     "parent_detected_id": "DET-P301-S01",
-    "parent_text_hash": "40b82c18b3c4"
+    "parent_text_hash": "40b82c18b3c4",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-070A",
@@ -1287,7 +1355,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P304-S00",
-    "parent_text_hash": "f12a4252b1da"
+    "parent_text_hash": "f12a4252b1da",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-070B",
@@ -1296,13 +1365,14 @@
     "claim_class": "IMPLEMENTATION_VERIFIED",
     "evidence_class": "CODEBASE",
     "citation_numbers": [],
-    "source_locator": "Giá trị khởi tạo tham chiếu của đề tài; đã loại bỏ quy ước kế thừa BERT để loại trừ unsourced attribution.",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "src/research_agent/experiments/training/stage_a1_runner.py:L51; src/research_agent/experiments/extractor/sequence_view.py:L164-L185",
     "artifact_locator": "experiments/reports/STAGE-A1-PRETRAINING-REPORT.md:L51; experiments/protocol/STAGE-A1-TRAINING-CONTRACT.md:L30",
     "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
     "parent_detected_id": "DET-P304-S00",
-    "parent_text_hash": "f12a4252b1da"
+    "parent_text_hash": "f12a4252b1da",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-071",
@@ -1320,7 +1390,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P332-S00",
-    "parent_text_hash": "7cae4170737d"
+    "parent_text_hash": "7cae4170737d",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-072",
@@ -1341,7 +1412,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P339-S01",
-    "parent_text_hash": "a1213caabf91"
+    "parent_text_hash": "a1213caabf91",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-073",
@@ -1358,7 +1430,8 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P348-S01",
-    "parent_text_hash": "197782fbd90d"
+    "parent_text_hash": "197782fbd90d",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-074",
@@ -1376,7 +1449,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P358-S00",
-    "parent_text_hash": "7cae4170737d"
+    "parent_text_hash": "7cae4170737d",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-075",
@@ -1388,13 +1462,14 @@
       10,
       37
     ],
-    "source_locator": "Đóng góp và lựa chọn thiết kế phương pháp luận của luận văn, kế thừa và tích hợp các nguyên lý từ [10, 37].",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P380-S00",
-    "parent_text_hash": "fa56ddc8372c"
+    "parent_text_hash": "fa56ddc8372c",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-076",
@@ -1414,7 +1489,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P385-S00",
-    "parent_text_hash": "3c841a3e8167"
+    "parent_text_hash": "3c841a3e8167",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-077",
@@ -1425,13 +1501,14 @@
     "citation_numbers": [
       10
     ],
-    "source_locator": "Đóng góp và lựa chọn thiết kế phương pháp luận của luận văn, kế thừa và tích hợp các nguyên lý từ [10].",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P387-S00",
-    "parent_text_hash": "af7a3b1b9b34"
+    "parent_text_hash": "af7a3b1b9b34",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-078",
@@ -1448,7 +1525,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P387-S02",
-    "parent_text_hash": "65ef2e21ccb0"
+    "parent_text_hash": "65ef2e21ccb0",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-079",
@@ -1461,13 +1539,14 @@
       37,
       38
     ],
-    "source_locator": "Giả thuyết nghiên cứu của luận văn được xây dựng trên cơ sở các phát hiện từ [11, 37, 38]; được kiểm chứng tại Chương 3.",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_HYPOTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P387-S03",
-    "parent_text_hash": "2471a99c5803"
+    "parent_text_hash": "2471a99c5803",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-080",
@@ -1484,7 +1563,8 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P402-S01",
-    "parent_text_hash": "cb0bb4b6bfa2"
+    "parent_text_hash": "cb0bb4b6bfa2",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-081",
@@ -1501,7 +1581,8 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P443-S01",
-    "parent_text_hash": "6356a4654e82"
+    "parent_text_hash": "6356a4654e82",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-082",
@@ -1512,13 +1593,14 @@
     "citation_numbers": [
       15
     ],
-    "source_locator": "Đóng góp và lựa chọn thiết kế phương pháp luận của luận văn, kế thừa và tích hợp các nguyên lý từ [15].",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P450-S01",
-    "parent_text_hash": "23df0101b45d"
+    "parent_text_hash": "23df0101b45d",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-083",
@@ -1536,7 +1618,8 @@
     "required_action": "NONE",
     "parent_detected_id": "DET-P493-S00",
     "parent_text_hash": "1ee7bbc5b66b",
-    "notes": "; CLAIM_CLASS_SUPPORT_STATUS_CONTRADICTIONS=0; Reclassified to IMPLEMENTATION_VERIFIED: claim describes temporal split implementation verified in data_contract.py."
+    "notes": "; CLAIM_CLASS_SUPPORT_STATUS_CONTRADICTIONS=0; Reclassified to IMPLEMENTATION_VERIFIED: claim describes temporal split implementation verified in data_contract.py.",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-084",
@@ -1554,7 +1637,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-T06-R01",
-    "parent_text_hash": "4f5ae84d4875"
+    "parent_text_hash": "4f5ae84d4875",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-085",
@@ -1571,7 +1655,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-T06-R01",
-    "parent_text_hash": "4f5ae84d4875"
+    "parent_text_hash": "4f5ae84d4875",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-086",
@@ -1588,7 +1673,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-T06-R01",
-    "parent_text_hash": "4f5ae84d4875"
+    "parent_text_hash": "4f5ae84d4875",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-087",
@@ -1605,7 +1691,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-T12-R01",
-    "parent_text_hash": "cf0f852654e5"
+    "parent_text_hash": "cf0f852654e5",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-088",
@@ -1622,7 +1709,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-T12-R02",
-    "parent_text_hash": "45c1229db9bf"
+    "parent_text_hash": "45c1229db9bf",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-089",
@@ -1639,7 +1727,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-T12-R03",
-    "parent_text_hash": "8ba10c727964"
+    "parent_text_hash": "8ba10c727964",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-090",
@@ -1656,7 +1745,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-T12-R04",
-    "parent_text_hash": "16be8a65e1d2"
+    "parent_text_hash": "16be8a65e1d2",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-091",
@@ -1673,7 +1763,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-T12-R05",
-    "parent_text_hash": "df9e89e82b14"
+    "parent_text_hash": "df9e89e82b14",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "SCI-MATH-001",
@@ -1682,14 +1773,15 @@
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Thiết lập toán học hình thức của đề tài (Mục 1.1.4, Hợp đồng Biểu diễn)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "FALSE_MATHEMATICAL_IMPLEMENTATION_PROOF=0; Four-part representation contract is an author mathematical specification, not proved by code.",
     "parent_detected_id": "DET-P122-S00",
-    "parent_text_hash": "077c4b715352"
+    "parent_text_hash": "077c4b715352",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "SCI-MATH-002",
@@ -1707,7 +1799,8 @@
     "required_action": "NONE",
     "notes": "TGAT_IMPLEMENTATION_EQUIVALENCE_OVERCLAIM=0; Harmonic relative time encoding is a fixed sinusoidal adaptation inspired by TGAT.; CLAIM_CLASS_SUPPORT_STATUS_CONTRADICTIONS=0; Reclassified to MATHEMATICAL_FORMULATION: Harmonic time encoding formula from Xu et al. adapted and implemented in graph_view.py.",
     "parent_detected_id": "DET-P301-S00",
-    "parent_text_hash": "7f07375fa996"
+    "parent_text_hash": "7f07375fa996",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "SCI-CODE-001",
@@ -1716,13 +1809,14 @@
     "claim_class": "IMPLEMENTATION_VERIFIED",
     "evidence_class": "CODEBASE",
     "citation_numbers": [],
-    "source_locator": "Thiết kế giới hạn trạng thái động của đề tài",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "src/research_agent/experiments/extractor/graph_view.py:L45-L60 (BoundedEntityMemoryBank)",
     "artifact_locator": "experiments/protocol/STAGE-A1-TRAINING-CONTRACT.md:L1-L50",
     "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
     "parent_detected_id": "DET-P339-S01",
-    "parent_text_hash": "a1213caabf91"
+    "parent_text_hash": "a1213caabf91",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "SCI-CODE-002",
@@ -1731,14 +1825,15 @@
     "claim_class": "IMPLEMENTATION_VERIFIED",
     "evidence_class": "CODEBASE",
     "citation_numbers": [],
-    "source_locator": "Giao thức bảo vệ tính khách quan thực nghiệm của đề tài (PATH_EXCLUSION_BY_CONTRACT trong Stage A1; TestSetSealedError trong graph_builder/Stage A2).",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "src/research_agent/experiments/training/stage_a1_runner.py:L41-L44 (TestSetSealedError)",
     "artifact_locator": "experiments/evidence/stage-a2/reconciliation/CHAPTER3-SOURCE-METRICS.json:dataset_split.test",
     "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
     "notes": "ABSOLUTE_TEST_LEAKAGE_GUARANTEE=0; Bounded claim reflecting verified path exclusion in Stage A1 runner and active TestSetSealedError in graph builder.",
     "parent_detected_id": "DET-P496-S00",
-    "parent_text_hash": "e56f095e9eb9"
+    "parent_text_hash": "e56f095e9eb9",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "SCI-CODE-003",
@@ -1747,14 +1842,15 @@
     "claim_class": "IMPLEMENTATION_VERIFIED",
     "evidence_class": "CODEBASE",
     "citation_numbers": [],
-    "source_locator": "Heuristic fail-closed blacklist on known synthetic classes and top-level label keys in data_contract.py:25-56.",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "src/research_agent/experiments/data/data_contract.py:L25-L56",
     "artifact_locator": "experiments/protocol/STAGE-A1-TRAINING-CONTRACT.md",
     "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
     "notes": "OVERBROAD_DATA_PURITY_CLAIMS=0; Blacklist of known synthetic classes [SYNTHETIC_PROXY, SYNTHETIC_SMOKE_ONLY, HYBRID_SMOKE_FIXTURE] and 11 top-level label keys; verified identical in historical commits 70b68102 and e4d53b82.",
     "parent_detected_id": "DET-P250-S00",
-    "parent_text_hash": "3f2c0b8429c0"
+    "parent_text_hash": "3f2c0b8429c0",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "SCI-EXP-001",
@@ -1763,7 +1859,7 @@
     "claim_class": "EXPERIMENT_ARTIFACT_VERIFIED",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Kết quả thực nghiệm độc lập của luận văn (Bảng 8 & 9)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "src/research_agent/experiments/training/stage_a1_runner.py:L1-L562",
     "artifact_locator": "experiments/reports/STAGE-A1-PRETRAINING-REPORT.md; experiments/evidence/stage-a2/reconciliation/CHAPTER3-SOURCE-METRICS.json",
     "support_status": "VERIFIED_IN_ARTIFACT",
@@ -1772,7 +1868,8 @@
     "evidence_strength_local": "LOCAL_AGENT_BYTE_VERIFIED",
     "notes": "REMOTE_LOCAL_EVIDENCE_STRENGTH_MISMATCH=0; remote manifests attest loss metrics and zero test access; local workstation verifies raw checkpoint bytes.",
     "parent_detected_id": "DET-P431-S03",
-    "parent_text_hash": "3ea23067d77d"
+    "parent_text_hash": "3ea23067d77d",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "SCI-EXP-002",
@@ -1781,13 +1878,14 @@
     "claim_class": "EXPERIMENT_ARTIFACT_VERIFIED",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Bảng 3.3 và Bảng 3.4 trong Chuyên đề chuyên sâu.docx",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "src/research_agent/experiments/models/temporal_graph_view_encoder.py:L1-L320",
     "artifact_locator": "experiments/evidence/stage-a2/reconciliation/CHAPTER3-SOURCE-METRICS.json; experiments/plans/STAGE-A2-FINAL-12-EPOCH-AUTHORITY.json",
     "support_status": "VERIFIED_IN_ARTIFACT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P518-S00",
-    "parent_text_hash": "77052fc1af81"
+    "parent_text_hash": "77052fc1af81",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "SCI-PRIV-001",
@@ -1800,14 +1898,15 @@
       17,
       33
     ],
-    "source_locator": "Đề xuất quy trình đánh giá và định vị phương pháp luận cho mô hình hạ nguồn; chưa thực nghiệm tấn công trong phạm vi chuyên đề.",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "NOT_EMPIRICALLY_EXECUTED",
     "required_action": "NONE",
     "notes": "PRIVACY_IMPLEMENTATION_FALSE_POSITIVES=0; Proposed downstream evaluation framework, NOT empirically executed.",
     "parent_detected_id": "DET-P129-S01",
-    "parent_text_hash": "97d9c8a4d720"
+    "parent_text_hash": "97d9c8a4d720",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "SCI-CMPX-001",
@@ -1824,7 +1923,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P142-S00",
-    "parent_text_hash": "6153bbd3ee02"
+    "parent_text_hash": "6153bbd3ee02",
+    "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
     "claim_id": "CLM-SEC-001",
@@ -1833,13 +1933,14 @@
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả an toàn quyền riêng tư (Chương (Đoạn P71, câu S0))",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P253-S00",
-    "parent_text_hash": "c8db5478f35e"
+    "parent_text_hash": "c8db5478f35e",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-002",
@@ -1848,43 +1949,51 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P367-S00",
-    "parent_text_hash": "6cbbf35d088a"
+    "parent_text_hash": "6cbbf35d088a",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-003",
     "document_location": "Chương (Đoạn P82, câu S0)",
-    "atomic_claim": "Các phương pháp truyền thống như Bag of Words, n-gram, TF-IDF và đặc trưng thống kê có ưu điểm về tốc độ, chi phí và khả năng giải thích, nhưng hạn chế trong việc xử lý biến thể cú pháp và quan hệ dài hạn.",
-    "claim_class": "AUTHOR_SYNTHESIS",
-    "evidence_class": "NONE",
-    "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "atomic_claim": "Các phương pháp truyền thống như Bag of Words, n-gram, TF-IDF và đặc trưng thống kê có ưu điểm về tốc độ, chi phí và khả năng giải thích, nhưng hạn chế trong việc xử lý biến thể cú pháp và quan hệ dài hạn [6], [7].",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "citation_numbers": [
+      6,
+      7
+    ],
+    "source_locator": "Zhu et al., ICSE 2019 [6]; Jiang et al., ICSE 2024 / IEEE TSE [7] (Comprehensive empirical benchmark of traditional NLP/statistical vs neural log representations)",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "AUTHOR_SYNTHESIS",
+    "support_status": "SOURCE_GROUNDED_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P082-S00",
-    "parent_text_hash": "59da5fa8cd06"
+    "parent_text_hash": "40ffdf58266b",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-SEC-004",
     "document_location": "Chương (Đoạn P82, câu S2)",
-    "atomic_claim": "Mô hình ngôn ngữ lớn mở thêm khả năng chuẩn hóa và diễn giải log, nhưng vẫn chịu hạn chế về chi phí, độ trễ, tính ổn định và bảo mật dữ liệu.",
-    "claim_class": "AUTHOR_SYNTHESIS",
-    "evidence_class": "NONE",
-    "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "atomic_claim": "Mô hình ngôn ngữ lớn mở thêm khả năng chuẩn hóa và diễn giải log, nhưng vẫn chịu hạn chế về chi phí, độ trễ, tính ổn định và bảo mật dữ liệu [7].",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "citation_numbers": [
+      7
+    ],
+    "source_locator": "Jiang et al., ICSE 2024 / IEEE TSE [7], Sec. 4 & 5 (Empirical analysis of operational cost, inference latency, and stability limitations of LLMs in log processing)",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "AUTHOR_SYNTHESIS",
+    "support_status": "SOURCE_GROUNDED_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P082-S02",
-    "parent_text_hash": "da3fb9e7e96f"
+    "parent_text_hash": "77959975ccb6",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-SEC-005",
@@ -1893,13 +2002,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P086-S00",
-    "parent_text_hash": "27618fb98e20"
+    "parent_text_hash": "27618fb98e20",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-006",
@@ -1908,13 +2018,14 @@
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Quan sát thực nghiệm tại Chương (Đoạn P88, câu S1)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P088-S01",
-    "parent_text_hash": "dce03edbfbc7"
+    "parent_text_hash": "dce03edbfbc7",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-007",
@@ -1923,44 +2034,50 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P91, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P091-S00",
-    "parent_text_hash": "1a32e856f7d8"
+    "parent_text_hash": "1a32e856f7d8",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-008",
     "document_location": "Chương (Đoạn P92, câu S0)",
-    "atomic_claim": "Chương 3. Thực nghiệm, đánh giá và ứng dụng: Mô tả thiết lập thực nghiệm trên các bộ dữ liệu benchmark chuẩn (DARPA TC, LANL, HDFS, BGL), đánh giá định lượng hiệu năng phát hiện, phân tích độ bền vững trước trôi dạt dữ liệu, kiểm chứng khả năng phòng chống tấn công suy luận quyền riêng tư và thảo luận khả năng tích hợp trong hệ thống SOC.",
-    "claim_class": "PRIVACY_FRAMEWORK",
+    "atomic_claim": "Chương 3. Thực nghiệm, đánh giá và ứng dụng: Mô tả thiết lập thực nghiệm trên các bộ dữ liệu benchmark chuẩn (DARPA TC, LANL, HDFS, BGL), đánh giá định lượng hiệu năng phát hiện, phân tích độ bền vững trước trôi dạt dữ liệu, đề xuất khung đánh giá rủi ro quyền riêng tư và xác định MIA/Model Inversion là các phép kiểm tra hạ nguồn, chưa thực thi trong phạm vi thực nghiệm hiện tại và thảo luận khả năng tích hợp trong hệ thống SOC.",
+    "claim_class": "DOCUMENT_DESCRIPTION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả an toàn quyền riêng tư (Chương (Đoạn P92, câu S0))",
+    "source_locator": "DOCUMENT_DESCRIPTION (Bố cục cấu trúc Chương 3 của chuyên đề)",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "FRAMEWORK_SPECIFICATION",
+    "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P092-S00",
-    "parent_text_hash": "7273033f703d"
+    "parent_text_hash": "3b5639ec3a22",
+    "factuality_class": "DOCUMENT_DESCRIPTION"
   },
   {
     "claim_id": "CLM-SEC-009",
     "document_location": "Chương (Đoạn P97, câu S4)",
     "atomic_claim": "Nhóm thứ hai là nhật ký luồng mạng (Network Flow & Protocol Logs), được thu thập từ Zeek, Suricata hoặc NetFlow/IPFIX, cung cấp siêu dữ liệu kết nối giữa các nút mạng, giao dịch DNS, chứng chỉ TLS/SSL và thông lượng gói tin.",
-    "claim_class": "AUTHOR_SYNTHESIS",
-    "evidence_class": "NONE",
-    "citation_numbers": [],
-    "source_locator": "Tổng hợp từ ngữ cảnh đoạn P97 có trích dẫn [1], [5]: phân loại telemetry mạng doanh nghiệp",
+    "claim_class": "LITERATURE_DIRECT",
+    "evidence_class": "PRIMARY_PAPER",
+    "citation_numbers": [
+      1,
+      5
+    ],
+    "source_locator": "Inam et al., IEEE S&P 2023 [1], Sec. II; Zipperle et al., IEEE Access 2022 [5], Sec. 3 (Taxonomy of enterprise network flow protocols and telemetry sources)",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "AUTHOR_SYNTHESIS",
+    "support_status": "SOURCE_GROUNDED_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P097-S04",
     "notes": "SELF_REFERENTIAL_SOURCE_LOCATORS=0; Sentence is part of P97 which cites [1],[5] for taxonomy; METHODOLOGY_OVERVIEW reclassified to AUTHOR_SYNTHESIS as framing, not standalone external claim.",
-    "parent_text_hash": "99a1adf12110"
+    "parent_text_hash": "99a1adf12110",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-SEC-010",
@@ -1969,13 +2086,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P120, câu S3))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P120-S03",
-    "parent_text_hash": "af68f21c45e9"
+    "parent_text_hash": "af68f21c45e9",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-011",
@@ -1984,13 +2102,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P132, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P132-S00",
-    "parent_text_hash": "1e4ddf2fd3d0"
+    "parent_text_hash": "1e4ddf2fd3d0",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-012",
@@ -1999,13 +2118,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P139-S01",
-    "parent_text_hash": "a0ea118df610"
+    "parent_text_hash": "a0ea118df610",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-013",
@@ -2014,13 +2134,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P171, câu S1))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P171-S01",
-    "parent_text_hash": "d5f23f681784"
+    "parent_text_hash": "d5f23f681784",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-014",
@@ -2029,13 +2150,14 @@
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả an toàn quyền riêng tư (Chương (Đoạn P175, câu S0))",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P175-S00",
-    "parent_text_hash": "9e546aea9580"
+    "parent_text_hash": "9e546aea9580",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-015",
@@ -2044,13 +2166,14 @@
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Xác lập câu hỏi nghiên cứu / giả thuyết khoa học (Chương (Đoạn P176, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P176-S00",
-    "parent_text_hash": "170ace323a64"
+    "parent_text_hash": "170ace323a64",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-016",
@@ -2059,13 +2182,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P184-S00",
-    "parent_text_hash": "f0d79116ef71"
+    "parent_text_hash": "f0d79116ef71",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-017",
@@ -2074,13 +2198,14 @@
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả an toàn quyền riêng tư (Chương (Đoạn P192, câu S0))",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P192-S00",
-    "parent_text_hash": "780607e0bd67"
+    "parent_text_hash": "780607e0bd67",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-018",
@@ -2089,13 +2214,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P194, câu S4))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P194-S04",
-    "parent_text_hash": "63ecbf47eb47"
+    "parent_text_hash": "63ecbf47eb47",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-019",
@@ -2104,13 +2230,14 @@
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Xác lập câu hỏi nghiên cứu / giả thuyết khoa học (Chương (Đoạn P196, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P196-S00",
-    "parent_text_hash": "8d472a5c24b0"
+    "parent_text_hash": "8d472a5c24b0",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-020",
@@ -2119,13 +2246,14 @@
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả an toàn quyền riêng tư (Chương (Đoạn P199, câu S1))",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P200-S01",
-    "parent_text_hash": "1b2423f7ed82"
+    "parent_text_hash": "1b2423f7ed82",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-021",
@@ -2134,13 +2262,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P200, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P201-S00",
-    "parent_text_hash": "57d1a36d3895"
+    "parent_text_hash": "57d1a36d3895",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-022",
@@ -2149,13 +2278,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P203, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P204-S00",
-    "parent_text_hash": "8db29efe6233"
+    "parent_text_hash": "8db29efe6233",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-023",
@@ -2164,13 +2294,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P206, câu S2)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P207-S02",
-    "parent_text_hash": "7bd7279ed57c"
+    "parent_text_hash": "7bd7279ed57c",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-024",
@@ -2179,13 +2310,14 @@
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Xác lập câu hỏi nghiên cứu / giả thuyết khoa học (Chương (Đoạn P208, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P209-S00",
-    "parent_text_hash": "e196660f1d24"
+    "parent_text_hash": "e196660f1d24",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-025",
@@ -2194,13 +2326,14 @@
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Xác lập câu hỏi nghiên cứu / giả thuyết khoa học (Chương (Đoạn P211, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P212-S00",
-    "parent_text_hash": "9029bdffc5a5"
+    "parent_text_hash": "9029bdffc5a5",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-026",
@@ -2209,13 +2342,14 @@
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Xác lập câu hỏi nghiên cứu / giả thuyết khoa học (Chương (Đoạn P216, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P217-S00",
-    "parent_text_hash": "6b09b4507ed0"
+    "parent_text_hash": "6b09b4507ed0",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-027",
@@ -2224,13 +2358,14 @@
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Xác lập câu hỏi nghiên cứu / giả thuyết khoa học (Chương (Đoạn P218, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P219-S00",
-    "parent_text_hash": "ad2cf4e762a4"
+    "parent_text_hash": "ad2cf4e762a4",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-028",
@@ -2239,13 +2374,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P222-S00",
-    "parent_text_hash": "0525c822e5da"
+    "parent_text_hash": "0525c822e5da",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-029",
@@ -2254,14 +2390,15 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Động lực kỹ thuật cho Bounded-State Streaming Contract của luận văn (Mục 2.1.2); ràng buộc tài nguyên bộ nhớ là tiêu chuẩn trong streaming systems.",
+    "source_locator": "AUTHOR_PROPOSAL (Động lực kỹ thuật thiết lập Bounded-State Streaming Contract của đề tài theo Mục 2.1.2)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P223-S01",
     "notes": "SELF_REFERENTIAL_SOURCE_LOCATORS=0; FACTUAL_CLAIMS_WITHOUT_EVIDENCE=0; Bounded engineering motivation, not absolute universal claim.",
-    "parent_text_hash": "a2ed79558218"
+    "parent_text_hash": "a2ed79558218",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-030",
@@ -2270,13 +2407,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P223-S02",
-    "parent_text_hash": "f9584e61d0eb"
+    "parent_text_hash": "f9584e61d0eb",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-031",
@@ -2285,13 +2423,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P224, câu S3))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P225-S03",
-    "parent_text_hash": "31314c8b06ed"
+    "parent_text_hash": "31314c8b06ed",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-032",
@@ -2300,13 +2439,14 @@
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Quan sát thực nghiệm tại Chương (Đoạn P228, câu S1)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P229-S01",
-    "parent_text_hash": "ef3c6cbd9de0"
+    "parent_text_hash": "ef3c6cbd9de0",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-033",
@@ -2315,13 +2455,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P230-S00",
-    "parent_text_hash": "abd7af4ef660"
+    "parent_text_hash": "abd7af4ef660",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-034",
@@ -2330,13 +2471,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P230-S02",
-    "parent_text_hash": "0dd1930d7878"
+    "parent_text_hash": "0dd1930d7878",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-035",
@@ -2345,13 +2487,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P233, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P234-S00",
-    "parent_text_hash": "7e9f6241648e"
+    "parent_text_hash": "7e9f6241648e",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-036",
@@ -2360,13 +2503,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P235, câu S1)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P236-S01",
-    "parent_text_hash": "155fb4eaf25b"
+    "parent_text_hash": "155fb4eaf25b",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-037",
@@ -2375,13 +2519,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P237-S00",
-    "parent_text_hash": "34e62ff11725"
+    "parent_text_hash": "34e62ff11725",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-038",
@@ -2390,13 +2535,14 @@
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả an toàn quyền riêng tư (Chương (Đoạn P237, câu S0))",
+    "source_locator": "DOCUMENT_DESCRIPTION (Tổng quan cấu trúc tài liệu của chuyên đề)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P238-S00",
-    "parent_text_hash": "7af364a39a0c"
+    "parent_text_hash": "7af364a39a0c",
+    "factuality_class": "DOCUMENT_DESCRIPTION"
   },
   {
     "claim_id": "CLM-SEC-039",
@@ -2405,13 +2551,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P239-S00",
-    "parent_text_hash": "35f53ab7b5ae"
+    "parent_text_hash": "35f53ab7b5ae",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-040",
@@ -2420,13 +2567,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P245-S01",
-    "parent_text_hash": "f74bad57ee1c"
+    "parent_text_hash": "f74bad57ee1c",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-041",
@@ -2435,13 +2583,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P256-S00",
-    "parent_text_hash": "a3add3868fd7"
+    "parent_text_hash": "a3add3868fd7",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-042",
@@ -2450,13 +2599,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P256-S01",
-    "parent_text_hash": "03d53eebb4ed"
+    "parent_text_hash": "03d53eebb4ed",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-043",
@@ -2465,13 +2615,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P259-S02",
-    "parent_text_hash": "cf9c5404963a"
+    "parent_text_hash": "cf9c5404963a",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-044",
@@ -2480,28 +2631,30 @@
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả an toàn quyền riêng tư (Chương (Đoạn P261, câu S1))",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P262-S01",
-    "parent_text_hash": "67356fa64944"
+    "parent_text_hash": "67356fa64944",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-045",
     "document_location": "Chương (Đoạn P262, câu S3)",
-    "atomic_claim": "Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo H5 nhưng phải được kiểm chứng thực nghiệm tại Chương 3 (BOUNDARY-06: Privacy Claim Requires Attack-Based Empirical Evaluation).",
-    "claim_class": "PRIVACY_FRAMEWORK",
+    "atomic_claim": "Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo H5 nhưng cần được kiểm chứng thực nghiệm ở các mô hình hạ nguồn (BOUNDARY-06: Privacy Claim Requires Attack-Based Empirical Evaluation; chưa thực thi trong phạm vi Stage A hiện tại).",
+    "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả an toàn quyền riêng tư (Chương (Đoạn P261, câu S3))",
+    "source_locator": "AUTHOR_PROPOSAL (Giả thuyết vượt trội Pareto và định vị kiểm chứng thực nghiệm hạ nguồn)",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "FRAMEWORK_SPECIFICATION",
+    "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P262-S03",
-    "parent_text_hash": "0a63fe8bdf51"
+    "parent_text_hash": "d04957d175d0",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-046",
@@ -2510,13 +2663,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P267, câu S1)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P268-S01",
-    "parent_text_hash": "2ce2cb607e29"
+    "parent_text_hash": "2ce2cb607e29",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-047",
@@ -2525,28 +2679,30 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P275-S00",
-    "parent_text_hash": "c97a81354e2c"
+    "parent_text_hash": "c97a81354e2c",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-048",
     "document_location": "Chương (Đoạn P276, câu S2)",
-    "atomic_claim": "Tại Chương 3, chuyên đề đánh giá nhiều mốc rotation horizon cố định (fixed horizons) để xây dựng đường biên Utility–Privacy frontier.",
-    "claim_class": "PRIVACY_FRAMEWORK",
+    "atomic_claim": "Về mặt phương pháp luận, chuyên đề đề xuất hướng đánh giá nhiều mốc rotation horizon cố định (fixed horizons) để xây dựng đường biên Utility–Privacy frontier ở các giai đoạn thực nghiệm tiếp theo.",
+    "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả an toàn quyền riêng tư (Chương (Đoạn P275, câu S2))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất định hướng đánh giá ranh giới Utility–Privacy hạ nguồn)",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "FRAMEWORK_SPECIFICATION",
+    "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P276-S02",
-    "parent_text_hash": "389cbf3ed7d4"
+    "parent_text_hash": "893e7a012b03",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-049",
@@ -2555,13 +2711,14 @@
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả an toàn quyền riêng tư (Chương (Đoạn P276, câu S0))",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P277-S00",
-    "parent_text_hash": "020dfb673b30"
+    "parent_text_hash": "020dfb673b30",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-050",
@@ -2570,13 +2727,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P279-S00",
-    "parent_text_hash": "088c3d2bb424"
+    "parent_text_hash": "088c3d2bb424",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-051",
@@ -2585,13 +2743,14 @@
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả an toàn quyền riêng tư (Chương (Đoạn P280, câu S0))",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P281-S00",
-    "parent_text_hash": "70cf390c5adb"
+    "parent_text_hash": "70cf390c5adb",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-052",
@@ -2600,13 +2759,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P283-S01",
-    "parent_text_hash": "bad8ad96f393"
+    "parent_text_hash": "bad8ad96f393",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-053",
@@ -2615,13 +2775,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P285-S01",
-    "parent_text_hash": "3f31fdc3d2fa"
+    "parent_text_hash": "3f31fdc3d2fa",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-054",
@@ -2630,13 +2791,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P287, câu S1))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P288-S01",
-    "parent_text_hash": "5c194d82f0b9"
+    "parent_text_hash": "5c194d82f0b9",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-055",
@@ -2645,13 +2807,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P290-S00",
-    "parent_text_hash": "091078b4ab61"
+    "parent_text_hash": "091078b4ab61",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-056",
@@ -2660,13 +2823,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P291-S00",
-    "parent_text_hash": "d92aed98caec"
+    "parent_text_hash": "d92aed98caec",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-057",
@@ -2675,13 +2839,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P292-S01",
-    "parent_text_hash": "6da40db0d0eb"
+    "parent_text_hash": "6da40db0d0eb",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-058",
@@ -2690,13 +2855,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P293-S01",
-    "parent_text_hash": "4d34885800af"
+    "parent_text_hash": "4d34885800af",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-059",
@@ -2713,7 +2879,8 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P301-S00",
-    "parent_text_hash": "7f07375fa996"
+    "parent_text_hash": "7f07375fa996",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-SEC-060",
@@ -2722,13 +2889,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P306-S00",
-    "parent_text_hash": "606f25e7d757"
+    "parent_text_hash": "606f25e7d757",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-061",
@@ -2737,13 +2905,14 @@
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả an toàn quyền riêng tư (Chương (Đoạn P305, câu S2))",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P306-S02",
-    "parent_text_hash": "a7d78b9a6450"
+    "parent_text_hash": "a7d78b9a6450",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-062",
@@ -2752,13 +2921,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P314, câu S2)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P315-S02",
-    "parent_text_hash": "0f7af58ed6c2"
+    "parent_text_hash": "0f7af58ed6c2",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-063",
@@ -2767,13 +2937,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P316, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P317-S00",
-    "parent_text_hash": "191c3dd13a1b"
+    "parent_text_hash": "191c3dd13a1b",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-064",
@@ -2782,13 +2953,14 @@
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả an toàn quyền riêng tư (Chương (Đoạn P323, câu S0))",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P324-S00",
-    "parent_text_hash": "c0b7a112ea50"
+    "parent_text_hash": "c0b7a112ea50",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-065",
@@ -2797,13 +2969,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P326-S00",
-    "parent_text_hash": "e32f09e5d31e"
+    "parent_text_hash": "e32f09e5d31e",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-066",
@@ -2812,13 +2985,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P327-S00",
-    "parent_text_hash": "dddce1935541"
+    "parent_text_hash": "dddce1935541",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-067",
@@ -2827,13 +3001,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P327-S02",
-    "parent_text_hash": "434a1b3992aa"
+    "parent_text_hash": "434a1b3992aa",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-068",
@@ -2842,13 +3017,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P327-S03",
-    "parent_text_hash": "458a5698995b"
+    "parent_text_hash": "458a5698995b",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-069",
@@ -2857,13 +3033,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P328, câu S1))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P329-S01",
-    "parent_text_hash": "ca51c040a1b5"
+    "parent_text_hash": "ca51c040a1b5",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-070",
@@ -2872,13 +3049,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P331, câu S1))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P332-S01",
-    "parent_text_hash": "5464c89666af"
+    "parent_text_hash": "5464c89666af",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-071",
@@ -2887,13 +3065,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P340, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P341-S00",
-    "parent_text_hash": "6f35dc212d4b"
+    "parent_text_hash": "6f35dc212d4b",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-072",
@@ -2902,13 +3081,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P342, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P343-S00",
-    "parent_text_hash": "a3f9e21b2f46"
+    "parent_text_hash": "a3f9e21b2f46",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-073",
@@ -2917,13 +3097,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P345-S00",
-    "parent_text_hash": "fe86ec8af908"
+    "parent_text_hash": "fe86ec8af908",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-074",
@@ -2932,13 +3113,14 @@
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả an toàn quyền riêng tư (Chương (Đoạn P349, câu S1))",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P350-S01",
-    "parent_text_hash": "7590c67adc0d"
+    "parent_text_hash": "7590c67adc0d",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-075",
@@ -2947,13 +3129,14 @@
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả an toàn quyền riêng tư (Chương (Đoạn P349, câu S2))",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P350-S02",
-    "parent_text_hash": "f26233372ac9"
+    "parent_text_hash": "f26233372ac9",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-076",
@@ -2962,13 +3145,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P353, câu S1)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P354-S01",
-    "parent_text_hash": "ceecb96ecff2"
+    "parent_text_hash": "ceecb96ecff2",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-077",
@@ -2977,13 +3161,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P364-S02",
-    "parent_text_hash": "d1abd2ae6618"
+    "parent_text_hash": "d1abd2ae6618",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-078",
@@ -2992,13 +3177,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P365, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P366-S00",
-    "parent_text_hash": "d780bd7d6fa8"
+    "parent_text_hash": "d780bd7d6fa8",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-079",
@@ -3007,13 +3193,14 @@
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Xác lập câu hỏi nghiên cứu / giả thuyết khoa học (Chương (Đoạn P369, câu S1))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P370-S01",
-    "parent_text_hash": "10f9ffa4027e"
+    "parent_text_hash": "10f9ffa4027e",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-080",
@@ -3022,13 +3209,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P378-S00",
-    "parent_text_hash": "6c5eee361d51"
+    "parent_text_hash": "6c5eee361d51",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-081",
@@ -3037,13 +3225,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P386, câu S3))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P387-S03",
-    "parent_text_hash": "2471a99c5803"
+    "parent_text_hash": "2471a99c5803",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-082",
@@ -3052,13 +3241,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P407-S00",
-    "parent_text_hash": "a091ace92a99"
+    "parent_text_hash": "a091ace92a99",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-083",
@@ -3067,13 +3257,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P407, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P408-S00",
-    "parent_text_hash": "ba4b2f5d47e2"
+    "parent_text_hash": "ba4b2f5d47e2",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-084",
@@ -3082,13 +3273,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P408-S01",
-    "parent_text_hash": "1dcac8fdbb14"
+    "parent_text_hash": "1dcac8fdbb14",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-085",
@@ -3097,13 +3289,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P409, câu S1))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P410-S01",
-    "parent_text_hash": "cc4091e85c2d"
+    "parent_text_hash": "cc4091e85c2d",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-086",
@@ -3112,13 +3305,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P412-S00",
-    "parent_text_hash": "e37b5ebcafd9"
+    "parent_text_hash": "e37b5ebcafd9",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-087",
@@ -3127,13 +3321,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P414, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P415-S00",
-    "parent_text_hash": "14158979fb22"
+    "parent_text_hash": "14158979fb22",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-088",
@@ -3142,13 +3337,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P419, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P420-S00",
-    "parent_text_hash": "96f14f0ff989"
+    "parent_text_hash": "96f14f0ff989",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-089",
@@ -3157,13 +3353,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P422-S00",
-    "parent_text_hash": "c74cf45267a4"
+    "parent_text_hash": "c74cf45267a4",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-090",
@@ -3172,13 +3369,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P425, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P426-S00",
-    "parent_text_hash": "515ca2cabb62"
+    "parent_text_hash": "515ca2cabb62",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-091",
@@ -3187,13 +3385,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P430, câu S3)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P431-S03",
-    "parent_text_hash": "3ea23067d77d"
+    "parent_text_hash": "3ea23067d77d",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-092",
@@ -3202,13 +3401,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P461-S00",
-    "parent_text_hash": "ce38f1ca32b9"
+    "parent_text_hash": "ce38f1ca32b9",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-093",
@@ -3217,13 +3417,14 @@
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Quan sát thực nghiệm tại Chương (Đoạn P460, câu S1)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P461-S01",
-    "parent_text_hash": "fe8286e46dc8"
+    "parent_text_hash": "fe8286e46dc8",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-094",
@@ -3232,13 +3433,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P462-S01",
-    "parent_text_hash": "7bff8efeb857"
+    "parent_text_hash": "7bff8efeb857",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-095",
@@ -3247,13 +3449,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P463-S00",
-    "parent_text_hash": "acc434f3973e"
+    "parent_text_hash": "acc434f3973e",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-096",
@@ -3262,13 +3465,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P474, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P475-S00",
-    "parent_text_hash": "3aced102ba22"
+    "parent_text_hash": "3aced102ba22",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-097",
@@ -3277,13 +3481,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P476-S00",
-    "parent_text_hash": "46cd13fa6d53"
+    "parent_text_hash": "46cd13fa6d53",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-098",
@@ -3292,13 +3497,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P482-S00",
-    "parent_text_hash": "8675c32ec051"
+    "parent_text_hash": "8675c32ec051",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-099",
@@ -3307,13 +3513,14 @@
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Xác lập câu hỏi nghiên cứu / giả thuyết khoa học (Chương (Đoạn P481, câu S1))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P482-S01",
-    "parent_text_hash": "a2e277e22675"
+    "parent_text_hash": "a2e277e22675",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-100",
@@ -3322,13 +3529,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P483, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P484-S00",
-    "parent_text_hash": "5143d7b0d3b2"
+    "parent_text_hash": "5143d7b0d3b2",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-101",
@@ -3337,13 +3545,14 @@
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Quan sát thực nghiệm tại Chương (Đoạn P483, câu S1)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P484-S01",
-    "parent_text_hash": "efa4cdc1a37d"
+    "parent_text_hash": "efa4cdc1a37d",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-102",
@@ -3352,13 +3561,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P487-S00",
-    "parent_text_hash": "50c19964b797"
+    "parent_text_hash": "50c19964b797",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-103",
@@ -3367,13 +3577,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P487-S01",
-    "parent_text_hash": "e055ecce7a5f"
+    "parent_text_hash": "e055ecce7a5f",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-104",
@@ -3382,13 +3593,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P487-S02",
-    "parent_text_hash": "f014a60403f2"
+    "parent_text_hash": "f014a60403f2",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-105",
@@ -3397,13 +3609,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P488-S01",
-    "parent_text_hash": "2707af49e6ea"
+    "parent_text_hash": "2707af49e6ea",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-106",
@@ -3412,13 +3625,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P491-S00",
-    "parent_text_hash": "21b9b4342750"
+    "parent_text_hash": "21b9b4342750",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-107",
@@ -3427,13 +3641,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P496-S00",
-    "parent_text_hash": "e56f095e9eb9"
+    "parent_text_hash": "e56f095e9eb9",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-108",
@@ -3442,13 +3657,14 @@
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Quan sát thực nghiệm tại Chương (Đoạn P496, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P497-S00",
-    "parent_text_hash": "51e17378df7f"
+    "parent_text_hash": "51e17378df7f",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-109",
@@ -3457,13 +3673,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P499, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P500-S00",
-    "parent_text_hash": "52e14bad7be0"
+    "parent_text_hash": "52e14bad7be0",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-110",
@@ -3472,13 +3689,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P500, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P501-S00",
-    "parent_text_hash": "599d86cdbd6e"
+    "parent_text_hash": "599d86cdbd6e",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-111",
@@ -3487,13 +3705,14 @@
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Quan sát thực nghiệm tại Chương (Đoạn P510, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P511-S00",
-    "parent_text_hash": "c98db795a57c"
+    "parent_text_hash": "c98db795a57c",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-112",
@@ -3502,13 +3721,14 @@
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Quan sát thực nghiệm tại Chương (Đoạn P511, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P512-S00",
-    "parent_text_hash": "fc8e2a342a25"
+    "parent_text_hash": "fc8e2a342a25",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-113",
@@ -3517,13 +3737,14 @@
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Quan sát thực nghiệm tại Chương (Đoạn P512, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P513-S00",
-    "parent_text_hash": "6294a7884586"
+    "parent_text_hash": "6294a7884586",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-114",
@@ -3532,13 +3753,14 @@
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Quan sát thực nghiệm tại Chương (Đoạn P514, câu S1)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P515-S01",
-    "parent_text_hash": "0a3c2244f487"
+    "parent_text_hash": "0a3c2244f487",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-115",
@@ -3547,13 +3769,14 @@
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Quan sát thực nghiệm tại Chương (Đoạn P517, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P518-S00",
-    "parent_text_hash": "77052fc1af81"
+    "parent_text_hash": "77052fc1af81",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-116",
@@ -3562,13 +3785,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P518-S04",
-    "parent_text_hash": "a24468b71caa"
+    "parent_text_hash": "a24468b71caa",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-117",
@@ -3577,13 +3801,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P519, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P520-S00",
-    "parent_text_hash": "826e4b665a69"
+    "parent_text_hash": "826e4b665a69",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-118",
@@ -3592,13 +3817,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P520, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P521-S00",
-    "parent_text_hash": "481423b534dd"
+    "parent_text_hash": "481423b534dd",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-119",
@@ -3607,13 +3833,14 @@
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Quan sát thực nghiệm tại Chương (Đoạn P524, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P525-S00",
-    "parent_text_hash": "6b6472d560ed"
+    "parent_text_hash": "6b6472d560ed",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-120",
@@ -3622,13 +3849,14 @@
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Quan sát thực nghiệm tại Chương (Đoạn P524, câu S1)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P525-S01",
-    "parent_text_hash": "95b546c1a2ee"
+    "parent_text_hash": "95b546c1a2ee",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-121",
@@ -3637,13 +3865,14 @@
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Quan sát thực nghiệm tại Chương (Đoạn P526, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P527-S00",
-    "parent_text_hash": "71eed19cf202"
+    "parent_text_hash": "71eed19cf202",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-122",
@@ -3652,13 +3881,14 @@
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Xác lập câu hỏi nghiên cứu / giả thuyết khoa học (Chương (Đoạn P528, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P529-S00",
-    "parent_text_hash": "4cfaae89055c"
+    "parent_text_hash": "4cfaae89055c",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-123",
@@ -3667,13 +3897,14 @@
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Xác lập câu hỏi nghiên cứu / giả thuyết khoa học (Chương (Đoạn P529, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P530-S00",
-    "parent_text_hash": "be321faad27d"
+    "parent_text_hash": "be321faad27d",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-124",
@@ -3682,13 +3913,14 @@
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Xác lập câu hỏi nghiên cứu / giả thuyết khoa học (Chương (Đoạn P532, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P533-S00",
-    "parent_text_hash": "4d8084d1257c"
+    "parent_text_hash": "4d8084d1257c",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-125",
@@ -3697,13 +3929,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P533-S01",
-    "parent_text_hash": "f8f337ab6d33"
+    "parent_text_hash": "f8f337ab6d33",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-126",
@@ -3712,13 +3945,14 @@
     "claim_class": "RESEARCH_QUESTION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Xác lập câu hỏi nghiên cứu / giả thuyết khoa học (Chương (Đoạn P533, câu S0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FORMAL_QUESTION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P534-S00",
-    "parent_text_hash": "98b85f5cc607"
+    "parent_text_hash": "98b85f5cc607",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-127",
@@ -3727,13 +3961,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P538-S01",
-    "parent_text_hash": "293a40cc42be"
+    "parent_text_hash": "293a40cc42be",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-128",
@@ -3742,13 +3977,14 @@
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Quan sát thực nghiệm tại Chương (Đoạn P542, câu S1)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P543-S01",
-    "parent_text_hash": "c8cb2d48da05"
+    "parent_text_hash": "c8cb2d48da05",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-129",
@@ -3757,13 +3993,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P544-S01",
-    "parent_text_hash": "c3d7fc71d689"
+    "parent_text_hash": "c3d7fc71d689",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-130",
@@ -3772,13 +4009,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Chương (Đoạn P547, câu S1))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P548-S01",
-    "parent_text_hash": "31ad6e0ba817"
+    "parent_text_hash": "31ad6e0ba817",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-131",
@@ -3787,13 +4025,14 @@
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Quan sát thực nghiệm tại Chương (Đoạn P548, câu S1)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P549-S01",
-    "parent_text_hash": "9db9666b3ca5"
+    "parent_text_hash": "9db9666b3ca5",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-132",
@@ -3802,13 +4041,14 @@
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Quan sát thực nghiệm tại Chương (Đoạn P548, câu S2)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P549-S02",
-    "parent_text_hash": "b60fd05fc404"
+    "parent_text_hash": "b60fd05fc404",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-133",
@@ -3817,13 +4057,14 @@
     "claim_class": "EMPIRICAL_OBSERVATION",
     "evidence_class": "EXPERIMENT_ARTIFACT",
     "citation_numbers": [],
-    "source_locator": "Quan sát thực nghiệm tại Chương (Đoạn P549, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P550-S00",
-    "parent_text_hash": "dc0d2a1220e1"
+    "parent_text_hash": "dc0d2a1220e1",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-134",
@@ -3832,13 +4073,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-T03-R02",
-    "parent_text_hash": "e3bc0ed70a74"
+    "parent_text_hash": "e3bc0ed70a74",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-135",
@@ -3847,13 +4089,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-T03-R05",
-    "parent_text_hash": "ed8f985ce26d"
+    "parent_text_hash": "ed8f985ce26d",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-136",
@@ -3862,13 +4105,14 @@
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả an toàn quyền riêng tư (Bảng 4 (Hàng 0))",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-T04-R00",
-    "parent_text_hash": "2690efcf2adf"
+    "parent_text_hash": "2690efcf2adf",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-137",
@@ -3877,13 +4121,14 @@
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả an toàn quyền riêng tư (Bảng 4 (Hàng 3))",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-T04-R03",
-    "parent_text_hash": "c5fc1b51a293"
+    "parent_text_hash": "c5fc1b51a293",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-138",
@@ -3892,13 +4137,14 @@
     "claim_class": "PRIVACY_FRAMEWORK",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả an toàn quyền riêng tư (Bảng 4 (Hàng 4))",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "FRAMEWORK_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-T04-R04",
-    "parent_text_hash": "4031314e768a"
+    "parent_text_hash": "4031314e768a",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-139",
@@ -3907,13 +4153,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-T05-R00",
-    "parent_text_hash": "d721d7076e95"
+    "parent_text_hash": "d721d7076e95",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-140",
@@ -3922,13 +4169,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Bảng 6 (Hàng 0))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-T06-R00",
-    "parent_text_hash": "b49029d10c0f"
+    "parent_text_hash": "b49029d10c0f",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-141",
@@ -3937,13 +4185,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Bảng 6 (Hàng 4)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-T06-R04",
-    "parent_text_hash": "3f7fe9580c1b"
+    "parent_text_hash": "3f7fe9580c1b",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-142",
@@ -3952,13 +4201,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-T08-R04",
-    "parent_text_hash": "1f1276d93047"
+    "parent_text_hash": "1f1276d93047",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-143",
@@ -3967,13 +4217,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp và định khung phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-T09-R03",
-    "parent_text_hash": "2661832c3991"
+    "parent_text_hash": "2661832c3991",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-144",
@@ -3982,13 +4233,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của chuyên đề (Bảng 12 (Hàng 6))",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-T12-R06",
-    "parent_text_hash": "f8b15d00381d"
+    "parent_text_hash": "f8b15d00381d",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-145",
@@ -3997,13 +4249,14 @@
     "claim_class": "METHODOLOGY_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả phương pháp luận tại Chương (Đoạn P78, câu S1)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P078-S01",
-    "parent_text_hash": "578e23760449"
+    "parent_text_hash": "578e23760449",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-146",
@@ -4012,13 +4265,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P90, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P090-S00",
-    "parent_text_hash": "c28cc1a06172"
+    "parent_text_hash": "c28cc1a06172",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-147",
@@ -4027,13 +4281,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P127, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P127-S00",
-    "parent_text_hash": "acf3415c536a"
+    "parent_text_hash": "acf3415c536a",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-148",
@@ -4042,13 +4297,14 @@
     "claim_class": "METHODOLOGY_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả phương pháp luận tại Chương (Đoạn P140, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P140-S00",
-    "parent_text_hash": "b5bdcfa49677"
+    "parent_text_hash": "b5bdcfa49677",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-149",
@@ -4057,13 +4313,14 @@
     "claim_class": "METHODOLOGY_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả phương pháp luận tại Chương (Đoạn P180, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P180-S00",
-    "parent_text_hash": "26c3a3f44c2e"
+    "parent_text_hash": "26c3a3f44c2e",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-150",
@@ -4072,13 +4329,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P210, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P211-S00",
-    "parent_text_hash": "028413e95698"
+    "parent_text_hash": "028413e95698",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-151",
@@ -4087,13 +4345,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P243, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P244-S00",
-    "parent_text_hash": "573c269ed6c5"
+    "parent_text_hash": "573c269ed6c5",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-152",
@@ -4102,13 +4361,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P351, câu S1)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P352-S01",
-    "parent_text_hash": "de26fbe09da0"
+    "parent_text_hash": "de26fbe09da0",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-153",
@@ -4117,13 +4377,14 @@
     "claim_class": "METHODOLOGY_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả phương pháp luận tại Chương (Đoạn P371, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P372-S00",
-    "parent_text_hash": "999932f79dec"
+    "parent_text_hash": "999932f79dec",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-154",
@@ -4132,13 +4393,14 @@
     "claim_class": "METHODOLOGY_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả phương pháp luận tại Chương (Đoạn P373, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P374-S00",
-    "parent_text_hash": "d79eb287fe55"
+    "parent_text_hash": "d79eb287fe55",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-155",
@@ -4147,13 +4409,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P382, câu S1)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P383-S01",
-    "parent_text_hash": "3113796ad211"
+    "parent_text_hash": "3113796ad211",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-156",
@@ -4162,13 +4425,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P423, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P424-S00",
-    "parent_text_hash": "43abaf4b4a02"
+    "parent_text_hash": "43abaf4b4a02",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-157",
@@ -4177,13 +4441,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P431, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P432-S00",
-    "parent_text_hash": "a3603811a944"
+    "parent_text_hash": "a3603811a944",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-158",
@@ -4192,13 +4457,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P433, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P434-S00",
-    "parent_text_hash": "721b61c5c111"
+    "parent_text_hash": "721b61c5c111",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-159",
@@ -4207,13 +4473,14 @@
     "claim_class": "METHODOLOGY_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả phương pháp luận tại Chương (Đoạn P436, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P437-S00",
-    "parent_text_hash": "7b9e56073cbd"
+    "parent_text_hash": "7b9e56073cbd",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-160",
@@ -4222,13 +4489,14 @@
     "claim_class": "METHODOLOGY_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả phương pháp luận tại Chương (Đoạn P448, câu S1)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P449-S01",
-    "parent_text_hash": "dd0f6271658d"
+    "parent_text_hash": "dd0f6271658d",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-161",
@@ -4237,13 +4505,14 @@
     "claim_class": "METHODOLOGY_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả phương pháp luận tại Chương (Đoạn P465, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P466-S00",
-    "parent_text_hash": "9ef7f0f7ae41"
+    "parent_text_hash": "9ef7f0f7ae41",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-162",
@@ -4252,13 +4521,14 @@
     "claim_class": "METHODOLOGY_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả phương pháp luận tại Chương (Đoạn P484, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P485-S00",
-    "parent_text_hash": "87d541d4486e"
+    "parent_text_hash": "87d541d4486e",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-163",
@@ -4267,13 +4537,14 @@
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
-    "source_locator": "Công thức toán học tại Chương (Đoạn P502, câu S0)",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P503-S00",
-    "parent_text_hash": "1325411fdf04"
+    "parent_text_hash": "1325411fdf04",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-P087-S01",
@@ -4283,13 +4554,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "7d81a8e3ff1f"
+    "parent_text_hash": "7d81a8e3ff1f",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-P088-S00",
@@ -4299,13 +4571,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "a660e38a1a71"
+    "parent_text_hash": "a660e38a1a71",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-P097-S05",
@@ -4324,7 +4597,8 @@
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "842f544b3dff"
+    "parent_text_hash": "842f544b3dff",
+    "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
     "claim_id": "CLM-SEC-P117-S01",
@@ -4346,7 +4620,8 @@
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "864c327fc8fe"
+    "parent_text_hash": "864c327fc8fe",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-SEC-P119-S00",
@@ -4356,13 +4631,14 @@
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "ec8af5f533e3"
+    "parent_text_hash": "ec8af5f533e3",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-P120-S01",
@@ -4372,13 +4648,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "96202cb1d135"
+    "parent_text_hash": "96202cb1d135",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-P123-S00",
@@ -4388,13 +4665,14 @@
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "51f50dd58f1b"
+    "parent_text_hash": "51f50dd58f1b",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-P124-S00",
@@ -4404,13 +4682,14 @@
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "1eef922049a9"
+    "parent_text_hash": "1eef922049a9",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-P126-S00",
@@ -4420,13 +4699,14 @@
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "10d7dbdeea0a"
+    "parent_text_hash": "10d7dbdeea0a",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-P129-S00",
@@ -4436,13 +4716,14 @@
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "930d84a97cf3"
+    "parent_text_hash": "930d84a97cf3",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-P130-S00",
@@ -4452,13 +4733,14 @@
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "b2b610cf2dea"
+    "parent_text_hash": "b2b610cf2dea",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-P134-S00",
@@ -4468,13 +4750,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "52012b03e6a7"
+    "parent_text_hash": "52012b03e6a7",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-P163-S02",
@@ -4492,7 +4775,8 @@
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "2aea30dc5a5c"
+    "parent_text_hash": "2aea30dc5a5c",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-SEC-P163-S03",
@@ -4510,7 +4794,8 @@
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "36c9084796ca"
+    "parent_text_hash": "36c9084796ca",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-SEC-P163-S04",
@@ -4528,7 +4813,8 @@
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "70765c40928b"
+    "parent_text_hash": "70765c40928b",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-SEC-P163-S05",
@@ -4548,7 +4834,8 @@
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "48c3e3d99dc2"
+    "parent_text_hash": "48c3e3d99dc2",
+    "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
     "claim_id": "CLM-SEC-P183-S02",
@@ -4566,7 +4853,8 @@
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "d2148dca57eb"
+    "parent_text_hash": "d2148dca57eb",
+    "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-SEC-P194-S05",
@@ -4584,7 +4872,8 @@
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "210230338736"
+    "parent_text_hash": "210230338736",
+    "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
     "claim_id": "CLM-SEC-P206-S01",
@@ -4602,7 +4891,8 @@
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "c6c8cdc799a8"
+    "parent_text_hash": "c6c8cdc799a8",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-SEC-P240-S00",
@@ -4612,13 +4902,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "f612b389966d"
+    "parent_text_hash": "f612b389966d",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-P244-S00",
@@ -4628,13 +4919,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "385330665755"
+    "parent_text_hash": "385330665755",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-P249-S03",
@@ -4644,13 +4936,14 @@
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "c26356c93958"
+    "parent_text_hash": "c26356c93958",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-P258-S01",
@@ -4660,13 +4953,14 @@
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "86725e305d0d"
+    "parent_text_hash": "86725e305d0d",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-P260-S00",
@@ -4676,13 +4970,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "b76424109a98"
+    "parent_text_hash": "b76424109a98",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-P269-S01",
@@ -4700,7 +4995,8 @@
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "d1885f71e486"
+    "parent_text_hash": "d1885f71e486",
+    "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-SEC-P274-S01",
@@ -4710,13 +5006,14 @@
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "2dac747365ac"
+    "parent_text_hash": "2dac747365ac",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-P275-S01",
@@ -4726,31 +5023,31 @@
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "fa8d4fc7f361"
+    "parent_text_hash": "fa8d4fc7f361",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-P278-S01",
     "parent_detected_id": "DET-P279-S01",
     "document_location": "Chương (Đoạn P279, câu S1)",
-    "atomic_claim": "Tuy nhiên, khẳng định sự vượt trội này yêu cầu kiểm thử thực nghiệm tường minh tại Chương 3 thông qua CTRL-PRIV-001: đánh giá MIA ([16]), tấn công nghịch đảo (theo nguyên lý Fredrikson et al.",
-    "claim_class": "LITERATURE_DIRECT",
-    "evidence_class": "PRIMARY_PAPER",
-    "citation_numbers": [
-      16
-    ],
-    "source_locator": "Tài liệu tham khảo [16]",
+    "atomic_claim": "Tuy nhiên, khẳng định sự vượt trội này là một giả thuyết nghiên cứu yêu cầu kiểm thử thực nghiệm tường minh ở các mô hình hạ nguồn thông qua giao thức CTRL-PRIV-001 (đánh giá MIA [16], tấn công nghịch đảo theo nguyên lý Fredrikson et al. [33], và tấn công tái định danh); chưa được thực thi trong phạm vi thực nghiệm của chuyên đề hiện tại.",
+    "claim_class": "AUTHOR_PROPOSAL",
+    "evidence_class": "NONE",
+    "citation_numbers": [],
+    "source_locator": "AUTHOR_PROPOSAL (Giao thức CTRL-PRIV-001 định vị cho kiểm thử thực nghiệm mô hình hạ nguồn)",
     "code_locator": "",
     "artifact_locator": "",
-    "support_status": "SUPPORTED_BY_CITATION",
+    "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "7f0cad3536cf"
+    "parent_text_hash": "9ecd239a452b",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-P303-S02",
@@ -4760,13 +5057,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "955a20348a70"
+    "parent_text_hash": "955a20348a70",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-P305-S03",
@@ -4776,13 +5074,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "ce49d8e383b9"
+    "parent_text_hash": "ce49d8e383b9",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-P347-S00",
@@ -4792,13 +5091,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "1133f8e152f4"
+    "parent_text_hash": "1133f8e152f4",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-P349-S00",
@@ -4808,13 +5108,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "c01f3e189537"
+    "parent_text_hash": "c01f3e189537",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-P351-S00",
@@ -4824,13 +5125,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "48f7dab3bce9"
+    "parent_text_hash": "48f7dab3bce9",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-P355-S00",
@@ -4840,13 +5142,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "818e9add8725"
+    "parent_text_hash": "818e9add8725",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-P357-S01",
@@ -4856,13 +5159,14 @@
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đề xuất phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_PROPOSAL (Đề xuất nghiên cứu / câu hỏi / giả thuyết khoa học của tác giả)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "5464c89666af"
+    "parent_text_hash": "5464c89666af",
+    "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
     "claim_id": "CLM-SEC-P363-S01",
@@ -4872,13 +5176,14 @@
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "bd54066f736e"
+    "parent_text_hash": "bd54066f736e",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-P386-S04",
@@ -4898,7 +5203,8 @@
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "4bad7562a2c9"
+    "parent_text_hash": "4bad7562a2c9",
+    "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
     "claim_id": "CLM-SEC-P442-S00",
@@ -4908,13 +5214,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "b76eaa499e34"
+    "parent_text_hash": "b76eaa499e34",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-P513-S00",
@@ -4924,13 +5231,14 @@
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Tổng hợp phương pháp luận của luận văn",
+    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "e629e01dfb57"
+    "parent_text_hash": "e629e01dfb57",
+    "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
     "claim_id": "CLM-SEC-T02-R01",
@@ -4940,13 +5248,14 @@
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "b8af872e53c6"
+    "parent_text_hash": "b8af872e53c6",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-T02-R02",
@@ -4956,13 +5265,14 @@
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "2685b1ae4861"
+    "parent_text_hash": "2685b1ae4861",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-T02-R03",
@@ -4972,13 +5282,14 @@
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "29fd9ffba995"
+    "parent_text_hash": "29fd9ffba995",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
     "claim_id": "CLM-SEC-T04-R07",
@@ -4988,12 +5299,13 @@
     "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
     "evidence_class": "NONE",
     "citation_numbers": [],
-    "source_locator": "Đặc tả Hợp đồng Biểu diễn của đề tài",
+    "source_locator": "AUTHOR_SPECIFICATION (Đặc tả thiết kế kiến trúc / hợp đồng biểu diễn của luận văn)",
     "code_locator": "",
     "artifact_locator": "",
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "2ce8cb280cde"
+    "parent_text_hash": "2ce8cb280cde",
+    "factuality_class": "AUTHOR_SPECIFICATION"
   }
 ]

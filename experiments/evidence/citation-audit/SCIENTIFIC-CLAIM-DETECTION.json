@@ -2,7 +2,7 @@
   "status": "PASS",
   "gate_title": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE",
   "detector_version": "3.0.0-forensic-truth-repair-round-3",
-  "document_sha256": "ac10e8becbeb520774e0fc76f36274ebd049a91c668821f5f296697defd182b7",
+  "document_sha256": "0d93b07cdb8bd9b7d760e4c2212979d2ee19ca455da272430a3e7beebb9bffaa",
   "body_boundaries": {
     "body_start": 77,
     "body_end": 551,
@@ -40,10 +40,13 @@
       "location": "Chương (Đoạn P82, câu S0)",
       "paragraph_index": 82,
       "sentence_index": 0,
-      "text": "Các phương pháp truyền thống như Bag of Words, n-gram, TF-IDF và đặc trưng thống kê có ưu điểm về tốc độ, chi phí và khả năng giải thích, nhưng hạn chế trong việc xử lý biến thể cú pháp và quan hệ dài hạn.",
-      "text_hash": "59da5fa8cd06",
-      "citations": [],
-      "pass_a": false,
+      "text": "Các phương pháp truyền thống như Bag of Words, n-gram, TF-IDF và đặc trưng thống kê có ưu điểm về tốc độ, chi phí và khả năng giải thích, nhưng hạn chế trong việc xử lý biến thể cú pháp và quan hệ dài hạn [6], [7].",
+      "text_hash": "40ffdf58266b",
+      "citations": [
+        6,
+        7
+      ],
+      "pass_a": true,
       "pass_b": true,
       "reconciled_claim_ids": [
         "CLM-SEC-003"
@@ -54,10 +57,12 @@
       "location": "Chương (Đoạn P82, câu S2)",
       "paragraph_index": 82,
       "sentence_index": 2,
-      "text": "Mô hình ngôn ngữ lớn mở thêm khả năng chuẩn hóa và diễn giải log, nhưng vẫn chịu hạn chế về chi phí, độ trễ, tính ổn định và bảo mật dữ liệu.",
-      "text_hash": "da3fb9e7e96f",
-      "citations": [],
-      "pass_a": false,
+      "text": "Mô hình ngôn ngữ lớn mở thêm khả năng chuẩn hóa và diễn giải log, nhưng vẫn chịu hạn chế về chi phí, độ trễ, tính ổn định và bảo mật dữ liệu [7].",
+      "text_hash": "77959975ccb6",
+      "citations": [
+        7
+      ],
+      "pass_a": true,
       "pass_b": true,
       "reconciled_claim_ids": [
         "CLM-SEC-004"
@@ -152,8 +157,8 @@
       "location": "Chương (Đoạn P92, câu S0)",
       "paragraph_index": 92,
       "sentence_index": 0,
-      "text": "Chương 3. Thực nghiệm, đánh giá và ứng dụng: Mô tả thiết lập thực nghiệm trên các bộ dữ liệu benchmark chuẩn (DARPA TC, LANL, HDFS, BGL), đánh giá định lượng hiệu năng phát hiện, phân tích độ bền vững trước trôi dạt dữ liệu, kiểm chứng khả năng phòng chống tấn công suy luận quyền riêng tư và thảo luận khả năng tích hợp trong hệ thống SOC.",
-      "text_hash": "7273033f703d",
+      "text": "Chương 3. Thực nghiệm, đánh giá và ứng dụng: Mô tả thiết lập thực nghiệm trên các bộ dữ liệu benchmark chuẩn (DARPA TC, LANL, HDFS, BGL), đánh giá định lượng hiệu năng phát hiện, phân tích độ bền vững trước trôi dạt dữ liệu, đề xuất khung đánh giá rủi ro quyền riêng tư và xác định MIA/Model Inversion là các phép kiểm tra hạ nguồn, chưa thực thi trong phạm vi thực nghiệm hiện tại và thảo luận khả năng tích hợp trong hệ thống SOC.",
+      "text_hash": "3b5639ec3a22",
       "citations": [],
       "pass_a": false,
       "pass_b": true,
@@ -2154,8 +2159,8 @@
       "location": "Chương (Đoạn P262, câu S3)",
       "paragraph_index": 262,
       "sentence_index": 3,
-      "text": "Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo H5 nhưng phải được kiểm chứng thực nghiệm tại Chương 3 (BOUNDARY-06: Privacy Claim Requires Attack-Based Empirical Evaluation).",
-      "text_hash": "0a63fe8bdf51",
+      "text": "Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo H5 nhưng cần được kiểm chứng thực nghiệm ở các mô hình hạ nguồn (BOUNDARY-06: Privacy Claim Requires Attack-Based Empirical Evaluation; chưa thực thi trong phạm vi Stage A hiện tại).",
+      "text_hash": "d04957d175d0",
       "citations": [],
       "pass_a": false,
       "pass_b": true,
@@ -2270,8 +2275,8 @@
       "location": "Chương (Đoạn P276, câu S2)",
       "paragraph_index": 276,
       "sentence_index": 2,
-      "text": "Tại Chương 3, chuyên đề đánh giá nhiều mốc rotation horizon cố định (fixed horizons) để xây dựng đường biên Utility–Privacy frontier.",
-      "text_hash": "389cbf3ed7d4",
+      "text": "Về mặt phương pháp luận, chuyên đề đề xuất hướng đánh giá nhiều mốc rotation horizon cố định (fixed horizons) để xây dựng đường biên Utility–Privacy frontier ở các giai đoạn thực nghiệm tiếp theo.",
+      "text_hash": "893e7a012b03",
       "citations": [],
       "pass_a": false,
       "pass_b": true,
@@ -2312,8 +2317,8 @@
       "location": "Chương (Đoạn P279, câu S1)",
       "paragraph_index": 279,
       "sentence_index": 1,
-      "text": "Tuy nhiên, khẳng định sự vượt trội này yêu cầu kiểm thử thực nghiệm tường minh tại Chương 3 thông qua CTRL-PRIV-001: đánh giá MIA ([16]), tấn công nghịch đảo (theo nguyên lý Fredrikson et al.",
-      "text_hash": "7f0cad3536cf",
+      "text": "Tuy nhiên, khẳng định sự vượt trội này là một giả thuyết nghiên cứu yêu cầu kiểm thử thực nghiệm tường minh ở các mô hình hạ nguồn thông qua giao thức CTRL-PRIV-001 (đánh giá MIA [16]), tấn công nghịch đảo (theo nguyên lý Fredrikson et al.",
+      "text_hash": "9ecd239a452b",
       "citations": [
         16
       ],
@@ -2328,8 +2333,8 @@
       "location": "Chương (Đoạn P279, câu S2)",
       "paragraph_index": 279,
       "sentence_index": 2,
-      "text": "[33] áp dụng cho các thuộc tính nhạy cảm của log), và tấn công tái định danh; không thể đưa ra kết luận chỉ từ lý thuyết DP hoặc thiết kế pseudonymization.",
-      "text_hash": "d30c6df26783",
+      "text": "[33] áp dụng cho các thuộc tính nhạy cảm của log, và tấn công tái định danh); chưa được thực thi trong phạm vi thực nghiệm của chuyên đề hiện tại.",
+      "text_hash": "0944914e5d5f",
       "citations": [
         33
       ],
