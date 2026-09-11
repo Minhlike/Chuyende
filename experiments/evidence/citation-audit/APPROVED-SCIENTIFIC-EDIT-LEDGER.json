@@ -368,5 +368,45 @@
     "rationale": "Triệt tiêu toàn bộ hiện tượng citation drift, liên kết bền vững metadata nguồn sơ cấp với văn bản.",
     "verification_status": "APPROVED_AND_APPLIED",
     "verified_at_utc": "2026-09-11T16:48:08Z"
+  },
+  {
+    "repair_id": "R38",
+    "category": "SEMANTIC_TRUTH_REPAIR",
+    "target_location": "Chương 1 (P97)",
+    "anchor": "Host Audit & Provenance Telemetry... Linux Auditd... LogHub",
+    "change_summary": "Tách bạch viễn trắc nguồn gốc [1, 2] khỏi các ví dụ syscall đại diện; thu hẹp phạm vi log ứng dụng sang các hệ thống thuộc benchmark LogHub (Apache, HDFS, cluster services).",
+    "rationale": "Tuân thủ cổng CLM-006A và CLM-007: không gán nhãn y văn vượt quá nội dung thực tế của [1, 2, 6, 7].",
+    "verification_status": "APPROVED_AND_APPLIED",
+    "verified_at_utc": "2026-09-11T18:53:00.679531+00:00"
+  },
+  {
+    "repair_id": "R39",
+    "category": "SEMANTIC_TRUTH_REPAIR",
+    "target_location": "Chương 1 (P103)",
+    "anchor": "UNICORN [9]... runtime streaming",
+    "change_summary": "Loại bỏ khẳng định tiệm cận O(N) và giới hạn RAM đối với UNICORN [9]; giữ nguyên đặc tính runtime streaming graph sketching thực tế của bài báo.",
+    "rationale": "Tuân thủ cổng CLM-009: FALSE_ASYMPTOTIC_FROM_RUNTIME_SYSTEM=0.",
+    "verification_status": "APPROVED_AND_APPLIED",
+    "verified_at_utc": "2026-09-11T18:53:00.679531+00:00"
+  },
+  {
+    "repair_id": "R40",
+    "category": "SEMANTIC_TRUTH_REPAIR",
+    "target_location": "Chương 1 (P151)",
+    "anchor": "nhóm phương pháp thống kê và cú pháp... [6], [2]",
+    "change_summary": "Loại bỏ khẳng định O(N) tiệm cận hình thức trước trích dẫn [6], [2]; chuyển thành ưu thế tốc độ xử lý trong thực tiễn.",
+    "rationale": "Tuân thủ nguyên tắc không quy kết độ phức tạp tiệm cận hình thức ngoài bằng chứng y văn.",
+    "verification_status": "APPROVED_AND_APPLIED",
+    "verified_at_utc": "2026-09-11T18:53:00.679531+00:00"
+  },
+  {
+    "repair_id": "R41",
+    "category": "SEMANTIC_TRUTH_REPAIR",
+    "target_location": "Chương 2 (P303)",
+    "anchor": "tỷ lệ che 15%... Train/Validation",
+    "change_summary": "Loại bỏ cụm từ 'kế thừa từ nguyên lý che của BERT', giữ nguyên 15% là giá trị khởi tạo tham chiếu của đề tài được khóa trên Train/Validation.",
+    "rationale": "Tuân thủ cổng CLM-070B: BERT_15_PERCENT_UNSOURCED_ATTRIBUTION=0.",
+    "verification_status": "APPROVED_AND_APPLIED",
+    "verified_at_utc": "2026-09-11T18:53:00.679531+00:00"
   }
 ]

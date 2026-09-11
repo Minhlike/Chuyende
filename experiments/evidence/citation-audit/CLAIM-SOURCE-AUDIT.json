@@ -67,16 +67,16 @@
   {
     "claim_id": "CLM-006A",
     "document_location": "Chương 1 (Đoạn P97, câu S2)",
-    "claim_text": "Trên các hệ thống Linux, các cơ chế kiểm toán mức nhân như Linux Auditd và eBPF chặn bắt trực tiếp các lời gọi hệ thống (system calls) cốt lõi phục vụ điều tra số và xây dựng đồ thị nguồn gốc [1], [2], bao gồm: khởi tạo tiến trình (execve), thao tác tệp tin (open, openat, unlink), cùng các thao tác mở và kết nối socket mạng (connect, accept).",
+    "claim_text": "Trên các hệ thống Linux, các cơ chế thu thập viễn trắc nguồn gốc và kiểm toán mức nhân (như Linux Auditd hoặc eBPF) ghi nhận các sự kiện lời gọi hệ thống (system calls) — tiêu biểu như khởi tạo tiến trình (execve), thao tác tệp tin (open, openat, unlink) và kết nối socket mạng (connect, accept) — để phục vụ điều tra số và xây dựng đồ thị quan hệ nhân quả [1], [2].",
     "citation_numbers": [
       1,
       2
     ],
     "source_title": "Inam et al. (IEEE S&P 2023) & Michael et al. (ACSAC 2020)",
-    "claim_class": "LITERATURE_DIRECT",
+    "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "PRIMARY_PAPER",
-    "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Inam et al., IEEE S&P 2023, Sec. II & IV, pp. 2620-2638 (Provenance telemetry, syscalls and audit graphs) | Michael et al., ACSAC 2020, Sec. 3 & 4, pp. 189-202 (Approximated audit logs and forensic validity)",
+    "support_status": "AUTHOR_SYNTHESIS",
+    "source_locator": "Inam et al., IEEE S&P 2023 [1] (Provenance telemetry and audit graphs); Michael et al., ACSAC 2020 [2] (Approximated audit logs and forensic validity); Các syscall là ví dụ đại diện cho viễn trắc kiểm toán.",
     "action": "VALIDATED"
   },
   {
@@ -96,14 +96,14 @@
   {
     "claim_id": "CLM-007",
     "document_location": "Chương (Đoạn P97, câu S4)",
-    "claim_text": "Nhóm thứ ba là nhật ký ứng dụng và dịch vụ (Application & Service Logs), phát sinh từ máy chủ web (Nginx, Apache), cơ sở dữ liệu, dịch vụ phân tán (HDFS) cùng hệ thống điều phối container [6], [7].",
+    "claim_text": "Nhóm thứ ba là nhật ký ứng dụng và dịch vụ phân tán (Application & Distributed System Logs), phát sinh từ máy chủ web (Apache), hệ thống tệp phân tán (HDFS) cùng các dịch vụ tính toán cụm thuộc bộ benchmark LogHub [6], [7].",
     "citation_numbers": [
       6,
       7
     ],
     "source_title": "Tools and Benchmarks for Automated Log Parsing; A Large-Scale Evaluation for Log Parsing Techniques: How Far Are We?",
     "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Zhu et al., ICSE-SEIP 2019, Sec. 3 & 4, pp. 121-130 (Automated log parsers: Drain, Spell, LenMa, AEL and benchmark evaluation) | Jiang et al., ISSTA 2024, Sec. 3 & 5, pp. 223-234 (Evaluation of log parsers: efficiency, robustness and template matching)",
+    "source_locator": "Zhu et al., ICSE-SEIP 2019 [6]; Jiang et al., ISSTA 2024 [7] (Đánh giá benchmark trên các hệ thống log LogHub gồm Apache, HDFS, ZooKeeper, Spark, v.v.).",
     "action": "KEEP"
   },
   {
@@ -122,13 +122,13 @@
   {
     "claim_id": "CLM-009",
     "document_location": "Chương (Đoạn P103, câu S1)",
-    "claim_text": "Trong các môi trường mạng lớn, hệ thống tiếp nhận luồng sự kiện liên tục với tốc độ cao, đòi hỏi thuật toán biểu diễn đặc trưng phải xử lý theo cơ chế dòng (streaming) với độ phức tạp tính toán tuyến tính O(N) mà không đòi hỏi lưu giữ toàn bộ lịch sử đồ thị trong bộ nhớ truy cập ngẫu nhiên  [9].",
+    "claim_text": "Trong các môi trường mạng lớn, hệ thống tiếp nhận luồng sự kiện liên tục với tốc độ cao, đặt ra yêu cầu giám sát theo cơ chế thời gian thực (runtime streaming) như cách tiếp cận phác họa đồ thị của UNICORN [9], đồng thời đối mặt với thách thức kiểm soát tài nguyên bộ nhớ khi xử lý các đồ thị nguồn gốc kéo dài.",
     "citation_numbers": [
       9
     ],
     "source_title": "UNICORN: Runtime Provenance-Based Detector for Advanced Persistent Threats",
     "support_status": "DIRECT_SUPPORT",
-    "source_locator": "Han et al., NDSS 2020, Sec. 3 & 4 (UNICORN: Graph-based runtime provenance analysis for APT detection)",
+    "source_locator": "Han et al., NDSS 2020 [9] (UNICORN: Runtime provenance-based detector for APTs via graph sketching); Đã loại bỏ khẳng định O(N) và giới hạn RAM tiệm cận không được bài báo chứng minh.",
     "action": "KEEP"
   },
   {
@@ -952,7 +952,7 @@
   {
     "claim_id": "CLM-070B",
     "document_location": "Chương 2 (Đoạn P303, câu S0)",
-    "claim_text": "Trong tác vụ L_MEP, đề tài lựa chọn tỷ lệ che 15% làm điểm khởi tạo tham chiếu kế thừa quy ước kinh điển của BERT và khóa cố định trên tập Train/Validation trước khi đánh giá trên tập Test.",
+    "claim_text": "Trong tác vụ L_MEP, đề tài lựa chọn tỷ lệ che 15% làm điểm khởi tạo tham chiếu và khóa cố định trên tập Train/Validation trước khi đánh giá trên tập Test.",
     "citation_numbers": [],
     "source_title": "Quy ước khởi tạo tham số của luận văn",
     "claim_class": "IMPLEMENTATION_VERIFIED",
@@ -960,7 +960,8 @@
     "support_status": "VERIFIED_IN_CODE",
     "code_locator": "src/research_agent/experiments/training/stage_a1_runner.py:L51; src/research_agent/experiments/extractor/sequence_view.py:L164-L185",
     "artifact_locator": "experiments/reports/STAGE-A1-PRETRAINING-REPORT.md:L51; experiments/protocol/STAGE-A1-TRAINING-CONTRACT.md:L30",
-    "action": "VALIDATED"
+    "action": "VALIDATED",
+    "source_locator": "Giá trị khởi tạo tham chiếu của đề tài; đã loại bỏ quy ước kế thừa BERT để loại trừ unsourced attribution."
   },
   {
     "claim_id": "CLM-071",
