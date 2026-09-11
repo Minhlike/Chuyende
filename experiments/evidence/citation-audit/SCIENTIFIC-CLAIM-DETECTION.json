@@ -2,7 +2,7 @@
   "status": "PASS",
   "gate_title": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE",
   "detector_version": "3.0.0-forensic-truth-repair-round-3",
-  "document_sha256": "07c6ab37338a2f202fc32396c87ebd9dab94cfe856b68b0b3a4791abe0a7da7b",
+  "document_sha256": "0ec2d9696980819bab12abc785411b21ac62716f046d53c401d6d67e17e2eaff",
   "body_boundaries": {
     "body_start": 77,
     "body_end": 551,
@@ -647,8 +647,8 @@
       "location": "Chương (Đoạn P129, câu S1)",
       "paragraph_index": 129,
       "sentence_index": 1,
-      "text": "Về mặt bảo vệ quyền riêng tư, chuyên đề phân định rạch ròi bốn cấp độ an toàn thông tin và không đồng nhất khả năng phòng thủ giữa các cấp độ này: Một là, cơ chế giả danh hóa (Pseudonymization) thông qua việc ánh xạ các định danh nhạy cảm (như username, IP, hostname) sang không gian mã băm hoặc chỉ số trừu tượng nhằm kiểm soát khả năng liên kết (controlled linkability); Hai là, đề xuất quy trình đánh giá khả năng chống tấn công suy luận thành viên (Membership Inference Attack - MIA) [16] nhằm đánh giá xem kẻ tấn công có thể xác định một bản ghi nhật ký cụ thể có thuộc tập huấn luyện hay không; Ba là, đề xuất quy trình đánh giá khả năng chống tấn công đảo ngược mô hình (Model Inversion Attack) [33] nhằm đánh giá rủi ro khôi phục thông tin cấu hình từ vector biểu diễn tiềm ẩn; Bốn là, khung bảo đảm toán học về quyền riêng tư vi sai (Differential Privacy - DP) theo hướng dẫn chuẩn mực của NIST SP 800-226 [17].",
-      "text_hash": "97d9c8a4d720",
+      "text": "Về mặt bảo vệ quyền riêng tư, chuyên đề phân định rạch ròi bốn cấp độ an toàn thông tin và không đồng nhất khả năng phòng thủ giữa các cấp độ này: Một là, cơ chế giả danh hóa (Pseudonymization) thông qua việc ánh xạ các định danh nhạy cảm (như username, IP, hostname) sang không gian mã băm hoặc chỉ số trừu tượng nhằm kiểm soát khả năng liên kết (controlled linkability); Hai là,đề xuất quy trình đánh giá rủi ro trước tấn công suy luận thành viên (Membership Inference Attack – MIA) [16], được định vị là phép kiểm tra hạ nguồn nhằm đánh giá khả năng đối nghịch xác định một bản ghi nhật ký cụ thể có thuộc tập huấn luyện hay không; Ba là,đề xuất quy trình đánh giá rủi ro trước tấn công đảo ngược mô hình (Model Inversion Attack) [33], cũng được định vị là phép kiểm tra hạ nguồn nhằm đánh giá nguy cơ khôi phục thông tin cấu hình từ vector biểu diễn tiềm ẩn; Bốn là,định hướng khung bảo đảm toán học về quyền riêng tư vi sai (Differential Privacy – DP) theo hướng dẫn chuẩn mực của NIST SP 800-226 [17].",
+      "text_hash": "f42c95714fc6",
       "citations": [
         16,
         33,
@@ -666,8 +666,8 @@
       "location": "Chương (Đoạn P129, câu S2)",
       "paragraph_index": 129,
       "sentence_index": 2,
-      "text": "Cần khẳng định rằng vector biểu diễn tiềm ẩn không tự động an toàn về quyền riêng tư nếu không có cơ chế chứng minh toán học tường minh; chuyên đề đề xuất khung đánh giá an toàn thông tin bao gồm các thử nghiệm MIA hay Model Inversion được định vị cho giai đoạn đánh giá mô hình hạ nguồn [16], [33], kết hợp khung lý thuyết DP định hướng lượng hóa độ mất mát quyền riêng tư [17].",
-      "text_hash": "3a11a693df0d",
+      "text": "Cần khẳng định rằng vector biểu diễn tiềm ẩn không tự động an toàn về quyền riêng tư nếu không có cơ chế chứng minh toán học tường minh; các quy trình kiểm thử tấn công MIA hay Model Inversion được định vị là phép kiểm tra hạ nguồn độc lập và chưa được thực thi trong phạm vi thực nghiệm hiện tại của chuyên đề [16], [33], kết hợp khung lý thuyết DP định hướng lượng hóa độ mất mát quyền riêng tư [17].",
+      "text_hash": "21838cb94897",
       "citations": [
         16,
         33,
@@ -774,14 +774,14 @@
       "location": "Chương (Đoạn P137, câu S1)",
       "paragraph_index": 137,
       "sentence_index": 1,
-      "text": "Quy tắc này bảo đảm bộ phân loại hạ nguồn không làm thay nhiệm vụ trích xuất đặc trưng của Tầng 2 và phản ánh trung thực năng lực của không gian biểu diễn [8], [37].",
-      "text_hash": "c0a109125e32",
+      "text": "Giao thức đánh giá tuyến tính đóng băng (frozen linear probe) giữ bộ mã hóa cố định và chỉ huấn luyện một ánh xạ tuyến tính trên vector z, vì vậy phép đo cho biết lượng thông tin phục vụ tác vụ hạ nguồn có thể được truy xuất bằng một bộ phân loại tuyến tính mà không cho phép detector học lại biểu diễn, dù phương pháp này không đo lường toàn bộ thông tin phi tuyến có thể tồn tại trong z [8], [37].",
+      "text_hash": "d31c503f74e6",
       "citations": [
         8,
         37
       ],
       "pass_a": true,
-      "pass_b": true,
+      "pass_b": false,
       "reconciled_claim_ids": [
         "CLM-025"
       ]
@@ -875,8 +875,8 @@
       "location": "Chương (Đoạn P145, câu S1)",
       "paragraph_index": 145,
       "sentence_index": 1,
-      "text": "Bên cạnh đếm tần suất đơn thuần, trong các phương pháp tiếp cận thống kê truyền thống, trọng số TF-IDF (Term Frequency - Inverse Document Frequency) hoặc độ hỗn loạn thông tin Shannon (Information Entropy) thường được vận dụng nhằm cân bằng và nhấn mạnh các sự kiện hiếm gặp:",
-      "text_hash": "618b32a5dd08",
+      "text": "Bên cạnh đếm tần suất đơn thuần, trọng số TF-IDF (Term Frequency – Inverse Document Frequency) được vận dụng nhằm cân bằng độ nổi bật của sự kiện: tần suất sự kiện (TF) đo lường mức độ xuất hiện trong một cửa sổ hoặc phiên phân tích, trong khi tần số nghịch đảo văn bản (IDF) làm giảm trọng số của các sự kiện xuất hiện phổ biến trên nhiều cửa sổ; nhờ đó, sự kiện xuất hiện nhiều trong một phiên nhưng ít phổ biến trên toàn tập sẽ nhận trọng số tương đối lớn hơn, dù TF-IDF không mô hình hóa được thứ tự thời gian, khoảng cách ngữ nghĩa hay quan hệ nhân quả giữa các sự kiện; độc lập với TF-IDF, độ hỗn loạn thông tin Shannon (Entropy) đóng vai trò là thước đo mức độ bất định và phân tán của phân phối sự kiện trong cửa sổ phân tích:",
+      "text_hash": "69862b4c7919",
       "citations": [],
       "pass_a": false,
       "pass_b": true,
@@ -1006,8 +1006,8 @@
       "location": "Chương (Đoạn P157, câu S0)",
       "paragraph_index": 157,
       "sentence_index": 0,
-      "text": "Các công trình kế tiếp đã nâng cấp cơ chế biểu diễn ngữ nghĩa: (1) LogAnomaly (Meng et al., IJCAI 2019) [22] đề xuất Template2Vec, trích xuất vector ngữ nghĩa cho từng mẫu log thông qua Word2Vec/FastText kết hợp trọng số d-IDF; (2) Logsy (Nedelkoski et al., ICDM 2020) [23] sử dụng hàm mất mát phân loại ngoại lai (Outlier Classification Loss) trên dữ liệu log từ các hệ thống phụ trợ để định hình biên giới phân tách cho lớp bình thường; (3) LogBERT (Guo et al., IJCNN 2021) [20] khai thác kiến trúc Transformer hai chiều dựa trên cơ chế Self-Attention của Vaswani et al.",
-      "text_hash": "7a5d6e53224e",
+      "text": "Thứ nhất, để nâng cao năng lực biểu diễn ngữ nghĩa vượt khỏi hạn chế của vector tần suất, các công trình kế tiếp đã khai thác vector nhúng cho từng mẫu log: LogAnomaly [22] đề xuất Template2Vec dựa trên Word2Vec và FastText kết hợp trọng số d-IDF để trích xuất đặc trưng ngữ nghĩa từ vựng; trong khi đó, Logsy [23] áp dụng hàm mất mát phân loại ngoại lai trên dữ liệu log phụ trợ nhằm định hình biên giới phân tách cho lớp hành vi bình thường; Thứ hai, bước chuyển sang mô hình hóa chuỗi sâu sắc hơn được khởi xướng bởi LogBERT [20] dựa trên kiến trúc Transformer hai chiều và cơ chế chú ý tự thân (Self-Attention) của Vaswani et al.",
+      "text_hash": "d1b5fb4ef6eb",
       "citations": [
         22,
         23,
@@ -1024,8 +1024,8 @@
       "location": "Chương (Đoạn P157, câu S1)",
       "paragraph_index": 157,
       "sentence_index": 1,
-      "text": "Trong kiến trúc Transformer [34], cơ chế chú ý tích vô hướng tỉ lệ (Scaled Dot-Product Attention) sử dụng các ma trận Query, Key và Value cho phép mỗi vị trí trong chuỗi tương tác trực tiếp với tất cả các vị trí khác mà không bị hạn chế bởi nút thắt tuần tự của mạng hồi quy recurrent, kết hợp mã hóa vị trí (Positional Encoding) để duy trì trật tự chuỗi.",
-      "text_hash": "7fd5d883ecea",
+      "text": "Trong kiến trúc Transformer [34], cơ chế chú ý tích vô hướng tỉ lệ sử dụng các ma trận Query, Key và Value để so khớp thông tin: mỗi vị trí trong chuỗi có thể tham chiếu trực tiếp đến bất kỳ vị trí nào khác mà không bị giới hạn bởi nút thắt tuần tự của mạng hồi quy, qua đó nắm bắt hiệu quả các phụ thuộc ngữ cảnh dài hạn dù đổi lại chi phí tính toán chú ý tăng theo hàm bậc hai theo chiều dài chuỗi.",
+      "text_hash": "4a6a6dc9b484",
       "citations": [
         34
       ],
@@ -1040,8 +1040,8 @@
       "location": "Chương (Đoạn P157, câu S2)",
       "paragraph_index": 157,
       "sentence_index": 2,
-      "text": "LogBERT áp dụng cơ chế này cho hai tác vụ tự giám sát: Dự đoán sự kiện log bị che (Masked Log Event Prediction) và Dự đoán phân bố khối lượng log; (4) Nhóm tiếp cận không dùng Parser (Parsing-Free, NeuralLog [21]) bỏ qua bước phân tích cú pháp bằng cách sử dụng các mô hình ngôn ngữ tiền huấn luyện để trực tiếp mã hóa chuỗi văn bản log thô thành các vector nhúng liên tục.",
-      "text_hash": "a2379c3528fa",
+      "text": "LogBERT áp dụng cơ chế này cho hai tác vụ tự giám sát gồm dự đoán sự kiện log bị che và dự đoán phân bố khối lượng log; song song đó, hướng tiếp cận không dùng parser như NeuralLog [21] trực tiếp mã hóa chuỗi văn bản thô thành các vector nhúng liên tục.",
+      "text_hash": "b8a01ff64d02",
       "citations": [
         21
       ],
@@ -1056,8 +1056,8 @@
       "location": "Chương (Đoạn P157, câu S4)",
       "paragraph_index": 157,
       "sentence_index": 4,
-      "text": "Để kiểm soát hiện tượng này, kỹ thuật chính quy hóa VICReg (Bardes et al., ICLR 2022) [10] phân rã mục tiêu thành ba thành phần: Phương sai (Variance - duy trì độ phân tán theo chiều và chống collapse về một điểm), Bất biến (Invariance - gióng hàng biểu diễn) và Hiệp phương sai (Covariance - phi tương quan hóa các chiều đặc trưng, chống sụp đổ chiều).",
-      "text_hash": "a6e7cb315795",
+      "text": "Để kiểm soát hiện tượng này, kỹ thuật chính quy hóa VICReg [10] phân rã mục tiêu điều chuẩn hình học thành ba thành phần: Phương sai (Variance) duy trì độ phân tán theo chiều nhằm tránh co cụm về một điểm; Bất biến (Invariance) gióng hàng biểu diễn giữa các góc nhìn khác nhau; và Hiệp phương sai (Covariance) phi tương quan hóa các chiều đặc trưng nhằm ngăn ngừa sụp đổ chiều.",
+      "text_hash": "de7be6f862c8",
       "citations": [
         10
       ],
@@ -1072,8 +1072,8 @@
       "location": "Chương (Đoạn P157, câu S5)",
       "paragraph_index": 157,
       "sentence_index": 5,
-      "text": "Việc áp dụng VICReg trong chuyên đề đóng vai trò là một cơ chế chính quy hóa hình học không gian, trong khi hiệu quả giảm tỷ lệ cảnh báo sai/bỏ sót trong viễn trắc an ninh là giả thuyết thích ứng của đề tài cần kiểm chứng thực nghiệm [10].",
-      "text_hash": "8245461932ea",
+      "text": "Việc áp dụng VICReg trong chuyên đề đóng vai trò là một cơ chế chính quy hóa hình học không gian, trong khi hiệu quả giảm tỷ lệ cảnh báo sai hoặc bỏ sót trong viễn trắc an ninh là giả thuyết thích ứng của đề tài cần kiểm chứng thực nghiệm [10].",
+      "text_hash": "42919d5f9ce7",
       "citations": [
         10
       ],
@@ -1585,8 +1585,8 @@
       "location": "Chương (Đoạn P194, câu S5)",
       "paragraph_index": 194,
       "sentence_index": 5,
-      "text": "Một mô hình được thiết kế có nhận thức về quyền riêng tư (Privacy-Aware) không tự động đồng nghĩa với việc đã đạt được khả năng bảo vệ quyền riêng tư vững chắc (Privacy-Preserving) nếu chưa trải qua các kiểm thử thực nghiệm tấn công nghiêm ngặt [17].",
-      "text_hash": "210230338736",
+      "text": "Một mô hình được thiết kế có nhận thức về quyền riêng tư (Privacy-Aware) không tự động đồng nghĩa với việc đã đạt được khả năng bảo vệ quyền riêng tư (Privacy-Preserving); các quy trình kiểm thử tấn công MIA và đảo ngược mô hình được định vị là phép kiểm tra hạ nguồn và chưa được thực thi trong phạm vi thực nghiệm hiện tại [17].",
+      "text_hash": "456898487fe2",
       "citations": [
         17
       ],
@@ -1774,8 +1774,8 @@
       "location": "Chương (Đoạn P221, câu S0)",
       "paragraph_index": 221,
       "sentence_index": 0,
-      "text": "Trong đó lý thuyết Quyền riêng tư Vi sai (DP) đóng vai trò định lượng và chặn trên tổn thất lý thuyết  dưới các giả định toán học xác định, còn rủi ro thực tế được kiểm chứng thực nghiệm độc lập thông qua các tấn công suy luận thành viên (MIA)  [16],  [17] và tấn công nghịch đảo/tái định danh thực thể  [33].",
-      "text_hash": "9606fd661f65",
+      "text": "Trong đó lý thuyết Quyền riêng tư Vi sai (DP) đóng vai trò định lượng và chặn trên tổn thất lý thuyết dưới các giả định toán học xác định, còn rủi ro thực tế được định vị là phép kiểm tra hạ nguồn cần đánh giá thực nghiệm độc lập thông qua các quy trình kiểm thử tấn công suy luận thành viên (MIA)  [16],  [17] và tấn công nghịch đảo/tái định danh thực thể  [33].",
+      "text_hash": "cafbc615123e",
       "citations": [
         16,
         17,
@@ -2019,8 +2019,8 @@
       "location": "Chương (Đoạn P245, câu S1)",
       "paragraph_index": 245,
       "sentence_index": 1,
-      "text": "Ngược lại, từ vựng tham số động (đặc biệt là chuỗi đường dẫn tệp tin và đối số lệnh) phụ thuộc vào môi trường và được học hoàn toàn trên phân vùng huấn luyện  theo cơ chế fit-only: mọi thống kê, ánh xạ từ vựng và bảng chuẩn hóa đều được fit trên  và áp dụng ở trạng thái đóng băng (frozen state) lên phân vùng Validation và Test , qua đó bảo đảm không có thông tin ngược từ Val/Test nào được đưa vào quá trình fit.",
-      "text_hash": "f74bad57ee1c",
+      "text": "Ngược lại, từ vựng tham số động (đặc biệt là chuỗi đường dẫn tệp tin và đối số lệnh) phụ thuộc vào môi trường và được học hoàn toàn trên phân vùng huấn luyện  theo cơ chế fit-only: mọi thống kê, ánh xạ từ vựng và bảng chuẩn hóa đều được fit trên  và áp dụng ở trạng thái đóng băng (frozen state) lên phân vùng Validation và Test ; quá trình fit chỉ thực thi trên phân vùng huấn luyện nhằm tránh đưa thông tin từ tập kiểm tra và tập kiểm định vào bước fit.",
+      "text_hash": "6cc0a0abe3ed",
       "citations": [],
       "pass_a": false,
       "pass_b": true,
@@ -2117,8 +2117,8 @@
       "location": "Chương (Đoạn P259, câu S2)",
       "paragraph_index": 259,
       "sentence_index": 2,
-      "text": "Kỹ thuật này bảo đảm không sụp đổ (collapse) thông tin cấu trúc cú pháp cần thiết cho Extractor và không làm rò rỉ từ vựng.",
-      "text_hash": "cf9c5404963a",
+      "text": "Cơ chế này được thiết kế để giảm nguy cơ sụp đổ (collapse) thông tin cấu trúc cú pháp cần thiết cho Extractor và hạn chế rò rỉ từ vựng từ tập kiểm tra.",
+      "text_hash": "dd900e1a1070",
       "citations": [],
       "pass_a": false,
       "pass_b": true,
@@ -3330,8 +3330,8 @@
       "location": "Chương (Đoạn P431, câu S3)",
       "paragraph_index": 431,
       "sentence_index": 3,
-      "text": "Tại thời điểm suy luận dòng (Stage C), chỉ các backbone  và các ma trận dung hợp chuẩn tắc được nạp để tính toán vector , bảo đảm nguyên tắc Zero Orphan Parameters và tối ưu tài nguyên thực thi trực tuyến.",
-      "text_hash": "3ea23067d77d",
+      "text": "Tại thời điểm suy luận dòng, chỉ các backbone  và các ma trận dung hợp chuẩn tắc được nạp để tính toán vector ; nhờ đó, số thành phần mô hình phải duy trì khi suy luận được giảm đáng kể so với đồ thị huấn luyện đầy đủ mà không để lại tham số mồ côi (tuân thủ nguyên tắc Zero Orphan Parameters).",
+      "text_hash": "2abe2c69e304",
       "citations": [],
       "pass_a": false,
       "pass_b": true,

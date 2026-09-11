@@ -377,7 +377,7 @@
   {
     "claim_id": "CLM-020",
     "document_location": "Chương (Đoạn P129, câu S1)",
-    "atomic_claim": "Về mặt bảo vệ quyền riêng tư, chuyên đề phân định rạch ròi bốn cấp độ an toàn thông tin và không đồng nhất khả năng phòng thủ giữa các cấp độ này: Một là, cơ chế giả danh hóa (Pseudonymization) thông qua việc ánh xạ các định danh nhạy cảm (như username, IP, hostname) sang không gian mã băm hoặc chỉ số trừu tượng nhằm kiểm soát khả năng liên kết (controlled linkability); Hai là, thử nghiệm thực nghiệm khả năng chống tấn công suy luận thành viên (Membership Inference Attack - MIA) [16] nhằm đánh giá xem kẻ tấn công có thể xác định một bản ghi nhật ký cụ thể có thuộc tập huấn luyện hay không; Ba là, thử nghiệm thực nghiệm khả năng chống tấn công đảo ngược mô hình (Model Inversion Attack) [33] nhằm đánh giá rủi ro khôi phục thông tin cấu hình từ vector biểu diễn tiềm ẩn; Bốn là, khung bảo đảm toán học về quyền riêng tư vi sai (Differential Privacy - DP) theo hướng dẫn chuẩn mực của NIST SP 800-226 [17].",
+    "atomic_claim": "Một là, cơ chế giả danh hóa (Pseudonymization) thông qua việc ánh xạ các định danh nhạy cảm (như username, IP, hostname) sang không gian mã băm hoặc chỉ số trừu tượng nhằm kiểm soát khả năng liên kết (controlled linkability); Hai là, đề xuất quy trình đánh giá rủi ro trước tấn công suy luận thành viên (Membership Inference Attack – MIA) [16], được định vị là phép kiểm tra hạ nguồn nhằm đánh giá khả năng đối nghịch xác định một bản ghi nhật ký cụ thể có thuộc tập huấn luyện hay không; Ba là, đề xuất quy trình đánh giá rủi ro trước tấn công đảo ngược mô hình (Model Inversion Attack) [33], cũng được định vị là phép kiểm tra hạ nguồn nhằm đánh giá nguy cơ khôi phục thông tin cấu hình từ vector biểu diễn tiềm ẩn; Bốn là, định hướng khung bảo đảm toán học về quyền riêng tư vi sai (Differential Privacy – DP) theo hướng dẫn chuẩn mực của NIST SP 800-226 [17].",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [
@@ -391,7 +391,7 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P129-S01",
-    "parent_text_hash": "97d9c8a4d720",
+    "parent_text_hash": "f42c95714fc6",
     "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
@@ -412,7 +412,7 @@
     "required_action": "NONE",
     "notes": "PRIVACY_IMPLEMENTATION_FALSE_POSITIVES=0; Proposed downstream evaluation framework, NOT empirically executed.",
     "parent_detected_id": "DET-P129-S02",
-    "parent_text_hash": "3a11a693df0d",
+    "parent_text_hash": "21838cb94897",
     "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
@@ -472,7 +472,7 @@
   {
     "claim_id": "CLM-025",
     "document_location": "Chương (Đoạn P137, câu S1)",
-    "atomic_claim": "Quy tắc này bảo đảm bộ phân loại hạ nguồn không làm thay nhiệm vụ trích xuất đặc trưng của Tầng 2 và phản ánh trung thực năng lực của không gian biểu diễn [8], [37].",
+    "atomic_claim": "Giao thức đánh giá tuyến tính đóng băng (frozen linear probe) giữ bộ mã hóa cố định và chỉ huấn luyện một ánh xạ tuyến tính trên vector z, vì vậy phép đo cho biết lượng thông tin phục vụ tác vụ hạ nguồn có thể được truy xuất bằng một bộ phân loại tuyến tính mà không cho phép detector học lại biểu diễn, dù phương pháp này không đo lường toàn bộ thông tin phi tuyến có thể tồn tại trong z [8], [37].",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
@@ -485,7 +485,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P137-S01",
-    "parent_text_hash": "c0a109125e32",
+    "parent_text_hash": "d31c503f74e6",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -549,7 +549,7 @@
   {
     "claim_id": "CLM-029",
     "document_location": "Chương (Đoạn P145, câu S1)",
-    "atomic_claim": "Bên cạnh đếm tần suất đơn thuần, trong các phương pháp tiếp cận thống kê truyền thống, trọng số TF-IDF (Term Frequency - Inverse Document Frequency) hoặc độ hỗn loạn thông tin Shannon (Information Entropy) thường được vận dụng nhằm cân bằng và nhấn mạnh các sự kiện hiếm gặp:",
+    "atomic_claim": "Bên cạnh đếm tần suất đơn thuần, trọng số TF-IDF (Term Frequency – Inverse Document Frequency) được vận dụng nhằm cân bằng độ nổi bật của sự kiện: tần suất sự kiện (TF) đo lường mức độ xuất hiện trong một cửa sổ hoặc phiên phân tích, trong khi tần số nghịch đảo văn bản (IDF) làm giảm trọng số của các sự kiện xuất hiện phổ biến trên nhiều cửa sổ; nhờ đó, sự kiện xuất hiện nhiều trong một phiên nhưng ít phổ biến trên toàn tập sẽ nhận trọng số tương đối lớn hơn, dù TF-IDF không mô hình hóa được thứ tự thời gian, khoảng cách ngữ nghĩa hay quan hệ nhân quả giữa các sự kiện; độc lập với TF-IDF, độ hỗn loạn thông tin Shannon (Entropy) đóng vai trò là thước đo mức độ bất định và phân tán của phân phối sự kiện trong cửa sổ phân tích:",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [],
@@ -559,7 +559,7 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P145-S01",
-    "parent_text_hash": "618b32a5dd08",
+    "parent_text_hash": "69862b4c7919",
     "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
@@ -696,7 +696,7 @@
   {
     "claim_id": "CLM-037",
     "document_location": "Chương (Đoạn P157, câu S0)",
-    "atomic_claim": "Các công trình kế tiếp đã nâng cấp cơ chế biểu diễn ngữ nghĩa: (1) LogAnomaly (Meng et al., IJCAI 2019) [22] đề xuất Template2Vec, trích xuất vector ngữ nghĩa cho từng mẫu log thông qua Word2Vec/FastText kết hợp trọng số d-IDF; (2) Logsy (Nedelkoski et al., ICDM 2020) [23] sử dụng hàm mất mát phân loại ngoại lai (Outlier Classification Loss) trên dữ liệu log từ các hệ thống phụ trợ để định hình biên giới phân tách cho lớp bình thường; (3) LogBERT (Guo et al., IJCNN 2021) [20] khai thác kiến trúc Transformer hai chiều dựa trên cơ chế Self-Attention của Vaswani et al. [34].",
+    "atomic_claim": "Thứ nhất, để nâng cao năng lực biểu diễn ngữ nghĩa vượt khỏi hạn chế của vector tần suất, các công trình kế tiếp đã khai thác vector nhúng cho từng mẫu log: LogAnomaly [22] đề xuất Template2Vec dựa trên Word2Vec và FastText kết hợp trọng số d-IDF để trích xuất đặc trưng ngữ nghĩa từ vựng; trong khi đó, Logsy [23] áp dụng hàm mất mát phân loại ngoại lai trên dữ liệu log phụ trợ nhằm định hình biên giới phân tách cho lớp hành vi bình thường; Thứ hai, bước chuyển sang mô hình hóa chuỗi sâu sắc hơn được khởi xướng bởi LogBERT [20] dựa trên kiến trúc Transformer hai chiều và cơ chế chú ý tự thân (Self-Attention) của Vaswani et al.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
@@ -711,13 +711,13 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P157-S00",
-    "parent_text_hash": "7a5d6e53224e",
+    "parent_text_hash": "d1b5fb4ef6eb",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-038",
     "document_location": "Chương (Đoạn P157, câu S1)",
-    "atomic_claim": "Trong kiến trúc Transformer [34], cơ chế chú ý tích vô hướng tỉ lệ (Scaled Dot-Product Attention) sử dụng các ma trận Query, Key và Value cho phép mỗi vị trí trong chuỗi tương tác trực tiếp với tất cả các vị trí khác mà không bị hạn chế bởi nút thắt tuần tự của mạng hồi quy recurrent, kết hợp mã hóa vị trí (Positional Encoding) để duy trì trật tự chuỗi.",
+    "atomic_claim": "Trong kiến trúc Transformer [34], cơ chế chú ý tích vô hướng tỉ lệ sử dụng các ma trận Query, Key và Value để so khớp thông tin: mỗi vị trí trong chuỗi có thể tham chiếu trực tiếp đến bất kỳ vị trí nào khác mà không bị giới hạn bởi nút thắt tuần tự của mạng hồi quy, qua đó nắm bắt hiệu quả các phụ thuộc ngữ cảnh dài hạn dù đổi lại chi phí tính toán chú ý tăng theo hàm bậc hai theo chiều dài chuỗi.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
@@ -729,13 +729,13 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P157-S01",
-    "parent_text_hash": "7fd5d883ecea",
+    "parent_text_hash": "4a6a6dc9b484",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-039",
     "document_location": "Chương (Đoạn P157, câu S2)",
-    "atomic_claim": "LogBERT áp dụng cơ chế này cho hai tác vụ tự giám sát: Dự đoán sự kiện log bị che (Masked Log Event Prediction) và Dự đoán phân bố khối lượng log; (4) Nhóm tiếp cận không dùng Parser (Parsing-Free, NeuralLog [21]) bỏ qua bước phân tích cú pháp bằng cách sử dụng các mô hình ngôn ngữ tiền huấn luyện để trực tiếp mã hóa chuỗi văn bản log thô thành các vector nhúng liên tục.",
+    "atomic_claim": "LogBERT áp dụng cơ chế này cho hai tác vụ tự giám sát gồm dự đoán sự kiện log bị che và dự đoán phân bố khối lượng log; song song đó, hướng tiếp cận không dùng parser như NeuralLog [21] trực tiếp mã hóa chuỗi văn bản thô thành các vector nhúng liên tục.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
@@ -747,13 +747,13 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P157-S02",
-    "parent_text_hash": "a2379c3528fa",
+    "parent_text_hash": "b8a01ff64d02",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
     "claim_id": "CLM-040",
     "document_location": "Chương (Đoạn P157, câu S4)",
-    "atomic_claim": "Để kiểm soát hiện tượng này, kỹ thuật chính quy hóa VICReg (Bardes et al., ICLR 2022) [10] phân rã Mục tiêu thành ba thành phần: Phương sai (Variance - duy trì độ phân tán theo chiều và chống collapse về một điểm), Bất biến (Invariance - gióng hàng biểu diễn) và Hiệp phương sai (Covariance - phi tương quan hóa các chiều đặc trưng, chống sụp đổ chiều).",
+    "atomic_claim": "Để kiểm soát hiện tượng này, kỹ thuật chính quy hóa VICReg [10] phân rã mục tiêu điều chuẩn hình học thành ba thành phần: Phương sai (Variance) duy trì độ phân tán theo chiều nhằm tránh co cụm về một điểm; Bất biến (Invariance) gióng hàng biểu diễn giữa các góc nhìn khác nhau; và Hiệp phương sai (Covariance) phi tương quan hóa các chiều đặc trưng nhằm ngăn ngừa sụp đổ chiều.",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
@@ -765,13 +765,13 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P157-S04",
-    "parent_text_hash": "a6e7cb315795",
+    "parent_text_hash": "de7be6f862c8",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
     "claim_id": "CLM-041",
     "document_location": "Chương (Đoạn P157, câu S5)",
-    "atomic_claim": "Việc áp dụng VICReg trong chuyên đề đóng vai trò là một cơ chế chính quy hóa hình học không gian, trong khi hiệu quả giảm tỷ lệ cảnh báo sai/bỏ sót trong viễn trắc an ninh là giả thuyết thích ứng của đề tài cần kiểm chứng thực nghiệm [10].",
+    "atomic_claim": "Việc áp dụng VICReg trong chuyên đề đóng vai trò là một cơ chế chính quy hóa hình học không gian, trong khi hiệu quả giảm tỷ lệ cảnh báo sai hoặc bỏ sót trong viễn trắc an ninh là giả thuyết thích ứng của đề tài cần kiểm chứng thực nghiệm [10].",
     "claim_class": "AUTHOR_HYPOTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [
@@ -783,7 +783,7 @@
     "support_status": "AUTHOR_HYPOTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P157-S05",
-    "parent_text_hash": "8245461932ea",
+    "parent_text_hash": "42919d5f9ce7",
     "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
@@ -1213,7 +1213,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P221-S00",
-    "parent_text_hash": "9606fd661f65",
+    "parent_text_hash": "cafbc615123e",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
@@ -1868,7 +1868,7 @@
     "evidence_strength_local": "LOCAL_AGENT_BYTE_VERIFIED",
     "notes": "REMOTE_LOCAL_EVIDENCE_STRENGTH_MISMATCH=0; remote manifests attest loss metrics and zero test access; local workstation verifies raw checkpoint bytes.",
     "parent_detected_id": "DET-P431-S03",
-    "parent_text_hash": "3ea23067d77d",
+    "parent_text_hash": "2abe2c69e304",
     "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
@@ -1905,7 +1905,7 @@
     "required_action": "NONE",
     "notes": "PRIVACY_IMPLEMENTATION_FALSE_POSITIVES=0; Proposed downstream evaluation framework, NOT empirically executed.",
     "parent_detected_id": "DET-P129-S01",
-    "parent_text_hash": "97d9c8a4d720",
+    "parent_text_hash": "f42c95714fc6",
     "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
@@ -2573,7 +2573,7 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P245-S01",
-    "parent_text_hash": "f74bad57ee1c",
+    "parent_text_hash": "6cc0a0abe3ed",
     "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
@@ -2621,7 +2621,7 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P259-S02",
-    "parent_text_hash": "cf9c5404963a",
+    "parent_text_hash": "dd900e1a1070",
     "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
@@ -3381,7 +3381,7 @@
   {
     "claim_id": "CLM-SEC-091",
     "document_location": "Chương (Đoạn P431, câu S3)",
-    "atomic_claim": "Tại thời điểm suy luận dòng (Stage C), chỉ các backbone  và các ma trận dung hợp chuẩn tắc được nạp để tính toán vector , bảo đảm nguyên tắc Zero Orphan Parameters và tối ưu tài nguyên thực thi trực tuyến.",
+    "atomic_claim": "; nhờ đó, số thành phần mô hình phải duy trì khi suy luận được giảm đáng kể so với đồ thị huấn luyện đầy đủ mà không để lại tham số mồ côi (tuân thủ nguyên tắc Zero Orphan Parameters).",
     "claim_class": "MATHEMATICAL_FORMULATION",
     "evidence_class": "PROOF_DERIVATION",
     "citation_numbers": [],
@@ -3391,7 +3391,7 @@
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P431-S03",
-    "parent_text_hash": "3ea23067d77d",
+    "parent_text_hash": "2abe2c69e304",
     "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
@@ -4872,7 +4872,7 @@
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "210230338736",
+    "parent_text_hash": "456898487fe2",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
