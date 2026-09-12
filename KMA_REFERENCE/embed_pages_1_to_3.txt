@@ -1,0 +1,180 @@
+
+==================== EMBED PAGE 1 ====================
+id="outer_page_1"
+style="width:902px; height:1274px; ">
+&nbsp;
+Phụ lục I
+QUY ĐỊNH HÌNH THỨC TRÌNH BÀY
+QUYỂN ĐỒ ÁN TỐT NGHIỆP
+(Kèm theo Quyết định số 268/QĐ-HVM ngày 10 tháng 04 năm 2024
+của Học viện Kỹ thuật mật mã)
+I.
+Hình thứ
+c trình
+bày ĐATN
+1. Đồ án tốt nghiệp phải được trình bày rõ ràng, mạch lạc, sạch sẽ, không
+được tẩy xóa, có đánh số trang, đánh số bảng, hình vẽ, đồ thị và công thức.
+2. Quyển Đồ án khi nộp về Trung tâm thông tin thư viện phải đóng bìa cứng
+in chữ nhũ. Cụ thể:
+a) Soạn thảo văn bản: Đồ án
+tốt nghiệp sử dụng chữ Time New Roma
+n cỡ 14
+của hệ soạn thảo văn bản Winword hoặc tương đương; mật độ chữ chữ bình thường
+(Normal), dãn dòng ở chế độ 1,2 lines; lề trên 2 cm; lề dưới 2 cm; lề trái 3cm; lề
+phải 2 cm. Số trang được đánh ở giữa, phía trên, bắt đầu từ trang số 1 ( ở phần
+MỞ
+ĐẦU)
+. Nếu có bảng biểu, hình vẽ trình bày theo chiều ngang khổ giấy thì đầu bảng
+là lề trái của trang.
+b) Đồ án được in trên một mặt giấy trắng khổ A4 (210 x 297 mm)
+- Các tiểu mục: Các tiểu mục của đồ án được trình bày và đánh số thành nhóm
+số, nhiều nhất gồm bốn chữ số với số thứ nhất là chỉ số chương (ví dụ 4.1.2.1 chỉ
+tiểu mục 1, nhóm tiểu mục 2, mục 1, chương 4). Tại mỗi nhóm tiểu mục phải có ít
+nhất
+2
+tiểu
+mục.
+- Bảng biểu, hình vẽ, sơ đồ, công thức: Các bảng biểu, hình vẽ, công thức phải
+được tham chiếu trong đồ án. Việc đánh số bảng biểu, hình vẽ, sơ đồ, công thức
+gắn với số chương (ví dụ Hình 3.4 có
+nghĩa là hình thứ 4 trong chương 3). Đầu đề
+của bảng biểu ghi phía trên của bảng, canh giữa; đầu đề của hình vẽ ghi phía dưới
+hình, canh giữa, cỡ chữ phải bằng cỡ chữ sử dụng trong văn bản của đồ án; số công
+thức phải để trong dấu ngoặc đơn và canh phải. Trong trường hợp công thức dài
+hơn một dòng thì số công thức phải được đánh ở dòng dưới canh phải.
+- Viết tắt: Chỉ viết tắt những từ, cụm từ hoặc thuật ngữ được sử dụng nhiều lần
+trong đồ án. Viết tắt sau lần viết đầy đủ thứ nhất và chữ viết tắt để trong dấu ngoặc
+đơn. Nếu đồ án có nhiều hơn 10 chữ viết tắt thì phải có bảng danh mục các chữ viết
+tắt (xếp theo thứ tự A, B, C) ở phần đầu của đồ án.
+c) Phụ lục của đồ án: Phần này bao gồm những nội dung cần thiết nhằm minh
+họa hoặc bổ trợ cho nội dung đồ án, như: chương trình tính toán, kết quả khảo sát
+trên mô hình số, các số liệu, mẫu biểu, tranh ảnh… Phụ lục không được đánh số
+trang, không được trình bày dày hơn phần chính của đồ án.
+d) Tài liệu tham khảo hay trích dẫn:
+docManager.addPage({
+pageNum:  1 ,
+fonts: [0,2,3],
+origWidth:  902 ,
+origHeight:  1274 ,
+containerElem: document.getElementById("outer_page_1"),
+blur:  false ,
+innerPageElem: document.getElementById("page1")
+});
+<div class="outer_page only_ie6_border "
+id="
+
+==================== EMBED PAGE 2 ====================
+id="outer_page_2"
+style="width:902px; height:1274px; ">
+&nbsp;
+2
+- Mọi ý kiến, khái niệm có ý nghĩa, mang tính chất gợi ý không phải của riêng
+tác giả và mọi tham khảo khác phải được trích dẫn và chỉ rõ nguồn trong danh mục
+Tài liệu tham khảo của đồ án. Việc trích dẫn là theo số thứ tự của tài liệu ở trong
+danh mục Tài liệu tham khảo và được đặt trong dấu ngoặc vuông, khi cần có cả số
+trang, ví dụ [15, tr.314-315].
+- Tài liệu tham khảo được xếp riêng theo thứ tự từng ngôn ngữ như sau: Tiếng
+Việt, tiếng Anh, Pháp, Đức, Nga, Trung, Nhật… Các tài liệu bằng tiếng nước ngoài
+phải giữ nguyên văn, không phiên âm, không dịch, kể cả tài liệu bằng tiếng Trung
+Quốc, Nhật…
+- Tài liệu tham khảo xếp theo thứ tự ABC họ tên
+tác giả theo thông lệ của
+từng nước:
+• Tác giả
+là người Việt Nam: xếp thứ tự
+ABC theo tên nhưng vẫn giữ nguyên
+thứ tự thông thường của người Việt Nam.
+• Tác giả là người nước ngoài: xếp theo thứ tự ABC theo họ.
+• Tài liệu không có tên tác
+giả thì xếp theo thứ tự ABC từ đầu
+tiên của tên cơ
+quan ban hành báo cáo hay ấn phẩm.
+- Tài liệu tham khảo sách, đồ án, luận văn, báo cáo… phải ghi đầy đủ những
+thông tin sau:
+• Tên các tác giả (không có dấu ngăn cách).
+• Năm công bố (đặt trong dấu ngoặc đơn, dấu phẩy sau ngoặc đơn).
+• Tên bài báo (đặt trong dấu ngoặc kép, không in nghiêng, dấu phẩy cuối tên
+bài báo).
+• Tạp chí hoặc tên tên sách (in nghiêng, dấu phẩy cuối tên).
+• Tập (không có dấu ngăn cách).
+• Số (đặt trong dấu ngoặc đơn, dấu phẩy sau ngoặc đơn).
+• Các số trang (gạch ngang giữa hai chữ số, dấu chấm kết thúc).
+Nếu tài liệu dài hơn một dòng thì nên trình bày sao cho từ dòng thứ hai lùi
+vào so với dòng thứ nhất khoảng 1 cm để rõ ràng, dễ theo dõi.
+e) Đánh số trang trong đồ án tốt nghiệp: Trước trang
+MỞ ĐẦU
+số trang
+được đánh số
+La Mã thường
+(i, ii, iii…). T
+ừ trang
+MỞ ĐẦU
+trở đi của đồ án được
+đánh số Ả Rập (1, 2, 3…).
+II. Định dạng văn bản
+1. Định dạng đoạn văn bản thường
+- Phông chữ: Times New Roman
+- Cỡ chữ: 14
+docManager.addPage({
+pageNum:  2 ,
+fonts: [3,0],
+origWidth:  902 ,
+origHeight:  1274 ,
+containerElem: document.getElementById("outer_page_2"),
+blur:  false ,
+innerPageElem: document.getElementById("page2")
+});
+<div class="outer_page only_ie6_border "
+id="
+
+==================== EMBED PAGE 3 ====================
+id="outer_page_3"
+style="width:902px; height:1274px; ">
+&nbsp;
+3
+- Kiểu chữ: thường
+- Dãn dòng: 1,5 lines
+- Đầu dòng thứ nhất: lùi vào 12,7 mm
+- Căn lề: đều
+2. Định dạng tên chương và các tiểu mục
++ Tên chương
+- Phông chữ: Times New Roman
+- Cỡ chữ: 14
+- Kiểu chữ: in hoa, nét đậm
+- Dãn dòng: 1,5 lines
+- Căn lề: giữa
+- Có đánh số theo quy định
++
+Tiểu mục cấp 1
+- Phông chữ: Times New Roman
+- Cỡ chữ: 14
+- Kiểu chữ: in thường, nét đậm
+- Dãn dòng: 1,5 lines
+- Căn lề: đều
+- Có đánh số theo quy định
++ Tiểu mục cấp 2
+- Phông chữ: Times New Roman
+- Cỡ chữ: 14
+- Kiểu chữ: in thường, nghiêng
+- Dãn dòng: 1,5 lines
+- Căn lề: đều
+- Có đánh số theo quy định
++
+Tiểu mục cấp 3
+- Phông chữ: Times New Roman
+- Cỡ chữ: 14
+- Kiểu chữ: in thường
+- Dãn dòng: 1,5 lines
+- Căn lề: đều
+- Có đánh số theo quy định
+docManager.addPage({
+pageNum:  3 ,
+fonts: [3,0],
+origWidth:  902 ,
+origHeight:  1274 ,
+containerElem: document.getElementById("outer_page_3"),
+blur:  false ,
+innerPageElem: document.getElementById("page3")
+});
+<div class="outer_page only_ie6_border "
+id="
