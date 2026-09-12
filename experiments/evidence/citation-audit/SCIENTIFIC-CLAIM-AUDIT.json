@@ -577,7 +577,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P147-S00",
-    "parent_text_hash": "ad61499f0c98",
+    "parent_text_hash": "19ddfdb498df",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
@@ -803,7 +803,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P158-S00",
-    "parent_text_hash": "19431f160eb5",
+    "parent_text_hash": "3fd3356bed7a",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
@@ -1320,7 +1320,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P301-S00",
-    "parent_text_hash": "f80de60fc6f3",
+    "parent_text_hash": "2ce33d4d90ad",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -1799,7 +1799,7 @@
     "required_action": "NONE",
     "notes": "TGAT_IMPLEMENTATION_EQUIVALENCE_OVERCLAIM=0; Harmonic relative time encoding is a fixed sinusoidal adaptation inspired by TGAT.; CLAIM_CLASS_SUPPORT_STATUS_CONTRADICTIONS=0; Reclassified to MATHEMATICAL_FORMULATION: Harmonic time encoding formula from Xu et al. adapted and implemented in graph_view.py.",
     "parent_detected_id": "DET-P301-S00",
-    "parent_text_hash": "f80de60fc6f3",
+    "parent_text_hash": "2ce33d4d90ad",
     "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
@@ -2879,7 +2879,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P301-S00",
-    "parent_text_hash": "f80de60fc6f3",
+    "parent_text_hash": "2ce33d4d90ad",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {

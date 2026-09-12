@@ -2,7 +2,7 @@
   "status": "PASS",
   "gate_title": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE",
   "detector_version": "3.0.0-forensic-truth-repair-round-3",
-  "document_sha256": "d3cbba20792c0548e836e7d78ba709f0ae1004fb05ff39e31e77ad8a0534b436",
+  "document_sha256": "9ac2d52fb1f67e6153c713b266dc030eabc60b5a5edb561fbfcc8111a2a3ab29",
   "body_boundaries": {
     "body_start": 77,
     "body_end": 551,
@@ -889,8 +889,8 @@
       "location": "Chương (Đoạn P147, câu S0)",
       "paragraph_index": 147,
       "sentence_index": 0,
-      "text": "Trên không gian vector tần suất này, các mô hình phát hiện bất thường kinh điển được triển khai rộng rãi: thứ nhất là phân tích thành phần chính PCA (Xu et al., SOSP 2009)  [18] thực hiện tâm hóa dữ liệu và tìm các phương chiếu trực giao có phương sai lớn nhất để phân rã không gian vector  thành không gian con chuẩn tắc  được tạo bởi các thành phần chính giữ lại và không gian con phần dư , nhận diện bất thường khi năng lượng chiếu lên phần dư vượt ngưỡng kiểm định thống kê; tuy nhiên, phương sai lớn không đồng nghĩa với ý nghĩa an ninh vì các hành vi tấn công tinh vi thường có quy mô tín hiệu nhỏ:",
-      "text_hash": "ad61499f0c98",
+      "text": "Trên không gian vector tần suất này, các mô hình phát hiện bất thường kinh điển được triển khai rộng rãi: thứ nhất là phân tích thành phần chính PCA (Xu et al., SOSP 2009)  [18] thực hiện tâm hóa dữ liệu và tìm các phương chiếu trực giao có phương sai lớn nhất để phân rã không gian vector  thành không gian con chuẩn tắc  được tạo bởi các thành phần chính giữ lại và không gian con phần dư , nhận diện bất thường khi năng lượng chiếu lên phần dư vượt ngưỡng kiểm định thống kê; tuy nhiên, phương có phương sai lớn trong dữ liệu không nhất thiết là phương mang ý nghĩa an ninh, bởi PCA chỉ tối ưu hóa phương sai thống kê chứ không tối ưu hóa ngữ nghĩa an ninh, do đó điểm bất thường phần dư thuần túy là tín hiệu độ lệch thống kê chứ không tự chứng minh bản chất tấn công:",
+      "text_hash": "19ddfdb498df",
       "citations": [
         18
       ],
@@ -1088,8 +1088,8 @@
       "location": "Chương (Đoạn P158, câu S0)",
       "paragraph_index": 158,
       "sentence_index": 0,
-      "text": "Mặc dù đạt kết quả tốt trên các tập dữ liệu phần mềm, nhóm phương pháp Semantic–Sequential đối mặt với ba rào cản khi áp dụng vào an ninh mạng [8], [3]: Một là, nguy cơ rò rỉ và thiên lệch từ dữ liệu tiền huấn luyện: các mô hình sử dụng Transformer tiền huấn luyện trên kho văn bản tổng quát có nguy cơ tận dụng tri thức ngoài miền; khi đánh giá trong điều kiện phân vùng nghiêm ngặt, năng lực phân tách thực tế cần được kiểm chứng cẩn trọng [8]; Hai là, chi phí tài nguyên tính toán: cơ chế Self-Attention trong Transformer [34] có độ phức tạp tính toán và bộ nhớ bậc hai theo độ dài chuỗi hoặc kích thước cửa sổ, đòi hỏi tài nguyên tính toán đáng kể khi triển khai trên luồng dữ liệu thời gian thực có lưu lượng lớn; Ba là, giới hạn phạm vi quan sát đơn luồng và thiếu nhận thức cấu trúc: cơ chế chú ý tự thân tính toán trọng số tương tác trực tiếp từ tích vô hướng Query-Key trong phạm vi cửa sổ chuỗi cục bộ, bị giới hạn bởi độ dài cửa sổ và không có cơ chế tự nhiên để mã hóa cấu trúc đồ thị nguồn gốc, các tương tác đa thực thể giữa tiến trình - tệp tin - socket mạng, cũng như không thể tự suy diễn quan hệ nhân quả hay tri thức an ninh hệ điều hành nếu không có cấu trúc tô-pô bổ trợ.",
-      "text_hash": "19431f160eb5",
+      "text": "Mặc dù đạt kết quả tốt trên các tập dữ liệu phần mềm, nhóm phương pháp Semantic–Sequential đối mặt với ba rào cản khi áp dụng vào an ninh mạng [8], [3]: Một là, nguy cơ rò rỉ và thiên lệch từ dữ liệu tiền huấn luyện: các mô hình sử dụng Transformer tiền huấn luyện trên kho văn bản tổng quát có nguy cơ tận dụng tri thức ngoài miền; khi đánh giá trong điều kiện phân vùng nghiêm ngặt, năng lực phân tách thực tế cần được kiểm chứng cẩn trọng [8]; Hai là, chi phí tài nguyên tính toán: cơ chế Self-Attention trong Transformer [34] có độ phức tạp tính toán và bộ nhớ bậc hai theo độ dài chuỗi hoặc kích thước cửa sổ, đòi hỏi tài nguyên tính toán đáng kể khi triển khai trên luồng dữ liệu thời gian thực có lưu lượng lớn; Ba là, giới hạn phạm vi quan sát đơn luồng và thiếu nhận thức cấu trúc: cơ chế chú ý tự thân tính toán trọng số tương tác trực tiếp từ tích vô hướng Query-Key trong phạm vi cửa sổ chuỗi cục bộ và tự nó không chứng minh quan hệ nhân quả; trong khi đó, cấu trúc đồ thị nguồn gốc có thể cung cấp thêm tương tác đa thực thể giữa tiến trình - tệp tin - socket mạng và các liên kết phụ thuộc, nhưng bản thân tô-pô đồ thị cũng không tự biến quan hệ liên đới hay phụ thuộc cấu trúc thành suy diễn nhân quả an ninh nếu thiếu các thiết kế kiểm soát hoặc bằng chứng bổ sung phù hợp.",
+      "text_hash": "3fd3356bed7a",
       "citations": [
         8,
         3,
@@ -2477,8 +2477,8 @@
       "location": "Chương (Đoạn P301, câu S0)",
       "paragraph_index": 301,
       "sentence_index": 0,
-      "text": "Trong đó:  là các ma trận nhúng kiểu sự kiện và hành động tĩnh;  là nhúng thực thể chủ thể và đối tượng theo không gian giả danh có kiểm soát;  là nhúng các token tham số an ninh được giữ lại;  là mã hóa vị trí rời rạc; và  là hàm mã hóa thời gian liên tục điều hòa (Harmonic Time Encoding) dạng , kế thừa nguyên lý mã hóa thời gian liên tục trên đồ thị động  [35], cung cấp biểu diễn học được của khoảng thời gian tương đối  giữa các hành vi liên tiếp nhằm phân biệt các động thái có nhịp độ khác nhau (như hai hành vi giống nhau diễn ra cách nhau 10 mili-giây trong một đoạn mã tự động so với cách nhau 10 giờ trong hoạt động thông thường), thay vì giả định đây là phép đo đồng hồ tuyệt đối.",
-      "text_hash": "f80de60fc6f3",
+      "text": "Trong đó:  là các ma trận nhúng kiểu sự kiện và hành động tĩnh;  là nhúng thực thể chủ thể và đối tượng theo không gian giả danh có kiểm soát;  là nhúng các token tham số an ninh được giữ lại;  là mã hóa vị trí rời rạc; và  là hàm mã hóa thời gian liên tục điều hòa (Harmonic Time Encoding) dạng , kế thừa nguyên lý mã hóa thời gian liên tục trên đồ thị động  [35], mã hóa trực tiếp khoảng trễ liên tục  giữa các hành vi liên tiếp nhằm tránh việc rời rạc hóa thô thành các time-bin cố định, cho phép mô hình biểu diễn và phân biệt các nhịp thời gian khác nhau trong phạm vi thiết kế (như sự khác biệt giữa hai hành vi diễn ra cách nhau 10 mili-giây trong một đoạn mã tự động so với cách nhau 10 giờ trong hoạt động thông thường), song phép chiếu điều hòa này không hàm ý một ánh xạ một-một hay bảo toàn tuyệt đối mọi giá trị khoảng trễ thực tế.",
+      "text_hash": "2ce33d4d90ad",
       "citations": [
         35
       ],
