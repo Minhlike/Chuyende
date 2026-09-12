@@ -17,7 +17,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_TAXONOMY",
     "atomic_claim": "hình 1.2: Mô hình Không gian Bằng chứng Hành vi Đa chiều MITRE ATT&CK và các đặc trưng phi tuyến tính trong tấn công APT (Nguồn: Tác giả tổng hợp dựa trên MITRE ATT&CK [4] và Inam et al. [1])\t15",
-    "parent_text_hash": "be45483e4e50"
+    "parent_text_hash": "608eebca4f66"
   },
   {
     "claim_id": "CLM-002",
@@ -290,7 +290,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_TAXONOMY",
     "atomic_claim": "Cần lưu ý rằng MITRE khuyến nghị ATT&CK không phải là một danh Mục kiểm tra đầy đủ (checklist) khép kín; từ ontology ATT&CK và các quan sát về đồ thị nguồn gốc hệ thống [1], nghiên cứu tổng hợp ba cấu trúc phân tích đặc thù sau (đây là cấu trúc phân loại do đề tài tự tổng hợp, không phải taxonomy chính thức của MITRE ATT&CK): Một là, cấu trúc nhảy cóc giai đoạn (Step Skipping): Kẻ tấn công có thể khai thác trực tiếp lỗ hổng thực thi mã từ xa để trích xuất dữ liệu ra ngoài mà không cần thiết lập cơ chế duy trì hay di chuyển ngang; Hai là, cấu trúc lặp vòng kỹ thuật (Tactic Looping & Interleaving): Kỹ thuật thu thập thông tin nội bộ (Discovery) thường được lặp lại nhiều lần xen kẽ giữa các bước leo thang đặc quyền và chiếm đoạt thông tin xác thực; Ba là, cấu trúc phân nhánh tiến trình song song (Parallel Branching): Kẻ tấn công có thể khởi tạo đồng thời nhiều luồng tiến trình con độc lập trên các tiến trình hợp lệ khác nhau nhằm phân tán sự theo dõi của hệ thống phòng thủ.",
-    "parent_text_hash": "feb8182c587b"
+    "parent_text_hash": "5072d84a48c9"
   },
   {
     "claim_id": "CLM-015",
@@ -310,7 +310,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_TAXONOMY",
     "atomic_claim": "hình 1.2: Mô hình Không gian Bằng chứng Hành vi Đa chiều MITRE ATT&CK và các đặc trưng phi tuyến tính trong tấn công APT (Nguồn: Tác giả tổng hợp dựa trên MITRE ATT&CK  [4] và Inam et al.  [1])",
-    "parent_text_hash": "be45483e4e50"
+    "parent_text_hash": "608eebca4f66"
   },
   {
     "claim_id": "CLM-016",
@@ -329,7 +329,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Trong đó mỗi chiến thuật (Tactic) đại diện cho Mục tiêu chiến thuật của kẻ tấn công (trả lời câu hỏi “Tại sao”) và mỗi kỹ thuật (Technique) đại diện cho phương thức thực thi cụ thể (trả lời câu hỏi “Làm thế nào”); một chuỗi sự kiện hoặc cây tiến trình có thể đồng thời kích hoạt nhiều nhãn chiến thuật và kỹ thuật tại cùng một thời điểm quan sát  [4].",
-    "parent_text_hash": "8c819a75b96d"
+    "parent_text_hash": "2b5b06816551"
   },
   {
     "claim_id": "CLM-017",
@@ -372,7 +372,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Ba là, nhóm Điều kiện Triệt tiêu (EXCLUDE, E_exclude): Tập hợp các thông tin giả tạo và biến số ngoài miền bắt buộc phải bị loại bỏ/triệt tiêu khỏi không gian vector z nhằm ngăn ngừa rủi ro học đường tắt (Shortcut Learning) [8].",
-    "parent_text_hash": "20a77042dd4f"
+    "parent_text_hash": "889476ec16c8"
   },
   {
     "claim_id": "CLM-019",
@@ -412,7 +412,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_TAXONOMY",
     "atomic_claim": "Một là, cơ chế giả danh hóa (Pseudonymization) thông qua việc ánh xạ các định danh nhạy cảm (như username, IP, hostname) sang không gian mã băm hoặc chỉ số trừu tượng nhằm kiểm soát khả năng liên kết (controlled linkability); Hai là, đề xuất quy trình đánh giá rủi ro trước tấn công suy luận thành viên (Membership Inference Attack – MIA) [16], được định vị là phép kiểm tra hạ nguồn nhằm đánh giá khả năng đối nghịch xác định một bản ghi nhật ký cụ thể có thuộc tập huấn luyện hay không; Ba là, đề xuất quy trình đánh giá rủi ro trước tấn công đảo ngược mô hình (Model Inversion Attack) [33], cũng được định vị là phép kiểm tra hạ nguồn nhằm đánh giá nguy cơ khôi phục thông tin cấu hình từ vector biểu diễn tiềm ẩn; Bốn là, định hướng khung bảo đảm toán học về quyền riêng tư vi sai (Differential Privacy – DP) theo hướng dẫn chuẩn mực của NIST SP 800-226 [17].",
-    "parent_text_hash": "7d3c239feacd"
+    "parent_text_hash": "31fe10f04572"
   },
   {
     "claim_id": "CLM-021",
@@ -472,7 +472,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_TAXONOMY",
     "atomic_claim": "Các hàm mất mát tự giám sát (như dự đoán tham số bị che, dự đoán sự kiện tiếp theo, dự đoán quan hệ đồ thị và căn chỉnh thời gian) được thiết kế như các Mục tiêu tối ưu hóa (optimization objectives) cụ thể để khuyến khích không gian biểu diễn z lưu giữ những tín hiệu phục vụ các ràng buộc PRESERVE và INVARIANT; chúng không phải là bằng chứng khoa học trực tiếp chứng minh mô hình đã tự động hiểu an ninh hay nhân quả, và mức độ đạt được bắt buộc phải được kiểm chứng downstream [10].",
-    "parent_text_hash": "479aebcbed47"
+    "parent_text_hash": "1f89d3199ba1"
   },
   {
     "claim_id": "CLM-024",
@@ -532,7 +532,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_TAXONOMY",
     "atomic_claim": "Phục vụ việc định vị chính xác các đóng góp kỹ thuật và cơ sở lý luận của chuyên đề, Mục 1.2 tiến hành khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log chủ đạo trong y văn hiện đại  [6],  [1],  [5]: (1) Nhóm phương pháp thống kê và cú pháp dựa trên mẫu log (Statistical & Syntactic Parsing-Based); (2) Nhóm phương pháp biểu diễn ngữ nghĩa chuỗi thời gian (Semantic–Sequential & Transformer-Based); và (3) Nhóm phương pháp học biểu diễn đồ thị nguồn gốc (Provenance Graph Representation Learning).",
-    "parent_text_hash": "4f6a9164fff9"
+    "parent_text_hash": "335c5b056171"
   },
   {
     "claim_id": "CLM-027",
@@ -572,7 +572,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT",
     "atomic_claim": "Trong giai đoạn phân tích cú pháp, nhiều thuật toán tiêu biểu đã được phát triển nhằm tối ưu hóa tốc độ xử lý  [6]: (1) Drain  [6] sử dụng cấu trúc cây phân tích có độ sâu cố định (Fixed-Depth Parse Tree) để nhóm các dòng log dựa trên độ dài chuỗi và các từ khóa tiền tố; trong kết quả đo chuẩn thực nghiệm của Zhu et al., thời gian xử lý của Drain tăng gần tuyến tính theo kích thước tập dữ liệu log đối với luồng dữ liệu lớn; (2) Spell  [6] áp dụng thuật toán tìm chuỗi con chung dài nhất (Longest Common Subsequence - LCS) theo cơ chế dòng để trích xuất động các thành phần tĩnh của thông điệp log; (3) LenMa và AEL  [6],  [7] lần lượt khai thác chiều dài các từ tố và tần suất xuất hiện của từ khóa để phân cụm và tách biến số ra khỏi chuỗi mẫu.",
-    "parent_text_hash": "dfec4ece0098"
+    "parent_text_hash": "c86d44a4c387"
   },
   {
     "claim_id": "CLM-029",
@@ -589,7 +589,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_TAXONOMY",
     "atomic_claim": "Bên cạnh đếm tần suất đơn thuần, trọng số TF-IDF (Term Frequency – Inverse Document Frequency) được vận dụng nhằm cân bằng độ nổi bật của sự kiện: tần suất sự kiện (TF) đo lường mức độ xuất hiện trong một cửa sổ hoặc phiên phân tích, trong khi tần số nghịch đảo văn bản (IDF) làm giảm trọng số của các sự kiện xuất hiện phổ biến trên nhiều cửa sổ; nhờ đó, sự kiện xuất hiện nhiều trong một phiên nhưng ít phổ biến trên toàn tập sẽ nhận trọng số tương đối lớn hơn, dù TF-IDF không mô hình hóa được thứ tự thời gian, khoảng cách ngữ nghĩa hay quan hệ nhân quả giữa các sự kiện; độc lập với TF-IDF, độ hỗn loạn thông tin Shannon (Entropy) đóng vai trò là thước đo mức độ bất định và phân tán của phân phối sự kiện trong cửa sổ phân tích:",
-    "parent_text_hash": "be017ef698f1"
+    "parent_text_hash": "9afc4aede8c2"
   },
   {
     "claim_id": "CLM-030",
@@ -608,7 +608,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Trên không gian vector tần suất này, các mô hình phát hiện bất thường kinh điển được triển khai rộng rãi: (1) Principal Component Analysis (PCA) (Xu et al., SOSP 2009)  [18] phân rã không gian vector  thành không gian con chuẩn tắc  và không gian con phần dư , nhận diện bất thường khi năng lượng chiếu lên phần dư vượt ngưỡng kiểm định:",
-    "parent_text_hash": "9034b78a04d8"
+    "parent_text_hash": "9e6738d8b9c2"
   },
   {
     "claim_id": "CLM-031",
@@ -627,7 +627,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "(2) Invariant Mining (Lou et al., USENIX ATC 2010)  [19] tự động khai phá các phương trình bất biến tuyến tính phản ánh mối quan hệ bảo toàn logic giữa các bước thực thi:",
-    "parent_text_hash": "29977a032d04"
+    "parent_text_hash": "3e404d80368f"
   },
   {
     "claim_id": "CLM-032",
@@ -647,7 +647,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Mặc dù sở hữu ưu điểm về hiệu năng tính toán (độ phức tạp tuyến tính O(N)), nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng  [6],  [2]: (1) Mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số: các bộ log parser dựa trên biểu thức chính quy thường thay thế các tham số biến động (địa chỉ IP, đường dẫn tệp tin, tham số dòng lệnh) bằng ký tự đại diện <*> khiến nhiều thông tin an ninh mang tính phân biệt cao bị lược bỏ; (2) Lan truyền và khuếch đại sai số cú pháp (Parser Error Propagation): khi gặp các định dạng log mới chưa từng xuất hiện (unseen logs), parser có thể phân tách không chính xác, dẫn đến hiện tượng sinh ra các mẫu sự kiện giả lập hoặc gộp nhầm các sự kiện khác biệt, làm xáo trộn cấu trúc không gian vector x.",
-    "parent_text_hash": "1aee879665c1"
+    "parent_text_hash": "24b988fb8057"
   },
   {
     "claim_id": "CLM-033",
@@ -708,7 +708,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "DeepLog không chỉ phân tích chuỗi mã sự kiện log mà còn là một khung làm việc toàn diện gồm hai thành phần mô hình hóa: Một là, mô hình LSTM thứ nhất học biểu diễn chuỗi các mẫu log (Log-Key Anomaly Detection) nhằm phát hiện các sự kiện sai lệch khỏi trật tự thực thi bình thường theo phân phối có điều kiện ; Hai là, mô hình LSTM thứ hai kết hợp phân phối chuẩn nhiều chiều để kiểm tra sự bất thường về giá trị tham số số học (Parameter Value Anomaly Detection) [14].",
-    "parent_text_hash": "3df76aa8c127"
+    "parent_text_hash": "c1e55b770587"
   },
   {
     "claim_id": "CLM-036",
@@ -727,7 +727,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Song song đó, DeepLog xây dựng mô hình LSTM thứ hai dựa trên phân phối chuẩn nhiều chiều để kiểm tra sự bất thường về giá trị tham số số học (Parameter Value Anomaly)  [14].",
-    "parent_text_hash": "d00796a55719"
+    "parent_text_hash": "6306c5db45ba"
   },
   {
     "claim_id": "CLM-037",
@@ -846,7 +846,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT",
     "atomic_claim": "Mặc dù đạt kết quả tốt trên các tập dữ liệu phần mềm, nhóm phương pháp Semantic–Sequential đối mặt với ba rào cản khi áp dụng vào an ninh mạng [8], [3]: (1) Nguy cơ rò rỉ và thiên lệch từ dữ liệu tiền huấn luyện (Pretraining-Data Advantage): các mô hình sử dụng Transformer tiền huấn luyện trên kho văn bản tổng quát có nguy cơ tận dụng tri thức ngoài miền; khi đánh giá trong điều kiện phân vùng nghiêm ngặt, năng lực phân tách thực tế cần được kiểm chứng cẩn trọng [8]; (2) Chi phí tài nguyên tính toán: cơ chế Self-Attention trong Transformer [34] có độ phức tạp tính toán và bộ nhớ bậc hai theo độ dài chuỗi hoặc kích thước cửa sổ, đòi hỏi tài nguyên tính toán đáng kể khi triển khai trên luồng dữ liệu thời gian thực có lưu lượng lớn; (3) Giới hạn phạm vi quan sát đơn luồng: mô hình chuỗi chủ yếu theo dõi các sự kiện trên một dòng thời gian cục bộ, gặp khó khăn khi mô hình hóa trực tiếp các mối liên hệ phụ thuộc đan xen đa tiến trình, đa thực thể và vượt ranh giới máy chủ.",
-    "parent_text_hash": "ad1a87c77f00"
+    "parent_text_hash": "6472b99ce6f9"
   },
   {
     "claim_id": "CLM-043",
@@ -866,7 +866,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Khắc phục hạn chế về phạm vi quan sát của mô hình chuỗi, hướng tiếp cận dựa trên đồ thị nguồn gốc hệ thống (System Provenance Graph) mô hình hóa toàn bộ lịch sử thực thi và tương tác trong hệ điều hành dưới dạng một đồ thị có hướng, không đồng nhất và gán nhãn thời gian  [1],  [5]:",
-    "parent_text_hash": "ea4950b0670d"
+    "parent_text_hash": "b18c91649441"
   },
   {
     "claim_id": "CLM-044",
@@ -910,7 +910,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Các hệ thống phát hiện xâm nhập dựa trên đồ thị nguồn gốc (PIDS) tiêu biểu bao gồm [1], [5]: (1) UNICORN [9] (Han et al., NDSS 2020) xây dựng đồ thị nguồn gốc luồng thời gian thực, áp dụng thuật toán băm cây con Weisfeiler-Lehman (WL-subtree kernel) để chuyển đổi đồ thị động thành vector đặc trưng đếm histogram; (2) KAIROS [24] (Cheng et al., IEEE S&P 2024) tích hợp mạng nơ-ron đồ thị nhận biết thời gian (Time-Aware GNN encoder-decoder), mã hóa đồng thời thông tin cấu trúc và sự tiến triển thời gian của đồ thị nguồn gốc để chấm điểm bất thường và tái dựng dấu vết tấn công APT; (3) NODLINK [25] (Li et al., NDSS 2024) mô hình hóa bài toán phát hiện thành cây Steiner trực tuyến (Online Steiner Tree Problem) kết hợp cơ chế bộ nhớ đệm để khôi phục đồ thị con tấn công nhỏ gọn; (4) MAGIC [26] (Jia et al., USENIX Security 2024) khai thác kiến trúc tự mã hóa đồ thị che (Masked Graph Autoencoder) kết hợp cơ chế thích ứng mô hình (model adaptation) để học biểu diễn đa độ hạt và chống trôi khái niệm (concept drift); (5) ORTHRUS [27] (Jiang et al., USENIX Security 2025) tích hợp cơ chế học biểu diễn nguồn gốc chống chịu kỹ thuật lẩn tránh.",
-    "parent_text_hash": "c36ba5d1b1f7"
+    "parent_text_hash": "d123033ac9f6"
   },
   {
     "claim_id": "CLM-046",
@@ -934,7 +934,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT",
     "atomic_claim": "Mặc dù đạt nhiều bước tiến, nhóm phương pháp đồ thị đối mặt với ba thách thức lý thuyết và thực tiễn cốt lõi: Một là, hiện tượng bùng nổ phụ thuộc (Dependency Explosion): các tiến trình hệ thống chạy dài hạn liên tục tương tác với nhiều tệp tin và socket, khiến đồ thị phát triển dày đặc và tạo ra nhiều liên kết phụ thuộc xa làm loãng tín hiệu bất thường [1], [28]; Hai là, ranh giới giữa quan hệ phụ thuộc cấu trúc và tác động nhân quả (Dependency != Causal Effect): kết quả khảo sát thực nghiệm của Bilot et al. [29] (USENIX Security 2025) và Guerra et al. [30] chỉ ra rằng nhiều mô hình GNN phức tạp có nguy cơ khai thác các đặc trưng đường tắt thống kê (như phân bố bậc của nút hoặc tính mới của đường dẫn); trong đó Bilot et al. [29] chứng minh một mô hình mạng nơ-ron đơn giản (simple neural network) đạt hiệu năng cạnh tranh vượt trội trên 5/7 tập dữ liệu DARPA, còn Guerra et al. [30] chỉ ra hiệu quả của các baseline danh sách cho phép / thống kê sự kiện, khẳng định một cạnh phụ thuộc trong đồ thị không đồng nghĩa với tác động nhân quả an ninh; Ba là, hai bệnh lý mạng nơ-ron đồ thị về mặt cấu trúc: khi tăng số lớp truyền tin (message passing), hiện tượng làm mịn quá mức (Over-smoothing), được Oono & Suzuki [44] chứng minh về mặt toán học tại ICLR 2020, khiến vector biểu diễn của các đỉnh mất dần năng lực biểu đạt theo hàm mũ và hội tụ về các vector khó phân biệt; trong khi đó hiện tượng nghẽn cổ chai thông tin (Over-squashing), được Alon & Yahav [31] phân tích tại ICLR 2021, xuất hiện khi thông tin từ vùng lân cận tăng theo hàm mũ bị ép vào một vector kích thước cố định.",
-    "parent_text_hash": "35fc3888a90c"
+    "parent_text_hash": "6475d56480cb"
   },
   {
     "claim_id": "CLM-047",
@@ -953,7 +953,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Tại Việt Nam, các nghiên cứu chuyên sâu của ThS. Nguyễn Thị Thu Thủy (Khoa An toàn thông tin, Học viện Kỹ thuật Mật mã)  [32] cũng đã hệ thống hóa toàn diện phương pháp luận ứng dụng Graph Learning và mạng nơ-ron đồ thị (Graph Neural Network, GNN) trên đồ thị nguồn gốc (provenance graph) để phát hiện các chiến dịch tấn công APT đa giai đoạn; đồng thời phân tích sâu sắc các thách thức về hiện tượng bùng nổ phụ thuộc, tính đa góc nhìn và yêu cầu bảo toàn tính nhân quả khi phân tích luồng sự kiện kiểm toán hệ thống.",
-    "parent_text_hash": "d17a0bac36e1"
+    "parent_text_hash": "8541d333052e"
   },
   {
     "claim_id": "CLM-048",
@@ -1100,7 +1100,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Trong thực tế giám sát an ninh mạng doanh nghiệp, dữ liệu nhãn thực tế thường chỉ được ghi nhận ở mức độ hạt rất thô (Coarse Labels), chẳng hạn như gán nhãn một phiên làm việc kéo dài nhiều giờ hoặc toàn bộ một máy chủ bị xâm nhập trong một khoảng thời gian  [3],  [12],  [13].",
-    "parent_text_hash": "d8ca96ec1dfa"
+    "parent_text_hash": "ee97a91b5823"
   },
   {
     "claim_id": "CLM-055",
@@ -1140,7 +1140,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Nhiệm vụ phát hiện và điều tra các cuộc tấn công APT kéo dài đòi hỏi mô hình học biểu diễn phải duy trì khả năng liên kết có kiểm soát giữa các chuỗi hành vi của cùng một thực thể (người dùng, máy chủ, tiến trình) qua nhiều mốc thời gian khác nhau  [1],  [5].",
-    "parent_text_hash": "fe30dd4e1c98"
+    "parent_text_hash": "477d01b33efa"
   },
   {
     "claim_id": "CLM-057",
@@ -1199,7 +1199,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Về mặt lý thuyết nguồn gốc, nghiên cứu kinh điển của Fredrikson et al. [33] đã chứng minh tấn công nghịch đảo mô hình (Model Inversion Attacks) có thể khai thác thông tin đầu ra và độ tin cậy để suy diễn lại các đặc trưng nhạy cảm của dữ liệu đầu vào.",
-    "parent_text_hash": "b6efb629f0e7"
+    "parent_text_hash": "299c4debe327"
   },
   {
     "claim_id": "CLM-060",
@@ -1316,7 +1316,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Tấn công suy luận thành viên (Membership Inference Attack, MIA): đối nghịch xác định xem một bản ghi dữ liệu cụ thể của một thực thể có nằm trong tập huấn luyện của mô hình hay không, thông qua quan sát hành vi đầu ra hoặc các đặc trưng của vector  ([16]).",
-    "parent_text_hash": "9744c27e75df"
+    "parent_text_hash": "bcc45f8699b7"
   },
   {
     "claim_id": "CLM-066",
@@ -1335,7 +1335,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Tấn công nghịch đảo biểu diễn (Representation/Model Inversion Attack): Về mặt nguyên lý, Fredrikson et al. [33] chứng minh tấn công nghịch đảo có thể khai thác thông tin đầu ra/độ tin cậy để tái cấu trúc thuộc tính dữ liệu; trong mô hình đe dọa thích ứng của đề tài (Threat-Model Adaptation), đối nghịch cố gắng khôi phục hoặc xấp xỉ các thuộc tính nhạy cảm tiềm năng (như tên người dùng, hostname, chuỗi lệnh) từ vector nhúng z.",
-    "parent_text_hash": "db398a762040"
+    "parent_text_hash": "19284daf2a6b"
   },
   {
     "claim_id": "CLM-067",
@@ -1646,7 +1646,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_PROPOSAL",
     "atomic_claim": "Chuyên đề xử lý vấn đề này theo khung tiếp cận của CPM-Nets  [39] kết hợp cơ chế mặt nạ khả dụng và suy thoái duyên dáng (Graceful Degradation) do chuyên đề đề xuất:",
-    "parent_text_hash": "cb0bb4b6bfa2"
+    "parent_text_hash": "ae6d6ca153af"
   },
   {
     "claim_id": "CLM-081",
@@ -1703,7 +1703,7 @@
     "artifact_locator": "experiments/plans/STAGE-A2-FINAL-12-EPOCH-AUTHORITY.json:L57; research_specs/roadmap/controls.yaml:L4-L10",
     "factuality_class": "AUTHOR_SPECIFICATION",
     "atomic_claim": "Khác với các phương pháp xáo trộn ngẫu nhiên truyền thống có nguy cơ rò rỉ thông tin thời gian, nghiên cứu đề xuất và áp dụng quy trình phân chia dữ liệu theo thứ tự thời gian nhân quả nghiêm ngặt (Strict Causal Temporal Split), tuân thủ khuyến nghị tránh rò rỉ thời gian (temporal snooping) của Arp et al. [8].",
-    "parent_text_hash": "1ee7bbc5b66b"
+    "parent_text_hash": "4397a5095997"
   },
   {
     "claim_id": "CLM-084",
