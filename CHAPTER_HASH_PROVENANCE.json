@@ -7,9 +7,9 @@
   },
   "observed_hash": {
     "chapter_1_sha256": "2d4e6dd94c13765c5d3a45c98a0771b0b8cc6937f82b3ac6e18e32ecf9480539",
-    "chapter_2_sha256": "e041b390e9ae66bf75c8c702236fea1f018601ac8b4aa1f7e02230e45bda45c8"
+    "chapter_2_sha256": "499d68675a926571e2ab9ddb0e4cc9587d7794a84801f49632944aa7918ac69b"
   },
-  "approved_edits_count": 77,
-  "total_diff_hunks": 77,
+  "approved_edits_count": 76,
+  "total_diff_hunks": 76,
   "status": "PASS"
 }

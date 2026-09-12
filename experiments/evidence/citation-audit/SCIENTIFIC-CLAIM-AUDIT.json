@@ -4911,23 +4911,6 @@
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
-    "claim_id": "CLM-SEC-P240-S00",
-    "parent_detected_id": "DET-P250-S00",
-    "document_location": "Chương (Đoạn P250, câu S0)",
-    "atomic_claim": "Typed Schema và Security-aware Parameter Retention",
-    "claim_class": "AUTHOR_SYNTHESIS",
-    "evidence_class": "NONE",
-    "citation_numbers": [],
-    "source_locator": "AUTHOR_TAXONOMY (Tổng hợp và định khung phương pháp luận của luận văn)",
-    "code_locator": "",
-    "artifact_locator": "",
-    "support_status": "AUTHOR_SYNTHESIS",
-    "required_action": "NONE",
-    "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "f612b389966d",
-    "factuality_class": "AUTHOR_TAXONOMY"
-  },
-  {
     "claim_id": "CLM-SEC-P244-S00",
     "parent_detected_id": "DET-P254-S00",
     "document_location": "Chương (Đoạn P254, câu S0)",

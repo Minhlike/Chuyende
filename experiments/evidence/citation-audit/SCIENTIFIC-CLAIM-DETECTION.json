@@ -2,14 +2,14 @@
   "status": "PASS",
   "gate_title": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE",
   "detector_version": "3.0.0-forensic-truth-repair-round-3",
-  "document_sha256": "e220203b5599bdcafdbb68a3393da67b836956f8f38548c591d9a29874ad2009",
+  "document_sha256": "8cc8153c658b500c694af15f450807aeefd534e2b42ddbdabca9fbbbe1dca874",
   "body_boundaries": {
     "body_start": 86,
     "body_end": 560,
     "scanned_paragraphs_count": 475
   },
-  "candidate_count": 293,
-  "atomic_claim_count": 309,
+  "candidate_count": 292,
+  "atomic_claim_count": 308,
   "reconciliation_statistics": {
     "unscanned_body_paragraphs": 0,
     "global_text_deduplication": 0,
@@ -1969,20 +1969,6 @@
       "pass_b": true,
       "reconciled_claim_ids": [
         "CLM-SEC-039"
-      ]
-    },
-    {
-      "detected_id": "DET-P250-S00",
-      "location": "Chương (Đoạn P250, câu S0)",
-      "paragraph_index": 250,
-      "sentence_index": 0,
-      "text": "Typed Schema và Security-aware Parameter Retention",
-      "text_hash": "f612b389966d",
-      "citations": [],
-      "pass_a": false,
-      "pass_b": true,
-      "reconciled_claim_ids": [
-        "CLM-SEC-P240-S00"
       ]
     },
     {

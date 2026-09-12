@@ -9,19 +9,19 @@
   },
   "observed_current_hashes": {
     "chapter_1_sha256": "2d4e6dd94c13765c5d3a45c98a0771b0b8cc6937f82b3ac6e18e32ecf9480539",
-    "chapter_2_sha256": "e041b390e9ae66bf75c8c702236fea1f018601ac8b4aa1f7e02230e45bda45c8"
+    "chapter_2_sha256": "499d68675a926571e2ab9ddb0e4cc9587d7794a84801f49632944aa7918ac69b"
   },
   "diff_statistics": {
     "ch1_diff_hunks": 20,
-    "ch2_diff_hunks": 57,
-    "total_diff_hunks": 77,
-    "ledger_entries_count": 77,
-    "matched_diff_hunks": 77,
+    "ch2_diff_hunks": 56,
+    "total_diff_hunks": 76,
+    "ledger_entries_count": 76,
+    "matched_diff_hunks": 76,
     "unmatched_diff_hunks": 0,
     "unused_ledger_entries": 0,
     "non_bijective_ledger_matches": 0,
     "self_attested_fields_used": 0
   },
-  "current_docx_sha256": "e220203b5599bdcafdbb68a3393da67b836956f8f38548c591d9a29874ad2009",
-  "current_docx_size": 2057551
+  "current_docx_sha256": "8cc8153c658b500c694af15f450807aeefd534e2b42ddbdabca9fbbbe1dca874",
+  "current_docx_size": 2057616
 }

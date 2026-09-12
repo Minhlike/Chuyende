@@ -1078,14 +1078,6 @@
       6,
       13
     ],
-    "base_paragraph_indices": [
-      5,
-      12
-    ],
-    "current_paragraph_indices": [
-      6,
-      13
-    ],
     "old_lines": [
       "Trong đó là trạng thái bộ nhớ nội bộ hữu hạn tại thời điểm t, được cập nhật theo cơ chế đơn lượt theo chiều thời gian, không nhìn trước (Strictly Causal Single-pass Update) khi tiếp nhận sự kiện mới . Quá trình học biểu diễn và đánh giá được tổ chức chặt chẽ theo ba giai đoạn giám sát độc lập (Supervision Contract):",
       "1. Giai đoạn A (Stage A, Pretraining Tự giám sát Ngoại tuyến): Huấn luyện bộ trích xuất hoàn toàn theo cơ chế tự giám sát (Self-Supervised Learning) trên dữ liệu nền tảng lịch sử mà không tiếp cận bất kỳ nhãn tấn công hay tín hiệu phân loại hạ nguồn nào, học các bất biến cấu trúc và trật tự thời gian nội tại.",
@@ -1097,34 +1089,18 @@
     ],
     "new_lines": [
       "Trong đó là trạng thái bộ nhớ nội bộ hữu hạn tại thời điểm t, được cập nhật theo cơ chế đơn lượt theo chiều thời gian, không nhìn trước (Strictly Causal Single-pass Update) khi tiếp nhận sự kiện mới . Quá trình học biểu diễn và đánh giá được tổ chức chặt chẽ theo ba giai đoạn giám sát độc lập :",
-      "Một là, Giai đoạn A (Stage A - Tiền huấn luyện tự giám sát ngoại tuyến): Huấn luyện bộ trích xuất hoàn toàn theo cơ chế tự giám sát trên dữ liệu nền tảng lịch sử mà không tiếp cận bất kỳ nhãn tấn công hay tín hiệu phân loại hạ nguồn nào. Trong đó, Giai đoạn A gồm hai bước nối tiếp: Bước A1 : tiền huấn luyện đơn góc nhìn tối ưu hóa độc lập bộ trích xuất chuỗi và bộ trích xuất đồ thị qua các mục tiêu nội bộ như dự đoán sự kiện bị che hoặc dự đoán quan hệ cạnh nhằm hình thành các biểu trưng cấu trúc nền tảng; Bước A2 : gióng hàng đa góc nhìn liên hợp kế thừa trọng số từ Bước A1 và tiến hành tối ưu hóa đồng thời qua hàm gióng hàng kết hợp điều chuẩn phương sai và hiệp phương sai, nhằm hòa nhập hai góc nhìn vào không gian vector tiềm ẩn chung z mà không gây sụp đổ biểu diễn; việc chia tách này giúp ổn định quá trình tối ưu hóa và tránh hiện tượng trôi dạt đặc trưng.",
-      "Hai là, Giai đoạn B (Stage B - Thích ứng bằng chứng yếu tùy chọn): Khi môi trường giám sát cung cấp các nhãn an ninh mức thô (như phiên làm việc hoặc máy chủ bị xâm nhập), mô hình kích hoạt đầu dự đoán bằng chứng yếu để hướng dẫn không gian vector tập trung vào các sự kiện mấu chốt cấu thành cuộc tấn công, hạn chế nguy cơ học nhầm các thao tác quản trị hợp pháp.",
-      "Ba là, Giai đoạn C (Stage C - Đánh giá đóng băng hạ nguồn): Khóa cố định toàn bộ tham số của bộ trích xuất biểu diễn. Đánh giá chất lượng biểu diễn thông qua giao thức đóng băng tham số (Frozen Linear Probe: ) phục vụ phân loại và quy kết chiến thuật/kỹ thuật theo phân loại MITRE ATT&CK [4], hoặc quy trình chấm điểm bất thường không giám sát tùy chọn (Optional Downstream Zero-Shot Anomaly Scoring Protocol). Trong đó, hàm tính điểm bất thường, phép đo khoảng cách/năng lượng, phân bố nền chuẩn, phương pháp hiệu chuẩn và chính sách ngưỡng/ngân sách cảnh báo đều được đăng ký trước và khóa cố định trên tập Train/Validation tại Chương 3 trước khi mở tập Test; do phân loại tuyến tính chỉ đo lường thông tin phân tách tuyến tính trực tiếp từ z, giao thức này không hàm ý khai thác toàn bộ các tương quan phi tuyến tiềm ẩn. Bộ trích xuất Extractor tuyệt đối độc lập và không phụ thuộc vào bất kỳ bộ dò Detector cụ thể nào.",
+      "Giai đoạn A (Stage A - Tiền huấn luyện tự giám sát ngoại tuyến): Huấn luyện bộ trích xuất hoàn toàn theo cơ chế tự giám sát trên dữ liệu nền tảng lịch sử mà không tiếp cận bất kỳ nhãn tấn công hay tín hiệu phân loại hạ nguồn nào. Trong đó, Giai đoạn A gồm hai bước nối tiếp: Bước A1 : tiền huấn luyện đơn góc nhìn tối ưu hóa độc lập bộ trích xuất chuỗi và bộ trích xuất đồ thị qua các mục tiêu nội bộ như dự đoán sự kiện bị che hoặc dự đoán quan hệ cạnh nhằm hình thành các biểu trưng cấu trúc nền tảng; Bước A2 : gióng hàng đa góc nhìn liên hợp kế thừa trọng số từ Bước A1 và tiến hành tối ưu hóa đồng thời qua hàm gióng hàng kết hợp điều chuẩn phương sai và hiệp phương sai, nhằm hòa nhập hai góc nhìn vào không gian vector tiềm ẩn chung z mà không gây sụp đổ biểu diễn; việc chia tách này giúp ổn định quá trình tối ưu hóa và tránh hiện tượng trôi dạt đặc trưng.",
+      "Giai đoạn B (Stage B - Thích ứng bằng chứng yếu tùy chọn): Khi môi trường giám sát cung cấp các nhãn an ninh mức thô (như phiên làm việc hoặc máy chủ bị xâm nhập), mô hình kích hoạt đầu dự đoán bằng chứng yếu để hướng dẫn không gian vector tập trung vào các sự kiện mấu chốt cấu thành cuộc tấn công, hạn chế nguy cơ học nhầm các thao tác quản trị hợp pháp.",
+      "Giai đoạn C (Stage C - Đánh giá đóng băng hạ nguồn): Khóa cố định toàn bộ tham số của bộ trích xuất biểu diễn. Đánh giá chất lượng biểu diễn thông qua giao thức đóng băng tham số (Frozen Linear Probe: ) phục vụ phân loại và quy kết chiến thuật/kỹ thuật theo phân loại MITRE ATT&CK [4], hoặc quy trình chấm điểm bất thường không giám sát tùy chọn (Optional Downstream Zero-Shot Anomaly Scoring Protocol). Trong đó, hàm tính điểm bất thường, phép đo khoảng cách/năng lượng, phân bố nền chuẩn, phương pháp hiệu chuẩn và chính sách ngưỡng/ngân sách cảnh báo đều được đăng ký trước và khóa cố định trên tập Train/Validation tại Chương 3 trước khi mở tập Test; do phân loại tuyến tính chỉ đo lường thông tin phân tách tuyến tính trực tiếp từ z, giao thức này không hàm ý khai thác toàn bộ các tương quan phi tuyến tiềm ẩn. Bộ trích xuất Extractor tuyệt đối độc lập và không phụ thuộc vào bất kỳ bộ dò Detector cụ thể nào.",
       "Trên cơ sở định nghĩa bài toán và ranh giới phương pháp luận, chuyên đề hình thức hóa năm giả thuyết khoa học cốt lõi từ H1 đến H5:",
       "Giả thuyết H1 (Parameter Semantic Fidelity, Đóng góp Độc lập): Biểu diễn nhận biết tham số như chuỗi lệnh, đường dẫn tệp tin và địa chỉ IP vào không gian vector z bảo tồn lượng thông tin tương hỗ về ngữ nghĩa an ninh tiềm ẩn cao hơn có ý nghĩa so với biểu diễn chỉ dựa trên mẫu tĩnh hoặc bị trừu tượng hóa tham số :",
       "Trong đó là biến ngẫu nhiên đại diện cho mục tiêu ngữ nghĩa an ninh tiềm ẩn như nhãn hành vi độc hại, ý định thực thi tiến trình và phân loại quyền hạn truy cập; là thước đo thông tin tương hỗ, với bộ ước lượng và giao thức thực nghiệm sẽ được thiết lập và khóa chặt chẽ tại Chương 3; giả thuyết chỉ kiểm tra tính trung thực ngữ nghĩa an ninh và không suy diễn tuyệt đối sang việc triệt tiêu sụp đổ biểu diễn."
     ],
     "old_text_sha256": "cdc647de04c2f155fe9b2997d857b6ca794e54d1e64f898c8ed5005cd023509e",
-    "new_text_sha256": "757b9d9f4262703153ec715ceb055babf9fd8dfa3ca02b0a1e308fcd7e6785a0",
+    "new_text_sha256": "42b4b90f330204d14b10267565509ae12c2060f8c45a7009bd51775b248d84f7",
     "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
     "associated_claims": [
       "PROSE-RESTRAINT"
-    ],
-    "claim_ids": [
-      "PROSE-RESTRAINT"
-    ],
-    "current_indices": [
-      6,
-      13
-    ],
-    "new_text": [
-      "Trong đó là trạng thái bộ nhớ nội bộ hữu hạn tại thời điểm t, được cập nhật theo cơ chế đơn lượt theo chiều thời gian, không nhìn trước (Strictly Causal Single-pass Update) khi tiếp nhận sự kiện mới . Quá trình học biểu diễn và đánh giá được tổ chức chặt chẽ theo ba giai đoạn giám sát độc lập :",
-      "Một là, Giai đoạn A (Stage A - Tiền huấn luyện tự giám sát ngoại tuyến): Huấn luyện bộ trích xuất hoàn toàn theo cơ chế tự giám sát trên dữ liệu nền tảng lịch sử mà không tiếp cận bất kỳ nhãn tấn công hay tín hiệu phân loại hạ nguồn nào. Trong đó, Giai đoạn A gồm hai bước nối tiếp: Bước A1 : tiền huấn luyện đơn góc nhìn tối ưu hóa độc lập bộ trích xuất chuỗi và bộ trích xuất đồ thị qua các mục tiêu nội bộ như dự đoán sự kiện bị che hoặc dự đoán quan hệ cạnh nhằm hình thành các biểu trưng cấu trúc nền tảng; Bước A2 : gióng hàng đa góc nhìn liên hợp kế thừa trọng số từ Bước A1 và tiến hành tối ưu hóa đồng thời qua hàm gióng hàng kết hợp điều chuẩn phương sai và hiệp phương sai, nhằm hòa nhập hai góc nhìn vào không gian vector tiềm ẩn chung z mà không gây sụp đổ biểu diễn; việc chia tách này giúp ổn định quá trình tối ưu hóa và tránh hiện tượng trôi dạt đặc trưng.",
-      "Hai là, Giai đoạn B (Stage B - Thích ứng bằng chứng yếu tùy chọn): Khi môi trường giám sát cung cấp các nhãn an ninh mức thô (như phiên làm việc hoặc máy chủ bị xâm nhập), mô hình kích hoạt đầu dự đoán bằng chứng yếu để hướng dẫn không gian vector tập trung vào các sự kiện mấu chốt cấu thành cuộc tấn công, hạn chế nguy cơ học nhầm các thao tác quản trị hợp pháp.",
-      "Ba là, Giai đoạn C (Stage C - Đánh giá đóng băng hạ nguồn): Khóa cố định toàn bộ tham số của bộ trích xuất biểu diễn. Đánh giá chất lượng biểu diễn thông qua giao thức đóng băng tham số (Frozen Linear Probe: ) phục vụ phân loại và quy kết chiến thuật/kỹ thuật theo phân loại MITRE ATT&CK [4], hoặc quy trình chấm điểm bất thường không giám sát tùy chọn (Optional Downstream Zero-Shot Anomaly Scoring Protocol). Trong đó, hàm tính điểm bất thường, phép đo khoảng cách/năng lượng, phân bố nền chuẩn, phương pháp hiệu chuẩn và chính sách ngưỡng/ngân sách cảnh báo đều được đăng ký trước và khóa cố định trên tập Train/Validation tại Chương 3 trước khi mở tập Test; do phân loại tuyến tính chỉ đo lường thông tin phân tách tuyến tính trực tiếp từ z, giao thức này không hàm ý khai thác toàn bộ các tương quan phi tuyến tiềm ẩn. Bộ trích xuất Extractor tuyệt đối độc lập và không phụ thuộc vào bất kỳ bộ dò Detector cụ thể nào.",
-      "Trên cơ sở định nghĩa bài toán và ranh giới phương pháp luận, chuyên đề hình thức hóa năm giả thuyết khoa học cốt lõi từ H1 đến H5:",
-      "Giả thuyết H1 (Parameter Semantic Fidelity, Đóng góp Độc lập): Biểu diễn nhận biết tham số như chuỗi lệnh, đường dẫn tệp tin và địa chỉ IP vào không gian vector z bảo tồn lượng thông tin tương hỗ về ngữ nghĩa an ninh tiềm ẩn cao hơn có ý nghĩa so với biểu diễn chỉ dựa trên mẫu tĩnh hoặc bị trừu tượng hóa tham số :",
-      "Trong đó là biến ngẫu nhiên đại diện cho mục tiêu ngữ nghĩa an ninh tiềm ẩn như nhãn hành vi độc hại, ý định thực thi tiến trình và phân loại quyền hạn truy cập; là thước đo thông tin tương hỗ, với bộ ước lượng và giao thức thực nghiệm sẽ được thiết lập và khóa chặt chẽ tại Chương 3; giả thuyết chỉ kiểm tra tính trung thực ngữ nghĩa an ninh và không suy diễn tuyệt đối sang việc triệt tiêu sụp đổ biểu diễn."
     ]
   },
   {
@@ -1369,52 +1345,55 @@
     ]
   },
   {
-    "hunk_id": "HUNK-CH2-031",
+    "chapter": 2,
+    "opcode": "replace",
+    "base_indices": [
+      34,
+      35
+    ],
+    "curr_indices": [
+      35,
+      36
+    ],
+    "old_lines": [
+      "Typed Schema và Security-aware Parameter Retention"
+    ],
+    "new_lines": [
+      "Lược đồ kiểu hóa và bảo toàn tham số có nhận thức an ninh"
+    ],
+    "old_text_sha256": "f612b389966d60c9914e887e50e7d73b705bfbfb01a3d2450e7a9e6a748da99f",
+    "new_text_sha256": "6a5ae572cac2787d88c0a33509738c5d1b8d9d50faa068731da747d794a9b92b",
+    "scientific_justification": "Dịch chuẩn hóa tiêu đề Heading 4 ('Lược đồ kiểu hóa và bảo toàn tham số có nhận thức an ninh') sang tiếng Việt học thuật chính xác, nhất quán với phong cách toàn luận văn.",
+    "associated_claims": [
+      "PROSE-RESTRAINT"
+    ]
+  },
+  {
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
       36,
-      38
-    ],
-    "base_paragraph_indices": [
-      36,
-      38
-    ],
-    "current_indices": [
-      37,
       39
-    ],
-    "current_paragraph_indices": [
-      37,
-      39
-    ],
-    "old_text_sha256": "1b3336d251cf09b71409b5f202d7a090d92fa613fe2e6c6c35b9f70b69465263",
-    "new_text_sha256": "fd434e36e108f50a4f1f14a55336bca005da3b6d965db804fd316144e46bdc9b",
-    "old_text": [
-      "Trong đó: là mốc thời gian sự kiện (Event-Time) theo đồng hồ hệ thống nguồn; là kiểu hành vi kiểm toán (syscall, registry op, network op, auth op,...); là thực thể chủ thể (Actor) gồm tiến trình, người dùng, dịch vụ; là thực thể đối tượng (Object) gồm tệp tin, socket, registry key, tiến trình con; là hành động cụ thể (read, write, execute, connect, create, delete,...); là tập các tham số động có kiểu hóa cụ thể: đường dẫn tệp tin, địa chỉ IP và cổng đích, chuỗi đối số dòng lệnh, giá trị registry, tên người dùng đích, mã trả về, đáp ứng đúng yêu cầu của Hợp đồng Biểu diễn yêu cầu bảo toàn.",
-      "Tập kiểu sự kiện và tập hành động được định nghĩa tĩnh theo đặc tả nguồn thu thập (auditd syscall table, Windows Event ID taxonomy, Sysmon event types) và không phụ thuộc vào dữ liệu huấn luyện, do đó không phát sinh rủi ro rò rỉ vocabulary từ tập kiểm tra (CTRL-LEAK-001). Ngược lại, từ vựng tham số động (đặc biệt là chuỗi đường dẫn tệp tin và đối số lệnh) phụ thuộc vào môi trường và được học hoàn toàn trên phân vùng huấn luyện theo cơ chế fit-only: mọi thống kê, ánh xạ từ vựng và bảng chuẩn hóa đều được fit trên và áp dụng ở trạng thái đóng băng (frozen state) lên phân vùng Validation và Test — không có thông tin ngược từ Val/Test nào được đưa vào quá trình fit."
-    ],
-    "new_text": [
-      "Trong đó: là mốc thời gian sự kiện theo đồng hồ hệ thống nguồn; là kiểu hành vi kiểm toán như syscall, registry op, network op hoặc auth op; là thực thể chủ thể gồm tiến trình, người dùng, dịch vụ; là thực thể đối tượng gồm tệp tin, socket, registry key, tiến trình con; là hành động cụ thể như read, write, execute, connect, create hoặc delete; là tập các tham số động có kiểu hóa cụ thể: đường dẫn tệp tin, địa chỉ IP và cổng đích, chuỗi đối số dòng lệnh, giá trị registry, tên người dùng đích, mã trả về, đáp ứng đúng yêu cầu của Hợp đồng Biểu diễn yêu cầu bảo toàn.",
-      "Tập kiểu sự kiện và tập hành động được định nghĩa tĩnh theo đặc tả nguồn thu thập như bảng syscall của Auditd, taxonomy Windows Event ID và các kiểu sự kiện Sysmon và không phụ thuộc vào dữ liệu huấn luyện, do đó không phát sinh rủi ro rò rỉ vocabulary từ tập kiểm tra (CTRL-LEAK-001). Ngược lại, từ vựng tham số động đặc biệt là chuỗi đường dẫn tệp tin và đối số lệnh, phụ thuộc vào môi trường và được học hoàn toàn trên phân vùng huấn luyện theo cơ chế fit-only: mọi thống kê, ánh xạ từ vựng và bảng chuẩn hóa đều được fit trên và áp dụng ở trạng thái đóng băng lên phân vùng Validation và Test ; quá trình fit chỉ thực thi trên phân vùng huấn luyện nhằm tránh đưa thông tin từ tập kiểm tra và tập kiểm định vào bước fit."
-    ],
-    "category": "MATHEMATICAL_FORMULATION_PRECISION",
-    "reason": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
-    "scientific_justification": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees.",
-    "claim_ids": [
-      "MATH-DYNAMICS"
-    ],
-    "associated_claims": [
-      "MATH-DYNAMICS"
-    ],
-    "verified": true,
-    "new_lines": [
-      "Trong đó: là mốc thời gian sự kiện theo đồng hồ hệ thống nguồn; là kiểu hành vi kiểm toán như syscall, registry op, network op hoặc auth op; là thực thể chủ thể gồm tiến trình, người dùng, dịch vụ; là thực thể đối tượng gồm tệp tin, socket, registry key, tiến trình con; là hành động cụ thể như read, write, execute, connect, create hoặc delete; là tập các tham số động có kiểu hóa cụ thể: đường dẫn tệp tin, địa chỉ IP và cổng đích, chuỗi đối số dòng lệnh, giá trị registry, tên người dùng đích, mã trả về, đáp ứng đúng yêu cầu của Hợp đồng Biểu diễn yêu cầu bảo toàn.",
-      "Tập kiểu sự kiện và tập hành động được định nghĩa tĩnh theo đặc tả nguồn thu thập như bảng syscall của Auditd, taxonomy Windows Event ID và các kiểu sự kiện Sysmon và không phụ thuộc vào dữ liệu huấn luyện, do đó không phát sinh rủi ro rò rỉ vocabulary từ tập kiểm tra (CTRL-LEAK-001). Ngược lại, từ vựng tham số động đặc biệt là chuỗi đường dẫn tệp tin và đối số lệnh, phụ thuộc vào môi trường và được học hoàn toàn trên phân vùng huấn luyện theo cơ chế fit-only: mọi thống kê, ánh xạ từ vựng và bảng chuẩn hóa đều được fit trên và áp dụng ở trạng thái đóng băng lên phân vùng Validation và Test ; quá trình fit chỉ thực thi trên phân vùng huấn luyện nhằm tránh đưa thông tin từ tập kiểm tra và tập kiểm định vào bước fit."
     ],
     "curr_indices": [
       37,
-      39
+      40
+    ],
+    "old_lines": [
+      "Trong đó: là mốc thời gian sự kiện (Event-Time) theo đồng hồ hệ thống nguồn; là kiểu hành vi kiểm toán (syscall, registry op, network op, auth op,...); là thực thể chủ thể (Actor) gồm tiến trình, người dùng, dịch vụ; là thực thể đối tượng (Object) gồm tệp tin, socket, registry key, tiến trình con; là hành động cụ thể (read, write, execute, connect, create, delete,...); là tập các tham số động có kiểu hóa cụ thể: đường dẫn tệp tin, địa chỉ IP và cổng đích, chuỗi đối số dòng lệnh, giá trị registry, tên người dùng đích, mã trả về, đáp ứng đúng yêu cầu của Hợp đồng Biểu diễn yêu cầu bảo toàn.",
+      "Tập kiểu sự kiện và tập hành động được định nghĩa tĩnh theo đặc tả nguồn thu thập (auditd syscall table, Windows Event ID taxonomy, Sysmon event types) và không phụ thuộc vào dữ liệu huấn luyện, do đó không phát sinh rủi ro rò rỉ vocabulary từ tập kiểm tra (CTRL-LEAK-001). Ngược lại, từ vựng tham số động (đặc biệt là chuỗi đường dẫn tệp tin và đối số lệnh) phụ thuộc vào môi trường và được học hoàn toàn trên phân vùng huấn luyện theo cơ chế fit-only: mọi thống kê, ánh xạ từ vựng và bảng chuẩn hóa đều được fit trên và áp dụng ở trạng thái đóng băng (frozen state) lên phân vùng Validation và Test — không có thông tin ngược từ Val/Test nào được đưa vào quá trình fit.",
+      "Typed Canonicalization và Entity Resolution"
+    ],
+    "new_lines": [
+      "Trong đó: là mốc thời gian sự kiện theo đồng hồ hệ thống nguồn; là kiểu hành vi kiểm toán như syscall, registry op, network op hoặc auth op; là thực thể chủ thể gồm tiến trình, người dùng, dịch vụ; là thực thể đối tượng gồm tệp tin, socket, registry key, tiến trình con; là hành động cụ thể như read, write, execute, connect, create hoặc delete; là tập các tham số động có kiểu hóa cụ thể: đường dẫn tệp tin, địa chỉ IP và cổng đích, chuỗi đối số dòng lệnh, giá trị registry, tên người dùng đích, mã trả về, đáp ứng đúng yêu cầu của Hợp đồng Biểu diễn yêu cầu bảo toàn.",
+      "Tập kiểu sự kiện và tập hành động được định nghĩa tĩnh theo đặc tả nguồn thu thập như bảng syscall của Auditd, taxonomy Windows Event ID và các kiểu sự kiện Sysmon và không phụ thuộc vào dữ liệu huấn luyện, do đó không phát sinh rủi ro rò rỉ vocabulary từ tập kiểm tra (CTRL-LEAK-001). Ngược lại, từ vựng tham số động đặc biệt là chuỗi đường dẫn tệp tin và đối số lệnh, phụ thuộc vào môi trường và được học hoàn toàn trên phân vùng huấn luyện theo cơ chế fit-only: mọi thống kê, ánh xạ từ vựng và bảng chuẩn hóa đều được fit trên và áp dụng ở trạng thái đóng băng lên phân vùng Validation và Test ; quá trình fit chỉ thực thi trên phân vùng huấn luyện nhằm tránh đưa thông tin từ tập kiểm tra và tập kiểm định vào bước fit.",
+      "Chuẩn hóa kiểu hóa và phân giải thực thể"
+    ],
+    "old_text_sha256": "2b4c06cfb135da6c6c22d47f6a42378d073f7f2a25b896e47e20ecd6c46eeff5",
+    "new_text_sha256": "d6010410ebc8ea89727d004d26fc75c83712d4b272b1d11b20de04a2e46bb849",
+    "scientific_justification": "Formalize Dirichlet energy dynamics and non-trivial subspace preservation guarantees. | Dịch chuẩn hóa tiêu đề Heading 4 ('Chuẩn hóa kiểu hóa và phân giải thực thể') sang tiếng Việt học thuật chính xác, nhất quán với phong cách toàn luận văn.",
+    "associated_claims": [
+      "MATH-DYNAMICS"
     ]
   },
   {
@@ -1470,22 +1449,15 @@
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
-      45,
+      44,
       50
     ],
     "curr_indices": [
-      46,
-      51
-    ],
-    "base_paragraph_indices": [
       45,
-      50
-    ],
-    "current_paragraph_indices": [
-      46,
       51
     ],
     "old_lines": [
+      "Leakage-safe Preprocessing",
       "Tất cả các thành phần tiền xử lý có trạng thái học được (bao gồm từ vựng tokenizer tham số động, bảng chuẩn hóa tên tiến trình theo môi trường, thống kê tần suất sự kiện phục vụ outlier filtering, và ngưỡng phân ngưỡng tham số) đều được fit độc quyền trên phân vùng huấn luyện theo thứ tự nhân quả thời gian (causal-time order), tức là chỉ sử dụng dữ liệu quan sát trước thời điểm phân cắt huấn luyện. Phân vùng Validation và Test chỉ nhận các phép biến đổi (transform) từ trạng thái đóng băng đã fit, không có bất kỳ thông tin thống kê nào từ Val/Test được đưa trở lại (CTRL-LEAK-001: Anti-Leakage Temporal Split). Cụ thể:",
       "Phân vùng thời gian tuyến tính theo Event-Time: trong đó ký hiệu biểu thị quan hệ xảy ra trước nghiêm ngặt theo thứ tự thời gian. Không có xáo trộn ngẫu nhiên (random shuffle) theo thời gian ở bất kỳ giai đoạn nào.",
       "Tất cả preprocessor (tokenizer, normalizer, entity resolver, vocabulary builder) đều có trạng thái fit-freeze: quá trình fit chỉ chạy một lần trên .",
@@ -1493,73 +1465,44 @@
       "Ranh giới leakage-safe được kiểm tra tự động trong pipeline thực nghiệm: mọi phép fit nào truy cập dữ liệu ngoài đều bị phát hiện và báo lỗi trước khi chạy thực nghiệm (xem CTRL-LEAK-001)."
     ],
     "new_lines": [
+      "Tiền xử lý an toàn chống rò rỉ thông tin",
       "Tất cả các thành phần tiền xử lý có trạng thái học được (bao gồm từ vựng tokenizer tham số động, bảng chuẩn hóa tên tiến trình theo môi trường, thống kê tần suất sự kiện phục vụ outlier filtering, và ngưỡng phân ngưỡng tham số) đều được fit độc quyền trên phân vùng huấn luyện theo thứ tự nhân quả thời gian theo trật tự nhân quả thời gian, tức là chỉ sử dụng dữ liệu quan sát trước thời điểm phân cắt huấn luyện. Phân vùng Validation và Test chỉ nhận các phép biến đổi từ trạng thái đóng băng đã fit, không có bất kỳ thông tin thống kê nào từ Val/Test được đưa trở lại (CTRL-LEAK-001: Anti-Leakage Temporal Split). Cụ thể:",
       "Một là, phân vùng thời gian tuyến tính theo Event-Time: trong đó ký hiệu biểu thị quan hệ xảy ra trước nghiêm ngặt theo thứ tự thời gian. Không có xáo trộn ngẫu nhiên theo thời gian ở bất kỳ giai đoạn nào.",
       "Hai là, tất cả preprocessor như tokenizer, normalizer, entity resolver và vocabulary builder đều có trạng thái fit-freeze: quá trình fit chỉ chạy một lần trên .",
       "Ba là, chính sách xử lý tham số chưa xác định tuân thủ nghiêm ngặt nguyên tắc an toàn UNKNOWN-SAFE: tuyệt đối không áp dụng quy tắc mặc định hủy bỏ, không thực hiện loại bỏ mặc định UNCONFIRMED → DROP. Hệ thống phân định rạch ròi: Thứ nhất, các trường KNOWN EXCLUDE FIELD gồm metadata môi trường như PID, timestamp cục bộ mili-giây và số sequence nội bộ được loại bỏ hoàn toàn trước khi đưa vào Extractor; Thứ hai, các tham số UNSEEN hoặc chưa xác định rõ ngữ nghĩa an ninh xuất hiện trong tập Validation hoặc Test được giữ nguyên nhãn kiểu trường gồm các thẻ PATH, IP, CMD, REG, USER và bảo toàn vị trí cấu trúc của tham số trong bộ sáu, đồng thời thay thế giá trị chuỗi cụ thể bằng typed placeholder tương ứng (<UNK-PATH>, <UNK-IP>, <UNK-CMD>). Cơ chế này được thiết kế để giảm nguy cơ sụp đổ thông tin cấu trúc cú pháp cần thiết cho Extractor và hạn chế rò rỉ từ vựng từ tập kiểm tra.",
       "Bốn là, ranh giới leakage-safe được kiểm tra tự động trong pipeline thực nghiệm: mọi phép fit nào truy cập dữ liệu ngoài đều bị phát hiện và báo lỗi trước khi chạy thực nghiệm (xem CTRL-LEAK-001)."
     ],
-    "old_text_sha256": "948e6ab709929707dd72ed22b81eb9044e57210c30061a9916d686c79e95158b",
-    "new_text_sha256": "169f22382dc37246bfe86041a2e38152f6a6e9c05f6e128ff833a16187059125",
-    "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
+    "old_text_sha256": "c698168b350be297f379cb72a0c577702deda88fba5cf67c2dd042fe0898bbb9",
+    "new_text_sha256": "484f1192e5beaefcca905e0d10c81ec0a37b9c7246a6e3b507497a34dc9be16b",
+    "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học. | Dịch chuẩn hóa tiêu đề Heading 4 ('Tiền xử lý an toàn chống rò rỉ thông tin') sang tiếng Việt học thuật chính xác, nhất quán với phong cách toàn luận văn.",
     "associated_claims": [
       "PROSE-RESTRAINT"
-    ],
-    "claim_ids": [
-      "PROSE-RESTRAINT"
-    ],
-    "current_indices": [
-      46,
-      51
-    ],
-    "new_text": [
-      "Tất cả các thành phần tiền xử lý có trạng thái học được (bao gồm từ vựng tokenizer tham số động, bảng chuẩn hóa tên tiến trình theo môi trường, thống kê tần suất sự kiện phục vụ outlier filtering, và ngưỡng phân ngưỡng tham số) đều được fit độc quyền trên phân vùng huấn luyện theo thứ tự nhân quả thời gian theo trật tự nhân quả thời gian, tức là chỉ sử dụng dữ liệu quan sát trước thời điểm phân cắt huấn luyện. Phân vùng Validation và Test chỉ nhận các phép biến đổi từ trạng thái đóng băng đã fit, không có bất kỳ thông tin thống kê nào từ Val/Test được đưa trở lại (CTRL-LEAK-001: Anti-Leakage Temporal Split). Cụ thể:",
-      "Một là, phân vùng thời gian tuyến tính theo Event-Time: trong đó ký hiệu biểu thị quan hệ xảy ra trước nghiêm ngặt theo thứ tự thời gian. Không có xáo trộn ngẫu nhiên theo thời gian ở bất kỳ giai đoạn nào.",
-      "Hai là, tất cả preprocessor như tokenizer, normalizer, entity resolver và vocabulary builder đều có trạng thái fit-freeze: quá trình fit chỉ chạy một lần trên .",
-      "Ba là, chính sách xử lý tham số chưa xác định tuân thủ nghiêm ngặt nguyên tắc an toàn UNKNOWN-SAFE: tuyệt đối không áp dụng quy tắc mặc định hủy bỏ, không thực hiện loại bỏ mặc định UNCONFIRMED → DROP. Hệ thống phân định rạch ròi: Thứ nhất, các trường KNOWN EXCLUDE FIELD gồm metadata môi trường như PID, timestamp cục bộ mili-giây và số sequence nội bộ được loại bỏ hoàn toàn trước khi đưa vào Extractor; Thứ hai, các tham số UNSEEN hoặc chưa xác định rõ ngữ nghĩa an ninh xuất hiện trong tập Validation hoặc Test được giữ nguyên nhãn kiểu trường gồm các thẻ PATH, IP, CMD, REG, USER và bảo toàn vị trí cấu trúc của tham số trong bộ sáu, đồng thời thay thế giá trị chuỗi cụ thể bằng typed placeholder tương ứng (<UNK-PATH>, <UNK-IP>, <UNK-CMD>). Cơ chế này được thiết kế để giảm nguy cơ sụp đổ thông tin cấu trúc cú pháp cần thiết cho Extractor và hạn chế rò rỉ từ vựng từ tập kiểm tra.",
-      "Bốn là, ranh giới leakage-safe được kiểm tra tự động trong pipeline thực nghiệm: mọi phép fit nào truy cập dữ liệu ngoài đều bị phát hiện và báo lỗi trước khi chạy thực nghiệm (xem CTRL-LEAK-001)."
     ]
   },
   {
-    "hunk_id": "HUNK-CH2-034",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
       51,
-      52
-    ],
-    "base_paragraph_indices": [
-      51,
-      52
-    ],
-    "current_indices": [
-      52,
       53
-    ],
-    "current_paragraph_indices": [
-      52,
-      53
-    ],
-    "old_text_sha256": "dc78cd3fe4dd7a17daa85f27fa0f09495aa159b6ccc37c4d7912f8269d76757a",
-    "new_text_sha256": "c6e26e96cac447badaf6c72ea2c0ff53f33f967af12420067e17499e62eeb7dc",
-    "old_text": [
-      "Các vector biểu diễn đặc trưng và các sự kiện đã được chuẩn hóa tất yếu mang thông tin nhận dạng thực thể, xem đây là điều kiện cần thiết để duy trì ngữ cảnh hành vi và phục vụ phân tích tấn công đa giai đoạn (kế thừa H5 từ Mục 2.1). Tuy nhiên, việc lưu giữ thông tin nhận dạng thô trong không gian vector tạo ra bề mặt tấn công quyền riêng tư không cần thiết. Mục 2.2.2 hình thức hóa mô hình đe dọa và xác lập cơ chế liên kết có kiểm soát (Controlled Linkability Mechanism) như một hợp đồng kỹ thuật. Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo H5 nhưng phải được kiểm chứng thực nghiệm tại Chương 3 (BOUNDARY-06: Privacy Claim Requires Attack-Based Empirical Evaluation)."
-    ],
-    "new_text": [
-      "Các vector biểu diễn đặc trưng và các sự kiện đã được chuẩn hóa tất yếu mang thông tin nhận dạng thực thể, xem đây là điều kiện cần thiết để duy trì ngữ cảnh hành vi và phục vụ phân tích tấn công đa giai đoạn (kế thừa H5 từ Mục 2.1). Tuy nhiên, việc lưu giữ thông tin nhận dạng thô trong không gian vector tạo ra bề mặt tấn công quyền riêng tư không cần thiết. Mục 2.2.2 hình thức hóa mô hình đe dọa và xác lập cơ chế liên kết có kiểm soát như một hợp đồng kỹ thuật. Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo H5 nhưng cần được kiểm chứng thực nghiệm ở các mô hình hạ nguồn (BOUNDARY-06: Privacy Claim Requires Attack-Based Empirical Evaluation; chưa thực thi trong phạm vi Stage A hiện tại)."
-    ],
-    "category": "PROSE_AUDIT_STYLE_REFINEMENT",
-    "reason": "Refine prose and align terminology with scientific auditing standards.",
-    "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
-    "claim_ids": [],
-    "associated_claims": [],
-    "verified": true,
-    "new_lines": [
-      "Các vector biểu diễn đặc trưng và các sự kiện đã được chuẩn hóa tất yếu mang thông tin nhận dạng thực thể, xem đây là điều kiện cần thiết để duy trì ngữ cảnh hành vi và phục vụ phân tích tấn công đa giai đoạn (kế thừa H5 từ Mục 2.1). Tuy nhiên, việc lưu giữ thông tin nhận dạng thô trong không gian vector tạo ra bề mặt tấn công quyền riêng tư không cần thiết. Mục 2.2.2 hình thức hóa mô hình đe dọa và xác lập cơ chế liên kết có kiểm soát như một hợp đồng kỹ thuật. Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo H5 nhưng cần được kiểm chứng thực nghiệm ở các mô hình hạ nguồn (BOUNDARY-06: Privacy Claim Requires Attack-Based Empirical Evaluation; chưa thực thi trong phạm vi Stage A hiện tại)."
     ],
     "curr_indices": [
       52,
-      53
+      54
+    ],
+    "old_lines": [
+      "Các vector biểu diễn đặc trưng và các sự kiện đã được chuẩn hóa tất yếu mang thông tin nhận dạng thực thể, xem đây là điều kiện cần thiết để duy trì ngữ cảnh hành vi và phục vụ phân tích tấn công đa giai đoạn (kế thừa H5 từ Mục 2.1). Tuy nhiên, việc lưu giữ thông tin nhận dạng thô trong không gian vector tạo ra bề mặt tấn công quyền riêng tư không cần thiết. Mục 2.2.2 hình thức hóa mô hình đe dọa và xác lập cơ chế liên kết có kiểm soát (Controlled Linkability Mechanism) như một hợp đồng kỹ thuật. Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo H5 nhưng phải được kiểm chứng thực nghiệm tại Chương 3 (BOUNDARY-06: Privacy Claim Requires Attack-Based Empirical Evaluation).",
+      "Data/Entity Adversary"
+    ],
+    "new_lines": [
+      "Các vector biểu diễn đặc trưng và các sự kiện đã được chuẩn hóa tất yếu mang thông tin nhận dạng thực thể, xem đây là điều kiện cần thiết để duy trì ngữ cảnh hành vi và phục vụ phân tích tấn công đa giai đoạn (kế thừa H5 từ Mục 2.1). Tuy nhiên, việc lưu giữ thông tin nhận dạng thô trong không gian vector tạo ra bề mặt tấn công quyền riêng tư không cần thiết. Mục 2.2.2 hình thức hóa mô hình đe dọa và xác lập cơ chế liên kết có kiểm soát như một hợp đồng kỹ thuật. Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo H5 nhưng cần được kiểm chứng thực nghiệm ở các mô hình hạ nguồn (BOUNDARY-06: Privacy Claim Requires Attack-Based Empirical Evaluation; chưa thực thi trong phạm vi Stage A hiện tại).",
+      "Đối nghịch dữ liệu và thực thể"
+    ],
+    "old_text_sha256": "5d7e1a01060548cd8fe7b0f69d6a32362b1d0340affb8b2a3e66c51ed9e222e4",
+    "new_text_sha256": "59a177b71fcbb561e22cd0af9b84fb3b3619f8cedfa52aa63cbd65a338c261d3",
+    "scientific_justification": "Refine prose and align terminology with scientific auditing standards. | Dịch chuẩn hóa tiêu đề Heading 4 ('Đối nghịch dữ liệu và thực thể') sang tiếng Việt học thuật chính xác, nhất quán với phong cách toàn luận văn.",
+    "associated_claims": [
+      "PROSE-RESTRAINT"
     ]
   },
   {
@@ -1608,73 +1551,45 @@
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
-      57,
+      56,
       60
     ],
     "curr_indices": [
-      58,
-      61
-    ],
-    "base_paragraph_indices": [
       57,
-      60
-    ],
-    "current_paragraph_indices": [
-      58,
       61
     ],
     "old_lines": [
+      "Model Adversary",
       "Lớp đe dọa thứ hai là đối nghịch mô hình (Model Adversary). Đối nghịch này không truy cập trực tiếp dữ liệu thô mà tương tác với mô hình đã được triển khai hoặc với các vector biểu diễn đã xuất ra. Hai mối đe dọa chính:",
       "Tấn công suy luận thành viên (Membership Inference Attack, MIA): đối nghịch xác định xem một bản ghi dữ liệu cụ thể của một thực thể có nằm trong tập huấn luyện của mô hình hay không, thông qua quan sát hành vi đầu ra hoặc các đặc trưng của vector ([16]).",
       "Tấn công nghịch đảo biểu diễn (Representation/Model Inversion Attack): đối nghịch khôi phục hoặc xấp xỉ các đặc trưng nhận dạng nhạy cảm từ vector (ví dụ tên người dùng, hostname, chuỗi lệnh) thông qua giải bài toán ngược của bộ mã hóa ([32])."
     ],
     "new_lines": [
+      "Đối nghịch mô hình",
       "Lớp đe dọa thứ hai là đối nghịch mô hình Model Adversary. Đối nghịch này không truy cập trực tiếp dữ liệu thô mà tương tác với mô hình đã được triển khai hoặc với các vector biểu diễn đã xuất ra. Hai mối đe dọa chính:",
       "Tấn công suy luận thành viên Membership Inference Attack (MIA): đối nghịch xác định xem một bản ghi dữ liệu cụ thể của một thực thể có nằm trong tập huấn luyện của mô hình hay không, thông qua quan sát hành vi đầu ra hoặc các đặc trưng của vector ([16]).",
       "Tấn công nghịch đảo biểu diễn Representation/Model Inversion Attack: Về mặt nguyên lý, Fredrikson et al. [33] chứng minh tấn công nghịch đảo có thể khai thác thông tin đầu ra/độ tin cậy để tái cấu trúc thuộc tính dữ liệu; trong mô hình đe dọa thích ứng của đề tài (Threat-Model Adaptation), đối nghịch cố gắng khôi phục hoặc xấp xỉ các thuộc tính nhạy cảm tiềm năng như tên người dùng, hostname và chuỗi lệnh từ vector nhúng z."
     ],
-    "old_text_sha256": "c09d21f59a6882f550b479c379e4ef0463c313668aebcd74ab423593529f1420",
-    "new_text_sha256": "ad2f5a91fa2512ec7d2434be8cb9b22fddd9e42b3953d304ad1820af8da910c8",
-    "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
+    "old_text_sha256": "285623385eb76463f8713d7a96dc02d902124c0a0e1fdc6fed10e23dbbccad90",
+    "new_text_sha256": "9b0a4e90f8f8b7c2472911b0d47666729292a0464b075ffbf5efd09ad5b9e6e3",
+    "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học. | Dịch chuẩn hóa tiêu đề Heading 4 ('Đối nghịch mô hình') sang tiếng Việt học thuật chính xác, nhất quán với phong cách toàn luận văn.",
     "associated_claims": [
       "PROSE-RESTRAINT"
-    ],
-    "claim_ids": [
-      "PROSE-RESTRAINT"
-    ],
-    "current_indices": [
-      58,
-      61
-    ],
-    "new_text": [
-      "Lớp đe dọa thứ hai là đối nghịch mô hình Model Adversary. Đối nghịch này không truy cập trực tiếp dữ liệu thô mà tương tác với mô hình đã được triển khai hoặc với các vector biểu diễn đã xuất ra. Hai mối đe dọa chính:",
-      "Tấn công suy luận thành viên Membership Inference Attack (MIA): đối nghịch xác định xem một bản ghi dữ liệu cụ thể của một thực thể có nằm trong tập huấn luyện của mô hình hay không, thông qua quan sát hành vi đầu ra hoặc các đặc trưng của vector ([16]).",
-      "Tấn công nghịch đảo biểu diễn Representation/Model Inversion Attack: Về mặt nguyên lý, Fredrikson et al. [33] chứng minh tấn công nghịch đảo có thể khai thác thông tin đầu ra/độ tin cậy để tái cấu trúc thuộc tính dữ liệu; trong mô hình đe dọa thích ứng của đề tài (Threat-Model Adaptation), đối nghịch cố gắng khôi phục hoặc xấp xỉ các thuộc tính nhạy cảm tiềm năng như tên người dùng, hostname và chuỗi lệnh từ vector nhúng z."
     ]
   },
   {
-    "hunk_id": "HUNK-CH2-036",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
-      62,
+      61,
       68
     ],
-    "base_paragraph_indices": [
+    "curr_indices": [
       62,
-      68
-    ],
-    "current_indices": [
-      63,
       69
     ],
-    "current_paragraph_indices": [
-      63,
-      69
-    ],
-    "old_text_sha256": "271302a8350bb754ec491f06b81111bf4ab9b16d13784bd4499466741bab8db2",
-    "new_text_sha256": "58acbb21d62da0168a6b5b05a9b504ff0b75887cb8c9fb2dfd429903905a0866",
-    "old_text": [
+    "old_lines": [
+      "Controlled Linkability Mechanism Contract",
       "Để giải quyết đồng thời hai lớp đe dọa trên trong khi vẫn bảo toàn ngữ cảnh hành vi cần thiết cho phân tích tấn công, chuyên đề xác lập Cơ chế Liên kết Có Kiểm soát (Controlled Linkability Mechanism) như một hợp đồng kỹ thuật với ba thành phần:",
       "1. Pseudonymization thực thể theo phiên (Session-scoped Pseudonymization): mỗi thực thể thực sự được ánh xạ về một mã định danh giả danh thông qua hàm ánh xạ xác định có kiểm soát . Hàm bảo toàn quan hệ đồng nhất thực thể (tức là ) để cho phép liên kết hành vi theo thời gian (điều kiện cần để phát hiện APT đa giai đoạn), nhưng không giữ lại thông tin nhận dạng thô không cần thiết cho mục đích phát hiện.",
       "2. Tokenization tham số động có chọn lọc (Security-selective Parameter Tokenization): các tham số động đã được xác nhận là mang ngữ nghĩa an ninh được tokenize thành các đơn vị học được theo kho từ vựng fit trên . Các trường KNOWN EXCLUDE FIELD được loại bỏ hoàn toàn (DROP) trước khi đưa vào ; trong khi các tham số UNSEEN / UNCERTAIN được xử lý theo chính sách UNKNOWN-SAFE (bảo toàn nhãn kiểu trường và vị trí cấu trúc, gán typed placeholder), không bị loại bỏ tùy tiện.",
@@ -1682,7 +1597,8 @@
       "Hợp đồng kỹ thuật tổng quát của cơ chế Controlled Linkability được phát biểu như sau: với mọi sự kiện đã được chuẩn hóa , sự kiện được biến đổi quyền riêng tư được tạo ra bằng cách thay thế các trường nhận dạng thực thể bằng mã giả danh và áp dụng toán tử bảo vệ tham số an toàn tuân thủ nguyên tắc: (i) các trường KNOWN EXCLUDE FIELD bị loại bỏ hoàn toàn (DROP); (ii) các tham số được xác nhận được tokenize trên ; (iii) các tham số UNSEEN / UNCERTAIN được xử lý theo chính sách UNKNOWN-SAFE (bảo toàn nhãn kiểu trường và vị trí cấu trúc, gán typed placeholder):",
       "Lưu ý rằng các tham số thời gian và kiểu hành vi được bảo toàn nguyên vẹn vì chúng không phải direct identifier, tuy nhiên các tham số này có thể hoạt động như quasi-identifier khi kết hợp với dữ liệu bên ngoài; rủi ro liên kết tương ứng cần được đánh giá theo CTRL-PRIV-001. Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo nghĩa của H5 so với hai đường cơ sở: (a) giữ nguyên định danh thô không có pseudonymization; và (b) ẩn danh hóa quá mức xóa bỏ cả liên kết thực thể cần thiết cho phân tích hành vi. Tuy nhiên, khẳng định sự vượt trội này yêu cầu kiểm thử thực nghiệm tường minh tại Chương 3 thông qua CTRL-PRIV-001: đánh giá MIA ([16]), tấn công nghịch đảo ([32]), và tấn công tái định danh; không thể đưa ra kết luận chỉ từ lý thuyết DP hoặc thiết kế pseudonymization."
     ],
-    "new_text": [
+    "new_lines": [
+      "Hợp đồng cơ chế liên kết có kiểm soát",
       "Trước hai lớp đe dọa nêu trên trong khi vẫn bảo toàn ngữ cảnh hành vi cần thiết cho phân tích tấn công, chuyên đề xác lập Cơ chế Liên kết Có Kiểm soát như một hợp đồng kỹ thuật với ba thành phần:",
       "Một là, cơ chế pseudonymization thực thể theo phiên Session-scoped Pseudonymization: mỗi thực thể thực sự được ánh xạ về một mã định danh giả danh thông qua hàm ánh xạ xác định có kiểm soát . Hàm bảo toàn quan hệ đồng nhất thực thể (tức là ) để cho phép liên kết hành vi theo thời gian, đây là điều kiện cần để phát hiện APT đa giai đoạn, nhưng không giữ lại thông tin nhận dạng thô không cần thiết cho mục đích phát hiện.",
       "Hai là, cơ chế tokenization tham số động có chọn lọc Security-selective Parameter Tokenization: các tham số động đã được xác nhận là mang ngữ nghĩa an ninh được tokenize thành các đơn vị học được theo kho từ vựng fit trên . Các trường KNOWN EXCLUDE FIELD được loại bỏ hoàn toàn trước khi đưa vào ; trong khi các tham số UNSEEN / UNCERTAIN được xử lý theo chính sách UNKNOWN-SAFE với mục tiêu bảo toàn nhãn kiểu trường và vị trí cấu trúc, đồng thời gán typed placeholder, không bị loại bỏ tùy tiện.",
@@ -1690,144 +1606,33 @@
       "Hợp đồng kỹ thuật tổng quát của cơ chế Controlled Linkability được phát biểu như sau: với mọi sự kiện đã được chuẩn hóa , sự kiện được biến đổi quyền riêng tư được tạo ra bằng cách thay thế các trường nhận dạng thực thể bằng mã giả danh và áp dụng toán tử bảo vệ tham số an toàn tuân thủ nguyên tắc: thứ nhất, các trường KNOWN EXCLUDE FIELD bị loại bỏ hoàn toàn; thứ hai, các tham số được xác nhận được tokenize trên ; thứ ba, các tham số UNSEEN / UNCERTAIN được xử lý theo chính sách UNKNOWN-SAFE :",
       "Lưu ý rằng các tham số thời gian và kiểu hành vi được bảo toàn nguyên vẹn vì chúng không phải direct identifier, tuy nhiên các tham số này có thể hoạt động như quasi-identifier khi kết hợp với dữ liệu bên ngoài; rủi ro liên kết tương ứng cần được đánh giá theo CTRL-PRIV-001. Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo nghĩa của H5 so với hai đường cơ sở: thứ nhất, giữ nguyên định danh thô không có pseudonymization; và thứ hai, ẩn danh hóa quá mức xóa bỏ cả liên kết thực thể cần thiết cho phân tích hành vi. Tuy nhiên, khẳng định sự vượt trội này là một giả thuyết nghiên cứu yêu cầu kiểm thử thực nghiệm tường minh ở các mô hình hạ nguồn thông qua giao thức CTRL-PRIV-001, bao gồm đánh giá MIA [16], tấn công nghịch đảo theo nguyên lý Fredrikson et al. [33] áp dụng cho các thuộc tính nhạy cảm của log, cùng tấn công tái định danh; chưa được thực thi trong phạm vi thực nghiệm của chuyên đề hiện tại."
     ],
-    "category": "PRIVACY_SCOPE_CALIBRATION",
-    "reason": "Distinguish proposed evaluation framework from executed experiments in thesis, avoiding privacy false positives.",
-    "scientific_justification": "Distinguish proposed evaluation framework from executed experiments in thesis, avoiding privacy false positives.",
-    "claim_ids": [
-      "CLM-021",
-      "SCI-PRIV-001"
-    ],
+    "old_text_sha256": "b0a979a3906e649b2ed41b540cbfa0289eaf40e81c7f1d9b1b7f597f67967bd5",
+    "new_text_sha256": "f23e6eaa35475d450d2c39defe1d488aee75383616725c2182f36a4508446168",
+    "scientific_justification": "Distinguish proposed evaluation framework from executed experiments in thesis, avoiding privacy false positives. | Dịch chuẩn hóa tiêu đề Heading 4 ('Hợp đồng cơ chế liên kết có kiểm soát') sang tiếng Việt học thuật chính xác, nhất quán với phong cách toàn luận văn.",
     "associated_claims": [
       "CLM-021",
       "SCI-PRIV-001"
-    ],
-    "verified": true,
-    "new_lines": [
-      "Trước hai lớp đe dọa nêu trên trong khi vẫn bảo toàn ngữ cảnh hành vi cần thiết cho phân tích tấn công, chuyên đề xác lập Cơ chế Liên kết Có Kiểm soát như một hợp đồng kỹ thuật với ba thành phần:",
-      "Một là, cơ chế pseudonymization thực thể theo phiên Session-scoped Pseudonymization: mỗi thực thể thực sự được ánh xạ về một mã định danh giả danh thông qua hàm ánh xạ xác định có kiểm soát . Hàm bảo toàn quan hệ đồng nhất thực thể (tức là ) để cho phép liên kết hành vi theo thời gian, đây là điều kiện cần để phát hiện APT đa giai đoạn, nhưng không giữ lại thông tin nhận dạng thô không cần thiết cho mục đích phát hiện.",
-      "Hai là, cơ chế tokenization tham số động có chọn lọc Security-selective Parameter Tokenization: các tham số động đã được xác nhận là mang ngữ nghĩa an ninh được tokenize thành các đơn vị học được theo kho từ vựng fit trên . Các trường KNOWN EXCLUDE FIELD được loại bỏ hoàn toàn trước khi đưa vào ; trong khi các tham số UNSEEN / UNCERTAIN được xử lý theo chính sách UNKNOWN-SAFE với mục tiêu bảo toàn nhãn kiểu trường và vị trí cấu trúc, đồng thời gán typed placeholder, không bị loại bỏ tùy tiện.",
-      "Ba là, về phạm vi liên kết và rotation Linkability Scope: hàm xác lập bốn ranh giới tường minh: thứ nhất, Linkable within scope: trong cùng phiên, nhất quán để hành vi đa giai đoạn của cùng thực thể vẫn liên kết được; thứ hai, Unlinkable across rotation boundary: khi rotation xảy ra, cùng thực thể nhận mã giả danh mới, làm gián đoạn cross-session linkage; thứ ba, Remains linkable: kiểu hành vi, thời gian tương đối và tham số an ninh giúp duy trì behavioral fingerprint; thứ tư, Becomes unlinkable: tên thực sự v, o và các direct identifier. Rotation boundary phải được xác lập theo predefined operational policy hoặc được lựa chọn dựa trên tập Train/Validation, tuyệt đối không sử dụng thông tin từ true Test attack/campaign duration nhằm loại trừ rủi ro test leakage. Về mặt phương pháp luận, chuyên đề đề xuất hướng đánh giá nhiều mốc rotation horizon cố định để xây dựng đường biên Utility–Privacy frontier ở các giai đoạn thực nghiệm tiếp theo. Trường hợp rotation horizon quá ngắn so với thời lượng chiến dịch APT thực tế sẽ dẫn tới việc cùng một thực thể nhận các mã giả danh khác nhau qua từng giai đoạn, làm phân mảnh khả năng liên kết chuỗi hành vi cross-phase nếu không có cơ chế tái liên kết an toàn; đây là failure case tường minh cần được định lượng trong đánh giá thực nghiệm. Thiết kế phạm vi cụ thể giữa cấp độ phiên và cấp độ toàn cục là quyết định thực nghiệm phụ thuộc vào đánh đổi này.",
-      "Hợp đồng kỹ thuật tổng quát của cơ chế Controlled Linkability được phát biểu như sau: với mọi sự kiện đã được chuẩn hóa , sự kiện được biến đổi quyền riêng tư được tạo ra bằng cách thay thế các trường nhận dạng thực thể bằng mã giả danh và áp dụng toán tử bảo vệ tham số an toàn tuân thủ nguyên tắc: thứ nhất, các trường KNOWN EXCLUDE FIELD bị loại bỏ hoàn toàn; thứ hai, các tham số được xác nhận được tokenize trên ; thứ ba, các tham số UNSEEN / UNCERTAIN được xử lý theo chính sách UNKNOWN-SAFE :",
-      "Lưu ý rằng các tham số thời gian và kiểu hành vi được bảo toàn nguyên vẹn vì chúng không phải direct identifier, tuy nhiên các tham số này có thể hoạt động như quasi-identifier khi kết hợp với dữ liệu bên ngoài; rủi ro liên kết tương ứng cần được đánh giá theo CTRL-PRIV-001. Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo nghĩa của H5 so với hai đường cơ sở: thứ nhất, giữ nguyên định danh thô không có pseudonymization; và thứ hai, ẩn danh hóa quá mức xóa bỏ cả liên kết thực thể cần thiết cho phân tích hành vi. Tuy nhiên, khẳng định sự vượt trội này là một giả thuyết nghiên cứu yêu cầu kiểm thử thực nghiệm tường minh ở các mô hình hạ nguồn thông qua giao thức CTRL-PRIV-001, bao gồm đánh giá MIA [16], tấn công nghịch đảo theo nguyên lý Fredrikson et al. [33] áp dụng cho các thuộc tính nhạy cảm của log, cùng tấn công tái định danh; chưa được thực thi trong phạm vi thực nghiệm của chuyên đề hiện tại."
-    ],
-    "curr_indices": [
-      63,
-      69
-    ]
-  },
-  {
-    "hunk_id": "HUNK-CH2-037",
-    "chapter": 2,
-    "opcode": "replace",
-    "base_indices": [
-      69,
-      70
-    ],
-    "base_paragraph_indices": [
-      69,
-      70
-    ],
-    "current_indices": [
-      70,
-      71
-    ],
-    "current_paragraph_indices": [
-      70,
-      71
-    ],
-    "old_text_sha256": "fb9ecc1ce45ca2b21f6f12f0a9baf1d33ed35ed3bfa75bca470326df93d9d10d",
-    "new_text_sha256": "0db2c8f3e3fe133c5e1dc5c663d103c579fab4088f3752e5d5a86f6eb05ddebf",
-    "old_text": [
-      "Sau khi các sự kiện được chuẩn hóa và bảo vệ quyền riêng tư theo Mục 2.2.1–2.2.2, bước tiếp theo là tổ chức chúng thành các đơn vị ngữ cảnh phục vụ các bộ trích xuất đặc trưng hạ nguồn tại Mục 2.3. Mục 2.2.3 giải quyết hai vấn đề liên quan chặt chẽ: (1) đảm bảo tính nhất quán Event-Time khi sự kiện đến từ nhiều nguồn có đồng hồ không đồng bộ; và (2) xây dựng cấu trúc cửa sổ ngữ cảnh đa tỷ lệ phù hợp với bản chất đa giai đoạn của chiến dịch APT. Cơ chế mốc ngắt thời gian (Event-Time Watermark) và tham số đã được xác lập tại Mục 2.1.2; Mục 2.2.3 kế thừa và áp dụng các định nghĩa đó mà không tái định nghĩa lại."
-    ],
-    "new_text": [
-      "Sau khi các sự kiện được chuẩn hóa và bảo vệ quyền riêng tư theo Mục 2.2.1–2.2.2, bước tiếp theo là tổ chức chúng thành các đơn vị ngữ cảnh phục vụ các bộ trích xuất đặc trưng hạ nguồn tại Mục 2.3. Mục 2.2.3 giải quyết hai vấn đề liên quan chặt chẽ: thứ nhất là đảm bảo tính nhất quán Event-Time khi sự kiện đến từ nhiều nguồn có đồng hồ không đồng bộ; và thứ hai là xây dựng cấu trúc cửa sổ ngữ cảnh đa tỷ lệ phù hợp với bản chất đa giai đoạn của chiến dịch APT. Cơ chế mốc ngắt thời gian và tham số đã được xác lập tại Mục 2.1.2; Mục 2.2.3 kế thừa và áp dụng các định nghĩa đó mà không tái định nghĩa lại."
-    ],
-    "category": "PROSE_AUDIT_STYLE_REFINEMENT",
-    "reason": "Refine prose and align terminology with scientific auditing standards.",
-    "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
-    "claim_ids": [],
-    "associated_claims": [],
-    "verified": true,
-    "new_lines": [
-      "Sau khi các sự kiện được chuẩn hóa và bảo vệ quyền riêng tư theo Mục 2.2.1–2.2.2, bước tiếp theo là tổ chức chúng thành các đơn vị ngữ cảnh phục vụ các bộ trích xuất đặc trưng hạ nguồn tại Mục 2.3. Mục 2.2.3 giải quyết hai vấn đề liên quan chặt chẽ: thứ nhất là đảm bảo tính nhất quán Event-Time khi sự kiện đến từ nhiều nguồn có đồng hồ không đồng bộ; và thứ hai là xây dựng cấu trúc cửa sổ ngữ cảnh đa tỷ lệ phù hợp với bản chất đa giai đoạn của chiến dịch APT. Cơ chế mốc ngắt thời gian và tham số đã được xác lập tại Mục 2.1.2; Mục 2.2.3 kế thừa và áp dụng các định nghĩa đó mà không tái định nghĩa lại."
-    ],
-    "curr_indices": [
-      70,
-      71
     ]
   },
   {
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
-      71,
-      75
+      69,
+      81
     ],
     "curr_indices": [
-      72,
-      76
-    ],
-    "base_paragraph_indices": [
-      71,
-      75
-    ],
-    "current_paragraph_indices": [
-      72,
-      76
+      70,
+      82
     ],
     "old_lines": [
+      "Sau khi các sự kiện được chuẩn hóa và bảo vệ quyền riêng tư theo Mục 2.2.1–2.2.2, bước tiếp theo là tổ chức chúng thành các đơn vị ngữ cảnh phục vụ các bộ trích xuất đặc trưng hạ nguồn tại Mục 2.3. Mục 2.2.3 giải quyết hai vấn đề liên quan chặt chẽ: (1) đảm bảo tính nhất quán Event-Time khi sự kiện đến từ nhiều nguồn có đồng hồ không đồng bộ; và (2) xây dựng cấu trúc cửa sổ ngữ cảnh đa tỷ lệ phù hợp với bản chất đa giai đoạn của chiến dịch APT. Cơ chế mốc ngắt thời gian (Event-Time Watermark) và tham số đã được xác lập tại Mục 2.1.2; Mục 2.2.3 kế thừa và áp dụng các định nghĩa đó mà không tái định nghĩa lại.",
+      "Event-Time, Clock Skew, Watermark và Late Events",
       "Môi trường SOC thực tế thu thập log từ nhiều nguồn có đồng hồ hệ thống khác nhau, phát sinh hiện tượng lệch pha đồng hồ (Clock Skew). Lệch pha đồng hồ khiến các bản ghi telemetry tương ứng của cùng một sự kiện/tương tác quan sát được lại mang nhãn thời gian không nhất quán khi so sánh xuyên nguồn, làm xáo trộn thứ tự thời gian sự kiện dùng để xây dựng chuỗi và đồ thị hạ nguồn (lưu ý nguyên lý bất biến: quan hệ phụ thuộc ghi nhận trong log không đồng nhất với quan hệ nhân quả (nguyên lý: dependency != causal effect)). Giai đoạn đồng bộ thời gian áp dụng một chuỗi bước xử lý có thứ tự:",
       "(i) Chuẩn hóa múi giờ: tất cả nhãn thời gian được chuyển về UTC epoch trước khi so sánh xuyên nguồn.",
       "(ii) Ước lượng và hiệu chỉnh lệch pha đồng hồ: với mỗi cặp nguồn có thể quan sát được sự kiện chung (ví dụ: cùng một kết nối mạng được ghi nhận bởi cả endpoint log và network log), offset lệch pha được ước lượng và hiệu chỉnh. Phương pháp ước lượng cụ thể (crystal-synced event matching, NTP-based correction,...) là quyết định triển khai phụ thuộc môi trường và không ảnh hưởng đến hợp đồng tiền xử lý.",
-      "(iii) Áp dụng cơ chế Watermark kế thừa từ Mục 2.1.2: tham số xác lập cửa sổ dung sai cho sự kiện đến muộn sau đồng bộ thời gian. Các sự kiện đến trong cửa sổ được tích hợp vào trạng thái dòng; các sự kiện đến trễ hơn được chuyển vào Reconciliation Buffer theo Explicit Information-Loss Protocol."
-    ],
-    "new_lines": [
-      "Môi trường SOC thực tế thu thập log từ nhiều nguồn có đồng hồ hệ thống khác nhau, phát sinh hiện tượng lệch pha đồng hồ Clock Skew. Lệch pha đồng hồ khiến các bản ghi telemetry tương ứng của cùng một sự kiện/tương tác quan sát được lại mang nhãn thời gian không nhất quán khi so sánh xuyên nguồn, làm xáo trộn thứ tự thời gian sự kiện dùng để xây dựng chuỗi và đồ thị hạ nguồn (lưu ý nguyên lý bất biến: quan hệ phụ thuộc ghi nhận trong log không đồng nhất với quan hệ nhân quả (nguyên lý: dependency != causal effect)). Giai đoạn đồng bộ thời gian áp dụng một chuỗi bước xử lý có thứ tự:",
-      "Thứ nhất, chuẩn hóa múi giờ: tất cả nhãn thời gian được chuyển về UTC epoch trước khi so sánh xuyên nguồn.",
-      "Thứ hai, ước lượng và hiệu chỉnh lệch pha đồng hồ: với mỗi cặp nguồn có thể quan sát được sự kiện chung (ví dụ: cùng một kết nối mạng được ghi nhận bởi cả endpoint log và network log), offset lệch pha được ước lượng và hiệu chỉnh. Phương pháp ước lượng cụ thể (crystal-synced event matching, NTP-based correction,...) là quyết định triển khai phụ thuộc môi trường và không ảnh hưởng đến hợp đồng tiền xử lý.",
-      "Thứ ba, áp dụng cơ chế Watermark kế thừa từ Mục 2.1.2: tham số xác lập cửa sổ dung sai cho sự kiện đến muộn sau đồng bộ thời gian. Các sự kiện đến trong cửa sổ được tích hợp vào trạng thái dòng; các sự kiện đến trễ hơn được chuyển vào Reconciliation Buffer theo Explicit Information-Loss Protocol."
-    ],
-    "old_text_sha256": "a6ad6b9b449d398dd87328365518f32121be5c223e3637948377588f5b2412fe",
-    "new_text_sha256": "264e12f9d0035ccfb3a309830499d9af6535f6deb5eefe8a4262f74124457bcf",
-    "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
-    "associated_claims": [
-      "PROSE-RESTRAINT"
-    ],
-    "claim_ids": [
-      "PROSE-RESTRAINT"
-    ],
-    "current_indices": [
-      72,
-      76
-    ],
-    "new_text": [
-      "Môi trường SOC thực tế thu thập log từ nhiều nguồn có đồng hồ hệ thống khác nhau, phát sinh hiện tượng lệch pha đồng hồ Clock Skew. Lệch pha đồng hồ khiến các bản ghi telemetry tương ứng của cùng một sự kiện/tương tác quan sát được lại mang nhãn thời gian không nhất quán khi so sánh xuyên nguồn, làm xáo trộn thứ tự thời gian sự kiện dùng để xây dựng chuỗi và đồ thị hạ nguồn (lưu ý nguyên lý bất biến: quan hệ phụ thuộc ghi nhận trong log không đồng nhất với quan hệ nhân quả (nguyên lý: dependency != causal effect)). Giai đoạn đồng bộ thời gian áp dụng một chuỗi bước xử lý có thứ tự:",
-      "Thứ nhất, chuẩn hóa múi giờ: tất cả nhãn thời gian được chuyển về UTC epoch trước khi so sánh xuyên nguồn.",
-      "Thứ hai, ước lượng và hiệu chỉnh lệch pha đồng hồ: với mỗi cặp nguồn có thể quan sát được sự kiện chung (ví dụ: cùng một kết nối mạng được ghi nhận bởi cả endpoint log và network log), offset lệch pha được ước lượng và hiệu chỉnh. Phương pháp ước lượng cụ thể (crystal-synced event matching, NTP-based correction,...) là quyết định triển khai phụ thuộc môi trường và không ảnh hưởng đến hợp đồng tiền xử lý.",
-      "Thứ ba, áp dụng cơ chế Watermark kế thừa từ Mục 2.1.2: tham số xác lập cửa sổ dung sai cho sự kiện đến muộn sau đồng bộ thời gian. Các sự kiện đến trong cửa sổ được tích hợp vào trạng thái dòng; các sự kiện đến trễ hơn được chuyển vào Reconciliation Buffer theo Explicit Information-Loss Protocol."
-    ]
-  },
-  {
-    "chapter": 2,
-    "opcode": "replace",
-    "base_indices": [
-      76,
-      81
-    ],
-    "curr_indices": [
-      77,
-      82
-    ],
-    "base_paragraph_indices": [
-      76,
-      81
-    ],
-    "current_paragraph_indices": [
-      77,
-      82
-    ],
-    "old_lines": [
+      "(iii) Áp dụng cơ chế Watermark kế thừa từ Mục 2.1.2: tham số xác lập cửa sổ dung sai cho sự kiện đến muộn sau đồng bộ thời gian. Các sự kiện đến trong cửa sổ được tích hợp vào trạng thái dòng; các sự kiện đến trễ hơn được chuyển vào Reconciliation Buffer theo Explicit Information-Loss Protocol.",
+      "Multi-scale Context Windows",
       "Đặc điểm của chiến dịch APT là hoạt động trải dài nhiều tỷ lệ thời gian khác nhau đồng thời: hành động tức thời (milliseconds đến seconds), chuỗi hành vi ngắn hạn (minutes đến hours), và chiến dịch dài hạn (days đến weeks). Một cửa sổ ngữ cảnh duy nhất không thể bao phủ đầy đủ tất cả tỷ lệ này mà không vi phạm ràng buộc bộ nhớ hữu hạn từ Mục 2.1.2. Chuyên đề đề xuất cấu trúc cửa sổ ngữ cảnh ba tỷ lệ (Multi-scale Context Windows) như một giải pháp phân cấp:",
       "Cửa sổ ngắn hạn (Short-term Window): bao phủ chuỗi sự kiện gần nhất trong phạm vi thời gian ngắn (hyperparameter, ví dụ: vài phút đến hàng chục phút; khóa bằng Validation/operational budget tại Mục 2.3), cung cấp ngữ cảnh thực thi tức thời cho một tiến trình hoặc phiên làm việc. Cửa sổ này cung cấp dữ liệu đầu vào chính cho Bộ trích xuất tuần tự (Sequential Extractor) tại Mục 2.3. Kích thước bị chặn trên bởi độ dài chuỗi tối đa của kiến trúc encoder, với giá trị cụ thể sẽ được xác lập tại Mục 2.3 khi kiến trúc được khóa.",
       "Cửa sổ trung hạn (Medium-term Window): bao phủ lịch sử hành vi của thực thể trong phạm vi thời gian trung (hyperparameter, ví dụ: vài giờ đến một ngày; khóa bằng Validation budget), phản ánh các pattern hành vi đặc trưng của người dùng/tiến trình và cung cấp ngữ cảnh phát hiện leo thang đặc quyền hoặc lateral movement. Cửa sổ này được duy trì trong trạng thái hữu hạn thông qua cơ chế nén trạng thái (state summary/sketch) đã xác lập tại Mục 2.1.2.",
@@ -1835,31 +1640,24 @@
       "Ba cửa sổ không độc lập mà có quan hệ phân cấp: theo thứ tự thời gian, và là tóm tắt nén của lịch sử trước . Phân cấp này đảm bảo cùng một evidence có thể xuất hiện ở nhiều scale (Ws, Wm, Wl) dưới dạng bài biểu diễn khác nhau, nhưng không có thông tin tương lai nào bị nạp vào cửa sổ hiện tại (nguyên lý Strictly Causal / Zero Lookahead từ Mục 2.1.3). Sơ đồ phân cấp cụ thể và giao diện đầu ra từ sang các bộ trích xuất tại Mục 2.3 sẽ được hình thức hóa khi kiến trúc được xác lập."
     ],
     "new_lines": [
+      "Sau khi các sự kiện được chuẩn hóa và bảo vệ quyền riêng tư theo Mục 2.2.1–2.2.2, bước tiếp theo là tổ chức chúng thành các đơn vị ngữ cảnh phục vụ các bộ trích xuất đặc trưng hạ nguồn tại Mục 2.3. Mục 2.2.3 giải quyết hai vấn đề liên quan chặt chẽ: thứ nhất là đảm bảo tính nhất quán Event-Time khi sự kiện đến từ nhiều nguồn có đồng hồ không đồng bộ; và thứ hai là xây dựng cấu trúc cửa sổ ngữ cảnh đa tỷ lệ phù hợp với bản chất đa giai đoạn của chiến dịch APT. Cơ chế mốc ngắt thời gian và tham số đã được xác lập tại Mục 2.1.2; Mục 2.2.3 kế thừa và áp dụng các định nghĩa đó mà không tái định nghĩa lại.",
+      "Thời gian sự kiện, lệch pha đồng hồ, cơ chế watermark và sự kiện đến trễ",
+      "Môi trường SOC thực tế thu thập log từ nhiều nguồn có đồng hồ hệ thống khác nhau, phát sinh hiện tượng lệch pha đồng hồ Clock Skew. Lệch pha đồng hồ khiến các bản ghi telemetry tương ứng của cùng một sự kiện/tương tác quan sát được lại mang nhãn thời gian không nhất quán khi so sánh xuyên nguồn, làm xáo trộn thứ tự thời gian sự kiện dùng để xây dựng chuỗi và đồ thị hạ nguồn (lưu ý nguyên lý bất biến: quan hệ phụ thuộc ghi nhận trong log không đồng nhất với quan hệ nhân quả (nguyên lý: dependency != causal effect)). Giai đoạn đồng bộ thời gian áp dụng một chuỗi bước xử lý có thứ tự:",
+      "Thứ nhất, chuẩn hóa múi giờ: tất cả nhãn thời gian được chuyển về UTC epoch trước khi so sánh xuyên nguồn.",
+      "Thứ hai, ước lượng và hiệu chỉnh lệch pha đồng hồ: với mỗi cặp nguồn có thể quan sát được sự kiện chung (ví dụ: cùng một kết nối mạng được ghi nhận bởi cả endpoint log và network log), offset lệch pha được ước lượng và hiệu chỉnh. Phương pháp ước lượng cụ thể (crystal-synced event matching, NTP-based correction,...) là quyết định triển khai phụ thuộc môi trường và không ảnh hưởng đến hợp đồng tiền xử lý.",
+      "Thứ ba, áp dụng cơ chế Watermark kế thừa từ Mục 2.1.2: tham số xác lập cửa sổ dung sai cho sự kiện đến muộn sau đồng bộ thời gian. Các sự kiện đến trong cửa sổ được tích hợp vào trạng thái dòng; các sự kiện đến trễ hơn được chuyển vào Reconciliation Buffer theo Explicit Information-Loss Protocol.",
+      "Cửa sổ ngữ cảnh đa tỷ lệ",
       "Đặc điểm của chiến dịch APT là hoạt động trải dài nhiều tỷ lệ thời gian khác nhau đồng thời: hành động tức thời từ mili-giây đến giây, chuỗi hành vi ngắn hạn từ phút đến giờ, và chiến dịch dài hạn từ ngày đến tuần. Một cửa sổ ngữ cảnh duy nhất không thể bao phủ đầy đủ tất cả tỷ lệ này mà không vi phạm ràng buộc bộ nhớ hữu hạn từ Mục 2.1.2. Chuyên đề đề xuất cấu trúc cửa sổ ngữ cảnh ba tỷ lệ như một giải pháp phân cấp:",
       "Cửa sổ ngắn hạn Short-term Window: bao phủ chuỗi sự kiện gần nhất trong phạm vi thời gian ngắn (hyperparameter, ví dụ: vài phút đến hàng chục phút; khóa bằng Validation/operational budget tại Mục 2.3), cung cấp ngữ cảnh thực thi tức thời cho một tiến trình hoặc phiên làm việc. Cửa sổ này cung cấp dữ liệu đầu vào chính cho Bộ trích xuất tuần tự tại Mục 2.3. Kích thước bị chặn trên bởi độ dài chuỗi tối đa của kiến trúc encoder, với giá trị cụ thể sẽ được xác lập tại Mục 2.3 khi kiến trúc được khóa.",
       "Cửa sổ trung hạn Medium-term Window: bao phủ lịch sử hành vi của thực thể trong phạm vi thời gian trung (hyperparameter, ví dụ: vài giờ đến một ngày; khóa bằng Validation budget), phản ánh các pattern hành vi đặc trưng của người dùng/tiến trình và cung cấp ngữ cảnh phát hiện leo thang đặc quyền hoặc lateral movement. Cửa sổ này được duy trì trong trạng thái hữu hạn thông qua cơ chế nén trạng thái (state summary/sketch) đã xác lập tại Mục 2.1.2.",
       "Cửa sổ dài hạn/Tóm tắt trạng thái Long-term State Summary: thay vì lưu trữ toàn bộ lịch sử thô (vi phạm ), trạng thái dài hạn được duy trì dưới dạng các sketch thống kê nén gọn (ví dụ: Count-Min Sketch về tần suất hành vi loại sự kiện, hàm suy giảm trọng số cạnh theo thời gian). Đây chính là đánh đổi cốt lõi Long-Horizon Context Trade-off đã được xác lập tại Mục 2.1.2: chi phí tính toán và bộ nhớ cụ thể của phụ thuộc vào lựa chọn cấu trúc sketch tại Mục 2.3–2.4.",
       "Ba cửa sổ không độc lập mà có quan hệ phân cấp: theo thứ tự thời gian, và là tóm tắt nén của lịch sử trước . Phân cấp này đảm bảo cùng một evidence có thể xuất hiện ở nhiều scale gồm Ws, Wm và Wl dưới dạng bài biểu diễn khác nhau, nhưng không có thông tin tương lai nào bị nạp vào cửa sổ hiện tại (nguyên lý Strictly Causal / Zero Lookahead từ Mục 2.1.3). Sơ đồ phân cấp cụ thể và giao diện đầu ra từ sang các bộ trích xuất tại Mục 2.3 sẽ được hình thức hóa khi kiến trúc được xác lập."
     ],
-    "old_text_sha256": "780c9f408f045e23fe00dc9f70a2489e0237739f5bee2f7292ec0f4329074a94",
-    "new_text_sha256": "db946344082bbf2e35762e62aa26d5af8fbeee4de46afb67033930a3e152e9f3",
-    "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
+    "old_text_sha256": "f5342bb5aa224884679734bb6c8d58d4097aeea10ecc5231ae6aea4c6a774617",
+    "new_text_sha256": "e9c54ce87ba9dbe7db2d5f93a4e515fdfca45559180d9e93a5e43f9c3cd21f36",
+    "scientific_justification": "Refine prose and align terminology with scientific auditing standards. | Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học. | Dịch chuẩn hóa tiêu đề Heading 4 ('Thời gian sự kiện, lệch pha đồng hồ, cơ chế watermark và sự kiện đến trễ', 'Cửa sổ ngữ cảnh đa tỷ lệ') sang tiếng Việt học thuật chính xác, nhất quán với phong cách toàn luận văn.",
     "associated_claims": [
       "PROSE-RESTRAINT"
-    ],
-    "claim_ids": [
-      "PROSE-RESTRAINT"
-    ],
-    "current_indices": [
-      77,
-      82
-    ],
-    "new_text": [
-      "Đặc điểm của chiến dịch APT là hoạt động trải dài nhiều tỷ lệ thời gian khác nhau đồng thời: hành động tức thời từ mili-giây đến giây, chuỗi hành vi ngắn hạn từ phút đến giờ, và chiến dịch dài hạn từ ngày đến tuần. Một cửa sổ ngữ cảnh duy nhất không thể bao phủ đầy đủ tất cả tỷ lệ này mà không vi phạm ràng buộc bộ nhớ hữu hạn từ Mục 2.1.2. Chuyên đề đề xuất cấu trúc cửa sổ ngữ cảnh ba tỷ lệ như một giải pháp phân cấp:",
-      "Cửa sổ ngắn hạn Short-term Window: bao phủ chuỗi sự kiện gần nhất trong phạm vi thời gian ngắn (hyperparameter, ví dụ: vài phút đến hàng chục phút; khóa bằng Validation/operational budget tại Mục 2.3), cung cấp ngữ cảnh thực thi tức thời cho một tiến trình hoặc phiên làm việc. Cửa sổ này cung cấp dữ liệu đầu vào chính cho Bộ trích xuất tuần tự tại Mục 2.3. Kích thước bị chặn trên bởi độ dài chuỗi tối đa của kiến trúc encoder, với giá trị cụ thể sẽ được xác lập tại Mục 2.3 khi kiến trúc được khóa.",
-      "Cửa sổ trung hạn Medium-term Window: bao phủ lịch sử hành vi của thực thể trong phạm vi thời gian trung (hyperparameter, ví dụ: vài giờ đến một ngày; khóa bằng Validation budget), phản ánh các pattern hành vi đặc trưng của người dùng/tiến trình và cung cấp ngữ cảnh phát hiện leo thang đặc quyền hoặc lateral movement. Cửa sổ này được duy trì trong trạng thái hữu hạn thông qua cơ chế nén trạng thái (state summary/sketch) đã xác lập tại Mục 2.1.2.",
-      "Cửa sổ dài hạn/Tóm tắt trạng thái Long-term State Summary: thay vì lưu trữ toàn bộ lịch sử thô (vi phạm ), trạng thái dài hạn được duy trì dưới dạng các sketch thống kê nén gọn (ví dụ: Count-Min Sketch về tần suất hành vi loại sự kiện, hàm suy giảm trọng số cạnh theo thời gian). Đây chính là đánh đổi cốt lõi Long-Horizon Context Trade-off đã được xác lập tại Mục 2.1.2: chi phí tính toán và bộ nhớ cụ thể của phụ thuộc vào lựa chọn cấu trúc sketch tại Mục 2.3–2.4.",
-      "Ba cửa sổ không độc lập mà có quan hệ phân cấp: theo thứ tự thời gian, và là tóm tắt nén của lịch sử trước . Phân cấp này đảm bảo cùng một evidence có thể xuất hiện ở nhiều scale gồm Ws, Wm và Wl dưới dạng bài biểu diễn khác nhau, nhưng không có thông tin tương lai nào bị nạp vào cửa sổ hiện tại (nguyên lý Strictly Causal / Zero Lookahead từ Mục 2.1.3). Sơ đồ phân cấp cụ thể và giao diện đầu ra từ sang các bộ trích xuất tại Mục 2.3 sẽ được hình thức hóa khi kiến trúc được xác lập."
     ]
   },
   {
