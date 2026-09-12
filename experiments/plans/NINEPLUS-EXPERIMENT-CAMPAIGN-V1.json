@@ -1,0 +1,262 @@
+{
+  "campaign_id": "NINEPLUS-EXPERIMENT-CAMPAIGN-V1",
+  "version": "1.0.0",
+  "created_at_utc": "2026-09-12T18:25:00Z",
+  "baseline_commit": "8a00e67f79a9e787d3eb9e29f4c483aed4764246",
+  "namespace": "NEW_9PLUS_CAMPAIGN",
+  "legacy_baseline_status": "FROZEN",
+  "master_docx_status": "UNTOUCHED_FROZEN",
+  "test_firewall": {
+    "test_opened": false,
+    "test_read_count": 0,
+    "policy": "CRYPTOGRAPHIC_SEALED_ZERO_READ",
+    "enforced_by": "RuntimeTestFirewallGuard",
+    "violation_exception": "TestSetSealedError"
+  },
+  "optimizer_step_accounting": {
+    "legacy_stage_a2_optimizer_steps": 29796,
+    "phase0_new_backbone_optimizer_steps": 0,
+    "phase0_new_probe_optimizer_steps": 0,
+    "phase0_new_mil_optimizer_steps": 0
+  },
+  "hardware_environment": {
+    "execution_provider": "LOCAL_WINDOWS_GPU",
+    "device_name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+    "vram_total_bytes": 4294967296,
+    "vram_gb": 4.0,
+    "compute_capability": "8.6",
+    "cuda_version": "12.4",
+    "pytorch_version": "2.6.0+cu124",
+    "python_version": "3.12.8",
+    "cublas_workspace_config": ":4096:8",
+    "sweet_spot_profile_script": "scripts/set_training_sweetspot.ps1",
+    "proven_sweet_spot_runtime": "94.7 min/train epoch, 7.5 min/val epoch (~102.2 min/total epoch, 20.43h/12-epoch run)"
+  },
+  "statistical_framework": {
+    "bootstrap_recomputations": 2000,
+    "bootstrap_seed": 10007,
+    "alpha": 0.05,
+    "multiplicity_corrections": {
+      "family_h1": "Bonferroni",
+      "family_h2": "Bonferroni",
+      "family_h3": "Benjamini-Hochberg FDR",
+      "family_h4": "Conjunctive SLO"
+    },
+    "independent_cluster_unit": "HDFS Block ID (session-level cluster) / BGL Temporal Node Cluster"
+  },
+  "pilot_policy": {
+    "pilot_seeds": [42],
+    "pilot_epochs": 2,
+    "pilot_status": "PILOT_DEBUG_ONLY",
+    "pilot_pooling_rule": "STRICT_PROHIBITION_OF_PILOT_DATA_IN_CONFIRMATORY_CONCLUSIONS"
+  },
+  "seed_policy": {
+    "confirmatory_seeds": [42, 7, 999],
+    "reserve_seeds": [1337, 2024],
+    "seed_allocation_rationale": "3 identical-protocol seeds provide valid variance estimation and paired cluster bootstrap within the 15-day compute budget without heterogeneity confounders."
+  },
+  "campaign_budget_tiers": {
+    "MINIMUM_9PLUS_CAMPAIGN": {
+      "description": "Probe-centric campaign using frozen backbones (Stage A1 & A2) + H1/H2/H3/H4 evaluations + 1 multi-view pilot",
+      "new_backbone_runs": 1,
+      "probe_runs": 15,
+      "total_gpu_hours": 10.5,
+      "wall_clock_hours": 14.0,
+      "disk_gb": 5.0
+    },
+    "RECOMMENDED_CAMPAIGN": {
+      "description": "Full H1, H3, H4 on frozen models + Canonical 3-seed end-to-end Multi-View training (Seeds 42, 7, 999) + Unaligned ablation run",
+      "new_backbone_runs": 5,
+      "probe_runs": 25,
+      "total_gpu_hours": 92.6,
+      "wall_clock_hours": 110.0,
+      "disk_gb": 15.0
+    },
+    "FULL_CAMPAIGN": {
+      "description": "5 canonical seeds across all multi-view and single-view configurations + PCGrad (if implemented) + H5 privacy frontier",
+      "new_backbone_runs": 12,
+      "probe_runs": 50,
+      "total_gpu_hours": 240.0,
+      "wall_clock_hours": 280.0,
+      "disk_gb": 35.0
+    }
+  },
+  "experiment_families": [
+    {
+      "family_id": "FAMILY_H2_MULTIVIEW_ABLATION",
+      "priority": 1,
+      "status": "PREREGISTERED_LOCKED",
+      "research_question": "Does joint multi-view alignment (Sequence + Temporal Graph with VICReg) outperform single-view baselines (Sequence-only, Graph-only) and unaligned fusion without representation collapse and without negative transfer?",
+      "hypothesis": "Aligned multi-view representation z_mv achieves higher Average Precision (AP) on downstream detection than Sequence-only and Graph-only baselines by at least margin epsilon (-0.02), significantly beats unaligned fusion (delta > 0, p < 0.05 Bonferroni-corrected), and maintains latent variance Var(z) >= 0.01.",
+      "construct": "Multi-View Complementarity & Negative Transfer Prevention",
+      "independent_variable": "Representation View Modality (sequence_only, graph_only, unaligned_fusion, aligned_vicreg_fusion)",
+      "dependent_metric": "Average Precision (AP) Difference over Clusters, Latent Variance, Representation Collapse Flag",
+      "baseline": "Sequence-only (Stage A1 Transformer) and Graph-only (Stage A2 TGNN), Unaligned Concatenation",
+      "treatment": "MultiViewRepresentationModel (mode='aligned', VICReg sim/var/cov loss, Gated Dynamic Fusion)",
+      "dataset": "HDFS LogHub Benchmark (DATA-HDFS-001)",
+      "split": "SPL-HDFS-001 Strict Causal Temporal Split (Train: 35,000 sessions / 586,577 events; Val: 7,500 sessions / 119,531 events)",
+      "checkpoint_policy": "Checkpoint on global validation loss minimum; last checkpoint preserved; operational stream cursor serialized",
+      "frozen_trainable_parameters": {
+        "pretraining": "Backbone extractors, projection heads, fusion gates all trainable",
+        "downstream_probing": "Backbone strictly FROZEN (grad == 0); capacity-controlled linear probe (dim=128 to 2) trained on Train, evaluated on Val"
+      },
+      "seeds": [42, 7, 999],
+      "epoch_step_budget": {
+        "epochs_per_run": 12,
+        "steps_per_epoch": 573,
+        "max_optimizer_steps": 6876,
+        "window_size": 256,
+        "gradient_accumulation_steps": 4,
+        "effective_batch_events": 1024
+      },
+      "scheduler": {
+        "type": "LinearWarmupCosineDecay",
+        "initial_lr": 0.0005,
+        "min_lr": 0.00001,
+        "warmup_ratio": 0.05,
+        "warmup_steps": 343,
+        "optimizer": "AdamW",
+        "weight_decay": 0.01,
+        "betas": [0.9, 0.98]
+      },
+      "warmup": "343 steps (5% of 6,876 steps)",
+      "stopping_rule": "Early stopping with patience=3 completed epochs on global validation loss or ceiling of 12 completed epochs",
+      "primary_metric": "Average Precision (AP) Difference over Clusters with Paired Cluster Bootstrap (B=2000, seed=10007, alpha=0.05)",
+      "secondary_metrics": [
+        "PR-AUC",
+        "Macro-F1",
+        "Latent Representation Variance",
+        "VICReg Invariance/Variance/Covariance Losses",
+        "Gate Weight Alpha Distribution"
+      ],
+      "decision_rule": "SUPPORTED if boot_vs_seq['observed_delta'] >= -0.02 and boot_vs_graph['observed_delta'] >= -0.02 and boot_vs_unaligned['verdict'] == 'SUPPORTED' and not variance_collapsed. FALSIFIED if boot_vs_seq or boot_vs_graph is FALSIFIED (significantly worse) or variance_collapsed. INCONCLUSIVE otherwise.",
+      "allowed_inference": "Multi-view representation successfully fuses sequential and relational structural telemetry without catastrophic interference on the evaluated temporal distribution.",
+      "forbidden_inference": "Does NOT prove negative-transfer prevention on out-of-distribution log formats or unmodeled zero-day event classes."
+    },
+    {
+      "family_id": "FAMILY_H1_PARAMETER_FIDELITY",
+      "priority": 2,
+      "status": "PREREGISTERED_LOCKED",
+      "research_question": "Does security-aware dynamic parameter representation preserve dynamic security-relevant semantics compared to template-only abstraction under identical architecture, split, and probe capacity?",
+      "hypothesis": "Parameter-aware representation z_param achieves statistically superior downstream Average Precision (AP) and parameter category recovery over template-only representation z_template under identical frozen backbone capacity.",
+      "construct": "Parameter Semantic Fidelity",
+      "independent_variable": "Dynamic Parameter Representation (Parameter-Aware with typed slots vs Template-Only with param_slots=None)",
+      "dependent_metric": "Downstream Average Precision (AP) on Anomaly Target, Parameter Category Probe Recovery AP",
+      "baseline": "Template-only representation z_template (param_slots masked/zeroed)",
+      "treatment": "Parameter-aware representation z_param (bounded multi-slot typed parameters K=4)",
+      "dataset": "HDFS LogHub Benchmark (DATA-HDFS-001) & BGL Supercomputer (DATA-BGL-001)",
+      "split": "Strict Causal Temporal Split (Train fit, Val evaluate)",
+      "checkpoint_policy": "Frozen pre-existing Stage A1 & Stage A2 & Multi-View checkpoints",
+      "frozen_trainable_parameters": {
+        "backbone": "STRICTLY FROZEN (0 optimizer steps)",
+        "probe": "Linear / Logistic Probe W in R^{128 x C} trained on Train split"
+      },
+      "seeds": [42, 7, 999],
+      "epoch_step_budget": {
+        "probe_epochs": 50,
+        "patience": 5,
+        "batch_size": 128
+      },
+      "scheduler": {
+        "optimizer": "AdamW",
+        "learning_rate": 0.001,
+        "weight_decay": 0.001
+      },
+      "warmup": "None (convex/linear probe)",
+      "stopping_rule": "Validation loss patience=5",
+      "primary_metric": "Average Precision (AP) Difference over Clusters with Paired Cluster Bootstrap (B=2000, seed=10007, alpha=0.05, Bonferroni)",
+      "secondary_metrics": [
+        "PR-AUC",
+        "Macro-F1",
+        "Direct Parameter Classification Accuracy"
+      ],
+      "decision_rule": "SUPPORTED if boot['verdict'] == 'SUPPORTED' (delta > 0, CI_lower > 0). FALSIFIED if boot['verdict'] == 'FALSIFIED' (delta <= 0). INCONCLUSIVE otherwise.",
+      "allowed_inference": "Security-aware parameter representation linearly preserves security-relevant parameter dynamics that template-only abstraction discards.",
+      "forbidden_inference": "Does NOT imply exact reconstruction of arbitrary unmapped string payloads or natural language text."
+    },
+    {
+      "family_id": "FAMILY_H3_ROBUSTNESS_PERTURBATION",
+      "priority": 3,
+      "status": "PREREGISTERED_LOCKED",
+      "research_question": "Are learned representations robust against semantic-preserving perturbations and shortcut shifts (P01..P12) without requiring backbone retraining?",
+      "hypothesis": "Representation quality degradation under 12 semantic-preserving perturbation operators (P01..P12) on the Validation split is strictly bounded (AP retention >= 80%), controlling False Discovery Rate at q < 0.05 via Benjamini-Hochberg.",
+      "construct": "Representation Invariance & Shortcut Robustness",
+      "independent_variable": "Validation Perturbation Operator (P01 Token Deletion, P02 Token Insertion Noise, P03 Parameter Obfuscation, P04 Event Order Jitter, P05 IP Translation, P06 Path Aliasing, P07 Burst Interleaving, P08 Unseen Template Shift, P09 Host Reassignment, P10 Pseudonym Rotation, P11 Timestamp Skew, P12 Composite)",
+      "dependent_metric": "Relative AP Retention Ratio AP(z') / AP(z), Delta AP, BH-FDR Adjusted q-values",
+      "baseline": "Clean Unperturbed Validation Representation",
+      "treatment": "Perturbed Validation Representation z' passed through frozen probe",
+      "dataset": "HDFS LogHub Benchmark (DATA-HDFS-001)",
+      "split": "Validation Split Only (7,500 sessions / 119,531 events)",
+      "checkpoint_policy": "Frozen checkpoints from Stage A1, Stage A2, and Multi-View",
+      "frozen_trainable_parameters": {
+        "backbone": "STRICTLY FROZEN (0 optimizer steps)",
+        "probe": "STRICTLY FROZEN (0 optimizer steps)"
+      },
+      "seeds": [42, 7, 999],
+      "epoch_step_budget": {
+        "epochs": 0,
+        "optimizer_steps": 0,
+        "evaluation_batches": "Full Validation Split (467 windows w256)"
+      },
+      "scheduler": {
+        "type": "None"
+      },
+      "warmup": "None",
+      "stopping_rule": "Deterministic evaluation completion",
+      "primary_metric": "Mean Relative AP Retention across P01..P12 under Benjamini-Hochberg FDR (q < 0.05)",
+      "secondary_metrics": [
+        "Per-Operator Delta AP",
+        "Worst-Case Perturbation Drop",
+        "Cross-Seed Stability"
+      ],
+      "decision_rule": "SUPPORTED if mean AP retention >= 0.80 and no individual operator causes collapse to chance prevalence pi. FALSIFIED if mean retention < 0.50 or any operator drops AP below chance prevalence. INCONCLUSIVE otherwise.",
+      "allowed_inference": "Model representations resist superficial token deletions, formatting obfuscations, and timestamp concurrency jitter without collapsing.",
+      "forbidden_inference": "Does NOT imply robustness against semantic evasion attacks that fundamentally alter the causal execution graph."
+    },
+    {
+      "family_id": "FAMILY_H4_OPERATIONAL_SLO",
+      "priority": 4,
+      "status": "PREREGISTERED_LOCKED",
+      "research_question": "Does the end-to-end multi-view extraction and fusion inference pipeline satisfy the operational Service Level Objective (SLO) on edge hardware?",
+      "hypothesis": "The inference pipeline conjunctively satisfies all three SLO thresholds: p95 latency <= 10.0 ms/sequence, peak host RAM <= 500.0 MB, processing throughput >= 10,000 telemetry events/sec.",
+      "construct": "Operational Feasibility on Edge Telemetry Hardware",
+      "independent_variable": "Pipeline Execution Mode (End-to-End vs Incremental Fusion)",
+      "dependent_metric": "p95 Latency (ms), Peak RAM (MB), Peak VRAM (MB), Event Throughput (events/s)",
+      "baseline": "Static Pre-Registered SLO Thresholds (10 ms, 500 MB, 10,000 events/s)",
+      "treatment": "Hardware benchmark harness in research_agent.experiments.protocols.h4_operational_benchmark",
+      "dataset": "HDFS Validation Telemetry Stream (119,531 events)",
+      "split": "Validation Split",
+      "checkpoint_policy": "Frozen Multi-View Checkpoint",
+      "frozen_trainable_parameters": {
+        "backbone": "STRICTLY FROZEN (0 optimizer steps)"
+      },
+      "seeds": [42],
+      "epoch_step_budget": {
+        "optimizer_steps": 0
+      },
+      "scheduler": {
+        "type": "None"
+      },
+      "warmup": "None",
+      "stopping_rule": "Benchmark loop completion (1,000 sequences)",
+      "primary_metric": "Conjunctive Binary SLO Satisfaction (All 3 conditions == True)",
+      "secondary_metrics": [
+        "p50 and p99 latency",
+        "Peak CUDA VRAM allocated",
+        "Continuous RAM profile"
+      ],
+      "decision_rule": "SUPPORTED if (p95 <= 10.0) and (peak_ram <= 500.0) and (throughput >= 10000.0). FALSIFIED if any of the three criteria fail. INCONCLUSIVE if system interrupt occurs.",
+      "allowed_inference": "The deployed inference pipeline meets operational constraints for real-time telemetry streaming on host systems.",
+      "forbidden_inference": "Does NOT measure cluster-wide distributed coordination or network ingestion bottlenecks."
+    },
+    {
+      "family_id": "FAMILY_H5_PRIVACY_FRONTIER",
+      "priority": 5,
+      "status": "SURVEYED_DEFERRED",
+      "research_question": "How does controlled linkability compare against raw identifiers and extreme anonymization across four distinct adversarial attacks?",
+      "hypothesis": "Controlled linkability maintains downstream utility while reducing multi-adversary advantage (2 * |AUC - 0.5|) compared to raw identifiers.",
+      "construct": "Utility–Privacy Pareto Frontier",
+      "status_notes": "Code surveyed; deferred to post-H2/H1/H3 phase to preserve compute budget for highest priority confirmatory ablations."
+    }
+  ]
+}
