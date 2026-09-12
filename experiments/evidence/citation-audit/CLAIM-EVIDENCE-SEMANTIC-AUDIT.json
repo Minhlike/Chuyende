@@ -32,7 +32,7 @@
   "per_claim_records": [
     {
       "claim_id": "CLM-001",
-      "parent_detected_id": "DET-P115-S00",
+      "parent_detected_id": "DET-P124-S00",
       "parent_text_hash_expected": "608eebca4f66",
       "parent_text_hash_observed": "608eebca4f66",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -51,7 +51,7 @@
     },
     {
       "claim_id": "CLM-002",
-      "parent_detected_id": "DET-P095-S00",
+      "parent_detected_id": "DET-P104-S00",
       "parent_text_hash_expected": "b7386a3e0708",
       "parent_text_hash_observed": "b7386a3e0708",
       "claim_class": "LITERATURE_DIRECT",
@@ -69,7 +69,7 @@
     },
     {
       "claim_id": "CLM-003",
-      "parent_detected_id": "DET-P095-S01",
+      "parent_detected_id": "DET-P104-S01",
       "parent_text_hash_expected": "13c674c81a33",
       "parent_text_hash_observed": "13c674c81a33",
       "claim_class": "LITERATURE_DIRECT",
@@ -88,7 +88,7 @@
     },
     {
       "claim_id": "CLM-004",
-      "parent_detected_id": "DET-P095-S02",
+      "parent_detected_id": "DET-P104-S02",
       "parent_text_hash_expected": "5159ce1b213c",
       "parent_text_hash_observed": "5159ce1b213c",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -106,7 +106,7 @@
     },
     {
       "claim_id": "CLM-005",
-      "parent_detected_id": "DET-P097-S00",
+      "parent_detected_id": "DET-P106-S00",
       "parent_text_hash_expected": "4ce299b080bf",
       "parent_text_hash_observed": "4ce299b080bf",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -125,7 +125,7 @@
     },
     {
       "claim_id": "CLM-006A",
-      "parent_detected_id": "DET-P097-S02",
+      "parent_detected_id": "DET-P106-S02",
       "parent_text_hash_expected": "0ea32de5ea77",
       "parent_text_hash_observed": "0ea32de5ea77",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -144,7 +144,7 @@
     },
     {
       "claim_id": "CLM-006B",
-      "parent_detected_id": "DET-P097-S03",
+      "parent_detected_id": "DET-P106-S03",
       "parent_text_hash_expected": "bb15cf5bdc99",
       "parent_text_hash_observed": "bb15cf5bdc99",
       "claim_class": "LITERATURE_DIRECT",
@@ -162,7 +162,7 @@
     },
     {
       "claim_id": "CLM-007",
-      "parent_detected_id": "DET-P097-S04",
+      "parent_detected_id": "DET-P106-S04",
       "parent_text_hash_expected": "f6ea8db5414d",
       "parent_text_hash_observed": "f6ea8db5414d",
       "claim_class": "LITERATURE_DIRECT",
@@ -181,7 +181,7 @@
     },
     {
       "claim_id": "CLM-008",
-      "parent_detected_id": "DET-P103-S00",
+      "parent_detected_id": "DET-P112-S00",
       "parent_text_hash_expected": "ee7ce1f1fc6f",
       "parent_text_hash_observed": "ee7ce1f1fc6f",
       "claim_class": "LITERATURE_DIRECT",
@@ -200,7 +200,7 @@
     },
     {
       "claim_id": "CLM-009",
-      "parent_detected_id": "DET-P103-S01",
+      "parent_detected_id": "DET-P112-S01",
       "parent_text_hash_expected": "256c477f045a",
       "parent_text_hash_observed": "256c477f045a",
       "claim_class": "LITERATURE_DIRECT",
@@ -218,7 +218,7 @@
     },
     {
       "claim_id": "CLM-010",
-      "parent_detected_id": "DET-P103-S02",
+      "parent_detected_id": "DET-P112-S02",
       "parent_text_hash_expected": "203943d9a08e",
       "parent_text_hash_observed": "203943d9a08e",
       "claim_class": "LITERATURE_DIRECT",
@@ -236,7 +236,7 @@
     },
     {
       "claim_id": "CLM-011",
-      "parent_detected_id": "DET-P103-S03",
+      "parent_detected_id": "DET-P112-S03",
       "parent_text_hash_expected": "b34468e0d3e1",
       "parent_text_hash_observed": "b34468e0d3e1",
       "claim_class": "LITERATURE_DIRECT",
@@ -255,7 +255,7 @@
     },
     {
       "claim_id": "CLM-012",
-      "parent_detected_id": "DET-P104-S01",
+      "parent_detected_id": "DET-P113-S01",
       "parent_text_hash_expected": "64c8474de730",
       "parent_text_hash_observed": "64c8474de730",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -273,7 +273,7 @@
     },
     {
       "claim_id": "CLM-013",
-      "parent_detected_id": "DET-P111-S00",
+      "parent_detected_id": "DET-P120-S00",
       "parent_text_hash_expected": "07b771f4fec9",
       "parent_text_hash_observed": "07b771f4fec9",
       "claim_class": "LITERATURE_DIRECT",
@@ -292,7 +292,7 @@
     },
     {
       "claim_id": "CLM-014",
-      "parent_detected_id": "DET-P111-S01",
+      "parent_detected_id": "DET-P120-S01",
       "parent_text_hash_expected": "5072d84a48c9",
       "parent_text_hash_observed": "5072d84a48c9",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -310,7 +310,7 @@
     },
     {
       "claim_id": "CLM-015",
-      "parent_detected_id": "DET-P115-S00",
+      "parent_detected_id": "DET-P124-S00",
       "parent_text_hash_expected": "608eebca4f66",
       "parent_text_hash_observed": "608eebca4f66",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -329,7 +329,7 @@
     },
     {
       "claim_id": "CLM-016",
-      "parent_detected_id": "DET-P116-S00",
+      "parent_detected_id": "DET-P125-S00",
       "parent_text_hash_expected": "5363c1be75e6",
       "parent_text_hash_observed": "5363c1be75e6",
       "claim_class": "LITERATURE_DIRECT",
@@ -347,7 +347,7 @@
     },
     {
       "claim_id": "CLM-017",
-      "parent_detected_id": "DET-P117-S00",
+      "parent_detected_id": "DET-P126-S00",
       "parent_text_hash_expected": "dd8d5f587cbe",
       "parent_text_hash_observed": "dd8d5f587cbe",
       "claim_class": "LITERATURE_DIRECT",
@@ -370,7 +370,7 @@
     },
     {
       "claim_id": "CLM-018",
-      "parent_detected_id": "DET-P125-S00",
+      "parent_detected_id": "DET-P134-S00",
       "parent_text_hash_expected": "11085d2ffb49",
       "parent_text_hash_observed": "11085d2ffb49",
       "claim_class": "LITERATURE_DIRECT",
@@ -388,7 +388,7 @@
     },
     {
       "claim_id": "CLM-019",
-      "parent_detected_id": "DET-P125-S01",
+      "parent_detected_id": "DET-P134-S01",
       "parent_text_hash_expected": "3208981f6083",
       "parent_text_hash_observed": "3208981f6083",
       "claim_class": "LITERATURE_DIRECT",
@@ -406,7 +406,7 @@
     },
     {
       "claim_id": "CLM-020",
-      "parent_detected_id": "DET-P129-S01",
+      "parent_detected_id": "DET-P138-S01",
       "parent_text_hash_expected": "31fe10f04572",
       "parent_text_hash_observed": "31fe10f04572",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -426,7 +426,7 @@
     },
     {
       "claim_id": "CLM-021",
-      "parent_detected_id": "DET-P129-S02",
+      "parent_detected_id": "DET-P138-S02",
       "parent_text_hash_expected": "21838cb94897",
       "parent_text_hash_observed": "21838cb94897",
       "claim_class": "AUTHOR_PROPOSED_EVALUATION_FRAMEWORK",
@@ -446,7 +446,7 @@
     },
     {
       "claim_id": "CLM-022",
-      "parent_detected_id": "DET-P129-S03",
+      "parent_detected_id": "DET-P138-S03",
       "parent_text_hash_expected": "686fe50a15ec",
       "parent_text_hash_observed": "686fe50a15ec",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -464,7 +464,7 @@
     },
     {
       "claim_id": "CLM-023",
-      "parent_detected_id": "DET-P134-S01",
+      "parent_detected_id": "DET-P143-S01",
       "parent_text_hash_expected": "1f89d3199ba1",
       "parent_text_hash_observed": "1f89d3199ba1",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -482,7 +482,7 @@
     },
     {
       "claim_id": "CLM-024",
-      "parent_detected_id": "DET-P135-S00",
+      "parent_detected_id": "DET-P144-S00",
       "parent_text_hash_expected": "9d416dc60183",
       "parent_text_hash_observed": "9d416dc60183",
       "claim_class": "LITERATURE_DIRECT",
@@ -500,7 +500,7 @@
     },
     {
       "claim_id": "CLM-025",
-      "parent_detected_id": "DET-P137-S01",
+      "parent_detected_id": "DET-P146-S01",
       "parent_text_hash_expected": "d31c503f74e6",
       "parent_text_hash_observed": "d31c503f74e6",
       "claim_class": "LITERATURE_DIRECT",
@@ -519,7 +519,7 @@
     },
     {
       "claim_id": "CLM-026",
-      "parent_detected_id": "DET-P139-S00",
+      "parent_detected_id": "DET-P148-S00",
       "parent_text_hash_expected": "335c5b056171",
       "parent_text_hash_observed": "335c5b056171",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -539,7 +539,7 @@
     },
     {
       "claim_id": "CLM-027",
-      "parent_detected_id": "DET-P141-S00",
+      "parent_detected_id": "DET-P150-S00",
       "parent_text_hash_expected": "20bc90fe4ccb",
       "parent_text_hash_observed": "20bc90fe4ccb",
       "claim_class": "LITERATURE_DIRECT",
@@ -558,7 +558,7 @@
     },
     {
       "claim_id": "CLM-028",
-      "parent_detected_id": "DET-P142-S00",
+      "parent_detected_id": "DET-P151-S00",
       "parent_text_hash_expected": "c86d44a4c387",
       "parent_text_hash_observed": "c86d44a4c387",
       "claim_class": "LITERATURE_DIRECT",
@@ -577,7 +577,7 @@
     },
     {
       "claim_id": "CLM-029",
-      "parent_detected_id": "DET-P145-S01",
+      "parent_detected_id": "DET-P154-S01",
       "parent_text_hash_expected": "1daced1ce22b",
       "parent_text_hash_observed": "1daced1ce22b",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -593,7 +593,7 @@
     },
     {
       "claim_id": "CLM-030",
-      "parent_detected_id": "DET-P147-S00",
+      "parent_detected_id": "DET-P156-S00",
       "parent_text_hash_expected": "bbce590434d8",
       "parent_text_hash_observed": "bbce590434d8",
       "claim_class": "LITERATURE_DIRECT",
@@ -611,7 +611,7 @@
     },
     {
       "claim_id": "CLM-031",
-      "parent_detected_id": "DET-P149-S00",
+      "parent_detected_id": "DET-P158-S00",
       "parent_text_hash_expected": "3e404d80368f",
       "parent_text_hash_observed": "3e404d80368f",
       "claim_class": "LITERATURE_DIRECT",
@@ -629,7 +629,7 @@
     },
     {
       "claim_id": "CLM-032",
-      "parent_detected_id": "DET-P151-S00",
+      "parent_detected_id": "DET-P160-S00",
       "parent_text_hash_expected": "24b988fb8057",
       "parent_text_hash_observed": "24b988fb8057",
       "claim_class": "LITERATURE_DIRECT",
@@ -648,7 +648,7 @@
     },
     {
       "claim_id": "CLM-033",
-      "parent_detected_id": "DET-P153-S00",
+      "parent_detected_id": "DET-P162-S00",
       "parent_text_hash_expected": "977b34572607",
       "parent_text_hash_observed": "977b34572607",
       "claim_class": "LITERATURE_DIRECT",
@@ -670,7 +670,7 @@
     },
     {
       "claim_id": "CLM-034",
-      "parent_detected_id": "DET-P154-S00",
+      "parent_detected_id": "DET-P163-S00",
       "parent_text_hash_expected": "bad41e0bf75b",
       "parent_text_hash_observed": "bad41e0bf75b",
       "claim_class": "LITERATURE_DIRECT",
@@ -688,7 +688,7 @@
     },
     {
       "claim_id": "CLM-035",
-      "parent_detected_id": "DET-P154-S01",
+      "parent_detected_id": "DET-P163-S01",
       "parent_text_hash_expected": "6254acb604b9",
       "parent_text_hash_observed": "6254acb604b9",
       "claim_class": "LITERATURE_DIRECT",
@@ -706,7 +706,7 @@
     },
     {
       "claim_id": "CLM-036",
-      "parent_detected_id": "DET-P156-S00",
+      "parent_detected_id": "DET-P165-S00",
       "parent_text_hash_expected": "8d3382505ca1",
       "parent_text_hash_observed": "8d3382505ca1",
       "claim_class": "LITERATURE_DIRECT",
@@ -724,7 +724,7 @@
     },
     {
       "claim_id": "CLM-037",
-      "parent_detected_id": "DET-P157-S00",
+      "parent_detected_id": "DET-P166-S00",
       "parent_text_hash_expected": "181ff2f35e10",
       "parent_text_hash_observed": "181ff2f35e10",
       "claim_class": "LITERATURE_DIRECT",
@@ -745,7 +745,7 @@
     },
     {
       "claim_id": "CLM-038",
-      "parent_detected_id": "DET-P157-S01",
+      "parent_detected_id": "DET-P166-S01",
       "parent_text_hash_expected": "b28b3d68456f",
       "parent_text_hash_observed": "b28b3d68456f",
       "claim_class": "LITERATURE_DIRECT",
@@ -763,7 +763,7 @@
     },
     {
       "claim_id": "CLM-039",
-      "parent_detected_id": "DET-P157-S02",
+      "parent_detected_id": "DET-P166-S02",
       "parent_text_hash_expected": "6b2692a92209",
       "parent_text_hash_observed": "6b2692a92209",
       "claim_class": "LITERATURE_DIRECT",
@@ -781,7 +781,7 @@
     },
     {
       "claim_id": "CLM-040",
-      "parent_detected_id": "DET-P157-S04",
+      "parent_detected_id": "DET-P166-S04",
       "parent_text_hash_expected": "440be9c71907",
       "parent_text_hash_observed": "440be9c71907",
       "claim_class": "LITERATURE_DIRECT",
@@ -799,7 +799,7 @@
     },
     {
       "claim_id": "CLM-041",
-      "parent_detected_id": "DET-P157-S05",
+      "parent_detected_id": "DET-P166-S05",
       "parent_text_hash_expected": "86f0a5e6dcd5",
       "parent_text_hash_observed": "86f0a5e6dcd5",
       "claim_class": "AUTHOR_HYPOTHESIS",
@@ -817,7 +817,7 @@
     },
     {
       "claim_id": "CLM-042",
-      "parent_detected_id": "DET-P158-S00",
+      "parent_detected_id": "DET-P167-S00",
       "parent_text_hash_expected": "3fd3356bed7a",
       "parent_text_hash_observed": "3fd3356bed7a",
       "claim_class": "LITERATURE_DIRECT",
@@ -837,7 +837,7 @@
     },
     {
       "claim_id": "CLM-043",
-      "parent_detected_id": "DET-P160-S00",
+      "parent_detected_id": "DET-P169-S00",
       "parent_text_hash_expected": "b18c91649441",
       "parent_text_hash_observed": "b18c91649441",
       "claim_class": "LITERATURE_DIRECT",
@@ -856,7 +856,7 @@
     },
     {
       "claim_id": "CLM-044",
-      "parent_detected_id": "DET-P162-S00",
+      "parent_detected_id": "DET-P171-S00",
       "parent_text_hash_expected": "0c39d1298df0",
       "parent_text_hash_observed": "0c39d1298df0",
       "claim_class": "LITERATURE_DIRECT",
@@ -874,7 +874,7 @@
     },
     {
       "claim_id": "CLM-045",
-      "parent_detected_id": "DET-P163-S00",
+      "parent_detected_id": "DET-P172-S00",
       "parent_text_hash_expected": "20f3af935d03",
       "parent_text_hash_observed": "20f3af935d03",
       "claim_class": "LITERATURE_DIRECT",
@@ -898,7 +898,7 @@
     },
     {
       "claim_id": "CLM-046",
-      "parent_detected_id": "DET-P163-S01",
+      "parent_detected_id": "DET-P172-S01",
       "parent_text_hash_expected": "35012d53f4bd",
       "parent_text_hash_observed": "35012d53f4bd",
       "claim_class": "LITERATURE_DIRECT",
@@ -921,7 +921,7 @@
     },
     {
       "claim_id": "CLM-047",
-      "parent_detected_id": "DET-P164-S01",
+      "parent_detected_id": "DET-P173-S01",
       "parent_text_hash_expected": "8541d333052e",
       "parent_text_hash_observed": "8541d333052e",
       "claim_class": "LITERATURE_DIRECT",
@@ -939,7 +939,7 @@
     },
     {
       "claim_id": "CLM-048",
-      "parent_detected_id": "DET-P171-S00",
+      "parent_detected_id": "DET-P180-S00",
       "parent_text_hash_expected": "84a03d0f306b",
       "parent_text_hash_observed": "84a03d0f306b",
       "claim_class": "LITERATURE_DIRECT",
@@ -960,7 +960,7 @@
     },
     {
       "claim_id": "CLM-049",
-      "parent_detected_id": "DET-P173-S00",
+      "parent_detected_id": "DET-P182-S00",
       "parent_text_hash_expected": "018f230bf785",
       "parent_text_hash_observed": "018f230bf785",
       "claim_class": "LITERATURE_DIRECT",
@@ -979,7 +979,7 @@
     },
     {
       "claim_id": "CLM-050",
-      "parent_detected_id": "DET-P174-S00",
+      "parent_detected_id": "DET-P183-S00",
       "parent_text_hash_expected": "1b53027f9aaf",
       "parent_text_hash_observed": "1b53027f9aaf",
       "claim_class": "LITERATURE_DIRECT",
@@ -998,7 +998,7 @@
     },
     {
       "claim_id": "CLM-051",
-      "parent_detected_id": "DET-P178-S00",
+      "parent_detected_id": "DET-P187-S00",
       "parent_text_hash_expected": "5a45cef8a72c",
       "parent_text_hash_observed": "5a45cef8a72c",
       "claim_class": "LITERATURE_DIRECT",
@@ -1021,7 +1021,7 @@
     },
     {
       "claim_id": "CLM-052",
-      "parent_detected_id": "DET-P179-S00",
+      "parent_detected_id": "DET-P188-S00",
       "parent_text_hash_expected": "e9524dd47f75",
       "parent_text_hash_observed": "e9524dd47f75",
       "claim_class": "LITERATURE_DIRECT",
@@ -1040,7 +1040,7 @@
     },
     {
       "claim_id": "CLM-053",
-      "parent_detected_id": "DET-P183-S01",
+      "parent_detected_id": "DET-P192-S01",
       "parent_text_hash_expected": "251c5721119c",
       "parent_text_hash_observed": "251c5721119c",
       "claim_class": "LITERATURE_DIRECT",
@@ -1059,7 +1059,7 @@
     },
     {
       "claim_id": "CLM-054",
-      "parent_detected_id": "DET-P188-S00",
+      "parent_detected_id": "DET-P197-S00",
       "parent_text_hash_expected": "b8dfda0e5507",
       "parent_text_hash_observed": "b8dfda0e5507",
       "claim_class": "LITERATURE_DIRECT",
@@ -1079,7 +1079,7 @@
     },
     {
       "claim_id": "CLM-055",
-      "parent_detected_id": "DET-P189-S00",
+      "parent_detected_id": "DET-P198-S00",
       "parent_text_hash_expected": "169ed1072b81",
       "parent_text_hash_observed": "169ed1072b81",
       "claim_class": "LITERATURE_DIRECT",
@@ -1098,7 +1098,7 @@
     },
     {
       "claim_id": "CLM-056",
-      "parent_detected_id": "DET-P193-S00",
+      "parent_detected_id": "DET-P202-S00",
       "parent_text_hash_expected": "468e6e2d2e7f",
       "parent_text_hash_observed": "468e6e2d2e7f",
       "claim_class": "LITERATURE_DIRECT",
@@ -1117,7 +1117,7 @@
     },
     {
       "claim_id": "CLM-057",
-      "parent_detected_id": "DET-P194-S00",
+      "parent_detected_id": "DET-P203-S00",
       "parent_text_hash_expected": "ad79bf8e8e2d",
       "parent_text_hash_observed": "ad79bf8e8e2d",
       "claim_class": "LITERATURE_DIRECT",
@@ -1137,7 +1137,7 @@
     },
     {
       "claim_id": "CLM-058",
-      "parent_detected_id": "DET-P194-S01",
+      "parent_detected_id": "DET-P203-S01",
       "parent_text_hash_expected": "73af2ef7b421",
       "parent_text_hash_observed": "73af2ef7b421",
       "claim_class": "LITERATURE_DIRECT",
@@ -1155,7 +1155,7 @@
     },
     {
       "claim_id": "CLM-059",
-      "parent_detected_id": "DET-P194-S03",
+      "parent_detected_id": "DET-P203-S03",
       "parent_text_hash_expected": "299c4debe327",
       "parent_text_hash_observed": "299c4debe327",
       "claim_class": "LITERATURE_DIRECT",
@@ -1173,7 +1173,7 @@
     },
     {
       "claim_id": "CLM-060",
-      "parent_detected_id": "DET-P194-S04",
+      "parent_detected_id": "DET-P203-S04",
       "parent_text_hash_expected": "3ea65df7f1dc",
       "parent_text_hash_observed": "3ea65df7f1dc",
       "claim_class": "LITERATURE_DIRECT",
@@ -1191,7 +1191,7 @@
     },
     {
       "claim_id": "CLM-061",
-      "parent_detected_id": "DET-P201-S01",
+      "parent_detected_id": "DET-P210-S01",
       "parent_text_hash_expected": "d72f6f2c8df1",
       "parent_text_hash_observed": "d72f6f2c8df1",
       "claim_class": "LITERATURE_DIRECT",
@@ -1209,7 +1209,7 @@
     },
     {
       "claim_id": "CLM-062",
-      "parent_detected_id": "DET-P207-S02",
+      "parent_detected_id": "DET-P216-S02",
       "parent_text_hash_expected": "bc2bf21b1e81",
       "parent_text_hash_observed": "bc2bf21b1e81",
       "claim_class": "LITERATURE_DIRECT",
@@ -1227,7 +1227,7 @@
     },
     {
       "claim_id": "CLM-063",
-      "parent_detected_id": "DET-P221-S00",
+      "parent_detected_id": "DET-P230-S00",
       "parent_text_hash_expected": "cafbc615123e",
       "parent_text_hash_observed": "cafbc615123e",
       "claim_class": "LITERATURE_DIRECT",
@@ -1247,7 +1247,7 @@
     },
     {
       "claim_id": "CLM-064",
-      "parent_detected_id": "DET-P226-S00",
+      "parent_detected_id": "DET-P235-S00",
       "parent_text_hash_expected": "e0a3517ca71b",
       "parent_text_hash_observed": "e0a3517ca71b",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -1266,7 +1266,7 @@
     },
     {
       "claim_id": "CLM-065",
-      "parent_detected_id": "DET-P269-S00",
+      "parent_detected_id": "DET-P278-S00",
       "parent_text_hash_expected": "bcc45f8699b7",
       "parent_text_hash_observed": "bcc45f8699b7",
       "claim_class": "LITERATURE_DIRECT",
@@ -1284,7 +1284,7 @@
     },
     {
       "claim_id": "CLM-066",
-      "parent_detected_id": "DET-P270-S00",
+      "parent_detected_id": "DET-P279-S00",
       "parent_text_hash_expected": "19284daf2a6b",
       "parent_text_hash_observed": "19284daf2a6b",
       "claim_class": "LITERATURE_DIRECT",
@@ -1302,7 +1302,7 @@
     },
     {
       "claim_id": "CLM-067",
-      "parent_detected_id": "DET-P279-S02",
+      "parent_detected_id": "DET-P288-S02",
       "parent_text_hash_expected": "9882d3037326",
       "parent_text_hash_observed": "9882d3037326",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -1318,7 +1318,7 @@
     },
     {
       "claim_id": "CLM-068",
-      "parent_detected_id": "DET-P297-S00",
+      "parent_detected_id": "DET-P306-S00",
       "parent_text_hash_expected": "e07416c890ec",
       "parent_text_hash_observed": "e07416c890ec",
       "claim_class": "LITERATURE_DIRECT",
@@ -1336,7 +1336,7 @@
     },
     {
       "claim_id": "CLM-069A",
-      "parent_detected_id": "DET-P301-S00",
+      "parent_detected_id": "DET-P310-S00",
       "parent_text_hash_expected": "2ce33d4d90ad",
       "parent_text_hash_observed": "2ce33d4d90ad",
       "claim_class": "LITERATURE_DIRECT",
@@ -1354,7 +1354,7 @@
     },
     {
       "claim_id": "CLM-069B",
-      "parent_detected_id": "DET-P301-S01",
+      "parent_detected_id": "DET-P310-S01",
       "parent_text_hash_expected": "40b82c18b3c4",
       "parent_text_hash_observed": "40b82c18b3c4",
       "claim_class": "IMPLEMENTATION_VERIFIED",
@@ -1370,7 +1370,7 @@
     },
     {
       "claim_id": "CLM-070A",
-      "parent_detected_id": "DET-P304-S00",
+      "parent_detected_id": "DET-P313-S00",
       "parent_text_hash_expected": "f12a4252b1da",
       "parent_text_hash_observed": "f12a4252b1da",
       "claim_class": "LITERATURE_DIRECT",
@@ -1388,7 +1388,7 @@
     },
     {
       "claim_id": "CLM-070B",
-      "parent_detected_id": "DET-P304-S00",
+      "parent_detected_id": "DET-P313-S00",
       "parent_text_hash_expected": "f12a4252b1da",
       "parent_text_hash_observed": "f12a4252b1da",
       "claim_class": "IMPLEMENTATION_VERIFIED",
@@ -1404,7 +1404,7 @@
     },
     {
       "claim_id": "CLM-071",
-      "parent_detected_id": "DET-P332-S00",
+      "parent_detected_id": "DET-P341-S00",
       "parent_text_hash_expected": "506070c68c21",
       "parent_text_hash_observed": "506070c68c21",
       "claim_class": "LITERATURE_DIRECT",
@@ -1423,7 +1423,7 @@
     },
     {
       "claim_id": "CLM-072",
-      "parent_detected_id": "DET-P339-S01",
+      "parent_detected_id": "DET-P348-S01",
       "parent_text_hash_expected": "a1213caabf91",
       "parent_text_hash_observed": "a1213caabf91",
       "claim_class": "LITERATURE_DIRECT",
@@ -1445,7 +1445,7 @@
     },
     {
       "claim_id": "CLM-073",
-      "parent_detected_id": "DET-P348-S01",
+      "parent_detected_id": "DET-P357-S01",
       "parent_text_hash_expected": "197782fbd90d",
       "parent_text_hash_observed": "197782fbd90d",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -1463,7 +1463,7 @@
     },
     {
       "claim_id": "CLM-074",
-      "parent_detected_id": "DET-P358-S00",
+      "parent_detected_id": "DET-P367-S00",
       "parent_text_hash_expected": "7cae4170737d",
       "parent_text_hash_observed": "7cae4170737d",
       "claim_class": "LITERATURE_DIRECT",
@@ -1482,7 +1482,7 @@
     },
     {
       "claim_id": "CLM-075",
-      "parent_detected_id": "DET-P380-S00",
+      "parent_detected_id": "DET-P389-S00",
       "parent_text_hash_expected": "fa56ddc8372c",
       "parent_text_hash_observed": "fa56ddc8372c",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -1501,7 +1501,7 @@
     },
     {
       "claim_id": "CLM-076",
-      "parent_detected_id": "DET-P385-S00",
+      "parent_detected_id": "DET-P394-S00",
       "parent_text_hash_expected": "3c841a3e8167",
       "parent_text_hash_observed": "3c841a3e8167",
       "claim_class": "LITERATURE_DIRECT",
@@ -1522,7 +1522,7 @@
     },
     {
       "claim_id": "CLM-077",
-      "parent_detected_id": "DET-P387-S00",
+      "parent_detected_id": "DET-P396-S00",
       "parent_text_hash_expected": "6adbb5314ff4",
       "parent_text_hash_observed": "6adbb5314ff4",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -1540,7 +1540,7 @@
     },
     {
       "claim_id": "CLM-078",
-      "parent_detected_id": "DET-P387-S02",
+      "parent_detected_id": "DET-P396-S02",
       "parent_text_hash_expected": "fb9c7d482fe1",
       "parent_text_hash_observed": "fb9c7d482fe1",
       "claim_class": "LITERATURE_DIRECT",
@@ -1558,7 +1558,7 @@
     },
     {
       "claim_id": "CLM-079",
-      "parent_detected_id": "DET-P387-S03",
+      "parent_detected_id": "DET-P396-S03",
       "parent_text_hash_expected": "05c55c1ddc27",
       "parent_text_hash_observed": "05c55c1ddc27",
       "claim_class": "AUTHOR_HYPOTHESIS",
@@ -1578,7 +1578,7 @@
     },
     {
       "claim_id": "CLM-080",
-      "parent_detected_id": "DET-P402-S01",
+      "parent_detected_id": "DET-P411-S01",
       "parent_text_hash_expected": "ae6d6ca153af",
       "parent_text_hash_observed": "ae6d6ca153af",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -1596,7 +1596,7 @@
     },
     {
       "claim_id": "CLM-081",
-      "parent_detected_id": "DET-P443-S01",
+      "parent_detected_id": "DET-P452-S01",
       "parent_text_hash_expected": "6356a4654e82",
       "parent_text_hash_observed": "6356a4654e82",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -1614,7 +1614,7 @@
     },
     {
       "claim_id": "CLM-082",
-      "parent_detected_id": "DET-P450-S01",
+      "parent_detected_id": "DET-P459-S01",
       "parent_text_hash_expected": "23df0101b45d",
       "parent_text_hash_observed": "23df0101b45d",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -1632,7 +1632,7 @@
     },
     {
       "claim_id": "CLM-083",
-      "parent_detected_id": "DET-P493-S00",
+      "parent_detected_id": "DET-P502-S00",
       "parent_text_hash_expected": "28166f437c85",
       "parent_text_hash_observed": "28166f437c85",
       "claim_class": "IMPLEMENTATION_VERIFIED",
@@ -1795,7 +1795,7 @@
     },
     {
       "claim_id": "SCI-MATH-001",
-      "parent_detected_id": "DET-P122-S00",
+      "parent_detected_id": "DET-P131-S00",
       "parent_text_hash_expected": "077c4b715352",
       "parent_text_hash_observed": "077c4b715352",
       "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
@@ -1811,7 +1811,7 @@
     },
     {
       "claim_id": "SCI-MATH-002",
-      "parent_detected_id": "DET-P301-S00",
+      "parent_detected_id": "DET-P310-S00",
       "parent_text_hash_expected": "2ce33d4d90ad",
       "parent_text_hash_observed": "2ce33d4d90ad",
       "claim_class": "IMPLEMENTATION_VERIFIED",
@@ -1829,7 +1829,7 @@
     },
     {
       "claim_id": "SCI-CODE-001",
-      "parent_detected_id": "DET-P339-S01",
+      "parent_detected_id": "DET-P348-S01",
       "parent_text_hash_expected": "a1213caabf91",
       "parent_text_hash_observed": "a1213caabf91",
       "claim_class": "IMPLEMENTATION_VERIFIED",
@@ -1845,7 +1845,7 @@
     },
     {
       "claim_id": "SCI-CODE-002",
-      "parent_detected_id": "DET-P496-S00",
+      "parent_detected_id": "DET-P505-S00",
       "parent_text_hash_expected": "e7fd3b789c7a",
       "parent_text_hash_observed": "e7fd3b789c7a",
       "claim_class": "IMPLEMENTATION_VERIFIED",
@@ -1861,7 +1861,7 @@
     },
     {
       "claim_id": "SCI-CODE-003",
-      "parent_detected_id": "DET-P250-S00",
+      "parent_detected_id": "DET-P259-S00",
       "parent_text_hash_expected": "2c4e27c449c9",
       "parent_text_hash_observed": "2c4e27c449c9",
       "claim_class": "IMPLEMENTATION_VERIFIED",
@@ -1877,7 +1877,7 @@
     },
     {
       "claim_id": "SCI-EXP-001",
-      "parent_detected_id": "DET-P431-S03",
+      "parent_detected_id": "DET-P440-S03",
       "parent_text_hash_expected": "5373886c2f29",
       "parent_text_hash_observed": "5373886c2f29",
       "claim_class": "EXPERIMENT_ARTIFACT_VERIFIED",
@@ -1893,7 +1893,7 @@
     },
     {
       "claim_id": "SCI-EXP-002",
-      "parent_detected_id": "DET-P518-S00",
+      "parent_detected_id": "DET-P527-S00",
       "parent_text_hash_expected": "77052fc1af81",
       "parent_text_hash_observed": "77052fc1af81",
       "claim_class": "EXPERIMENT_ARTIFACT_VERIFIED",
@@ -1909,7 +1909,7 @@
     },
     {
       "claim_id": "SCI-PRIV-001",
-      "parent_detected_id": "DET-P129-S01",
+      "parent_detected_id": "DET-P138-S01",
       "parent_text_hash_expected": "31fe10f04572",
       "parent_text_hash_observed": "31fe10f04572",
       "claim_class": "AUTHOR_PROPOSED_EVALUATION_FRAMEWORK",
@@ -1929,7 +1929,7 @@
     },
     {
       "claim_id": "SCI-CMPX-001",
-      "parent_detected_id": "DET-P142-S00",
+      "parent_detected_id": "DET-P151-S00",
       "parent_text_hash_expected": "c86d44a4c387",
       "parent_text_hash_observed": "c86d44a4c387",
       "claim_class": "LITERATURE_DIRECT",
@@ -1947,7 +1947,7 @@
     },
     {
       "claim_id": "CLM-SEC-001",
-      "parent_detected_id": "DET-P253-S00",
+      "parent_detected_id": "DET-P262-S00",
       "parent_text_hash_expected": "c8db5478f35e",
       "parent_text_hash_observed": "c8db5478f35e",
       "claim_class": "PRIVACY_FRAMEWORK",
@@ -1963,7 +1963,7 @@
     },
     {
       "claim_id": "CLM-SEC-002",
-      "parent_detected_id": "DET-P367-S00",
+      "parent_detected_id": "DET-P376-S00",
       "parent_text_hash_expected": "6cbbf35d088a",
       "parent_text_hash_observed": "6cbbf35d088a",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -1979,7 +1979,7 @@
     },
     {
       "claim_id": "CLM-SEC-003",
-      "parent_detected_id": "DET-P082-S00",
+      "parent_detected_id": "DET-P091-S00",
       "parent_text_hash_expected": "9150bafac7bc",
       "parent_text_hash_observed": "9150bafac7bc",
       "claim_class": "LITERATURE_DIRECT",
@@ -1998,7 +1998,7 @@
     },
     {
       "claim_id": "CLM-SEC-004",
-      "parent_detected_id": "DET-P082-S02",
+      "parent_detected_id": "DET-P091-S02",
       "parent_text_hash_expected": "82d19692d659",
       "parent_text_hash_observed": "82d19692d659",
       "claim_class": "LITERATURE_DIRECT",
@@ -2016,7 +2016,7 @@
     },
     {
       "claim_id": "CLM-SEC-005",
-      "parent_detected_id": "DET-P086-S00",
+      "parent_detected_id": "DET-P095-S00",
       "parent_text_hash_expected": "27618fb98e20",
       "parent_text_hash_observed": "27618fb98e20",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2032,7 +2032,7 @@
     },
     {
       "claim_id": "CLM-SEC-006",
-      "parent_detected_id": "DET-P088-S01",
+      "parent_detected_id": "DET-P097-S01",
       "parent_text_hash_expected": "dce03edbfbc7",
       "parent_text_hash_observed": "dce03edbfbc7",
       "claim_class": "EMPIRICAL_OBSERVATION",
@@ -2048,7 +2048,7 @@
     },
     {
       "claim_id": "CLM-SEC-007",
-      "parent_detected_id": "DET-P091-S00",
+      "parent_detected_id": "DET-P100-S00",
       "parent_text_hash_expected": "1a32e856f7d8",
       "parent_text_hash_observed": "1a32e856f7d8",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -2064,7 +2064,7 @@
     },
     {
       "claim_id": "CLM-SEC-008",
-      "parent_detected_id": "DET-P092-S00",
+      "parent_detected_id": "DET-P101-S00",
       "parent_text_hash_expected": "833eb4df03ed",
       "parent_text_hash_observed": "833eb4df03ed",
       "claim_class": "DOCUMENT_DESCRIPTION",
@@ -2080,7 +2080,7 @@
     },
     {
       "claim_id": "CLM-SEC-009",
-      "parent_detected_id": "DET-P097-S04",
+      "parent_detected_id": "DET-P106-S04",
       "parent_text_hash_expected": "f6ea8db5414d",
       "parent_text_hash_observed": "f6ea8db5414d",
       "claim_class": "LITERATURE_DIRECT",
@@ -2099,7 +2099,7 @@
     },
     {
       "claim_id": "CLM-SEC-010",
-      "parent_detected_id": "DET-P120-S03",
+      "parent_detected_id": "DET-P129-S03",
       "parent_text_hash_expected": "4eebba7f5f22",
       "parent_text_hash_observed": "4eebba7f5f22",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -2115,7 +2115,7 @@
     },
     {
       "claim_id": "CLM-SEC-011",
-      "parent_detected_id": "DET-P132-S00",
+      "parent_detected_id": "DET-P141-S00",
       "parent_text_hash_expected": "d27337dacbe7",
       "parent_text_hash_observed": "d27337dacbe7",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -2131,7 +2131,7 @@
     },
     {
       "claim_id": "CLM-SEC-012",
-      "parent_detected_id": "DET-P139-S01",
+      "parent_detected_id": "DET-P148-S01",
       "parent_text_hash_expected": "a0ea118df610",
       "parent_text_hash_observed": "a0ea118df610",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2147,7 +2147,7 @@
     },
     {
       "claim_id": "CLM-SEC-013",
-      "parent_detected_id": "DET-P171-S01",
+      "parent_detected_id": "DET-P180-S01",
       "parent_text_hash_expected": "452f414d2b70",
       "parent_text_hash_observed": "452f414d2b70",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -2163,7 +2163,7 @@
     },
     {
       "claim_id": "CLM-SEC-014",
-      "parent_detected_id": "DET-P175-S00",
+      "parent_detected_id": "DET-P184-S00",
       "parent_text_hash_expected": "70be6bac07b0",
       "parent_text_hash_observed": "70be6bac07b0",
       "claim_class": "PRIVACY_FRAMEWORK",
@@ -2179,7 +2179,7 @@
     },
     {
       "claim_id": "CLM-SEC-015",
-      "parent_detected_id": "DET-P176-S00",
+      "parent_detected_id": "DET-P185-S00",
       "parent_text_hash_expected": "949a72ed9b6e",
       "parent_text_hash_observed": "949a72ed9b6e",
       "claim_class": "RESEARCH_QUESTION",
@@ -2195,7 +2195,7 @@
     },
     {
       "claim_id": "CLM-SEC-016",
-      "parent_detected_id": "DET-P184-S00",
+      "parent_detected_id": "DET-P193-S00",
       "parent_text_hash_expected": "9c395c7002da",
       "parent_text_hash_observed": "9c395c7002da",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2211,7 +2211,7 @@
     },
     {
       "claim_id": "CLM-SEC-017",
-      "parent_detected_id": "DET-P192-S00",
+      "parent_detected_id": "DET-P201-S00",
       "parent_text_hash_expected": "780607e0bd67",
       "parent_text_hash_observed": "780607e0bd67",
       "claim_class": "PRIVACY_FRAMEWORK",
@@ -2227,7 +2227,7 @@
     },
     {
       "claim_id": "CLM-SEC-018",
-      "parent_detected_id": "DET-P194-S04",
+      "parent_detected_id": "DET-P203-S04",
       "parent_text_hash_expected": "3ea65df7f1dc",
       "parent_text_hash_observed": "3ea65df7f1dc",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -2243,7 +2243,7 @@
     },
     {
       "claim_id": "CLM-SEC-019",
-      "parent_detected_id": "DET-P196-S00",
+      "parent_detected_id": "DET-P205-S00",
       "parent_text_hash_expected": "8d472a5c24b0",
       "parent_text_hash_observed": "8d472a5c24b0",
       "claim_class": "RESEARCH_QUESTION",
@@ -2259,7 +2259,7 @@
     },
     {
       "claim_id": "CLM-SEC-020",
-      "parent_detected_id": "DET-P200-S01",
+      "parent_detected_id": "DET-P209-S01",
       "parent_text_hash_expected": "7595bf511be7",
       "parent_text_hash_observed": "7595bf511be7",
       "claim_class": "PRIVACY_FRAMEWORK",
@@ -2275,7 +2275,7 @@
     },
     {
       "claim_id": "CLM-SEC-021",
-      "parent_detected_id": "DET-P201-S00",
+      "parent_detected_id": "DET-P210-S00",
       "parent_text_hash_expected": "deb45a54925f",
       "parent_text_hash_observed": "deb45a54925f",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -2291,7 +2291,7 @@
     },
     {
       "claim_id": "CLM-SEC-022",
-      "parent_detected_id": "DET-P204-S00",
+      "parent_detected_id": "DET-P213-S00",
       "parent_text_hash_expected": "8db29efe6233",
       "parent_text_hash_observed": "8db29efe6233",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -2307,7 +2307,7 @@
     },
     {
       "claim_id": "CLM-SEC-023",
-      "parent_detected_id": "DET-P207-S02",
+      "parent_detected_id": "DET-P216-S02",
       "parent_text_hash_expected": "bc2bf21b1e81",
       "parent_text_hash_observed": "bc2bf21b1e81",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -2323,7 +2323,7 @@
     },
     {
       "claim_id": "CLM-SEC-024",
-      "parent_detected_id": "DET-P209-S00",
+      "parent_detected_id": "DET-P218-S00",
       "parent_text_hash_expected": "e23ee99993ca",
       "parent_text_hash_observed": "e23ee99993ca",
       "claim_class": "RESEARCH_QUESTION",
@@ -2339,7 +2339,7 @@
     },
     {
       "claim_id": "CLM-SEC-025",
-      "parent_detected_id": "DET-P212-S00",
+      "parent_detected_id": "DET-P221-S00",
       "parent_text_hash_expected": "9029bdffc5a5",
       "parent_text_hash_observed": "9029bdffc5a5",
       "claim_class": "RESEARCH_QUESTION",
@@ -2355,7 +2355,7 @@
     },
     {
       "claim_id": "CLM-SEC-026",
-      "parent_detected_id": "DET-P217-S00",
+      "parent_detected_id": "DET-P226-S00",
       "parent_text_hash_expected": "6b09b4507ed0",
       "parent_text_hash_observed": "6b09b4507ed0",
       "claim_class": "RESEARCH_QUESTION",
@@ -2371,7 +2371,7 @@
     },
     {
       "claim_id": "CLM-SEC-027",
-      "parent_detected_id": "DET-P219-S00",
+      "parent_detected_id": "DET-P228-S00",
       "parent_text_hash_expected": "f0320571addf",
       "parent_text_hash_observed": "f0320571addf",
       "claim_class": "RESEARCH_QUESTION",
@@ -2387,7 +2387,7 @@
     },
     {
       "claim_id": "CLM-SEC-028",
-      "parent_detected_id": "DET-P222-S00",
+      "parent_detected_id": "DET-P231-S00",
       "parent_text_hash_expected": "0525c822e5da",
       "parent_text_hash_observed": "0525c822e5da",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2403,7 +2403,7 @@
     },
     {
       "claim_id": "CLM-SEC-029",
-      "parent_detected_id": "DET-P223-S01",
+      "parent_detected_id": "DET-P232-S01",
       "parent_text_hash_expected": "a2ed79558218",
       "parent_text_hash_observed": "a2ed79558218",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -2419,7 +2419,7 @@
     },
     {
       "claim_id": "CLM-SEC-030",
-      "parent_detected_id": "DET-P223-S02",
+      "parent_detected_id": "DET-P232-S02",
       "parent_text_hash_expected": "f9584e61d0eb",
       "parent_text_hash_observed": "f9584e61d0eb",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2435,7 +2435,7 @@
     },
     {
       "claim_id": "CLM-SEC-031",
-      "parent_detected_id": "DET-P225-S03",
+      "parent_detected_id": "DET-P234-S03",
       "parent_text_hash_expected": "4d40f31d2cde",
       "parent_text_hash_observed": "4d40f31d2cde",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -2451,7 +2451,7 @@
     },
     {
       "claim_id": "CLM-SEC-032",
-      "parent_detected_id": "DET-P229-S01",
+      "parent_detected_id": "DET-P238-S01",
       "parent_text_hash_expected": "614687ab5bed",
       "parent_text_hash_observed": "614687ab5bed",
       "claim_class": "EMPIRICAL_OBSERVATION",
@@ -2467,7 +2467,7 @@
     },
     {
       "claim_id": "CLM-SEC-033",
-      "parent_detected_id": "DET-P230-S00",
+      "parent_detected_id": "DET-P239-S00",
       "parent_text_hash_expected": "abd7af4ef660",
       "parent_text_hash_observed": "abd7af4ef660",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2483,7 +2483,7 @@
     },
     {
       "claim_id": "CLM-SEC-034",
-      "parent_detected_id": "DET-P230-S02",
+      "parent_detected_id": "DET-P239-S02",
       "parent_text_hash_expected": "0dd1930d7878",
       "parent_text_hash_observed": "0dd1930d7878",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2499,7 +2499,7 @@
     },
     {
       "claim_id": "CLM-SEC-035",
-      "parent_detected_id": "DET-P234-S00",
+      "parent_detected_id": "DET-P243-S00",
       "parent_text_hash_expected": "ee19a510916a",
       "parent_text_hash_observed": "ee19a510916a",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -2515,7 +2515,7 @@
     },
     {
       "claim_id": "CLM-SEC-036",
-      "parent_detected_id": "DET-P236-S01",
+      "parent_detected_id": "DET-P245-S01",
       "parent_text_hash_expected": "eb68b0b58903",
       "parent_text_hash_observed": "eb68b0b58903",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -2531,7 +2531,7 @@
     },
     {
       "claim_id": "CLM-SEC-037",
-      "parent_detected_id": "DET-P237-S00",
+      "parent_detected_id": "DET-P246-S00",
       "parent_text_hash_expected": "34e62ff11725",
       "parent_text_hash_observed": "34e62ff11725",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2547,7 +2547,7 @@
     },
     {
       "claim_id": "CLM-SEC-038",
-      "parent_detected_id": "DET-P238-S00",
+      "parent_detected_id": "DET-P247-S00",
       "parent_text_hash_expected": "ce2539bb06b3",
       "parent_text_hash_observed": "ce2539bb06b3",
       "claim_class": "PRIVACY_FRAMEWORK",
@@ -2563,7 +2563,7 @@
     },
     {
       "claim_id": "CLM-SEC-039",
-      "parent_detected_id": "DET-P239-S00",
+      "parent_detected_id": "DET-P248-S00",
       "parent_text_hash_expected": "35f53ab7b5ae",
       "parent_text_hash_observed": "35f53ab7b5ae",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2579,7 +2579,7 @@
     },
     {
       "claim_id": "CLM-SEC-040",
-      "parent_detected_id": "DET-P245-S01",
+      "parent_detected_id": "DET-P254-S01",
       "parent_text_hash_expected": "f8c574e3bbaf",
       "parent_text_hash_observed": "f8c574e3bbaf",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2595,7 +2595,7 @@
     },
     {
       "claim_id": "CLM-SEC-041",
-      "parent_detected_id": "DET-P256-S00",
+      "parent_detected_id": "DET-P265-S00",
       "parent_text_hash_expected": "21d612bcd6ff",
       "parent_text_hash_observed": "21d612bcd6ff",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2611,7 +2611,7 @@
     },
     {
       "claim_id": "CLM-SEC-042",
-      "parent_detected_id": "DET-P256-S01",
+      "parent_detected_id": "DET-P265-S01",
       "parent_text_hash_expected": "914f2436339c",
       "parent_text_hash_observed": "914f2436339c",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2627,7 +2627,7 @@
     },
     {
       "claim_id": "CLM-SEC-043",
-      "parent_detected_id": "DET-P259-S02",
+      "parent_detected_id": "DET-P268-S02",
       "parent_text_hash_expected": "3ea4c9299a67",
       "parent_text_hash_observed": "3ea4c9299a67",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2643,7 +2643,7 @@
     },
     {
       "claim_id": "CLM-SEC-044",
-      "parent_detected_id": "DET-P262-S01",
+      "parent_detected_id": "DET-P271-S01",
       "parent_text_hash_expected": "67356fa64944",
       "parent_text_hash_observed": "67356fa64944",
       "claim_class": "PRIVACY_FRAMEWORK",
@@ -2659,7 +2659,7 @@
     },
     {
       "claim_id": "CLM-SEC-045",
-      "parent_detected_id": "DET-P262-S03",
+      "parent_detected_id": "DET-P271-S03",
       "parent_text_hash_expected": "d04957d175d0",
       "parent_text_hash_observed": "d04957d175d0",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -2675,7 +2675,7 @@
     },
     {
       "claim_id": "CLM-SEC-046",
-      "parent_detected_id": "DET-P268-S01",
+      "parent_detected_id": "DET-P277-S01",
       "parent_text_hash_expected": "2ce2cb607e29",
       "parent_text_hash_observed": "2ce2cb607e29",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -2691,7 +2691,7 @@
     },
     {
       "claim_id": "CLM-SEC-047",
-      "parent_detected_id": "DET-P275-S00",
+      "parent_detected_id": "DET-P284-S00",
       "parent_text_hash_expected": "616c08a3221a",
       "parent_text_hash_observed": "616c08a3221a",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2707,7 +2707,7 @@
     },
     {
       "claim_id": "CLM-SEC-048",
-      "parent_detected_id": "DET-P276-S02",
+      "parent_detected_id": "DET-P285-S02",
       "parent_text_hash_expected": "2981d1d9cfb3",
       "parent_text_hash_observed": "2981d1d9cfb3",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -2723,7 +2723,7 @@
     },
     {
       "claim_id": "CLM-SEC-049",
-      "parent_detected_id": "DET-P277-S00",
+      "parent_detected_id": "DET-P286-S00",
       "parent_text_hash_expected": "cdd1663914d0",
       "parent_text_hash_observed": "cdd1663914d0",
       "claim_class": "PRIVACY_FRAMEWORK",
@@ -2739,7 +2739,7 @@
     },
     {
       "claim_id": "CLM-SEC-050",
-      "parent_detected_id": "DET-P279-S00",
+      "parent_detected_id": "DET-P288-S00",
       "parent_text_hash_expected": "2495c2e5304c",
       "parent_text_hash_observed": "2495c2e5304c",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2755,7 +2755,7 @@
     },
     {
       "claim_id": "CLM-SEC-051",
-      "parent_detected_id": "DET-P281-S00",
+      "parent_detected_id": "DET-P290-S00",
       "parent_text_hash_expected": "b4df3f459fb5",
       "parent_text_hash_observed": "b4df3f459fb5",
       "claim_class": "PRIVACY_FRAMEWORK",
@@ -2771,7 +2771,7 @@
     },
     {
       "claim_id": "CLM-SEC-052",
-      "parent_detected_id": "DET-P283-S01",
+      "parent_detected_id": "DET-P292-S01",
       "parent_text_hash_expected": "bad8ad96f393",
       "parent_text_hash_observed": "bad8ad96f393",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2787,7 +2787,7 @@
     },
     {
       "claim_id": "CLM-SEC-053",
-      "parent_detected_id": "DET-P285-S01",
+      "parent_detected_id": "DET-P294-S01",
       "parent_text_hash_expected": "3f31fdc3d2fa",
       "parent_text_hash_observed": "3f31fdc3d2fa",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2803,7 +2803,7 @@
     },
     {
       "claim_id": "CLM-SEC-054",
-      "parent_detected_id": "DET-P288-S01",
+      "parent_detected_id": "DET-P297-S01",
       "parent_text_hash_expected": "4fec80e9efa3",
       "parent_text_hash_observed": "4fec80e9efa3",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -2819,7 +2819,7 @@
     },
     {
       "claim_id": "CLM-SEC-055",
-      "parent_detected_id": "DET-P290-S00",
+      "parent_detected_id": "DET-P299-S00",
       "parent_text_hash_expected": "784eff2ddbd4",
       "parent_text_hash_observed": "784eff2ddbd4",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2835,7 +2835,7 @@
     },
     {
       "claim_id": "CLM-SEC-056",
-      "parent_detected_id": "DET-P291-S00",
+      "parent_detected_id": "DET-P300-S00",
       "parent_text_hash_expected": "b06b29647168",
       "parent_text_hash_observed": "b06b29647168",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2851,7 +2851,7 @@
     },
     {
       "claim_id": "CLM-SEC-057",
-      "parent_detected_id": "DET-P292-S01",
+      "parent_detected_id": "DET-P301-S01",
       "parent_text_hash_expected": "6da40db0d0eb",
       "parent_text_hash_observed": "6da40db0d0eb",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2867,7 +2867,7 @@
     },
     {
       "claim_id": "CLM-SEC-058",
-      "parent_detected_id": "DET-P293-S01",
+      "parent_detected_id": "DET-P302-S01",
       "parent_text_hash_expected": "faee07f69ea3",
       "parent_text_hash_observed": "faee07f69ea3",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2883,7 +2883,7 @@
     },
     {
       "claim_id": "CLM-SEC-059",
-      "parent_detected_id": "DET-P301-S00",
+      "parent_detected_id": "DET-P310-S00",
       "parent_text_hash_expected": "2ce33d4d90ad",
       "parent_text_hash_observed": "2ce33d4d90ad",
       "claim_class": "LITERATURE_DIRECT",
@@ -2901,7 +2901,7 @@
     },
     {
       "claim_id": "CLM-SEC-060",
-      "parent_detected_id": "DET-P306-S00",
+      "parent_detected_id": "DET-P315-S00",
       "parent_text_hash_expected": "606f25e7d757",
       "parent_text_hash_observed": "606f25e7d757",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2917,7 +2917,7 @@
     },
     {
       "claim_id": "CLM-SEC-061",
-      "parent_detected_id": "DET-P306-S02",
+      "parent_detected_id": "DET-P315-S02",
       "parent_text_hash_expected": "a7d78b9a6450",
       "parent_text_hash_observed": "a7d78b9a6450",
       "claim_class": "PRIVACY_FRAMEWORK",
@@ -2933,7 +2933,7 @@
     },
     {
       "claim_id": "CLM-SEC-062",
-      "parent_detected_id": "DET-P315-S02",
+      "parent_detected_id": "DET-P324-S02",
       "parent_text_hash_expected": "0f7af58ed6c2",
       "parent_text_hash_observed": "0f7af58ed6c2",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -2949,7 +2949,7 @@
     },
     {
       "claim_id": "CLM-SEC-063",
-      "parent_detected_id": "DET-P317-S00",
+      "parent_detected_id": "DET-P326-S00",
       "parent_text_hash_expected": "e211d810a20a",
       "parent_text_hash_observed": "e211d810a20a",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -2965,7 +2965,7 @@
     },
     {
       "claim_id": "CLM-SEC-064",
-      "parent_detected_id": "DET-P324-S00",
+      "parent_detected_id": "DET-P333-S00",
       "parent_text_hash_expected": "91442e6585db",
       "parent_text_hash_observed": "91442e6585db",
       "claim_class": "PRIVACY_FRAMEWORK",
@@ -2981,7 +2981,7 @@
     },
     {
       "claim_id": "CLM-SEC-065",
-      "parent_detected_id": "DET-P326-S00",
+      "parent_detected_id": "DET-P335-S00",
       "parent_text_hash_expected": "e32f09e5d31e",
       "parent_text_hash_observed": "e32f09e5d31e",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -2997,7 +2997,7 @@
     },
     {
       "claim_id": "CLM-SEC-066",
-      "parent_detected_id": "DET-P327-S00",
+      "parent_detected_id": "DET-P336-S00",
       "parent_text_hash_expected": "8c50bf56e4ad",
       "parent_text_hash_observed": "8c50bf56e4ad",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3013,7 +3013,7 @@
     },
     {
       "claim_id": "CLM-SEC-067",
-      "parent_detected_id": "DET-P327-S02",
+      "parent_detected_id": "DET-P336-S02",
       "parent_text_hash_expected": "434a1b3992aa",
       "parent_text_hash_observed": "434a1b3992aa",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3029,7 +3029,7 @@
     },
     {
       "claim_id": "CLM-SEC-068",
-      "parent_detected_id": "DET-P327-S03",
+      "parent_detected_id": "DET-P336-S03",
       "parent_text_hash_expected": "458a5698995b",
       "parent_text_hash_observed": "458a5698995b",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3045,7 +3045,7 @@
     },
     {
       "claim_id": "CLM-SEC-069",
-      "parent_detected_id": "DET-P329-S01",
+      "parent_detected_id": "DET-P338-S01",
       "parent_text_hash_expected": "ca51c040a1b5",
       "parent_text_hash_observed": "ca51c040a1b5",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -3061,7 +3061,7 @@
     },
     {
       "claim_id": "CLM-SEC-070",
-      "parent_detected_id": "DET-P332-S01",
+      "parent_detected_id": "DET-P341-S01",
       "parent_text_hash_expected": "e94fc6ffac02",
       "parent_text_hash_observed": "e94fc6ffac02",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -3077,7 +3077,7 @@
     },
     {
       "claim_id": "CLM-SEC-071",
-      "parent_detected_id": "DET-P341-S00",
+      "parent_detected_id": "DET-P350-S00",
       "parent_text_hash_expected": "6f35dc212d4b",
       "parent_text_hash_observed": "6f35dc212d4b",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -3093,7 +3093,7 @@
     },
     {
       "claim_id": "CLM-SEC-072",
-      "parent_detected_id": "DET-P343-S00",
+      "parent_detected_id": "DET-P352-S00",
       "parent_text_hash_expected": "a3f9e21b2f46",
       "parent_text_hash_observed": "a3f9e21b2f46",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -3109,7 +3109,7 @@
     },
     {
       "claim_id": "CLM-SEC-073",
-      "parent_detected_id": "DET-P345-S00",
+      "parent_detected_id": "DET-P354-S00",
       "parent_text_hash_expected": "35732e589b62",
       "parent_text_hash_observed": "35732e589b62",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3125,7 +3125,7 @@
     },
     {
       "claim_id": "CLM-SEC-074",
-      "parent_detected_id": "DET-P350-S01",
+      "parent_detected_id": "DET-P359-S01",
       "parent_text_hash_expected": "7590c67adc0d",
       "parent_text_hash_observed": "7590c67adc0d",
       "claim_class": "PRIVACY_FRAMEWORK",
@@ -3141,7 +3141,7 @@
     },
     {
       "claim_id": "CLM-SEC-075",
-      "parent_detected_id": "DET-P350-S02",
+      "parent_detected_id": "DET-P359-S02",
       "parent_text_hash_expected": "21d596a2c204",
       "parent_text_hash_observed": "21d596a2c204",
       "claim_class": "PRIVACY_FRAMEWORK",
@@ -3157,7 +3157,7 @@
     },
     {
       "claim_id": "CLM-SEC-076",
-      "parent_detected_id": "DET-P354-S01",
+      "parent_detected_id": "DET-P363-S01",
       "parent_text_hash_expected": "ceecb96ecff2",
       "parent_text_hash_observed": "ceecb96ecff2",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -3173,7 +3173,7 @@
     },
     {
       "claim_id": "CLM-SEC-077",
-      "parent_detected_id": "DET-P364-S02",
+      "parent_detected_id": "DET-P373-S02",
       "parent_text_hash_expected": "d1abd2ae6618",
       "parent_text_hash_observed": "d1abd2ae6618",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3189,7 +3189,7 @@
     },
     {
       "claim_id": "CLM-SEC-078",
-      "parent_detected_id": "DET-P366-S00",
+      "parent_detected_id": "DET-P375-S00",
       "parent_text_hash_expected": "caa94bca9de3",
       "parent_text_hash_observed": "caa94bca9de3",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -3205,7 +3205,7 @@
     },
     {
       "claim_id": "CLM-SEC-079",
-      "parent_detected_id": "DET-P370-S01",
+      "parent_detected_id": "DET-P379-S01",
       "parent_text_hash_expected": "cafb02339955",
       "parent_text_hash_observed": "cafb02339955",
       "claim_class": "RESEARCH_QUESTION",
@@ -3221,7 +3221,7 @@
     },
     {
       "claim_id": "CLM-SEC-080",
-      "parent_detected_id": "DET-P378-S00",
+      "parent_detected_id": "DET-P387-S00",
       "parent_text_hash_expected": "f8a8a9c6e0cb",
       "parent_text_hash_observed": "f8a8a9c6e0cb",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3237,7 +3237,7 @@
     },
     {
       "claim_id": "CLM-SEC-081",
-      "parent_detected_id": "DET-P387-S03",
+      "parent_detected_id": "DET-P396-S03",
       "parent_text_hash_expected": "05c55c1ddc27",
       "parent_text_hash_observed": "05c55c1ddc27",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -3253,7 +3253,7 @@
     },
     {
       "claim_id": "CLM-SEC-082",
-      "parent_detected_id": "DET-P407-S00",
+      "parent_detected_id": "DET-P416-S00",
       "parent_text_hash_expected": "a091ace92a99",
       "parent_text_hash_observed": "a091ace92a99",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3269,7 +3269,7 @@
     },
     {
       "claim_id": "CLM-SEC-083",
-      "parent_detected_id": "DET-P408-S00",
+      "parent_detected_id": "DET-P417-S00",
       "parent_text_hash_expected": "cd7a55dd83f1",
       "parent_text_hash_observed": "cd7a55dd83f1",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -3285,7 +3285,7 @@
     },
     {
       "claim_id": "CLM-SEC-084",
-      "parent_detected_id": "DET-P408-S01",
+      "parent_detected_id": "DET-P417-S01",
       "parent_text_hash_expected": "1dcac8fdbb14",
       "parent_text_hash_observed": "1dcac8fdbb14",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3301,7 +3301,7 @@
     },
     {
       "claim_id": "CLM-SEC-085",
-      "parent_detected_id": "DET-P410-S01",
+      "parent_detected_id": "DET-P419-S01",
       "parent_text_hash_expected": "cc4091e85c2d",
       "parent_text_hash_observed": "cc4091e85c2d",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -3317,7 +3317,7 @@
     },
     {
       "claim_id": "CLM-SEC-086",
-      "parent_detected_id": "DET-P412-S00",
+      "parent_detected_id": "DET-P421-S00",
       "parent_text_hash_expected": "4100278f9953",
       "parent_text_hash_observed": "4100278f9953",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3333,7 +3333,7 @@
     },
     {
       "claim_id": "CLM-SEC-087",
-      "parent_detected_id": "DET-P415-S00",
+      "parent_detected_id": "DET-P424-S00",
       "parent_text_hash_expected": "14158979fb22",
       "parent_text_hash_observed": "14158979fb22",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -3349,7 +3349,7 @@
     },
     {
       "claim_id": "CLM-SEC-088",
-      "parent_detected_id": "DET-P420-S00",
+      "parent_detected_id": "DET-P429-S00",
       "parent_text_hash_expected": "79ccb478cc40",
       "parent_text_hash_observed": "79ccb478cc40",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -3365,7 +3365,7 @@
     },
     {
       "claim_id": "CLM-SEC-089",
-      "parent_detected_id": "DET-P422-S00",
+      "parent_detected_id": "DET-P431-S00",
       "parent_text_hash_expected": "476bfb948964",
       "parent_text_hash_observed": "476bfb948964",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3381,7 +3381,7 @@
     },
     {
       "claim_id": "CLM-SEC-090",
-      "parent_detected_id": "DET-P426-S00",
+      "parent_detected_id": "DET-P435-S00",
       "parent_text_hash_expected": "515ca2cabb62",
       "parent_text_hash_observed": "515ca2cabb62",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -3397,7 +3397,7 @@
     },
     {
       "claim_id": "CLM-SEC-091",
-      "parent_detected_id": "DET-P431-S03",
+      "parent_detected_id": "DET-P440-S03",
       "parent_text_hash_expected": "5373886c2f29",
       "parent_text_hash_observed": "5373886c2f29",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -3413,7 +3413,7 @@
     },
     {
       "claim_id": "CLM-SEC-092",
-      "parent_detected_id": "DET-P461-S00",
+      "parent_detected_id": "DET-P470-S00",
       "parent_text_hash_expected": "5ee0702ffa55",
       "parent_text_hash_observed": "5ee0702ffa55",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3429,7 +3429,7 @@
     },
     {
       "claim_id": "CLM-SEC-093",
-      "parent_detected_id": "DET-P461-S01",
+      "parent_detected_id": "DET-P470-S01",
       "parent_text_hash_expected": "2d83a4d8ff18",
       "parent_text_hash_observed": "2d83a4d8ff18",
       "claim_class": "EMPIRICAL_OBSERVATION",
@@ -3445,7 +3445,7 @@
     },
     {
       "claim_id": "CLM-SEC-094",
-      "parent_detected_id": "DET-P462-S01",
+      "parent_detected_id": "DET-P471-S01",
       "parent_text_hash_expected": "7bff8efeb857",
       "parent_text_hash_observed": "7bff8efeb857",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3461,7 +3461,7 @@
     },
     {
       "claim_id": "CLM-SEC-095",
-      "parent_detected_id": "DET-P463-S00",
+      "parent_detected_id": "DET-P472-S00",
       "parent_text_hash_expected": "acc434f3973e",
       "parent_text_hash_observed": "acc434f3973e",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3477,7 +3477,7 @@
     },
     {
       "claim_id": "CLM-SEC-096",
-      "parent_detected_id": "DET-P475-S00",
+      "parent_detected_id": "DET-P484-S00",
       "parent_text_hash_expected": "3aae68df3f32",
       "parent_text_hash_observed": "3aae68df3f32",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -3493,7 +3493,7 @@
     },
     {
       "claim_id": "CLM-SEC-097",
-      "parent_detected_id": "DET-P476-S00",
+      "parent_detected_id": "DET-P485-S00",
       "parent_text_hash_expected": "46cd13fa6d53",
       "parent_text_hash_observed": "46cd13fa6d53",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3509,7 +3509,7 @@
     },
     {
       "claim_id": "CLM-SEC-098",
-      "parent_detected_id": "DET-P482-S00",
+      "parent_detected_id": "DET-P491-S00",
       "parent_text_hash_expected": "8675c32ec051",
       "parent_text_hash_observed": "8675c32ec051",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3525,7 +3525,7 @@
     },
     {
       "claim_id": "CLM-SEC-099",
-      "parent_detected_id": "DET-P482-S01",
+      "parent_detected_id": "DET-P491-S01",
       "parent_text_hash_expected": "825175f0003a",
       "parent_text_hash_observed": "825175f0003a",
       "claim_class": "RESEARCH_QUESTION",
@@ -3541,7 +3541,7 @@
     },
     {
       "claim_id": "CLM-SEC-100",
-      "parent_detected_id": "DET-P484-S00",
+      "parent_detected_id": "DET-P493-S00",
       "parent_text_hash_expected": "5143d7b0d3b2",
       "parent_text_hash_observed": "5143d7b0d3b2",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -3557,7 +3557,7 @@
     },
     {
       "claim_id": "CLM-SEC-101",
-      "parent_detected_id": "DET-P484-S01",
+      "parent_detected_id": "DET-P493-S01",
       "parent_text_hash_expected": "efa4cdc1a37d",
       "parent_text_hash_observed": "efa4cdc1a37d",
       "claim_class": "EMPIRICAL_OBSERVATION",
@@ -3573,7 +3573,7 @@
     },
     {
       "claim_id": "CLM-SEC-102",
-      "parent_detected_id": "DET-P487-S00",
+      "parent_detected_id": "DET-P496-S00",
       "parent_text_hash_expected": "50c19964b797",
       "parent_text_hash_observed": "50c19964b797",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3589,7 +3589,7 @@
     },
     {
       "claim_id": "CLM-SEC-103",
-      "parent_detected_id": "DET-P487-S01",
+      "parent_detected_id": "DET-P496-S01",
       "parent_text_hash_expected": "e055ecce7a5f",
       "parent_text_hash_observed": "e055ecce7a5f",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3605,7 +3605,7 @@
     },
     {
       "claim_id": "CLM-SEC-104",
-      "parent_detected_id": "DET-P487-S02",
+      "parent_detected_id": "DET-P496-S02",
       "parent_text_hash_expected": "f014a60403f2",
       "parent_text_hash_observed": "f014a60403f2",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3621,7 +3621,7 @@
     },
     {
       "claim_id": "CLM-SEC-105",
-      "parent_detected_id": "DET-P488-S01",
+      "parent_detected_id": "DET-P497-S01",
       "parent_text_hash_expected": "2707af49e6ea",
       "parent_text_hash_observed": "2707af49e6ea",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3637,7 +3637,7 @@
     },
     {
       "claim_id": "CLM-SEC-106",
-      "parent_detected_id": "DET-P491-S00",
+      "parent_detected_id": "DET-P500-S00",
       "parent_text_hash_expected": "21b9b4342750",
       "parent_text_hash_observed": "21b9b4342750",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3653,7 +3653,7 @@
     },
     {
       "claim_id": "CLM-SEC-107",
-      "parent_detected_id": "DET-P496-S00",
+      "parent_detected_id": "DET-P505-S00",
       "parent_text_hash_expected": "e7fd3b789c7a",
       "parent_text_hash_observed": "e7fd3b789c7a",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3669,7 +3669,7 @@
     },
     {
       "claim_id": "CLM-SEC-108",
-      "parent_detected_id": "DET-P497-S00",
+      "parent_detected_id": "DET-P506-S00",
       "parent_text_hash_expected": "51e17378df7f",
       "parent_text_hash_observed": "51e17378df7f",
       "claim_class": "EMPIRICAL_OBSERVATION",
@@ -3685,7 +3685,7 @@
     },
     {
       "claim_id": "CLM-SEC-109",
-      "parent_detected_id": "DET-P500-S00",
+      "parent_detected_id": "DET-P509-S00",
       "parent_text_hash_expected": "b36940dd3783",
       "parent_text_hash_observed": "b36940dd3783",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -3701,7 +3701,7 @@
     },
     {
       "claim_id": "CLM-SEC-110",
-      "parent_detected_id": "DET-P501-S00",
+      "parent_detected_id": "DET-P510-S00",
       "parent_text_hash_expected": "599d86cdbd6e",
       "parent_text_hash_observed": "599d86cdbd6e",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -3717,7 +3717,7 @@
     },
     {
       "claim_id": "CLM-SEC-111",
-      "parent_detected_id": "DET-P511-S00",
+      "parent_detected_id": "DET-P520-S00",
       "parent_text_hash_expected": "c98db795a57c",
       "parent_text_hash_observed": "c98db795a57c",
       "claim_class": "EMPIRICAL_OBSERVATION",
@@ -3733,7 +3733,7 @@
     },
     {
       "claim_id": "CLM-SEC-112",
-      "parent_detected_id": "DET-P512-S00",
+      "parent_detected_id": "DET-P521-S00",
       "parent_text_hash_expected": "fc8e2a342a25",
       "parent_text_hash_observed": "fc8e2a342a25",
       "claim_class": "EMPIRICAL_OBSERVATION",
@@ -3749,7 +3749,7 @@
     },
     {
       "claim_id": "CLM-SEC-113",
-      "parent_detected_id": "DET-P513-S00",
+      "parent_detected_id": "DET-P522-S00",
       "parent_text_hash_expected": "879ccdef6987",
       "parent_text_hash_observed": "879ccdef6987",
       "claim_class": "EMPIRICAL_OBSERVATION",
@@ -3765,7 +3765,7 @@
     },
     {
       "claim_id": "CLM-SEC-114",
-      "parent_detected_id": "DET-P515-S01",
+      "parent_detected_id": "DET-P524-S01",
       "parent_text_hash_expected": "0a3c2244f487",
       "parent_text_hash_observed": "0a3c2244f487",
       "claim_class": "EMPIRICAL_OBSERVATION",
@@ -3781,7 +3781,7 @@
     },
     {
       "claim_id": "CLM-SEC-115",
-      "parent_detected_id": "DET-P518-S00",
+      "parent_detected_id": "DET-P527-S00",
       "parent_text_hash_expected": "77052fc1af81",
       "parent_text_hash_observed": "77052fc1af81",
       "claim_class": "EMPIRICAL_OBSERVATION",
@@ -3797,7 +3797,7 @@
     },
     {
       "claim_id": "CLM-SEC-116",
-      "parent_detected_id": "DET-P518-S04",
+      "parent_detected_id": "DET-P527-S04",
       "parent_text_hash_expected": "a24468b71caa",
       "parent_text_hash_observed": "a24468b71caa",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3813,7 +3813,7 @@
     },
     {
       "claim_id": "CLM-SEC-117",
-      "parent_detected_id": "DET-P520-S00",
+      "parent_detected_id": "DET-P529-S00",
       "parent_text_hash_expected": "826e4b665a69",
       "parent_text_hash_observed": "826e4b665a69",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -3829,7 +3829,7 @@
     },
     {
       "claim_id": "CLM-SEC-118",
-      "parent_detected_id": "DET-P521-S00",
+      "parent_detected_id": "DET-P530-S00",
       "parent_text_hash_expected": "481423b534dd",
       "parent_text_hash_observed": "481423b534dd",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -3845,7 +3845,7 @@
     },
     {
       "claim_id": "CLM-SEC-119",
-      "parent_detected_id": "DET-P525-S00",
+      "parent_detected_id": "DET-P534-S00",
       "parent_text_hash_expected": "6b6472d560ed",
       "parent_text_hash_observed": "6b6472d560ed",
       "claim_class": "EMPIRICAL_OBSERVATION",
@@ -3861,7 +3861,7 @@
     },
     {
       "claim_id": "CLM-SEC-120",
-      "parent_detected_id": "DET-P525-S01",
+      "parent_detected_id": "DET-P534-S01",
       "parent_text_hash_expected": "95b546c1a2ee",
       "parent_text_hash_observed": "95b546c1a2ee",
       "claim_class": "EMPIRICAL_OBSERVATION",
@@ -3877,7 +3877,7 @@
     },
     {
       "claim_id": "CLM-SEC-121",
-      "parent_detected_id": "DET-P527-S00",
+      "parent_detected_id": "DET-P536-S00",
       "parent_text_hash_expected": "71eed19cf202",
       "parent_text_hash_observed": "71eed19cf202",
       "claim_class": "EMPIRICAL_OBSERVATION",
@@ -3893,7 +3893,7 @@
     },
     {
       "claim_id": "CLM-SEC-122",
-      "parent_detected_id": "DET-P529-S00",
+      "parent_detected_id": "DET-P538-S00",
       "parent_text_hash_expected": "4cfaae89055c",
       "parent_text_hash_observed": "4cfaae89055c",
       "claim_class": "RESEARCH_QUESTION",
@@ -3909,7 +3909,7 @@
     },
     {
       "claim_id": "CLM-SEC-123",
-      "parent_detected_id": "DET-P530-S00",
+      "parent_detected_id": "DET-P539-S00",
       "parent_text_hash_expected": "c2d9665d1887",
       "parent_text_hash_observed": "c2d9665d1887",
       "claim_class": "RESEARCH_QUESTION",
@@ -3925,7 +3925,7 @@
     },
     {
       "claim_id": "CLM-SEC-124",
-      "parent_detected_id": "DET-P533-S00",
+      "parent_detected_id": "DET-P542-S00",
       "parent_text_hash_expected": "a31f5dacbe47",
       "parent_text_hash_observed": "a31f5dacbe47",
       "claim_class": "RESEARCH_QUESTION",
@@ -3941,7 +3941,7 @@
     },
     {
       "claim_id": "CLM-SEC-125",
-      "parent_detected_id": "DET-P533-S01",
+      "parent_detected_id": "DET-P542-S01",
       "parent_text_hash_expected": "f8f337ab6d33",
       "parent_text_hash_observed": "f8f337ab6d33",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3957,7 +3957,7 @@
     },
     {
       "claim_id": "CLM-SEC-126",
-      "parent_detected_id": "DET-P534-S00",
+      "parent_detected_id": "DET-P543-S00",
       "parent_text_hash_expected": "496d25da90ba",
       "parent_text_hash_observed": "496d25da90ba",
       "claim_class": "RESEARCH_QUESTION",
@@ -3973,7 +3973,7 @@
     },
     {
       "claim_id": "CLM-SEC-127",
-      "parent_detected_id": "DET-P538-S01",
+      "parent_detected_id": "DET-P547-S01",
       "parent_text_hash_expected": "083165a6b0bd",
       "parent_text_hash_observed": "083165a6b0bd",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -3989,7 +3989,7 @@
     },
     {
       "claim_id": "CLM-SEC-128",
-      "parent_detected_id": "DET-P543-S01",
+      "parent_detected_id": "DET-P552-S01",
       "parent_text_hash_expected": "c8cb2d48da05",
       "parent_text_hash_observed": "c8cb2d48da05",
       "claim_class": "EMPIRICAL_OBSERVATION",
@@ -4005,7 +4005,7 @@
     },
     {
       "claim_id": "CLM-SEC-129",
-      "parent_detected_id": "DET-P544-S01",
+      "parent_detected_id": "DET-P553-S01",
       "parent_text_hash_expected": "c3d7fc71d689",
       "parent_text_hash_observed": "c3d7fc71d689",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -4021,7 +4021,7 @@
     },
     {
       "claim_id": "CLM-SEC-130",
-      "parent_detected_id": "DET-P548-S01",
+      "parent_detected_id": "DET-P557-S01",
       "parent_text_hash_expected": "15d1f3527093",
       "parent_text_hash_observed": "15d1f3527093",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -4037,7 +4037,7 @@
     },
     {
       "claim_id": "CLM-SEC-131",
-      "parent_detected_id": "DET-P549-S01",
+      "parent_detected_id": "DET-P558-S01",
       "parent_text_hash_expected": "9db9666b3ca5",
       "parent_text_hash_observed": "9db9666b3ca5",
       "claim_class": "EMPIRICAL_OBSERVATION",
@@ -4053,7 +4053,7 @@
     },
     {
       "claim_id": "CLM-SEC-132",
-      "parent_detected_id": "DET-P549-S02",
+      "parent_detected_id": "DET-P558-S02",
       "parent_text_hash_expected": "2b61271820f0",
       "parent_text_hash_observed": "2b61271820f0",
       "claim_class": "EMPIRICAL_OBSERVATION",
@@ -4069,7 +4069,7 @@
     },
     {
       "claim_id": "CLM-SEC-133",
-      "parent_detected_id": "DET-P550-S00",
+      "parent_detected_id": "DET-P559-S00",
       "parent_text_hash_expected": "dc0d2a1220e1",
       "parent_text_hash_observed": "dc0d2a1220e1",
       "claim_class": "EMPIRICAL_OBSERVATION",
@@ -4261,7 +4261,7 @@
     },
     {
       "claim_id": "CLM-SEC-145",
-      "parent_detected_id": "DET-P078-S01",
+      "parent_detected_id": "DET-P087-S01",
       "parent_text_hash_expected": "578e23760449",
       "parent_text_hash_observed": "578e23760449",
       "claim_class": "METHODOLOGY_SPECIFICATION",
@@ -4277,7 +4277,7 @@
     },
     {
       "claim_id": "CLM-SEC-146",
-      "parent_detected_id": "DET-P090-S00",
+      "parent_detected_id": "DET-P099-S00",
       "parent_text_hash_expected": "11f4275fb82a",
       "parent_text_hash_observed": "11f4275fb82a",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -4293,7 +4293,7 @@
     },
     {
       "claim_id": "CLM-SEC-147",
-      "parent_detected_id": "DET-P127-S00",
+      "parent_detected_id": "DET-P136-S00",
       "parent_text_hash_expected": "06e524156fe4",
       "parent_text_hash_observed": "06e524156fe4",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -4309,7 +4309,7 @@
     },
     {
       "claim_id": "CLM-SEC-148",
-      "parent_detected_id": "DET-P140-S00",
+      "parent_detected_id": "DET-P149-S00",
       "parent_text_hash_expected": "b5bdcfa49677",
       "parent_text_hash_observed": "b5bdcfa49677",
       "claim_class": "METHODOLOGY_SPECIFICATION",
@@ -4325,7 +4325,7 @@
     },
     {
       "claim_id": "CLM-SEC-149",
-      "parent_detected_id": "DET-P180-S00",
+      "parent_detected_id": "DET-P189-S00",
       "parent_text_hash_expected": "09fd681769e4",
       "parent_text_hash_observed": "09fd681769e4",
       "claim_class": "METHODOLOGY_SPECIFICATION",
@@ -4341,7 +4341,7 @@
     },
     {
       "claim_id": "CLM-SEC-150",
-      "parent_detected_id": "DET-P211-S00",
+      "parent_detected_id": "DET-P220-S00",
       "parent_text_hash_expected": "e6e4b931b659",
       "parent_text_hash_observed": "e6e4b931b659",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -4357,7 +4357,7 @@
     },
     {
       "claim_id": "CLM-SEC-151",
-      "parent_detected_id": "DET-P244-S00",
+      "parent_detected_id": "DET-P253-S00",
       "parent_text_hash_expected": "af5c794906ff",
       "parent_text_hash_observed": "af5c794906ff",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -4373,7 +4373,7 @@
     },
     {
       "claim_id": "CLM-SEC-152",
-      "parent_detected_id": "DET-P352-S01",
+      "parent_detected_id": "DET-P361-S01",
       "parent_text_hash_expected": "de26fbe09da0",
       "parent_text_hash_observed": "de26fbe09da0",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -4389,7 +4389,7 @@
     },
     {
       "claim_id": "CLM-SEC-153",
-      "parent_detected_id": "DET-P372-S00",
+      "parent_detected_id": "DET-P381-S00",
       "parent_text_hash_expected": "29cb6ec63de1",
       "parent_text_hash_observed": "29cb6ec63de1",
       "claim_class": "METHODOLOGY_SPECIFICATION",
@@ -4405,7 +4405,7 @@
     },
     {
       "claim_id": "CLM-SEC-154",
-      "parent_detected_id": "DET-P374-S00",
+      "parent_detected_id": "DET-P383-S00",
       "parent_text_hash_expected": "0d0c71caebad",
       "parent_text_hash_observed": "0d0c71caebad",
       "claim_class": "METHODOLOGY_SPECIFICATION",
@@ -4421,7 +4421,7 @@
     },
     {
       "claim_id": "CLM-SEC-155",
-      "parent_detected_id": "DET-P383-S01",
+      "parent_detected_id": "DET-P392-S01",
       "parent_text_hash_expected": "3113796ad211",
       "parent_text_hash_observed": "3113796ad211",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -4437,7 +4437,7 @@
     },
     {
       "claim_id": "CLM-SEC-156",
-      "parent_detected_id": "DET-P424-S00",
+      "parent_detected_id": "DET-P433-S00",
       "parent_text_hash_expected": "08c608ca1942",
       "parent_text_hash_observed": "08c608ca1942",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -4453,7 +4453,7 @@
     },
     {
       "claim_id": "CLM-SEC-157",
-      "parent_detected_id": "DET-P432-S00",
+      "parent_detected_id": "DET-P441-S00",
       "parent_text_hash_expected": "a3603811a944",
       "parent_text_hash_observed": "a3603811a944",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -4469,7 +4469,7 @@
     },
     {
       "claim_id": "CLM-SEC-158",
-      "parent_detected_id": "DET-P434-S00",
+      "parent_detected_id": "DET-P443-S00",
       "parent_text_hash_expected": "721b61c5c111",
       "parent_text_hash_observed": "721b61c5c111",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -4485,7 +4485,7 @@
     },
     {
       "claim_id": "CLM-SEC-159",
-      "parent_detected_id": "DET-P437-S00",
+      "parent_detected_id": "DET-P446-S00",
       "parent_text_hash_expected": "7b9e56073cbd",
       "parent_text_hash_observed": "7b9e56073cbd",
       "claim_class": "METHODOLOGY_SPECIFICATION",
@@ -4501,7 +4501,7 @@
     },
     {
       "claim_id": "CLM-SEC-160",
-      "parent_detected_id": "DET-P449-S01",
+      "parent_detected_id": "DET-P458-S01",
       "parent_text_hash_expected": "dd0f6271658d",
       "parent_text_hash_observed": "dd0f6271658d",
       "claim_class": "METHODOLOGY_SPECIFICATION",
@@ -4517,7 +4517,7 @@
     },
     {
       "claim_id": "CLM-SEC-161",
-      "parent_detected_id": "DET-P466-S00",
+      "parent_detected_id": "DET-P475-S00",
       "parent_text_hash_expected": "9ef7f0f7ae41",
       "parent_text_hash_observed": "9ef7f0f7ae41",
       "claim_class": "METHODOLOGY_SPECIFICATION",
@@ -4533,7 +4533,7 @@
     },
     {
       "claim_id": "CLM-SEC-162",
-      "parent_detected_id": "DET-P485-S00",
+      "parent_detected_id": "DET-P494-S00",
       "parent_text_hash_expected": "87d541d4486e",
       "parent_text_hash_observed": "87d541d4486e",
       "claim_class": "METHODOLOGY_SPECIFICATION",
@@ -4549,7 +4549,7 @@
     },
     {
       "claim_id": "CLM-SEC-163",
-      "parent_detected_id": "DET-P503-S00",
+      "parent_detected_id": "DET-P512-S00",
       "parent_text_hash_expected": "1325411fdf04",
       "parent_text_hash_observed": "1325411fdf04",
       "claim_class": "MATHEMATICAL_FORMULATION",
@@ -4565,7 +4565,7 @@
     },
     {
       "claim_id": "CLM-SEC-P087-S01",
-      "parent_detected_id": "DET-P087-S01",
+      "parent_detected_id": "DET-P096-S01",
       "parent_text_hash_expected": "7d81a8e3ff1f",
       "parent_text_hash_observed": "7d81a8e3ff1f",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -4581,7 +4581,7 @@
     },
     {
       "claim_id": "CLM-SEC-P088-S00",
-      "parent_detected_id": "DET-P088-S00",
+      "parent_detected_id": "DET-P097-S00",
       "parent_text_hash_expected": "a660e38a1a71",
       "parent_text_hash_observed": "a660e38a1a71",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -4597,7 +4597,7 @@
     },
     {
       "claim_id": "CLM-SEC-P097-S05",
-      "parent_detected_id": "DET-P097-S05",
+      "parent_detected_id": "DET-P106-S05",
       "parent_text_hash_expected": "d03a626b3f86",
       "parent_text_hash_observed": "d03a626b3f86",
       "claim_class": "LITERATURE_DIRECT",
@@ -4616,7 +4616,7 @@
     },
     {
       "claim_id": "CLM-SEC-P117-S01",
-      "parent_detected_id": "DET-P117-S01",
+      "parent_detected_id": "DET-P126-S01",
       "parent_text_hash_expected": "719b1680a345",
       "parent_text_hash_observed": "719b1680a345",
       "claim_class": "LITERATURE_DIRECT",
@@ -4638,7 +4638,7 @@
     },
     {
       "claim_id": "CLM-SEC-P119-S00",
-      "parent_detected_id": "DET-P119-S00",
+      "parent_detected_id": "DET-P128-S00",
       "parent_text_hash_expected": "262fc349a7bc",
       "parent_text_hash_observed": "262fc349a7bc",
       "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
@@ -4654,7 +4654,7 @@
     },
     {
       "claim_id": "CLM-SEC-P120-S01",
-      "parent_detected_id": "DET-P120-S01",
+      "parent_detected_id": "DET-P129-S01",
       "parent_text_hash_expected": "96202cb1d135",
       "parent_text_hash_observed": "96202cb1d135",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -4670,7 +4670,7 @@
     },
     {
       "claim_id": "CLM-SEC-P123-S00",
-      "parent_detected_id": "DET-P123-S00",
+      "parent_detected_id": "DET-P132-S00",
       "parent_text_hash_expected": "5e8a6533600d",
       "parent_text_hash_observed": "5e8a6533600d",
       "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
@@ -4686,7 +4686,7 @@
     },
     {
       "claim_id": "CLM-SEC-P124-S00",
-      "parent_detected_id": "DET-P124-S00",
+      "parent_detected_id": "DET-P133-S00",
       "parent_text_hash_expected": "171b9dcb4a22",
       "parent_text_hash_observed": "171b9dcb4a22",
       "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
@@ -4702,7 +4702,7 @@
     },
     {
       "claim_id": "CLM-SEC-P126-S00",
-      "parent_detected_id": "DET-P126-S00",
+      "parent_detected_id": "DET-P135-S00",
       "parent_text_hash_expected": "10d7dbdeea0a",
       "parent_text_hash_observed": "10d7dbdeea0a",
       "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
@@ -4718,7 +4718,7 @@
     },
     {
       "claim_id": "CLM-SEC-P129-S00",
-      "parent_detected_id": "DET-P129-S00",
+      "parent_detected_id": "DET-P138-S00",
       "parent_text_hash_expected": "930d84a97cf3",
       "parent_text_hash_observed": "930d84a97cf3",
       "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
@@ -4734,7 +4734,7 @@
     },
     {
       "claim_id": "CLM-SEC-P130-S00",
-      "parent_detected_id": "DET-P130-S00",
+      "parent_detected_id": "DET-P139-S00",
       "parent_text_hash_expected": "b2b610cf2dea",
       "parent_text_hash_observed": "b2b610cf2dea",
       "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
@@ -4750,7 +4750,7 @@
     },
     {
       "claim_id": "CLM-SEC-P134-S00",
-      "parent_detected_id": "DET-P134-S00",
+      "parent_detected_id": "DET-P143-S00",
       "parent_text_hash_expected": "59fb93b44d53",
       "parent_text_hash_observed": "59fb93b44d53",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -4766,7 +4766,7 @@
     },
     {
       "claim_id": "CLM-SEC-P163-S02",
-      "parent_detected_id": "DET-P163-S02",
+      "parent_detected_id": "DET-P172-S02",
       "parent_text_hash_expected": "2aea30dc5a5c",
       "parent_text_hash_observed": "2aea30dc5a5c",
       "claim_class": "LITERATURE_DIRECT",
@@ -4784,7 +4784,7 @@
     },
     {
       "claim_id": "CLM-SEC-P163-S03",
-      "parent_detected_id": "DET-P163-S03",
+      "parent_detected_id": "DET-P172-S03",
       "parent_text_hash_expected": "766c96724647",
       "parent_text_hash_observed": "766c96724647",
       "claim_class": "LITERATURE_DIRECT",
@@ -4802,7 +4802,7 @@
     },
     {
       "claim_id": "CLM-SEC-P163-S04",
-      "parent_detected_id": "DET-P163-S04",
+      "parent_detected_id": "DET-P172-S04",
       "parent_text_hash_expected": "626015054c2e",
       "parent_text_hash_observed": "626015054c2e",
       "claim_class": "LITERATURE_DIRECT",
@@ -4820,7 +4820,7 @@
     },
     {
       "claim_id": "CLM-SEC-P163-S05",
-      "parent_detected_id": "DET-P163-S05",
+      "parent_detected_id": "DET-P172-S05",
       "parent_text_hash_expected": "2136e560dfdf",
       "parent_text_hash_observed": "2136e560dfdf",
       "claim_class": "LITERATURE_DIRECT",
@@ -4840,7 +4840,7 @@
     },
     {
       "claim_id": "CLM-SEC-P183-S02",
-      "parent_detected_id": "DET-P183-S02",
+      "parent_detected_id": "DET-P192-S02",
       "parent_text_hash_expected": "9e2f832c848d",
       "parent_text_hash_observed": "9e2f832c848d",
       "claim_class": "LITERATURE_DIRECT",
@@ -4858,7 +4858,7 @@
     },
     {
       "claim_id": "CLM-SEC-P194-S05",
-      "parent_detected_id": "DET-P194-S05",
+      "parent_detected_id": "DET-P203-S05",
       "parent_text_hash_expected": "1f75409690f5",
       "parent_text_hash_observed": "1f75409690f5",
       "claim_class": "LITERATURE_DIRECT",
@@ -4876,7 +4876,7 @@
     },
     {
       "claim_id": "CLM-SEC-P206-S01",
-      "parent_detected_id": "DET-P207-S01",
+      "parent_detected_id": "DET-P216-S01",
       "parent_text_hash_expected": "c6c8cdc799a8",
       "parent_text_hash_observed": "c6c8cdc799a8",
       "claim_class": "LITERATURE_DIRECT",
@@ -4894,7 +4894,7 @@
     },
     {
       "claim_id": "CLM-SEC-P240-S00",
-      "parent_detected_id": "DET-P241-S00",
+      "parent_detected_id": "DET-P250-S00",
       "parent_text_hash_expected": "f612b389966d",
       "parent_text_hash_observed": "f612b389966d",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -4910,7 +4910,7 @@
     },
     {
       "claim_id": "CLM-SEC-P244-S00",
-      "parent_detected_id": "DET-P245-S00",
+      "parent_detected_id": "DET-P254-S00",
       "parent_text_hash_expected": "1b4842293aaa",
       "parent_text_hash_observed": "1b4842293aaa",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -4926,7 +4926,7 @@
     },
     {
       "claim_id": "CLM-SEC-P249-S03",
-      "parent_detected_id": "DET-P250-S03",
+      "parent_detected_id": "DET-P259-S03",
       "parent_text_hash_expected": "1a3ecedc33c6",
       "parent_text_hash_observed": "1a3ecedc33c6",
       "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
@@ -4942,7 +4942,7 @@
     },
     {
       "claim_id": "CLM-SEC-P258-S01",
-      "parent_detected_id": "DET-P259-S01",
+      "parent_detected_id": "DET-P268-S01",
       "parent_text_hash_expected": "7543b7589d0b",
       "parent_text_hash_observed": "7543b7589d0b",
       "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
@@ -4958,7 +4958,7 @@
     },
     {
       "claim_id": "CLM-SEC-P260-S00",
-      "parent_detected_id": "DET-P261-S00",
+      "parent_detected_id": "DET-P270-S00",
       "parent_text_hash_expected": "b76424109a98",
       "parent_text_hash_observed": "b76424109a98",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -4974,7 +4974,7 @@
     },
     {
       "claim_id": "CLM-SEC-P269-S01",
-      "parent_detected_id": "DET-P270-S01",
+      "parent_detected_id": "DET-P279-S01",
       "parent_text_hash_expected": "58c072d1800c",
       "parent_text_hash_observed": "58c072d1800c",
       "claim_class": "LITERATURE_DIRECT",
@@ -4992,7 +4992,7 @@
     },
     {
       "claim_id": "CLM-SEC-P274-S01",
-      "parent_detected_id": "DET-P275-S01",
+      "parent_detected_id": "DET-P284-S01",
       "parent_text_hash_expected": "117f0f5c5ba8",
       "parent_text_hash_observed": "117f0f5c5ba8",
       "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
@@ -5008,7 +5008,7 @@
     },
     {
       "claim_id": "CLM-SEC-P275-S01",
-      "parent_detected_id": "DET-P276-S01",
+      "parent_detected_id": "DET-P285-S01",
       "parent_text_hash_expected": "9f27c8bdab6c",
       "parent_text_hash_observed": "9f27c8bdab6c",
       "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
@@ -5024,7 +5024,7 @@
     },
     {
       "claim_id": "CLM-SEC-P278-S01",
-      "parent_detected_id": "DET-P279-S01",
+      "parent_detected_id": "DET-P288-S01",
       "parent_text_hash_expected": "b23aca7fcd4a",
       "parent_text_hash_observed": "b23aca7fcd4a",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -5040,7 +5040,7 @@
     },
     {
       "claim_id": "CLM-SEC-P303-S02",
-      "parent_detected_id": "DET-P304-S02",
+      "parent_detected_id": "DET-P313-S02",
       "parent_text_hash_expected": "955a20348a70",
       "parent_text_hash_observed": "955a20348a70",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -5056,7 +5056,7 @@
     },
     {
       "claim_id": "CLM-SEC-P305-S03",
-      "parent_detected_id": "DET-P306-S03",
+      "parent_detected_id": "DET-P315-S03",
       "parent_text_hash_expected": "ce49d8e383b9",
       "parent_text_hash_observed": "ce49d8e383b9",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -5072,7 +5072,7 @@
     },
     {
       "claim_id": "CLM-SEC-P347-S00",
-      "parent_detected_id": "DET-P348-S00",
+      "parent_detected_id": "DET-P357-S00",
       "parent_text_hash_expected": "1133f8e152f4",
       "parent_text_hash_observed": "1133f8e152f4",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -5088,7 +5088,7 @@
     },
     {
       "claim_id": "CLM-SEC-P349-S00",
-      "parent_detected_id": "DET-P350-S00",
+      "parent_detected_id": "DET-P359-S00",
       "parent_text_hash_expected": "90ec3eae7f59",
       "parent_text_hash_observed": "90ec3eae7f59",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -5104,7 +5104,7 @@
     },
     {
       "claim_id": "CLM-SEC-P351-S00",
-      "parent_detected_id": "DET-P352-S00",
+      "parent_detected_id": "DET-P361-S00",
       "parent_text_hash_expected": "48f7dab3bce9",
       "parent_text_hash_observed": "48f7dab3bce9",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -5120,7 +5120,7 @@
     },
     {
       "claim_id": "CLM-SEC-P355-S00",
-      "parent_detected_id": "DET-P356-S00",
+      "parent_detected_id": "DET-P365-S00",
       "parent_text_hash_expected": "818e9add8725",
       "parent_text_hash_observed": "818e9add8725",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -5136,7 +5136,7 @@
     },
     {
       "claim_id": "CLM-SEC-P357-S01",
-      "parent_detected_id": "DET-P358-S01",
+      "parent_detected_id": "DET-P367-S01",
       "parent_text_hash_expected": "e94fc6ffac02",
       "parent_text_hash_observed": "e94fc6ffac02",
       "claim_class": "AUTHOR_PROPOSAL",
@@ -5152,7 +5152,7 @@
     },
     {
       "claim_id": "CLM-SEC-P363-S01",
-      "parent_detected_id": "DET-P364-S01",
+      "parent_detected_id": "DET-P373-S01",
       "parent_text_hash_expected": "bd54066f736e",
       "parent_text_hash_observed": "bd54066f736e",
       "claim_class": "AUTHOR_MATHEMATICAL_SPECIFICATION",
@@ -5168,7 +5168,7 @@
     },
     {
       "claim_id": "CLM-SEC-P386-S04",
-      "parent_detected_id": "DET-P387-S04",
+      "parent_detected_id": "DET-P396-S04",
       "parent_text_hash_expected": "2f4eab216040",
       "parent_text_hash_observed": "2f4eab216040",
       "claim_class": "LITERATURE_DIRECT",
@@ -5188,7 +5188,7 @@
     },
     {
       "claim_id": "CLM-SEC-P442-S00",
-      "parent_detected_id": "DET-P443-S00",
+      "parent_detected_id": "DET-P452-S00",
       "parent_text_hash_expected": "b76eaa499e34",
       "parent_text_hash_observed": "b76eaa499e34",
       "claim_class": "AUTHOR_SYNTHESIS",
@@ -5204,7 +5204,7 @@
     },
     {
       "claim_id": "CLM-SEC-P513-S00",
-      "parent_detected_id": "DET-P514-S00",
+      "parent_detected_id": "DET-P523-S00",
       "parent_text_hash_expected": "e629e01dfb57",
       "parent_text_hash_observed": "e629e01dfb57",
       "claim_class": "AUTHOR_SYNTHESIS",

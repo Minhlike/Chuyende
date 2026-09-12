@@ -130,22 +130,34 @@ def scan_and_audit():
                 candidates.append(c_dict)
                 candidates_by_id[cand_id] = c_dict
 
-    # Scan body tables (tables 1 to len-1, excluding bibliography table)
-    for tidx in range(1, len(doc.tables)):
-        if tidx == bib_table_idx:
-            continue
-        t = doc.tables[tidx]
+    # Scan body tables: tables occurring between body_start and body_end, excluding bibliography table
+    p_start_elm = doc.paragraphs[body_start]._element
+    p_end_elm = doc.paragraphs[body_end]._element
+    in_body = False
+    body_tables = []
+    t_idx = 0
+    for child in doc._element.body:
+        if child == p_start_elm:
+            in_body = True
+        if child == p_end_elm:
+            in_body = False
+        if child.tag.split('}')[-1] == 'tbl':
+            if in_body and t_idx != bib_table_idx:
+                body_tables.append((len(body_tables) + 1, t_idx, doc.tables[t_idx]))
+            t_idx += 1
+
+    for b_num, t_idx, t in body_tables:
         for ridx, r in enumerate(t.rows):
             row_txt = ' | '.join(c.text.strip().replace('\n', ' ') for c in r.cells)
             m_a = bool(CIT_PATTERN.search(row_txt))
             m_b = bool(KW_PATTERN.search(row_txt))
             if m_a or m_b:
-                cand_id = f'DET-T{tidx:02d}-R{ridx:02d}'
+                cand_id = f'DET-T{b_num:02d}-R{ridx:02d}'
                 text_hash = hashlib.sha256(row_txt.encode('utf-8')).hexdigest()[:12]
                 c_dict = {
+                    'location': f'Bảng {b_num} (Hàng {ridx})',
                     'detected_id': cand_id,
-                    'location': f'Bảng {tidx} (Hàng {ridx})',
-                    'table_index': tidx,
+                    'table_index': b_num,
                     'row_index': ridx,
                     'text': row_txt,
                     'text_hash': text_hash,

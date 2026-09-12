@@ -2,10 +2,10 @@
   "status": "PASS",
   "gate_title": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE",
   "detector_version": "3.0.0-forensic-truth-repair-round-3",
-  "document_sha256": "8bd1c51a8878f0208f93f0965ad9ab2b582ba8602205dc24bf98c0f9bd356b3e",
+  "document_sha256": "721202fa8204f3c5d47f54bb7e506a86a0b2bbd4dc7fd3c171ae250e7dd504ae",
   "body_boundaries": {
-    "body_start": 77,
-    "body_end": 551,
+    "body_start": 86,
+    "body_end": 560,
     "scanned_paragraphs_count": 475
   },
   "candidate_count": 293,
@@ -22,9 +22,9 @@
   },
   "detected_candidates": [
     {
-      "detected_id": "DET-P078-S01",
-      "location": "Chương (Đoạn P78, câu S1)",
-      "paragraph_index": 78,
+      "detected_id": "DET-P087-S01",
+      "location": "Chương (Đoạn P87, câu S1)",
+      "paragraph_index": 87,
       "sentence_index": 1,
       "text": "Các sự kiện như đăng nhập, tạo tiến trình, truy cập tệp, thay đổi quyền, thực hiện truy vấn hoặc thiết lập kết nối mạng đều có thể được ghi nhận bởi hệ điều hành, ứng dụng, thiết bị mạng, nền tảng đám mây và giải pháp bảo mật.",
       "text_hash": "578e23760449",
@@ -36,9 +36,9 @@
       ]
     },
     {
-      "detected_id": "DET-P082-S00",
-      "location": "Chương (Đoạn P82, câu S0)",
-      "paragraph_index": 82,
+      "detected_id": "DET-P091-S00",
+      "location": "Chương (Đoạn P91, câu S0)",
+      "paragraph_index": 91,
       "sentence_index": 0,
       "text": "Các phương pháp truyền thống như Bag of Words, n-gram, TF-IDF và đặc trưng thống kê có ưu điểm về tốc độ, chi phí và khả năng giải thích, nhưng hạn chế trong việc xử lý biến thể cú pháp và quan hệ dài hạn  [6],  [7].",
       "text_hash": "9150bafac7bc",
@@ -53,9 +53,9 @@
       ]
     },
     {
-      "detected_id": "DET-P082-S02",
-      "location": "Chương (Đoạn P82, câu S2)",
-      "paragraph_index": 82,
+      "detected_id": "DET-P091-S02",
+      "location": "Chương (Đoạn P91, câu S2)",
+      "paragraph_index": 91,
       "sentence_index": 2,
       "text": "Mô hình ngôn ngữ lớn mở thêm khả năng chuẩn hóa và diễn giải log, nhưng vẫn chịu hạn chế về chi phí, độ trễ, tính ổn định và bảo mật dữ liệu  [7].",
       "text_hash": "82d19692d659",
@@ -69,9 +69,9 @@
       ]
     },
     {
-      "detected_id": "DET-P086-S00",
-      "location": "Chương (Đoạn P86, câu S0)",
-      "paragraph_index": 86,
+      "detected_id": "DET-P095-S00",
+      "location": "Chương (Đoạn P95, câu S0)",
+      "paragraph_index": 95,
       "sentence_index": 0,
       "text": "Nghiên cứu hướng tới làm rõ vai trò của các nhóm đặc trưng thống kê, từ vựng, ngữ nghĩa, thời gian và đồ thị; ảnh hưởng của parsing, phân phiên và chia cửa sổ; khả năng xử lý mẫu sự kiện chưa từng xuất hiện; cũng như sự đánh đổi giữa độ chính xác, độ trễ, tài nguyên và khả năng giải thích.",
       "text_hash": "27618fb98e20",
@@ -83,9 +83,9 @@
       ]
     },
     {
-      "detected_id": "DET-P087-S01",
-      "location": "Chương (Đoạn P87, câu S1)",
-      "paragraph_index": 87,
+      "detected_id": "DET-P096-S01",
+      "location": "Chương (Đoạn P96, câu S1)",
+      "paragraph_index": 96,
       "sentence_index": 1,
       "text": "Hiệu quả được đánh giá bằng các chỉ số phù hợp với dữ liệu mất cân bằng, đồng thời xem xét cảnh báo sai, độ trễ, tài nguyên và khả năng giải thích.",
       "text_hash": "7d81a8e3ff1f",
@@ -97,9 +97,9 @@
       ]
     },
     {
-      "detected_id": "DET-P088-S00",
-      "location": "Chương (Đoạn P88, câu S0)",
-      "paragraph_index": 88,
+      "detected_id": "DET-P097-S00",
+      "location": "Chương (Đoạn P97, câu S0)",
+      "paragraph_index": 97,
       "sentence_index": 0,
       "text": "Về phương diện khoa học, đề tài hướng tới thiết lập hệ thống phân loại đa chiều cho các phương pháp trích xuất đặc trưng, làm rõ ranh giới giữa phát hiện bất thường hệ thống và phát hiện tấn công, đồng thời xác định yêu cầu đối với một biểu diễn log có khả năng bảo toàn ngữ nghĩa, thời gian và quan hệ.",
       "text_hash": "a660e38a1a71",
@@ -111,9 +111,9 @@
       ]
     },
     {
-      "detected_id": "DET-P088-S01",
-      "location": "Chương (Đoạn P88, câu S1)",
-      "paragraph_index": 88,
+      "detected_id": "DET-P097-S01",
+      "location": "Chương (Đoạn P97, câu S1)",
+      "paragraph_index": 97,
       "sentence_index": 1,
       "text": "Về khía cạnh thực tiễn, kết quả nghiên cứu hỗ trợ việc lựa chọn kỹ thuật phù hợp với từng nguồn dữ liệu và điều kiện triển khai, làm cơ sở xây dựng pipeline phân tích cho SIEM, SOC, EDR và hoạt động săn tìm mối đe dọa.",
       "text_hash": "dce03edbfbc7",
@@ -125,9 +125,9 @@
       ]
     },
     {
-      "detected_id": "DET-P090-S00",
-      "location": "Chương (Đoạn P90, câu S0)",
-      "paragraph_index": 90,
+      "detected_id": "DET-P099-S00",
+      "location": "Chương (Đoạn P99, câu S0)",
+      "paragraph_index": 99,
       "sentence_index": 0,
       "text": "Chương 1. Tổng quan về phương pháp trích xuất đặc trưng dữ liệu log và thách thức bảo toàn ngữ cảnh an toàn: Trình bày bài toán biểu diễn dữ liệu log doanh nghiệp, hành vi tấn công đa giai đoạn trên ma trận MITRE ATT&CK (Phiên bản Enterprise v19.1, 12/05/2026), khung Hợp đồng Biểu diễn , phân tích đối chiếu ba nhóm phương pháp hiện đại và xác lập 5 khoảng trống nghiên cứu cốt lõi tương ứng với 5 câu hỏi nghiên cứu từ RQ1 đến RQ5.",
       "text_hash": "11f4275fb82a",
@@ -139,9 +139,9 @@
       ]
     },
     {
-      "detected_id": "DET-P091-S00",
-      "location": "Chương (Đoạn P91, câu S0)",
-      "paragraph_index": 91,
+      "detected_id": "DET-P100-S00",
+      "location": "Chương (Đoạn P100, câu S0)",
+      "paragraph_index": 100,
       "sentence_index": 0,
       "text": "Chương 2. Đề xuất phương pháp trích xuất đặc trưng đa view bảo toàn ngữ cảnh và nhận thức quyền riêng tư: Trình bày kiến trúc biểu diễn đa góc nhìn kết hợp chuỗi sự kiện và đồ thị nguồn gốc, cơ chế gióng hàng tiềm ẩn chống sụp đổ biểu diễn, phân bổ bằng chứng yếu cho nhiễu quản trị viên và cơ chế bảo toàn liên kết có kiểm soát quyền riêng tư.",
       "text_hash": "1a32e856f7d8",
@@ -153,9 +153,9 @@
       ]
     },
     {
-      "detected_id": "DET-P092-S00",
-      "location": "Chương (Đoạn P92, câu S0)",
-      "paragraph_index": 92,
+      "detected_id": "DET-P101-S00",
+      "location": "Chương (Đoạn P101, câu S0)",
+      "paragraph_index": 101,
       "sentence_index": 0,
       "text": "Chương 3. Thực nghiệm, đánh giá và ứng dụng: Mô tả thiết lập thực nghiệm, giao thức kiểm thử và hệ thống benchmark (DARPA TC, LANL, HDFS, BGL); báo cáo kết quả tiền huấn luyện tự giám sát Stage A2 trên tập Train/Validation (chủ yếu trên HDFS) cùng phương sai qua nhiều seed; định vị rõ khung đánh giá trôi dạt dữ liệu, rủi ro quyền riêng tư (MIA/Model Inversion) và phát hiện tấn công là các giao thức đánh giá hạ nguồn tiếp theo; thảo luận khả năng tích hợp trong hệ thống SOC.",
       "text_hash": "833eb4df03ed",
@@ -167,9 +167,9 @@
       ]
     },
     {
-      "detected_id": "DET-P095-S00",
-      "location": "Chương (Đoạn P95, câu S0)",
-      "paragraph_index": 95,
+      "detected_id": "DET-P104-S00",
+      "location": "Chương (Đoạn P104, câu S0)",
+      "paragraph_index": 104,
       "sentence_index": 0,
       "text": "Trong các trung tâm điều hành an ninh mạng (SOC), dữ liệu nhật ký hệ điều hành và nhật ký kiểm toán là nguồn bằng chứng trung tâm phục vụ phát hiện, điều tra và đối phó các cuộc tấn công có chủ đích kéo dài  [1].",
       "text_hash": "b7386a3e0708",
@@ -183,9 +183,9 @@
       ]
     },
     {
-      "detected_id": "DET-P095-S01",
-      "location": "Chương (Đoạn P95, câu S1)",
-      "paragraph_index": 95,
+      "detected_id": "DET-P104-S01",
+      "location": "Chương (Đoạn P104, câu S1)",
+      "paragraph_index": 104,
       "sentence_index": 1,
       "text": "Khác với văn bản ngôn ngữ tự nhiên hay tín hiệu hình ảnh, dữ liệu nhật ký có cấu trúc bán cấu trúc, phụ thuộc thứ tự thời gian, phản ánh quan hệ phụ thuộc thực thi giữa các tiến trình và tài nguyên hệ thống, đồng thời mang ngữ nghĩa an ninh chuyên biệt  [2],  [3].",
       "text_hash": "13c674c81a33",
@@ -200,9 +200,9 @@
       ]
     },
     {
-      "detected_id": "DET-P095-S02",
-      "location": "Chương (Đoạn P95, câu S2)",
-      "paragraph_index": 95,
+      "detected_id": "DET-P104-S02",
+      "location": "Chương (Đoạn P104, câu S2)",
+      "paragraph_index": 104,
       "sentence_index": 2,
       "text": "Mục 1.1 hình thức hóa bài toán biểu diễn đặc trưng nhật ký phục vụ phát hiện tấn công đa giai đoạn, phân tích đặc tính không gian dữ liệu doanh nghiệp, xác lập mô hình hành vi dựa trên ma trận MITRE ATT&CK  [4] và thiết lập Hợp đồng Biểu diễn nhằm bảo toàn các ràng buộc an toàn cho không gian vector đặc trưng.",
       "text_hash": "5159ce1b213c",
@@ -216,9 +216,9 @@
       ]
     },
     {
-      "detected_id": "DET-P097-S00",
-      "location": "Chương (Đoạn P97, câu S0)",
-      "paragraph_index": 97,
+      "detected_id": "DET-P106-S00",
+      "location": "Chương (Đoạn P106, câu S0)",
+      "paragraph_index": 106,
       "sentence_index": 0,
       "text": "Không gian dữ liệu nhật ký trong môi trường mạng doanh nghiệp được tổng hợp từ ba nhóm nguồn dữ liệu chính với cấu trúc và định dạng không đồng nhất  [1],  [5].",
       "text_hash": "4ce299b080bf",
@@ -233,9 +233,9 @@
       ]
     },
     {
-      "detected_id": "DET-P097-S02",
-      "location": "Chương (Đoạn P97, câu S2)",
-      "paragraph_index": 97,
+      "detected_id": "DET-P106-S02",
+      "location": "Chương (Đoạn P106, câu S2)",
+      "paragraph_index": 106,
       "sentence_index": 2,
       "text": "Trên các hệ thống Linux, các cơ chế thu thập viễn trắc nguồn gốc và kiểm toán mức nhân, như Linux Auditd hoặc eBPF, ghi nhận các sự kiện lời gọi hệ thống, tiêu biểu như khởi tạo tiến trình execve, thao tác tệp tin open, openat, unlink và kết nối mạng connect, accept, để phục vụ điều tra số và xây dựng đồ thị quan hệ nhân quả  [1],  [2].",
       "text_hash": "0ea32de5ea77",
@@ -250,9 +250,9 @@
       ]
     },
     {
-      "detected_id": "DET-P097-S03",
-      "location": "Chương (Đoạn P97, câu S3)",
-      "paragraph_index": 97,
+      "detected_id": "DET-P106-S03",
+      "location": "Chương (Đoạn P106, câu S3)",
+      "paragraph_index": 106,
       "sentence_index": 3,
       "text": "Trong khi đó, trên môi trường Windows, Microsoft Sysinternals Sysmon cung cấp viễn trắc an ninh mức hệ điều hành thông qua các sự kiện định danh chuẩn hóa theo đặc tả kỹ thuật chính thức của Russinovich & Garnier  [41], tiêu biểu gồm: khởi tạo tiến trình (ProcessCreate - Event ID 1), kết nối mạng (NetworkConnect - Event ID 3), nạp thư viện động (ImageLoaded - Event ID 7), tạo tệp tin (FileCreate - Event ID 11), và thao tác cấu hình registry (RegistryEvent - Event ID 13).",
       "text_hash": "bb15cf5bdc99",
@@ -266,9 +266,9 @@
       ]
     },
     {
-      "detected_id": "DET-P097-S04",
-      "location": "Chương (Đoạn P97, câu S4)",
-      "paragraph_index": 97,
+      "detected_id": "DET-P106-S04",
+      "location": "Chương (Đoạn P106, câu S4)",
+      "paragraph_index": 106,
       "sentence_index": 4,
       "text": "Nhóm thứ hai là nhật ký luồng mạng, được thu thập từ Zeek, Suricata hoặc NetFlow/IPFIX, cung cấp siêu dữ liệu kết nối giữa các nút mạng, giao dịch DNS, chứng chỉ TLS/SSL và thông lượng gói tin.",
       "text_hash": "f6ea8db5414d",
@@ -281,9 +281,9 @@
       ]
     },
     {
-      "detected_id": "DET-P097-S05",
-      "location": "Chương (Đoạn P97, câu S5)",
-      "paragraph_index": 97,
+      "detected_id": "DET-P106-S05",
+      "location": "Chương (Đoạn P106, câu S5)",
+      "paragraph_index": 106,
       "sentence_index": 5,
       "text": "Nhóm thứ ba là nhật ký ứng dụng và dịch vụ phân tán, phát sinh từ máy chủ web Apache, hệ thống tệp phân tán HDFS cùng các dịch vụ tính toán cụm thuộc bộ benchmark LogHub  [42].",
       "text_hash": "d03a626b3f86",
@@ -297,9 +297,9 @@
       ]
     },
     {
-      "detected_id": "DET-P103-S00",
-      "location": "Chương (Đoạn P103, câu S0)",
-      "paragraph_index": 103,
+      "detected_id": "DET-P112-S00",
+      "location": "Chương (Đoạn P112, câu S0)",
+      "paragraph_index": 112,
       "sentence_index": 0,
       "text": "Bên cạnh tính dị thể giữa các nguồn thu thập, dữ liệu nhật ký doanh nghiệp còn chịu áp lực lớn về mặt thông lượng và tỷ lệ phân bố nhãn  [3],  [8].",
       "text_hash": "ee7ce1f1fc6f",
@@ -314,9 +314,9 @@
       ]
     },
     {
-      "detected_id": "DET-P103-S01",
-      "location": "Chương (Đoạn P103, câu S1)",
-      "paragraph_index": 103,
+      "detected_id": "DET-P112-S01",
+      "location": "Chương (Đoạn P112, câu S1)",
+      "paragraph_index": 112,
       "sentence_index": 1,
       "text": "Hệ thống tiếp nhận luồng sự kiện liên tục với tốc độ cao, đòi hỏi cơ chế xử lý dòng trực tiếp như cách tiếp cận phác họa đồ thị của UNICORN  [9], đồng thời đặt ra yêu cầu kiểm soát tài nguyên bộ nhớ khi theo dõi các đồ thị nguồn gốc kéo dài.",
       "text_hash": "256c477f045a",
@@ -330,9 +330,9 @@
       ]
     },
     {
-      "detected_id": "DET-P103-S02",
-      "location": "Chương (Đoạn P103, câu S2)",
-      "paragraph_index": 103,
+      "detected_id": "DET-P112-S02",
+      "location": "Chương (Đoạn P112, câu S2)",
+      "paragraph_index": 112,
       "sentence_index": 2,
       "text": "Tỷ lệ các dòng nhật ký liên quan đến hành vi tấn công trong thực tế thường rất nhỏ so với lưu lượng vận hành nền, tạo ra sự mất cân bằng dữ liệu sâu sắc khiến các thuật toán học máy thông thường có xu hướng bỏ qua nhóm thiểu số  [8].",
       "text_hash": "203943d9a08e",
@@ -346,9 +346,9 @@
       ]
     },
     {
-      "detected_id": "DET-P103-S03",
-      "location": "Chương (Đoạn P103, câu S3)",
-      "paragraph_index": 103,
+      "detected_id": "DET-P112-S03",
+      "location": "Chương (Đoạn P112, câu S3)",
+      "paragraph_index": 112,
       "sentence_index": 3,
       "text": "Bên cạnh đó, hiện tượng sụp đổ chiều biểu diễn có nguy cơ xuất hiện khi mô hình học biểu diễn tự giám sát trên luồng dữ liệu mất cân bằng không có cơ chế điều hòa phương sai và hiệp phương sai phù hợp để duy trì độ phong phú của các chiều vector  [10],  [11].",
       "text_hash": "b34468e0d3e1",
@@ -363,9 +363,9 @@
       ]
     },
     {
-      "detected_id": "DET-P104-S01",
-      "location": "Chương (Đoạn P104, câu S1)",
-      "paragraph_index": 104,
+      "detected_id": "DET-P113-S01",
+      "location": "Chương (Đoạn P113, câu S1)",
+      "paragraph_index": 113,
       "sentence_index": 1,
       "text": "Dựa trên bản chất không dừng của luồng dữ liệu và phương pháp luận đánh giá theo thời gian  [8], bốn dạng trôi dạt dữ liệu được phân định như sau:",
       "text_hash": "64c8474de730",
@@ -379,9 +379,9 @@
       ]
     },
     {
-      "detected_id": "DET-P111-S00",
-      "location": "Chương (Đoạn P111, câu S0)",
-      "paragraph_index": 111,
+      "detected_id": "DET-P120-S00",
+      "location": "Chương (Đoạn P120, câu S0)",
+      "paragraph_index": 120,
       "sentence_index": 0,
       "text": "Tuy nhiên, trên thực tế vận hành và theo khung phân loại chuẩn hóa của ma trận tri thức an ninh MITRE ATT&CK [4], các chiến dịch tấn công có chủ đích (APT) mang bản chất phi tuyến tính sâu sắc [1].",
       "text_hash": "07b771f4fec9",
@@ -396,9 +396,9 @@
       ]
     },
     {
-      "detected_id": "DET-P111-S01",
-      "location": "Chương (Đoạn P111, câu S1)",
-      "paragraph_index": 111,
+      "detected_id": "DET-P120-S01",
+      "location": "Chương (Đoạn P120, câu S1)",
+      "paragraph_index": 120,
       "sentence_index": 1,
       "text": "Cần lưu ý rằng MITRE khuyến nghị ATT&CK không phải là một danh mục kiểm tra đầy đủ khép kín; từ ontology ATT&CK và các quan sát về đồ thị nguồn gốc hệ thống [1], nghiên cứu tổng hợp ba cấu trúc phân tích đặc thù sau ; đây là cấu trúc phân loại do đề tài tự tổng hợp, không phải bảng phân loại chính thức của MITRE ATT&CK: Một là, cấu trúc nhảy cóc giai đoạn Step Skipping: Kẻ tấn công có thể khai thác trực tiếp lỗ hổng thực thi mã từ xa để trích xuất dữ liệu ra ngoài mà không cần thiết lập cơ chế duy trì hay di chuyển ngang; Hai là, cấu trúc lặp vòng kỹ thuật Tactic Looping & Interleaving: Kỹ thuật thu thập thông tin nội bộ Discovery thường được lặp lại nhiều lần xen kẽ giữa các bước leo thang đặc quyền và chiếm đoạt thông tin xác thực; Ba là, cấu trúc phân nhánh tiến trình song song Parallel Branching: Kẻ tấn công có thể khởi tạo đồng thời nhiều luồng tiến trình con độc lập trên các tiến trình hợp lệ khác nhau nhằm phân tán sự theo dõi của hệ thống phòng thủ.",
       "text_hash": "5072d84a48c9",
@@ -412,9 +412,9 @@
       ]
     },
     {
-      "detected_id": "DET-P115-S00",
-      "location": "Chương (Đoạn P115, câu S0)",
-      "paragraph_index": 115,
+      "detected_id": "DET-P124-S00",
+      "location": "Chương (Đoạn P124, câu S0)",
+      "paragraph_index": 124,
       "sentence_index": 0,
       "text": "Hình 1.2: Mô hình Không gian Bằng chứng Hành vi Đa chiều MITRE ATT&CK và các đặc trưng phi tuyến tính trong tấn công APT , nguồn tác giả tổng hợp dựa trên MITRE ATT&CK [4] và Inam et al.",
       "text_hash": "608eebca4f66",
@@ -429,9 +429,9 @@
       ]
     },
     {
-      "detected_id": "DET-P116-S00",
-      "location": "Chương (Đoạn P116, câu S0)",
-      "paragraph_index": 116,
+      "detected_id": "DET-P125-S00",
+      "location": "Chương (Đoạn P125, câu S0)",
+      "paragraph_index": 125,
       "sentence_index": 0,
       "text": "Trong đó mỗi chiến thuật Tactic đại diện cho mục tiêu chiến thuật của kẻ tấn công, trả lời câu hỏi “Tại sao”, và mỗi kỹ thuật Technique đại diện cho phương thức thực thi cụ thể, trả lời câu hỏi “Làm thế nào”; một chuỗi sự kiện hoặc cây tiến trình có thể đồng thời kích hoạt nhiều nhãn chiến thuật và kỹ thuật tại cùng một thời điểm quan sát  [4].",
       "text_hash": "5363c1be75e6",
@@ -445,9 +445,9 @@
       ]
     },
     {
-      "detected_id": "DET-P117-S00",
-      "location": "Chương (Đoạn P117, câu S0)",
-      "paragraph_index": 117,
+      "detected_id": "DET-P126-S00",
+      "location": "Chương (Đoạn P126, câu S0)",
+      "paragraph_index": 126,
       "sentence_index": 0,
       "text": "Xét theo dữ liệu thực nghiệm, việc mô hình hóa hành vi tấn công đòi hỏi phải phân định chuẩn xác đặc tính gán nhãn và mức độ hạt của từng bộ dữ liệu chuẩn [3]: Một là, bộ dữ liệu DARPA Transparent Computing Engagement #3 (TC E3, diễn ra tháng 4/2018) [12] và Engagement #5 (TC E5) [43] cung cấp dữ liệu kiểm toán hệ thống mức hạt nhân chi tiết, trong đó các kịch bản tấn công và diễn tập red-team trong các engagement của chương trình được gán nhãn ở mức độ hạt tiến trình và luồng phụ thuộc; Hai là, bộ dữ liệu LANL Unified Host and Network Dataset [13] phản ánh môi trường mạng doanh nghiệp quy mô lớn với hàng tỷ sự kiện xác thực và luồng mạng, trong đó nhãn mặt đất thực nghiệm được xác lập từ tệp redteam.txt ghi nhận các sự kiện xác thực bị xâm nhập cụ thể của đội Red Team theo mốc thời gian và tài khoản/máy chủ xác định; Ba là, bộ dữ liệu HDFS của Xu et al.",
       "text_hash": "dd8d5f587cbe",
@@ -464,9 +464,9 @@
       ]
     },
     {
-      "detected_id": "DET-P117-S01",
-      "location": "Chương (Đoạn P117, câu S1)",
-      "paragraph_index": 117,
+      "detected_id": "DET-P126-S01",
+      "location": "Chương (Đoạn P126, câu S1)",
+      "paragraph_index": 126,
       "sentence_index": 1,
       "text": "[18] và LogHub [42] được gán nhãn bất thường theo vết thực thi ở mức khối dữ liệu [18], phản ánh trạng thái bình thường hoặc bất thường của một phiên giao tác phân tán hoàn chỉnh; Bốn là, bộ dữ liệu BGL thuộc kho LogHub [42] đại diện cho nhật ký siêu máy tính với nhãn bất thường được xác lập ở mức dòng log đơn lẻ [42].",
       "text_hash": "719b1680a345",
@@ -484,9 +484,9 @@
       ]
     },
     {
-      "detected_id": "DET-P119-S00",
-      "location": "Chương (Đoạn P119, câu S0)",
-      "paragraph_index": 119,
+      "detected_id": "DET-P128-S00",
+      "location": "Chương (Đoạn P128, câu S0)",
+      "paragraph_index": 128,
       "sentence_index": 0,
       "text": "Các mức biểu diễn dữ liệu và Hợp đồng Biểu diễn",
       "text_hash": "262fc349a7bc",
@@ -498,9 +498,9 @@
       ]
     },
     {
-      "detected_id": "DET-P120-S01",
-      "location": "Chương (Đoạn P120, câu S1)",
-      "paragraph_index": 120,
+      "detected_id": "DET-P129-S01",
+      "location": "Chương (Đoạn P129, câu S1)",
+      "paragraph_index": 129,
       "sentence_index": 1,
       "text": "Trong học sâu, mô hình thiết lập một ánh xạ hàm tham số chuyển đổi dữ liệu nhật ký hệ thống đa góc nhìn sang không gian vector tiềm ẩn.",
       "text_hash": "96202cb1d135",
@@ -512,9 +512,9 @@
       ]
     },
     {
-      "detected_id": "DET-P120-S03",
-      "location": "Chương (Đoạn P120, câu S3)",
-      "paragraph_index": 120,
+      "detected_id": "DET-P129-S03",
+      "location": "Chương (Đoạn P129, câu S3)",
+      "paragraph_index": 129,
       "sentence_index": 3,
       "text": "Do đó, để định hình không gian biểu diễn phục vụ mục tiêu an ninh, chuyên đề đề xuất một khung khái niệm chính thức mang tên Hợp đồng Biểu diễn , ký hiệu là , đóng vai trò như một bản đặc tả các ràng buộc toán học và ngữ nghĩa giữa dữ liệu thô và không gian vector tiềm ẩn z:",
       "text_hash": "4eebba7f5f22",
@@ -526,9 +526,9 @@
       ]
     },
     {
-      "detected_id": "DET-P122-S00",
-      "location": "Chương (Đoạn P122, câu S0)",
-      "paragraph_index": 122,
+      "detected_id": "DET-P131-S00",
+      "location": "Chương (Đoạn P131, câu S0)",
+      "paragraph_index": 131,
       "sentence_index": 0,
       "text": "Khung Hợp đồng Biểu diễn thiết lập ba nhóm điều kiện ràng buộc bắt buộc mà không gian vector biểu diễn z phải đồng thời thỏa mãn:",
       "text_hash": "077c4b715352",
@@ -540,9 +540,9 @@
       ]
     },
     {
-      "detected_id": "DET-P123-S00",
-      "location": "Chương (Đoạn P123, câu S0)",
-      "paragraph_index": 123,
+      "detected_id": "DET-P132-S00",
+      "location": "Chương (Đoạn P132, câu S0)",
+      "paragraph_index": 132,
       "sentence_index": 0,
       "text": "Một là, nhóm Điều kiện Bảo toàn PRESERVE: Tập hợp các thuộc tính và tương quan an ninh bắt buộc phải được bảo toàn trong không gian vector biểu diễn, bao gồm ngữ nghĩa của các tham số dòng lệnh quan trọng, trật tự thời gian và quan hệ phụ thuộc thực thi giữa các tiến trình, tệp tin và kết nối mạng, cấu trúc cục bộ của đồ thị nguồn gốc cùng các đặc trưng nhận diện chiến thuật và kỹ thuật MITRE ATT&CK.",
       "text_hash": "5e8a6533600d",
@@ -554,9 +554,9 @@
       ]
     },
     {
-      "detected_id": "DET-P124-S00",
-      "location": "Chương (Đoạn P124, câu S0)",
-      "paragraph_index": 124,
+      "detected_id": "DET-P133-S00",
+      "location": "Chương (Đoạn P133, câu S0)",
+      "paragraph_index": 133,
       "sentence_index": 0,
       "text": "Hai là, nhóm Điều kiện Bất biến INVARIANT: Tập hợp các biến đổi hình thức mà không gian vector z phải duy trì tính bất biến, bao gồm sự thay đổi cú pháp vô hại của chuỗi nhật ký (định dạng thời gian, khoảng trắng, thứ tự các trường không mang nghĩa an ninh), sự ngẫu nhiên hóa mã định danh tiến trình (PID/PPID), tên tài khoản cục bộ không ảnh hưởng đến bản chất luồng thực thi và các biến động chu kỳ của lưu lượng nền.",
       "text_hash": "171b9dcb4a22",
@@ -568,9 +568,9 @@
       ]
     },
     {
-      "detected_id": "DET-P125-S00",
-      "location": "Chương (Đoạn P125, câu S0)",
-      "paragraph_index": 125,
+      "detected_id": "DET-P134-S00",
+      "location": "Chương (Đoạn P134, câu S0)",
+      "paragraph_index": 134,
       "sentence_index": 0,
       "text": "Ba là, nhóm Điều kiện Triệt tiêu EXCLUDE: Tập hợp các thông tin giả tạo và biến số ngoài miền bắt buộc phải bị loại bỏ khỏi không gian vector z nhằm ngăn ngừa rủi ro học đường tắt  [8].",
       "text_hash": "11085d2ffb49",
@@ -584,9 +584,9 @@
       ]
     },
     {
-      "detected_id": "DET-P125-S01",
-      "location": "Chương (Đoạn P125, câu S1)",
-      "paragraph_index": 125,
+      "detected_id": "DET-P134-S01",
+      "location": "Chương (Đoạn P134, câu S1)",
+      "paragraph_index": 134,
       "sentence_index": 1,
       "text": "Bao gồm các mẫu định dạng đặc thù của môi trường thử nghiệm lab, các biến số gây rò rỉ phân vùng và dấu thời gian tuyệt đối của máy thử nghiệm  [8], cùng các tương quan ngẫu nhiên có thể khiến mô hình đạt điểm số ảo trên tập kiểm thử nhưng suy giảm năng lực khi vận hành thực tế.",
       "text_hash": "3208981f6083",
@@ -600,9 +600,9 @@
       ]
     },
     {
-      "detected_id": "DET-P126-S00",
-      "location": "Chương (Đoạn P126, câu S0)",
-      "paragraph_index": 126,
+      "detected_id": "DET-P135-S00",
+      "location": "Chương (Đoạn P135, câu S0)",
+      "paragraph_index": 135,
       "sentence_index": 0,
       "text": "Các đặc tả chi tiết của Hợp đồng Biểu diễn được hệ thống hóa trong Bảng 1.2:",
       "text_hash": "10d7dbdeea0a",
@@ -614,9 +614,9 @@
       ]
     },
     {
-      "detected_id": "DET-P127-S00",
-      "location": "Chương (Đoạn P127, câu S0)",
-      "paragraph_index": 127,
+      "detected_id": "DET-P136-S00",
+      "location": "Chương (Đoạn P136, câu S0)",
+      "paragraph_index": 136,
       "sentence_index": 0,
       "text": "Bảng 1.2: Đặc tả Hợp đồng Biểu diễn cho vector đặc trưng z",
       "text_hash": "06e524156fe4",
@@ -628,9 +628,9 @@
       ]
     },
     {
-      "detected_id": "DET-P129-S00",
-      "location": "Chương (Đoạn P129, câu S0)",
-      "paragraph_index": 129,
+      "detected_id": "DET-P138-S00",
+      "location": "Chương (Đoạn P138, câu S0)",
+      "paragraph_index": 138,
       "sentence_index": 0,
       "text": "Nguyên tắc PRESERVE tập trung vào việc bảo toàn ngữ nghĩa an ninh động chứ không đồng nghĩa với việc giữ lại toàn bộ định danh thô của người dùng hay máy chủ.",
       "text_hash": "930d84a97cf3",
@@ -642,9 +642,9 @@
       ]
     },
     {
-      "detected_id": "DET-P129-S01",
-      "location": "Chương (Đoạn P129, câu S1)",
-      "paragraph_index": 129,
+      "detected_id": "DET-P138-S01",
+      "location": "Chương (Đoạn P138, câu S1)",
+      "paragraph_index": 138,
       "sentence_index": 1,
       "text": "Về mặt bảo vệ quyền riêng tư, chuyên đề phân định rạch ròi bốn cấp độ an toàn thông tin và không đồng nhất khả năng phòng thủ giữa các cấp độ này: Một là, cơ chế giả danh hóa ẩn danh hóa thông qua việc ánh xạ các định danh nhạy cảm như tên người dùng, địa chỉ IP và tên máy chủ sang không gian mã băm hoặc chỉ số trừu tượng nhằm kiểm soát khả năng liên kết dữ liệu; Hai là,đề xuất quy trình đánh giá rủi ro trước tấn công suy luận thành viên (Membership Inference Attack – MIA) [16], được định vị là phép kiểm tra hạ nguồn nhằm đánh giá khả năng đối nghịch xác định một bản ghi nhật ký cụ thể có thuộc tập huấn luyện hay không; Ba là,đề xuất quy trình đánh giá rủi ro trước tấn công đảo ngược mô hình Model Inversion Attack [33], cũng được định vị là phép kiểm tra hạ nguồn nhằm đánh giá nguy cơ khôi phục thông tin cấu hình từ vector biểu diễn tiềm ẩn; Bốn là,định hướng khung bảo đảm toán học về quyền riêng tư vi sai (Differential Privacy – DP) theo hướng dẫn chuẩn mực của NIST SP 800-226 [17].",
       "text_hash": "31fe10f04572",
@@ -661,9 +661,9 @@
       ]
     },
     {
-      "detected_id": "DET-P129-S02",
-      "location": "Chương (Đoạn P129, câu S2)",
-      "paragraph_index": 129,
+      "detected_id": "DET-P138-S02",
+      "location": "Chương (Đoạn P138, câu S2)",
+      "paragraph_index": 138,
       "sentence_index": 2,
       "text": "Cần khẳng định rằng vector biểu diễn tiềm ẩn không tự động an toàn về quyền riêng tư nếu không có cơ chế chứng minh toán học tường minh; các quy trình kiểm thử tấn công MIA hay Model Inversion được định vị là phép kiểm tra hạ nguồn độc lập và chưa được thực thi trong phạm vi thực nghiệm hiện tại của chuyên đề [16], [33], kết hợp khung lý thuyết DP định hướng lượng hóa độ mất mát quyền riêng tư [17].",
       "text_hash": "21838cb94897",
@@ -679,9 +679,9 @@
       ]
     },
     {
-      "detected_id": "DET-P129-S03",
-      "location": "Chương (Đoạn P129, câu S3)",
-      "paragraph_index": 129,
+      "detected_id": "DET-P138-S03",
+      "location": "Chương (Đoạn P138, câu S3)",
+      "paragraph_index": 138,
       "sentence_index": 3,
       "text": "Tương tự, nguyên tắc EXCLUDE thiết lập các ràng buộc phủ định đối với các giả định đường tắt đã biết và các biến số gây rò rỉ phân vùng [8], thay vì giả định rằng mọi đường tắt đều có thể nhận biết trước khi thực nghiệm.",
       "text_hash": "686fe50a15ec",
@@ -695,9 +695,9 @@
       ]
     },
     {
-      "detected_id": "DET-P130-S00",
-      "location": "Chương (Đoạn P130, câu S0)",
-      "paragraph_index": 130,
+      "detected_id": "DET-P139-S00",
+      "location": "Chương (Đoạn P139, câu S0)",
+      "paragraph_index": 139,
       "sentence_index": 0,
       "text": "Đi đôi với Hợp đồng Biểu diễn được quy định trong Bảng 1.2, chuyên đề thiết lập nguyên tắc phân định ranh giới phương pháp luận ba tầng độc lập, được mô hình hóa tổng quát trong Hình 1.3:",
       "text_hash": "b2b610cf2dea",
@@ -709,9 +709,9 @@
       ]
     },
     {
-      "detected_id": "DET-P132-S00",
-      "location": "Chương (Đoạn P132, câu S0)",
-      "paragraph_index": 132,
+      "detected_id": "DET-P141-S00",
+      "location": "Chương (Đoạn P141, câu S0)",
+      "paragraph_index": 141,
       "sentence_index": 0,
       "text": "Hình 1.3: Khung phân định ranh giới ba tầng phương pháp luận và vị trí trọng tâm của không gian vector biểu diễn z , nguồn tác giả đề xuất",
       "text_hash": "d27337dacbe7",
@@ -723,9 +723,9 @@
       ]
     },
     {
-      "detected_id": "DET-P134-S00",
-      "location": "Chương (Đoạn P134, câu S0)",
-      "paragraph_index": 134,
+      "detected_id": "DET-P143-S00",
+      "location": "Chương (Đoạn P143, câu S0)",
+      "paragraph_index": 143,
       "sentence_index": 0,
       "text": "Hai là, Tầng 2 học không gian biểu diễn tự giám sát: Thiết lập kiến trúc bộ mã hóa  cùng các đầu chiếu phụ trợ để chuyển đổi chuỗi sự kiện và đồ thị nguồn gốc sang không gian vector tiềm ẩn.",
       "text_hash": "59fb93b44d53",
@@ -737,9 +737,9 @@
       ]
     },
     {
-      "detected_id": "DET-P134-S01",
-      "location": "Chương (Đoạn P134, câu S1)",
-      "paragraph_index": 134,
+      "detected_id": "DET-P143-S01",
+      "location": "Chương (Đoạn P143, câu S1)",
+      "paragraph_index": 143,
       "sentence_index": 1,
       "text": "Các hàm mất mát tự giám sát như dự đoán tham số bị che, dự đoán sự kiện tiếp theo, dự đoán quan hệ đồ thị và căn chỉnh thời gian đóng vai trò là các mục tiêu tối ưu hóa hình thức nhằm định hướng không gian vector z lưu giữ tín hiệu phục vụ các ràng buộc PRESERVE và INVARIANT; các hàm mục tiêu này là công cụ tối ưu hóa hình thức chứ không cấu thành bằng chứng trực tiếp chứng minh mô hình đã tự động hiểu bản chất an ninh hay nhân quả, và chất lượng biểu diễn bắt buộc phải được đánh giá qua các tác vụ hạ nguồn [10].",
       "text_hash": "1f89d3199ba1",
@@ -753,9 +753,9 @@
       ]
     },
     {
-      "detected_id": "DET-P135-S00",
-      "location": "Chương (Đoạn P135, câu S0)",
-      "paragraph_index": 135,
+      "detected_id": "DET-P144-S00",
+      "location": "Chương (Đoạn P144, câu S0)",
+      "paragraph_index": 144,
       "sentence_index": 0,
       "text": "Ba là, Tầng 3 thực hiện đánh giá phát hiện hạ nguồn: Đánh giá chất lượng của vector biểu diễn z thông qua giao thức đóng băng bộ mã hóa và huấn luyện bộ phân loại tuyến tính (Frozen Linear Probing theo chuẩn mực SimCLR  [37]):",
       "text_hash": "9d416dc60183",
@@ -769,9 +769,9 @@
       ]
     },
     {
-      "detected_id": "DET-P137-S01",
-      "location": "Chương (Đoạn P137, câu S1)",
-      "paragraph_index": 137,
+      "detected_id": "DET-P146-S01",
+      "location": "Chương (Đoạn P146, câu S1)",
+      "paragraph_index": 146,
       "sentence_index": 1,
       "text": "Giao thức đánh giá tuyến tính đóng băng (frozen linear probe) giữ bộ mã hóa cố định và chỉ huấn luyện một ánh xạ tuyến tính trên vector z, vì vậy phép đo cho biết lượng thông tin phục vụ tác vụ hạ nguồn có thể được truy xuất bằng một bộ phân loại tuyến tính mà không cho phép detector học lại biểu diễn, dù phương pháp này không đo lường toàn bộ thông tin phi tuyến có thể tồn tại trong z [8], [37].",
       "text_hash": "d31c503f74e6",
@@ -786,9 +786,9 @@
       ]
     },
     {
-      "detected_id": "DET-P139-S00",
-      "location": "Chương (Đoạn P139, câu S0)",
-      "paragraph_index": 139,
+      "detected_id": "DET-P148-S00",
+      "location": "Chương (Đoạn P148, câu S0)",
+      "paragraph_index": 148,
       "sentence_index": 0,
       "text": "Phục vụ việc định vị chính xác các đóng góp kỹ thuật và cơ sở lý luận của chuyên đề, Mục 1.2 tiến hành khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log chủ đạo trong y văn hiện đại [6], [1], [5]: thứ nhất là nhóm phương pháp thống kê và cú pháp dựa trên mẫu log; thứ hai là nhóm phương pháp biểu diễn ngữ nghĩa chuỗi thời gian; và thứ ba là nhóm phương pháp học biểu diễn đồ thị nguồn gốc.",
       "text_hash": "335c5b056171",
@@ -804,9 +804,9 @@
       ]
     },
     {
-      "detected_id": "DET-P139-S01",
-      "location": "Chương (Đoạn P139, câu S1)",
-      "paragraph_index": 139,
+      "detected_id": "DET-P148-S01",
+      "location": "Chương (Đoạn P148, câu S1)",
+      "paragraph_index": 148,
       "sentence_index": 1,
       "text": "Mỗi nhóm phương pháp được mổ xẻ tường minh về cơ chế toán học, độ phức tạp thuật toán, ưu điểm cốt lõi và các rào cản nền tảng khi triển khai trong môi trường phát hiện tấn công thực tế.",
       "text_hash": "a0ea118df610",
@@ -818,9 +818,9 @@
       ]
     },
     {
-      "detected_id": "DET-P140-S00",
-      "location": "Chương (Đoạn P140, câu S0)",
-      "paragraph_index": 140,
+      "detected_id": "DET-P149-S00",
+      "location": "Chương (Đoạn P149, câu S0)",
+      "paragraph_index": 149,
       "sentence_index": 0,
       "text": "Phương pháp thống kê và cú pháp: Event Count, Frequency, Entropy và Template Features",
       "text_hash": "b5bdcfa49677",
@@ -832,9 +832,9 @@
       ]
     },
     {
-      "detected_id": "DET-P141-S00",
-      "location": "Chương (Đoạn P141, câu S0)",
-      "paragraph_index": 141,
+      "detected_id": "DET-P150-S00",
+      "location": "Chương (Đoạn P150, câu S0)",
+      "paragraph_index": 150,
       "sentence_index": 0,
       "text": "Nhóm phương pháp thống kê và cú pháp đại diện cho thế hệ tiếp cận đầu tiên trong phân tích nhật ký tự động  [6],  [7].",
       "text_hash": "20bc90fe4ccb",
@@ -849,9 +849,9 @@
       ]
     },
     {
-      "detected_id": "DET-P142-S00",
-      "location": "Chương (Đoạn P142, câu S0)",
-      "paragraph_index": 142,
+      "detected_id": "DET-P151-S00",
+      "location": "Chương (Đoạn P151, câu S0)",
+      "paragraph_index": 151,
       "sentence_index": 0,
       "text": "Trong giai đoạn phân tích cú pháp, nhiều thuật toán tiêu biểu đã được phát triển nhằm tối ưu hóa tốc độ xử lý  [6]: thứ nhất là Drain  [6] sử dụng cấu trúc cây phân tích có độ sâu cố định để nhóm các dòng log dựa trên độ dài chuỗi và các từ khóa tiền tố, trong kết quả đo chuẩn thực nghiệm của Zhu et al., thời gian xử lý của Drain tăng gần tuyến tính theo kích thước tập dữ liệu log đối với luồng dữ liệu lớn; thứ hai là Spell  [6] áp dụng thuật toán tìm chuỗi con chung dài nhất (LCS) theo cơ chế dòng để trích xuất động các thành phần tĩnh của thông điệp log; thứ ba là LenMa và AEL  [6],  [7] lần lượt khai thác chiều dài các từ tố và tần suất xuất hiện của từ khóa để phân cụm và tách biến số ra khỏi chuỗi mẫu.",
       "text_hash": "c86d44a4c387",
@@ -870,9 +870,9 @@
       ]
     },
     {
-      "detected_id": "DET-P145-S01",
-      "location": "Chương (Đoạn P145, câu S1)",
-      "paragraph_index": 145,
+      "detected_id": "DET-P154-S01",
+      "location": "Chương (Đoạn P154, câu S1)",
+      "paragraph_index": 154,
       "sentence_index": 1,
       "text": "Bên cạnh việc đếm tần suất đơn thuần, trọng số TF-IDF được vận dụng để điều chỉnh độ nổi bật của từng mẫu sự kiện trong không gian đặc trưng; trong đó thành phần tần suất sự kiện (TF) đo lường mức độ xuất hiện cục bộ trong một phiên phân tích, kết hợp cùng trọng số nghịch đảo chuỗi  nhằm phạt giảm trọng số của các sự kiện phổ biến trên toàn bộ kho dữ liệu, giúp khuếch đại các sự kiện xuất hiện tập trung trong phiên nhưng hiếm gặp trên diện rộng.",
       "text_hash": "1daced1ce22b",
@@ -884,9 +884,9 @@
       ]
     },
     {
-      "detected_id": "DET-P147-S00",
-      "location": "Chương (Đoạn P147, câu S0)",
-      "paragraph_index": 147,
+      "detected_id": "DET-P156-S00",
+      "location": "Chương (Đoạn P156, câu S0)",
+      "paragraph_index": 156,
       "sentence_index": 0,
       "text": "Trên không gian vector tần suất này, các mô hình phát hiện bất thường kinh điển được triển khai rộng rãi, tiêu biểu là phân tích thành phần chính PCA (Xu et al., SOSP 2009)  [18] thực hiện tâm hóa dữ liệu và tìm các phương chiếu trực giao có phương sai lớn nhất nhằm phân rã không gian vector  thành không gian con chuẩn tắc  gồm các thành phần chính được giữ lại và không gian con phần dư ; về mặt hình học, khi một vector quan sát nằm hoàn toàn trong không gian con giữ lại thì thành phần chiếu lên phần dư bằng 0, ngược lại một sự kiện được nhận diện là bất thường khi năng lượng chiếu lên phần dư vượt ngưỡng kiểm định thống kê, tuy nhiên phương có phương sai lớn trong dữ liệu không mặc nhiên là phương mang ý nghĩa an ninh do PCA tối ưu hóa tiêu chuẩn phương sai thống kê thay vì thuộc tính an ninh, vì vậy độ lớn phần dư thuần túy phản ánh độ lệch thống kê ngoài không gian chuẩn tắc chứ không tự chứng minh bản chất tấn công:",
       "text_hash": "bbce590434d8",
@@ -900,9 +900,9 @@
       ]
     },
     {
-      "detected_id": "DET-P149-S00",
-      "location": "Chương (Đoạn P149, câu S0)",
-      "paragraph_index": 149,
+      "detected_id": "DET-P158-S00",
+      "location": "Chương (Đoạn P158, câu S0)",
+      "paragraph_index": 158,
       "sentence_index": 0,
       "text": "Thứ hai, Invariant Mining (Lou et al., USENIX ATC 2010)  [19] tự động khai phá các phương trình bất biến tuyến tính phản ánh mối quan hệ bảo toàn logic giữa các bước thực thi:",
       "text_hash": "3e404d80368f",
@@ -916,9 +916,9 @@
       ]
     },
     {
-      "detected_id": "DET-P151-S00",
-      "location": "Chương (Đoạn P151, câu S0)",
-      "paragraph_index": 151,
+      "detected_id": "DET-P160-S00",
+      "location": "Chương (Đoạn P160, câu S0)",
+      "paragraph_index": 160,
       "sentence_index": 0,
       "text": "Mặc dù sở hữu ưu thế về tốc độ xử lý trong thực tiễn, nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng  [6],  [2]: Một là, mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số: các bộ log parser dựa trên biểu thức chính quy thường thay thế các tham số biến động như địa chỉ IP, đường dẫn tệp tin và tham số dòng lệnh bằng ký tự đại diện <*> khiến nhiều thông tin an ninh mang tính phân biệt cao bị lược bỏ; Hai là, lan truyền và khuếch đại sai số cú pháp Parser Error Propagation: khi gặp các định dạng log mới chưa từng xuất hiện, parser có thể phân tách không chính xác, dẫn đến hiện tượng sinh ra các mẫu sự kiện giả lập hoặc gộp nhầm các sự kiện khác biệt, làm xáo trộn cấu trúc không gian vector x.",
       "text_hash": "24b988fb8057",
@@ -933,9 +933,9 @@
       ]
     },
     {
-      "detected_id": "DET-P153-S00",
-      "location": "Chương (Đoạn P153, câu S0)",
-      "paragraph_index": 153,
+      "detected_id": "DET-P162-S00",
+      "location": "Chương (Đoạn P162, câu S0)",
+      "paragraph_index": 162,
       "sentence_index": 0,
       "text": "Khắc phục sự cứng nhắc của các vector đếm tần suất và tận dụng trật tự xuất hiện của các sự kiện, nhóm phương pháp Semantic–Sequential mô hình hóa luồng log tương tự như các chuỗi ngôn ngữ tự nhiên, tích hợp các kỹ thuật nhúng từ và học tự giám sát (Self-Supervised Learning) để nắm bắt phụ thuộc ngữ cảnh dài hạn  [14],  [20],  [21],  [22],  [23].",
       "text_hash": "977b34572607",
@@ -953,9 +953,9 @@
       ]
     },
     {
-      "detected_id": "DET-P154-S00",
-      "location": "Chương (Đoạn P154, câu S0)",
-      "paragraph_index": 154,
+      "detected_id": "DET-P163-S00",
+      "location": "Chương (Đoạn P163, câu S0)",
+      "paragraph_index": 163,
       "sentence_index": 0,
       "text": "Khởi đầu cho hướng nghiên cứu này là mô hình DeepLog  [14].",
       "text_hash": "bad41e0bf75b",
@@ -969,9 +969,9 @@
       ]
     },
     {
-      "detected_id": "DET-P154-S01",
-      "location": "Chương (Đoạn P154, câu S1)",
-      "paragraph_index": 154,
+      "detected_id": "DET-P163-S01",
+      "location": "Chương (Đoạn P163, câu S1)",
+      "paragraph_index": 163,
       "sentence_index": 1,
       "text": "Nhằm khắc phục hạn chế mất mát thứ tự thời gian của các mô hình túi từ, DeepLog thiết lập cơ chế phát hiện bất thường chuỗi mẫu sự kiện (Log-Key Anomaly Detection): mô hình LSTM học trật tự thực thi bình thường thông qua phân phối có điều kiện  trên cửa sổ trượt k sự kiện trước đó  [14]:",
       "text_hash": "6254acb604b9",
@@ -985,9 +985,9 @@
       ]
     },
     {
-      "detected_id": "DET-P156-S00",
-      "location": "Chương (Đoạn P156, câu S0)",
-      "paragraph_index": 156,
+      "detected_id": "DET-P165-S00",
+      "location": "Chương (Đoạn P165, câu S0)",
+      "paragraph_index": 165,
       "sentence_index": 0,
       "text": "Song song với luồng sự kiện phân loại, DeepLog xây dựng mô hình LSTM thứ hai kết hợp phân phối chuẩn nhiều chiều để kiểm tra độ lệch bất thường của các tham số số học  [14]; tuy nhiên, việc mô hình hóa dựa trên mạng hồi quy đòi hỏi thông tin trạng thái phải truyền tuần tự qua từng bước tính toán, khiến cơ chế cổng của LSTM gặp giới hạn khi truyền tải các phụ thuộc ngữ cảnh dài hạn và không cho phép các vị trí cách xa nhau tương tác trực tiếp với nhau.",
       "text_hash": "8d3382505ca1",
@@ -1001,9 +1001,9 @@
       ]
     },
     {
-      "detected_id": "DET-P157-S00",
-      "location": "Chương (Đoạn P157, câu S0)",
-      "paragraph_index": 157,
+      "detected_id": "DET-P166-S00",
+      "location": "Chương (Đoạn P166, câu S0)",
+      "paragraph_index": 166,
       "sentence_index": 0,
       "text": "Thứ nhất, để nâng cao năng lực biểu diễn ngữ nghĩa vượt khỏi hạn chế của vector tần suất, các công trình kế tiếp đã khai thác vector nhúng cho từng mẫu log: LogAnomaly  [22] đề xuất Template2Vec dựa trên Word2Vec và FastText kết hợp trọng số d-IDF để trích xuất đặc trưng ngữ nghĩa từ vựng; trong khi đó, Logsy  [23] áp dụng hàm mất mát phân loại ngoại lai trên dữ liệu log phụ trợ nhằm định hình biên giới phân tách cho lớp hành vi bình thường; Thứ hai, bước chuyển sang mô hình hóa chuỗi sâu sắc hơn được khởi xướng bởi LogBERT  [20] dựa trên kiến trúc Transformer hai chiều và cơ chế chú ý tự thân (Self-Attention) của Vaswani et al.",
       "text_hash": "181ff2f35e10",
@@ -1019,9 +1019,9 @@
       ]
     },
     {
-      "detected_id": "DET-P157-S01",
-      "location": "Chương (Đoạn P157, câu S1)",
-      "paragraph_index": 157,
+      "detected_id": "DET-P166-S01",
+      "location": "Chương (Đoạn P166, câu S1)",
+      "paragraph_index": 166,
       "sentence_index": 1,
       "text": "Trong kiến trúc Transformer  [34], cơ chế chú ý tích vô hướng tỉ lệ ánh xạ đầu vào thành các bộ vector Query, Key và Value, tính điểm tương tác giữa các cặp Query-Key và chuẩn hóa qua hàm softmax để tạo phân phối trọng số tổng hợp các vector Value trong phạm vi cửa sổ quan sát; về mặt cơ chế, nếu các điểm tương tác tương đương nhau thì trọng số chú ý phân bố gần như đồng đều, còn khi một vị trí có điểm vượt trội thì trọng số tập trung vào vị trí đó, cho phép liên kết trực tiếp mọi cặp sự kiện mà không bị nghẽn qua các bước tuần tự, song trọng số chú ý thuần túy phản ánh mức độ liên đới ngữ cảnh được tính toán trong cửa sổ chứ không cấu thành bằng chứng giải thích nhân quả hay đồ thị phụ thuộc hệ thống.",
       "text_hash": "b28b3d68456f",
@@ -1035,9 +1035,9 @@
       ]
     },
     {
-      "detected_id": "DET-P157-S02",
-      "location": "Chương (Đoạn P157, câu S2)",
-      "paragraph_index": 157,
+      "detected_id": "DET-P166-S02",
+      "location": "Chương (Đoạn P166, câu S2)",
+      "paragraph_index": 166,
       "sentence_index": 2,
       "text": "LogBERT áp dụng cơ chế này cho hai tác vụ tự giám sát gồm dự đoán sự kiện log bị che và dự đoán phân bố khối lượng log; song song đó, hướng tiếp cận không dùng parser như NeuralLog  [21] trực tiếp mã hóa chuỗi văn bản thô thành các vector nhúng liên tục.",
       "text_hash": "6b2692a92209",
@@ -1051,9 +1051,9 @@
       ]
     },
     {
-      "detected_id": "DET-P157-S04",
-      "location": "Chương (Đoạn P157, câu S4)",
-      "paragraph_index": 157,
+      "detected_id": "DET-P166-S04",
+      "location": "Chương (Đoạn P166, câu S4)",
+      "paragraph_index": 166,
       "sentence_index": 4,
       "text": "Để kiểm soát hiện tượng này, kỹ thuật chính quy hóa VICReg  [10] phân rã mục tiêu điều chuẩn hình học thành ba thành phần: Phương sai duy trì độ phân tán theo chiều nhằm tránh co cụm về một điểm; Bất biến gióng hàng biểu diễn giữa các góc nhìn khác nhau; và Hiệp phương sai phạt các phần tử ngoài đường chéo của ma trận hiệp phương sai nhằm giảm tương quan tuyến tính giữa các chiều đặc trưng, dù mức hiệp phương sai triệt tiêu không đồng nghĩa với tính độc lập thống kê hoàn toàn khi tồn tại phụ thuộc phi tuyến.",
       "text_hash": "440be9c71907",
@@ -1067,9 +1067,9 @@
       ]
     },
     {
-      "detected_id": "DET-P157-S05",
-      "location": "Chương (Đoạn P157, câu S5)",
-      "paragraph_index": 157,
+      "detected_id": "DET-P166-S05",
+      "location": "Chương (Đoạn P166, câu S5)",
+      "paragraph_index": 166,
       "sentence_index": 5,
       "text": "Việc áp dụng VICReg trong chuyên đề đóng vai trò là một cơ chế chính quy hóa hình học không gian, trong khi hiệu quả giảm tỷ lệ cảnh báo sai hoặc bỏ sót trong viễn trắc an ninh là giả thuyết thích ứng của đề tài cần kiểm chứng thực nghiệm  [10].",
       "text_hash": "86f0a5e6dcd5",
@@ -1083,9 +1083,9 @@
       ]
     },
     {
-      "detected_id": "DET-P158-S00",
-      "location": "Chương (Đoạn P158, câu S0)",
-      "paragraph_index": 158,
+      "detected_id": "DET-P167-S00",
+      "location": "Chương (Đoạn P167, câu S0)",
+      "paragraph_index": 167,
       "sentence_index": 0,
       "text": "Mặc dù đạt kết quả tốt trên các tập dữ liệu phần mềm, nhóm phương pháp Semantic–Sequential đối mặt với ba rào cản khi áp dụng vào an ninh mạng [8], [3]: Một là, nguy cơ rò rỉ và thiên lệch từ dữ liệu tiền huấn luyện: các mô hình sử dụng Transformer tiền huấn luyện trên kho văn bản tổng quát có nguy cơ tận dụng tri thức ngoài miền; khi đánh giá trong điều kiện phân vùng nghiêm ngặt, năng lực phân tách thực tế cần được kiểm chứng cẩn trọng [8]; Hai là, chi phí tài nguyên tính toán: cơ chế Self-Attention trong Transformer [34] có độ phức tạp tính toán và bộ nhớ bậc hai theo độ dài chuỗi hoặc kích thước cửa sổ, đòi hỏi tài nguyên tính toán đáng kể khi triển khai trên luồng dữ liệu thời gian thực có lưu lượng lớn; Ba là, giới hạn phạm vi quan sát đơn luồng và thiếu nhận thức cấu trúc: cơ chế chú ý tự thân tính toán trọng số tương tác trực tiếp từ tích vô hướng Query-Key trong phạm vi cửa sổ chuỗi cục bộ và tự nó không chứng minh quan hệ nhân quả; trong khi đó, cấu trúc đồ thị nguồn gốc có thể cung cấp thêm tương tác đa thực thể giữa tiến trình - tệp tin - socket mạng và các liên kết phụ thuộc, nhưng bản thân tô-pô đồ thị cũng không tự biến quan hệ liên đới hay phụ thuộc cấu trúc thành suy diễn nhân quả an ninh nếu thiếu các thiết kế kiểm soát hoặc bằng chứng bổ sung phù hợp.",
       "text_hash": "3fd3356bed7a",
@@ -1102,9 +1102,9 @@
       ]
     },
     {
-      "detected_id": "DET-P160-S00",
-      "location": "Chương (Đoạn P160, câu S0)",
-      "paragraph_index": 160,
+      "detected_id": "DET-P169-S00",
+      "location": "Chương (Đoạn P169, câu S0)",
+      "paragraph_index": 169,
       "sentence_index": 0,
       "text": "Để khắc phục hạn chế của mô hình chuỗi khi một sự kiện đơn lẻ không chứa đủ ngữ cảnh của cả chuỗi hành vi, hướng tiếp cận dựa trên đồ thị nguồn gốc hệ thống mô hình hóa toàn bộ lịch sử thực thi và tương tác trong hệ điều hành dưới dạng một đồ thị có hướng, không đồng nhất và gán nhãn thời gian  [1],  [5]:",
       "text_hash": "b18c91649441",
@@ -1119,9 +1119,9 @@
       ]
     },
     {
-      "detected_id": "DET-P162-S00",
-      "location": "Chương (Đoạn P162, câu S0)",
-      "paragraph_index": 162,
+      "detected_id": "DET-P171-S00",
+      "location": "Chương (Đoạn P171, câu S0)",
+      "paragraph_index": 171,
       "sentence_index": 0,
       "text": "Trong đó V là tập các đỉnh đại diện cho các thực thể hệ thống thuộc tập kiểu ; E là tập các cạnh có hướng mô tả các tương tác luồng phụ thuộc nằm trong tập kiểu ; và τ gán nhãn mốc thời gian xảy ra tương tác  [1].",
       "text_hash": "0c39d1298df0",
@@ -1135,9 +1135,9 @@
       ]
     },
     {
-      "detected_id": "DET-P163-S00",
-      "location": "Chương (Đoạn P163, câu S0)",
-      "paragraph_index": 163,
+      "detected_id": "DET-P172-S00",
+      "location": "Chương (Đoạn P172, câu S0)",
+      "paragraph_index": 172,
       "sentence_index": 0,
       "text": "Các hệ thống phát hiện xâm nhập dựa trên đồ thị nguồn gốc (PIDS) tiêu biểu bao gồm  [1],  [5]: Thứ nhất, UNICORN  [9] (NDSS 2020) xây dựng đồ thị nguồn gốc luồng thời gian thực, áp dụng thuật toán băm cây con Weisfeiler-Lehman để chuyển đổi đồ thị động thành vector đặc trưng đếm histogram; Thứ hai, KAIROS  [24] (IEEE S&P 2024) tích hợp mạng nơ-ron đồ thị nhận biết thời gian mã hóa đồng thời thông tin cấu trúc và sự tiến triển thời gian của đồ thị nguồn gốc để chấm điểm bất thường và tái dựng dấu vết tấn công APT; Thứ ba, NODLINK  [25] (NDSS 2024) mô hình hóa bài toán phát hiện thành cây Steiner trực tuyến kết hợp cơ chế bộ nhớ đệm để khôi phục đồ thị con tấn công nhỏ gọn; Thứ tư, MAGIC  [26] (USENIX Security 2024) khai thác kiến trúc tự mã hóa đồ thị che kết hợp cơ chế thích ứng mô hình để học biểu diễn đa độ hạt và chống trôi dạt khái niệm; Thứ năm, ORTHRUS  [27] (USENIX Security 2025) tích hợp cơ chế học biểu diễn nguồn gốc chống chịu kỹ thuật lẩn tránh.",
       "text_hash": "20f3af935d03",
@@ -1157,9 +1157,9 @@
       ]
     },
     {
-      "detected_id": "DET-P163-S01",
-      "location": "Chương (Đoạn P163, câu S1)",
-      "paragraph_index": 163,
+      "detected_id": "DET-P172-S01",
+      "location": "Chương (Đoạn P172, câu S1)",
+      "paragraph_index": 172,
       "sentence_index": 1,
       "text": "Mặc dù đạt nhiều bước tiến, nhóm phương pháp đồ thị đối mặt với ba thách thức lý thuyết và thực tiễn cốt lõi: Một là, hiện tượng bùng nổ phụ thuộc Dependency Explosion: các tiến trình hệ thống chạy dài hạn liên tục tương tác với nhiều tệp tin và socket, khiến đồ thị phát triển dày đặc và tạo ra nhiều liên kết phụ thuộc xa làm loãng tín hiệu bất thường  [1],  [28]; Hai là, ranh giới giữa quan hệ phụ thuộc cấu trúc và tác động nhân quả (Dependency != Causal Effect): kết quả khảo sát thực nghiệm của Bilot et al.",
       "text_hash": "35012d53f4bd",
@@ -1174,9 +1174,9 @@
       ]
     },
     {
-      "detected_id": "DET-P163-S02",
-      "location": "Chương (Đoạn P163, câu S2)",
-      "paragraph_index": 163,
+      "detected_id": "DET-P172-S02",
+      "location": "Chương (Đoạn P172, câu S2)",
+      "paragraph_index": 172,
       "sentence_index": 2,
       "text": "[29] (USENIX Security 2025) và Guerra et al.",
       "text_hash": "2aea30dc5a5c",
@@ -1190,9 +1190,9 @@
       ]
     },
     {
-      "detected_id": "DET-P163-S03",
-      "location": "Chương (Đoạn P163, câu S3)",
-      "paragraph_index": 163,
+      "detected_id": "DET-P172-S03",
+      "location": "Chương (Đoạn P172, câu S3)",
+      "paragraph_index": 172,
       "sentence_index": 3,
       "text": "[30] chỉ ra rằng nhiều mô hình GNN phức tạp có nguy cơ khai thác các đặc trưng đường tắt thống kê như phân bố bậc của nút hoặc tính mới của đường dẫn; trong đó Bilot et al.",
       "text_hash": "766c96724647",
@@ -1206,9 +1206,9 @@
       ]
     },
     {
-      "detected_id": "DET-P163-S04",
-      "location": "Chương (Đoạn P163, câu S4)",
-      "paragraph_index": 163,
+      "detected_id": "DET-P172-S04",
+      "location": "Chương (Đoạn P172, câu S4)",
+      "paragraph_index": 172,
       "sentence_index": 4,
       "text": "[29] chứng minh một mô hình mạng nơ-ron đơn giản đạt hiệu năng cạnh tranh vượt trội trên 5/7 tập dữ liệu DARPA, còn Guerra et al.",
       "text_hash": "626015054c2e",
@@ -1222,9 +1222,9 @@
       ]
     },
     {
-      "detected_id": "DET-P163-S05",
-      "location": "Chương (Đoạn P163, câu S5)",
-      "paragraph_index": 163,
+      "detected_id": "DET-P172-S05",
+      "location": "Chương (Đoạn P172, câu S5)",
+      "paragraph_index": 172,
       "sentence_index": 5,
       "text": "[30] chỉ ra hiệu quả của các baseline danh sách cho phép / thống kê sự kiện, khẳng định một cạnh phụ thuộc trong đồ thị không đồng nghĩa với tác động nhân quả an ninh; Ba là, hai bệnh lý mạng nơ-ron đồ thị về mặt cấu trúc: khi tăng số lớp truyền tin, hiện tượng làm mịn quá mức (Over-smoothing), được Oono & Suzuki  [44] chứng minh tại ICLR 2020 dưới các điều kiện phổ ma trận kề chuẩn hóa và hàm kích hoạt không âm trên kiến trúc GCN sâu, khiến biểu diễn các đỉnh hội tụ theo hàm mũ về một không gian con giới hạn và mất dần năng lực phân tách; trong khi đó, hiện tượng nghẽn cổ chai thông tin (Over-squashing), được Alon & Yahav  [31] phân tích tại ICLR 2021, xuất hiện khi kích thước vùng lân cận k-hop tăng nhanh và lượng thông tin từ nhiều nguồn phải truyền qua các nút cổ chai hoặc lát cắt hẹp để nén vào một vector trạng thái có kích thước cố định, khiến các tín hiệu bất thường quan trọng từ xa dễ bị hòa lẫn hoặc suy giảm.",
       "text_hash": "2136e560dfdf",
@@ -1240,9 +1240,9 @@
       ]
     },
     {
-      "detected_id": "DET-P164-S01",
-      "location": "Chương (Đoạn P164, câu S1)",
-      "paragraph_index": 164,
+      "detected_id": "DET-P173-S01",
+      "location": "Chương (Đoạn P173, câu S1)",
+      "paragraph_index": 173,
       "sentence_index": 1,
       "text": "Nguyễn Thị Thu Thủy (Khoa An toàn thông tin, Học viện Kỹ thuật Mật mã)  [32] cũng đã hệ thống hóa phương pháp luận ứng dụng Graph Learning và mạng nơ-ron đồ thị (Graph Neural Network, GNN) trên đồ thị nguồn gốc để phát hiện các chiến dịch tấn công APT đa giai đoạn; đồng thời phân tích sâu sắc các thách thức về hiện tượng bùng nổ phụ thuộc, tính đa góc nhìn và yêu cầu bảo toàn tính nhân quả khi phân tích luồng sự kiện kiểm toán hệ thống.",
       "text_hash": "8541d333052e",
@@ -1256,9 +1256,9 @@
       ]
     },
     {
-      "detected_id": "DET-P171-S00",
-      "location": "Chương (Đoạn P171, câu S0)",
-      "paragraph_index": 171,
+      "detected_id": "DET-P180-S00",
+      "location": "Chương (Đoạn P180, câu S0)",
+      "paragraph_index": 180,
       "sentence_index": 0,
       "text": "Kết quả khảo sát và phân tích đối chiếu ba nhóm phương pháp biểu diễn đặc trưng log tại Mục 1.2 cho thấy dù các kỹ thuật thống kê, mô hình chuỗi ngữ nghĩa và học biểu diễn đồ thị nguồn gốc đã giải quyết được từng khía cạnh phân tích riêng lẻ, việc triển khai chúng vào môi trường giám sát an ninh mạng doanh nghiệp thực tế vẫn bộc lộ các mâu thuẫn cơ bản về mặt biểu diễn  [1],  [3],  [6],  [8].",
       "text_hash": "84a03d0f306b",
@@ -1275,9 +1275,9 @@
       ]
     },
     {
-      "detected_id": "DET-P171-S01",
-      "location": "Chương (Đoạn P171, câu S1)",
-      "paragraph_index": 171,
+      "detected_id": "DET-P180-S01",
+      "location": "Chương (Đoạn P180, câu S1)",
+      "paragraph_index": 180,
       "sentence_index": 1,
       "text": "Để xác định phạm vi nghiên cứu và làm rõ cơ chế cần hoàn thiện, chuyên đề tổng hợp năm khoảng trống nghiên cứu kèm theo năm câu hỏi nghiên cứu tương ứng làm định hướng cho các đề xuất phương pháp luận tiếp theo:",
       "text_hash": "452f414d2b70",
@@ -1289,9 +1289,9 @@
       ]
     },
     {
-      "detected_id": "DET-P173-S00",
-      "location": "Chương (Đoạn P173, câu S0)",
-      "paragraph_index": 173,
+      "detected_id": "DET-P182-S00",
+      "location": "Chương (Đoạn P182, câu S0)",
+      "paragraph_index": 182,
       "sentence_index": 0,
       "text": "Dữ liệu thực nghiệm từ các nghiên cứu tiền nhiệm chỉ ra rằng các bộ phân tích cú pháp đóng vai trò giảm số chiều từ vựng bùng nổ của nhật ký hệ thống bằng cách gom cụm văn bản thành các khuôn mẫu định dạng tĩnh  [6],  [7].",
       "text_hash": "018f230bf785",
@@ -1306,9 +1306,9 @@
       ]
     },
     {
-      "detected_id": "DET-P174-S00",
-      "location": "Chương (Đoạn P174, câu S0)",
-      "paragraph_index": 174,
+      "detected_id": "DET-P183-S00",
+      "location": "Chương (Đoạn P183, câu S0)",
+      "paragraph_index": 183,
       "sentence_index": 0,
       "text": "Giới hạn quan trọng chưa được giải quyết là sự tương đương về mặt cú pháp mẫu nhật ký không đồng nghĩa với sự tương đương về mặt ngữ nghĩa an ninh  [2],  [3].",
       "text_hash": "1b53027f9aaf",
@@ -1323,9 +1323,9 @@
       ]
     },
     {
-      "detected_id": "DET-P175-S00",
-      "location": "Chương (Đoạn P175, câu S0)",
-      "paragraph_index": 175,
+      "detected_id": "DET-P184-S00",
+      "location": "Chương (Đoạn P184, câu S0)",
+      "paragraph_index": 184,
       "sentence_index": 0,
       "text": "Khoảng trống nghiên cứu này đặt ra thách thức: làm thế nào để thiết lập cơ chế trích xuất đặc trưng có khả năng lọc bỏ các nhiễu cú pháp vô hại nhưng vẫn bảo toàn các tham số động mang ngữ nghĩa an ninh trọng yếu dưới sự kiểm soát rò rỉ đường tắt và rủi ro quyền riêng tư trong không gian vector biểu diễn?",
       "text_hash": "70be6bac07b0",
@@ -1337,9 +1337,9 @@
       ]
     },
     {
-      "detected_id": "DET-P176-S00",
-      "location": "Chương (Đoạn P176, câu S0)",
-      "paragraph_index": 176,
+      "detected_id": "DET-P185-S00",
+      "location": "Chương (Đoạn P185, câu S0)",
+      "paragraph_index": 185,
       "sentence_index": 0,
       "text": "Câu hỏi nghiên cứu 1 RQ1 về độ trung thực biểu diễn: Có thể xây dựng representation loại bỏ nhiễu cú pháp nhưng vẫn bảo toàn các dynamic parameters có ý nghĩa an toàn quan trọng dưới sự kiểm soát rò rỉ và quyền riêng tư hay không?",
       "text_hash": "949a72ed9b6e",
@@ -1351,9 +1351,9 @@
       ]
     },
     {
-      "detected_id": "DET-P178-S00",
-      "location": "Chương (Đoạn P178, câu S0)",
-      "paragraph_index": 178,
+      "detected_id": "DET-P187-S00",
+      "location": "Chương (Đoạn P187, câu S0)",
+      "paragraph_index": 187,
       "sentence_index": 0,
       "text": "Hoạt động của một hệ thống có thể được quan sát qua nhiều lăng kính dữ liệu dị thể: góc nhìn thống kê tần suất phản ánh mật độ sự kiện  [6], góc nhìn chuỗi sự kiện phản ánh trật tự thời gian cục bộ  [14],  [20], và góc nhìn đồ thị nguồn gốc phản ánh cấu trúc phụ thuộc thực thi giữa các thực thể  [1],  [5],  [9].",
       "text_hash": "5a45cef8a72c",
@@ -1372,9 +1372,9 @@
       ]
     },
     {
-      "detected_id": "DET-P179-S00",
-      "location": "Chương (Đoạn P179, câu S0)",
-      "paragraph_index": 179,
+      "detected_id": "DET-P188-S00",
+      "location": "Chương (Đoạn P188, câu S0)",
+      "paragraph_index": 188,
       "sentence_index": 0,
       "text": "Khi đưa các góc nhìn dị thể này vào không gian vector tiềm ẩn chung qua các hàm mất mát tự giám sát, mô hình đối mặt với nguy cơ sụp đổ chiều biểu diễn, tức xu hướng ánh xạ mọi đầu vào thành các vector hằng số tầm thường, vốn đòi hỏi cơ chế điều hòa phương sai và hiệp phương sai để duy trì độ đa dạng không gian  [10],  [11]; bên cạnh đó, việc gióng hàng trong môi trường an ninh mạng còn gặp phải hai trở ngại thực tế: Một là, rủi ro chuyển giao tiêu cực, xảy ra khi nhiễu từ chuỗi sự kiện lấn át hoặc làm suy giảm tín hiệu cấu trúc phụ thuộc thực thi của đồ thị nguồn gốc; Hai là, hiện tượng dữ liệu bị khuyết hoặc tương ứng từng phần, phát sinh do độ trễ truyền thông, gói tin bị thất thoát hoặc thiếu liên kết 1–1 đồng thời giữa các luồng thu thập.",
       "text_hash": "e9524dd47f75",
@@ -1389,9 +1389,9 @@
       ]
     },
     {
-      "detected_id": "DET-P180-S00",
-      "location": "Chương (Đoạn P180, câu S0)",
-      "paragraph_index": 180,
+      "detected_id": "DET-P189-S00",
+      "location": "Chương (Đoạn P189, câu S0)",
+      "paragraph_index": 189,
       "sentence_index": 0,
       "text": "Khoảng trống nghiên cứu ở đây là: việc gióng hàng đồng thời các góc nhìn dị thể đòi hỏi thiết lập cơ chế kiểm soát toán học phù hợp để vừa chống sụp đổ biểu diễn và hạn chế chuyển giao tiêu cực, đồng thời vẫn bảo tồn được các thông tin đặc thù hữu ích của từng góc nhìn riêng biệt.",
       "text_hash": "09fd681769e4",
@@ -1403,9 +1403,9 @@
       ]
     },
     {
-      "detected_id": "DET-P183-S01",
-      "location": "Chương (Đoạn P183, câu S1)",
-      "paragraph_index": 183,
+      "detected_id": "DET-P192-S01",
+      "location": "Chương (Đoạn P192, câu S1)",
+      "paragraph_index": 192,
       "sentence_index": 1,
       "text": "[8] và Liu et al.",
       "text_hash": "251c5721119c",
@@ -1419,9 +1419,9 @@
       ]
     },
     {
-      "detected_id": "DET-P183-S02",
-      "location": "Chương (Đoạn P183, câu S2)",
-      "paragraph_index": 183,
+      "detected_id": "DET-P192-S02",
+      "location": "Chương (Đoạn P192, câu S2)",
+      "paragraph_index": 192,
       "sentence_index": 2,
       "text": "[3] đã cảnh báo sâu sắc về tình trạng sai lệch phương pháp luận trong nghiên cứu học máy áp dụng cho an ninh mạng.",
       "text_hash": "9e2f832c848d",
@@ -1435,9 +1435,9 @@
       ]
     },
     {
-      "detected_id": "DET-P184-S00",
-      "location": "Chương (Đoạn P184, câu S0)",
-      "paragraph_index": 184,
+      "detected_id": "DET-P193-S00",
+      "location": "Chương (Đoạn P193, câu S0)",
+      "paragraph_index": 193,
       "sentence_index": 0,
       "text": "Khảo sát thực nghiệm chỉ ra sáu kênh rò rỉ thông tin thường gặp trong quy trình đánh giá mô hình: Một là, rò rỉ từ vựng, xảy ra khi bộ phân tích cú pháp hoặc bộ tách từ được xây dựng trên toàn bộ dữ liệu bao gồm cả phần kiểm thử; Hai là, rò rỉ chuẩn hóa thống kê, khi các đại lượng trung bình, phương sai hoặc trọng số tần suất được tính toán xuyên qua ranh giới giữa tập huấn luyện và kiểm thử; Ba là, rò rỉ thực thể máy chủ, khi dấu vết tấn công trên cùng một máy chủ hoặc địa chỉ IP xuất hiện đồng thời ở cả hai tập; Bốn là, rò rỉ điều chỉnh siêu tham số, khi ngưỡng quyết định được tinh chỉnh dựa trên dữ liệu đánh giá; Năm là, rò rỉ dữ liệu tiền huấn luyện ngoài miền, dẫn đến ước lượng sai lệch về khả năng khái quát hóa; và Sáu là, rò rỉ thời gian tương lai, khi mô hình sử dụng các sự kiện xảy ra sau để trích xuất biểu diễn cho các sự kiện xảy ra trước.",
       "text_hash": "9c395c7002da",
@@ -1449,9 +1449,9 @@
       ]
     },
     {
-      "detected_id": "DET-P188-S00",
-      "location": "Chương (Đoạn P188, câu S0)",
-      "paragraph_index": 188,
+      "detected_id": "DET-P197-S00",
+      "location": "Chương (Đoạn P197, câu S0)",
+      "paragraph_index": 197,
       "sentence_index": 0,
       "text": "Trong thực tế giám sát an ninh mạng doanh nghiệp, dữ liệu nhãn thường chỉ được ghi nhận ở mức độ hạt rất thô, chẳng hạn như gán nhãn một phiên làm việc kéo dài nhiều giờ hoặc toàn bộ một máy chủ bị xâm nhập trong một khoảng thời gian  [3],  [12],  [13].",
       "text_hash": "b8dfda0e5507",
@@ -1467,9 +1467,9 @@
       ]
     },
     {
-      "detected_id": "DET-P189-S00",
-      "location": "Chương (Đoạn P189, câu S0)",
-      "paragraph_index": 189,
+      "detected_id": "DET-P198-S00",
+      "location": "Chương (Đoạn P198, câu S0)",
+      "paragraph_index": 198,
       "sentence_index": 0,
       "text": "Thách thức này càng trở nên phức tạp do sự xuất hiện liên tục của hành vi quản trị viên hệ thống  [1],  [3].",
       "text_hash": "169ed1072b81",
@@ -1484,9 +1484,9 @@
       ]
     },
     {
-      "detected_id": "DET-P192-S00",
-      "location": "Chương (Đoạn P192, câu S0)",
-      "paragraph_index": 192,
+      "detected_id": "DET-P201-S00",
+      "location": "Chương (Đoạn P201, câu S0)",
+      "paragraph_index": 201,
       "sentence_index": 0,
       "text": "Khoảng trống 5: Đánh đổi giữa bảo toàn liên kết an ninh và rủi ro quyền riêng tư",
       "text_hash": "780607e0bd67",
@@ -1498,9 +1498,9 @@
       ]
     },
     {
-      "detected_id": "DET-P193-S00",
-      "location": "Chương (Đoạn P193, câu S0)",
-      "paragraph_index": 193,
+      "detected_id": "DET-P202-S00",
+      "location": "Chương (Đoạn P202, câu S0)",
+      "paragraph_index": 202,
       "sentence_index": 0,
       "text": "Nhiệm vụ phát hiện và điều tra các cuộc tấn công APT kéo dài đòi hỏi mô hình học biểu diễn phải duy trì khả năng liên kết có kiểm soát giữa các chuỗi hành vi của cùng một thực thể như người dùng, máy chủ và tiến trình qua nhiều mốc thời gian khác nhau  [1],  [5].",
       "text_hash": "468e6e2d2e7f",
@@ -1515,9 +1515,9 @@
       ]
     },
     {
-      "detected_id": "DET-P194-S00",
-      "location": "Chương (Đoạn P194, câu S0)",
-      "paragraph_index": 194,
+      "detected_id": "DET-P203-S00",
+      "location": "Chương (Đoạn P203, câu S0)",
+      "paragraph_index": 203,
       "sentence_index": 0,
       "text": "Tuy nhiên, việc lưu giữ khả năng liên kết này trong không gian vector biểu diễn trực tiếp làm nảy sinh các nguy cơ nghiêm trọng về quyền riêng tư và an toàn thông tin  [16],  [17],  [33].",
       "text_hash": "ad79bf8e8e2d",
@@ -1533,9 +1533,9 @@
       ]
     },
     {
-      "detected_id": "DET-P194-S01",
-      "location": "Chương (Đoạn P194, câu S1)",
-      "paragraph_index": 194,
+      "detected_id": "DET-P203-S01",
+      "location": "Chương (Đoạn P203, câu S1)",
+      "paragraph_index": 203,
       "sentence_index": 1,
       "text": "Các vector biểu diễn đặc trưng tiềm ẩn có nguy cơ bị kẻ tấn công khai thác thông qua các kỹ thuật tấn công suy luận thành viên (Membership Inference Attacks - MIA  [16]) để xác định xem dữ liệu của một thực thể có nằm trong tập huấn luyện hay không.",
       "text_hash": "73af2ef7b421",
@@ -1549,9 +1549,9 @@
       ]
     },
     {
-      "detected_id": "DET-P194-S03",
-      "location": "Chương (Đoạn P194, câu S3)",
-      "paragraph_index": 194,
+      "detected_id": "DET-P203-S03",
+      "location": "Chương (Đoạn P203, câu S3)",
+      "paragraph_index": 203,
       "sentence_index": 3,
       "text": "[33] đã chứng minh tấn công nghịch đảo mô hình có thể khai thác thông tin đầu ra và độ tin cậy để suy diễn lại các đặc trưng nhạy cảm của dữ liệu đầu vào.",
       "text_hash": "299c4debe327",
@@ -1565,9 +1565,9 @@
       ]
     },
     {
-      "detected_id": "DET-P194-S04",
-      "location": "Chương (Đoạn P194, câu S4)",
-      "paragraph_index": 194,
+      "detected_id": "DET-P203-S04",
+      "location": "Chương (Đoạn P203, câu S4)",
+      "paragraph_index": 203,
       "sentence_index": 4,
       "text": "Trong bối cảnh mô hình biểu diễn nhật ký của đề tài theo mô hình đe dọa thích ứng do nghiên cứu đề xuất, các định danh như tên người dùng, tên máy chủ và chuỗi đối số dòng lệnh là các thuộc tính nhạy cảm tiềm năng cần phải kiểm thử thực nghiệm trước nguy cơ bị khôi phục hoặc xấp xỉ từ không gian vector biểu diễn.",
       "text_hash": "3ea65df7f1dc",
@@ -1580,9 +1580,9 @@
       ]
     },
     {
-      "detected_id": "DET-P194-S05",
-      "location": "Chương (Đoạn P194, câu S5)",
-      "paragraph_index": 194,
+      "detected_id": "DET-P203-S05",
+      "location": "Chương (Đoạn P203, câu S5)",
+      "paragraph_index": 203,
       "sentence_index": 5,
       "text": "Một mô hình được thiết kế có nhận thức về quyền riêng tư không tự động đồng nghĩa với việc đã đạt được khả năng bảo vệ quyền riêng tư ; các quy trình kiểm thử tấn công MIA và đảo ngược mô hình được định vị là phép kiểm tra hạ nguồn và chưa được thực thi trong phạm vi thực nghiệm hiện tại  [17].",
       "text_hash": "1f75409690f5",
@@ -1596,9 +1596,9 @@
       ]
     },
     {
-      "detected_id": "DET-P196-S00",
-      "location": "Chương (Đoạn P196, câu S0)",
-      "paragraph_index": 196,
+      "detected_id": "DET-P205-S00",
+      "location": "Chương (Đoạn P205, câu S0)",
+      "paragraph_index": 205,
       "sentence_index": 0,
       "text": "Câu hỏi nghiên cứu 5 (RQ5, Privacy-Security Trade-Off): Đâu là sự cân bằng chấp nhận được giữa entity continuity và privacy leakage để representation vẫn hữu ích cho phân tích an toàn?",
       "text_hash": "8d472a5c24b0",
@@ -1610,9 +1610,9 @@
       ]
     },
     {
-      "detected_id": "DET-P200-S01",
-      "location": "Chương (Đoạn P200, câu S1)",
-      "paragraph_index": 200,
+      "detected_id": "DET-P209-S01",
+      "location": "Chương (Đoạn P209, câu S1)",
+      "paragraph_index": 209,
       "sentence_index": 1,
       "text": "Việc giảm một hàm mất mát phụ trợ chỉ chứng minh mô hình tối ưu tốt hơn trên tác vụ đại diện và dữ liệu được quan sát; mọi kết luận về năng lực phát hiện xâm nhập downstream, tính vững chắc hay độ an toàn quyền riêng tư bắt buộc phải được thẩm định độc lập qua các phép đo thực nghiệm tương ứng.",
       "text_hash": "7595bf511be7",
@@ -1624,9 +1624,9 @@
       ]
     },
     {
-      "detected_id": "DET-P201-S00",
-      "location": "Chương (Đoạn P201, câu S0)",
-      "paragraph_index": 201,
+      "detected_id": "DET-P210-S00",
+      "location": "Chương (Đoạn P210, câu S0)",
+      "paragraph_index": 210,
       "sentence_index": 0,
       "text": "Trên cơ sở các khoảng trống phương pháp luận được xác lập tại Chương 1, Chương 2 đề xuất khung phương pháp biểu diễn đặc trưng log đa góc nhìn bảo toàn ngữ cảnh an toàn, vận hành trực tuyến trong môi trường xử lý dòng trong môi trường xử lý dòng trực tuyến.",
       "text_hash": "deb45a54925f",
@@ -1638,9 +1638,9 @@
       ]
     },
     {
-      "detected_id": "DET-P201-S01",
-      "location": "Chương (Đoạn P201, câu S1)",
-      "paragraph_index": 201,
+      "detected_id": "DET-P210-S01",
+      "location": "Chương (Đoạn P210, câu S1)",
+      "paragraph_index": 210,
       "sentence_index": 1,
       "text": "Quá trình biểu diễn bắt đầu bằng việc hình thức hóa luồng nhật ký kiểm toán hệ thống thành một chuỗi sự kiện được gán nhãn thời gian: , trong đó mỗi sự kiện  tuân thủ thống nhất lược đồ bộ sáu kiểu hóa , được đặc tả chi tiết tại Mục 2.2.1, bao gồm mốc thời gian xuất hiện sự kiện  , định danh kiểu sự kiện , thực thể tác nhân chủ động  , gồm tiến trình gốc hoặc tài khoản người dùng, thực thể đối tượng đích chịu tác động  , gồm tệp tin, cổng mạng hoặc tiến trình con, hành động/thao tác thực hiện  , như fork, execve, read, write, connect và registry_set, và tập hợp các tham số động có cấu trúc  gồm đường dẫn tệp tin, tham số dòng lệnh thực thi, cổng mạng và địa chỉ IP kết nối  [1].",
       "text_hash": "d72f6f2c8df1",
@@ -1654,9 +1654,9 @@
       ]
     },
     {
-      "detected_id": "DET-P204-S00",
-      "location": "Chương (Đoạn P204, câu S0)",
-      "paragraph_index": 204,
+      "detected_id": "DET-P213-S00",
+      "location": "Chương (Đoạn P213, câu S0)",
+      "paragraph_index": 213,
       "sentence_index": 0,
       "text": "Trong đó  là trạng thái bộ nhớ nội bộ hữu hạn tại thời điểm t, được cập nhật theo cơ chế đơn lượt theo chiều thời gian, không nhìn trước (Strictly Causal Single-pass Update) khi tiếp nhận sự kiện mới .",
       "text_hash": "8db29efe6233",
@@ -1668,9 +1668,9 @@
       ]
     },
     {
-      "detected_id": "DET-P207-S01",
-      "location": "Chương (Đoạn P207, câu S1)",
-      "paragraph_index": 207,
+      "detected_id": "DET-P216-S01",
+      "location": "Chương (Đoạn P216, câu S1)",
+      "paragraph_index": 216,
       "sentence_index": 1,
       "text": "Đánh giá chất lượng biểu diễn thông qua giao thức đóng băng tham số (Frozen Linear Probe: ) phục vụ phân loại và quy kết chiến thuật/kỹ thuật theo phân loại MITRE ATT&CK  [4], hoặc quy trình chấm điểm bất thường không giám sát tùy chọn (Optional Downstream Zero-Shot Anomaly Scoring Protocol).",
       "text_hash": "c6c8cdc799a8",
@@ -1684,9 +1684,9 @@
       ]
     },
     {
-      "detected_id": "DET-P207-S02",
-      "location": "Chương (Đoạn P207, câu S2)",
-      "paragraph_index": 207,
+      "detected_id": "DET-P216-S02",
+      "location": "Chương (Đoạn P216, câu S2)",
+      "paragraph_index": 216,
       "sentence_index": 2,
       "text": "Trong đó, hàm tính điểm bất thường, phép đo khoảng cách/năng lượng, phân bố nền chuẩn, phương pháp hiệu chuẩn và chính sách ngưỡng/ngân sách cảnh báo đều được đăng ký trước và khóa cố định trên tập Train/Validation tại Chương 3 trước khi mở tập Test; do phân loại tuyến tính chỉ đo lường thông tin phân tách tuyến tính trực tiếp từ z, giao thức này không hàm ý khai thác toàn bộ các tương quan phi tuyến tiềm ẩn.",
       "text_hash": "bc2bf21b1e81",
@@ -1699,9 +1699,9 @@
       ]
     },
     {
-      "detected_id": "DET-P209-S00",
-      "location": "Chương (Đoạn P209, câu S0)",
-      "paragraph_index": 209,
+      "detected_id": "DET-P218-S00",
+      "location": "Chương (Đoạn P218, câu S0)",
+      "paragraph_index": 218,
       "sentence_index": 0,
       "text": "Giả thuyết H1 (Parameter Semantic Fidelity, Đóng góp Độc lập): Biểu diễn nhận biết tham số  như chuỗi lệnh, đường dẫn tệp tin và địa chỉ IP vào không gian vector z bảo tồn lượng thông tin tương hỗ về ngữ nghĩa an ninh tiềm ẩn  cao hơn có ý nghĩa so với biểu diễn chỉ dựa trên mẫu tĩnh hoặc bị trừu tượng hóa tham số :",
       "text_hash": "e23ee99993ca",
@@ -1713,9 +1713,9 @@
       ]
     },
     {
-      "detected_id": "DET-P211-S00",
-      "location": "Chương (Đoạn P211, câu S0)",
-      "paragraph_index": 211,
+      "detected_id": "DET-P220-S00",
+      "location": "Chương (Đoạn P220, câu S0)",
+      "paragraph_index": 220,
       "sentence_index": 0,
       "text": "Trong đó  là biến ngẫu nhiên đại diện cho mục tiêu ngữ nghĩa an ninh tiềm ẩn như nhãn hành vi độc hại, ý định thực thi tiến trình và phân loại quyền hạn truy cập;  là thước đo thông tin tương hỗ, với bộ ước lượng và giao thức thực nghiệm sẽ được thiết lập và khóa chặt chẽ tại Chương 3; giả thuyết chỉ kiểm tra tính trung thực ngữ nghĩa an ninh và không suy diễn tuyệt đối sang việc triệt tiêu sụp đổ biểu diễn.",
       "text_hash": "e6e4b931b659",
@@ -1727,9 +1727,9 @@
       ]
     },
     {
-      "detected_id": "DET-P212-S00",
-      "location": "Chương (Đoạn P212, câu S0)",
-      "paragraph_index": 212,
+      "detected_id": "DET-P221-S00",
+      "location": "Chương (Đoạn P221, câu S0)",
+      "paragraph_index": 221,
       "sentence_index": 0,
       "text": "Giả thuyết H2 (Multi-View Alignment & Negative Transfer Prevention, Đóng góp Độc lập): Cơ chế gióng hàng có kiểm soát giữa góc nhìn chuỗi sự kiện  và góc nhìn đồ thị nguồn gốc  được kỳ vọng nâng cao hiệu năng biểu diễn tổng thể vượt trên các góc nhìn đơn lẻ, đồng thời thỏa mãn các điều kiện kiểm chứng định lượng:",
       "text_hash": "9029bdffc5a5",
@@ -1741,9 +1741,9 @@
       ]
     },
     {
-      "detected_id": "DET-P217-S00",
-      "location": "Chương (Đoạn P217, câu S0)",
-      "paragraph_index": 217,
+      "detected_id": "DET-P226-S00",
+      "location": "Chương (Đoạn P226, câu S0)",
+      "paragraph_index": 226,
       "sentence_index": 0,
       "text": "Giả thuyết H4 (Bounded Operational Budget Feasibility, Đóng góp Độc lập): Quá trình trích xuất và cập nhật biểu diễn dòng vận hành ổn định trong giới hạn ngân sách độ trễ và bộ nhớ xác định trước, đáp ứng yêu cầu độ trễ xử lý mỗi sự kiện  và dung lượng trạng thái bộ nhớ  trên toàn bộ dòng thời gian vận hành dài hạn:",
       "text_hash": "6b09b4507ed0",
@@ -1755,9 +1755,9 @@
       ]
     },
     {
-      "detected_id": "DET-P219-S00",
-      "location": "Chương (Đoạn P219, câu S0)",
-      "paragraph_index": 219,
+      "detected_id": "DET-P228-S00",
+      "location": "Chương (Đoạn P228, câu S0)",
+      "paragraph_index": 228,
       "sentence_index": 0,
       "text": "Giả thuyết H5 (Controlled Linkability & Utility–Privacy Frontier, Đóng góp Độc lập): Cơ chế duy trì liên kết có kiểm soát được kỳ vọng sẽ thiết lập sự vượt trội theo nghĩa Pareto so với các đường cơ sở giữ nguyên định danh thô hoặc ẩn danh hóa quá mức tại ít nhất một điểm vận hành thực tế dưới các thước đo hiệu năng an ninh và tổn thất quyền riêng tư đã định nghĩa trước:",
       "text_hash": "f0320571addf",
@@ -1769,9 +1769,9 @@
       ]
     },
     {
-      "detected_id": "DET-P221-S00",
-      "location": "Chương (Đoạn P221, câu S0)",
-      "paragraph_index": 221,
+      "detected_id": "DET-P230-S00",
+      "location": "Chương (Đoạn P230, câu S0)",
+      "paragraph_index": 230,
       "sentence_index": 0,
       "text": "Trong đó lý thuyết Quyền riêng tư Vi sai (DP) đóng vai trò định lượng và chặn trên tổn thất lý thuyết dưới các giả định toán học xác định, còn rủi ro thực tế được định vị là phép kiểm tra hạ nguồn cần đánh giá thực nghiệm độc lập thông qua các quy trình kiểm thử tấn công suy luận thành viên (MIA)  [16],  [17] và tấn công nghịch đảo/tái định danh thực thể  [33].",
       "text_hash": "cafbc615123e",
@@ -1787,9 +1787,9 @@
       ]
     },
     {
-      "detected_id": "DET-P222-S00",
-      "location": "Chương (Đoạn P222, câu S0)",
-      "paragraph_index": 222,
+      "detected_id": "DET-P231-S00",
+      "location": "Chương (Đoạn P231, câu S0)",
+      "paragraph_index": 231,
       "sentence_index": 0,
       "text": "Độ phức tạp xử lý dòng với trạng thái hữu hạn",
       "text_hash": "0525c822e5da",
@@ -1801,9 +1801,9 @@
       ]
     },
     {
-      "detected_id": "DET-P223-S01",
-      "location": "Chương (Đoạn P223, câu S1)",
-      "paragraph_index": 223,
+      "detected_id": "DET-P232-S01",
+      "location": "Chương (Đoạn P232, câu S1)",
+      "paragraph_index": 232,
       "sentence_index": 1,
       "text": "Việc duy trì toàn bộ lịch sử tương tác của hệ thống trên bộ nhớ là bất khả thi về mặt tài nguyên.",
       "text_hash": "a2ed79558218",
@@ -1815,9 +1815,9 @@
       ]
     },
     {
-      "detected_id": "DET-P223-S02",
-      "location": "Chương (Đoạn P223, câu S2)",
-      "paragraph_index": 223,
+      "detected_id": "DET-P232-S02",
+      "location": "Chương (Đoạn P232, câu S2)",
+      "paragraph_index": 232,
       "sentence_index": 2,
       "text": "Do đó, chuyên đề thiết lập hợp đồng xử lý dòng với trạng thái hữu hạn (Bounded-State Streaming Contract), được quy định bởi ngân sách bộ nhớ trần  và tập thực thể hoạt động :",
       "text_hash": "f9584e61d0eb",
@@ -1829,9 +1829,9 @@
       ]
     },
     {
-      "detected_id": "DET-P225-S03",
-      "location": "Chương (Đoạn P225, câu S3)",
-      "paragraph_index": 225,
+      "detected_id": "DET-P234-S03",
+      "location": "Chương (Đoạn P234, câu S3)",
+      "paragraph_index": 234,
       "sentence_index": 3,
       "text": "Để hiện thực hóa hợp đồng này, các kỹ thuật như chính sách Least Recently Updated LRU, cấu trúc phác thảo Count-Min Sketch và hàm suy giảm trọng số cạnh theo hàm mũ  được đề xuất như các ứng viên kỹ thuật hiện thực hóa có thể thay thế hoặc tùy biến linh hoạt.",
       "text_hash": "4d40f31d2cde",
@@ -1843,9 +1843,9 @@
       ]
     },
     {
-      "detected_id": "DET-P226-S00",
-      "location": "Chương (Đoạn P226, câu S0)",
-      "paragraph_index": 226,
+      "detected_id": "DET-P235-S00",
+      "location": "Chương (Đoạn P235, câu S0)",
+      "paragraph_index": 235,
       "sentence_index": 0,
       "text": "Xử lý hiện tượng sự kiện đến muộn hoặc xáo trộn thứ tự (Out-of-Order Events) phát sinh từ độ trễ mạng thu thập telemetry  [1],  [25], chuyên đề đề xuất nguyên tắc xử lý theo thời gian sự kiện kết hợp cơ chế mốc ngắt thời gian (Event-Time Watermark):",
       "text_hash": "e0a3517ca71b",
@@ -1860,9 +1860,9 @@
       ]
     },
     {
-      "detected_id": "DET-P229-S01",
-      "location": "Chương (Đoạn P229, câu S1)",
-      "paragraph_index": 229,
+      "detected_id": "DET-P238-S01",
+      "location": "Chương (Đoạn P238, câu S1)",
+      "paragraph_index": 238,
       "sentence_index": 1,
       "text": "Nếu lưu lượng vượt quá giới hạn chịu tải tối đa, việc loại bỏ gói tin (Shedding) được thực hiện hoàn toàn độc lập với kết quả phát hiện của mô hình (dựa trên hạn ngạch băng thông nguồn thu thập hoặc mức độ ưu tiên của phân vùng telemetry, tuyệt đối không dựa vào điểm số an ninh chưa kiểm chứng) nhằm tránh rủi ro rò rỉ vòng lặp Detector Leakage và loại bỏ nhầm các bằng chứng APT yếu thưa thớt.",
       "text_hash": "614687ab5bed",
@@ -1874,9 +1874,9 @@
       ]
     },
     {
-      "detected_id": "DET-P230-S00",
-      "location": "Chương (Đoạn P230, câu S0)",
-      "paragraph_index": 230,
+      "detected_id": "DET-P239-S00",
+      "location": "Chương (Đoạn P239, câu S0)",
+      "paragraph_index": 239,
       "sentence_index": 0,
       "text": "Xét theo lý thuyết tính toán, mô hình dòng thiết lập hợp đồng ngân sách độ phức tạp cho từng thành phần xử lý ký hiệu tổng quát: .",
       "text_hash": "abd7af4ef660",
@@ -1888,9 +1888,9 @@
       ]
     },
     {
-      "detected_id": "DET-P230-S02",
-      "location": "Chương (Đoạn P230, câu S2)",
-      "paragraph_index": 230,
+      "detected_id": "DET-P239-S02",
+      "location": "Chương (Đoạn P239, câu S2)",
+      "paragraph_index": 239,
       "sentence_index": 2,
       "text": "Các mức chặn Big-O cụ thể được đặc tả chặt chẽ cho từng nhánh tại Mục 2.3, Mục 2.4 và tổng hợp tại Bảng 2.2 và Bảng 2.4. Chuyên đề chỉ rõ bản chất đánh đổi cốt lõi (Long-Horizon Context Trade-off): các chiến dịch APT kéo dài nhiều tuần đòi hỏi duy trì ngữ cảnh tương tác sâu, trong khi bộ nhớ thực tế bị giới hạn bởi , và thiết kế dòng giải quyết mâu thuẫn này bằng cơ chế nén ngữ cảnh có kiểm soát thay vì lưu trữ toàn bộ dữ liệu thô.",
       "text_hash": "0dd1930d7878",
@@ -1902,9 +1902,9 @@
       ]
     },
     {
-      "detected_id": "DET-P234-S00",
-      "location": "Chương (Đoạn P234, câu S0)",
-      "paragraph_index": 234,
+      "detected_id": "DET-P243-S00",
+      "location": "Chương (Đoạn P243, câu S0)",
+      "paragraph_index": 243,
       "sentence_index": 0,
       "text": "Hình 2.1: Kiến trúc hai mặt phẳng (Training Plane & Inference Plane) của khung biểu diễn đặc trưng log đa góc nhìn dòng, nguồn tác giả đề xuất",
       "text_hash": "ee19a510916a",
@@ -1916,9 +1916,9 @@
       ]
     },
     {
-      "detected_id": "DET-P236-S01",
-      "location": "Chương (Đoạn P236, câu S1)",
-      "paragraph_index": 236,
+      "detected_id": "DET-P245-S01",
+      "location": "Chương (Đoạn P245, câu S1)",
+      "paragraph_index": 245,
       "sentence_index": 1,
       "text": "Mặt phẳng này tiếp nhận trọng số đã đóng băng hoàn toàn , cập nhật trạng thái bộ nhớ hữu hạn  theo các chính sách TTL, loại bỏ và đánh dấu thời gian, sau đó trích xuất vector đóng gói  theo cơ chế đơn lượt đơn hướng không nhìn trước thời gian tuân thủ nguyên tắc nhân quả thời gian nghiêm ngặt, cung cấp đầu vào tức thời cho các bộ dò tuyến tính đóng băng Giai đoạn C phục vụ phát hiện và quy kết chiến thuật/kỹ thuật MITRE ATT&CK.",
       "text_hash": "eb68b0b58903",
@@ -1930,9 +1930,9 @@
       ]
     },
     {
-      "detected_id": "DET-P237-S00",
-      "location": "Chương (Đoạn P237, câu S0)",
-      "paragraph_index": 237,
+      "detected_id": "DET-P246-S00",
+      "location": "Chương (Đoạn P246, câu S0)",
+      "paragraph_index": 246,
       "sentence_index": 0,
       "text": "Tiền xử lý và bảo vệ dynamic parameters",
       "text_hash": "34e62ff11725",
@@ -1944,9 +1944,9 @@
       ]
     },
     {
-      "detected_id": "DET-P238-S00",
-      "location": "Chương (Đoạn P238, câu S0)",
-      "paragraph_index": 238,
+      "detected_id": "DET-P247-S00",
+      "location": "Chương (Đoạn P247, câu S0)",
+      "paragraph_index": 247,
       "sentence_index": 0,
       "text": "Mục 2.2 xác lập cơ sở tiền xử lý phục vụ toàn bộ pipeline trích xuất đặc trưng đa góc nhìn: từ luồng nhật ký thô đến các sự kiện đã được chuẩn hóa, phân loại tham số an ninh và bảo vệ quyền riêng tư có kiểm soát; tất cả đều tuân thủ nghiêm ngặt ranh giới Extractor–Detector và hợp đồng biểu diễn đã thiết lập tại Mục 2.1. Ba thành phần cốt lõi được trình bày theo thứ tự phụ thuộc logic: Một là, parsing và chuẩn hóa có nhận thức an ninh tại Mục 2.2.1; Hai là, mô hình đe dọa quyền riêng tư và cơ chế liên kết có kiểm soát tại Mục 2.2.2; Ba là, đồng bộ thời gian và cửa sổ ngữ cảnh đa tỷ lệ tại Mục 2.2.3.",
       "text_hash": "ce2539bb06b3",
@@ -1958,9 +1958,9 @@
       ]
     },
     {
-      "detected_id": "DET-P239-S00",
-      "location": "Chương (Đoạn P239, câu S0)",
-      "paragraph_index": 239,
+      "detected_id": "DET-P248-S00",
+      "location": "Chương (Đoạn P248, câu S0)",
+      "paragraph_index": 248,
       "sentence_index": 0,
       "text": "Parsing, Typed Canonicalization, Entity Resolution và Security-aware Parameter Retention",
       "text_hash": "35f53ab7b5ae",
@@ -1972,9 +1972,9 @@
       ]
     },
     {
-      "detected_id": "DET-P241-S00",
-      "location": "Chương (Đoạn P241, câu S0)",
-      "paragraph_index": 241,
+      "detected_id": "DET-P250-S00",
+      "location": "Chương (Đoạn P250, câu S0)",
+      "paragraph_index": 250,
       "sentence_index": 0,
       "text": "Typed Schema và Security-aware Parameter Retention",
       "text_hash": "f612b389966d",
@@ -1986,9 +1986,9 @@
       ]
     },
     {
-      "detected_id": "DET-P244-S00",
-      "location": "Chương (Đoạn P244, câu S0)",
-      "paragraph_index": 244,
+      "detected_id": "DET-P253-S00",
+      "location": "Chương (Đoạn P253, câu S0)",
+      "paragraph_index": 253,
       "sentence_index": 0,
       "text": "Trong đó:  là mốc thời gian sự kiện theo đồng hồ hệ thống nguồn;  là kiểu hành vi kiểm toán như syscall, registry op, network op hoặc auth op;  là thực thể chủ thể gồm tiến trình, người dùng, dịch vụ;  là thực thể đối tượng gồm tệp tin, socket, registry key, tiến trình con;  là hành động cụ thể như read, write, execute, connect, create hoặc delete;  là tập các tham số động có kiểu hóa cụ thể: đường dẫn tệp tin, địa chỉ IP và cổng đích, chuỗi đối số dòng lệnh, giá trị registry, tên người dùng đích, mã trả về, đáp ứng đúng yêu cầu của Hợp đồng Biểu diễn yêu cầu bảo toàn.",
       "text_hash": "af5c794906ff",
@@ -2000,9 +2000,9 @@
       ]
     },
     {
-      "detected_id": "DET-P245-S00",
-      "location": "Chương (Đoạn P245, câu S0)",
-      "paragraph_index": 245,
+      "detected_id": "DET-P254-S00",
+      "location": "Chương (Đoạn P254, câu S0)",
+      "paragraph_index": 254,
       "sentence_index": 0,
       "text": "Tập kiểu sự kiện  và tập hành động  được định nghĩa tĩnh theo đặc tả nguồn thu thập như bảng syscall của Auditd, taxonomy Windows Event ID và các kiểu sự kiện Sysmon và không phụ thuộc vào dữ liệu huấn luyện, do đó không phát sinh rủi ro rò rỉ vocabulary từ tập kiểm tra (CTRL-LEAK-001).",
       "text_hash": "1b4842293aaa",
@@ -2014,9 +2014,9 @@
       ]
     },
     {
-      "detected_id": "DET-P245-S01",
-      "location": "Chương (Đoạn P245, câu S1)",
-      "paragraph_index": 245,
+      "detected_id": "DET-P254-S01",
+      "location": "Chương (Đoạn P254, câu S1)",
+      "paragraph_index": 254,
       "sentence_index": 1,
       "text": "Ngược lại, từ vựng tham số động đặc biệt là chuỗi đường dẫn tệp tin và đối số lệnh, phụ thuộc vào môi trường và được học hoàn toàn trên phân vùng huấn luyện  theo cơ chế fit-only: mọi thống kê, ánh xạ từ vựng và bảng chuẩn hóa đều được fit trên  và áp dụng ở trạng thái đóng băng lên phân vùng Validation và Test ; quá trình fit chỉ thực thi trên phân vùng huấn luyện nhằm tránh đưa thông tin từ tập kiểm tra và tập kiểm định vào bước fit.",
       "text_hash": "f8c574e3bbaf",
@@ -2028,9 +2028,9 @@
       ]
     },
     {
-      "detected_id": "DET-P250-S00",
-      "location": "Chương (Đoạn P250, câu S0)",
-      "paragraph_index": 250,
+      "detected_id": "DET-P259-S00",
+      "location": "Chương (Đoạn P259, câu S0)",
+      "paragraph_index": 259,
       "sentence_index": 0,
       "text": "Vị từ  được xác lập dựa trên kiểu ngữ nghĩa trường và tính phù hợp an ninh xác định tiền nghiệm hoặc được cấu hình độc quyền trên phân vùng  theo đặc tả miền, tuyệt đối không phụ thuộc vào nhãn tấn công hay thống kê tập kiểm tra nhằm ngăn ngừa rủi ro test leakage trên các trường được kiểm toán.",
       "text_hash": "2c4e27c449c9",
@@ -2042,9 +2042,9 @@
       ]
     },
     {
-      "detected_id": "DET-P250-S03",
-      "location": "Chương (Đoạn P250, câu S3)",
-      "paragraph_index": 250,
+      "detected_id": "DET-P259-S03",
+      "location": "Chương (Đoạn P259, câu S3)",
+      "paragraph_index": 259,
       "sentence_index": 3,
       "text": "Ngược lại, các trường metadata môi trường cục bộ không mang ngữ nghĩa an ninh như PID tạm thời, timestamp mili-giây nội bộ không phải Event-Time và số sequence kernel được phân loại là KNOWN EXCLUDE FIELD và bị loại bỏ trước khi đưa vào Extractor.",
       "text_hash": "1a3ecedc33c6",
@@ -2056,9 +2056,9 @@
       ]
     },
     {
-      "detected_id": "DET-P253-S00",
-      "location": "Chương (Đoạn P253, câu S0)",
-      "paragraph_index": 253,
+      "detected_id": "DET-P262-S00",
+      "location": "Chương (Đoạn P262, câu S0)",
+      "paragraph_index": 262,
       "sentence_index": 0,
       "text": "Bảng 2.1: Chính sách RETAIN / NORMALIZE / PRIVACY-PROTECT / UNKNOWN-SAFE cho các trường của bộ sáu kiểu hóa",
       "text_hash": "c8db5478f35e",
@@ -2070,9 +2070,9 @@
       ]
     },
     {
-      "detected_id": "DET-P256-S00",
-      "location": "Chương (Đoạn P256, câu S0)",
-      "paragraph_index": 256,
+      "detected_id": "DET-P265-S00",
+      "location": "Chương (Đoạn P265, câu S0)",
+      "paragraph_index": 265,
       "sentence_index": 0,
       "text": "Tất cả các thành phần tiền xử lý có trạng thái học được (bao gồm từ vựng tokenizer tham số động, bảng chuẩn hóa tên tiến trình theo môi trường, thống kê tần suất sự kiện phục vụ outlier filtering, và ngưỡng phân ngưỡng tham số) đều được fit độc quyền trên phân vùng huấn luyện  theo thứ tự nhân quả thời gian theo trật tự nhân quả thời gian, tức là chỉ sử dụng dữ liệu quan sát trước thời điểm phân cắt huấn luyện.",
       "text_hash": "21d612bcd6ff",
@@ -2084,9 +2084,9 @@
       ]
     },
     {
-      "detected_id": "DET-P256-S01",
-      "location": "Chương (Đoạn P256, câu S1)",
-      "paragraph_index": 256,
+      "detected_id": "DET-P265-S01",
+      "location": "Chương (Đoạn P265, câu S1)",
+      "paragraph_index": 265,
       "sentence_index": 1,
       "text": "Phân vùng Validation và Test chỉ nhận các phép biến đổi từ trạng thái đóng băng đã fit, không có bất kỳ thông tin thống kê nào từ Val/Test được đưa trở lại (CTRL-LEAK-001: Anti-Leakage Temporal Split).",
       "text_hash": "914f2436339c",
@@ -2098,9 +2098,9 @@
       ]
     },
     {
-      "detected_id": "DET-P259-S01",
-      "location": "Chương (Đoạn P259, câu S1)",
-      "paragraph_index": 259,
+      "detected_id": "DET-P268-S01",
+      "location": "Chương (Đoạn P268, câu S1)",
+      "paragraph_index": 268,
       "sentence_index": 1,
       "text": "Hệ thống phân định rạch ròi: Thứ nhất, các trường KNOWN EXCLUDE FIELD gồm metadata môi trường như PID, timestamp cục bộ mili-giây và số sequence nội bộ được loại bỏ hoàn toàn trước khi đưa vào Extractor; Thứ hai, các tham số UNSEEN hoặc chưa xác định rõ ngữ nghĩa an ninh xuất hiện trong tập Validation hoặc Test được giữ nguyên nhãn kiểu trường gồm các thẻ PATH, IP, CMD, REG, USER và bảo toàn vị trí cấu trúc của tham số trong bộ sáu, đồng thời thay thế giá trị chuỗi cụ thể bằng typed placeholder tương ứng (<UNK-PATH>, <UNK-IP>, <UNK-CMD>).",
       "text_hash": "7543b7589d0b",
@@ -2112,9 +2112,9 @@
       ]
     },
     {
-      "detected_id": "DET-P259-S02",
-      "location": "Chương (Đoạn P259, câu S2)",
-      "paragraph_index": 259,
+      "detected_id": "DET-P268-S02",
+      "location": "Chương (Đoạn P268, câu S2)",
+      "paragraph_index": 268,
       "sentence_index": 2,
       "text": "Cơ chế này được thiết kế để giảm nguy cơ sụp đổ thông tin cấu trúc cú pháp cần thiết cho Extractor và hạn chế rò rỉ từ vựng từ tập kiểm tra.",
       "text_hash": "3ea4c9299a67",
@@ -2126,9 +2126,9 @@
       ]
     },
     {
-      "detected_id": "DET-P261-S00",
-      "location": "Chương (Đoạn P261, câu S0)",
-      "paragraph_index": 261,
+      "detected_id": "DET-P270-S00",
+      "location": "Chương (Đoạn P270, câu S0)",
+      "paragraph_index": 270,
       "sentence_index": 0,
       "text": "Mô hình đe dọa quyền riêng tư và Controlled Linkability",
       "text_hash": "b76424109a98",
@@ -2140,9 +2140,9 @@
       ]
     },
     {
-      "detected_id": "DET-P262-S01",
-      "location": "Chương (Đoạn P262, câu S1)",
-      "paragraph_index": 262,
+      "detected_id": "DET-P271-S01",
+      "location": "Chương (Đoạn P271, câu S1)",
+      "paragraph_index": 271,
       "sentence_index": 1,
       "text": "Tuy nhiên, việc lưu giữ thông tin nhận dạng thô trong không gian vector tạo ra bề mặt tấn công quyền riêng tư không cần thiết.",
       "text_hash": "67356fa64944",
@@ -2154,9 +2154,9 @@
       ]
     },
     {
-      "detected_id": "DET-P262-S03",
-      "location": "Chương (Đoạn P262, câu S3)",
-      "paragraph_index": 262,
+      "detected_id": "DET-P271-S03",
+      "location": "Chương (Đoạn P271, câu S3)",
+      "paragraph_index": 271,
       "sentence_index": 3,
       "text": "Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo H5 nhưng cần được kiểm chứng thực nghiệm ở các mô hình hạ nguồn (BOUNDARY-06: Privacy Claim Requires Attack-Based Empirical Evaluation; chưa thực thi trong phạm vi Stage A hiện tại).",
       "text_hash": "d04957d175d0",
@@ -2168,9 +2168,9 @@
       ]
     },
     {
-      "detected_id": "DET-P268-S01",
-      "location": "Chương (Đoạn P268, câu S1)",
-      "paragraph_index": 268,
+      "detected_id": "DET-P277-S01",
+      "location": "Chương (Đoạn P277, câu S1)",
+      "paragraph_index": 277,
       "sentence_index": 1,
       "text": "Đối nghịch này không truy cập trực tiếp dữ liệu thô mà tương tác với mô hình đã được triển khai hoặc với các vector biểu diễn  đã xuất ra.",
       "text_hash": "2ce2cb607e29",
@@ -2182,9 +2182,9 @@
       ]
     },
     {
-      "detected_id": "DET-P269-S00",
-      "location": "Chương (Đoạn P269, câu S0)",
-      "paragraph_index": 269,
+      "detected_id": "DET-P278-S00",
+      "location": "Chương (Đoạn P278, câu S0)",
+      "paragraph_index": 278,
       "sentence_index": 0,
       "text": "Tấn công suy luận thành viên Membership Inference Attack (MIA): đối nghịch xác định xem một bản ghi dữ liệu cụ thể của một thực thể có nằm trong tập huấn luyện của mô hình hay không, thông qua quan sát hành vi đầu ra hoặc các đặc trưng của vector  ([16]).",
       "text_hash": "bcc45f8699b7",
@@ -2198,9 +2198,9 @@
       ]
     },
     {
-      "detected_id": "DET-P270-S00",
-      "location": "Chương (Đoạn P270, câu S0)",
-      "paragraph_index": 270,
+      "detected_id": "DET-P279-S00",
+      "location": "Chương (Đoạn P279, câu S0)",
+      "paragraph_index": 279,
       "sentence_index": 0,
       "text": "Tấn công nghịch đảo biểu diễn Representation/Model Inversion Attack: Về mặt nguyên lý, Fredrikson et al.",
       "text_hash": "19284daf2a6b",
@@ -2212,9 +2212,9 @@
       ]
     },
     {
-      "detected_id": "DET-P270-S01",
-      "location": "Chương (Đoạn P270, câu S1)",
-      "paragraph_index": 270,
+      "detected_id": "DET-P279-S01",
+      "location": "Chương (Đoạn P279, câu S1)",
+      "paragraph_index": 279,
       "sentence_index": 1,
       "text": "[33] chứng minh tấn công nghịch đảo có thể khai thác thông tin đầu ra/độ tin cậy để tái cấu trúc thuộc tính dữ liệu; trong mô hình đe dọa thích ứng của đề tài (Threat-Model Adaptation), đối nghịch cố gắng khôi phục hoặc xấp xỉ các thuộc tính nhạy cảm tiềm năng như tên người dùng, hostname và chuỗi lệnh từ vector nhúng z.",
       "text_hash": "58c072d1800c",
@@ -2228,9 +2228,9 @@
       ]
     },
     {
-      "detected_id": "DET-P275-S00",
-      "location": "Chương (Đoạn P275, câu S0)",
-      "paragraph_index": 275,
+      "detected_id": "DET-P284-S00",
+      "location": "Chương (Đoạn P284, câu S0)",
+      "paragraph_index": 284,
       "sentence_index": 0,
       "text": "Hai là, cơ chế tokenization tham số động có chọn lọc Security-selective Parameter Tokenization: các tham số động đã được  xác nhận là mang ngữ nghĩa an ninh được tokenize thành các đơn vị học được theo kho từ vựng fit trên .",
       "text_hash": "616c08a3221a",
@@ -2242,9 +2242,9 @@
       ]
     },
     {
-      "detected_id": "DET-P275-S01",
-      "location": "Chương (Đoạn P275, câu S1)",
-      "paragraph_index": 275,
+      "detected_id": "DET-P284-S01",
+      "location": "Chương (Đoạn P284, câu S1)",
+      "paragraph_index": 284,
       "sentence_index": 1,
       "text": "Các trường KNOWN EXCLUDE FIELD được loại bỏ hoàn toàn trước khi đưa vào ; trong khi các tham số UNSEEN / UNCERTAIN được xử lý theo chính sách UNKNOWN-SAFE với mục tiêu bảo toàn nhãn kiểu trường và vị trí cấu trúc, đồng thời gán typed placeholder, không bị loại bỏ tùy tiện.",
       "text_hash": "117f0f5c5ba8",
@@ -2256,9 +2256,9 @@
       ]
     },
     {
-      "detected_id": "DET-P276-S01",
-      "location": "Chương (Đoạn P276, câu S1)",
-      "paragraph_index": 276,
+      "detected_id": "DET-P285-S01",
+      "location": "Chương (Đoạn P285, câu S1)",
+      "paragraph_index": 285,
       "sentence_index": 1,
       "text": "Rotation boundary phải được xác lập theo predefined operational policy hoặc được lựa chọn dựa trên tập Train/Validation, tuyệt đối không sử dụng thông tin từ true Test attack/campaign duration nhằm loại trừ rủi ro test leakage.",
       "text_hash": "9f27c8bdab6c",
@@ -2270,9 +2270,9 @@
       ]
     },
     {
-      "detected_id": "DET-P276-S02",
-      "location": "Chương (Đoạn P276, câu S2)",
-      "paragraph_index": 276,
+      "detected_id": "DET-P285-S02",
+      "location": "Chương (Đoạn P285, câu S2)",
+      "paragraph_index": 285,
       "sentence_index": 2,
       "text": "Về mặt phương pháp luận, chuyên đề đề xuất hướng đánh giá nhiều mốc rotation horizon cố định để xây dựng đường biên Utility–Privacy frontier ở các giai đoạn thực nghiệm tiếp theo.",
       "text_hash": "2981d1d9cfb3",
@@ -2284,9 +2284,9 @@
       ]
     },
     {
-      "detected_id": "DET-P277-S00",
-      "location": "Chương (Đoạn P277, câu S0)",
-      "paragraph_index": 277,
+      "detected_id": "DET-P286-S00",
+      "location": "Chương (Đoạn P286, câu S0)",
+      "paragraph_index": 286,
       "sentence_index": 0,
       "text": "Hợp đồng kỹ thuật tổng quát của cơ chế Controlled Linkability được phát biểu như sau: với mọi sự kiện đã được chuẩn hóa , sự kiện được biến đổi quyền riêng tư  được tạo ra bằng cách thay thế các trường nhận dạng thực thể bằng mã giả danh và áp dụng toán tử bảo vệ tham số an toàn  tuân thủ nguyên tắc: thứ nhất, các trường KNOWN EXCLUDE FIELD bị loại bỏ hoàn toàn; thứ hai, các tham số được  xác nhận được tokenize trên ; thứ ba, các tham số UNSEEN / UNCERTAIN được xử lý theo chính sách UNKNOWN-SAFE :",
       "text_hash": "cdd1663914d0",
@@ -2298,9 +2298,9 @@
       ]
     },
     {
-      "detected_id": "DET-P279-S00",
-      "location": "Chương (Đoạn P279, câu S0)",
-      "paragraph_index": 279,
+      "detected_id": "DET-P288-S00",
+      "location": "Chương (Đoạn P288, câu S0)",
+      "paragraph_index": 288,
       "sentence_index": 0,
       "text": "Lưu ý rằng các tham số thời gian và kiểu hành vi được bảo toàn nguyên vẹn vì chúng không phải direct identifier, tuy nhiên các tham số này có thể hoạt động như quasi-identifier khi kết hợp với dữ liệu bên ngoài; rủi ro liên kết tương ứng cần được đánh giá theo CTRL-PRIV-001. Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo nghĩa của H5 so với hai đường cơ sở: thứ nhất, giữ nguyên định danh thô không có pseudonymization; và thứ hai, ẩn danh hóa quá mức xóa bỏ cả liên kết thực thể cần thiết cho phân tích hành vi.",
       "text_hash": "2495c2e5304c",
@@ -2312,9 +2312,9 @@
       ]
     },
     {
-      "detected_id": "DET-P279-S01",
-      "location": "Chương (Đoạn P279, câu S1)",
-      "paragraph_index": 279,
+      "detected_id": "DET-P288-S01",
+      "location": "Chương (Đoạn P288, câu S1)",
+      "paragraph_index": 288,
       "sentence_index": 1,
       "text": "Tuy nhiên, khẳng định sự vượt trội này là một giả thuyết nghiên cứu yêu cầu kiểm thử thực nghiệm tường minh ở các mô hình hạ nguồn thông qua giao thức CTRL-PRIV-001, bao gồm đánh giá MIA [16], tấn công nghịch đảo theo nguyên lý Fredrikson et al.",
       "text_hash": "b23aca7fcd4a",
@@ -2328,9 +2328,9 @@
       ]
     },
     {
-      "detected_id": "DET-P279-S02",
-      "location": "Chương (Đoạn P279, câu S2)",
-      "paragraph_index": 279,
+      "detected_id": "DET-P288-S02",
+      "location": "Chương (Đoạn P288, câu S2)",
+      "paragraph_index": 288,
       "sentence_index": 2,
       "text": "[33] áp dụng cho các thuộc tính nhạy cảm của log, cùng tấn công tái định danh; chưa được thực thi trong phạm vi thực nghiệm của chuyên đề hiện tại.",
       "text_hash": "9882d3037326",
@@ -2344,9 +2344,9 @@
       ]
     },
     {
-      "detected_id": "DET-P281-S00",
-      "location": "Chương (Đoạn P281, câu S0)",
-      "paragraph_index": 281,
+      "detected_id": "DET-P290-S00",
+      "location": "Chương (Đoạn P290, câu S0)",
+      "paragraph_index": 290,
       "sentence_index": 0,
       "text": "Sau khi các sự kiện được chuẩn hóa và bảo vệ quyền riêng tư theo Mục 2.2.1–2.2.2, bước tiếp theo là tổ chức chúng thành các đơn vị ngữ cảnh phục vụ các bộ trích xuất đặc trưng hạ nguồn tại Mục 2.3. Mục 2.2.3 giải quyết hai vấn đề liên quan chặt chẽ: thứ nhất là đảm bảo tính nhất quán Event-Time khi sự kiện đến từ nhiều nguồn có đồng hồ không đồng bộ; và thứ hai là xây dựng cấu trúc cửa sổ ngữ cảnh đa tỷ lệ phù hợp với bản chất đa giai đoạn của chiến dịch APT.",
       "text_hash": "b4df3f459fb5",
@@ -2358,9 +2358,9 @@
       ]
     },
     {
-      "detected_id": "DET-P283-S01",
-      "location": "Chương (Đoạn P283, câu S1)",
-      "paragraph_index": 283,
+      "detected_id": "DET-P292-S01",
+      "location": "Chương (Đoạn P292, câu S1)",
+      "paragraph_index": 292,
       "sentence_index": 1,
       "text": "Lệch pha đồng hồ khiến các bản ghi telemetry tương ứng của cùng một sự kiện/tương tác quan sát được lại mang nhãn thời gian không nhất quán khi so sánh xuyên nguồn, làm xáo trộn thứ tự thời gian sự kiện dùng để xây dựng chuỗi và đồ thị hạ nguồn (lưu ý nguyên lý bất biến: quan hệ phụ thuộc ghi nhận trong log không đồng nhất với quan hệ nhân quả (nguyên lý: dependency != causal effect)).",
       "text_hash": "bad8ad96f393",
@@ -2372,9 +2372,9 @@
       ]
     },
     {
-      "detected_id": "DET-P285-S01",
-      "location": "Chương (Đoạn P285, câu S1)",
-      "paragraph_index": 285,
+      "detected_id": "DET-P294-S01",
+      "location": "Chương (Đoạn P294, câu S1)",
+      "paragraph_index": 294,
       "sentence_index": 1,
       "text": "Phương pháp ước lượng cụ thể (crystal-synced event matching, NTP-based correction,...) là quyết định triển khai phụ thuộc môi trường và không ảnh hưởng đến hợp đồng tiền xử lý.",
       "text_hash": "3f31fdc3d2fa",
@@ -2386,9 +2386,9 @@
       ]
     },
     {
-      "detected_id": "DET-P288-S01",
-      "location": "Chương (Đoạn P288, câu S1)",
-      "paragraph_index": 288,
+      "detected_id": "DET-P297-S01",
+      "location": "Chương (Đoạn P297, câu S1)",
+      "paragraph_index": 297,
       "sentence_index": 1,
       "text": "Một cửa sổ ngữ cảnh duy nhất không thể bao phủ đầy đủ tất cả tỷ lệ này mà không vi phạm ràng buộc bộ nhớ hữu hạn  từ Mục 2.1.2. Chuyên đề đề xuất cấu trúc cửa sổ ngữ cảnh ba tỷ lệ như một giải pháp phân cấp:",
       "text_hash": "4fec80e9efa3",
@@ -2400,9 +2400,9 @@
       ]
     },
     {
-      "detected_id": "DET-P290-S00",
-      "location": "Chương (Đoạn P290, câu S0)",
-      "paragraph_index": 290,
+      "detected_id": "DET-P299-S00",
+      "location": "Chương (Đoạn P299, câu S0)",
+      "paragraph_index": 299,
       "sentence_index": 0,
       "text": "Cửa sổ ngắn hạn  Short-term Window: bao phủ chuỗi sự kiện gần nhất trong phạm vi thời gian ngắn (hyperparameter, ví dụ: vài phút đến hàng chục phút; khóa bằng Validation/operational budget tại Mục 2.3), cung cấp ngữ cảnh thực thi tức thời cho một tiến trình hoặc phiên làm việc.",
       "text_hash": "784eff2ddbd4",
@@ -2414,9 +2414,9 @@
       ]
     },
     {
-      "detected_id": "DET-P291-S00",
-      "location": "Chương (Đoạn P291, câu S0)",
-      "paragraph_index": 291,
+      "detected_id": "DET-P300-S00",
+      "location": "Chương (Đoạn P300, câu S0)",
+      "paragraph_index": 300,
       "sentence_index": 0,
       "text": "Cửa sổ trung hạn  Medium-term Window: bao phủ lịch sử hành vi của thực thể trong phạm vi thời gian trung (hyperparameter, ví dụ: vài giờ đến một ngày; khóa bằng Validation budget), phản ánh các pattern hành vi đặc trưng của người dùng/tiến trình và cung cấp ngữ cảnh phát hiện leo thang đặc quyền hoặc lateral movement.",
       "text_hash": "b06b29647168",
@@ -2428,9 +2428,9 @@
       ]
     },
     {
-      "detected_id": "DET-P292-S01",
-      "location": "Chương (Đoạn P292, câu S1)",
-      "paragraph_index": 292,
+      "detected_id": "DET-P301-S01",
+      "location": "Chương (Đoạn P301, câu S1)",
+      "paragraph_index": 301,
       "sentence_index": 1,
       "text": "Đây chính là đánh đổi cốt lõi Long-Horizon Context Trade-off đã được xác lập tại Mục 2.1.2: chi phí tính toán và bộ nhớ cụ thể của  phụ thuộc vào lựa chọn cấu trúc sketch tại Mục 2.3–2.4.",
       "text_hash": "6da40db0d0eb",
@@ -2442,9 +2442,9 @@
       ]
     },
     {
-      "detected_id": "DET-P293-S01",
-      "location": "Chương (Đoạn P293, câu S1)",
-      "paragraph_index": 293,
+      "detected_id": "DET-P302-S01",
+      "location": "Chương (Đoạn P302, câu S1)",
+      "paragraph_index": 302,
       "sentence_index": 1,
       "text": "Phân cấp này đảm bảo cùng một evidence có thể xuất hiện ở nhiều scale gồm Ws, Wm và Wl dưới dạng bài biểu diễn khác nhau, nhưng không có thông tin tương lai nào bị nạp vào cửa sổ hiện tại (nguyên lý Strictly Causal / Zero Lookahead từ Mục 2.1.3).",
       "text_hash": "faee07f69ea3",
@@ -2456,9 +2456,9 @@
       ]
     },
     {
-      "detected_id": "DET-P297-S00",
-      "location": "Chương (Đoạn P297, câu S0)",
-      "paragraph_index": 297,
+      "detected_id": "DET-P306-S00",
+      "location": "Chương (Đoạn P306, câu S0)",
+      "paragraph_index": 306,
       "sentence_index": 0,
       "text": "Bộ trích xuất tuần tự ngữ nghĩa tiếp nhận chuỗi các sự kiện kiểu hóa trong cửa sổ ngắn hạn  gồm  sự kiện liên tiếp, kế thừa kiến trúc Self-Attention tiêu chuẩn  [34].",
       "text_hash": "e07416c890ec",
@@ -2472,9 +2472,9 @@
       ]
     },
     {
-      "detected_id": "DET-P301-S00",
-      "location": "Chương (Đoạn P301, câu S0)",
-      "paragraph_index": 301,
+      "detected_id": "DET-P310-S00",
+      "location": "Chương (Đoạn P310, câu S0)",
+      "paragraph_index": 310,
       "sentence_index": 0,
       "text": "Trong đó:  là các ma trận nhúng kiểu sự kiện và hành động tĩnh;  là nhúng thực thể chủ thể và đối tượng theo không gian giả danh có kiểm soát;  là nhúng các token tham số an ninh được giữ lại;  là mã hóa vị trí rời rạc; và  là hàm mã hóa thời gian liên tục điều hòa (Harmonic Time Encoding) dạng , kế thừa nguyên lý mã hóa thời gian liên tục trên đồ thị động  [35], mã hóa trực tiếp khoảng trễ liên tục  giữa các hành vi liên tiếp nhằm tránh việc rời rạc hóa thô thành các time-bin cố định, cho phép mô hình biểu diễn và phân biệt các nhịp thời gian khác nhau trong phạm vi thiết kế (như sự khác biệt giữa hai hành vi diễn ra cách nhau 10 mili-giây trong một đoạn mã tự động so với cách nhau 10 giờ trong hoạt động thông thường), song phép chiếu điều hòa này không hàm ý một ánh xạ một-một hay bảo toàn tuyệt đối mọi giá trị khoảng trễ thực tế.",
       "text_hash": "2ce33d4d90ad",
@@ -2490,9 +2490,9 @@
       ]
     },
     {
-      "detected_id": "DET-P301-S01",
-      "location": "Chương (Đoạn P301, câu S1)",
-      "paragraph_index": 301,
+      "detected_id": "DET-P310-S01",
+      "location": "Chương (Đoạn P310, câu S1)",
+      "paragraph_index": 310,
       "sentence_index": 1,
       "text": "Toàn bộ các siêu tham số cấu trúc như số tầng encoder , số đầu chú ý , số chiều ẩn , số chiều lan truyền  và tỷ lệ dropout  đều được xác lập dựa trên tập huấn luyện và kiểm định (Train/Validation), không sử dụng nhãn kiểm tra.",
       "text_hash": "40b82c18b3c4",
@@ -2504,9 +2504,9 @@
       ]
     },
     {
-      "detected_id": "DET-P304-S00",
-      "location": "Chương (Đoạn P304, câu S0)",
-      "paragraph_index": 304,
+      "detected_id": "DET-P313-S00",
+      "location": "Chương (Đoạn P313, câu S0)",
+      "paragraph_index": 313,
       "sentence_index": 0,
       "text": "Tác vụ dự đoán sự kiện bị che (Masked Event Prediction, ): Thích ứng từ phương pháp LogBERT  [20], che ngẫu nhiên tập chỉ số sự kiện  theo tỷ lệ che  (trong đó đề tài lựa chọn giá trị 15% làm điểm khởi tạo tham chiếu và được khóa cố định trên tập Train/Validation trước khi đánh giá trên tập Test).",
       "text_hash": "f12a4252b1da",
@@ -2521,9 +2521,9 @@
       ]
     },
     {
-      "detected_id": "DET-P304-S02",
-      "location": "Chương (Đoạn P304, câu S2)",
-      "paragraph_index": 304,
+      "detected_id": "DET-P313-S02",
+      "location": "Chương (Đoạn P313, câu S2)",
+      "paragraph_index": 313,
       "sentence_index": 2,
       "text": "Mục tiêu (target) là nhãn kiểu sự kiện và hành động thực tế , tối ưu hóa qua hàm mất mát Categorical Cross-Entropy trung bình trên tập bị che, cung cấp gradient cập nhật trực tiếp cho  và :",
       "text_hash": "955a20348a70",
@@ -2535,9 +2535,9 @@
       ]
     },
     {
-      "detected_id": "DET-P306-S00",
-      "location": "Chương (Đoạn P306, câu S0)",
-      "paragraph_index": 306,
+      "detected_id": "DET-P315-S00",
+      "location": "Chương (Đoạn P315, câu S0)",
+      "paragraph_index": 315,
       "sentence_index": 0,
       "text": "Tác vụ dự đoán tham số an ninh bị che (Masked Parameter Prediction, ): Thiết kế đóng góp riêng của chuyên đề nhằm che ngẫu nhiên tập tham số bảo toàn an ninh  theo tỷ lệ  (khởi tạo tham chiếu 15% và được khóa cố định trên tập Validation trước khi thử nghiệm).",
       "text_hash": "606f25e7d757",
@@ -2549,9 +2549,9 @@
       ]
     },
     {
-      "detected_id": "DET-P306-S02",
-      "location": "Chương (Đoạn P306, câu S2)",
-      "paragraph_index": 306,
+      "detected_id": "DET-P315-S02",
+      "location": "Chương (Đoạn P315, câu S2)",
+      "paragraph_index": 315,
       "sentence_index": 2,
       "text": "Mục tiêu tái dựng được định nghĩa chuẩn xác là token đã qua chuẩn hóa và biến đổi bảo vệ quyền riêng tư  tại Mục 2.2 (gồm token thực thể giả danh hóa, token tham số an ninh chuẩn hóa hoặc token kiểu hóa UNKNOWN-SAFE), tuyệt đối không đặt mục tiêu là chuỗi nhạy cảm thô.",
       "text_hash": "a7d78b9a6450",
@@ -2563,9 +2563,9 @@
       ]
     },
     {
-      "detected_id": "DET-P306-S03",
-      "location": "Chương (Đoạn P306, câu S3)",
-      "paragraph_index": 306,
+      "detected_id": "DET-P315-S03",
+      "location": "Chương (Đoạn P315, câu S3)",
+      "paragraph_index": 315,
       "sentence_index": 3,
       "text": "Hàm mất mát Categorical Cross-Entropy tính trung bình trên , truyền gradient cho  và :",
       "text_hash": "ce49d8e383b9",
@@ -2577,9 +2577,9 @@
       ]
     },
     {
-      "detected_id": "DET-P315-S02",
-      "location": "Chương (Đoạn P315, câu S2)",
-      "paragraph_index": 315,
+      "detected_id": "DET-P324-S02",
+      "location": "Chương (Đoạn P324, câu S2)",
+      "paragraph_index": 324,
       "sentence_index": 2,
       "text": "Giả định kiến trúc gồm  tầng Transformer Encoder, độ dài chuỗi đầu vào , số chiều mô hình  và số chiều tầng truyền thẳng , độ phức tạp tính toán của bộ trích xuất tuần tự là , trong đó số hạng bậc hai phản ánh chi phí tính toán ma trận chú ý theo độ dài chuỗi.",
       "text_hash": "0f7af58ed6c2",
@@ -2591,9 +2591,9 @@
       ]
     },
     {
-      "detected_id": "DET-P317-S00",
-      "location": "Chương (Đoạn P317, câu S0)",
-      "paragraph_index": 317,
+      "detected_id": "DET-P326-S00",
+      "location": "Chương (Đoạn P326, câu S0)",
+      "paragraph_index": 326,
       "sentence_index": 0,
       "text": "Hình 2.2: Kiến trúc Bộ trích xuất tuần tự ngữ nghĩa Transformer và cơ chế học tự giám sát trên cửa sổ ngắn hạn, nguồn tác giả đề xuất",
       "text_hash": "e211d810a20a",
@@ -2605,9 +2605,9 @@
       ]
     },
     {
-      "detected_id": "DET-P324-S00",
-      "location": "Chương (Đoạn P324, câu S0)",
-      "paragraph_index": 324,
+      "detected_id": "DET-P333-S00",
+      "location": "Chương (Đoạn P333, câu S0)",
+      "paragraph_index": 333,
       "sentence_index": 0,
       "text": "Thuộc tính cạnh: tích hợp các tham số an ninh đã được chuẩn hóa và bảo vệ quyền riêng tư như số byte truyền nhận, cờ truy cập và mã trạng thái, gắn kèm vector thuộc tính .",
       "text_hash": "91442e6585db",
@@ -2619,9 +2619,9 @@
       ]
     },
     {
-      "detected_id": "DET-P326-S00",
-      "location": "Chương (Đoạn P326, câu S0)",
-      "paragraph_index": 326,
+      "detected_id": "DET-P335-S00",
+      "location": "Chương (Đoạn P335, câu S0)",
+      "paragraph_index": 335,
       "sentence_index": 0,
       "text": "Quan hệ phụ thuộc quan sát được và ranh giới với quan hệ nhân quả",
       "text_hash": "e32f09e5d31e",
@@ -2633,9 +2633,9 @@
       ]
     },
     {
-      "detected_id": "DET-P327-S00",
-      "location": "Chương (Đoạn P327, câu S0)",
-      "paragraph_index": 327,
+      "detected_id": "DET-P336-S00",
+      "location": "Chương (Đoạn P336, câu S0)",
+      "paragraph_index": 336,
       "sentence_index": 0,
       "text": "Một ranh giới phương pháp luận căn bản cần được duy trì xuyên suốt chuyên đề là sự phân định giữa quan hệ phụ thuộc quan sát được và quan hệ nhân quả thực sự .",
       "text_hash": "8c50bf56e4ad",
@@ -2647,9 +2647,9 @@
       ]
     },
     {
-      "detected_id": "DET-P327-S02",
-      "location": "Chương (Đoạn P327, câu S2)",
-      "paragraph_index": 327,
+      "detected_id": "DET-P336-S02",
+      "location": "Chương (Đoạn P336, câu S2)",
+      "paragraph_index": 336,
       "sentence_index": 2,
       "text": "Tuy nhiên, việc một tiến trình đọc tệp tin  rồi sau đó ghi vào tệp tin  không khẳng định một cách chắc chắn rằng nội dung trong  bị chi phối nhân quả bởi  (nguyên lý bất biến: dependency != causal effect).",
       "text_hash": "434a1b3992aa",
@@ -2661,9 +2661,9 @@
       ]
     },
     {
-      "detected_id": "DET-P327-S03",
-      "location": "Chương (Đoạn P327, câu S3)",
-      "paragraph_index": 327,
+      "detected_id": "DET-P336-S03",
+      "location": "Chương (Đoạn P336, câu S3)",
+      "paragraph_index": 336,
       "sentence_index": 3,
       "text": "Chuyên đề không sử dụng thuật ngữ đồ thị nhân quả trừ khi các giả định nhận dạng nhân quả chặt chẽ được thỏa mãn, tránh các suy diễn sai lầm trong việc truy vết nguồn gốc tấn công.",
       "text_hash": "458a5698995b",
@@ -2675,9 +2675,9 @@
       ]
     },
     {
-      "detected_id": "DET-P329-S01",
-      "location": "Chương (Đoạn P329, câu S1)",
-      "paragraph_index": 329,
+      "detected_id": "DET-P338-S01",
+      "location": "Chương (Đoạn P338, câu S1)",
+      "paragraph_index": 338,
       "sentence_index": 1,
       "text": "Để xử lý các thách thức này trước khi nạp đồ thị vào mô hình học máy, chuyên đề đề xuất bốn cơ chế ứng viên kiểm soát độ chân thực đồ thị (Proposed Graph-Fidelity Candidates) hoạt động độc lập với bộ phát hiện:",
       "text_hash": "ca51c040a1b5",
@@ -2689,9 +2689,9 @@
       ]
     },
     {
-      "detected_id": "DET-P332-S00",
-      "location": "Chương (Đoạn P332, câu S0)",
-      "paragraph_index": 332,
+      "detected_id": "DET-P341-S00",
+      "location": "Chương (Đoạn P341, câu S0)",
+      "paragraph_index": 341,
       "sentence_index": 0,
       "text": "Khi áp dụng mạng nơ-ron đồ thị trên đồ thị nguồn gốc có đường kính lớn, hai rủi ro kiến trúc phổ biến là hiện tượng làm mịn quá mức (Over-smoothing, Oono & Suzuki  [44]) khiến biểu diễn các đỉnh hội tụ về các vector khó phân biệt, và hiện tượng nghẽn cổ chai thông tin (Over-squashing, Alon & Yahav  [31]) khi lượng thông tin từ vùng lân cận mở rộng nhanh chóng phải truyền qua một số ít cạnh trung gian để nén vào một vector kích thước cố định.",
       "text_hash": "506070c68c21",
@@ -2706,9 +2706,9 @@
       ]
     },
     {
-      "detected_id": "DET-P332-S01",
-      "location": "Chương (Đoạn P332, câu S1)",
-      "paragraph_index": 332,
+      "detected_id": "DET-P341-S01",
+      "location": "Chương (Đoạn P341, câu S1)",
+      "paragraph_index": 341,
       "sentence_index": 1,
       "text": "Chuyên đề đề xuất hai cơ chế ứng viên giảm thiểu :",
       "text_hash": "e94fc6ffac02",
@@ -2720,9 +2720,9 @@
       ]
     },
     {
-      "detected_id": "DET-P339-S01",
-      "location": "Chương (Đoạn P339, câu S1)",
-      "paragraph_index": 339,
+      "detected_id": "DET-P348-S01",
+      "location": "Chương (Đoạn P348, câu S1)",
+      "paragraph_index": 348,
       "sentence_index": 1,
       "text": "Kế thừa khung xử lý bộ nhớ và truyền thông điệp thời gian động  [36] cùng các nguyên lý thiết kế từ các hệ thống đồ thị nguồn gốc tiêu biểu  [24],  [25],  [26],  [27], chuyên đề hình thức hóa cơ chế truyền thông điệp thời gian có kiểu hóa (Typed Temporal Message Passing) phù hợp với dữ liệu log bảo toàn ngữ cảnh an ninh.",
       "text_hash": "a1213caabf91",
@@ -2741,9 +2741,9 @@
       ]
     },
     {
-      "detected_id": "DET-P341-S00",
-      "location": "Chương (Đoạn P341, câu S0)",
-      "paragraph_index": 341,
+      "detected_id": "DET-P350-S00",
+      "location": "Chương (Đoạn P350, câu S0)",
+      "paragraph_index": 350,
       "sentence_index": 0,
       "text": "Tại mỗi sự kiện tương tác , thông điệp truyền từ đỉnh nguồn  sang đỉnh đích  được tính toán dựa trên trạng thái bộ nhớ của các đỉnh ngay trước mốc thời gian sự kiện, khoảng thời gian tương đối, vector nhúng kiểu quan hệ và thuộc tính cạnh an toàn:",
       "text_hash": "6f35dc212d4b",
@@ -2755,9 +2755,9 @@
       ]
     },
     {
-      "detected_id": "DET-P343-S00",
-      "location": "Chương (Đoạn P343, câu S0)",
-      "paragraph_index": 343,
+      "detected_id": "DET-P352-S00",
+      "location": "Chương (Đoạn P352, câu S0)",
+      "paragraph_index": 352,
       "sentence_index": 0,
       "text": "Trong đó  và  là trạng thái bộ nhớ của  và  ngay trước event-time ;  là vector nhúng của loại quan hệ ;  là vector thuộc tính cạnh;  là độ lệch thời gian so với tương tác gần nhất của .",
       "text_hash": "a3f9e21b2f46",
@@ -2769,9 +2769,9 @@
       ]
     },
     {
-      "detected_id": "DET-P345-S00",
-      "location": "Chương (Đoạn P345, câu S0)",
-      "paragraph_index": 345,
+      "detected_id": "DET-P354-S00",
+      "location": "Chương (Đoạn P354, câu S0)",
+      "paragraph_index": 354,
       "sentence_index": 0,
       "text": "Trạng thái bộ nhớ của thực thể  được cập nhật qua tế bào hồi quy như GRU Cell từ trạng thái trước đó và thông điệp tổng hợp:",
       "text_hash": "35732e589b62",
@@ -2783,9 +2783,9 @@
       ]
     },
     {
-      "detected_id": "DET-P348-S00",
-      "location": "Chương (Đoạn P348, câu S0)",
-      "paragraph_index": 348,
+      "detected_id": "DET-P357-S00",
+      "location": "Chương (Đoạn P357, câu S0)",
+      "paragraph_index": 357,
       "sentence_index": 0,
       "text": "Mục tiêu tối ưu hóa các tham số  của mạng Temporal GNN trong Giai đoạn A1 mà không sử dụng nhãn tấn công hay thông tin tương lai, chuyên đề thiết lập hàm mục tiêu tự giám sát đồ thị động .",
       "text_hash": "1133f8e152f4",
@@ -2797,9 +2797,9 @@
       ]
     },
     {
-      "detected_id": "DET-P348-S01",
-      "location": "Chương (Đoạn P348, câu S1)",
-      "paragraph_index": 348,
+      "detected_id": "DET-P357-S01",
+      "location": "Chương (Đoạn P357, câu S1)",
+      "paragraph_index": 357,
       "sentence_index": 1,
       "text": "Kế thừa cảm hứng từ mô hình MAGIC  [26] về học biểu diễn qua cơ chế che giấu (Masked Graph Representation Learning) và mở rộng cho đồ thị nguồn gốc động theo thời gian (Adapted / Ours), hàm mục tiêu tự giám sát đồ thị được cấu thành từ ba tác vụ phụ trợ với đầu dự đoán riêng biệt:",
       "text_hash": "197782fbd90d",
@@ -2813,9 +2813,9 @@
       ]
     },
     {
-      "detected_id": "DET-P350-S00",
-      "location": "Chương (Đoạn P350, câu S0)",
-      "paragraph_index": 350,
+      "detected_id": "DET-P359-S00",
+      "location": "Chương (Đoạn P359, câu S0)",
+      "paragraph_index": 359,
       "sentence_index": 0,
       "text": "Tác vụ tái tạo thuộc tính thực thể bị che (Masked Node Attribute Reconstruction, ): Che ngẫu nhiên một tỷ lệ  thuộc tính kiểu hóa của các thực thể hoạt động  , trong đó  là siêu tham số được kiểm soát, tinh chỉnh và khóa cố định trên tập Validation.",
       "text_hash": "90ec3eae7f59",
@@ -2827,9 +2827,9 @@
       ]
     },
     {
-      "detected_id": "DET-P350-S01",
-      "location": "Chương (Đoạn P350, câu S1)",
-      "paragraph_index": 350,
+      "detected_id": "DET-P359-S01",
+      "location": "Chương (Đoạn P359, câu S1)",
+      "paragraph_index": 359,
       "sentence_index": 1,
       "text": "Đầu giải mã phụ trợ  tái tạo lại vector thuộc tính an toàn quyền riêng tư  từ trạng thái ẩn  theo tiêu chuẩn hồi quy Mean Squared Error (MSE).",
       "text_hash": "7590c67adc0d",
@@ -2841,9 +2841,9 @@
       ]
     },
     {
-      "detected_id": "DET-P350-S02",
-      "location": "Chương (Đoạn P350, câu S2)",
-      "paragraph_index": 350,
+      "detected_id": "DET-P359-S02",
+      "location": "Chương (Đoạn P359, câu S2)",
+      "paragraph_index": 359,
       "sentence_index": 2,
       "text": "Mục tiêu tái dựng được khóa chuẩn xác là , tức vector đặc trưng đỉnh kiểu hóa thu được SAU KHI đã áp dụng toàn diện quy trình chuẩn hóa, kiểm soát liên kết danh tính / giả danh hóa và chính sách UNKNOWN-SAFE tại Mục 2.2; tuyệt đối không đặt mục tiêu là tên người dùng thô, tên máy chủ thô, mã tiến trình thô, định danh đối tượng thô hay bất kỳ giá trị nhạy cảm nào trước biến đổi, bảo đảm tác vụ tự giám sát đồ thị tuân thủ nghiêm ngặt cùng hợp đồng bảo vệ quyền riêng tư như tác vụ MPP của chuỗi; truyền gradient cập nhật cho  và :",
       "text_hash": "21d596a2c204",
@@ -2855,9 +2855,9 @@
       ]
     },
     {
-      "detected_id": "DET-P352-S00",
-      "location": "Chương (Đoạn P352, câu S0)",
-      "paragraph_index": 352,
+      "detected_id": "DET-P361-S00",
+      "location": "Chương (Đoạn P361, câu S0)",
+      "paragraph_index": 361,
       "sentence_index": 0,
       "text": "Tác vụ dự đoán kiểu quan hệ cạnh bị che (Masked Edge Relation Prediction, ): Che nhãn quan hệ tương tác trên tập cạnh  theo tỷ lệ  (siêu tham số được kiểm soát, tinh chỉnh và khóa cố định trên tập Validation trước khi đánh giá Test).",
       "text_hash": "48f7dab3bce9",
@@ -2869,9 +2869,9 @@
       ]
     },
     {
-      "detected_id": "DET-P352-S01",
-      "location": "Chương (Đoạn P352, câu S1)",
-      "paragraph_index": 352,
+      "detected_id": "DET-P361-S01",
+      "location": "Chương (Đoạn P361, câu S1)",
+      "paragraph_index": 361,
       "sentence_index": 1,
       "text": "Đầu phân loại phụ trợ  tiếp nhận vector ghép  và tối ưu hóa hàm Categorical Cross-Entropy đối với nhãn quan hệ thực tế , truyền gradient cho  và :",
       "text_hash": "de26fbe09da0",
@@ -2883,9 +2883,9 @@
       ]
     },
     {
-      "detected_id": "DET-P354-S01",
-      "location": "Chương (Đoạn P354, câu S1)",
-      "paragraph_index": 354,
+      "detected_id": "DET-P363-S01",
+      "location": "Chương (Đoạn P363, câu S1)",
+      "paragraph_index": 363,
       "sentence_index": 1,
       "text": "Đầu hồi quy phụ trợ  tiếp nhận  và tối ưu hóa hàm Smooth L1 ) đối với đích , truyền gradient cho  và  (giúp mô hình học cấu trúc thứ tự và khoảng thời gian quan sát được giữa các sự kiện mà không hàm ý tác động nhân quả, tuân thủ nguyên tắc temporal order != causal effect và dependency != causal effect):",
       "text_hash": "ceecb96ecff2",
@@ -2897,9 +2897,9 @@
       ]
     },
     {
-      "detected_id": "DET-P356-S00",
-      "location": "Chương (Đoạn P356, câu S0)",
-      "paragraph_index": 356,
+      "detected_id": "DET-P365-S00",
+      "location": "Chương (Đoạn P365, câu S0)",
+      "paragraph_index": 365,
       "sentence_index": 0,
       "text": "Các trọng số  là các siêu tham số cân bằng giữa các tác vụ phụ trợ.",
       "text_hash": "818e9add8725",
@@ -2911,9 +2911,9 @@
       ]
     },
     {
-      "detected_id": "DET-P358-S00",
-      "location": "Chương (Đoạn P358, câu S0)",
-      "paragraph_index": 358,
+      "detected_id": "DET-P367-S00",
+      "location": "Chương (Đoạn P367, câu S0)",
+      "paragraph_index": 367,
       "sentence_index": 0,
       "text": "Khi áp dụng mạng nơ-ron đồ thị trên đồ thị nguồn gốc có đường kính lớn, hai rủi ro kiến trúc phổ biến là hiện tượng làm mịn quá mức (Over-smoothing, Oono & Suzuki  [44]) khiến biểu diễn các đỉnh hội tụ về các vector khó phân biệt, và hiện tượng nghẽn cổ chai thông tin (Over-squashing, Alon & Yahav  [31]) khi thông tin từ vùng lân cận mở rộng theo hàm mũ bị ép vào một vector kích thước cố định.",
       "text_hash": "7cae4170737d",
@@ -2928,9 +2928,9 @@
       ]
     },
     {
-      "detected_id": "DET-P358-S01",
-      "location": "Chương (Đoạn P358, câu S1)",
-      "paragraph_index": 358,
+      "detected_id": "DET-P367-S01",
+      "location": "Chương (Đoạn P367, câu S1)",
+      "paragraph_index": 367,
       "sentence_index": 1,
       "text": "Chuyên đề đề xuất hai cơ chế ứng viên giảm thiểu :",
       "text_hash": "e94fc6ffac02",
@@ -2942,9 +2942,9 @@
       ]
     },
     {
-      "detected_id": "DET-P364-S01",
-      "location": "Chương (Đoạn P364, câu S1)",
-      "paragraph_index": 364,
+      "detected_id": "DET-P373-S01",
+      "location": "Chương (Đoạn P373, câu S1)",
+      "paragraph_index": 373,
       "sentence_index": 1,
       "text": "Về mặt khung đa tỷ lệ, cửa sổ dài hạn  đã thiết lập tại Mục 2.2.3.2 đóng vai trò cung cấp ngữ cảnh trạng thái dài hạn có chặn (Bounded Long-term Context Summary) cho hệ thống mà không làm phát sinh bộ trích xuất thứ ba độc lập.",
       "text_hash": "bd54066f736e",
@@ -2956,9 +2956,9 @@
       ]
     },
     {
-      "detected_id": "DET-P364-S02",
-      "location": "Chương (Đoạn P364, câu S2)",
-      "paragraph_index": 364,
+      "detected_id": "DET-P373-S02",
+      "location": "Chương (Đoạn P373, câu S2)",
+      "paragraph_index": 373,
       "sentence_index": 2,
       "text": "Chi phí tính toán của nhánh đồ thị được phân lập giữa chi phí xây dựng cửa sổ và chi phí xử lý gia số theo từng sự kiện: xây dựng đồ thị , tạo thông điệp , cập nhật trạng thái bộ nhớ với tập đỉnh nhận thông điệp  là , và tổng hợp đầu ra .",
       "text_hash": "d1abd2ae6618",
@@ -2970,9 +2970,9 @@
       ]
     },
     {
-      "detected_id": "DET-P366-S00",
-      "location": "Chương (Đoạn P366, câu S0)",
-      "paragraph_index": 366,
+      "detected_id": "DET-P375-S00",
+      "location": "Chương (Đoạn P375, câu S0)",
+      "paragraph_index": 375,
       "sentence_index": 0,
       "text": "Hình 2.3: Kiến trúc xây dựng đồ thị nguồn gốc phụ thuộc thời gian và Bộ trích xuất Temporal GNN, nguồn tác giả đề xuất",
       "text_hash": "caa94bca9de3",
@@ -2984,9 +2984,9 @@
       ]
     },
     {
-      "detected_id": "DET-P367-S00",
-      "location": "Chương (Đoạn P367, câu S0)",
-      "paragraph_index": 367,
+      "detected_id": "DET-P376-S00",
+      "location": "Chương (Đoạn P376, câu S0)",
+      "paragraph_index": 376,
       "sentence_index": 0,
       "text": "Bảng 2.2: Đặc tả kiến trúc và độ phức tạp tính toán của hai bộ trích xuất đặc trưng đa góc nhìn",
       "text_hash": "6cbbf35d088a",
@@ -2998,9 +2998,9 @@
       ]
     },
     {
-      "detected_id": "DET-P370-S01",
-      "location": "Chương (Đoạn P370, câu S1)",
-      "paragraph_index": 370,
+      "detected_id": "DET-P379-S01",
+      "location": "Chương (Đoạn P379, câu S1)",
+      "paragraph_index": 379,
       "sentence_index": 1,
       "text": "Tầng gióng hàng đa góc nhìn xây dựng cơ chế phương pháp luận giải quyết câu hỏi nghiên cứu  và , thiết lập nền tảng kỹ thuật nhằm phục vụ kiểm định giả thuyết  và  tại Chương 3. Để đạt được mục tiêu này, chuyên đề thiết lập một quy trình tối ưu hóa đa tầng chặt chẽ: thứ nhất, thiết lập không gian ngữ nghĩa chung mà không gây sụp đổ biểu diễn; thứ hai, bảo toàn đối xứng thông tin đặc thù nội góc nhìn ; thứ ba, kiểm soát nhiễu đặc quyền và hành vi quản trị viên thông qua ngữ cảnh hóa đa chiều ; thứ tư, cung cấp cơ chế phân bổ bằng chứng yếu qua mô hình học đa thể hiện MIL tùy chọn; và thứ năm, thích ứng linh hoạt với hiện tượng khuyết góc nhìn trong môi trường phân tán mà không vi phạm nguyên tắc nhân quả thời gian.",
       "text_hash": "cafb02339955",
@@ -3012,9 +3012,9 @@
       ]
     },
     {
-      "detected_id": "DET-P372-S00",
-      "location": "Chương (Đoạn P372, câu S0)",
-      "paragraph_index": 372,
+      "detected_id": "DET-P381-S00",
+      "location": "Chương (Đoạn P381, câu S0)",
+      "paragraph_index": 381,
       "sentence_index": 0,
       "text": "Mục 2.4.1 thiết lập Hợp đồng Tương ứng, phân định ranh giới giữa Không gian Biểu diễn và Không gian Chiếu, cùng các cơ chế điều hòa chống sụp đổ biểu diễn.",
       "text_hash": "29cb6ec63de1",
@@ -3026,9 +3026,9 @@
       ]
     },
     {
-      "detected_id": "DET-P374-S00",
-      "location": "Chương (Đoạn P374, câu S0)",
-      "paragraph_index": 374,
+      "detected_id": "DET-P383-S00",
+      "location": "Chương (Đoạn P383, câu S0)",
+      "paragraph_index": 383,
       "sentence_index": 0,
       "text": "Một cặp biểu diễn đa góc nhìn  được xem là một cặp tương ứng hợp lệ nếu và chỉ nếu chúng thỏa mãn Hợp đồng Tương ứng dựa trên bộ siêu dữ liệu liên kết  đã thiết lập tại Mục 2.3:",
       "text_hash": "0d0c71caebad",
@@ -3040,9 +3040,9 @@
       ]
     },
     {
-      "detected_id": "DET-P378-S00",
-      "location": "Chương (Đoạn P378, câu S0)",
-      "paragraph_index": 378,
+      "detected_id": "DET-P387-S00",
+      "location": "Chương (Đoạn P387, câu S0)",
+      "paragraph_index": 387,
       "sentence_index": 0,
       "text": "Tuyệt đối không sử dụng nhãn tấn công hay bất kỳ tín hiệu từ tập kiểm thử nào để định nghĩa cặp tương ứng trong Stage A.",
       "text_hash": "f8a8a9c6e0cb",
@@ -3054,9 +3054,9 @@
       ]
     },
     {
-      "detected_id": "DET-P380-S00",
-      "location": "Chương (Đoạn P380, câu S0)",
-      "paragraph_index": 380,
+      "detected_id": "DET-P389-S00",
+      "location": "Chương (Đoạn P389, câu S0)",
+      "paragraph_index": 389,
       "sentence_index": 0,
       "text": "Tránh hiện tượng mất mát thông tin cấu trúc đặc thù khi ép hai vector biểu diễn gốc  và  phải hội tụ về cùng một điểm, chuyên đề áp dụng nguyên lý phân tách không gian theo SimCLR  [37] và VICReg  [10].",
       "text_hash": "fa56ddc8372c",
@@ -3071,9 +3071,9 @@
       ]
     },
     {
-      "detected_id": "DET-P383-S01",
-      "location": "Chương (Đoạn P383, câu S1)",
-      "paragraph_index": 383,
+      "detected_id": "DET-P392-S01",
+      "location": "Chương (Đoạn P392, câu S1)",
+      "paragraph_index": 392,
       "sentence_index": 1,
       "text": "Việc phân tách này thiết lập một ranh giới phương pháp luận nghiêm ngặt: Không gian Chiếu  chỉ phục vụ việc tính toán các hàm mất mát gióng hàng tự giám sát và sẽ bị loại bỏ sau khi kết thúc Stage A; trong khi Không gian Biểu diễn ,  và không gian biểu diễn thống nhất  được bảo toàn nguyên vẹn để cung cấp đặc trưng cho các tác vụ hạ nguồn ở Stage C.",
       "text_hash": "3113796ad211",
@@ -3085,9 +3085,9 @@
       ]
     },
     {
-      "detected_id": "DET-P385-S00",
-      "location": "Chương (Đoạn P385, câu S0)",
-      "paragraph_index": 385,
+      "detected_id": "DET-P394-S00",
+      "location": "Chương (Đoạn P394, câu S0)",
+      "paragraph_index": 394,
       "sentence_index": 0,
       "text": "Trong học biểu diễn tự giám sát, ba hướng tiếp cận tiêu biểu bao gồm: InfoNCE / Contrastive Learning  [38],  [37], Barlow Twins  [11], và VICReg  [10].",
       "text_hash": "3c841a3e8167",
@@ -3104,9 +3104,9 @@
       ]
     },
     {
-      "detected_id": "DET-P387-S00",
-      "location": "Chương (Đoạn P387, câu S0)",
-      "paragraph_index": 387,
+      "detected_id": "DET-P396-S00",
+      "location": "Chương (Đoạn P396, câu S0)",
+      "paragraph_index": 396,
       "sentence_index": 0,
       "text": "Từ phân tích phương pháp luận trên, chuyên đề lựa chọn VICReg (Variance-Invariance-Covariance Regularization) [10] làm ứng viên gióng hàng cốt lõi.",
       "text_hash": "6adbb5314ff4",
@@ -3120,9 +3120,9 @@
       ]
     },
     {
-      "detected_id": "DET-P387-S02",
-      "location": "Chương (Đoạn P387, câu S2)",
-      "paragraph_index": 387,
+      "detected_id": "DET-P396-S02",
+      "location": "Chương (Đoạn P396, câu S2)",
+      "paragraph_index": 396,
       "sentence_index": 2,
       "text": "[10], VICReg thiết lập cơ chế tự giám sát không tương phản dựa trên điều hòa phương sai và hiệp phương sai để ngăn ngừa sụp đổ biểu diễn mà không cần khai thác các cặp mẫu âm.",
       "text_hash": "fb9c7d482fe1",
@@ -3136,9 +3136,9 @@
       ]
     },
     {
-      "detected_id": "DET-P387-S03",
-      "location": "Chương (Đoạn P387, câu S3)",
-      "paragraph_index": 387,
+      "detected_id": "DET-P396-S03",
+      "location": "Chương (Đoạn P396, câu S3)",
+      "paragraph_index": 396,
       "sentence_index": 3,
       "text": "Dựa trên đặc tính lý thuyết này của công bố gốc, nghiên cứu đề xuất giả thuyết thích nghi (Author Adaptation Hypothesis): việc loại bỏ nhu cầu lấy mẫu âm tường minh trong không gian telemetry log sẽ giúp giảm thiểu rủi ro âm tính giả, hạn chế việc ép các phiên telemetry bình thường độc lập nhưng có đặc trưng tương đồng ra xa nhau một cách nhân tạo.",
       "text_hash": "05c55c1ddc27",
@@ -3151,9 +3151,9 @@
       ]
     },
     {
-      "detected_id": "DET-P387-S04",
-      "location": "Chương (Đoạn P387, câu S4)",
-      "paragraph_index": 387,
+      "detected_id": "DET-P396-S04",
+      "location": "Chương (Đoạn P396, câu S4)",
+      "paragraph_index": 396,
       "sentence_index": 4,
       "text": "Giả thuyết này sẽ được kiểm chứng thực nghiệm độc lập tại Chương 3 trong mối tương quan với hai phương pháp đối chứng là InfoNCE [38], [37] và Barlow Twins [11].",
       "text_hash": "2f4eab216040",
@@ -3169,9 +3169,9 @@
       ]
     },
     {
-      "detected_id": "DET-P402-S01",
-      "location": "Chương (Đoạn P402, câu S1)",
-      "paragraph_index": 402,
+      "detected_id": "DET-P411-S01",
+      "location": "Chương (Đoạn P411, câu S1)",
+      "paragraph_index": 411,
       "sentence_index": 1,
       "text": "Chuyên đề xử lý vấn đề này theo khung tiếp cận của CPM-Nets  [39] kết hợp cơ chế mặt nạ khả dụng và suy thoái duyên dáng do chuyên đề đề xuất:",
       "text_hash": "ae6d6ca153af",
@@ -3185,9 +3185,9 @@
       ]
     },
     {
-      "detected_id": "DET-P407-S00",
-      "location": "Chương (Đoạn P407, câu S0)",
-      "paragraph_index": 407,
+      "detected_id": "DET-P416-S00",
+      "location": "Chương (Đoạn P416, câu S0)",
+      "paragraph_index": 416,
       "sentence_index": 0,
       "text": "Nguyên tắc bất biến: Hệ thống tuyệt đối không tự bịa đặt dữ liệu (Data Hallucination) cho góc nhìn bị thiếu, không sử dụng dữ liệu tương lai để nội suy và không sử dụng nhãn tấn công để bù đắp, tuân thủ nguyên tắc nhân quả thời gian của mặt phẳng suy luận dòng.",
       "text_hash": "a091ace92a99",
@@ -3199,9 +3199,9 @@
       ]
     },
     {
-      "detected_id": "DET-P408-S00",
-      "location": "Chương (Đoạn P408, câu S0)",
-      "paragraph_index": 408,
+      "detected_id": "DET-P417-S00",
+      "location": "Chương (Đoạn P417, câu S0)",
+      "paragraph_index": 417,
       "sentence_index": 0,
       "text": "Lưu ý phương pháp luận về tính nhân quả: Khái niệm “Strictly Causal / Zero Lookahead” được định nghĩa chính xác theo nghĩa: hệ thống chỉ sử dụng dữ liệu đo kiểm trong quá khứ và ở thời điểm hiện tại khi suy luận dòng, tuyệt đối không sử dụng thông tin tương lai hay nhãn kiểm thử; khái niệm này KHÔNG hàm ý suy diễn quan hệ nhân quả (Causal-effect Inference) theo nghĩa thống kê can thiệp.",
       "text_hash": "cd7a55dd83f1",
@@ -3213,9 +3213,9 @@
       ]
     },
     {
-      "detected_id": "DET-P408-S01",
-      "location": "Chương (Đoạn P408, câu S1)",
-      "paragraph_index": 408,
+      "detected_id": "DET-P417-S01",
+      "location": "Chương (Đoạn P417, câu S1)",
+      "paragraph_index": 417,
       "sentence_index": 1,
       "text": "Trong an ninh mạng, sự phụ thuộc quan sát được không đồng nhất với tác động nhân quả.",
       "text_hash": "1dcac8fdbb14",
@@ -3227,9 +3227,9 @@
       ]
     },
     {
-      "detected_id": "DET-P410-S01",
-      "location": "Chương (Đoạn P410, câu S1)",
-      "paragraph_index": 410,
+      "detected_id": "DET-P419-S01",
+      "location": "Chương (Đoạn P419, câu S1)",
+      "paragraph_index": 419,
       "sentence_index": 1,
       "text": "Mục 2.4.2 thiết lập khung phương pháp luận nhận thức hành vi quản trị (Risk-aware Administrative Behavior) và các cơ chế kiểm soát nhiễu đặc quyền (Admin-Noise Controls, Đề xuất của đề tài / Ours) nhằm giải quyết trực tiếp câu hỏi nghiên cứu .",
       "text_hash": "cc4091e85c2d",
@@ -3241,9 +3241,9 @@
       ]
     },
     {
-      "detected_id": "DET-P412-S00",
-      "location": "Chương (Đoạn P412, câu S0)",
-      "paragraph_index": 412,
+      "detected_id": "DET-P421-S00",
+      "location": "Chương (Đoạn P421, câu S0)",
+      "paragraph_index": 421,
       "sentence_index": 0,
       "text": "Trong môi trường vận hành công nghệ thông tin thực tế, các hoạt động quản trị viên (System Administration), ví dụ như cài đặt bản vá hàng loạt, sao lưu cơ sở dữ liệu định kỳ, bảo trì từ xa thông qua PowerShell, SSH, WMI, PsExec hay các kịch bản script tự động hóa phức tạp, thường xuyên tạo ra các chuỗi sự kiện có tần suất cao đột biến, quyền hạn cao Privileged Execution và cấu trúc lệnh khác lạ so với người dùng thông thường.",
       "text_hash": "4100278f9953",
@@ -3255,9 +3255,9 @@
       ]
     },
     {
-      "detected_id": "DET-P415-S00",
-      "location": "Chương (Đoạn P415, câu S0)",
-      "paragraph_index": 415,
+      "detected_id": "DET-P424-S00",
+      "location": "Chương (Đoạn P424, câu S0)",
+      "paragraph_index": 424,
       "sentence_index": 0,
       "text": "Ngữ cảnh công cụ và tham số (Tool & Parameter Structure): Biểu diễn cấu trúc cú pháp câu lệnh, tham số thực thi động và trạng thái chữ ký số (Signed/Unsigned State nếu quan sát được), phản ánh trung thực bản chất công cụ thực thi vào không gian vector.",
       "text_hash": "14158979fb22",
@@ -3269,9 +3269,9 @@
       ]
     },
     {
-      "detected_id": "DET-P420-S00",
-      "location": "Chương (Đoạn P420, câu S0)",
-      "paragraph_index": 420,
+      "detected_id": "DET-P429-S00",
+      "location": "Chương (Đoạn P429, câu S0)",
+      "paragraph_index": 429,
       "sentence_index": 0,
       "text": "Nhằm hạn chế rủi ro trôi dạt và tăng tính ổn định cho không gian vector biểu diễn, chuyên đề thiết lập các cơ chế kiểm soát biến gây nhiễu :",
       "text_hash": "79ccb478cc40",
@@ -3283,9 +3283,9 @@
       ]
     },
     {
-      "detected_id": "DET-P422-S00",
-      "location": "Chương (Đoạn P422, câu S0)",
-      "paragraph_index": 422,
+      "detected_id": "DET-P431-S00",
+      "location": "Chương (Đoạn P431, câu S0)",
+      "paragraph_index": 431,
       "sentence_index": 0,
       "text": "Cấm rò rỉ nhãn kiểm thử và đặc quyền giám sát (No Privileged Test Knowledge): Trong toàn bộ quá trình tiền xử lý và huấn luyện tự giám sát, hệ thống tuyệt đối không sử dụng bất kỳ thông tin nào về nhãn tấn công tương lai hay danh sách phân loại tĩnh từ tập kiểm thử, ngăn rò rỉ thông tin kiểm thử qua các kênh đã định nghĩa .",
       "text_hash": "476bfb948964",
@@ -3297,9 +3297,9 @@
       ]
     },
     {
-      "detected_id": "DET-P424-S00",
-      "location": "Chương (Đoạn P424, câu S0)",
-      "paragraph_index": 424,
+      "detected_id": "DET-P433-S00",
+      "location": "Chương (Đoạn P433, câu S0)",
+      "paragraph_index": 433,
       "sentence_index": 0,
       "text": "Mục 2.4.3 tổng hợp toàn bộ đồ thị tối ưu hóa của chuyên đề, thiết lập hàm mục tiêu tự giám sát thống nhất trong Stage A, đóng kín các luồng gradient cho toàn bộ tập tham số, và tích hợp mô đun Phân bổ Bằng chứng Yếu qua mô hình học đa thể hiện (MIL) tùy chọn trong Stage B.",
       "text_hash": "08c608ca1942",
@@ -3311,9 +3311,9 @@
       ]
     },
     {
-      "detected_id": "DET-P426-S00",
-      "location": "Chương (Đoạn P426, câu S0)",
-      "paragraph_index": 426,
+      "detected_id": "DET-P435-S00",
+      "location": "Chương (Đoạn P435, câu S0)",
+      "paragraph_index": 435,
       "sentence_index": 0,
       "text": "Theo nguyên tắc kiểm toán tham số có gradient (Zero Orphan Parameters), Bảng 2.4 tổng hợp toàn bộ tập tham số huấn luyện của hệ thống, xác định rõ giai đoạn huấn luyện, hàm mục tiêu sinh gradient, thời điểm đóng băng và vai trò khi suy luận trực tuyến:",
       "text_hash": "515ca2cabb62",
@@ -3325,9 +3325,9 @@
       ]
     },
     {
-      "detected_id": "DET-P431-S03",
-      "location": "Chương (Đoạn P431, câu S3)",
-      "paragraph_index": 431,
+      "detected_id": "DET-P440-S03",
+      "location": "Chương (Đoạn P440, câu S3)",
+      "paragraph_index": 440,
       "sentence_index": 3,
       "text": "Tại thời điểm suy luận dòng, chỉ các backbone  và các ma trận dung hợp chuẩn tắc được nạp để tính toán vector ; nhờ đó, số thành phần mô hình phải duy trì khi suy luận được giảm đáng kể so với đồ thị huấn luyện đầy đủ mà không để lại tham số mồ côi, tuân thủ nguyên tắc Zero Orphan Parameters.",
       "text_hash": "5373886c2f29",
@@ -3340,9 +3340,9 @@
       ]
     },
     {
-      "detected_id": "DET-P432-S00",
-      "location": "Chương (Đoạn P432, câu S0)",
-      "paragraph_index": 432,
+      "detected_id": "DET-P441-S00",
+      "location": "Chương (Đoạn P441, câu S0)",
+      "paragraph_index": 441,
       "sentence_index": 0,
       "text": "Cung cấp tín hiệu học trực tiếp cho các ma trận dung hợp , vector trọng số gating  và các ma trận giải mã tuyến tính , chuyên đề thiết lập hàm mất mát tái tạo đa góc nhìn tự giám sát :",
       "text_hash": "a3603811a944",
@@ -3354,9 +3354,9 @@
       ]
     },
     {
-      "detected_id": "DET-P434-S00",
-      "location": "Chương (Đoạn P434, câu S0)",
-      "paragraph_index": 434,
+      "detected_id": "DET-P443-S00",
+      "location": "Chương (Đoạn P443, câu S0)",
+      "paragraph_index": 443,
       "sentence_index": 0,
       "text": "Định tuyến luồng gradient: Để ngăn chặn hiện tượng co-adaptation không kiểm soát khiến vector đích tự trôi dạt, chuyên đề thiết lập toán tử chặn gradient tường minh  và .",
       "text_hash": "721b61c5c111",
@@ -3368,9 +3368,9 @@
       ]
     },
     {
-      "detected_id": "DET-P437-S00",
-      "location": "Chương (Đoạn P437, câu S0)",
-      "paragraph_index": 437,
+      "detected_id": "DET-P446-S00",
+      "location": "Chương (Đoạn P446, câu S0)",
+      "paragraph_index": 446,
       "sentence_index": 0,
       "text": "Các hệ số siêu tham số  là các trọng số điều hòa được thiết lập giá trị khởi tạo tham chiếu  và sẽ được tối ưu hóa, kiểm định độ nhạy thực nghiệm trên tập xác thực tại Chương 3.",
       "text_hash": "7b9e56073cbd",
@@ -3382,9 +3382,9 @@
       ]
     },
     {
-      "detected_id": "DET-P443-S00",
-      "location": "Chương (Đoạn P443, câu S0)",
-      "paragraph_index": 443,
+      "detected_id": "DET-P452-S00",
+      "location": "Chương (Đoạn P452, câu S0)",
+      "paragraph_index": 452,
       "sentence_index": 0,
       "text": "Trong đó  là siêu tham số ngưỡng chặn dưới an toàn, ngăn ngừa việc hạ trọng số về 0 (tính nhạy cảm của  sẽ được kiểm chứng thực nghiệm tại Chương 3).",
       "text_hash": "b76eaa499e34",
@@ -3396,9 +3396,9 @@
       ]
     },
     {
-      "detected_id": "DET-P443-S01",
-      "location": "Chương (Đoạn P443, câu S1)",
-      "paragraph_index": 443,
+      "detected_id": "DET-P452-S01",
+      "location": "Chương (Đoạn P452, câu S1)",
+      "paragraph_index": 452,
       "sentence_index": 1,
       "text": "Khi tối ưu hóa liên hợp, chuyên đề đề xuất áp dụng kỹ thuật phẫu thuật gradient PCGrad  [40] trên tập tham số nhận đồng thời hai luồng gradient:",
       "text_hash": "6356a4654e82",
@@ -3412,9 +3412,9 @@
       ]
     },
     {
-      "detected_id": "DET-P449-S01",
-      "location": "Chương (Đoạn P449, câu S1)",
-      "paragraph_index": 449,
+      "detected_id": "DET-P458-S01",
+      "location": "Chương (Đoạn P458, câu S1)",
+      "paragraph_index": 458,
       "sentence_index": 1,
       "text": "Để giải quyết thách thức này, chuyên đề thiết lập mô đun Phân bổ Bằng chứng Yếu tùy chọn ở Stage B dựa trên khung tiếp cận Học Đa Thể Hiện.",
       "text_hash": "dd0f6271658d",
@@ -3426,9 +3426,9 @@
       ]
     },
     {
-      "detected_id": "DET-P450-S01",
-      "location": "Chương (Đoạn P450, câu S1)",
-      "paragraph_index": 450,
+      "detected_id": "DET-P459-S01",
+      "location": "Chương (Đoạn P459, câu S1)",
+      "paragraph_index": 459,
       "sentence_index": 1,
       "text": "[15], nhưng thiết kế cơ chế ánh xạ Túi, Thực thể đặc thù cho bài toán an ninh mạng (Cybersecurity Bag-Instance Mapping, Đề xuất của đề tài / Ours):",
       "text_hash": "23df0101b45d",
@@ -3442,9 +3442,9 @@
       ]
     },
     {
-      "detected_id": "DET-P461-S00",
-      "location": "Chương (Đoạn P461, câu S0)",
-      "paragraph_index": 461,
+      "detected_id": "DET-P470-S00",
+      "location": "Chương (Đoạn P470, câu S0)",
+      "paragraph_index": 470,
       "sentence_index": 0,
       "text": "Biến thể tùy chọn hỗ trợ MIL: Nếu kịch bản triển khai thực tế có nhu cầu giám sát trực quan điểm bằng chứng, hệ thống định nghĩa riêng một biến thể hỗ trợ MIL, hoàn toàn phân định với Extractor chuẩn tắc.",
       "text_hash": "5ee0702ffa55",
@@ -3456,9 +3456,9 @@
       ]
     },
     {
-      "detected_id": "DET-P461-S01",
-      "location": "Chương (Đoạn P461, câu S1)",
-      "paragraph_index": 461,
+      "detected_id": "DET-P470-S01",
+      "location": "Chương (Đoạn P470, câu S1)",
+      "paragraph_index": 470,
       "sentence_index": 1,
       "text": "Tại Chương 3, chuyên đề sẽ báo cáo độc lập kết quả giữa ba cấu hình: SSL thuần túy, SSL kết hợp thích ứng MIL, và Biến thể hỗ trợ MIL khi triển khai.",
       "text_hash": "2d83a4d8ff18",
@@ -3470,9 +3470,9 @@
       ]
     },
     {
-      "detected_id": "DET-P462-S01",
-      "location": "Chương (Đoạn P462, câu S1)",
-      "paragraph_index": 462,
+      "detected_id": "DET-P471-S01",
+      "location": "Chương (Đoạn P471, câu S1)",
+      "paragraph_index": 471,
       "sentence_index": 1,
       "text": "Chuyên đề nhấn mạnh ranh giới khoa học: Trọng số  là tín hiệu gợi ý điều tra, TUYỆT ĐỐI KHÔNG PHẢI là xác suất tấn công độc hại và KHÔNG PHẢI là bằng chứng giải thích nhân quả.",
       "text_hash": "7bff8efeb857",
@@ -3484,9 +3484,9 @@
       ]
     },
     {
-      "detected_id": "DET-P463-S00",
-      "location": "Chương (Đoạn P463, câu S0)",
-      "paragraph_index": 463,
+      "detected_id": "DET-P472-S00",
+      "location": "Chương (Đoạn P472, câu S0)",
+      "paragraph_index": 472,
       "sentence_index": 0,
       "text": "Biểu diễn thống nhất, giao diện đầu ra và độ phức tạp",
       "text_hash": "acc434f3973e",
@@ -3498,9 +3498,9 @@
       ]
     },
     {
-      "detected_id": "DET-P466-S00",
-      "location": "Chương (Đoạn P466, câu S0)",
-      "paragraph_index": 466,
+      "detected_id": "DET-P475-S00",
+      "location": "Chương (Đoạn P475, câu S0)",
+      "paragraph_index": 475,
       "sentence_index": 0,
       "text": "Kết hợp sức mạnh biểu diễn vi mô từ chuỗi và quan hệ cấu trúc vĩ mô từ đồ thị mà không áp đặt giả định đồng nhất số chiều tùy tiện, chuyên đề thiết lập các ánh xạ tuyến tính chuẩn hóa sang không gian tương tác chung :",
       "text_hash": "9ef7f0f7ae41",
@@ -3512,9 +3512,9 @@
       ]
     },
     {
-      "detected_id": "DET-P475-S00",
-      "location": "Chương (Đoạn P475, câu S0)",
-      "paragraph_index": 475,
+      "detected_id": "DET-P484-S00",
+      "location": "Chương (Đoạn P484, câu S0)",
+      "paragraph_index": 484,
       "sentence_index": 0,
       "text": "Hình 2.4: Sơ đồ kiến trúc Gióng hàng đa góc nhìn, Kiểm soát sụp đổ và Tổng hợp biểu diễn thống nhất, nguồn tác giả đề xuất",
       "text_hash": "3aae68df3f32",
@@ -3526,9 +3526,9 @@
       ]
     },
     {
-      "detected_id": "DET-P476-S00",
-      "location": "Chương (Đoạn P476, câu S0)",
-      "paragraph_index": 476,
+      "detected_id": "DET-P485-S00",
+      "location": "Chương (Đoạn P485, câu S0)",
+      "paragraph_index": 485,
       "sentence_index": 0,
       "text": "Phân tích độ phức tạp tính toán và ngân sách streaming",
       "text_hash": "46cd13fa6d53",
@@ -3540,9 +3540,9 @@
       ]
     },
     {
-      "detected_id": "DET-P482-S00",
-      "location": "Chương (Đoạn P482, câu S0)",
-      "paragraph_index": 482,
+      "detected_id": "DET-P491-S00",
+      "location": "Chương (Đoạn P491, câu S0)",
+      "paragraph_index": 491,
       "sentence_index": 0,
       "text": "Chi phí tính toán toàn trình của toàn bộ hệ thống bao gồm: tiền xử lý sự kiện thô, trích xuất chuỗi ngắn hạn, cập nhật đồ thị động, lan truyền thông điệp Temporal GNN, quản lý trạng thái bộ nhớ hữu hạn và tổng hợp dung hợp đa góc nhìn.",
       "text_hash": "8675c32ec051",
@@ -3554,9 +3554,9 @@
       ]
     },
     {
-      "detected_id": "DET-P482-S01",
-      "location": "Chương (Đoạn P482, câu S1)",
-      "paragraph_index": 482,
+      "detected_id": "DET-P491-S01",
+      "location": "Chương (Đoạn P491, câu S1)",
+      "paragraph_index": 491,
       "sentence_index": 1,
       "text": "Các chỉ số đo kiểm thực nghiệm toàn trình (thông lượng sự kiện/giây, độ trễ p50/p95, dung lượng RAM, VRAM và kích thước trạng thái trên mỗi thực thể) sẽ được đo lường thực nghiệm chi tiết tại Chương 3 nhằm kiểm định giả thuyết .",
       "text_hash": "825175f0003a",
@@ -3568,9 +3568,9 @@
       ]
     },
     {
-      "detected_id": "DET-P484-S00",
-      "location": "Chương (Đoạn P484, câu S0)",
-      "paragraph_index": 484,
+      "detected_id": "DET-P493-S00",
+      "location": "Chương (Đoạn P493, câu S0)",
+      "paragraph_index": 493,
       "sentence_index": 0,
       "text": "Chương này trình bày chi tiết công tác thực nghiệm, phương pháp luận đánh giá và các kết quả định lượng thu được nhằm kiểm chứng mô hình biểu diễn đồ thị sự kiện theo dòng thời gian liên tục (Temporal Graph View Encoder) đã đề xuất tại Chương 2. Mọi quy trình thực nghiệm đều tuân thủ các nguyên tắc kiểm toán độc lập: môi trường phần cứng và phần mềm được ghi nhận chính xác theo khóa môi trường, dữ liệu phân tách nhân quả chống rò rỉ thông tin, và kết quả được đối soát nguồn gốc độc lập trên từng hạt giống ngẫu nhiên.",
       "text_hash": "5143d7b0d3b2",
@@ -3582,9 +3582,9 @@
       ]
     },
     {
-      "detected_id": "DET-P484-S01",
-      "location": "Chương (Đoạn P484, câu S1)",
-      "paragraph_index": 484,
+      "detected_id": "DET-P493-S01",
+      "location": "Chương (Đoạn P493, câu S1)",
+      "paragraph_index": 493,
       "sentence_index": 1,
       "text": "Toàn bộ các phân tích trong chương này được dẫn xuất trực tiếp từ các bằng chứng thực nghiệm máy đọc được, phân định rõ ràng giữa kết quả quan sát thực tế, suy diễn khoa học và các giới hạn kỹ thuật nội tại.",
       "text_hash": "efa4cdc1a37d",
@@ -3596,9 +3596,9 @@
       ]
     },
     {
-      "detected_id": "DET-P485-S00",
-      "location": "Chương (Đoạn P485, câu S0)",
-      "paragraph_index": 485,
+      "detected_id": "DET-P494-S00",
+      "location": "Chương (Đoạn P494, câu S0)",
+      "paragraph_index": 494,
       "sentence_index": 0,
       "text": "Thiết lập thực nghiệm và dữ liệu",
       "text_hash": "87d541d4486e",
@@ -3610,9 +3610,9 @@
       ]
     },
     {
-      "detected_id": "DET-P487-S00",
-      "location": "Chương (Đoạn P487, câu S0)",
-      "paragraph_index": 487,
+      "detected_id": "DET-P496-S00",
+      "location": "Chương (Đoạn P496, câu S0)",
+      "paragraph_index": 496,
       "sentence_index": 0,
       "text": "Bảo đảm tính minh bạch và khả năng tái lập thực nghiệm, toàn bộ quá trình tiền huấn luyện được thực thi trên môi trường máy trạm độc lập với thông số kỹ thuật được xác định theo đúng khóa môi trường thực thi STAGE-​A2-​LOCAL-​EXECUTION-​ENVIRONMENT-​V1.5.json.",
       "text_hash": "50c19964b797",
@@ -3624,9 +3624,9 @@
       ]
     },
     {
-      "detected_id": "DET-P487-S01",
-      "location": "Chương (Đoạn P487, câu S1)",
-      "paragraph_index": 487,
+      "detected_id": "DET-P496-S01",
+      "location": "Chương (Đoạn P496, câu S1)",
+      "paragraph_index": 496,
       "sentence_index": 1,
       "text": "Hệ thống phần cứng trang bị card đồ họa NVIDIA GeForce RTX 3050 Ti Laptop GPU (dung lượng bộ nhớ 4.0 GB, Compute Capability 8.6, phiên bản driver 595.95, mã định danh UUID: GPU-​3f4d825d-​63ad-​0695-​1b32-​466308a00b8c).",
       "text_hash": "e055ecce7a5f",
@@ -3638,9 +3638,9 @@
       ]
     },
     {
-      "detected_id": "DET-P487-S02",
-      "location": "Chương (Đoạn P487, câu S2)",
-      "paragraph_index": 487,
+      "detected_id": "DET-P496-S02",
+      "location": "Chương (Đoạn P496, câu S2)",
+      "paragraph_index": 496,
       "sentence_index": 2,
       "text": "Bộ xử lý trung tâm là Intel Core i5-12500H (12 Cores /​ 16 Threads) với bộ nhớ RAM hệ thống ghi nhận 15.71 GB.",
       "text_hash": "f014a60403f2",
@@ -3652,9 +3652,9 @@
       ]
     },
     {
-      "detected_id": "DET-P488-S01",
-      "location": "Chương (Đoạn P488, câu S1)",
-      "paragraph_index": 488,
+      "detected_id": "DET-P497-S01",
+      "location": "Chương (Đoạn P497, câu S1)",
+      "paragraph_index": 497,
       "sentence_index": 1,
       "text": "Đặc tả môi trường được niêm phong trong tệp bằng chứng experiments/​evidence/​stage-a2/​preexecution/​STAGE-​A2-​LOCAL-​EXECUTION-​ENVIRONMENT-​V1.5.json với mã băm SHA-256: 81d3ca48​65a95c75​cc234569​5091265f​948ad58e​705865a3​f8f780a9​bf09f362.",
       "text_hash": "2707af49e6ea",
@@ -3666,9 +3666,9 @@
       ]
     },
     {
-      "detected_id": "DET-P491-S00",
-      "location": "Chương (Đoạn P491, câu S0)",
-      "paragraph_index": 491,
+      "detected_id": "DET-P500-S00",
+      "location": "Chương (Đoạn P500, câu S0)",
+      "paragraph_index": 500,
       "sentence_index": 0,
       "text": "Hai tầng benchmark và giao thức phân chia nhân quả chống rò rỉ",
       "text_hash": "21b9b4342750",
@@ -3680,9 +3680,9 @@
       ]
     },
     {
-      "detected_id": "DET-P493-S00",
-      "location": "Chương (Đoạn P493, câu S0)",
-      "paragraph_index": 493,
+      "detected_id": "DET-P502-S00",
+      "location": "Chương (Đoạn P502, câu S0)",
+      "paragraph_index": 502,
       "sentence_index": 0,
       "text": "Khác với các phương pháp xáo trộn ngẫu nhiên truyền thống có nguy cơ rò rỉ thông tin thời gian, nghiên cứu đề xuất và áp dụng quy trình phân chia dữ liệu theo thứ tự thời gian nhân quả nghiêm ngặt, tuân thủ khuyến nghị tránh rò rỉ thời gian (temporal snooping) của Arp et al.",
       "text_hash": "28166f437c85",
@@ -3694,9 +3694,9 @@
       ]
     },
     {
-      "detected_id": "DET-P496-S00",
-      "location": "Chương (Đoạn P496, câu S0)",
-      "paragraph_index": 496,
+      "detected_id": "DET-P505-S00",
+      "location": "Chương (Đoạn P505, câu S0)",
+      "paragraph_index": 505,
       "sentence_index": 0,
       "text": "Ba là, phân vùng kiểm thử niêm phong: Được niêm phong cách ly mật mã thông qua cơ chế Tường lửa Dữ liệu Kiểm thử (SEALED_​CRYPTO_​FIREWALL).",
       "text_hash": "e7fd3b789c7a",
@@ -3709,9 +3709,9 @@
       ]
     },
     {
-      "detected_id": "DET-P497-S00",
-      "location": "Chương (Đoạn P497, câu S0)",
-      "paragraph_index": 497,
+      "detected_id": "DET-P506-S00",
+      "location": "Chương (Đoạn P506, câu S0)",
+      "paragraph_index": 506,
       "sentence_index": 0,
       "text": "Bảng 3.2: Phân chia tập dữ liệu HDFS theo giao thức nhân quả chống rò rỉ",
       "text_hash": "51e17378df7f",
@@ -3723,9 +3723,9 @@
       ]
     },
     {
-      "detected_id": "DET-P500-S00",
-      "location": "Chương (Đoạn P500, câu S0)",
-      "paragraph_index": 500,
+      "detected_id": "DET-P509-S00",
+      "location": "Chương (Đoạn P509, câu S0)",
+      "paragraph_index": 509,
       "sentence_index": 0,
       "text": "Theo khung đánh giá của luận văn, năng lực của vector biểu diễn đặc trưng log được kiểm chứng qua hệ thống thang đo ba tầng: thứ nhất là thang đo bản chất đo lường sai số dự đoán và độ phân kỳ phân phối trên không gian tự giám sát; thứ hai là thang đo đầu dò đánh giá năng lực phân tách tuyến tính các thuộc tính an ninh; và thứ ba là thang đo vận hành kiểm tra hiệu năng tính toán, độ trễ cùng thông lượng dòng sự kiện.",
       "text_hash": "b36940dd3783",
@@ -3737,9 +3737,9 @@
       ]
     },
     {
-      "detected_id": "DET-P501-S00",
-      "location": "Chương (Đoạn P501, câu S0)",
-      "paragraph_index": 501,
+      "detected_id": "DET-P510-S00",
+      "location": "Chương (Đoạn P510, câu S0)",
+      "paragraph_index": 510,
       "sentence_index": 0,
       "text": "Kiến trúc thực nghiệm trong Stage A2 là mô hình TemporalGraphViewEncoder, bao gồm: bộ nhớ trạng thái thực thể động dựa trên tế bào GRUCell (d_mem=128), cơ chế chú ý thời gian đa đầu (Multi-Head Temporal Attention over causal event window), và phép chiếu thời gian liên tục điều hòa (Continuous Sinusoidal Time Projection phi(Delta t)).",
       "text_hash": "599d86cdbd6e",
@@ -3751,9 +3751,9 @@
       ]
     },
     {
-      "detected_id": "DET-P503-S00",
-      "location": "Chương (Đoạn P503, câu S0)",
-      "paragraph_index": 503,
+      "detected_id": "DET-P512-S00",
+      "location": "Chương (Đoạn P512, câu S0)",
+      "paragraph_index": 512,
       "sentence_index": 0,
       "text": "Mất mát Dự đoán Quan hệ Che giấu (Masked Relation Prediction Loss, ): Đo lường sai số phân loại quan hệ cạnh giữa các thực thể dựa trên hàm mất mát cross-entropy:",
       "text_hash": "1325411fdf04",
@@ -3765,9 +3765,9 @@
       ]
     },
     {
-      "detected_id": "DET-P511-S00",
-      "location": "Chương (Đoạn P511, câu S0)",
-      "paragraph_index": 511,
+      "detected_id": "DET-P520-S00",
+      "location": "Chương (Đoạn P520, câu S0)",
+      "paragraph_index": 520,
       "sentence_index": 0,
       "text": "Kết quả thực nghiệm và benchmarking",
       "text_hash": "c98db795a57c",
@@ -3779,9 +3779,9 @@
       ]
     },
     {
-      "detected_id": "DET-P512-S00",
-      "location": "Chương (Đoạn P512, câu S0)",
-      "paragraph_index": 512,
+      "detected_id": "DET-P521-S00",
+      "location": "Chương (Đoạn P521, câu S0)",
+      "paragraph_index": 521,
       "sentence_index": 0,
       "text": "Kết quả huấn luyện Stage A2 trên 5 hạt ngẫu nhiên thực nghiệm",
       "text_hash": "fc8e2a342a25",
@@ -3793,9 +3793,9 @@
       ]
     },
     {
-      "detected_id": "DET-P513-S00",
-      "location": "Chương (Đoạn P513, câu S0)",
-      "paragraph_index": 513,
+      "detected_id": "DET-P522-S00",
+      "location": "Chương (Đoạn P522, câu S0)",
+      "paragraph_index": 522,
       "sentence_index": 0,
       "text": "Đánh giá tính ổn định thống kê và loại trừ hiện tượng thiên lệch chọn lọc, chiến dịch thực nghiệm được tiến hành trên 5 hạt giống khởi tạo ngẫu nhiên độc lập: 999, 42, 7, 1337, và 2024. Dựa trên cấu hình Stage A2 chính thức hiện hành theo văn bản thẩm quyền experiments/​plans/​STAGE-​A2-​FINAL-​12-​EPOCH-​AUTHORITY.json, trần 12 epochs, 6.876 bước tối ưu hóa, 343 bước khởi động tuyến tính, kết hợp kiểm toán nguồn gốc thực thi độc lập từ nhật ký Git và các tệp bằng chứng máy đọc được, các đợt chạy được phân loại khoa học và minh bạch như sau: nhóm Lệch Giao thức (Protocol Deviation), gồm Seed 999 hoàn thành 12 epochs với mất mát kiểm định 0,6095 nhưng có sai lệch giao thức tiền thi hành khi văn bản ủy quyền commit 244e81a5 ràng buộc kế hoạch chứa 573 bước khởi động trong khi mã nguồn thực thi sử dụng 343 bước, Seed 42 chạy theo quỹ đạo của bộ lập lịch cũ và dừng sớm tại Epoch 4 theo quy tắc dừng sớm đã tiền đăng ký, và Seed 7 khớp lịch trình 12 epochs nhưng tệp ủy quyền chỉ được commit lên Git sau thời điểm khởi chạy; và nhóm Đợt chạy Không chuẩn (Noncanonical), gồm Seed 1337 chạy theo lịch trình cũ, dừng tại Epoch 12 và thiếu các tệp biên bản thực thi bắt buộc METRICS.json, RUN-MANIFEST.json, TEST-FIREWALL.json, cùng Seed 2024 chứa sai lệch mã băm commit và điều chỉnh lịch học giữa chừng.",
       "text_hash": "879ccdef6987",
@@ -3807,9 +3807,9 @@
       ]
     },
     {
-      "detected_id": "DET-P514-S00",
-      "location": "Chương (Đoạn P514, câu S0)",
-      "paragraph_index": 514,
+      "detected_id": "DET-P523-S00",
+      "location": "Chương (Đoạn P523, câu S0)",
+      "paragraph_index": 523,
       "sentence_index": 0,
       "text": "Bảng 3.3: Kết quả huấn luyện Stage A2 trên 5 hạt ngẫu nhiên thực nghiệm",
       "text_hash": "e629e01dfb57",
@@ -3821,9 +3821,9 @@
       ]
     },
     {
-      "detected_id": "DET-P515-S01",
-      "location": "Chương (Đoạn P515, câu S1)",
-      "paragraph_index": 515,
+      "detected_id": "DET-P524-S01",
+      "location": "Chương (Đoạn P524, câu S1)",
+      "paragraph_index": 524,
       "sentence_index": 1,
       "text": "Các đợt có sai lệch được giữ lại để báo cáo minh bạch và được tách biệt khi tổng hợp kết quả chuẩn.",
       "text_hash": "0a3c2244f487",
@@ -3835,9 +3835,9 @@
       ]
     },
     {
-      "detected_id": "DET-P518-S00",
-      "location": "Chương (Đoạn P518, câu S0)",
-      "paragraph_index": 518,
+      "detected_id": "DET-P527-S00",
+      "location": "Chương (Đoạn P527, câu S0)",
+      "paragraph_index": 527,
       "sentence_index": 0,
       "text": "Từ kết quả Bảng 3.3, toàn bộ 5 hạt giống thực nghiệm được bóc tách và đối soát nguồn gốc độc lập.",
       "text_hash": "77052fc1af81",
@@ -3850,9 +3850,9 @@
       ]
     },
     {
-      "detected_id": "DET-P518-S04",
-      "location": "Chương (Đoạn P518, câu S4)",
-      "paragraph_index": 518,
+      "detected_id": "DET-P527-S04",
+      "location": "Chương (Đoạn P527, câu S4)",
+      "paragraph_index": 527,
       "sentence_index": 4,
       "text": "Việc công khai các sai lệch nguồn gốc và duy trì trạng thái niêm phong của tập kiểm thử giúp tăng tính minh bạch và khả năng kiểm toán của quy trình thực nghiệm.",
       "text_hash": "a24468b71caa",
@@ -3864,9 +3864,9 @@
       ]
     },
     {
-      "detected_id": "DET-P520-S00",
-      "location": "Chương (Đoạn P520, câu S0)",
-      "paragraph_index": 520,
+      "detected_id": "DET-P529-S00",
+      "location": "Chương (Đoạn P529, câu S0)",
+      "paragraph_index": 529,
       "sentence_index": 0,
       "text": "Làm rõ vị trí đóng góp học thuật của khung biểu diễn đề xuất, Bảng 3.5 tiến hành đối sánh định tính về đặc tính phương pháp luận giữa mô hình của luận văn và các phương pháp trích xuất đặc trưng log tiêu biểu được công bố trên các diễn đàn bảo mật quốc tế.",
       "text_hash": "826e4b665a69",
@@ -3878,9 +3878,9 @@
       ]
     },
     {
-      "detected_id": "DET-P521-S00",
-      "location": "Chương (Đoạn P521, câu S0)",
-      "paragraph_index": 521,
+      "detected_id": "DET-P530-S00",
+      "location": "Chương (Đoạn P530, câu S0)",
+      "paragraph_index": 530,
       "sentence_index": 0,
       "text": "Bảng 3.5: Đối sánh đặc tính phương pháp luận giữa khung biểu diễn đề xuất và các phương pháp cơ sở",
       "text_hash": "481423b534dd",
@@ -3892,9 +3892,9 @@
       ]
     },
     {
-      "detected_id": "DET-P525-S00",
-      "location": "Chương (Đoạn P525, câu S0)",
-      "paragraph_index": 525,
+      "detected_id": "DET-P534-S00",
+      "location": "Chương (Đoạn P534, câu S0)",
+      "paragraph_index": 534,
       "sentence_index": 0,
       "text": "Kết quả thực nghiệm trong chiến dịch huấn luyện Stage A2 ghi nhận sự phân hóa rõ nét giữa các quỹ đạo hội tụ.",
       "text_hash": "6b6472d560ed",
@@ -3906,9 +3906,9 @@
       ]
     },
     {
-      "detected_id": "DET-P525-S01",
-      "location": "Chương (Đoạn P525, câu S1)",
-      "paragraph_index": 525,
+      "detected_id": "DET-P534-S01",
+      "location": "Chương (Đoạn P534, câu S1)",
+      "paragraph_index": 534,
       "sentence_index": 1,
       "text": "Trong khi Seed 7 và Seed 999 đạt được mức mất mát kiểm định thấp quanh 0,550–0,609 sau 12 epochs, thì Seed 42 đã kích hoạt cơ chế dừng sớm (Early Stopping) ngay tại Epoch 4 với giá trị mất mát kiểm định ghi nhận ở mức 6.081352 (do thỏa mãn điều kiện kiên nhẫn patience = 3/​3 epochs không cải thiện so với Epoch 1).",
       "text_hash": "95b546c1a2ee",
@@ -3920,9 +3920,9 @@
       ]
     },
     {
-      "detected_id": "DET-P527-S00",
-      "location": "Chương (Đoạn P527, câu S0)",
-      "paragraph_index": 527,
+      "detected_id": "DET-P536-S00",
+      "location": "Chương (Đoạn P536, câu S0)",
+      "paragraph_index": 536,
       "sentence_index": 0,
       "text": "Việc báo cáo trung thực kết quả của Seed 42 thể hiện sự tuân thủ nghiêm túc quy trình nghiên cứu khoa học: mọi quan sát thực tế đều được ghi nhận đầy đủ, không thực hiện hành vi loại bỏ kết quả bất lợi để làm đẹp số liệu.",
       "text_hash": "71eed19cf202",
@@ -3934,9 +3934,9 @@
       ]
     },
     {
-      "detected_id": "DET-P529-S00",
-      "location": "Chương (Đoạn P529, câu S0)",
-      "paragraph_index": 529,
+      "detected_id": "DET-P538-S00",
+      "location": "Chương (Đoạn P538, câu S0)",
+      "paragraph_index": 538,
       "sentence_index": 0,
       "text": "Đối chiếu kết quả tiền huấn luyện Stage A2 với năm giả thuyết khoa học xác lập tại Chương 2:",
       "text_hash": "4cfaae89055c",
@@ -3948,9 +3948,9 @@
       ]
     },
     {
-      "detected_id": "DET-P530-S00",
-      "location": "Chương (Đoạn P530, câu S0)",
-      "paragraph_index": 530,
+      "detected_id": "DET-P539-S00",
+      "location": "Chương (Đoạn P539, câu S0)",
+      "paragraph_index": 539,
       "sentence_index": 0,
       "text": "Một là, về Giả thuyết H1 (Parameter Semantic Fidelity): Trong Stage A2 trên tập HDFS, nhánh đồ thị tập trung học quan hệ thực thể; mất mát dự đoán cạnh () giảm từ ~0.59 xuống 0.1833, cung cấp bằng chứng bước đầu cho năng lực biểu diễn cấu trúc trước khi đánh giá mức độ bảo toàn tham số động ở các tác vụ hạ nguồn.",
       "text_hash": "c2d9665d1887",
@@ -3962,9 +3962,9 @@
       ]
     },
     {
-      "detected_id": "DET-P533-S00",
-      "location": "Chương (Đoạn P533, câu S0)",
-      "paragraph_index": 533,
+      "detected_id": "DET-P542-S00",
+      "location": "Chương (Đoạn P542, câu S0)",
+      "paragraph_index": 542,
       "sentence_index": 0,
       "text": "Bốn là, về Giả thuyết H4 (Bounded Operational Budget Feasibility): Kích thước lô hiệu dụng 1,024 sự kiện tiêu tốn dưới 550 MB bộ nhớ GPU, gợi ý tiềm năng bước đầu về dung lượng bộ nhớ.",
       "text_hash": "a31f5dacbe47",
@@ -3976,9 +3976,9 @@
       ]
     },
     {
-      "detected_id": "DET-P533-S01",
-      "location": "Chương (Đoạn P533, câu S1)",
-      "paragraph_index": 533,
+      "detected_id": "DET-P542-S01",
+      "location": "Chương (Đoạn P542, câu S1)",
+      "paragraph_index": 542,
       "sentence_index": 1,
       "text": "Tuy nhiên, cần thêm các phép đo thực nghiệm về độ trễ streaming và thông lượng thực tế trước khi kết luận về khả năng triển khai vận hành SOC.",
       "text_hash": "f8f337ab6d33",
@@ -3990,9 +3990,9 @@
       ]
     },
     {
-      "detected_id": "DET-P534-S00",
-      "location": "Chương (Đoạn P534, câu S0)",
-      "paragraph_index": 534,
+      "detected_id": "DET-P543-S00",
+      "location": "Chương (Đoạn P543, câu S0)",
+      "paragraph_index": 543,
       "sentence_index": 0,
       "text": "Năm là, về Giả thuyết H5 (Controlled Linkability & Utility–Privacy Frontier): Stage A2 áp dụng chính sách chuẩn hóa danh tính và mã giả danh theo Mục 2.2; các đánh giá tấn công suy luận thành viên và ranh giới Pareto giữa độ chính xác và quyền riêng tư được bảo lưu kiểm chứng ở mô hình hạ nguồn.",
       "text_hash": "496d25da90ba",
@@ -4004,9 +4004,9 @@
       ]
     },
     {
-      "detected_id": "DET-P538-S01",
-      "location": "Chương (Đoạn P538, câu S1)",
-      "paragraph_index": 538,
+      "detected_id": "DET-P547-S01",
+      "location": "Chương (Đoạn P547, câu S1)",
+      "paragraph_index": 547,
       "sentence_index": 1,
       "text": "Việc biểu diễn các thực thể hệ thống theo chuỗi tương tác thời gian liên tục mở ra khả năng thiết lập các cụm sự kiện cảnh báo đơn lẻ có liên đới phụ thuộc thực thi theo thời gian, hỗ trợ chuyên viên phân tích theo dõi ngữ cảnh sự cố theo đồ thị tương tác.",
       "text_hash": "083165a6b0bd",
@@ -4018,9 +4018,9 @@
       ]
     },
     {
-      "detected_id": "DET-P543-S01",
-      "location": "Chương (Đoạn P543, câu S1)",
-      "paragraph_index": 543,
+      "detected_id": "DET-P552-S01",
+      "location": "Chương (Đoạn P552, câu S1)",
+      "paragraph_index": 552,
       "sentence_index": 1,
       "text": "Hiện tượng dừng sớm ở Seed 42 gợi ý sự cần thiết của việc nghiên cứu sâu hơn về các cơ chế khởi tạo trọng số hoặc kỹ thuật khởi động (warmup) thích nghi nhằm cải thiện độ ổn định tối ưu hóa.",
       "text_hash": "c8cb2d48da05",
@@ -4032,9 +4032,9 @@
       ]
     },
     {
-      "detected_id": "DET-P544-S01",
-      "location": "Chương (Đoạn P544, câu S1)",
-      "paragraph_index": 544,
+      "detected_id": "DET-P553-S01",
+      "location": "Chương (Đoạn P553, câu S1)",
+      "paragraph_index": 553,
       "sentence_index": 1,
       "text": "Giai đoạn Stage A2 mới hoàn thành tiền huấn luyện tự giám sát trên tập Train và Validation; nhiệm vụ tiếp theo là tiến hành đánh giá năng lực phát hiện tấn công trên tập dữ liệu kiểm thử niêm phong khi có ủy quyền chính thức.",
       "text_hash": "c3d7fc71d689",
@@ -4046,9 +4046,9 @@
       ]
     },
     {
-      "detected_id": "DET-P548-S01",
-      "location": "Chương (Đoạn P548, câu S1)",
-      "paragraph_index": 548,
+      "detected_id": "DET-P557-S01",
+      "location": "Chương (Đoạn P557, câu S1)",
+      "paragraph_index": 557,
       "sentence_index": 1,
       "text": "Chuyên đề đề xuất khung kiến trúc biểu diễn đặc trưng, trong đó nhánh đồ thị sự kiện theo thời gian TemporalGraphViewEncoder tích hợp tế bào bộ nhớ GRU động và cơ chế chú ý thời gian đa đầu nhằm theo vết trạng thái biến đổi của thực thể.",
       "text_hash": "15d1f3527093",
@@ -4060,9 +4060,9 @@
       ]
     },
     {
-      "detected_id": "DET-P549-S01",
-      "location": "Chương (Đoạn P549, câu S1)",
-      "paragraph_index": 549,
+      "detected_id": "DET-P558-S01",
+      "location": "Chương (Đoạn P558, câu S1)",
+      "paragraph_index": 558,
       "sentence_index": 1,
       "text": "Dựa trên cấu hình 12 epochs hiện hành, quá trình kiểm toán độc lập đã phân loại minh bạch toàn bộ 5 hạt giống thực nghiệm.",
       "text_hash": "9db9666b3ca5",
@@ -4074,9 +4074,9 @@
       ]
     },
     {
-      "detected_id": "DET-P549-S02",
-      "location": "Chương (Đoạn P549, câu S2)",
-      "paragraph_index": 549,
+      "detected_id": "DET-P558-S02",
+      "location": "Chương (Đoạn P558, câu S2)",
+      "paragraph_index": 558,
       "sentence_index": 2,
       "text": "Nhóm quan sát lệch giao thức, gồm Seed 999 hoàn thành 12 epochs với mất mát kiểm định 0,609500 nhưng mang sai lệch về số bước khởi động so với văn bản ủy quyền tiền thi hành, Seed 7 đạt mất mát kiểm định tốt nhất 0,550259 nhưng văn bản ủy quyền commit sau khi khởi chạy, và Seed 42 dừng sớm tại Epoch 4, ghi nhận mức mất mát kiểm định trung bình là 2.413704. Cùng với các đợt chạy không chuẩn gồm Seed 1337 và Seed 2024, các kết quả cung cấp dữ liệu đối chiếu khách quan trong khi toàn bộ dữ liệu kiểm thử được duy trì niêm phong sau tường lửa mật mã với trạng thái test_opened = false.",
       "text_hash": "2b61271820f0",
@@ -4088,9 +4088,9 @@
       ]
     },
     {
-      "detected_id": "DET-P550-S00",
-      "location": "Chương (Đoạn P550, câu S0)",
-      "paragraph_index": 550,
+      "detected_id": "DET-P559-S00",
+      "location": "Chương (Đoạn P559, câu S0)",
+      "paragraph_index": 559,
       "sentence_index": 0,
       "text": "Các kết quả đạt được cung cấp cơ sở kỹ thuật ban đầu để phục vụ các giai đoạn nghiên cứu tiếp theo, hướng tới việc hoàn thiện mô hình biểu diễn đa góc nhìn toàn phần và thử nghiệm đánh giá phát hiện tấn công trên dữ liệu kiểm thử khi được ủy quyền.",
       "text_hash": "dc0d2a1220e1",
@@ -4102,8 +4102,8 @@
       ]
     },
     {
-      "detected_id": "DET-T02-R01",
       "location": "Bảng 2 (Hàng 1)",
+      "detected_id": "DET-T02-R01",
       "table_index": 2,
       "row_index": 1,
       "text": "PRESERVE (Bảo toàn) | Bảo tồn đầy đủ tín hiệu ngữ cảnh an ninh phân biệt | Ngữ nghĩa tham số động, trật tự thời gian và quan hệ phụ thuộc, tô-pô đồ thị, nhãn ATT&CK | Linear Probing, Mutual Information",
@@ -4116,8 +4116,8 @@
       ]
     },
     {
-      "detected_id": "DET-T02-R02",
       "location": "Bảng 2 (Hàng 2)",
+      "detected_id": "DET-T02-R02",
       "table_index": 2,
       "row_index": 2,
       "text": "INVARIANT (Bất biến) | Duy trì bất biến trước biến đổi hình thức và trôi dạt vô hại | Định dạng timestamp, PID ngẫu nhiên, hoán vị cú pháp vô hại | Invariance Loss, Data Augmentation",
@@ -4130,8 +4130,8 @@
       ]
     },
     {
-      "detected_id": "DET-T02-R03",
       "location": "Bảng 2 (Hàng 3)",
+      "detected_id": "DET-T02-R03",
       "table_index": 2,
       "row_index": 3,
       "text": "EXCLUDE (Triệt tiêu) | Loại bỏ rò rỉ phân vùng và biến số học đường tắt | Artifacts môi trường lab, hostname cố định, thông tin định danh nhạy cảm (PII) | Snooping Test, Feature-leakage / Re-identification Audit",
@@ -4144,8 +4144,8 @@
       ]
     },
     {
-      "detected_id": "DET-T03-R02",
       "location": "Bảng 3 (Hàng 2)",
+      "detected_id": "DET-T03-R02",
       "table_index": 3,
       "row_index": 2,
       "text": "Độ phức tạp thời gian | O(N): Tuyến tính theo số lượng sự kiện | O(N · L) đến O(N · L^2): Phụ thuộc độ dài cửa sổ L | Phụ thuộc |E|, số tầng và chiều ẩn; chi phí lưu trữ đồ thị phụ thuộc |V| + |E|",
@@ -4158,8 +4158,8 @@
       ]
     },
     {
-      "detected_id": "DET-T03-R05",
       "location": "Bảng 3 (Hàng 5)",
+      "detected_id": "DET-T03-R05",
       "table_index": 3,
       "row_index": 5,
       "text": "Khả năng triển khai thực tế | Thuận lợi nhờ tính toán nhanh và tài nguyên thấp | Đòi hỏi tài nguyên GPU và thời gian suy luận lớn | Thách thức do đồ thị tăng trưởng và bùng nổ phụ thuộc",
@@ -4172,8 +4172,8 @@
       ]
     },
     {
-      "detected_id": "DET-T04-R00",
       "location": "Bảng 4 (Hàng 0)",
+      "detected_id": "DET-T04-R00",
       "table_index": 4,
       "row_index": 0,
       "text": "Trường | Vai trò ngữ nghĩa | Chính sách giữ/chuẩn hóa | Xử lý quyền riêng tư và An toàn",
@@ -4186,8 +4186,8 @@
       ]
     },
     {
-      "detected_id": "DET-T04-R03",
       "location": "Bảng 4 (Hàng 3)",
+      "detected_id": "DET-T04-R03",
       "table_index": 4,
       "row_index": 3,
       "text": " | Thực thể chủ thể (Actor) | PRIVACY-PROTECT → | Direct identifier; bắt buộc pseudonymize",
@@ -4200,8 +4200,8 @@
       ]
     },
     {
-      "detected_id": "DET-T04-R04",
       "location": "Bảng 4 (Hàng 4)",
+      "detected_id": "DET-T04-R04",
       "table_index": 4,
       "row_index": 4,
       "text": " | Thực thể đối tượng | PRIVACY-PROTECT → | Direct/quasi-ID; bắt buộc pseudonymize",
@@ -4214,8 +4214,8 @@
       ]
     },
     {
-      "detected_id": "DET-T04-R07",
       "location": "Bảng 4 (Hàng 7)",
+      "detected_id": "DET-T04-R07",
       "table_index": 4,
       "row_index": 7,
       "text": "(KNOWN EXCLUDE) | Trường xác định không mang ngữ nghĩa an ninh (PID, timestamp cục bộ, sequence kernel) | DROP trước Extractor | Loại bỏ hoàn toàn trước khi đưa vào",
@@ -4228,8 +4228,8 @@
       ]
     },
     {
-      "detected_id": "DET-T05-R00",
       "location": "Bảng 5 (Hàng 0)",
+      "detected_id": "DET-T05-R00",
       "table_index": 5,
       "row_index": 0,
       "text": "Thành phần trích xuất | Góc nhìn biểu diễn | Cấu trúc đầu vào | Mục tiêu biểu diễn | Độ phức tạp tính toán",
@@ -4242,8 +4242,8 @@
       ]
     },
     {
-      "detected_id": "DET-T06-R00",
       "location": "Bảng 6 (Hàng 0)",
+      "detected_id": "DET-T06-R00",
       "table_index": 6,
       "row_index": 0,
       "text": "Tiêu chí phương pháp luận | InfoNCE / Contrastive | Barlow Twins | VICReg (Ứng viên đề xuất)",
@@ -4256,8 +4256,8 @@
       ]
     },
     {
-      "detected_id": "DET-T06-R01",
       "location": "Bảng 6 (Hàng 1)",
+      "detected_id": "DET-T06-R01",
       "table_index": 6,
       "row_index": 1,
       "text": "Cơ chế điều hòa chống sụp đổ | Sử dụng phân bố mẫu âm (Negative pairs) để đẩy xa các phiên khác nhau  [38],  [37] | Ép ma trận tương quan chéo giữa hai view về ma trận đơn vị I  [11] | Phân tách độc lập: Duy trì phương sai từng chiều + Phạt hiệp phương sai  [10]",
@@ -4277,8 +4277,8 @@
       ]
     },
     {
-      "detected_id": "DET-T06-R04",
       "location": "Bảng 6 (Hàng 4)",
+      "detected_id": "DET-T06-R04",
       "table_index": 6,
       "row_index": 4,
       "text": "Đặc tính phụ thuộc kích thước lô | Hiệu năng thường hưởng lợi khi kích thước lô đủ lớn để bao quát phân bố mẫu âm | Độ ổn định phụ thuộc vào việc ước lượng ma trận tương quan chéo trên batch | Ước lượng phương sai và hiệp phương sai trực tiếp trên phân bố lô huấn luyện",
@@ -4291,8 +4291,8 @@
       ]
     },
     {
-      "detected_id": "DET-T08-R04",
       "location": "Bảng 8 (Hàng 4)",
+      "detected_id": "DET-T08-R04",
       "table_index": 8,
       "row_index": 4,
       "text": "Bộ nhớ hệ thống | RAM 15.71 GB | Ghi nhận từ môi trường lock",
@@ -4305,8 +4305,8 @@
       ]
     },
     {
-      "detected_id": "DET-T09-R03",
       "location": "Bảng 9 (Hàng 3)",
+      "detected_id": "DET-T09-R03",
       "table_index": 9,
       "row_index": 3,
       "text": "Sealed Test Split | Niêm phong cách ly | Niêm phong cách ly | Niêm phong cách ly | e07999decc7164e639a7...",
@@ -4319,8 +4319,8 @@
       ]
     },
     {
-      "detected_id": "DET-T12-R01",
       "location": "Bảng 12 (Hàng 1)",
+      "detected_id": "DET-T12-R01",
       "table_index": 12,
       "row_index": 1,
       "text": "DeepLog (Du et al., CCS 2017) [14] | Mô hình chuỗi LSTM trên mã định danh mẫu (Template ID) | Mô hình hóa chuỗi log key và vector giá trị tham số qua các LSTM tách rời; thời gian chỉ phản ánh qua thứ tự bước rời rạc | Nhận xét trong phạm vi đối sánh của nghiên cứu: Thiếu cấu trúc liên kết đồ thị giữa các thực thể hệ thống; nhạy cảm với biến động log ngoài từ điển",
@@ -4335,8 +4335,8 @@
       ]
     },
     {
-      "detected_id": "DET-T12-R02",
       "location": "Bảng 12 (Hàng 2)",
+      "detected_id": "DET-T12-R02",
       "table_index": 12,
       "row_index": 2,
       "text": "LogBERT (Guo et al., IJCNN 2021) [20] | Mô hình ngôn ngữ tự chú ý Transformer 2 chiều | Mô hình hóa chuỗi mã mẫu; không bảo toàn ngữ nghĩa số học của tham số dòng lệnh | Nhận xét trong phạm vi đối sánh của nghiên cứu: Không khai thác cấu trúc quan hệ nhân quả đồ thị; chi phí tính toán bậc hai theo độ dài chuỗi",
@@ -4351,8 +4351,8 @@
       ]
     },
     {
-      "detected_id": "DET-T12-R03",
       "location": "Bảng 12 (Hàng 3)",
+      "detected_id": "DET-T12-R03",
       "table_index": 12,
       "row_index": 3,
       "text": "UNICORN (Han et al., NDSS 2020) [9] | Đồ thị nguồn gốc tĩnh với cấu trúc phác họa đồ thị động (Graph Sketching) | Thời gian chia theo khoảng (Histogram/Bucketing); không hỗ trợ tham số biến đổi liên tục | Nhận xét trong phạm vi đối sánh của nghiên cứu: Dễ gặp hiện tượng bùng nổ phụ thuộc (Dependency Explosion) trong các tiến trình dài ngày",
@@ -4367,8 +4367,8 @@
       ]
     },
     {
-      "detected_id": "DET-T12-R04",
       "location": "Bảng 12 (Hàng 4)",
+      "detected_id": "DET-T12-R04",
       "table_index": 12,
       "row_index": 4,
       "text": "KAIROS (Cheng et al., IEEE S&P 2024) [24] | Mạng đồ thị nguồn gốc theo thời gian (Temporal Provenance Graph) | Sử dụng khoảng thời gian rời rạc giữa các sự kiện kiểm toán kernel | Nhận xét trong phạm vi đối sánh của nghiên cứu: Tập trung vào log kiểm toán hệ điều hành cấp thấp; chi phí bộ nhớ lớn khi theo vết toàn bộ dòng dữ liệu",
@@ -4383,8 +4383,8 @@
       ]
     },
     {
-      "detected_id": "DET-T12-R05",
       "location": "Bảng 12 (Hàng 5)",
+      "detected_id": "DET-T12-R05",
       "table_index": 12,
       "row_index": 5,
       "text": "MAGIC (Jia et al., USENIX Security 2024) [26] | Mô hình tự mã hóa đồ thị có mặt nạ (Masked Graph Autoencoder) | Phân chia cửa sổ sự kiện tĩnh; không mô hình hóa luồng thời gian liên tục cục bộ | Nhận xét trong phạm vi đối sánh của nghiên cứu: Quy trình xử lý đồ thị offline, khó triển khai cho các luồng log streaming tốc độ cao",
@@ -4399,8 +4399,8 @@
       ]
     },
     {
-      "detected_id": "DET-T12-R06",
       "location": "Bảng 12 (Hàng 6)",
+      "detected_id": "DET-T12-R06",
       "table_index": 12,
       "row_index": 6,
       "text": "Khung nghiên cứu đề xuất (Temporal Graph View) | TemporalGraphViewEncoder kết hợp bộ nhớ GRU động và Temporal Attention | Hàm nhúng thời gian liên tục phi(Delta t) bảo toàn trọn vẹn khoảng trễ thực tế | Mô hình hóa quan hệ đồ thị dị thể (4 loại nút, 8 loại quan hệ) kết hợp tự giám sát đa nhiệm",
