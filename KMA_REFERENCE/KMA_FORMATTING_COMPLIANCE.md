@@ -1,5 +1,15 @@
 # KMA FORMATTING COMPLIANCE AUDIT
 
+## Authoritative Reference Sources & Provenance
+
+Các quy định đối soát hình thức trình bày được đối chiếu trực tiếp từ các văn bản thẩm quyền trong thư mục `KMA_REFERENCE`:
+1. **`KMA_AT17_2024_Ke_hoach_bao_ve_DATN.pdf`** (`OFFICIAL_KMA`): Văn bản chính thức ban hành Kế hoạch tổ chức bảo vệ ĐATN khóa AT17 (năm 2024), xác nhận Quyết định số 268/QĐ-HVM là quy chuẩn hình thức áp dụng. Nguồn: Cổng TTĐT KMA (`idFile=4347`).
+2. **`QD268_HVM_2024_extracted_readable.txt`** (`DERIVED_TEXT`): Văn bản trích xuất sạch sẽ toàn bộ Phụ lục I ban hành kèm Quyết định số 268/QĐ-HVM ngày 10/04/2024 của Giám đốc Học viện Kỹ thuật Mật mã.
+3. **`page_1.jpg`** (`DERIVED_TEXT` / `THIRD_PARTY_MIRROR`): Bản quét quang học trang 1 Phụ lục I QĐ 268/QĐ-HVM (Visual Ground Truth).
+4. **`QD268_HVM_2024_Scribd_snapshot.html`** (`THIRD_PARTY_MIRROR`): Bản lưu trữ trực quan định dạng HTML từ Scribd.
+
+---
+
 ## Traceability & Compliance Matrix
 
 | Requirement | Source locator | Master before | Master after | Status |
