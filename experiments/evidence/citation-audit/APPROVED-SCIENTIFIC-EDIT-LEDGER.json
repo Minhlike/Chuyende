@@ -381,13 +381,13 @@
     ],
     "new_lines": [
       "Hình 1.3: Khung phân định ranh giới ba tầng phương pháp luận và vị trí trọng tâm của không gian vector biểu diễn z , nguồn tác giả đề xuất",
-      "Một là, Tầng 1 phụ trách trích xuất đặc trưng cơ sở: Đảm nhiệm tiền xử lý dữ liệu thô, phân tích cú pháp sơ bộ, chuẩn hóa kiểu dữ liệu trường và làm sạch dữ liệu ban đầu. Tầng này không gánh vác nhiệm vụ học biểu diễn ngữ cảnh an ninh sâu.",
-      "Hai là, Tầng 2 học không gian biểu diễn tự giám sát: Thiết lập kiến trúc bộ mã hóa cùng các đầu chiếu phụ trợ để chuyển đổi chuỗi sự kiện và đồ thị nguồn gốc sang không gian vector tiềm ẩn. Các hàm mất mát tự giám sát như dự đoán tham số bị che, dự đoán sự kiện tiếp theo, dự đoán quan hệ đồ thị và căn chỉnh thời gian đóng vai trò là các mục tiêu tối ưu hóa hình thức nhằm định hướng không gian vector z lưu giữ tín hiệu phục vụ các ràng buộc PRESERVE và INVARIANT; các hàm mục tiêu này là công cụ tối ưu hóa hình thức chứ không cấu thành bằng chứng trực tiếp chứng minh mô hình đã tự động hiểu bản chất an ninh hay nhân quả, và chất lượng biểu diễn bắt buộc phải được đánh giá qua các tác vụ hạ nguồn [10].",
-      "Ba là, Tầng 3 thực hiện đánh giá phát hiện hạ nguồn: Đánh giá chất lượng của vector biểu diễn z thông qua giao thức đóng băng bộ mã hóa và huấn luyện bộ phân loại tuyến tính (Frozen Linear Probing theo chuẩn mực SimCLR [37]):",
+      "Tầng 1 phụ trách trích xuất đặc trưng cơ sở: Đảm nhiệm tiền xử lý dữ liệu thô, phân tích cú pháp sơ bộ, chuẩn hóa kiểu dữ liệu trường và làm sạch dữ liệu ban đầu. Tầng này không gánh vác nhiệm vụ học biểu diễn ngữ cảnh an ninh sâu.",
+      "Tầng 2 học không gian biểu diễn tự giám sát: Thiết lập kiến trúc bộ mã hóa cùng các đầu chiếu phụ trợ để chuyển đổi chuỗi sự kiện và đồ thị nguồn gốc sang không gian vector tiềm ẩn. Các hàm mất mát tự giám sát như dự đoán tham số bị che, dự đoán sự kiện tiếp theo, dự đoán quan hệ đồ thị và căn chỉnh thời gian đóng vai trò là các mục tiêu tối ưu hóa hình thức nhằm định hướng không gian vector z lưu giữ tín hiệu phục vụ các ràng buộc PRESERVE và INVARIANT; các hàm mục tiêu này là công cụ tối ưu hóa hình thức chứ không cấu thành bằng chứng trực tiếp chứng minh mô hình đã tự động hiểu bản chất an ninh hay nhân quả, và chất lượng biểu diễn bắt buộc phải được đánh giá qua các tác vụ hạ nguồn [10].",
+      "Tầng 3 thực hiện đánh giá phát hiện hạ nguồn: Đánh giá chất lượng của vector biểu diễn z thông qua giao thức đóng băng bộ mã hóa và huấn luyện bộ phân loại tuyến tính (Frozen Linear Probing theo chuẩn mực SimCLR [37]):",
       "Trong đó tham số của bộ mã hóa Tầng 2 được giữ cố định hoàn toàn trong suốt quá trình đánh giá ở Tầng 3, chỉ có các tham số của bộ phân loại tuyến tính được huấn luyện để đo lường khả năng truy xuất tuyến tính của thông tin an ninh trong vector z. Giao thức đánh giá tuyến tính đóng băng (frozen linear probe) giữ bộ mã hóa cố định và chỉ huấn luyện một ánh xạ tuyến tính trên vector z, vì vậy phép đo cho biết lượng thông tin phục vụ tác vụ hạ nguồn có thể được truy xuất bằng một bộ phân loại tuyến tính mà không cho phép detector học lại biểu diễn, dù phương pháp này không đo lường toàn bộ thông tin phi tuyến có thể tồn tại trong z [8], [37]."
     ],
     "old_text_sha256": "c4372235ea3ad6580b0369c3aad120fce6ec0b9c905f39defa738b8cad32fa41",
-    "new_text_sha256": "8662507dcf1124e9882fce6a1ca53471589e67647757c9e09d8a6bc6c399de0e",
+    "new_text_sha256": "1e540a00fcd29e65dd7aa05f52c0625407637a1cad4719ba8d557a82de2fe93f",
     "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
     "associated_claims": [
       "PROSE-RESTRAINT"
@@ -401,9 +401,9 @@
     ],
     "new_text": [
       "Hình 1.3: Khung phân định ranh giới ba tầng phương pháp luận và vị trí trọng tâm của không gian vector biểu diễn z , nguồn tác giả đề xuất",
-      "Một là, Tầng 1 phụ trách trích xuất đặc trưng cơ sở: Đảm nhiệm tiền xử lý dữ liệu thô, phân tích cú pháp sơ bộ, chuẩn hóa kiểu dữ liệu trường và làm sạch dữ liệu ban đầu. Tầng này không gánh vác nhiệm vụ học biểu diễn ngữ cảnh an ninh sâu.",
-      "Hai là, Tầng 2 học không gian biểu diễn tự giám sát: Thiết lập kiến trúc bộ mã hóa cùng các đầu chiếu phụ trợ để chuyển đổi chuỗi sự kiện và đồ thị nguồn gốc sang không gian vector tiềm ẩn. Các hàm mất mát tự giám sát như dự đoán tham số bị che, dự đoán sự kiện tiếp theo, dự đoán quan hệ đồ thị và căn chỉnh thời gian đóng vai trò là các mục tiêu tối ưu hóa hình thức nhằm định hướng không gian vector z lưu giữ tín hiệu phục vụ các ràng buộc PRESERVE và INVARIANT; các hàm mục tiêu này là công cụ tối ưu hóa hình thức chứ không cấu thành bằng chứng trực tiếp chứng minh mô hình đã tự động hiểu bản chất an ninh hay nhân quả, và chất lượng biểu diễn bắt buộc phải được đánh giá qua các tác vụ hạ nguồn [10].",
-      "Ba là, Tầng 3 thực hiện đánh giá phát hiện hạ nguồn: Đánh giá chất lượng của vector biểu diễn z thông qua giao thức đóng băng bộ mã hóa và huấn luyện bộ phân loại tuyến tính (Frozen Linear Probing theo chuẩn mực SimCLR [37]):",
+      "Tầng 1 phụ trách trích xuất đặc trưng cơ sở: Đảm nhiệm tiền xử lý dữ liệu thô, phân tích cú pháp sơ bộ, chuẩn hóa kiểu dữ liệu trường và làm sạch dữ liệu ban đầu. Tầng này không gánh vác nhiệm vụ học biểu diễn ngữ cảnh an ninh sâu.",
+      "Tầng 2 học không gian biểu diễn tự giám sát: Thiết lập kiến trúc bộ mã hóa cùng các đầu chiếu phụ trợ để chuyển đổi chuỗi sự kiện và đồ thị nguồn gốc sang không gian vector tiềm ẩn. Các hàm mất mát tự giám sát như dự đoán tham số bị che, dự đoán sự kiện tiếp theo, dự đoán quan hệ đồ thị và căn chỉnh thời gian đóng vai trò là các mục tiêu tối ưu hóa hình thức nhằm định hướng không gian vector z lưu giữ tín hiệu phục vụ các ràng buộc PRESERVE và INVARIANT; các hàm mục tiêu này là công cụ tối ưu hóa hình thức chứ không cấu thành bằng chứng trực tiếp chứng minh mô hình đã tự động hiểu bản chất an ninh hay nhân quả, và chất lượng biểu diễn bắt buộc phải được đánh giá qua các tác vụ hạ nguồn [10].",
+      "Tầng 3 thực hiện đánh giá phát hiện hạ nguồn: Đánh giá chất lượng của vector biểu diễn z thông qua giao thức đóng băng bộ mã hóa và huấn luyện bộ phân loại tuyến tính (Frozen Linear Probing theo chuẩn mực SimCLR [37]):",
       "Trong đó tham số của bộ mã hóa Tầng 2 được giữ cố định hoàn toàn trong suốt quá trình đánh giá ở Tầng 3, chỉ có các tham số của bộ phân loại tuyến tính được huấn luyện để đo lường khả năng truy xuất tuyến tính của thông tin an ninh trong vector z. Giao thức đánh giá tuyến tính đóng băng (frozen linear probe) giữ bộ mã hóa cố định và chỉ huấn luyện một ánh xạ tuyến tính trên vector z, vì vậy phép đo cho biết lượng thông tin phục vụ tác vụ hạ nguồn có thể được truy xuất bằng một bộ phân loại tuyến tính mà không cho phép detector học lại biểu diễn, dù phương pháp này không đo lường toàn bộ thông tin phi tuyến có thể tồn tại trong z [8], [37]."
     ]
   },
@@ -428,12 +428,12 @@
       39
     ],
     "old_text_sha256": "99e649a421ccf75de5f79863d57b22919ea5508be6dd779e7551eb577927e66e",
-    "new_text_sha256": "1cbb602c907465b60d79f01bdcb00f8c05d2b0bdc8a306f07a2b7e80a979bd25",
+    "new_text_sha256": "20204a059defa6d41f40d14bc9f4d4393e66557a4c5172bef2c4505a335d1b1d",
     "old_text": [
       "Nhằm định vị chính xác các đóng góp kỹ thuật và cơ sở lý luận của chuyên đề, Mục 1.2 tiến hành khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log chủ đạo trong y văn hiện đại [6], [1], [5]: (1) Nhóm phương pháp thống kê và cú pháp dựa trên mẫu log (Statistical & Syntactic Parsing-Based); (2) Nhóm phương pháp biểu diễn ngữ nghĩa chuỗi thời gian (Semantic–Sequential & Transformer-Based); và (3) Nhóm phương pháp học biểu diễn đồ thị nguồn gốc (Provenance Graph Representation Learning). Mỗi nhóm phương pháp được mổ xẻ tường minh về cơ chế toán học, độ phức tạp thuật toán, ưu điểm cốt lõi và các rào cản nền tảng khi triển khai trong môi trường phát hiện tấn công thực tế."
     ],
     "new_text": [
-      "Phục vụ việc định vị chính xác các đóng góp kỹ thuật và cơ sở lý luận của chuyên đề, Mục 1.2 tiến hành khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log chủ đạo trong y văn hiện đại [6], [1], [5]: thứ nhất là nhóm phương pháp thống kê và cú pháp dựa trên mẫu log; thứ hai là nhóm phương pháp biểu diễn ngữ nghĩa chuỗi thời gian; và thứ ba là nhóm phương pháp học biểu diễn đồ thị nguồn gốc. Mỗi nhóm phương pháp được mổ xẻ tường minh về cơ chế toán học, độ phức tạp thuật toán, ưu điểm cốt lõi và các rào cản nền tảng khi triển khai trong môi trường phát hiện tấn công thực tế."
+      "Phục vụ việc định vị chính xác các đóng góp kỹ thuật và cơ sở lý luận của chuyên đề, Mục 1.2 tiến hành khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log chủ đạo trong y văn hiện đại, bao gồm: nhóm phương pháp thống kê và cú pháp dựa trên mẫu log [6]; nhóm phương pháp biểu diễn ngữ nghĩa chuỗi thời gian [1]; cùng nhóm phương pháp học biểu diễn đồ thị nguồn gốc [5]. Mỗi nhóm phương pháp được mổ xẻ tường minh về cơ chế toán học, độ phức tạp thuật toán, ưu điểm cốt lõi và các rào cản nền tảng khi triển khai trong môi trường phát hiện tấn công thực tế."
     ],
     "category": "CITATION_REPAIR_AND_NORMALIZATION",
     "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
@@ -446,7 +446,7 @@
     ],
     "verified": true,
     "new_lines": [
-      "Phục vụ việc định vị chính xác các đóng góp kỹ thuật và cơ sở lý luận của chuyên đề, Mục 1.2 tiến hành khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log chủ đạo trong y văn hiện đại [6], [1], [5]: thứ nhất là nhóm phương pháp thống kê và cú pháp dựa trên mẫu log; thứ hai là nhóm phương pháp biểu diễn ngữ nghĩa chuỗi thời gian; và thứ ba là nhóm phương pháp học biểu diễn đồ thị nguồn gốc. Mỗi nhóm phương pháp được mổ xẻ tường minh về cơ chế toán học, độ phức tạp thuật toán, ưu điểm cốt lõi và các rào cản nền tảng khi triển khai trong môi trường phát hiện tấn công thực tế."
+      "Phục vụ việc định vị chính xác các đóng góp kỹ thuật và cơ sở lý luận của chuyên đề, Mục 1.2 tiến hành khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log chủ đạo trong y văn hiện đại, bao gồm: nhóm phương pháp thống kê và cú pháp dựa trên mẫu log [6]; nhóm phương pháp biểu diễn ngữ nghĩa chuỗi thời gian [1]; cùng nhóm phương pháp học biểu diễn đồ thị nguồn gốc [5]. Mỗi nhóm phương pháp được mổ xẻ tường minh về cơ chế toán học, độ phức tạp thuật toán, ưu điểm cốt lõi và các rào cản nền tảng khi triển khai trong môi trường phát hiện tấn công thực tế."
     ],
     "curr_indices": [
       38,

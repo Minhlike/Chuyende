@@ -483,8 +483,8 @@
     {
       "claim_id": "CLM-024",
       "parent_detected_id": "DET-P144-S00",
-      "parent_text_hash_expected": "9d416dc60183",
-      "parent_text_hash_observed": "9d416dc60183",
+      "parent_text_hash_expected": "0ef9bea03ed6",
+      "parent_text_hash_observed": "0ef9bea03ed6",
       "claim_class": "LITERATURE_DIRECT",
       "factuality_class": "EXTERNAL_TECHNICAL_FACT",
       "evidence_class": "PRIMARY_PAPER",
@@ -520,8 +520,8 @@
     {
       "claim_id": "CLM-026",
       "parent_detected_id": "DET-P148-S00",
-      "parent_text_hash_expected": "335c5b056171",
-      "parent_text_hash_observed": "335c5b056171",
+      "parent_text_hash_expected": "6f41d2f2dc41",
+      "parent_text_hash_observed": "6f41d2f2dc41",
       "claim_class": "AUTHOR_SYNTHESIS",
       "factuality_class": "AUTHOR_TAXONOMY",
       "evidence_class": "NONE",
@@ -4751,8 +4751,8 @@
     {
       "claim_id": "CLM-SEC-P134-S00",
       "parent_detected_id": "DET-P143-S00",
-      "parent_text_hash_expected": "59fb93b44d53",
-      "parent_text_hash_observed": "59fb93b44d53",
+      "parent_text_hash_expected": "ddf74ac54891",
+      "parent_text_hash_observed": "ddf74ac54891",
       "claim_class": "AUTHOR_PROPOSAL",
       "factuality_class": "AUTHOR_PROPOSAL",
       "evidence_class": "NONE",

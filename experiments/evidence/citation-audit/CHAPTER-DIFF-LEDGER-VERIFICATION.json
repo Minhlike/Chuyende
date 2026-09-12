@@ -8,7 +8,7 @@
     "chapter_2_sha256": "e91bbc47de218d037d5dec3192b6ba59fda4e3c7423e51c34aea898d3db25a01"
   },
   "observed_current_hashes": {
-    "chapter_1_sha256": "2d4ba872818e9031137bdf492ee18435fd86ece263e8fc44b4ccc150164f0eae",
+    "chapter_1_sha256": "2d4e6dd94c13765c5d3a45c98a0771b0b8cc6937f82b3ac6e18e32ecf9480539",
     "chapter_2_sha256": "e041b390e9ae66bf75c8c702236fea1f018601ac8b4aa1f7e02230e45bda45c8"
   },
   "diff_statistics": {
@@ -22,6 +22,6 @@
     "non_bijective_ledger_matches": 0,
     "self_attested_fields_used": 0
   },
-  "current_docx_sha256": "721202fa8204f3c5d47f54bb7e506a86a0b2bbd4dc7fd3c171ae250e7dd504ae",
-  "current_docx_size": 2059383
+  "current_docx_sha256": "e220203b5599bdcafdbb68a3393da67b836956f8f38548c591d9a29874ad2009",
+  "current_docx_size": 2057551
 }

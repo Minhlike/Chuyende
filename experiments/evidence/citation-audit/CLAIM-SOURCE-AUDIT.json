@@ -477,7 +477,7 @@
   {
     "claim_id": "CLM-024",
     "document_location": "Chương (Đoạn P144, câu S1)",
-    "claim_text": "Tầng 3 thực hiện phát hiện và phân loại hạ nguồn (Downstream Detection): Đánh giá chất lượng của vector biểu diễn z thông qua giao thức đóng băng encoder và huấn luyện đầu phân loại tuyến tính (Frozen Linear Probing theo chuẩn mực SimCLR [37]):",
+    "claim_text": "Tầng 3 thực hiện đánh giá phát hiện hạ nguồn: Đánh giá chất lượng của vector biểu diễn z thông qua giao thức đóng băng bộ mã hóa và huấn luyện bộ phân loại tuyến tính (Frozen Linear Probing theo chuẩn mực SimCLR  [37]):",
     "citation_numbers": [
       37
     ],
@@ -490,8 +490,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
-    "atomic_claim": "Tầng 3 thực hiện phát hiện và phân loại hạ nguồn (Downstream Detection): Đánh giá chất lượng của vector biểu diễn z thông qua giao thức đóng băng encoder và huấn luyện đầu phân loại tuyến tính (Frozen Linear Probing theo chuẩn mực SimCLR [37]):",
-    "parent_text_hash": "9d416dc60183"
+    "atomic_claim": "Tầng 3 thực hiện đánh giá phát hiện hạ nguồn: Đánh giá chất lượng của vector biểu diễn z thông qua giao thức đóng băng bộ mã hóa và huấn luyện bộ phân loại tuyến tính (Frozen Linear Probing theo chuẩn mực SimCLR  [37]):",
+    "parent_text_hash": "0ef9bea03ed6"
   },
   {
     "claim_id": "CLM-025",
@@ -516,7 +516,7 @@
   {
     "claim_id": "CLM-026",
     "document_location": "Chương (Đoạn P148, câu S0)",
-    "claim_text": "Phục vụ việc định vị chính xác các đóng góp kỹ thuật và cơ sở lý luận của chuyên đề, Mục 1.2 tiến hành khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log chủ đạo trong y văn hiện đại  [6],  [1],  [5]: (1) Nhóm phương pháp thống kê và cú pháp dựa trên mẫu log (Statistical & Syntactic Parsing-Based); (2) Nhóm phương pháp biểu diễn ngữ nghĩa chuỗi thời gian (Semantic–Sequential & Transformer-Based); và (3) Nhóm phương pháp học biểu diễn đồ thị nguồn gốc (Provenance Graph Representation Learning).",
+    "claim_text": "Phục vụ việc định vị chính xác các đóng góp kỹ thuật và cơ sở lý luận của chuyên đề, Mục 1.2 tiến hành khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log chủ đạo trong y văn hiện đại, bao gồm: nhóm phương pháp thống kê và cú pháp dựa trên mẫu log [6]; nhóm phương pháp biểu diễn ngữ nghĩa chuỗi thời gian [1]; cùng nhóm phương pháp học biểu diễn đồ thị nguồn gốc [5].",
     "citation_numbers": [
       1,
       5,
@@ -531,8 +531,8 @@
     "code_locator": "",
     "artifact_locator": "",
     "factuality_class": "AUTHOR_TAXONOMY",
-    "atomic_claim": "Phục vụ việc định vị chính xác các đóng góp kỹ thuật và cơ sở lý luận của chuyên đề, Mục 1.2 tiến hành khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log chủ đạo trong y văn hiện đại  [6],  [1],  [5]: (1) Nhóm phương pháp thống kê và cú pháp dựa trên mẫu log (Statistical & Syntactic Parsing-Based); (2) Nhóm phương pháp biểu diễn ngữ nghĩa chuỗi thời gian (Semantic–Sequential & Transformer-Based); và (3) Nhóm phương pháp học biểu diễn đồ thị nguồn gốc (Provenance Graph Representation Learning).",
-    "parent_text_hash": "335c5b056171"
+    "atomic_claim": "Phục vụ việc định vị chính xác các đóng góp kỹ thuật và cơ sở lý luận của chuyên đề, Mục 1.2 tiến hành khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log chủ đạo trong y văn hiện đại, bao gồm: nhóm phương pháp thống kê và cú pháp dựa trên mẫu log [6]; nhóm phương pháp biểu diễn ngữ nghĩa chuỗi thời gian [1]; cùng nhóm phương pháp học biểu diễn đồ thị nguồn gốc [5].",
+    "parent_text_hash": "6f41d2f2dc41"
   },
   {
     "claim_id": "CLM-027",

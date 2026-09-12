@@ -2,7 +2,7 @@
   "status": "PASS",
   "gate_title": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE",
   "detector_version": "3.0.0-forensic-truth-repair-round-3",
-  "document_sha256": "721202fa8204f3c5d47f54bb7e506a86a0b2bbd4dc7fd3c171ae250e7dd504ae",
+  "document_sha256": "e220203b5599bdcafdbb68a3393da67b836956f8f38548c591d9a29874ad2009",
   "body_boundaries": {
     "body_start": 86,
     "body_end": 560,
@@ -727,8 +727,8 @@
       "location": "Chương (Đoạn P143, câu S0)",
       "paragraph_index": 143,
       "sentence_index": 0,
-      "text": "Hai là, Tầng 2 học không gian biểu diễn tự giám sát: Thiết lập kiến trúc bộ mã hóa  cùng các đầu chiếu phụ trợ để chuyển đổi chuỗi sự kiện và đồ thị nguồn gốc sang không gian vector tiềm ẩn.",
-      "text_hash": "59fb93b44d53",
+      "text": "Tầng 2 học không gian biểu diễn tự giám sát: Thiết lập kiến trúc bộ mã hóa  cùng các đầu chiếu phụ trợ để chuyển đổi chuỗi sự kiện và đồ thị nguồn gốc sang không gian vector tiềm ẩn.",
+      "text_hash": "ddf74ac54891",
       "citations": [],
       "pass_a": false,
       "pass_b": true,
@@ -757,8 +757,8 @@
       "location": "Chương (Đoạn P144, câu S0)",
       "paragraph_index": 144,
       "sentence_index": 0,
-      "text": "Ba là, Tầng 3 thực hiện đánh giá phát hiện hạ nguồn: Đánh giá chất lượng của vector biểu diễn z thông qua giao thức đóng băng bộ mã hóa và huấn luyện bộ phân loại tuyến tính (Frozen Linear Probing theo chuẩn mực SimCLR  [37]):",
-      "text_hash": "9d416dc60183",
+      "text": "Tầng 3 thực hiện đánh giá phát hiện hạ nguồn: Đánh giá chất lượng của vector biểu diễn z thông qua giao thức đóng băng bộ mã hóa và huấn luyện bộ phân loại tuyến tính (Frozen Linear Probing theo chuẩn mực SimCLR  [37]):",
+      "text_hash": "0ef9bea03ed6",
       "citations": [
         37
       ],
@@ -790,8 +790,8 @@
       "location": "Chương (Đoạn P148, câu S0)",
       "paragraph_index": 148,
       "sentence_index": 0,
-      "text": "Phục vụ việc định vị chính xác các đóng góp kỹ thuật và cơ sở lý luận của chuyên đề, Mục 1.2 tiến hành khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log chủ đạo trong y văn hiện đại [6], [1], [5]: thứ nhất là nhóm phương pháp thống kê và cú pháp dựa trên mẫu log; thứ hai là nhóm phương pháp biểu diễn ngữ nghĩa chuỗi thời gian; và thứ ba là nhóm phương pháp học biểu diễn đồ thị nguồn gốc.",
-      "text_hash": "335c5b056171",
+      "text": "Phục vụ việc định vị chính xác các đóng góp kỹ thuật và cơ sở lý luận của chuyên đề, Mục 1.2 tiến hành khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log chủ đạo trong y văn hiện đại, bao gồm: nhóm phương pháp thống kê và cú pháp dựa trên mẫu log [6]; nhóm phương pháp biểu diễn ngữ nghĩa chuỗi thời gian [1]; cùng nhóm phương pháp học biểu diễn đồ thị nguồn gốc [5].",
+      "text_hash": "6f41d2f2dc41",
       "citations": [
         6,
         1,

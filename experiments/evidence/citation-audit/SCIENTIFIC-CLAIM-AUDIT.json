@@ -454,7 +454,7 @@
   {
     "claim_id": "CLM-024",
     "document_location": "Chương (Đoạn P144, câu S1)",
-    "atomic_claim": "Tầng 3 thực hiện phát hiện và phân loại hạ nguồn (Downstream Detection): Đánh giá chất lượng của vector biểu diễn z thông qua giao thức đóng băng encoder và huấn luyện đầu phân loại tuyến tính (Frozen Linear Probing theo chuẩn mực SimCLR [37]):",
+    "atomic_claim": "Tầng 3 thực hiện đánh giá phát hiện hạ nguồn: Đánh giá chất lượng của vector biểu diễn z thông qua giao thức đóng băng bộ mã hóa và huấn luyện bộ phân loại tuyến tính (Frozen Linear Probing theo chuẩn mực SimCLR  [37]):",
     "claim_class": "LITERATURE_DIRECT",
     "evidence_class": "PRIMARY_PAPER",
     "citation_numbers": [
@@ -466,7 +466,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P144-S00",
-    "parent_text_hash": "9d416dc60183",
+    "parent_text_hash": "0ef9bea03ed6",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
@@ -491,7 +491,7 @@
   {
     "claim_id": "CLM-026",
     "document_location": "Chương (Đoạn P148, câu S0)",
-    "atomic_claim": "Phục vụ việc định vị chính xác các đóng góp kỹ thuật và cơ sở lý luận của chuyên đề, Mục 1.2 tiến hành khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log chủ đạo trong y văn hiện đại  [6],  [1],  [5]: (1) Nhóm phương pháp thống kê và cú pháp dựa trên mẫu log (Statistical & Syntactic Parsing-Based); (2) Nhóm phương pháp biểu diễn ngữ nghĩa chuỗi thời gian (Semantic–Sequential & Transformer-Based); và (3) Nhóm phương pháp học biểu diễn đồ thị nguồn gốc (Provenance Graph Representation Learning).",
+    "atomic_claim": "Phục vụ việc định vị chính xác các đóng góp kỹ thuật và cơ sở lý luận của chuyên đề, Mục 1.2 tiến hành khảo cứu, phân loại và phân tích đa chiều ba nhóm phương pháp biểu diễn đặc trưng log chủ đạo trong y văn hiện đại, bao gồm: nhóm phương pháp thống kê và cú pháp dựa trên mẫu log [6]; nhóm phương pháp biểu diễn ngữ nghĩa chuỗi thời gian [1]; cùng nhóm phương pháp học biểu diễn đồ thị nguồn gốc [5].",
     "claim_class": "AUTHOR_SYNTHESIS",
     "evidence_class": "NONE",
     "citation_numbers": [
@@ -505,7 +505,7 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P148-S00",
-    "parent_text_hash": "335c5b056171",
+    "parent_text_hash": "6f41d2f2dc41",
     "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
@@ -4761,7 +4761,7 @@
     "claim_id": "CLM-SEC-P134-S00",
     "parent_detected_id": "DET-P143-S00",
     "document_location": "Chương (Đoạn P143, câu S0)",
-    "atomic_claim": "2. Tầng 2 tập trung học không gian biểu diễn, giữ vai trò trọng tâm của Chuyên đề: Thiết lập kiến trúc encoder  và các đầu chiếu/dự đoán phụ trợ (projection/prediction heads) để chuyển đổi cấu trúc chuỗi sự kiện và đồ thị nguồn gốc sang không gian vector tiềm ẩn.",
+    "atomic_claim": "Tầng 2 học không gian biểu diễn tự giám sát: Thiết lập kiến trúc bộ mã hóa  cùng các đầu chiếu phụ trợ để chuyển đổi chuỗi sự kiện và đồ thị nguồn gốc sang không gian vector tiềm ẩn.",
     "claim_class": "AUTHOR_PROPOSAL",
     "evidence_class": "NONE",
     "citation_numbers": [],
@@ -4771,7 +4771,7 @@
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "59fb93b44d53",
+    "parent_text_hash": "ddf74ac54891",
     "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
