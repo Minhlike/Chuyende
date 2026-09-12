@@ -8,20 +8,20 @@
     "chapter_2_sha256": "e91bbc47de218d037d5dec3192b6ba59fda4e3c7423e51c34aea898d3db25a01"
   },
   "observed_current_hashes": {
-    "chapter_1_sha256": "8a8b2751bc6738b59af1b2d1350a11f0af64a621a63deba7ccdfe02a78126420",
-    "chapter_2_sha256": "c1a4d327719a2a8486e8834ea5bd2752697ed9c74d765fccc71dcdce91a648e5"
+    "chapter_1_sha256": "de42fd86703c12f074232e9388fb291b581db354b6ee041b44d2452c028cd3ec",
+    "chapter_2_sha256": "f843c5e96d94141bed81f12d741b4206ae445f2738a48c3fd8535410e9c4a4c1"
   },
   "diff_statistics": {
-    "ch1_diff_hunks": 21,
+    "ch1_diff_hunks": 20,
     "ch2_diff_hunks": 57,
-    "total_diff_hunks": 78,
-    "ledger_entries_count": 78,
-    "matched_diff_hunks": 78,
+    "total_diff_hunks": 77,
+    "ledger_entries_count": 77,
+    "matched_diff_hunks": 77,
     "unmatched_diff_hunks": 0,
     "unused_ledger_entries": 0,
     "non_bijective_ledger_matches": 0,
     "self_attested_fields_used": 0
   },
-  "current_docx_sha256": "ccab7c03c9374c29413f7b33a70a70c89c74c1e23bbf9243f08ec4e010b8f2e1",
-  "current_docx_size": 2051057
+  "current_docx_sha256": "4ebea1aad15a774b8be3da0039ffc41dc15775300a7df67d0b8b7920f6f4aeb2",
+  "current_docx_size": 2051037
 }

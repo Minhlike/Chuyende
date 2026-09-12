@@ -82,6 +82,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      4,
+      7
     ]
   },
   {
@@ -180,6 +184,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      15,
+      17
     ]
   },
   {
@@ -211,20 +219,24 @@
     ],
     "new_lines": [
       "Hình 1.2: Mô hình Không gian Bằng chứng Hành vi Đa chiều MITRE ATT&CK và các đặc trưng phi tuyến tính trong tấn công APT , nguồn tác giả tổng hợp dựa trên MITRE ATT&CK [4] và Inam et al. [1]",
-      "Trong đó mỗi chiến thuật Tactic đại diện cho mục tiêu chiến thuật của kẻ tấn công , trả lời câu hỏi “Tại sao”, và mỗi kỹ thuật Technique đại diện cho phương thức thực thi cụ thể , trả lời câu hỏi “Làm thế nào”,; một chuỗi sự kiện hoặc cây tiến trình có thể đồng thời kích hoạt nhiều nhãn chiến thuật và kỹ thuật tại cùng một thời điểm quan sát [4].",
+      "Trong đó mỗi chiến thuật Tactic đại diện cho mục tiêu chiến thuật của kẻ tấn công, trả lời câu hỏi “Tại sao”, và mỗi kỹ thuật Technique đại diện cho phương thức thực thi cụ thể, trả lời câu hỏi “Làm thế nào”; một chuỗi sự kiện hoặc cây tiến trình có thể đồng thời kích hoạt nhiều nhãn chiến thuật và kỹ thuật tại cùng một thời điểm quan sát [4].",
       "Xét theo dữ liệu thực nghiệm, việc mô hình hóa hành vi tấn công đòi hỏi phải phân định chuẩn xác đặc tính gán nhãn và mức độ hạt của từng bộ dữ liệu chuẩn [3]: Một là, bộ dữ liệu DARPA Transparent Computing Engagement #3 (TC E3, diễn ra tháng 4/2018) [12] và Engagement #5 (TC E5) [43] cung cấp dữ liệu kiểm toán hệ thống mức hạt nhân chi tiết, trong đó các kịch bản tấn công và diễn tập red-team trong các engagement của chương trình được gán nhãn ở mức độ hạt tiến trình và luồng phụ thuộc; Hai là, bộ dữ liệu LANL Unified Host and Network Dataset [13] phản ánh môi trường mạng doanh nghiệp quy mô lớn với hàng tỷ sự kiện xác thực và luồng mạng, trong đó nhãn mặt đất thực nghiệm được xác lập từ tệp redteam.txt ghi nhận các sự kiện xác thực bị xâm nhập cụ thể của đội Red Team theo mốc thời gian và tài khoản/máy chủ xác định; Ba là, bộ dữ liệu HDFS của Xu et al. [18] và LogHub [42] được gán nhãn bất thường theo vết thực thi ở mức khối dữ liệu [18], phản ánh trạng thái bình thường hoặc bất thường của một phiên giao tác phân tán hoàn chỉnh; Bốn là, bộ dữ liệu BGL thuộc kho LogHub [42] đại diện cho nhật ký siêu máy tính với nhãn bất thường được xác lập ở mức dòng log đơn lẻ [42].",
       "Đặc biệt, sự xuất hiện của hoạt động quản trị viên hệ thống là một thách thức vận hành thực tế. Các kỹ sư quản trị thường xuyên sử dụng các công cụ hợp lệ của hệ điều hành như PowerShell, SSH, WMI tương tự như công cụ kẻ tấn công khai thác; hiện tượng này đòi hỏi mô hình học sâu không dừng lại ở các mẫu cú pháp bề mặt mà phải nắm bắt được tương quan phụ thuộc cấu trúc và ngữ cảnh thực thi.",
       "Các mức biểu diễn dữ liệu và Hợp đồng Biểu diễn",
       "Khắc phục hạn chế của các nghiên cứu tiền nhiệm vốn thường đồng nhất việc trích xuất đặc trưng với thuật toán phân loại cụ thể, chuyên đề tiếp cận bài toán dưới góc nhìn của học biểu diễn sâu (Deep Representation Learning). Trong học sâu, mô hình thiết lập một ánh xạ hàm tham số chuyển đổi dữ liệu nhật ký hệ thống đa góc nhìn sang không gian vector tiềm ẩn. Điểm cốt lõi về mặt nhận thức luận là vector biểu diễn z chỉ phản ánh những thuộc tính và quy luật thống kê mà hàm mục tiêu tối ưu hóa khuyến khích lưu giữ, chứ không phải một bản sao toàn tri của mọi trạng thái hệ điều hành; những thông tin không xuất hiện trong dữ liệu quan sát hoặc không được objective thúc đẩy có thể không tồn tại trong z. Do đó, để định hình không gian biểu diễn phục vụ mục tiêu an ninh, chuyên đề đề xuất một khung khái niệm chính thức mang tên Hợp đồng Biểu diễn , ký hiệu là , đóng vai trò như một bản đặc tả các ràng buộc toán học và ngữ nghĩa giữa dữ liệu thô và không gian vector tiềm ẩn z:"
     ],
     "old_text_sha256": "ed0211fc244ab5b51e91659c1d1a5e4acbc5a692743c4cb9dacb00c259cc231b",
-    "new_text_sha256": "3314fe46f7317e1d33bfc6091b7a518aa4ccfb3b0d1c656c86bf2b43be896d97",
+    "new_text_sha256": "7e2df6e66a65f4ec1e16ddd4edf494221769ba5bfdbd98b9cde016aac9fa7fb4",
     "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
     "associated_claims": [
       "PROSE-RESTRAINT"
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      18,
+      24
     ]
   },
   {
@@ -314,6 +326,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      29,
+      31
     ]
   },
   {
@@ -357,6 +373,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      32,
+      37
     ]
   },
   {
@@ -489,6 +509,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      43,
+      47
     ]
   },
   {
@@ -532,100 +556,50 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      48,
+      53
     ]
   },
   {
-    "hunk_id": "HUNK-CH1-016",
     "chapter": 1,
     "opcode": "replace",
     "base_indices": [
       54,
-      55
-    ],
-    "base_paragraph_indices": [
-      54,
-      55
-    ],
-    "current_indices": [
-      54,
-      55
-    ],
-    "current_paragraph_indices": [
-      54,
-      55
-    ],
-    "old_text_sha256": "74f4dd8b59fd1dbe80afed0d8127185ae25d4eea0822abbbbdc0057a2643e936",
-    "new_text_sha256": "708e5640d380cb4c293322e0cbe3f833e764e7fb9e62d98d70c30e16317f5e32",
-    "old_text": [
-      "Để khắc phục hạn chế về phạm vi quan sát của mô hình chuỗi, hướng tiếp cận dựa trên đồ thị nguồn gốc hệ thống (System Provenance Graph) mô hình hóa toàn bộ lịch sử thực thi và tương tác trong hệ điều hành dưới dạng một đồ thị có hướng, không đồng nhất và gán nhãn thời gian [1], [5]:"
-    ],
-    "new_text": [
-      "Để khắc phục hạn chế của mô hình chuỗi khi một sự kiện đơn lẻ không chứa đủ ngữ cảnh của cả chuỗi hành vi, hướng tiếp cận dựa trên đồ thị nguồn gốc hệ thống (System Provenance Graph) mô hình hóa toàn bộ lịch sử thực thi và tương tác trong hệ điều hành dưới dạng một đồ thị có hướng, không đồng nhất và gán nhãn thời gian [1], [5]:"
-    ],
-    "category": "CITATION_REPAIR_AND_NORMALIZATION",
-    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
-    "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
-    "claim_ids": [
-      "CIT-INTEGRITY"
-    ],
-    "associated_claims": [
-      "CIT-INTEGRITY"
-    ],
-    "verified": true,
-    "new_lines": [
-      "Để khắc phục hạn chế của mô hình chuỗi khi một sự kiện đơn lẻ không chứa đủ ngữ cảnh của cả chuỗi hành vi, hướng tiếp cận dựa trên đồ thị nguồn gốc hệ thống mô hình hóa toàn bộ lịch sử thực thi và tương tác trong hệ điều hành dưới dạng một đồ thị có hướng, không đồng nhất và gán nhãn thời gian [1], [5]:"
+      57
     ],
     "curr_indices": [
       54,
-      55
-    ]
-  },
-  {
-    "hunk_id": "HUNK-CH1-017",
-    "chapter": 1,
-    "opcode": "replace",
-    "base_indices": [
-      56,
-      57
+      58
     ],
     "base_paragraph_indices": [
-      56,
+      54,
       57
     ],
-    "current_indices": [
-      56,
-      58
-    ],
     "current_paragraph_indices": [
-      56,
+      54,
       58
     ],
-    "old_text_sha256": "faa557aca4e58f907d6626dbfeec8f6b900988c6c7f2469164c73261f788b122",
-    "new_text_sha256": "c27f1ead0b8affa1b2468412f5c7ee280f0a17bf2c99b0e94f9eec9caf10b230",
-    "old_text": [
+    "old_lines": [
+      "Để khắc phục hạn chế về phạm vi quan sát của mô hình chuỗi, hướng tiếp cận dựa trên đồ thị nguồn gốc hệ thống (System Provenance Graph) mô hình hóa toàn bộ lịch sử thực thi và tương tác trong hệ điều hành dưới dạng một đồ thị có hướng, không đồng nhất và gán nhãn thời gian [1], [5]:",
+      "Trong đó V là tập các đỉnh đại diện cho các thực thể hệ thống thuộc tập kiểu ; E là tập các cạnh có hướng mô tả các tương tác luồng phụ thuộc thuộc tập kiểu ; và τ gán nhãn mốc thời gian xảy ra tương tác [1].",
       "Các hệ thống phát hiện xâm nhập dựa trên đồ thị nguồn gốc (PIDS) tiêu biểu bao gồm [1], [5]: (1) UNICORN [9] (Han et al., NDSS 2020) xây dựng đồ thị nguồn gốc luồng thời gian thực, áp dụng thuật toán băm cây con Weisfeiler-Lehman (WL-subtree kernel) để chuyển đổi đồ thị động thành vector đặc trưng đếm histogram; (2) KAIROS [24] (Cheng et al., IEEE S&P 2024) tích hợp mạng nơ-ron đồ thị nhận biết thời gian (Time-Aware GNN), mã hóa đồng thời thông tin cấu trúc và khoảng cách thời gian giữa các cạnh để phát hiện kỹ thuật APT ẩn mình; (3) NODLINK [25] (Li et al., NDSS 2024) mô hình hóa bài toán phát hiện thành cây Steiner trực tuyến (Online Steiner Tree Problem) kết hợp cơ chế bộ nhớ đệm để khôi phục đồ thị con tấn công nhỏ gọn; (4) MAGIC [26] (Jia et al., USENIX Security 2024) khai thác kiến trúc tự mã hóa đồ thị che (Masked Graph Autoencoder) để học biểu diễn hành vi bình thường và phát hiện bất thường APT; (5) ORTHRUS [27]: (1) Hiện tượng bùng nổ phụ thuộc (Dependency Explosion): các tiến trình hệ thống chạy dài hạn (như daemon hệ thống hoặc trình duyệt) liên tục tương tác với nhiều tệp tin và socket, khiến đồ thị phát triển dày đặc và tạo ra nhiều liên kết phụ thuộc xa làm loãng tín hiệu bất thường [1], [28]; (2) Ranh giới giữa quan hệ phụ thuộc cấu trúc và tác động nhân quả (Dependency != Causal Effect): kết quả khảo sát thực nghiệm của Bilot et al. [29] và Guerra et al. (arXiv:2608.01454) [30] trên các bộ dữ liệu PIDS chuẩn chỉ ra rằng nhiều mô hình GNN phức tạp có xu hướng khai thác các đặc trưng đường tắt thống kê (như phân bố bậc của nút hoặc tính mới của đường dẫn tệp tin); khi kiểm soát chặt chẽ các yếu tố gây nhiễu, các bộ phân loại tuyến tính đơn giản có thể đạt hiệu năng cạnh tranh; (3) Hiện tượng nghẽn cổ chai thông tin (Over-smoothing và Over-squashing): khi tăng số lớp truyền tin, Over-smoothing làm vector biểu diễn của các nút dần trở nên tương đồng, trong khi Over-squashing [31] nén ép lượng thông tin cấu trúc tăng theo hàm mũ vào vector kích thước cố định, ảnh hưởng đến khả năng phân tách các hành vi tấn công tinh vi."
     ],
-    "new_text": [
-      "Các hệ thống phát hiện xâm nhập dựa trên đồ thị nguồn gốc (PIDS) tiêu biểu bao gồm [1], [5]: (1) UNICORN [9] (Han et al., NDSS 2020) xây dựng đồ thị nguồn gốc luồng thời gian thực, áp dụng thuật toán băm cây con Weisfeiler-Lehman (WL-subtree kernel) để chuyển đổi đồ thị động thành vector đặc trưng đếm histogram; (2) KAIROS [24] (Cheng et al., IEEE S&P 2024) tích hợp mạng nơ-ron đồ thị nhận biết thời gian (Time-Aware GNN encoder-decoder), mã hóa đồng thời thông tin cấu trúc và sự tiến triển thời gian của đồ thị nguồn gốc để chấm điểm bất thường và tái dựng dấu vết tấn công APT; (3) NODLINK [25] (Li et al., NDSS 2024) mô hình hóa bài toán phát hiện thành cây Steiner trực tuyến (Online Steiner Tree Problem) kết hợp cơ chế bộ nhớ đệm để khôi phục đồ thị con tấn công nhỏ gọn; (4) MAGIC [26] (Jia et al., USENIX Security 2024) khai thác kiến trúc tự mã hóa đồ thị che (Masked Graph Autoencoder) kết hợp cơ chế thích ứng mô hình (model adaptation) để học biểu diễn đa độ hạt và chống trôi khái niệm (concept drift); (5) ORTHRUS [27] (Jiang et al., USENIX Security 2025) tích hợp cơ chế học biểu diễn nguồn gốc chống chịu kỹ thuật lẩn tránh. Mặc dù đạt nhiều bước tiến, nhóm phương pháp đồ thị đối mặt với ba thách thức lý thuyết và thực tiễn cốt lõi: Một là, hiện tượng bùng nổ phụ thuộc (Dependency Explosion): các tiến trình hệ thống chạy dài hạn liên tục tương tác với nhiều tệp tin và socket, khiến đồ thị phát triển dày đặc và tạo ra nhiều liên kết phụ thuộc xa làm loãng tín hiệu bất thường [1], [28]; Hai là, ranh giới giữa quan hệ phụ thuộc cấu trúc và tác động nhân quả (Dependency != Causal Effect): kết quả khảo sát thực nghiệm của Bilot et al. [29] (USENIX Security 2025) và Guerra et al. [30] chỉ ra rằng nhiều mô hình GNN phức tạp có nguy cơ khai thác các đặc trưng đường tắt thống kê (như phân bố bậc của nút hoặc tính mới của đường dẫn); trong đó Bilot et al. [29] chứng minh một mô hình mạng nơ-ron đơn giản (simple neural network) đạt hiệu năng cạnh tranh vượt trội trên 5/7 tập dữ liệu DARPA, còn Guerra et al. [30] chỉ ra hiệu quả của các baseline danh sách cho phép / thống kê sự kiện, khẳng định một cạnh phụ thuộc trong đồ thị không đồng nghĩa với tác động nhân quả an ninh; Ba là, hai bệnh lý mạng nơ-ron đồ thị về mặt cấu trúc: khi tăng số lớp truyền tin (message passing), hiện tượng làm mịn quá mức (Over-smoothing), được Oono & Suzuki [44] chứng minh về mặt toán học tại ICLR 2020, khiến vector biểu diễn của các đỉnh mất dần năng lực biểu đạt theo hàm mũ và hội tụ về các vector khó phân biệt; trong khi đó hiện tượng nghẽn cổ chai thông tin (Over-squashing), được Alon & Yahav [31] phân tích tại ICLR 2021, xuất hiện khi lượng thông tin từ vùng lân cận mở rộng nhanh chóng phải truyền qua một số ít cạnh trung gian để nén vào một vector có kích thước cố định, khiến các tín hiệu bất thường quan trọng từ xa dễ bị hòa lẫn hoặc thất thoát. Hai hiện tượng này mang bản chất toán học độc lập và cần được xử lý bằng các cơ chế kiến trúc riêng biệt.",
-      "Tại Việt Nam, các nghiên cứu chuyên sâu của ThS. Nguyễn Thị Thu Thủy (Khoa An toàn thông tin, Học viện Kỹ thuật Mật mã) [32] cũng đã hệ thống hóa phương pháp luận ứng dụng Graph Learning và mạng nơ-ron đồ thị (Graph Neural Network, GNN) trên đồ thị nguồn gốc (provenance graph) để phát hiện các chiến dịch tấn công APT đa giai đoạn; đồng thời phân tích sâu sắc các thách thức về hiện tượng bùng nổ phụ thuộc, tính đa góc nhìn và yêu cầu bảo toàn tính nhân quả khi phân tích luồng sự kiện kiểm toán hệ thống."
-    ],
-    "category": "CITATION_REPAIR_AND_NORMALIZATION",
-    "reason": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
-    "scientific_justification": "Repair citation metadata, reference numbering, or decoupled citation sentence semantics.",
-    "claim_ids": [
-      "CIT-INTEGRITY"
-    ],
-    "associated_claims": [
-      "CIT-INTEGRITY"
-    ],
-    "verified": true,
     "new_lines": [
-      "Các hệ thống phát hiện xâm nhập dựa trên đồ thị nguồn gốc (PIDS) tiêu biểu bao gồm [1], [5]: Thứ nhất, UNICORN [9] (NDSS 2020) xây dựng đồ thị nguồn gốc luồng thời gian thực, áp dụng thuật toán băm cây con Weisfeiler-Lehman để chuyển đổi đồ thị động thành vector đặc trưng đếm histogram; Thứ hai, KAIROS [24] (IEEE S&P 2024) tích hợp mạng nơ-ron đồ thị nhận biết thời gian mã hóa đồng thời thông tin cấu trúc và sự tiến triển thời gian của đồ thị nguồn gốc để chấm điểm bất thường và tái dựng dấu vết tấn công APT; Thứ ba, NODLINK [25] (NDSS 2024) mô hình hóa bài toán phát hiện thành cây Steiner trực tuyến kết hợp cơ chế bộ nhớ đệm để khôi phục đồ thị con tấn công nhỏ gọn; Thứ tư, MAGIC [26] (USENIX Security 2024) khai thác kiến trúc tự mã hóa đồ thị che kết hợp cơ chế thích ứng mô hình để học biểu diễn đa độ hạt và chống trôi khái niệm trôi khái niệm; Thứ năm, ORTHRUS [27] (USENIX Security 2025) tích hợp cơ chế học biểu diễn nguồn gốc chống chịu kỹ thuật lẩn tránh. Mặc dù đạt nhiều bước tiến, nhóm phương pháp đồ thị đối mặt với ba thách thức lý thuyết và thực tiễn cốt lõi: Một là, hiện tượng bùng nổ phụ thuộc Dependency Explosion: các tiến trình hệ thống chạy dài hạn liên tục tương tác với nhiều tệp tin và socket, khiến đồ thị phát triển dày đặc và tạo ra nhiều liên kết phụ thuộc xa làm loãng tín hiệu bất thường [1], [28]; Hai là, ranh giới giữa quan hệ phụ thuộc cấu trúc và tác động nhân quả (Dependency != Causal Effect): kết quả khảo sát thực nghiệm của Bilot et al. [29] (USENIX Security 2025) và Guerra et al. [30] chỉ ra rằng nhiều mô hình GNN phức tạp có nguy cơ khai thác các đặc trưng đường tắt thống kê như phân bố bậc của nút hoặc tính mới của đường dẫn; trong đó Bilot et al. [29] chứng minh một mô hình mạng nơ-ron đơn giản đạt hiệu năng cạnh tranh vượt trội trên 5/7 tập dữ liệu DARPA, còn Guerra et al. [30] chỉ ra hiệu quả của các baseline danh sách cho phép / thống kê sự kiện, khẳng định một cạnh phụ thuộc trong đồ thị không đồng nghĩa với tác động nhân quả an ninh; Ba là, hai bệnh lý mạng nơ-ron đồ thị về mặt cấu trúc: khi tăng số lớp truyền tin hiện tượng làm mịn quá mức (Over-smoothing), được Oono & Suzuki [44] chứng minh về mặt toán học tại ICLR 2020, khiến vector biểu diễn của các đỉnh mất dần năng lực biểu đạt theo hàm mũ và hội tụ về các vector khó phân biệt; trong khi đó hiện tượng nghẽn cổ chai thông tin (Over-squashing), được Alon & Yahav [31] phân tích tại ICLR 2021, xuất hiện khi lượng thông tin từ vùng lân cận mở rộng nhanh chóng phải truyền qua một số ít cạnh trung gian để nén vào một vector có kích thước cố định, khiến các tín hiệu bất thường quan trọng từ xa dễ bị hòa lẫn hoặc thất thoát. Hai hiện tượng này mang bản chất toán học độc lập và cần được xử lý bằng các cơ chế kiến trúc riêng biệt.",
+      "Để khắc phục hạn chế của mô hình chuỗi khi một sự kiện đơn lẻ không chứa đủ ngữ cảnh của cả chuỗi hành vi, hướng tiếp cận dựa trên đồ thị nguồn gốc hệ thống mô hình hóa toàn bộ lịch sử thực thi và tương tác trong hệ điều hành dưới dạng một đồ thị có hướng, không đồng nhất và gán nhãn thời gian [1], [5]:",
+      "Trong đó V là tập các đỉnh đại diện cho các thực thể hệ thống thuộc tập kiểu ; E là tập các cạnh có hướng mô tả các tương tác luồng phụ thuộc nằm trong tập kiểu ; và τ gán nhãn mốc thời gian xảy ra tương tác [1].",
+      "Các hệ thống phát hiện xâm nhập dựa trên đồ thị nguồn gốc (PIDS) tiêu biểu bao gồm [1], [5]: Thứ nhất, UNICORN [9] (NDSS 2020) xây dựng đồ thị nguồn gốc luồng thời gian thực, áp dụng thuật toán băm cây con Weisfeiler-Lehman để chuyển đổi đồ thị động thành vector đặc trưng đếm histogram; Thứ hai, KAIROS [24] (IEEE S&P 2024) tích hợp mạng nơ-ron đồ thị nhận biết thời gian mã hóa đồng thời thông tin cấu trúc và sự tiến triển thời gian của đồ thị nguồn gốc để chấm điểm bất thường và tái dựng dấu vết tấn công APT; Thứ ba, NODLINK [25] (NDSS 2024) mô hình hóa bài toán phát hiện thành cây Steiner trực tuyến kết hợp cơ chế bộ nhớ đệm để khôi phục đồ thị con tấn công nhỏ gọn; Thứ tư, MAGIC [26] (USENIX Security 2024) khai thác kiến trúc tự mã hóa đồ thị che kết hợp cơ chế thích ứng mô hình để học biểu diễn đa độ hạt và chống trôi dạt khái niệm; Thứ năm, ORTHRUS [27] (USENIX Security 2025) tích hợp cơ chế học biểu diễn nguồn gốc chống chịu kỹ thuật lẩn tránh. Mặc dù đạt nhiều bước tiến, nhóm phương pháp đồ thị đối mặt với ba thách thức lý thuyết và thực tiễn cốt lõi: Một là, hiện tượng bùng nổ phụ thuộc Dependency Explosion: các tiến trình hệ thống chạy dài hạn liên tục tương tác với nhiều tệp tin và socket, khiến đồ thị phát triển dày đặc và tạo ra nhiều liên kết phụ thuộc xa làm loãng tín hiệu bất thường [1], [28]; Hai là, ranh giới giữa quan hệ phụ thuộc cấu trúc và tác động nhân quả (Dependency != Causal Effect): kết quả khảo sát thực nghiệm của Bilot et al. [29] (USENIX Security 2025) và Guerra et al. [30] chỉ ra rằng nhiều mô hình GNN phức tạp có nguy cơ khai thác các đặc trưng đường tắt thống kê như phân bố bậc của nút hoặc tính mới của đường dẫn; trong đó Bilot et al. [29] chứng minh một mô hình mạng nơ-ron đơn giản đạt hiệu năng cạnh tranh vượt trội trên 5/7 tập dữ liệu DARPA, còn Guerra et al. [30] chỉ ra hiệu quả của các baseline danh sách cho phép / thống kê sự kiện, khẳng định một cạnh phụ thuộc trong đồ thị không đồng nghĩa với tác động nhân quả an ninh; Ba là, hai bệnh lý mạng nơ-ron đồ thị về mặt cấu trúc: khi tăng số lớp truyền tin hiện tượng làm mịn quá mức (Over-smoothing), được Oono & Suzuki [44] chứng minh về mặt toán học tại ICLR 2020, khiến vector biểu diễn của các đỉnh mất dần năng lực biểu đạt theo hàm mũ và hội tụ về các vector khó phân biệt; trong khi đó hiện tượng nghẽn cổ chai thông tin (Over-squashing), được Alon & Yahav [31] phân tích tại ICLR 2021, xuất hiện khi lượng thông tin từ vùng lân cận mở rộng nhanh chóng phải truyền qua một số ít cạnh trung gian để nén vào một vector có kích thước cố định, khiến các tín hiệu bất thường quan trọng từ xa dễ bị hòa lẫn hoặc thất thoát. Hai hiện tượng này mang bản chất toán học độc lập và cần được xử lý bằng các cơ chế kiến trúc riêng biệt.",
       "Tại Việt Nam, các nghiên cứu chuyên sâu của ThS. Nguyễn Thị Thu Thủy (Khoa An toàn thông tin, Học viện Kỹ thuật Mật mã) [32] cũng đã hệ thống hóa phương pháp luận ứng dụng Graph Learning và mạng nơ-ron đồ thị (Graph Neural Network, GNN) trên đồ thị nguồn gốc để phát hiện các chiến dịch tấn công APT đa giai đoạn; đồng thời phân tích sâu sắc các thách thức về hiện tượng bùng nổ phụ thuộc, tính đa góc nhìn và yêu cầu bảo toàn tính nhân quả khi phân tích luồng sự kiện kiểm toán hệ thống."
     ],
-    "curr_indices": [
-      56,
-      58
+    "old_text_sha256": "1b147b32eac0cdad9ec53bb7bf7d321c7e4c1ddd9161202c2049cbf6b262e624",
+    "new_text_sha256": "705a586e9ff6f9919353ad07f087e45850e7c9fb1d669fc38524b433d54a1972",
+    "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
+    "associated_claims": [
+      "PROSE-RESTRAINT"
+    ],
+    "claim_ids": [
+      "PROSE-RESTRAINT"
     ]
   },
   {
@@ -663,6 +637,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      59,
+      61
     ]
   },
   {
@@ -897,7 +875,7 @@
       83
     ],
     "old_text_sha256": "ab1366a67249aff3a92db0d29a0f94250ecf9a8ec6a347ac554441929f5edeac",
-    "new_text_sha256": "c68140702a4182363ac0d6c79c017929bba103a78f05e542b4d5292efdbcdd9a",
+    "new_text_sha256": "c969ca6f9753479d78a719d7371eb81e6e880a08cbc9af854d66c8252073373c",
     "old_text": [
       "Trong thực tế giám sát an ninh mạng doanh nghiệp, dữ liệu nhãn mặt đất (Ground Truth) thường chỉ được ghi nhận ở mức độ hạt rất thô (Coarse Labels), chẳng hạn như gán nhãn một phiên làm việc kéo dài nhiều giờ hoặc toàn bộ một máy chủ bị xâm nhập trong một khoảng thời gian [3], [12], [13]. Bên trong phiên làm việc đó, phần lớn các dòng log vẫn là các thao tác hệ thống bình thường, và chỉ có một số lượng rất nhỏ sự kiện thực sự phản ánh kỹ thuật tấn công.",
       "Thách thức này càng trở nên phức tạp do sự xuất hiện liên tục của hành vi quản trị viên hệ thống (Admin-Noise / LOLBins) [1], [3]. Các kỹ sư quản trị thường xuyên thực thi các lệnh bảo trì, chẩn đoán mạng hoặc sao lưu dữ liệu bằng các công cụ dòng lệnh hợp lệ (như PowerShell, WMI, SSH, vssadmin). Các hành vi này sở hữu cấu trúc cú pháp và quyền hạn thực thi tương đồng với kỹ thuật của kẻ tấn công, nhưng hoàn toàn mang mục đích hợp pháp (Benign-but-risky). Một hành vi bất thường hoặc hiếm gặp không tự thân đồng nghĩa với hành vi tấn công độc hại (Unusual ≠ Malicious, Anomaly ≠ Attack).",
@@ -921,7 +899,7 @@
     ],
     "verified": true,
     "new_lines": [
-      "Trong thực tế giám sát an ninh mạng doanh nghiệp, dữ liệu nhãn thường chỉ được ghi nhận ở mức độ hạt rất thô , chẳng hạn như gán nhãn một phiên làm việc kéo dài nhiều giờ hoặc toàn bộ một máy chủ bị xâm nhập trong một khoảng thời gian [3], [12], [13]. Bên trong phiên làm việc đó, phần lớn các dòng nhật ký vẫn là các thao tác hệ thống bình thường, và chỉ có một số lượng rất nhỏ sự kiện thực sự phản ánh kỹ thuật tấn công.",
+      "Trong thực tế giám sát an ninh mạng doanh nghiệp, dữ liệu nhãn thường chỉ được ghi nhận ở mức độ hạt rất thô, chẳng hạn như gán nhãn một phiên làm việc kéo dài nhiều giờ hoặc toàn bộ một máy chủ bị xâm nhập trong một khoảng thời gian [3], [12], [13]. Bên trong phiên làm việc đó, phần lớn các dòng nhật ký vẫn là các thao tác hệ thống bình thường, và chỉ có một số lượng rất nhỏ sự kiện thực sự phản ánh kỹ thuật tấn công.",
       "Thách thức này càng trở nên phức tạp do sự xuất hiện liên tục của hành vi quản trị viên hệ thống [1], [3]. Các kỹ sư quản trị thường xuyên thực thi các lệnh bảo trì, chẩn đoán mạng hoặc sao lưu dữ liệu bằng các công cụ dòng lệnh hợp lệ của hệ điều hành như PowerShell, WMI hay SSH. Những hành vi này chia sẻ cùng cú pháp câu lệnh và quyền thực thi với các kỹ thuật tấn công lợi dụng công cụ sẵn có nhưng hoàn toàn mang mục đích vận hành hợp pháp. Một hành vi bất thường hoặc ít xuất hiện không tự thân đồng nghĩa với hành vi tấn công độc hại.",
       "Khoảng trống nghiên cứu là: làm thế nào để phân bổ đúng bằng chứng tấn công từ nhãn mức thô xuống các sự kiện mấu chốt mà không học nhầm các thao tác quản trị hợp pháp thành hành vi độc hại. Đây là cơ sở để xác lập câu hỏi nghiên cứu thứ tư:",
       "Câu hỏi nghiên cứu 4 RQ4 về phân bổ bằng chứng yếu: Có thể gán đúng attack evidence dưới coarse labels mà không học nhầm các hành vi quản trị hợp pháp thành malicious hay không?"
@@ -1079,6 +1057,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      6,
+      13
     ]
   },
   {
@@ -1219,6 +1201,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      21,
+      26
     ]
   },
   {
@@ -1246,18 +1232,22 @@
       "2. Mặt phẳng Suy luận Dòng (Streaming Inference Plane / Online Causal): Vận hành trực tuyến (Online) trên luồng sự kiện đang diễn ra . Mặt phẳng này tiếp nhận trọng số đã đóng băng hoàn toàn , cập nhật trạng thái bộ nhớ hữu hạn theo các chính sách TTL, Eviction và Watermarking, sau đó trích xuất vector đóng gói theo cơ chế đơn lượt đơn hướng (Strictly Causal, Zero Lookahead), cung cấp đầu vào tức thời cho các bộ dò tuyến tính đóng băng Giai đoạn C phục vụ phát hiện và quy kết chiến thuật/kỹ thuật MITRE ATT&CK."
     ],
     "new_lines": [
-      "Hình 2.1: Kiến trúc hai mặt phẳng (Training Plane & Inference Plane) của khung biểu diễn đặc trưng log đa góc nhìn dòng , nguồn tác giả đề xuất",
+      "Hình 2.1: Kiến trúc hai mặt phẳng (Training Plane & Inference Plane) của khung biểu diễn đặc trưng log đa góc nhìn dòng, nguồn tác giả đề xuất",
       "Một là, mặt phẳng huấn luyện ngoại tuyến: Vận hành trên kho dữ liệu telemetry lịch sử . Mặt phẳng này thực hiện trích xuất song song hai góc nhìn gồm chuỗi sự kiện và đồ thị nguồn gốc, tối ưu hóa hàm mất mát gióng hàng đa góc nhìn kết hợp các số hạng điều hòa bất biến để tìm kiếm bộ trọng số tối ưu tại Giai đoạn A, đồng thời hỗ trợ pha thích ứng bằng chứng yếu Giai đoạn B khi có nhãn mức thô. Quá trình tiền huấn luyện hoàn toàn không sử dụng nhãn tấn công và không can thiệp vào luồng vận hành thời gian thực.",
       "Hai là, mặt phẳng suy luận dòng trực tuyến: Vận hành trên luồng sự kiện đang diễn ra . Mặt phẳng này tiếp nhận trọng số đã đóng băng hoàn toàn , cập nhật trạng thái bộ nhớ hữu hạn theo các chính sách TTL, loại bỏ và đánh dấu thời gian, sau đó trích xuất vector đóng gói theo cơ chế đơn lượt đơn hướng không nhìn trước thời gian tuân thủ nguyên tắc nhân quả thời gian nghiêm ngặt, cung cấp đầu vào tức thời cho các bộ dò tuyến tính đóng băng Giai đoạn C phục vụ phát hiện và quy kết chiến thuật/kỹ thuật MITRE ATT&CK."
     ],
     "old_text_sha256": "ccf5e719f34e386c71bbbdb9426a409908da45e1d7795f4f237d6c133c8eeef0",
-    "new_text_sha256": "2465cef63093e5334b577f664c9c661d2c2b2d695551d95449e9ef678f5a17bf",
+    "new_text_sha256": "36cd573257e6544718de63baea45bf5228164fb2218b1c9a288ecbd89d73c637",
     "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
     "associated_claims": [
       "PROSE-RESTRAINT"
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      28,
+      31
     ]
   },
   {
@@ -1293,6 +1283,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      32,
+      33
     ]
   },
   {
@@ -1423,17 +1417,21 @@
       "Tất cả các thành phần tiền xử lý có trạng thái học được (bao gồm từ vựng tokenizer tham số động, bảng chuẩn hóa tên tiến trình theo môi trường, thống kê tần suất sự kiện phục vụ outlier filtering, và ngưỡng phân ngưỡng tham số) đều được fit độc quyền trên phân vùng huấn luyện theo thứ tự nhân quả thời gian theo trật tự nhân quả thời gian, tức là chỉ sử dụng dữ liệu quan sát trước thời điểm phân cắt huấn luyện. Phân vùng Validation và Test chỉ nhận các phép biến đổi từ trạng thái đóng băng đã fit, không có bất kỳ thông tin thống kê nào từ Val/Test được đưa trở lại (CTRL-LEAK-001: Anti-Leakage Temporal Split). Cụ thể:",
       "Một là, phân vùng thời gian tuyến tính theo Event-Time: trong đó ký hiệu biểu thị quan hệ xảy ra trước nghiêm ngặt theo thứ tự thời gian. Không có xáo trộn ngẫu nhiên xáo trộn ngẫu nhiên theo thời gian ở bất kỳ giai đoạn nào.",
       "Hai là, tất cả preprocessor như tokenizer, normalizer, entity resolver và vocabulary builder đều có trạng thái fit-freeze: quá trình fit chỉ chạy một lần trên .",
-      "Ba là, chính sách xử lý tham số chưa xác định về tham số chưa xác định tuân thủ nghiêm ngặt nguyên tắc an toàn UNKNOWN-SAFE: tuyệt đối không áp dụng quy tắc mặc định hủy bỏ , không thực hiện loại bỏ mặc định UNCONFIRMED → DROP. Hệ thống phân định rạch ròi: Thứ nhất, các trường KNOWN EXCLUDE FIELD gồm metadata môi trường như PID, timestamp cục bộ mili-giây và số sequence nội bộ được loại bỏ hoàn toàn trước khi đưa vào Extractor; Thứ hai, các tham số UNSEEN hoặc chưa xác định rõ ngữ nghĩa an ninh xuất hiện trong tập Validation hoặc Test được giữ nguyên nhãn kiểu trường gồm các thẻ PATH, IP, CMD, REG, USER và bảo toàn vị trí cấu trúc của tham số trong bộ sáu, đồng thời thay thế giá trị chuỗi cụ thể bằng typed placeholder tương ứng (<UNK-PATH>, <UNK-IP>, <UNK-CMD>). Cơ chế này được thiết kế để giảm nguy cơ sụp đổ thông tin cấu trúc cú pháp cần thiết cho Extractor và hạn chế rò rỉ từ vựng từ tập kiểm tra.",
+      "Ba là, chính sách xử lý tham số chưa xác định tuân thủ nghiêm ngặt nguyên tắc an toàn UNKNOWN-SAFE: tuyệt đối không áp dụng quy tắc mặc định hủy bỏ, không thực hiện loại bỏ mặc định UNCONFIRMED → DROP. Hệ thống phân định rạch ròi: Thứ nhất, các trường KNOWN EXCLUDE FIELD gồm metadata môi trường như PID, timestamp cục bộ mili-giây và số sequence nội bộ được loại bỏ hoàn toàn trước khi đưa vào Extractor; Thứ hai, các tham số UNSEEN hoặc chưa xác định rõ ngữ nghĩa an ninh xuất hiện trong tập Validation hoặc Test được giữ nguyên nhãn kiểu trường gồm các thẻ PATH, IP, CMD, REG, USER và bảo toàn vị trí cấu trúc của tham số trong bộ sáu, đồng thời thay thế giá trị chuỗi cụ thể bằng typed placeholder tương ứng (<UNK-PATH>, <UNK-IP>, <UNK-CMD>). Cơ chế này được thiết kế để giảm nguy cơ sụp đổ thông tin cấu trúc cú pháp cần thiết cho Extractor và hạn chế rò rỉ từ vựng từ tập kiểm tra.",
       "Bốn là, ranh giới leakage-safe được kiểm tra tự động trong pipeline thực nghiệm: mọi phép fit nào truy cập dữ liệu ngoài đều bị phát hiện và báo lỗi trước khi chạy thực nghiệm (xem CTRL-LEAK-001)."
     ],
     "old_text_sha256": "948e6ab709929707dd72ed22b81eb9044e57210c30061a9916d686c79e95158b",
-    "new_text_sha256": "c13d86baf255b1907e83bd55e005731e0cfc49356004206146966220253e14fe",
+    "new_text_sha256": "d935e81dc3333a2d6c7ee35255c4c9bba6448a66c5ca6daf14c999222a4657c5",
     "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
     "associated_claims": [
       "PROSE-RESTRAINT"
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      46,
+      51
     ]
   },
   {
@@ -1511,6 +1509,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      55,
+      56
     ]
   },
   {
@@ -1550,6 +1552,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      58,
+      61
     ]
   },
   {
@@ -1573,7 +1579,7 @@
       69
     ],
     "old_text_sha256": "271302a8350bb754ec491f06b81111bf4ab9b16d13784bd4499466741bab8db2",
-    "new_text_sha256": "ca8f16306573331c8937df082bbd1bab74e04d9ded73f53844b31c6d91d0de92",
+    "new_text_sha256": "58acbb21d62da0168a6b5b05a9b504ff0b75887cb8c9fb2dfd429903905a0866",
     "old_text": [
       "Để giải quyết đồng thời hai lớp đe dọa trên trong khi vẫn bảo toàn ngữ cảnh hành vi cần thiết cho phân tích tấn công, chuyên đề xác lập Cơ chế Liên kết Có Kiểm soát (Controlled Linkability Mechanism) như một hợp đồng kỹ thuật với ba thành phần:",
       "1. Pseudonymization thực thể theo phiên (Session-scoped Pseudonymization): mỗi thực thể thực sự được ánh xạ về một mã định danh giả danh thông qua hàm ánh xạ xác định có kiểm soát . Hàm bảo toàn quan hệ đồng nhất thực thể (tức là ) để cho phép liên kết hành vi theo thời gian (điều kiện cần để phát hiện APT đa giai đoạn), nhưng không giữ lại thông tin nhận dạng thô không cần thiết cho mục đích phát hiện.",
@@ -1604,11 +1610,11 @@
     "verified": true,
     "new_lines": [
       "Trước hai lớp đe dọa nêu trên trong khi vẫn bảo toàn ngữ cảnh hành vi cần thiết cho phân tích tấn công, chuyên đề xác lập Cơ chế Liên kết Có Kiểm soát như một hợp đồng kỹ thuật với ba thành phần:",
-      "Một là, cơ chế pseudonymization thực thể theo phiên Session-scoped Pseudonymization: mỗi thực thể thực sự được ánh xạ về một mã định danh giả danh thông qua hàm ánh xạ xác định có kiểm soát . Hàm bảo toàn quan hệ đồng nhất thực thể (tức là ) để cho phép liên kết hành vi theo thời gian , đây là điều kiện cần để phát hiện APT đa giai đoạn, nhưng không giữ lại thông tin nhận dạng thô không cần thiết cho mục đích phát hiện.",
+      "Một là, cơ chế pseudonymization thực thể theo phiên Session-scoped Pseudonymization: mỗi thực thể thực sự được ánh xạ về một mã định danh giả danh thông qua hàm ánh xạ xác định có kiểm soát . Hàm bảo toàn quan hệ đồng nhất thực thể (tức là ) để cho phép liên kết hành vi theo thời gian, đây là điều kiện cần để phát hiện APT đa giai đoạn, nhưng không giữ lại thông tin nhận dạng thô không cần thiết cho mục đích phát hiện.",
       "Hai là, cơ chế tokenization tham số động có chọn lọc Security-selective Parameter Tokenization: các tham số động đã được xác nhận là mang ngữ nghĩa an ninh được tokenize thành các đơn vị học được theo kho từ vựng fit trên . Các trường KNOWN EXCLUDE FIELD được loại bỏ hoàn toàn trước khi đưa vào ; trong khi các tham số UNSEEN / UNCERTAIN được xử lý theo chính sách UNKNOWN-SAFE với mục tiêu bảo toàn nhãn kiểu trường và vị trí cấu trúc, đồng thời gán typed placeholder, không bị loại bỏ tùy tiện.",
       "Ba là, về phạm vi liên kết và rotation Linkability Scope: hàm xác lập bốn ranh giới tường minh: thứ nhất, Linkable within scope: trong cùng phiên, nhất quán để hành vi đa giai đoạn của cùng thực thể vẫn liên kết được; thứ hai, Unlinkable across rotation boundary: khi rotation xảy ra, cùng thực thể nhận mã giả danh mới, làm gián đoạn cross-session linkage; thứ ba, Remains linkable: kiểu hành vi, thời gian tương đối và tham số an ninh giúp duy trì behavioral fingerprint; thứ tư, Becomes unlinkable: tên thực sự v, o và các direct identifier. Rotation boundary phải được xác lập theo predefined operational policy hoặc được lựa chọn dựa trên tập Train/Validation, tuyệt đối không sử dụng thông tin từ true Test attack/campaign duration nhằm loại trừ rủi ro test leakage. Về mặt phương pháp luận, chuyên đề đề xuất hướng đánh giá nhiều mốc rotation horizon cố định để xây dựng đường biên Utility–Privacy frontier ở các giai đoạn thực nghiệm tiếp theo. Trường hợp rotation horizon quá ngắn so với thời lượng chiến dịch APT thực tế sẽ dẫn tới việc cùng một thực thể nhận các mã giả danh khác nhau qua từng giai đoạn, làm phân mảnh khả năng liên kết chuỗi hành vi cross-phase nếu không có cơ chế tái liên kết an toàn; đây là failure case tường minh cần được định lượng trong đánh giá thực nghiệm. Thiết kế phạm vi cụ thể giữa cấp độ phiên và cấp độ toàn cục là quyết định thực nghiệm phụ thuộc vào đánh đổi này.",
       "Hợp đồng kỹ thuật tổng quát của cơ chế Controlled Linkability được phát biểu như sau: với mọi sự kiện đã được chuẩn hóa , sự kiện được biến đổi quyền riêng tư được tạo ra bằng cách thay thế các trường nhận dạng thực thể bằng mã giả danh và áp dụng toán tử bảo vệ tham số an toàn tuân thủ nguyên tắc: thứ nhất, các trường KNOWN EXCLUDE FIELD bị loại bỏ hoàn toàn; thứ hai, các tham số được xác nhận được tokenize trên ; thứ ba, các tham số UNSEEN / UNCERTAIN được xử lý theo chính sách UNKNOWN-SAFE :",
-      "Lưu ý rằng các tham số thời gian và kiểu hành vi được bảo toàn nguyên vẹn vì chúng không phải direct identifier, tuy nhiên các tham số này có thể hoạt động như quasi-identifier khi kết hợp với dữ liệu bên ngoài; rủi ro liên kết tương ứng cần được đánh giá theo CTRL-PRIV-001. Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo nghĩa của H5 so với hai đường cơ sở: thứ nhất, giữ nguyên định danh thô không có pseudonymization; và thứ hai, ẩn danh hóa quá mức xóa bỏ cả liên kết thực thể cần thiết cho phân tích hành vi. Tuy nhiên, khẳng định sự vượt trội này là một giả thuyết nghiên cứu yêu cầu kiểm thử thực nghiệm tường minh ở các mô hình hạ nguồn thông qua giao thức CTRL-PRIV-001 , bao gồm đánh giá MIA [16], tấn công nghịch đảo theo nguyên lý Fredrikson et al. [33] áp dụng cho các thuộc tính nhạy cảm của log, cùng tấn công tái định danh; chưa được thực thi trong phạm vi thực nghiệm của chuyên đề hiện tại."
+      "Lưu ý rằng các tham số thời gian và kiểu hành vi được bảo toàn nguyên vẹn vì chúng không phải direct identifier, tuy nhiên các tham số này có thể hoạt động như quasi-identifier khi kết hợp với dữ liệu bên ngoài; rủi ro liên kết tương ứng cần được đánh giá theo CTRL-PRIV-001. Cơ chế này được kỳ vọng thiết lập sự vượt trội Pareto theo nghĩa của H5 so với hai đường cơ sở: thứ nhất, giữ nguyên định danh thô không có pseudonymization; và thứ hai, ẩn danh hóa quá mức xóa bỏ cả liên kết thực thể cần thiết cho phân tích hành vi. Tuy nhiên, khẳng định sự vượt trội này là một giả thuyết nghiên cứu yêu cầu kiểm thử thực nghiệm tường minh ở các mô hình hạ nguồn thông qua giao thức CTRL-PRIV-001, bao gồm đánh giá MIA [16], tấn công nghịch đảo theo nguyên lý Fredrikson et al. [33] áp dụng cho các thuộc tính nhạy cảm của log, cùng tấn công tái định danh; chưa được thực thi trong phạm vi thực nghiệm của chuyên đề hiện tại."
     ],
     "curr_indices": [
       63,
@@ -1696,6 +1702,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      72,
+      76
     ]
   },
   {
@@ -1739,6 +1749,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      77,
+      82
     ]
   },
   {
@@ -1906,16 +1920,20 @@
     ],
     "new_lines": [
       "Đầu ra của Bộ trích xuất tuần tự là một gói biểu diễn chuẩn hóa mang vector đại diện cho toàn bộ chuỗi hành vi trong cửa sổ ngắn hạn , kèm theo siêu dữ liệu tương ứng bao gồm: khoảng thời gian sự kiện , phạm vi thực thể hoặc phiên tương ứng, mặt nạ sẵn sàng của góc nhìn , và định danh cửa sổ. Giao diện này cung cấp đầy đủ thông tin để Tầng gióng hàng tại Mục 2.4 xác định quan hệ tương ứng giữa các góc nhìn mà không thực hiện dung hợp sớm hay sử dụng nhãn kiểm tra. Giả định kiến trúc gồm tầng Transformer Encoder, độ dài chuỗi đầu vào , số chiều mô hình và số chiều tầng truyền thẳng , độ phức tạp tính toán của bộ trích xuất tuần tự là , trong đó số hạng bậc hai phản ánh chi phí tính toán ma trận chú ý theo độ dài chuỗi.",
-      "Hình 2.2: Kiến trúc Bộ trích xuất tuần tự ngữ nghĩa Transformer và cơ chế học tự giám sát trên cửa sổ ngắn hạn , nguồn tác giả đề xuất"
+      "Hình 2.2: Kiến trúc Bộ trích xuất tuần tự ngữ nghĩa Transformer và cơ chế học tự giám sát trên cửa sổ ngắn hạn, nguồn tác giả đề xuất"
     ],
     "old_text_sha256": "26eec3b2d7ff1eb984ec2ae7de5dabe3e3c3a7b17b4dd0a4995087423345eed7",
-    "new_text_sha256": "15f452a9ca64d3fb1700907345512368eeaafacde7a0d4f2b0e1ac177a00cc55",
+    "new_text_sha256": "cfa139f817a48870057121f56fc2fc1c38a5371c385818a63ae913ca22ecc915",
     "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
     "associated_claims": [
       "PROSE-RESTRAINT"
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      97,
+      99
     ]
   },
   {
@@ -1951,6 +1969,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      105,
+      106
     ]
   },
   {
@@ -1986,6 +2008,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      108,
+      109
     ]
   },
   {
@@ -2029,6 +2055,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      110,
+      115
     ]
   },
   {
@@ -2064,6 +2094,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      116,
+      117
     ]
   },
   {
@@ -2145,6 +2179,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      124,
+      125
     ]
   },
   {
@@ -2193,45 +2231,40 @@
     ]
   },
   {
-    "hunk_id": "HUNK-CH2-045",
     "chapter": 2,
     "opcode": "replace",
     "base_indices": [
       128,
-      129
+      130
+    ],
+    "curr_indices": [
+      129,
+      131
     ],
     "base_paragraph_indices": [
       128,
-      129
-    ],
-    "current_indices": [
-      129,
       130
     ],
     "current_paragraph_indices": [
       129,
-      130
+      131
     ],
-    "old_text_sha256": "53e9eb927ecaae27f3523c590cbf12e1e7cc7442e1a085098386473218d0f0e2",
-    "new_text_sha256": "da33d1a0634b9c27918718c909ae700b0f94bfda357dce39b1041607fa6a6571",
-    "old_text": [
-      "Tác vụ dự đoán khoảng cách thời gian tương đối (Relative Temporal Gap Prediction, ): Dự đoán độ lệch thời gian tương tác giữa các cặp đỉnh tương tác trong tập cạnh hoạt động . Đầu hồi quy phụ trợ tiếp nhận và tối ưu hóa hàm Smooth L1 (Huber criterion, ) đối với đích , truyền gradient cho và (giúp mô hình học cấu trúc thứ tự và khoảng thời gian quan sát được giữa các sự kiện mà không hàm ý tác động nhân quả, tuân thủ nguyên tắc temporal order != causal effect và dependency != causal effect):"
+    "old_lines": [
+      "Tác vụ dự đoán khoảng cách thời gian tương đối (Relative Temporal Gap Prediction, ): Dự đoán độ lệch thời gian tương tác giữa các cặp đỉnh tương tác trong tập cạnh hoạt động . Đầu hồi quy phụ trợ tiếp nhận và tối ưu hóa hàm Smooth L1 (Huber criterion, ) đối với đích , truyền gradient cho và (giúp mô hình học cấu trúc thứ tự và khoảng thời gian quan sát được giữa các sự kiện mà không hàm ý tác động nhân quả, tuân thủ nguyên tắc temporal order != causal effect và dependency != causal effect):",
+      "Các trọng số là các siêu tham số cân bằng giữa các tác vụ phụ trợ. Hàm mục tiêu trực tiếp tối ưu hóa tập tham số cùng các đầu phụ trợ trong Giai đoạn A1 và trở thành thành phần bảo toàn cấu trúc đồ thị trong hàm tại Mục 2.4."
     ],
-    "new_text": [
-      "Tác vụ dự đoán khoảng cách thời gian tương đối (Relative Temporal Gap Prediction, ): Dự đoán độ lệch thời gian tương tác giữa các cặp đỉnh tương tác trong tập cạnh hoạt động . Đầu hồi quy phụ trợ tiếp nhận và tối ưu hóa hàm Smooth L1 ) đối với đích , truyền gradient cho và (giúp mô hình học cấu trúc thứ tự và khoảng thời gian quan sát được giữa các sự kiện mà không hàm ý tác động nhân quả, tuân thủ nguyên tắc temporal order != causal effect và dependency != causal effect):"
-    ],
-    "category": "PROSE_AUDIT_STYLE_REFINEMENT",
-    "reason": "Refine prose and align terminology with scientific auditing standards.",
-    "scientific_justification": "Refine prose and align terminology with scientific auditing standards.",
-    "claim_ids": [],
-    "associated_claims": [],
-    "verified": true,
     "new_lines": [
-      "Tác vụ dự đoán khoảng cách thời gian tương đối (Relative Temporal Gap Prediction, ): Dự đoán độ lệch thời gian tương tác giữa các cặp đỉnh tương tác trong tập cạnh hoạt động . Đầu hồi quy phụ trợ tiếp nhận và tối ưu hóa hàm Smooth L1 ) đối với đích , truyền gradient cho và (giúp mô hình học cấu trúc thứ tự và khoảng thời gian quan sát được giữa các sự kiện mà không hàm ý tác động nhân quả, tuân thủ nguyên tắc temporal order != causal effect và dependency != causal effect):"
+      "Tác vụ dự đoán khoảng cách thời gian tương đối (Relative Temporal Gap Prediction, ): Dự đoán độ lệch thời gian tương tác giữa các cặp đỉnh tương tác trong tập cạnh hoạt động . Đầu hồi quy phụ trợ tiếp nhận và tối ưu hóa hàm Smooth L1 ) đối với đích , truyền gradient cho và (giúp mô hình học cấu trúc thứ tự và khoảng thời gian quan sát được giữa các sự kiện mà không hàm ý tác động nhân quả, tuân thủ nguyên tắc temporal order != causal effect và dependency != causal effect):",
+      "Các trọng số là các siêu tham số cân bằng giữa các tác vụ phụ trợ. Hàm mục tiêu trực tiếp tối ưu hóa tập tham số cùng các đầu phụ trợ trong Giai đoạn A1 và trở thành cấu phần bảo toàn cấu trúc đồ thị trong hàm tại Mục 2.4."
     ],
-    "curr_indices": [
-      129,
-      130
+    "old_text_sha256": "654e2c90282261cc90e4115bfcd856dd17b1e56517cafdae4b31e011c970a1a2",
+    "new_text_sha256": "215a0ddef8dc0cddc24b8e2f44131d11b4499b91eeb069904c2804edf63ccb97",
+    "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
+    "associated_claims": [
+      "PROSE-RESTRAINT"
+    ],
+    "claim_ids": [
+      "PROSE-RESTRAINT"
     ]
   },
   {
@@ -2313,6 +2346,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      134,
+      135
     ]
   },
   {
@@ -2339,16 +2376,20 @@
       "Bảng 2.2 tóm tắt các đặc tính kiến trúc và độ phức tạp tính toán của hai bộ trích xuất đặc trưng đa góc nhìn:"
     ],
     "new_lines": [
-      "Hình 2.3: Kiến trúc xây dựng đồ thị nguồn gốc phụ thuộc thời gian và Bộ trích xuất Temporal GNN , nguồn tác giả đề xuất"
+      "Hình 2.3: Kiến trúc xây dựng đồ thị nguồn gốc phụ thuộc thời gian và Bộ trích xuất Temporal GNN, nguồn tác giả đề xuất"
     ],
     "old_text_sha256": "a13a5cc5204fcff7595c0276103a947e2755930fb7e5def572c9fa05d7d9ef60",
-    "new_text_sha256": "0045edb2cc7d4432c34fc0a9181f484f9fb86d103bb7b5cd79d384300966c48b",
+    "new_text_sha256": "caa94bca9de37bab73b1abc0b41c4134bdfc06f7e37d31997647a291517eed8b",
     "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
     "associated_claims": [
       "PROSE-RESTRAINT"
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      138,
+      139
     ]
   },
   {
@@ -2420,16 +2461,20 @@
       "Mục 2.4.1 thiết lập Hợp đồng Tương ứng (Correspondence Contract), phân định ranh giới giữa Không gian Biểu diễn (Representation Space) và Không gian Chiếu (Projection Space), cùng các cơ chế điều hòa chống sụp đổ biểu diễn."
     ],
     "new_lines": [
-      "Mục 2.4.1 thiết lập Hợp đồng Tương ứng , phân định ranh giới giữa Không gian Biểu diễn không gian biểu diễn và Không gian Chiếu không gian chiếu, cùng các cơ chế điều hòa chống sụp đổ biểu diễn."
+      "Mục 2.4.1 thiết lập Hợp đồng Tương ứng, phân định ranh giới giữa Không gian Biểu diễn và Không gian Chiếu, cùng các cơ chế điều hòa chống sụp đổ biểu diễn."
     ],
     "old_text_sha256": "999932f79dece327ebfc69303dc6cfd018c121ddc0419dddbc12aa124dcb9f70",
-    "new_text_sha256": "2286a175e6b40446afd271d9ed35bf936ce81b70086f1bfd83753bc78fa44f36",
+    "new_text_sha256": "29cb6ec63de1e986c0b4f595ddc9e74f7d68f78fd8eba2279148cd05ee48206e",
     "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
     "associated_claims": [
       "PROSE-RESTRAINT"
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      143,
+      144
     ]
   },
   {
@@ -2463,16 +2508,20 @@
       "Giao thoa khoảng thời gian quan sát Temporal Interval Overlap: Khoảng thời gian hiệu lực của cửa sổ chuỗi ngắn hạn phải là tập con hoặc có giao thoa thực dương với khoảng thời gian của cửa sổ đồ thị trung hạn , tức .",
       "Giao thoa phạm vi thực thể Entity Scope Overlap: Tập các thực thể hệ thống quan sát trong chuỗi như tiến trình, người dùng và tài nguyên phải chia sẻ ít nhất một đỉnh thực thể chung với tập đỉnh đồ thị , tức .",
       "Tính đầy đủ của mặt nạ khả dụng Availability Mask Completeness: Cả hai góc nhìn đều tồn tại dữ liệu đo kiểm thực tế trong khoảng quan sát, biểu thị bởi và .",
-      "Tuyệt đối không sử dụng nhãn tấn công hay bất kỳ tín hiệu từ tập kiểm thử nào để định nghĩa cặp tương ứng trong Stage A. Các cặp tương ứng được hình thành hoàn toàn tự nhiên từ tiến trình vận hành hệ thống thực tế. Các trường hợp chỉ giao thoa một phần thực thể hoặc thời gian được xếp vào nhóm Tương ứng Cục bộ , trong khi các trường hợp thiếu hụt một trong hai nguồn được xử lý qua cơ chế Góc nhìn Khuyết."
+      "Tuyệt đối không sử dụng nhãn tấn công hay bất kỳ tín hiệu từ tập kiểm thử nào để định nghĩa cặp tương ứng trong Stage A. Các cặp tương ứng được hình thành hoàn toàn tự nhiên từ tiến trình vận hành hệ thống thực tế. Các trường hợp chỉ giao thoa một phần thực thể hoặc thời gian được xếp vào nhóm Tương ứng Cục bộ, trong khi các trường hợp thiếu hụt một trong hai nguồn được xử lý qua cơ chế Góc nhìn Khuyết."
     ],
     "old_text_sha256": "d3b530d39eaf35ca1be9d4430c3beac8c2ffaf118a5a7266bcc72889a643546f",
-    "new_text_sha256": "2d67ace6a0a5f844c1da03c40c8fd733ca84c6787a1a6ba16dc8339d7336bae5",
+    "new_text_sha256": "87af66f0109f6a30d327544f08f63def4d8b0f425975ddec91d8d16b0ebe1d40",
     "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
     "associated_claims": [
       "PROSE-RESTRAINT"
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      145,
+      150
     ]
   },
   {
@@ -2719,7 +2768,7 @@
       172
     ],
     "old_text_sha256": "958e72529e9424722fa0f24552b08f0c19f2b4c1df4062142dc81f271d34ccfe",
-    "new_text_sha256": "fdfdec362cae211ed49e1838a5bad858394ef1f320f52caa75603a118e040425",
+    "new_text_sha256": "f7e9f15576494d60354b06ee99c1ce6eebb812e28863321cb7841d9b080f0702",
     "old_text": [
       "Trường hợp tương ứng cục bộ (Partial Correspondence): Khi hai góc nhìn chỉ giao nhau một phần về thời gian hoặc thực thể, hệ thống tính toán hệ số giao thoa Jaccard và điều tiết trọng số gióng hàng tương thích: .",
       "Nguyên tắc bất biến: Hệ thống tuyệt đối không tự bịa đặt dữ liệu (Data Hallucination) cho góc nhìn bị thiếu, không sử dụng dữ liệu tương lai để nội suy và không sử dụng nhãn tấn công để bù đắp, tuân thủ nguyên tắc nhân quả thời gian (Strictly Causal / Zero Lookahead) của mặt phẳng suy luận dòng (Streaming Inference Plane).",
@@ -2739,7 +2788,7 @@
     "new_lines": [
       "Trường hợp tương ứng cục bộ: Khi hai góc nhìn chỉ giao nhau một phần về thời gian hoặc thực thể, hệ thống tính toán hệ số giao thoa Jaccard và điều tiết trọng số gióng hàng tương thích: .",
       "Nguyên tắc bất biến: Hệ thống tuyệt đối không tự bịa đặt dữ liệu (Data Hallucination) cho góc nhìn bị thiếu, không sử dụng dữ liệu tương lai để nội suy và không sử dụng nhãn tấn công để bù đắp, tuân thủ nguyên tắc nhân quả thời gian của mặt phẳng suy luận dòng.",
-      "Lưu ý phương pháp luận về tính nhân quả: Khái niệm “Strictly Causal / Zero Lookahead” được định nghĩa chính xác theo nghĩa: hệ thống chỉ sử dụng dữ liệu đo kiểm trong quá khứ và hiện tại tại thời điểm suy luận dòng, tuyệt đối không sử dụng thông tin tương lai hay nhãn kiểm thử; khái niệm này KHÔNG hàm ý suy diễn quan hệ nhân quả (Causal-effect Inference) theo nghĩa thống kê can thiệp. Trong an ninh mạng, sự phụ thuộc quan sát được không đồng nhất với tác động nhân quả."
+      "Lưu ý phương pháp luận về tính nhân quả: Khái niệm “Strictly Causal / Zero Lookahead” được định nghĩa chính xác theo nghĩa: hệ thống chỉ sử dụng dữ liệu đo kiểm trong quá khứ và ở thời điểm hiện tại khi suy luận dòng, tuyệt đối không sử dụng thông tin tương lai hay nhãn kiểm thử; khái niệm này KHÔNG hàm ý suy diễn quan hệ nhân quả (Causal-effect Inference) theo nghĩa thống kê can thiệp. Trong an ninh mạng, sự phụ thuộc quan sát được không đồng nhất với tác động nhân quả."
     ],
     "curr_indices": [
       169,
@@ -2823,6 +2872,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      175,
+      177
     ]
   },
   {
@@ -2858,6 +2911,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      180,
+      181
     ]
   },
   {
@@ -2897,6 +2954,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      183,
+      186
     ]
   },
   {
@@ -3008,7 +3069,7 @@
       196
     ],
     "old_text_sha256": "c6b49500e741d511bac13a512a763971e3c7f209dcc1599c77efc8e51f210eb1",
-    "new_text_sha256": "509edf3541ca0f98f3209a968bb96ffa4f0079143d680ea22cec80b641e6bd49",
+    "new_text_sha256": "dc8980c80af8ed31b3c3911bf7914968acf0dc3471ff821b4f6b8fe47f14594f",
     "old_text": [
       "Trong Stage A, chuyên đề áp dụng chiến lược Bảo toàn Đối xứng (Symmetric Multi-View Preservation) kết hợp hàm mất mát tái tạo dung hợp tự giám sát (Self-Supervised Fusion Reconstruction). Hàm mất mát bảo toàn đối xứng duy trì năng lực biểu diễn nội góc nhìn cho cả chuỗi và đồ thị thông qua việc tái sử dụng các mục tiêu tự giám sát nội tại:",
       "Vòng đời và vai trò của các đầu dự đoán phụ trợ (Auxiliary SSL Heads Lifecycle): Trong Stage A1, các đầu phụ trợ và được tối ưu hóa đồng thời cùng backbone tương ứng. Trong Stage A2, để tính toán hàm mất mát bảo toàn đối xứng được thiết kế nhằm hạn chế nguy cơ trôi dạt biểu diễn (Representation Drift) và quên thảm họa (Catastrophic Forgetting) trong khi gióng hàng đa góc nhìn (việc đánh giá định lượng hiệu quả thực tế được thực hiện tại Chương 3), các đầu phụ trợ này tiếp tục được duy trì để cung cấp gradient điều hòa. Ngay sau khi Stage A2 kết thúc, toàn bộ các đầu phụ trợ này cùng 2 đầu chiếu phi tuyến và 2 bộ giải mã tái tạo đều bị ngắt bỏ (discarded). Tại thời điểm suy luận dòng (Stage C), chỉ các backbone và các ma trận dung hợp chuẩn tắc được nạp để tính toán vector , bảo đảm nguyên tắc Zero Orphan Parameters và tối ưu tài nguyên thực thi trực tuyến.",
@@ -3033,7 +3094,7 @@
     "verified": true,
     "new_lines": [
       "Trong Stage A, chuyên đề áp dụng chiến lược Bảo toàn Đối xứng kết hợp hàm mất mát tái tạo dung hợp tự giám sát (Self-Supervised Fusion Reconstruction). Hàm mất mát bảo toàn đối xứng duy trì năng lực biểu diễn nội góc nhìn cho cả chuỗi và đồ thị thông qua việc tái sử dụng các mục tiêu tự giám sát nội tại:",
-      "Vòng đời và vai trò của các đầu dự đoán phụ trợ Auxiliary SSL Heads Lifecycle: Trong Stage A1, các đầu phụ trợ và được tối ưu hóa đồng thời cùng backbone tương ứng. Trong Stage A2, để tính toán hàm mất mát bảo toàn đối xứng được thiết kế nhằm hạn chế nguy cơ trôi dạt biểu diễn và quên thảm họa trong khi gióng hàng đa góc nhìn với việc đánh giá định lượng hiệu quả thực tế được thực hiện tại Chương 3, các đầu phụ trợ này tiếp tục được duy trì để cung cấp gradient điều hòa. Ngay sau khi Stage A2 kết thúc, toàn bộ các đầu phụ trợ này cùng 2 đầu chiếu phi tuyến và 2 bộ giải mã tái tạo đều bị ngắt bỏ; các projection và prediction heads chỉ phục vụ huấn luyện tự giám sát và không được nạp trong Stage C. Tại thời điểm suy luận dòng, chỉ các backbone và các ma trận dung hợp chuẩn tắc được nạp để tính toán vector ; nhờ đó, số thành phần mô hình phải duy trì khi suy luận được giảm đáng kể so với đồ thị huấn luyện đầy đủ mà không để lại tham số mồ côi , tuân thủ nguyên tắc Zero Orphan Parameters.",
+      "Vòng đời và vai trò của các đầu dự đoán phụ trợ Auxiliary SSL Heads Lifecycle: Trong Stage A1, các đầu phụ trợ và được tối ưu hóa đồng thời cùng backbone tương ứng. Trong Stage A2, để tính toán hàm mất mát bảo toàn đối xứng được thiết kế nhằm hạn chế nguy cơ trôi dạt biểu diễn và quên thảm họa trong khi gióng hàng đa góc nhìn với việc đánh giá định lượng hiệu quả thực tế được thực hiện tại Chương 3, các đầu phụ trợ này tiếp tục được duy trì để cung cấp gradient điều hòa. Ngay sau khi Stage A2 kết thúc, toàn bộ các đầu phụ trợ này cùng 2 đầu chiếu phi tuyến và 2 bộ giải mã tái tạo đều bị ngắt bỏ; các projection và prediction heads chỉ phục vụ huấn luyện tự giám sát và không được nạp trong Stage C. Tại thời điểm suy luận dòng, chỉ các backbone và các ma trận dung hợp chuẩn tắc được nạp để tính toán vector ; nhờ đó, số thành phần mô hình phải duy trì khi suy luận được giảm đáng kể so với đồ thị huấn luyện đầy đủ mà không để lại tham số mồ côi, tuân thủ nguyên tắc Zero Orphan Parameters.",
       "Cung cấp tín hiệu học trực tiếp cho các ma trận dung hợp , vector trọng số gating và các ma trận giải mã tuyến tính , chuyên đề thiết lập hàm mất mát tái tạo đa góc nhìn tự giám sát :",
       "Định tuyến luồng gradient: Để ngăn chặn hiện tượng co-adaptation không kiểm soát khiến vector đích tự trôi dạt, chuyên đề thiết lập toán tử chặn gradient tường minh và . Hàm mất mát chỉ truyền gradient cập nhật cho các tham số tầng dung hợp và bộ giải mã () mà TUYỆT ĐỐI KHÔNG cập nhật ngược lại các trọng số backbone và . Trong quá trình tinh chỉnh liên hợp ở Stage A2, hai bộ trích xuất backbone và chỉ nhận luồng gradient duy nhất từ hàm gióng hàng kết hợp với hàm bảo toàn đối xứng ."
     ],
@@ -3170,6 +3231,10 @@
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      202,
+      205
     ]
   },
   {
@@ -3244,17 +3309,21 @@
     ],
     "new_lines": [
       "Giai đoạn Stage C chuẩn tắc: Hệ thống hoàn toàn loại bỏ đầu phân lớp cùng cấu trúc phân loại túi, đóng băng bộ trích xuất đặc trưng thuần túy để chỉ xuất gói biểu diễn chuẩn tắc chứa vector canonical cho các mô hình hạ nguồn độc lập.",
-      "Biến thể tùy chọn hỗ trợ MIL tùy chọn hỗ trợ MIL: Nếu kịch bản triển khai thực tế có nhu cầu giám sát trực quan điểm bằng chứng , hệ thống định nghĩa riêng một biến thể hỗ trợ MIL, hoàn toàn phân định với Extractor chuẩn tắc. Tại Chương 3, chuyên đề sẽ báo cáo độc lập kết quả giữa ba cấu hình: SSL thuần túy SSL thuần túy, SSL kết hợp thích ứng MIL SSL kết hợp thích ứng MIL, và Biến thể hỗ trợ MIL khi triển khai biến thể hỗ trợ MIL.",
+      "Biến thể tùy chọn hỗ trợ MIL: Nếu kịch bản triển khai thực tế có nhu cầu giám sát trực quan điểm bằng chứng, hệ thống định nghĩa riêng một biến thể hỗ trợ MIL, hoàn toàn phân định với Extractor chuẩn tắc. Tại Chương 3, chuyên đề sẽ báo cáo độc lập kết quả giữa ba cấu hình: SSL thuần túy, SSL kết hợp thích ứng MIL, và Biến thể hỗ trợ MIL khi triển khai.",
       "Ý nghĩa phương pháp luận của trọng số chú ý : Trọng số phản ánh mức độ đóng góp bằng chứng yếu của cửa sổ quan sát thứ đối với trạng thái bất thường chung của toàn bộ túi. Chuyên đề nhấn mạnh ranh giới khoa học: Trọng số là tín hiệu gợi ý điều tra, TUYỆT ĐỐI KHÔNG PHẢI là xác suất tấn công độc hại và KHÔNG PHẢI là bằng chứng giải thích nhân quả."
     ],
     "old_text_sha256": "a075556bbca5a4d4732fc64580c0579c6bdf3b6012b21906c9b5e867fe1a1976",
-    "new_text_sha256": "54a68039c3b859d850ae5ad9c73e63d7fb1a1816ed49767a72b119af6024d123",
+    "new_text_sha256": "d705688313696def02101d3b5bf85d058ecce2ce3246112e488bff90dd6d988d",
     "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
     "associated_claims": [
       "PROSE-RESTRAINT"
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      211,
+      214
     ]
   },
   {
@@ -3327,16 +3396,20 @@
     ],
     "new_lines": [
       "Gói biểu diễn tạo thành giao diện đầu ra duy nhất của toàn bộ Khung Trích xuất Đặc trưng Đa góc nhìn. Phù hợp với ranh giới phân định tầng tại Mục 1.1.3, Extractor tuyệt đối không chứa logic phát hiện bất thường hay ngưỡng phân lớp an ninh. Gói biểu diễn được bàn giao nguyên vẹn sang Stage C phục vụ các đầu dò tuyến tính đóng băng và quy trình chấm điểm bất thường không giám sát tùy chọn (Optional Downstream Zero-Shot Anomaly Scoring Protocol, trong đó hàm đo khoảng cách/năng lượng, phân bố nền và chính sách ngưỡng được tiền đăng ký và khóa cố định trên tập Train/Validation tại Chương 3).",
-      "Hình 2.4: Sơ đồ kiến trúc Gióng hàng đa góc nhìn, Kiểm soát sụp đổ và Tổng hợp biểu diễn thống nhất , nguồn tác giả đề xuất"
+      "Hình 2.4: Sơ đồ kiến trúc Gióng hàng đa góc nhìn, Kiểm soát sụp đổ và Tổng hợp biểu diễn thống nhất, nguồn tác giả đề xuất"
     ],
     "old_text_sha256": "3113fc49e7601712a72408854ada701408afb23f9f5e984da2d12347a0fd85bd",
-    "new_text_sha256": "2d9625494007f518ec03bc1a30c5a2f34cadbd04718148f46c263aa8fadeee2c",
+    "new_text_sha256": "54c00bdfed0c493386d464b2563c99afa5f4d21e98b584c8dc5571770ffca4aa",
     "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
     "associated_claims": [
       "PROSE-RESTRAINT"
     ],
     "claim_ids": [
       "PROSE-RESTRAINT"
+    ],
+    "current_indices": [
+      220,
+      222
     ]
   },
   {

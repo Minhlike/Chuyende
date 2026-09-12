@@ -312,7 +312,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P116-S00",
-    "parent_text_hash": "2b5b06816551",
+    "parent_text_hash": "5363c1be75e6",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -840,7 +840,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P162-S00",
-    "parent_text_hash": "2427e51e2c52",
+    "parent_text_hash": "0c39d1298df0",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -864,7 +864,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P163-S00",
-    "parent_text_hash": "d123033ac9f6",
+    "parent_text_hash": "1f5bbdb252e1",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
@@ -1045,7 +1045,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P188-S00",
-    "parent_text_hash": "ee97a91b5823",
+    "parent_text_hash": "92a80f5731c3",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -1617,7 +1617,7 @@
     "support_status": "VERIFIED_IN_CODE",
     "required_action": "NONE",
     "parent_detected_id": "DET-P493-S00",
-    "parent_text_hash": "4397a5095997",
+    "parent_text_hash": "28166f437c85",
     "notes": "; CLAIM_CLASS_SUPPORT_STATUS_CONTRADICTIONS=0; Reclassified to IMPLEMENTATION_VERIFIED: claim describes temporal split implementation verified in data_contract.py.",
     "factuality_class": "AUTHOR_SPECIFICATION"
   },
@@ -1868,7 +1868,7 @@
     "evidence_strength_local": "LOCAL_AGENT_BYTE_VERIFIED",
     "notes": "REMOTE_LOCAL_EVIDENCE_STRENGTH_MISMATCH=0; remote manifests attest loss metrics and zero test access; local workstation verifies raw checkpoint bytes.",
     "parent_detected_id": "DET-P431-S03",
-    "parent_text_hash": "fde963f30b2d",
+    "parent_text_hash": "5373886c2f29",
     "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
@@ -2493,7 +2493,7 @@
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P234-S00",
-    "parent_text_hash": "41360a1a4db3",
+    "parent_text_hash": "ee19a510916a",
     "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
@@ -2943,7 +2943,7 @@
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P317-S00",
-    "parent_text_hash": "83b8baa4ceab",
+    "parent_text_hash": "e211d810a20a",
     "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
@@ -3183,7 +3183,7 @@
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P366-S00",
-    "parent_text_hash": "0045edb2cc7d",
+    "parent_text_hash": "caa94bca9de3",
     "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
@@ -3263,7 +3263,7 @@
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P408-S00",
-    "parent_text_hash": "ba4b2f5d47e2",
+    "parent_text_hash": "cd7a55dd83f1",
     "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
@@ -3391,7 +3391,7 @@
     "support_status": "MATHEMATICAL_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P431-S03",
-    "parent_text_hash": "fde963f30b2d",
+    "parent_text_hash": "5373886c2f29",
     "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
@@ -3407,7 +3407,7 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P461-S00",
-    "parent_text_hash": "0a6f08ba02e0",
+    "parent_text_hash": "5ee0702ffa55",
     "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
@@ -3423,7 +3423,7 @@
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P461-S01",
-    "parent_text_hash": "decbfc9a4bdf",
+    "parent_text_hash": "2d83a4d8ff18",
     "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
@@ -3471,7 +3471,7 @@
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P475-S00",
-    "parent_text_hash": "6f3112a91a79",
+    "parent_text_hash": "3aae68df3f32",
     "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
@@ -3743,7 +3743,7 @@
     "support_status": "EMPIRICAL_OBSERVATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P513-S00",
-    "parent_text_hash": "f361730fa915",
+    "parent_text_hash": "879ccdef6987",
     "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
@@ -4383,7 +4383,7 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P372-S00",
-    "parent_text_hash": "2286a175e6b4",
+    "parent_text_hash": "29cb6ec63de1",
     "factuality_class": "AUTHOR_SPECIFICATION"
   },
   {
@@ -5046,7 +5046,7 @@
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "5b172e4024a4",
+    "parent_text_hash": "b23aca7fcd4a",
     "factuality_class": "AUTHOR_PROPOSAL"
   },
   {

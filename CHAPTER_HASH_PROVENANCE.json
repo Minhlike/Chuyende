@@ -6,10 +6,10 @@
     "chapter_2_sha256": "e91bbc47de218d037d5dec3192b6ba59fda4e3c7423e51c34aea898d3db25a01"
   },
   "observed_hash": {
-    "chapter_1_sha256": "8a8b2751bc6738b59af1b2d1350a11f0af64a621a63deba7ccdfe02a78126420",
-    "chapter_2_sha256": "c1a4d327719a2a8486e8834ea5bd2752697ed9c74d765fccc71dcdce91a648e5"
+    "chapter_1_sha256": "de42fd86703c12f074232e9388fb291b581db354b6ee041b44d2452c028cd3ec",
+    "chapter_2_sha256": "f843c5e96d94141bed81f12d741b4206ae445f2738a48c3fd8535410e9c4a4c1"
   },
-  "approved_edits_count": 78,
-  "total_diff_hunks": 78,
+  "approved_edits_count": 77,
+  "total_diff_hunks": 77,
   "status": "PASS"
 }
