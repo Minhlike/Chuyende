@@ -559,7 +559,7 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P145-S01",
-    "parent_text_hash": "9afc4aede8c2",
+    "parent_text_hash": "e234249879eb",
     "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
@@ -577,7 +577,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P147-S00",
-    "parent_text_hash": "9e6738d8b9c2",
+    "parent_text_hash": "ad61499f0c98",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
@@ -729,7 +729,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P157-S01",
-    "parent_text_hash": "4a6a6dc9b484",
+    "parent_text_hash": "ac5112bc4134",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
@@ -803,7 +803,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P158-S00",
-    "parent_text_hash": "6472b99ce6f9",
+    "parent_text_hash": "19431f160eb5",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
@@ -1525,7 +1525,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P387-S02",
-    "parent_text_hash": "66fb4e141549",
+    "parent_text_hash": "fb9c7d482fe1",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -1545,7 +1545,7 @@
     "support_status": "AUTHOR_HYPOTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P387-S03",
-    "parent_text_hash": "1f1031569166",
+    "parent_text_hash": "05c55c1ddc27",
     "factuality_class": "AUTHOR_PROPOSAL"
   },
   {
@@ -3231,7 +3231,7 @@
     "support_status": "AUTHOR_PROPOSAL",
     "required_action": "NONE",
     "parent_detected_id": "DET-P387-S03",
-    "parent_text_hash": "1f1031569166",
+    "parent_text_hash": "05c55c1ddc27",
     "factuality_class": "AUTHOR_PROPOSAL"
   },
   {

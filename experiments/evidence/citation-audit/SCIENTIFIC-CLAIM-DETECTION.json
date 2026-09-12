@@ -2,7 +2,7 @@
   "status": "PASS",
   "gate_title": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE",
   "detector_version": "3.0.0-forensic-truth-repair-round-3",
-  "document_sha256": "4ebea1aad15a774b8be3da0039ffc41dc15775300a7df67d0b8b7920f6f4aeb2",
+  "document_sha256": "d3cbba20792c0548e836e7d78ba709f0ae1004fb05ff39e31e77ad8a0534b436",
   "body_boundaries": {
     "body_start": 77,
     "body_end": 551,
@@ -875,8 +875,8 @@
       "location": "Chương (Đoạn P145, câu S1)",
       "paragraph_index": 145,
       "sentence_index": 1,
-      "text": "Bên cạnh đếm tần suất đơn thuần, trọng số TF-IDF được vận dụng nhằm cân bằng độ nổi bật của sự kiện: tần suất sự kiện (TF) đo lường mức độ xuất hiện cục bộ trong một cửa sổ hoặc phiên phân tích, trong khi tần số nghịch đảo văn bản (IDF) phạt giảm trọng số của các sự kiện phổ biến trên toàn bộ các cửa sổ; nhờ đó, sự kiện xuất hiện nhiều trong một phiên nhưng hiếm gặp trên toàn tập dữ liệu sẽ nhận trọng số tương đối lớn hơn, hỗ trợ làm nổi bật các biến động bất thường nhưng cần lưu ý rằng sự kiện hiếm không mặc nhiên đồng nghĩa với hành vi tấn công (rare != malicious); mặt khác, TF-IDF không mô hình hóa được thứ tự thời gian, khoảng cách ngữ nghĩa hay quan hệ nhân quả giữa các sự kiện; hoàn toàn độc lập với TF-IDF, độ hỗn loạn thông tin Shannon phản ánh mức độ bất định và phân tán của phân phối sự kiện trong cửa sổ: khi luồng log chỉ tập trung vào một vài loại hành vi quen thuộc, entropy nhận giá trị thấp; ngược lại, khi các sự kiện phân bố trải đều trên nhiều nhóm trạng thái khác nhau, entropy đạt mức cao:",
-      "text_hash": "9afc4aede8c2",
+      "text": "Bên cạnh đếm tần suất đơn thuần, trọng số TF-IDF được vận dụng nhằm cân bằng độ nổi bật của sự kiện: tần suất sự kiện (TF) đo lường mức độ xuất hiện cục bộ trong một cửa sổ hoặc phiên phân tích, trong khi tần số nghịch đảo văn bản (IDF) phạt giảm trọng số của các sự kiện phổ biến trên toàn bộ các cửa sổ, nhờ đó sự kiện xuất hiện nhiều trong một phiên nhưng hiếm gặp trên toàn tập dữ liệu sẽ nhận trọng số tương đối lớn hơn nhằm hỗ trợ làm nổi bật các biến động bất thường, song sự kiện hiếm không đồng nghĩa với hành vi tấn công độc hại bởi các tác vụ bảo trì ít dùng cũng có thể tạo ra tần suất thấp, đồng thời TF-IDF không mô hình hóa được thứ tự thời gian, khoảng cách ngữ nghĩa hay quan hệ nhân quả giữa các sự kiện; hoàn toàn độc lập với TF-IDF, độ hỗn loạn thông tin Shannon được xác định từ phân phối xác suất để đo lường mức độ bất định và phân tán của các loại sự kiện trong cửa sổ: khi luồng log chỉ tập trung vào một vài hành vi quen thuộc thì entropy nhận giá trị thấp, ngược lại khi các sự kiện phân bố trải đều trên nhiều nhóm trạng thái khác nhau thì entropy đạt mức cao:",
+      "text_hash": "e234249879eb",
       "citations": [],
       "pass_a": false,
       "pass_b": true,
@@ -889,8 +889,8 @@
       "location": "Chương (Đoạn P147, câu S0)",
       "paragraph_index": 147,
       "sentence_index": 0,
-      "text": "Trên không gian vector tần suất này, các mô hình phát hiện bất thường kinh điển được triển khai rộng rãi: thứ nhất là phân tích thành phần chính (PCA) (Xu et al., SOSP 2009)  [18] phân rã không gian vector  thành không gian con chuẩn tắc  và không gian con phần dư , nhận diện bất thường khi năng lượng chiếu lên phần dư vượt ngưỡng kiểm định:",
-      "text_hash": "9e6738d8b9c2",
+      "text": "Trên không gian vector tần suất này, các mô hình phát hiện bất thường kinh điển được triển khai rộng rãi: thứ nhất là phân tích thành phần chính PCA (Xu et al., SOSP 2009)  [18] thực hiện tâm hóa dữ liệu và tìm các phương chiếu trực giao có phương sai lớn nhất để phân rã không gian vector  thành không gian con chuẩn tắc  được tạo bởi các thành phần chính giữ lại và không gian con phần dư , nhận diện bất thường khi năng lượng chiếu lên phần dư vượt ngưỡng kiểm định thống kê; tuy nhiên, phương sai lớn không đồng nghĩa với ý nghĩa an ninh vì các hành vi tấn công tinh vi thường có quy mô tín hiệu nhỏ:",
+      "text_hash": "ad61499f0c98",
       "citations": [
         18
       ],
@@ -1024,8 +1024,8 @@
       "location": "Chương (Đoạn P157, câu S1)",
       "paragraph_index": 157,
       "sentence_index": 1,
-      "text": "Trong kiến trúc Transformer [34], cơ chế chú ý tích vô hướng tỉ lệ sử dụng các ma trận Query, Key và Value để so khớp thông tin: mỗi vị trí trong chuỗi có thể tham chiếu trực tiếp đến bất kỳ vị trí nào khác mà không bị giới hạn bởi nút thắt tuần tự của mạng hồi quy, qua đó nắm bắt hiệu quả các phụ thuộc ngữ cảnh dài hạn dù đổi lại chi phí tính toán chú ý tăng theo hàm bậc hai theo chiều dài chuỗi.",
-      "text_hash": "4a6a6dc9b484",
+      "text": "Trong kiến trúc Transformer [34], cơ chế chú ý tích vô hướng tỉ lệ tính điểm tương tác giữa các cặp Query và Key, chuẩn hóa qua hàm softmax thành trọng số để tổng hợp các vector Value trong phạm vi cửa sổ cho phép: mỗi vị trí có thể liên kết trực tiếp với mọi vị trí khác mà không phụ thuộc vào đường truyền tuần tự từng bước của mạng hồi quy, qua đó nắm bắt hiệu quả các phụ thuộc ngữ cảnh dài hạn dù đổi lại chi phí tính toán chú ý tăng theo hàm bậc hai theo chiều dài chuỗi.",
+      "text_hash": "ac5112bc4134",
       "citations": [
         34
       ],
@@ -1088,8 +1088,8 @@
       "location": "Chương (Đoạn P158, câu S0)",
       "paragraph_index": 158,
       "sentence_index": 0,
-      "text": "Mặc dù đạt kết quả tốt trên các tập dữ liệu phần mềm, nhóm phương pháp Semantic–Sequential đối mặt với ba rào cản khi áp dụng vào an ninh mạng [8], [3]: Một là, nguy cơ rò rỉ và thiên lệch từ dữ liệu tiền huấn luyện: các mô hình sử dụng Transformer tiền huấn luyện trên kho văn bản tổng quát có nguy cơ tận dụng tri thức ngoài miền; khi đánh giá trong điều kiện phân vùng nghiêm ngặt, năng lực phân tách thực tế cần được kiểm chứng cẩn trọng [8]; Hai là, chi phí tài nguyên tính toán: cơ chế Self-Attention trong Transformer [34] có độ phức tạp tính toán và bộ nhớ bậc hai theo độ dài chuỗi hoặc kích thước cửa sổ, đòi hỏi tài nguyên tính toán đáng kể khi triển khai trên luồng dữ liệu thời gian thực có lưu lượng lớn; Ba là, giới hạn phạm vi quan sát đơn luồng và thiếu nhận thức cấu trúc: cơ chế chú ý tự thân chỉ so khớp tương đồng hình thức giữa các token trên một dòng thời gian cục bộ, không tự động hiểu được cấu trúc tô-pô đồ thị, quan hệ tương tác đa thực thể giữa tiến trình - tệp tin - socket mạng, cũng như không tự suy diễn được quan hệ nhân quả hay ngữ nghĩa an ninh chuyên sâu của hệ điều hành.",
-      "text_hash": "6472b99ce6f9",
+      "text": "Mặc dù đạt kết quả tốt trên các tập dữ liệu phần mềm, nhóm phương pháp Semantic–Sequential đối mặt với ba rào cản khi áp dụng vào an ninh mạng [8], [3]: Một là, nguy cơ rò rỉ và thiên lệch từ dữ liệu tiền huấn luyện: các mô hình sử dụng Transformer tiền huấn luyện trên kho văn bản tổng quát có nguy cơ tận dụng tri thức ngoài miền; khi đánh giá trong điều kiện phân vùng nghiêm ngặt, năng lực phân tách thực tế cần được kiểm chứng cẩn trọng [8]; Hai là, chi phí tài nguyên tính toán: cơ chế Self-Attention trong Transformer [34] có độ phức tạp tính toán và bộ nhớ bậc hai theo độ dài chuỗi hoặc kích thước cửa sổ, đòi hỏi tài nguyên tính toán đáng kể khi triển khai trên luồng dữ liệu thời gian thực có lưu lượng lớn; Ba là, giới hạn phạm vi quan sát đơn luồng và thiếu nhận thức cấu trúc: cơ chế chú ý tự thân tính toán trọng số tương tác trực tiếp từ tích vô hướng Query-Key trong phạm vi cửa sổ chuỗi cục bộ, bị giới hạn bởi độ dài cửa sổ và không có cơ chế tự nhiên để mã hóa cấu trúc đồ thị nguồn gốc, các tương tác đa thực thể giữa tiến trình - tệp tin - socket mạng, cũng như không thể tự suy diễn quan hệ nhân quả hay tri thức an ninh hệ điều hành nếu không có cấu trúc tô-pô bổ trợ.",
+      "text_hash": "19431f160eb5",
       "citations": [
         8,
         3,
@@ -3125,8 +3125,8 @@
       "location": "Chương (Đoạn P387, câu S2)",
       "paragraph_index": 387,
       "sentence_index": 2,
-      "text": "[10], VICReg thiết lập cơ chế tự giám sát không tương phản dựa trên điều hòa phương sai và hiệp phương sai để ngăn ngừa sụp đổ biểu diễn mà không cần khai thác các cặp mẫu âm mẫu âm.",
-      "text_hash": "66fb4e141549",
+      "text": "[10], VICReg thiết lập cơ chế tự giám sát không tương phản dựa trên điều hòa phương sai và hiệp phương sai để ngăn ngừa sụp đổ biểu diễn mà không cần khai thác các cặp mẫu âm.",
+      "text_hash": "fb9c7d482fe1",
       "citations": [
         10
       ],
@@ -3141,8 +3141,8 @@
       "location": "Chương (Đoạn P387, câu S3)",
       "paragraph_index": 387,
       "sentence_index": 3,
-      "text": "Dựa trên đặc tính lý thuyết này của công bố gốc, nghiên cứu đề xuất giả thuyết thích nghi (Author Adaptation Hypothesis): việc loại bỏ nhu cầu lấy mẫu âm tường minh trong không gian telemetry log sẽ giúp giảm thiểu rủi ro âm tính giả âm tính giả, hạn chế việc ép các phiên telemetry bình thường độc lập nhưng có đặc trưng tương đồng ra xa nhau một cách nhân tạo.",
-      "text_hash": "1f1031569166",
+      "text": "Dựa trên đặc tính lý thuyết này của công bố gốc, nghiên cứu đề xuất giả thuyết thích nghi (Author Adaptation Hypothesis): việc loại bỏ nhu cầu lấy mẫu âm tường minh trong không gian telemetry log sẽ giúp giảm thiểu rủi ro âm tính giả, hạn chế việc ép các phiên telemetry bình thường độc lập nhưng có đặc trưng tương đồng ra xa nhau một cách nhân tạo.",
+      "text_hash": "05c55c1ddc27",
       "citations": [],
       "pass_a": false,
       "pass_b": true,
