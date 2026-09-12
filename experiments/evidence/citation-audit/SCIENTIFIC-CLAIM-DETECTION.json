@@ -2,7 +2,7 @@
   "status": "PASS",
   "gate_title": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE",
   "detector_version": "3.0.0-forensic-truth-repair-round-3",
-  "document_sha256": "57c91524a0dfec51e144f4f6e637ddc8e8b6d87f16244005770e9e18ef6a1776",
+  "document_sha256": "e5386f6cb4abdbb08268ed8e834c7ecaacb1fca6d01e52b20049069fc08be52f",
   "body_boundaries": {
     "body_start": 77,
     "body_end": 551,
@@ -874,8 +874,8 @@
       "location": "Chương (Đoạn P145, câu S1)",
       "paragraph_index": 145,
       "sentence_index": 1,
-      "text": "Bên cạnh đếm tần suất đơn thuần, trọng số TF-IDF được vận dụng nhằm cân bằng độ nổi bật của sự kiện: tần suất sự kiện (TF) đo lường mức độ xuất hiện cục bộ trong một cửa sổ hoặc phiên phân tích, trong khi tần số nghịch đảo văn bản (IDF) phạt giảm trọng số của các sự kiện phổ biến trên toàn bộ các cửa sổ, nhờ đó sự kiện xuất hiện nhiều trong một phiên nhưng hiếm gặp trên toàn tập dữ liệu sẽ nhận trọng số tương đối lớn hơn nhằm hỗ trợ làm nổi bật các biến động bất thường, song sự kiện hiếm không đồng nghĩa với hành vi tấn công độc hại bởi các tác vụ bảo trì ít dùng cũng có thể tạo ra tần suất thấp, đồng thời TF-IDF không mô hình hóa được thứ tự thời gian, khoảng cách ngữ nghĩa hay quan hệ nhân quả giữa các sự kiện; hoàn toàn độc lập với TF-IDF, độ hỗn loạn thông tin Shannon được xác định từ phân phối xác suất để đo lường mức độ bất định và phân tán của các loại sự kiện trong cửa sổ: khi luồng log chỉ tập trung vào một vài hành vi quen thuộc thì entropy nhận giá trị thấp, ngược lại khi các sự kiện phân bố trải đều trên nhiều nhóm trạng thái khác nhau thì entropy đạt mức cao:",
-      "text_hash": "e234249879eb",
+      "text": "Bên cạnh việc đếm tần suất đơn thuần, trọng số TF-IDF được vận dụng để điều chỉnh độ nổi bật của từng mẫu sự kiện trong không gian đặc trưng; trong đó thành phần tần suất sự kiện (TF) đo lường mức độ xuất hiện cục bộ trong một cửa sổ hoặc phiên phân tích, còn tần số nghịch đảo văn bản (IDF) phạt giảm trọng số của các sự kiện phổ biến trên toàn bộ kho dữ liệu nhằm hỗ trợ làm nổi bật các biến động bất thường, song sự kiện hiếm gặp không đồng nghĩa với hành vi tấn công độc hại bởi các tác vụ bảo trì định kỳ hoặc cấu hình quản trị ít dùng cũng tạo ra tần suất thấp, đồng thời TF-IDF không mô hình hóa được thứ tự thời gian, khoảng cách ngữ nghĩa hay mối liên hệ nhân quả giữa các sự kiện; hoàn toàn độc lập với phép đánh trọng số từ vựng TF-IDF, độ hỗn loạn thông tin Shannon được xác định từ phân phối xác suất thực nghiệm để đo lường mức độ bất định và độ phân tán của các loại sự kiện trong cửa sổ: khi luồng nhật ký chỉ tập trung vào một vài hành vi quen thuộc thì entropy nhận giá trị thấp, ngược lại khi các sự kiện phân bố trải đều trên nhiều nhóm trạng thái khác nhau thì entropy đạt mức cao:",
+      "text_hash": "43b84f24b819",
       "citations": [],
       "pass_a": false,
       "pass_b": true,
@@ -888,8 +888,8 @@
       "location": "Chương (Đoạn P147, câu S0)",
       "paragraph_index": 147,
       "sentence_index": 0,
-      "text": "Trên không gian vector tần suất này, các mô hình phát hiện bất thường kinh điển được triển khai rộng rãi: thứ nhất là phân tích thành phần chính PCA (Xu et al., SOSP 2009)  [18] thực hiện tâm hóa dữ liệu và tìm các phương chiếu trực giao có phương sai lớn nhất để phân rã không gian vector  thành không gian con chuẩn tắc  được tạo bởi các thành phần chính giữ lại và không gian con phần dư , nhận diện bất thường khi năng lượng chiếu lên phần dư vượt ngưỡng kiểm định thống kê; tuy nhiên, phương có phương sai lớn trong dữ liệu không nhất thiết là phương mang ý nghĩa an ninh, bởi PCA chỉ tối ưu hóa phương sai thống kê chứ không tối ưu hóa ngữ nghĩa an ninh, do đó điểm bất thường phần dư thuần túy là tín hiệu độ lệch thống kê chứ không tự chứng minh bản chất tấn công:",
-      "text_hash": "19ddfdb498df",
+      "text": "Trên không gian vector tần suất này, các mô hình phát hiện bất thường kinh điển được triển khai rộng rãi, tiêu biểu là phân tích thành phần chính PCA (Xu et al., SOSP 2009)  [18] thực hiện tâm hóa dữ liệu và tìm các phương chiếu trực giao có phương sai lớn nhất nhằm phân rã không gian vector  thành không gian con chuẩn tắc  gồm các thành phần chính được giữ lại và không gian con phần dư ; về mặt hình học, khi một vector quan sát nằm hoàn toàn trong không gian con giữ lại thì thành phần chiếu lên phần dư bằng 0, ngược lại một sự kiện được nhận diện là bất thường khi năng lượng chiếu lên phần dư vượt ngưỡng kiểm định thống kê, tuy nhiên phương có phương sai lớn trong dữ liệu không mặc nhiên là phương mang ý nghĩa an ninh do PCA tối ưu hóa tiêu chuẩn phương sai thống kê thay vì thuộc tính an ninh, vì vậy độ lớn phần dư thuần túy phản ánh độ lệch thống kê ngoài không gian chuẩn tắc chứ không tự chứng minh bản chất tấn công:",
+      "text_hash": "bbce590434d8",
       "citations": [
         18
       ],
@@ -957,8 +957,8 @@
       "location": "Chương (Đoạn P154, câu S0)",
       "paragraph_index": 154,
       "sentence_index": 0,
-      "text": "Khởi đầu cho hướng nghiên cứu này là mô hình DeepLog [14].",
-      "text_hash": "c8e6358dd0dd",
+      "text": "Khởi đầu cho hướng nghiên cứu này là mô hình DeepLog  [14].",
+      "text_hash": "bad41e0bf75b",
       "citations": [
         14
       ],
@@ -973,8 +973,8 @@
       "location": "Chương (Đoạn P154, câu S1)",
       "paragraph_index": 154,
       "sentence_index": 1,
-      "text": "DeepLog không chỉ phân tích chuỗi mã sự kiện log mà còn thiết lập một khung làm việc gồm hai thành phần mô hình hóa: Một là, mô hình LSTM thứ nhất học biểu diễn chuỗi các mẫu log (Log-Key Anomaly Detection) nhằm phát hiện các sự kiện sai lệch khỏi trật tự thực thi bình thường theo phân phối có điều kiện ; Hai là, mô hình LSTM thứ hai kết hợp phân phối chuẩn nhiều chiều để kiểm tra sự bất thường về giá trị tham số số học [14].",
-      "text_hash": "c1e55b770587",
+      "text": "Nhằm khắc phục hạn chế mất mát thứ tự thời gian của các mô hình túi từ, DeepLog thiết lập cơ chế phát hiện bất thường chuỗi mẫu sự kiện (Log-Key Anomaly Detection): mô hình LSTM học trật tự thực thi bình thường thông qua phân phối có điều kiện  trên cửa sổ trượt k sự kiện trước đó  [14]:",
+      "text_hash": "6254acb604b9",
       "citations": [
         14
       ],
@@ -989,8 +989,8 @@
       "location": "Chương (Đoạn P156, câu S0)",
       "paragraph_index": 156,
       "sentence_index": 0,
-      "text": "Song song đó, DeepLog xây dựng mô hình LSTM thứ hai dựa trên phân phối chuẩn nhiều chiều để kiểm tra sự bất thường về giá trị tham số số học  [14].",
-      "text_hash": "6306c5db45ba",
+      "text": "Song song với luồng sự kiện phân loại, DeepLog xây dựng mô hình LSTM thứ hai kết hợp phân phối chuẩn nhiều chiều để kiểm tra độ lệch bất thường của các tham số số học  [14]; tuy nhiên, việc mô hình hóa dựa trên mạng hồi quy đòi hỏi thông tin trạng thái phải truyền tuần tự qua từng bước tính toán, khiến cơ chế cổng của LSTM gặp giới hạn khi truyền tải các phụ thuộc ngữ cảnh dài hạn và không cho phép các vị trí cách xa nhau tương tác trực tiếp với nhau.",
+      "text_hash": "8d3382505ca1",
       "citations": [
         14
       ],
@@ -1005,8 +1005,8 @@
       "location": "Chương (Đoạn P157, câu S0)",
       "paragraph_index": 157,
       "sentence_index": 0,
-      "text": "Thứ nhất, để nâng cao năng lực biểu diễn ngữ nghĩa vượt khỏi hạn chế của vector tần suất, các công trình kế tiếp đã khai thác vector nhúng cho từng mẫu log: LogAnomaly [22] đề xuất Template2Vec dựa trên Word2Vec và FastText kết hợp trọng số d-IDF để trích xuất đặc trưng ngữ nghĩa từ vựng; trong khi đó, Logsy [23] áp dụng hàm mất mát phân loại ngoại lai trên dữ liệu log phụ trợ nhằm định hình biên giới phân tách cho lớp hành vi bình thường; Thứ hai, bước chuyển sang mô hình hóa chuỗi sâu sắc hơn được khởi xướng bởi LogBERT [20] dựa trên kiến trúc Transformer hai chiều và cơ chế chú ý tự thân (Self-Attention) của Vaswani et al.",
-      "text_hash": "d1b5fb4ef6eb",
+      "text": "Thứ nhất, để nâng cao năng lực biểu diễn ngữ nghĩa vượt khỏi hạn chế của vector tần suất, các công trình kế tiếp đã khai thác vector nhúng cho từng mẫu log: LogAnomaly  [22] đề xuất Template2Vec dựa trên Word2Vec và FastText kết hợp trọng số d-IDF để trích xuất đặc trưng ngữ nghĩa từ vựng; trong khi đó, Logsy  [23] áp dụng hàm mất mát phân loại ngoại lai trên dữ liệu log phụ trợ nhằm định hình biên giới phân tách cho lớp hành vi bình thường; Thứ hai, bước chuyển sang mô hình hóa chuỗi sâu sắc hơn được khởi xướng bởi LogBERT  [20] dựa trên kiến trúc Transformer hai chiều và cơ chế chú ý tự thân (Self-Attention) của Vaswani et al.",
+      "text_hash": "181ff2f35e10",
       "citations": [
         22,
         23,
@@ -1023,13 +1023,13 @@
       "location": "Chương (Đoạn P157, câu S1)",
       "paragraph_index": 157,
       "sentence_index": 1,
-      "text": "Trong kiến trúc Transformer [34], cơ chế chú ý tích vô hướng tỉ lệ tính điểm tương tác giữa các cặp Query và Key, chuẩn hóa qua hàm softmax thành trọng số để tổng hợp các vector Value trong phạm vi cửa sổ cho phép: mỗi vị trí có thể liên kết trực tiếp với mọi vị trí khác mà không phụ thuộc vào đường truyền tuần tự từng bước của mạng hồi quy, qua đó nắm bắt hiệu quả các phụ thuộc ngữ cảnh dài hạn dù đổi lại chi phí tính toán chú ý tăng theo hàm bậc hai theo chiều dài chuỗi.",
-      "text_hash": "ac5112bc4134",
+      "text": "Trong kiến trúc Transformer  [34], cơ chế chú ý tích vô hướng tỉ lệ ánh xạ đầu vào thành các bộ vector Query, Key và Value, tính điểm tương tác giữa các cặp Query-Key và chuẩn hóa qua hàm softmax để tạo phân phối trọng số tổng hợp các vector Value trong phạm vi cửa sổ quan sát; về mặt cơ chế, nếu các điểm tương tác tương đương nhau thì trọng số chú ý phân bố gần như đồng đều, còn khi một vị trí có điểm vượt trội thì trọng số tập trung vào vị trí đó, cho phép liên kết trực tiếp mọi cặp sự kiện mà không bị nghẽn qua các bước tuần tự, song trọng số chú ý thuần túy phản ánh mức độ liên đới ngữ cảnh được tính toán trong cửa sổ chứ không cấu thành bằng chứng giải thích nhân quả hay đồ thị phụ thuộc hệ thống.",
+      "text_hash": "b28b3d68456f",
       "citations": [
         34
       ],
       "pass_a": true,
-      "pass_b": false,
+      "pass_b": true,
       "reconciled_claim_ids": [
         "CLM-038"
       ]
@@ -1039,8 +1039,8 @@
       "location": "Chương (Đoạn P157, câu S2)",
       "paragraph_index": 157,
       "sentence_index": 2,
-      "text": "LogBERT áp dụng cơ chế này cho hai tác vụ tự giám sát gồm dự đoán sự kiện log bị che và dự đoán phân bố khối lượng log; song song đó, hướng tiếp cận không dùng parser như NeuralLog [21] trực tiếp mã hóa chuỗi văn bản thô thành các vector nhúng liên tục.",
-      "text_hash": "b8a01ff64d02",
+      "text": "LogBERT áp dụng cơ chế này cho hai tác vụ tự giám sát gồm dự đoán sự kiện log bị che và dự đoán phân bố khối lượng log; song song đó, hướng tiếp cận không dùng parser như NeuralLog  [21] trực tiếp mã hóa chuỗi văn bản thô thành các vector nhúng liên tục.",
+      "text_hash": "6b2692a92209",
       "citations": [
         21
       ],
@@ -1055,8 +1055,8 @@
       "location": "Chương (Đoạn P157, câu S4)",
       "paragraph_index": 157,
       "sentence_index": 4,
-      "text": "Để kiểm soát hiện tượng này, kỹ thuật chính quy hóa VICReg [10] phân rã mục tiêu điều chuẩn hình học thành ba thành phần: Phương sai duy trì độ phân tán theo chiều nhằm tránh co cụm về một điểm; Bất biến gióng hàng biểu diễn giữa các góc nhìn khác nhau; và Hiệp phương sai phi tương quan hóa các chiều đặc trưng nhằm ngăn ngừa sụp đổ chiều.",
-      "text_hash": "201fb26991e7",
+      "text": "Để kiểm soát hiện tượng này, kỹ thuật chính quy hóa VICReg  [10] phân rã mục tiêu điều chuẩn hình học thành ba thành phần: Phương sai duy trì độ phân tán theo chiều nhằm tránh co cụm về một điểm; Bất biến gióng hàng biểu diễn giữa các góc nhìn khác nhau; và Hiệp phương sai phạt các phần tử ngoài đường chéo của ma trận hiệp phương sai nhằm giảm tương quan tuyến tính giữa các chiều đặc trưng, dù mức hiệp phương sai triệt tiêu không đồng nghĩa với tính độc lập thống kê hoàn toàn khi tồn tại phụ thuộc phi tuyến.",
+      "text_hash": "440be9c71907",
       "citations": [
         10
       ],
@@ -1071,8 +1071,8 @@
       "location": "Chương (Đoạn P157, câu S5)",
       "paragraph_index": 157,
       "sentence_index": 5,
-      "text": "Việc áp dụng VICReg trong chuyên đề đóng vai trò là một cơ chế chính quy hóa hình học không gian, trong khi hiệu quả giảm tỷ lệ cảnh báo sai hoặc bỏ sót trong viễn trắc an ninh là giả thuyết thích ứng của đề tài cần kiểm chứng thực nghiệm [10].",
-      "text_hash": "42919d5f9ce7",
+      "text": "Việc áp dụng VICReg trong chuyên đề đóng vai trò là một cơ chế chính quy hóa hình học không gian, trong khi hiệu quả giảm tỷ lệ cảnh báo sai hoặc bỏ sót trong viễn trắc an ninh là giả thuyết thích ứng của đề tài cần kiểm chứng thực nghiệm  [10].",
+      "text_hash": "86f0a5e6dcd5",
       "citations": [
         10
       ],
@@ -1139,8 +1139,8 @@
       "location": "Chương (Đoạn P163, câu S0)",
       "paragraph_index": 163,
       "sentence_index": 0,
-      "text": "Các hệ thống phát hiện xâm nhập dựa trên đồ thị nguồn gốc (PIDS) tiêu biểu bao gồm [1], [5]: Thứ nhất, UNICORN [9] (NDSS 2020) xây dựng đồ thị nguồn gốc luồng thời gian thực, áp dụng thuật toán băm cây con Weisfeiler-Lehman để chuyển đổi đồ thị động thành vector đặc trưng đếm histogram; Thứ hai, KAIROS [24] (IEEE S&P 2024) tích hợp mạng nơ-ron đồ thị nhận biết thời gian mã hóa đồng thời thông tin cấu trúc và sự tiến triển thời gian của đồ thị nguồn gốc để chấm điểm bất thường và tái dựng dấu vết tấn công APT; Thứ ba, NODLINK [25] (NDSS 2024) mô hình hóa bài toán phát hiện thành cây Steiner trực tuyến kết hợp cơ chế bộ nhớ đệm để khôi phục đồ thị con tấn công nhỏ gọn; Thứ tư, MAGIC [26] (USENIX Security 2024) khai thác kiến trúc tự mã hóa đồ thị che kết hợp cơ chế thích ứng mô hình để học biểu diễn đa độ hạt và chống trôi dạt khái niệm; Thứ năm, ORTHRUS [27] (USENIX Security 2025) tích hợp cơ chế học biểu diễn nguồn gốc chống chịu kỹ thuật lẩn tránh.",
-      "text_hash": "1f5bbdb252e1",
+      "text": "Các hệ thống phát hiện xâm nhập dựa trên đồ thị nguồn gốc (PIDS) tiêu biểu bao gồm  [1],  [5]: Thứ nhất, UNICORN  [9] (NDSS 2020) xây dựng đồ thị nguồn gốc luồng thời gian thực, áp dụng thuật toán băm cây con Weisfeiler-Lehman để chuyển đổi đồ thị động thành vector đặc trưng đếm histogram; Thứ hai, KAIROS  [24] (IEEE S&P 2024) tích hợp mạng nơ-ron đồ thị nhận biết thời gian mã hóa đồng thời thông tin cấu trúc và sự tiến triển thời gian của đồ thị nguồn gốc để chấm điểm bất thường và tái dựng dấu vết tấn công APT; Thứ ba, NODLINK  [25] (NDSS 2024) mô hình hóa bài toán phát hiện thành cây Steiner trực tuyến kết hợp cơ chế bộ nhớ đệm để khôi phục đồ thị con tấn công nhỏ gọn; Thứ tư, MAGIC  [26] (USENIX Security 2024) khai thác kiến trúc tự mã hóa đồ thị che kết hợp cơ chế thích ứng mô hình để học biểu diễn đa độ hạt và chống trôi dạt khái niệm; Thứ năm, ORTHRUS  [27] (USENIX Security 2025) tích hợp cơ chế học biểu diễn nguồn gốc chống chịu kỹ thuật lẩn tránh.",
+      "text_hash": "20f3af935d03",
       "citations": [
         1,
         5,
@@ -1161,8 +1161,8 @@
       "location": "Chương (Đoạn P163, câu S1)",
       "paragraph_index": 163,
       "sentence_index": 1,
-      "text": "Mặc dù đạt nhiều bước tiến, nhóm phương pháp đồ thị đối mặt với ba thách thức lý thuyết và thực tiễn cốt lõi: Một là, hiện tượng bùng nổ phụ thuộc Dependency Explosion: các tiến trình hệ thống chạy dài hạn liên tục tương tác với nhiều tệp tin và socket, khiến đồ thị phát triển dày đặc và tạo ra nhiều liên kết phụ thuộc xa làm loãng tín hiệu bất thường [1], [28]; Hai là, ranh giới giữa quan hệ phụ thuộc cấu trúc và tác động nhân quả (Dependency != Causal Effect): kết quả khảo sát thực nghiệm của Bilot et al.",
-      "text_hash": "6475d56480cb",
+      "text": "Mặc dù đạt nhiều bước tiến, nhóm phương pháp đồ thị đối mặt với ba thách thức lý thuyết và thực tiễn cốt lõi: Một là, hiện tượng bùng nổ phụ thuộc Dependency Explosion: các tiến trình hệ thống chạy dài hạn liên tục tương tác với nhiều tệp tin và socket, khiến đồ thị phát triển dày đặc và tạo ra nhiều liên kết phụ thuộc xa làm loãng tín hiệu bất thường  [1],  [28]; Hai là, ranh giới giữa quan hệ phụ thuộc cấu trúc và tác động nhân quả (Dependency != Causal Effect): kết quả khảo sát thực nghiệm của Bilot et al.",
+      "text_hash": "35012d53f4bd",
       "citations": [
         1,
         28
@@ -1226,8 +1226,8 @@
       "location": "Chương (Đoạn P163, câu S5)",
       "paragraph_index": 163,
       "sentence_index": 5,
-      "text": "[30] chỉ ra hiệu quả của các baseline danh sách cho phép / thống kê sự kiện, khẳng định một cạnh phụ thuộc trong đồ thị không đồng nghĩa với tác động nhân quả an ninh; Ba là, hai bệnh lý mạng nơ-ron đồ thị về mặt cấu trúc: khi tăng số lớp truyền tin hiện tượng làm mịn quá mức (Over-smoothing), được Oono & Suzuki [44] chứng minh về mặt toán học tại ICLR 2020, khiến vector biểu diễn của các đỉnh mất dần năng lực biểu đạt theo hàm mũ và hội tụ về các vector khó phân biệt; trong khi đó hiện tượng nghẽn cổ chai thông tin (Over-squashing), được Alon & Yahav [31] phân tích tại ICLR 2021, xuất hiện khi lượng thông tin từ vùng lân cận mở rộng nhanh chóng phải truyền qua một số ít cạnh trung gian để nén vào một vector có kích thước cố định, khiến các tín hiệu bất thường quan trọng từ xa dễ bị hòa lẫn hoặc thất thoát.",
-      "text_hash": "bf12b7ccc2c5",
+      "text": "[30] chỉ ra hiệu quả của các baseline danh sách cho phép / thống kê sự kiện, khẳng định một cạnh phụ thuộc trong đồ thị không đồng nghĩa với tác động nhân quả an ninh; Ba là, hai bệnh lý mạng nơ-ron đồ thị về mặt cấu trúc: khi tăng số lớp truyền tin, hiện tượng làm mịn quá mức (Over-smoothing), được Oono & Suzuki  [44] chứng minh tại ICLR 2020 dưới các điều kiện phổ ma trận kề chuẩn hóa và hàm kích hoạt không âm trên kiến trúc GCN sâu, khiến biểu diễn các đỉnh hội tụ theo hàm mũ về một không gian con giới hạn và mất dần năng lực phân tách; trong khi đó, hiện tượng nghẽn cổ chai thông tin (Over-squashing), được Alon & Yahav  [31] phân tích tại ICLR 2021, xuất hiện khi kích thước vùng lân cận k-hop tăng nhanh và lượng thông tin từ nhiều nguồn phải truyền qua các nút cổ chai hoặc lát cắt hẹp để nén vào một vector trạng thái có kích thước cố định, khiến các tín hiệu bất thường quan trọng từ xa dễ bị hòa lẫn hoặc suy giảm.",
+      "text_hash": "2136e560dfdf",
       "citations": [
         30,
         44,
@@ -1355,8 +1355,8 @@
       "location": "Chương (Đoạn P178, câu S0)",
       "paragraph_index": 178,
       "sentence_index": 0,
-      "text": "Hoạt động của một hệ thống có thể được quan sát qua nhiều lăng kính dữ liệu dị thể: góc nhìn thống kê tần suất phản ánh mật độ sự kiện  [6], góc nhìn chuỗi sự kiện phản ánh trật tự thời gian cục bộ  [14],  [20], và góc nhìn đồ thị nguồn gốc phản ánh cấu trúc phụ thuộc nhân quả giữa các thực thể  [1],  [5],  [9].",
-      "text_hash": "b18051b89ee3",
+      "text": "Hoạt động của một hệ thống có thể được quan sát qua nhiều lăng kính dữ liệu dị thể: góc nhìn thống kê tần suất phản ánh mật độ sự kiện  [6], góc nhìn chuỗi sự kiện phản ánh trật tự thời gian cục bộ  [14],  [20], và góc nhìn đồ thị nguồn gốc phản ánh cấu trúc phụ thuộc thực thi giữa các thực thể  [1],  [5],  [9].",
+      "text_hash": "5a45cef8a72c",
       "citations": [
         6,
         14,
@@ -1366,7 +1366,7 @@
         9
       ],
       "pass_a": true,
-      "pass_b": true,
+      "pass_b": false,
       "reconciled_claim_ids": [
         "CLM-051"
       ]
@@ -1376,8 +1376,8 @@
       "location": "Chương (Đoạn P179, câu S0)",
       "paragraph_index": 179,
       "sentence_index": 0,
-      "text": "Khi đưa các góc nhìn dị thể này vào không gian vector tiềm ẩn chung qua các hàm mất mát tự giám sát, mô hình đối mặt với nguy cơ sụp đổ chiều biểu diễn, tức xu hướng ánh xạ mọi đầu vào thành các vector hằng số tầm thường, vốn đòi hỏi cơ chế điều hòa phương sai và hiệp phương sai để duy trì độ đa dạng không gian  [10],  [11]; bên cạnh đó, việc gióng hàng trong môi trường an ninh mạng còn gặp phải hai trở ngại thực tế: Một là, rủi ro chuyển giao tiêu cực, xảy ra khi nhiễu từ chuỗi sự kiện lấn át hoặc làm suy giảm tín hiệu cấu trúc nhân quả của đồ thị nguồn gốc; Hai là, hiện tượng dữ liệu bị khuyết hoặc tương ứng từng phần, phát sinh do độ trễ truyền thông, gói tin bị thất thoát hoặc thiếu liên kết 1–1 đồng thời giữa các luồng thu thập.",
-      "text_hash": "8eef565a5ee9",
+      "text": "Khi đưa các góc nhìn dị thể này vào không gian vector tiềm ẩn chung qua các hàm mất mát tự giám sát, mô hình đối mặt với nguy cơ sụp đổ chiều biểu diễn, tức xu hướng ánh xạ mọi đầu vào thành các vector hằng số tầm thường, vốn đòi hỏi cơ chế điều hòa phương sai và hiệp phương sai để duy trì độ đa dạng không gian  [10],  [11]; bên cạnh đó, việc gióng hàng trong môi trường an ninh mạng còn gặp phải hai trở ngại thực tế: Một là, rủi ro chuyển giao tiêu cực, xảy ra khi nhiễu từ chuỗi sự kiện lấn át hoặc làm suy giảm tín hiệu cấu trúc phụ thuộc thực thi của đồ thị nguồn gốc; Hai là, hiện tượng dữ liệu bị khuyết hoặc tương ứng từng phần, phát sinh do độ trễ truyền thông, gói tin bị thất thoát hoặc thiếu liên kết 1–1 đồng thời giữa các luồng thu thập.",
+      "text_hash": "e9524dd47f75",
       "citations": [
         10,
         11
@@ -4008,8 +4008,8 @@
       "location": "Chương (Đoạn P538, câu S1)",
       "paragraph_index": 538,
       "sentence_index": 1,
-      "text": "Việc biểu diễn các thực thể hệ thống theo chuỗi tương tác thời gian liên tục mở ra khả năng gom cụm các sự kiện cảnh báo đơn lẻ có liên hệ nhân quả, hỗ trợ chuyên viên phân tích theo dõi ngữ cảnh sự cố theo đồ thị tương tác.",
-      "text_hash": "293a40cc42be",
+      "text": "Việc biểu diễn các thực thể hệ thống theo chuỗi tương tác thời gian liên tục mở ra khả năng thiết lập các cụm sự kiện cảnh báo đơn lẻ có liên đới phụ thuộc thực thi theo thời gian, hỗ trợ chuyên viên phân tích theo dõi ngữ cảnh sự cố theo đồ thị tương tác.",
+      "text_hash": "083165a6b0bd",
       "citations": [],
       "pass_a": false,
       "pass_b": true,

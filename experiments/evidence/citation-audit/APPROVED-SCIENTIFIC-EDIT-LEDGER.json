@@ -502,7 +502,7 @@
       "Mặc dù sở hữu ưu thế về tốc độ xử lý trong thực tiễn, nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng [6], [2]: Một là, mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số: các bộ log parser dựa trên biểu thức chính quy thường thay thế các tham số biến động như địa chỉ IP, đường dẫn tệp tin và tham số dòng lệnh bằng ký tự đại diện <*> khiến nhiều thông tin an ninh mang tính phân biệt cao bị lược bỏ; Hai là, lan truyền và khuếch đại sai số cú pháp Parser Error Propagation: khi gặp các định dạng log mới chưa từng xuất hiện, parser có thể phân tách không chính xác, dẫn đến hiện tượng sinh ra các mẫu sự kiện giả lập hoặc gộp nhầm các sự kiện khác biệt, làm xáo trộn cấu trúc không gian vector x."
     ],
     "old_text_sha256": "fd07818b34cb95b8e3e7d81c26ea1a6120cec0294764cc7397e24e80df63e336",
-    "new_text_sha256": "0c784d402f319b77e56f8bd0102bc183c3e4fd5ba2be48f4a70f35ae60218217",
+    "new_text_sha256": "ce1ddd4438fcc1aa156b8446ed38642c749fc6111cfe6b6271a4e4c1be9b43cc",
     "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
     "associated_claims": [
       "PROSE-RESTRAINT"
@@ -549,7 +549,7 @@
       "Mặc dù đạt kết quả tốt trên các tập dữ liệu phần mềm, nhóm phương pháp Semantic–Sequential đối mặt với ba rào cản khi áp dụng vào an ninh mạng [8], [3]: Một là, nguy cơ rò rỉ và thiên lệch từ dữ liệu tiền huấn luyện: các mô hình sử dụng Transformer tiền huấn luyện trên kho văn bản tổng quát có nguy cơ tận dụng tri thức ngoài miền; khi đánh giá trong điều kiện phân vùng nghiêm ngặt, năng lực phân tách thực tế cần được kiểm chứng cẩn trọng [8]; Hai là, chi phí tài nguyên tính toán: cơ chế Self-Attention trong Transformer [34] có độ phức tạp tính toán và bộ nhớ bậc hai theo độ dài chuỗi hoặc kích thước cửa sổ, đòi hỏi tài nguyên tính toán đáng kể khi triển khai trên luồng dữ liệu thời gian thực có lưu lượng lớn; Ba là, giới hạn phạm vi quan sát đơn luồng và thiếu nhận thức cấu trúc: cơ chế chú ý tự thân tính toán trọng số tương tác trực tiếp từ tích vô hướng Query-Key trong phạm vi cửa sổ chuỗi cục bộ và tự nó không chứng minh quan hệ nhân quả; trong khi đó, cấu trúc đồ thị nguồn gốc có thể cung cấp thêm tương tác đa thực thể giữa tiến trình - tệp tin - socket mạng và các liên kết phụ thuộc, nhưng bản thân tô-pô đồ thị cũng không tự biến quan hệ liên đới hay phụ thuộc cấu trúc thành suy diễn nhân quả an ninh nếu thiếu các thiết kế kiểm soát hoặc bằng chứng bổ sung phù hợp."
     ],
     "old_text_sha256": "58e48bded2c7bf23ec99477d903f8f73f771fc35d40f196344dbca3f685e1c3f",
-    "new_text_sha256": "f0e77502ae379422e7e9a8e8b90ee2154901bef0ee2b71d6bbfc4fa397c8876c",
+    "new_text_sha256": "c72333ddc9c724dea5dfe4bb25323a60855a091e4d5d86a245a2b6c017893d4e",
     "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
     "associated_claims": [
       "PROSE-RESTRAINT"
@@ -593,7 +593,7 @@
       "Tại Việt Nam, các nghiên cứu chuyên sâu của ThS. Nguyễn Thị Thu Thủy (Khoa An toàn thông tin, Học viện Kỹ thuật Mật mã) [32] cũng đã hệ thống hóa phương pháp luận ứng dụng Graph Learning và mạng nơ-ron đồ thị (Graph Neural Network, GNN) trên đồ thị nguồn gốc để phát hiện các chiến dịch tấn công APT đa giai đoạn; đồng thời phân tích sâu sắc các thách thức về hiện tượng bùng nổ phụ thuộc, tính đa góc nhìn và yêu cầu bảo toàn tính nhân quả khi phân tích luồng sự kiện kiểm toán hệ thống."
     ],
     "old_text_sha256": "1b147b32eac0cdad9ec53bb7bf7d321c7e4c1ddd9161202c2049cbf6b262e624",
-    "new_text_sha256": "705a586e9ff6f9919353ad07f087e45850e7c9fb1d669fc38524b433d54a1972",
+    "new_text_sha256": "b09bec6c81c70ecb2232751e6e7d0ca9618e5c67506d2b500eb12bb88b4ce6e8",
     "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
     "associated_claims": [
       "PROSE-RESTRAINT"
@@ -769,7 +769,7 @@
       73
     ],
     "old_text_sha256": "db92c26b571fe086a294d2e05b6949bc761258b2e71bfa218b91fcedfc208f6e",
-    "new_text_sha256": "4d8c530839b9535abc7cfa86dacae03496abab7606e43c8c159f2969d2f54d0f",
+    "new_text_sha256": "dc76468035dcb3672be71cbb014af298a0bec2149d105ec22b4f9501a3823725",
     "old_text": [
       "Các công trình nghiên cứu hiện đại đã chỉ ra rằng dữ liệu log sở hữu tính đa góc nhìn nội tại: góc nhìn thống kê tần suất phản ánh mật độ hoạt động [6], góc nhìn chuỗi sự kiện phản ánh trật tự thời gian cục bộ [14], [20], và góc nhìn đồ thị nguồn gốc phản ánh luồng phụ thuộc cấu trúc đa thực thể [1], [5], [9]. Việc kết hợp các góc nhìn này được kỳ vọng sẽ cung cấp bức tranh toàn cảnh về chiến dịch tấn công.",
       "Tuy nhiên, khi tiến hành hợp nhất hoặc gióng hàng (Cross-view Alignment) các không gian biểu diễn dị thể này trong không gian vector tiềm ẩn, các mô hình học biểu diễn tự giám sát đối mặt với nguy cơ sụp đổ chiều biểu diễn (Representation Collapse), vốn đòi hỏi các kỹ thuật điều hòa phương sai - hiệp phương sai hoặc giảm dư thừa đặc trưng để duy trì tính đa dạng (như các nguyên lý được gợi mở trong VICReg [10] và Barlow Twins [11]). Đồng thời, trong phạm vi bài toán biểu diễn an ninh mạng doanh nghiệp, quá trình gióng hàng đa góc nhìn còn đặt ra các thách thức chuyên biệt: (1) Nguy cơ chuyển giao tiêu cực (Negative Transfer), khi sự kết hợp giữa các góc nhìn làm suy giảm độ chính xác tổng thể do nhiễu từ một góc nhìn lấn át tín hiệu hữu ích của góc nhìn khác; và (2) Vấn đề góc nhìn bị khuyết hoặc tương ứng từng phần (Missing-view & Partial Correspondence), nảy sinh khi một số luồng telemetry bị chậm trễ, thất thoát gói tin hoặc không có liên kết 1-1 đồng thời giữa chuỗi sự kiện và đồ thị nguồn gốc.",
@@ -3232,7 +3232,7 @@
       "Trong các kịch bản an ninh thực tế, nhãn tấn công thường chỉ sẵn có ở mức độ thô, ví dụ: một phiên làm việc, một máy chủ, hoặc một cửa sổ chiến dịch kéo dài được xác định là bị xâm nhập (nhãn túi ), nhưng không thể xác định chính xác sự kiện log đơn lẻ nào là hành vi tấn công. Để giải quyết thách thức này, chuyên đề thiết lập mô đun Phân bổ Bằng chứng Yếu tùy chọn ở Stage B dựa trên khung tiếp cận Học Đa Thể Hiện."
     ],
     "old_text_sha256": "7d3b9922d82b21811ae89cb1d8853f0662d571446b9e8d9be5d4034d5d6b1a55",
-    "new_text_sha256": "c8bc19d04f9dc12230f4076fc1797e6da689489d2780cdb93c654c45b8908348",
+    "new_text_sha256": "73feb7f6de6a54508f38ae634c5f77010d202241b9cffa64c567b15f8e7777ca",
     "scientific_justification": "Biên tập chuẩn hóa văn phong học thuật tiếng Việt, loại bỏ ngoặc đơn dư thừa và bảo toàn nguyên vẹn 100% ngữ nghĩa khoa học.",
     "associated_claims": [
       "PROSE-RESTRAINT"
