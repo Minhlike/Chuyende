@@ -45,8 +45,8 @@ def verify_report():
     with open(pdf_path, 'rb') as f:
         actual_pdf_sha = hashlib.sha256(f.read()).hexdigest()
 
-    expected_docx_sha = "83de2320df0a5af3dad2a80c5b8c2ef88b308a50e1233f003498a12dbdeed040"
-    expected_pdf_sha = "625a19ac674327b143b20c2b046c0b3256eedbf5690eaf1356da17e5de804aae"
+    expected_docx_sha = "69982da7c2959dbda797be8a38181f493cb5aec7f17f2f2a9ed6d4eee866d48f"
+    expected_pdf_sha = "00cecc7e6ba47a560edbae5a82635b9649760fc613f8819337401c35dc7ca4a2"
 
     if actual_docx_sha != expected_docx_sha:
         errors.append(f"Master DOCX hash modified! Expected {expected_docx_sha}, got {actual_docx_sha}")

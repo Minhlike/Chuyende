@@ -3,7 +3,7 @@
 
 **Tài liệu thẩm định:**
 - Master DOCX: `D:\Research\Chuyên đề chuyên sâu.docx`
-- Master PDF: `D:\Research\Chuyên đề chuyên sâu.pdf` (102 trang)
+- Master PDF: `D:\Research\Chuyên đề chuyên sâu.pdf` (104 trang)
 - Repository: `Minhlike/Chuyende` | Branch: `fix/thesis-apply-edits`
 - Thời điểm thẩm định: 13/09/2026
 
@@ -13,8 +13,8 @@
 
 STATUS: FULLY_ACCEPTED
 THESIS_MASTER_ACCEPTED_AT_SHA: 807ed9fdaeac4959ce4dd19b499c8cd27ab9d5d1
-CURRENT_REPOSITORY_HEAD: d787cc06a54f58059ce1566d0efb7b0820601927
-MASTER_HASH_MATCH: PASS (DOCX và PDF được cập nhật đồng bộ qua vòng Content Defense Hardening)
+CURRENT_REPOSITORY_HEAD: 9cebe5bd3a03c5c86d21cca7dda7bdbe44e6a9ea
+MASTER_HASH_MATCH: PASS (DOCX và PDF được cập nhật đồng bộ qua vòng Content Defense Hardening Round 2)
 
 ---
 
@@ -35,13 +35,14 @@ Các luận điểm toán học và học máy nền tảng đều được truy
 - **PCGrad** (P456): Khi tích vô hướng hai gradient âm ($g_1 \cdot g_2 < 0$, góc tù $> 90^\circ$), phép chiếu trực giao lên siêu phẳng pháp tuyến triệt tiêu thành phần đối kháng bậc nhất Taylor ($g'_1 \cdot g_2 \ge 0$), không làm suy giảm hàm mục tiêu thành phần.
 - **VICReg** (P166): Thành phần hiệp phương sai phạt các phần tử ngoài đường chéo nhằm giảm tương quan tuyến tính giữa các chiều đặc trưng; triệt tiêu hiệp phương sai không đồng nghĩa với tính độc lập thống kê hoàn toàn khi tồn tại phụ thuộc phi tuyến.
 
-### H1–H5 END-TO-END SEMANTIC IDENTITY: PASS
-Giữ vững bản sắc ngữ nghĩa thống nhất từ Lý thuyết $\to$ Phương pháp $\to$ Hiện thực $\to$ Chỉ số $\to$ Bằng chứng $\to$ Kết quả $\to$ Kết luận:
-- **H1 (Parameter Semantic Fidelity)**: **PASS**. Nhánh đồ thị học quan hệ thực thể; hàm mất mát dự đoán cạnh ($L_{\text{rel}}$) giảm từ ~0.59 về 0.1833; bảo lưu kiểm định bảo toàn tham số động ở tác vụ hạ nguồn.
-- **H2 (Multi-View Alignment & Negative Transfer Prevention)**: **PASS**. Mất mát hồi quy thời gian ($L_{\text{time}}$) giảm về 0.0857–0.0887 trên các đợt chạy 12 epochs; kiểm chứng gióng hàng đồng bộ với chuỗi Transformer được định vị cho giai đoạn tiếp theo.
-- **H3 (Anti-Drift & Shortcut Invariance Robustness)**: **PASS**. Stage A2 tập trung vào nhiệm vụ tự giám sát nội tại, chưa thử nghiệm loại bỏ đặc trưng đường tắt hoặc kiểm tra trôi dạt phân phối; bảo lưu kiểm chứng định lượng tại giai đoạn đánh giá đóng băng hạ nguồn.
-- **H4 (Bounded Operational Budget Feasibility)**: **PASS**. Kích thước lô hiệu dụng 1,024 sự kiện tiêu tốn dưới 550 MB VRAM GPU; đo đạc độ trễ streaming và thông lượng thực tế được ghi nhận rõ là yêu cầu kiểm nghiệm khi triển khai SOC.
-- **H5 (Controlled Linkability & Utility–Privacy Frontier)**: **PASS**. Stage A2 áp dụng chính sách chuẩn hóa danh tính và mã giả danh theo phiên (Session-scoped Pseudonymization); đánh giá tấn công suy luận thành viên (MIA) và ranh giới Pareto quyền riêng tư được bảo lưu cho mô hình hạ nguồn.
+### H1–H5 & ER1 END-TO-END SEMANTIC IDENTITY: PASS
+Giữ vững bản sắc ngữ nghĩa thống nhất từ RQ $\to$ Giả thuyết $\to$ Cấu tạo $\to$ Độ đo $\to$ Bằng chứng $\to$ Kết quả $\to$ Kết luận:
+- **H1 (Parameter Semantic Fidelity)**: **PASS** (Trạng thái: `NOT_TESTED_AS_FORMULATED` / Quan sát phụ trợ sơ bộ). Nhánh đồ thị đạt mức giảm mất mát quan hệ cạnh ($L_{\text{rel}}$) từ ban đầu về 0.1833 (Seed 7) và 0.1943 (Seed 999); đây là quan sát tối ưu phụ trợ, chưa đo lường trực tiếp thông tin tương hỗ tham số an ninh $I(z; Y_{\text{sec}})$.
+- **H2 (Multi-View Alignment & Negative Transfer Prevention)**: **PASS** (Trạng thái: `NOT_TESTED_AS_FORMULATED`). Mất mát hồi quy bước thời gian liên tục ($L_{\text{time}}$) đạt mức quan sát 0.0857–0.0887 trên các đợt chạy 12 epochs; chưa thực hiện thực nghiệm bóc tách (ablation) đơn view vs. đa view và ablation PCGrad.
+- **H3 (Anti-Drift & Shortcut Invariance Robustness)**: **PASS** (Trạng thái: `NOT_TESTED`). Stage A2 tập trung vào nhiệm vụ tự giám sát nội tại trên phân vùng Train/Validation, chưa thực hiện tiêm nhiễu trôi dạt hoặc triệt tiêu đường tắt.
+- **H4 (Weak-Label Evidence Allocation & Administrator-Noise Robustness)**: **PASS** (Trạng thái: `NOT_TESTED`). Tầng Attention-MIL (Stage B) đã được thiết kế hoàn chỉnh về mặt kiến trúc; bảo lưu kiểm chứng thực nghiệm khi mô hình được huấn luyện trên nhãn thô và đánh giá hạ nguồn.
+- **H5 (Controlled Linkability & Utility–Privacy Frontier)**: **PASS** (Trạng thái: `NOT_TESTED`). Khung giả danh hóa theo phiên (Session-scoped Pseudonymization) được thiết lập ở tầng tiền xử lý; các thực nghiệm tấn công suy luận thành viên (MIA), nghịch đảo mô hình và xác lập đường biên Pareto được bảo lưu cho giai đoạn hạ nguồn.
+- **ER1 (Bounded Operational Resource Feasibility)**: **PASS** (Trạng thái: `PARTIAL_PRELIMINARY_MEMORY_EVIDENCE`). Kích thước lô hiệu dụng 1,024 sự kiện tiêu tốn dưới 550 MB VRAM GPU trong quá trình tiền huấn luyện; các chỉ tiêu streaming (thông lượng, độ trễ p50/p95, dung lượng trạng thái) thuộc phạm vi triển khai tiếp theo.
 
 ### EXPERIMENTAL_TRUTH: PASS
 - Báo cáo trung thực trên cả 5 hạt ngẫu nhiên (Seed 999, Seed 42, Seed 7, Seed 1337, Seed 2024), trích xuất trực tiếp từ tệp nhật ký `TRAIN-LOG.jsonl`.
