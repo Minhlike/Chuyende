@@ -33,7 +33,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P095-S00",
-    "parent_text_hash": "08ff4f35bce1",
+    "parent_text_hash": "b7386a3e0708",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -52,7 +52,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P095-S01",
-    "parent_text_hash": "da25052c4586",
+    "parent_text_hash": "13c674c81a33",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
@@ -70,7 +70,7 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P095-S02",
-    "parent_text_hash": "5c028cb2f4c4",
+    "parent_text_hash": "5159ce1b213c",
     "factuality_class": "DOCUMENT_DESCRIPTION"
   },
   {
@@ -89,7 +89,7 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P097-S00",
-    "parent_text_hash": "ad346d916bd1",
+    "parent_text_hash": "4ce299b080bf",
     "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
@@ -109,7 +109,7 @@
     "required_action": "NONE",
     "parent_detected_id": "DET-P097-S02",
     "notes": "CLAIM_CLASS_SUPPORT_STATUS_CONTRADICTIONS=0; FALSE_DIRECT_SUPPORT=0; AUTHOR_SYNTHESIS: [1] (Inam et al. IEEE S&P 2023) and [2] (Michael et al. ACSAC 2020) establish provenance telemetry and audit log forensics on Linux, supporting the general mechanism. Syscall examples (execve, openat, unlink, connect, accept) are representative author-selected illustrations of the telemetry categories; specific enumeration is author synthesis, not exhaustively proven by [1],[2] alone.",
-    "parent_text_hash": "4a303d757c06",
+    "parent_text_hash": "0ea32de5ea77",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
@@ -127,7 +127,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P097-S03",
-    "parent_text_hash": "907a08d53f7b",
+    "parent_text_hash": "bb15cf5bdc99",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -165,7 +165,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P103-S00",
-    "parent_text_hash": "02ca586aae1b",
+    "parent_text_hash": "ee7ce1f1fc6f",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -183,7 +183,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P103-S01",
-    "parent_text_hash": "3aaa8b5a2d07",
+    "parent_text_hash": "256c477f045a",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -201,7 +201,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P103-S02",
-    "parent_text_hash": "b9cecfc87a21",
+    "parent_text_hash": "203943d9a08e",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -220,7 +220,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P103-S03",
-    "parent_text_hash": "4151e4e4e61e",
+    "parent_text_hash": "b34468e0d3e1",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
@@ -238,7 +238,7 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P104-S01",
-    "parent_text_hash": "2b66d31b5c23",
+    "parent_text_hash": "64c8474de730",
     "factuality_class": "AUTHOR_TAXONOMY"
   },
   {
@@ -353,7 +353,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P125-S00",
-    "parent_text_hash": "889476ec16c8",
+    "parent_text_hash": "11085d2ffb49",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -371,7 +371,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P125-S01",
-    "parent_text_hash": "68f6c618374f",
+    "parent_text_hash": "3208981f6083",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
@@ -466,7 +466,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P135-S00",
-    "parent_text_hash": "7d6595168012",
+    "parent_text_hash": "9d416dc60183",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
@@ -926,7 +926,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P171-S00",
-    "parent_text_hash": "05c4bf80701f",
+    "parent_text_hash": "84a03d0f306b",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
@@ -945,7 +945,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P173-S00",
-    "parent_text_hash": "a5af34ba4f90",
+    "parent_text_hash": "018f230bf785",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
@@ -964,7 +964,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P174-S00",
-    "parent_text_hash": "5a090b0d8df0",
+    "parent_text_hash": "1b53027f9aaf",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -1006,7 +1006,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P179-S00",
-    "parent_text_hash": "2d3909e141a5",
+    "parent_text_hash": "8eef565a5ee9",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
@@ -1045,7 +1045,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P188-S00",
-    "parent_text_hash": "92a80f5731c3",
+    "parent_text_hash": "b8dfda0e5507",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -1064,7 +1064,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P189-S00",
-    "parent_text_hash": "8acb1d3375d1",
+    "parent_text_hash": "169ed1072b81",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -1083,7 +1083,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P193-S00",
-    "parent_text_hash": "477d01b33efa",
+    "parent_text_hash": "468e6e2d2e7f",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
@@ -1103,7 +1103,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P194-S00",
-    "parent_text_hash": "a951d02f105a",
+    "parent_text_hash": "ad79bf8e8e2d",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -1121,7 +1121,7 @@
     "support_status": "DIRECT_SUPPORT",
     "required_action": "NONE",
     "parent_detected_id": "DET-P194-S01",
-    "parent_text_hash": "04d74c7cba4c",
+    "parent_text_hash": "73af2ef7b421",
     "factuality_class": "LITERATURE_INTERPRETATION"
   },
   {
@@ -1974,7 +1974,7 @@
     "support_status": "SOURCE_GROUNDED_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P082-S00",
-    "parent_text_hash": "40ffdf58266b",
+    "parent_text_hash": "9150bafac7bc",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
@@ -1992,7 +1992,7 @@
     "support_status": "SOURCE_GROUNDED_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P082-S02",
-    "parent_text_hash": "77959975ccb6",
+    "parent_text_hash": "82d19692d659",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT"
   },
   {
@@ -4597,7 +4597,7 @@
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "1f188c0b1dc8",
+    "parent_text_hash": "d03a626b3f86",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {
@@ -4872,7 +4872,7 @@
     "support_status": "SUPPORTED_BY_CITATION",
     "required_action": "NONE",
     "notes": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE; 1:N reconciled candidate.",
-    "parent_text_hash": "eb0261cdde54",
+    "parent_text_hash": "1f75409690f5",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT"
   },
   {

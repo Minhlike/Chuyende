@@ -36,7 +36,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Trong các Trung tâm Điều hành An ninh mạng (Security Operations Center, SOC) hiện đại, dữ liệu nhật ký hệ thống và nhật ký kiểm toán đóng vai trò là nguồn bằng chứng trung tâm phục vụ phát hiện, điều tra và ứng phó các chiến dịch tấn công có chủ đích (Advanced Persistent Threats, APT) [1].",
-    "parent_text_hash": "08ff4f35bce1"
+    "parent_text_hash": "b7386a3e0708"
   },
   {
     "claim_id": "CLM-003",
@@ -56,7 +56,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Khác với văn bản ngôn ngữ tự nhiên thông thường hoặc tín hiệu thị giác máy tính, dữ liệu log sở hữu cấu trúc bán cấu trúc, mang tính phụ thuộc thời gian nghiêm ngặt, phản ánh các quan hệ phụ thuộc thực thi giữa các tiến trình và tài nguyên hệ điều hành, đồng thời chứa đựng các ngữ nghĩa an ninh đặc thù [2], [3].",
-    "parent_text_hash": "da25052c4586"
+    "parent_text_hash": "13c674c81a33"
   },
   {
     "claim_id": "CLM-004",
@@ -75,7 +75,7 @@
     "artifact_locator": "",
     "factuality_class": "DOCUMENT_DESCRIPTION",
     "atomic_claim": "Mục 1.1 tập trung hình thức hóa bài toán biểu diễn đặc trưng log phục vụ phát hiện tấn công đa giai đoạn, phân tích bản chất không gian dữ liệu doanh nghiệp, xác lập mô hình hành vi phi tuyến tính trên ma trận MITRE ATT&CK [4] và thiết lập khung Hợp đồng Biểu diễn nhằm bảo toàn các bất biến an toàn cho không gian vector đặc trưng .",
-    "parent_text_hash": "5c028cb2f4c4"
+    "parent_text_hash": "5159ce1b213c"
   },
   {
     "claim_id": "CLM-005",
@@ -95,7 +95,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_TAXONOMY",
     "atomic_claim": "Không gian dữ liệu nhật ký trong môi trường mạng doanh nghiệp được tổng hợp từ ba nhóm nguồn telemetry chính với cấu trúc và định dạng không đồng nhất [1], [5].",
-    "parent_text_hash": "ad346d916bd1"
+    "parent_text_hash": "4ce299b080bf"
   },
   {
     "claim_id": "CLM-006A",
@@ -115,7 +115,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Trên các hệ thống Linux, các cơ chế thu thập viễn trắc nguồn gốc và kiểm toán mức nhân (như Linux Auditd hoặc eBPF) ghi nhận các sự kiện lời gọi hệ thống (system calls) — tiêu biểu như khởi tạo tiến trình (execve), thao tác tệp tin (open, openat, unlink) và kết nối socket mạng (connect, accept) — để phục vụ điều tra số và xây dựng đồ thị quan hệ nhân quả [1], [2].",
-    "parent_text_hash": "4a303d757c06"
+    "parent_text_hash": "0ea32de5ea77"
   },
   {
     "claim_id": "CLM-006B",
@@ -134,7 +134,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Trong khi đó, trên môi trường Windows, Microsoft Sysinternals Sysmon cung cấp viễn trắc an ninh mức hệ điều hành thông qua các sự kiện định danh chuẩn hóa theo đặc tả kỹ thuật chính thức của Russinovich & Garnier [41], tiêu biểu gồm: khởi tạo tiến trình (ProcessCreate - Event ID 1), kết nối mạng (NetworkConnect - Event ID 3), nạp thư viện động (ImageLoaded - Event ID 7), tạo tệp tin (FileCreate - Event ID 11), và thao tác cấu hình registry (RegistryEvent - Event ID 13).",
-    "parent_text_hash": "907a08d53f7b"
+    "parent_text_hash": "bb15cf5bdc99"
   },
   {
     "claim_id": "CLM-007",
@@ -174,7 +174,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Bên cạnh tính dị thể, dữ liệu log doanh nghiệp chịu áp lực vận hành về mặt thông lượng và tỷ lệ phân bố nhãn  [8],  [3].",
-    "parent_text_hash": "02ca586aae1b"
+    "parent_text_hash": "ee7ce1f1fc6f"
   },
   {
     "claim_id": "CLM-009",
@@ -193,7 +193,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Trong các môi trường mạng lớn, hệ thống tiếp nhận luồng sự kiện liên tục với tốc độ cao, đặt ra yêu cầu giám sát theo cơ chế thời gian thực (runtime streaming) như cách tiếp cận phác họa đồ thị của UNICORN [9], đồng thời đối mặt với thách thức kiểm soát tài nguyên bộ nhớ khi xử lý các đồ thị nguồn gốc kéo dài.",
-    "parent_text_hash": "3aaa8b5a2d07"
+    "parent_text_hash": "256c477f045a"
   },
   {
     "claim_id": "CLM-010",
@@ -212,7 +212,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Đồng thời, tỷ lệ các dòng log liên quan đến hành vi tấn công trong thực tế thường rất nhỏ so với lưu lượng thông thường, tạo ra sự mất cân bằng nhãn sâu sắc khiến các hàm mất mát học máy thông thường có xu hướng xem nhẹ nhóm thiểu số  [8].",
-    "parent_text_hash": "b9cecfc87a21"
+    "parent_text_hash": "203943d9a08e"
   },
   {
     "claim_id": "CLM-011",
@@ -232,7 +232,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Trong khi đó, việc suy thoái không gian vector (sụp đổ chiều biểu diễn) nảy sinh khi các mô hình tự giám sát không áp dụng các cơ chế điều hòa phương sai và hiệp phương sai phù hợp để duy trì tính đa dạng của các chiều đặc trưng  [10],  [11].",
-    "parent_text_hash": "4151e4e4e61e"
+    "parent_text_hash": "b34468e0d3e1"
   },
   {
     "claim_id": "CLM-012",
@@ -251,7 +251,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_TAXONOMY",
     "atomic_claim": "Dựa trên các vấn đề không dừng (non-stationarity) và phương pháp luận đánh giá theo thời gian được thảo luận trong tài liệu liên quan [8], nghiên cứu tổng hợp bốn dạng trôi dạt dữ liệu (Drift Taxonomy) phục vụ khung phân tích của chuyên đề (Tác giả tổng hợp):",
-    "parent_text_hash": "2b66d31b5c23"
+    "parent_text_hash": "64c8474de730"
   },
   {
     "claim_id": "CLM-013",
@@ -329,7 +329,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Trong đó mỗi chiến thuật (Tactic) đại diện cho Mục tiêu chiến thuật của kẻ tấn công (trả lời câu hỏi “Tại sao”) và mỗi kỹ thuật (Technique) đại diện cho phương thức thực thi cụ thể (trả lời câu hỏi “Làm thế nào”); một chuỗi sự kiện hoặc cây tiến trình có thể đồng thời kích hoạt nhiều nhãn chiến thuật và kỹ thuật tại cùng một thời điểm quan sát  [4].",
-    "parent_text_hash": "2b5b06816551"
+    "parent_text_hash": "5363c1be75e6"
   },
   {
     "claim_id": "CLM-017",
@@ -372,7 +372,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Ba là, nhóm Điều kiện Triệt tiêu (EXCLUDE, E_exclude): Tập hợp các thông tin giả tạo và biến số ngoài miền bắt buộc phải bị loại bỏ/triệt tiêu khỏi không gian vector z nhằm ngăn ngừa rủi ro học đường tắt (Shortcut Learning) [8].",
-    "parent_text_hash": "889476ec16c8"
+    "parent_text_hash": "11085d2ffb49"
   },
   {
     "claim_id": "CLM-019",
@@ -391,7 +391,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Bao gồm: các mẫu định dạng đặc thù của môi trường thử nghiệm (Testbed-specific artifacts), các biến số gây rò rỉ phân vùng dữ liệu và đánh cắp thời gian (Partition-leakage and temporal snooping variables như dấu thời gian tuyệt đối của máy thí nghiệm, hostname cố định của môi trường lab) [8], và các đặc trưng tương quan giả (Spurious correlations) có thể khiến mô hình đạt độ chính xác ảo trên tập kiểm thử nhưng thất bại khi triển khai thực tế.",
-    "parent_text_hash": "68f6c618374f"
+    "parent_text_hash": "3208981f6083"
   },
   {
     "claim_id": "CLM-020",
@@ -491,7 +491,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Tầng 3 thực hiện phát hiện và phân loại hạ nguồn (Downstream Detection): Đánh giá chất lượng của vector biểu diễn z thông qua giao thức đóng băng encoder và huấn luyện đầu phân loại tuyến tính (Frozen Linear Probing theo chuẩn mực SimCLR [37]):",
-    "parent_text_hash": "7d6595168012"
+    "parent_text_hash": "9d416dc60183"
   },
   {
     "claim_id": "CLM-025",
@@ -589,7 +589,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_TAXONOMY",
     "atomic_claim": "Bên cạnh đếm tần suất đơn thuần, trọng số TF-IDF (Term Frequency – Inverse Document Frequency) được vận dụng nhằm cân bằng độ nổi bật của sự kiện: tần suất sự kiện (TF) đo lường mức độ xuất hiện trong một cửa sổ hoặc phiên phân tích, trong khi tần số nghịch đảo văn bản (IDF) làm giảm trọng số của các sự kiện xuất hiện phổ biến trên nhiều cửa sổ; nhờ đó, sự kiện xuất hiện nhiều trong một phiên nhưng ít phổ biến trên toàn tập sẽ nhận trọng số tương đối lớn hơn, dù TF-IDF không mô hình hóa được thứ tự thời gian, khoảng cách ngữ nghĩa hay quan hệ nhân quả giữa các sự kiện; độc lập với TF-IDF, độ hỗn loạn thông tin Shannon (Entropy) đóng vai trò là thước đo mức độ bất định và phân tán của phân phối sự kiện trong cửa sổ phân tích:",
-    "parent_text_hash": "9afc4aede8c2"
+    "parent_text_hash": "e234249879eb"
   },
   {
     "claim_id": "CLM-030",
@@ -608,7 +608,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Trên không gian vector tần suất này, các mô hình phát hiện bất thường kinh điển được triển khai rộng rãi: (1) Principal Component Analysis (PCA) (Xu et al., SOSP 2009)  [18] phân rã không gian vector  thành không gian con chuẩn tắc  và không gian con phần dư , nhận diện bất thường khi năng lượng chiếu lên phần dư vượt ngưỡng kiểm định:",
-    "parent_text_hash": "9e6738d8b9c2"
+    "parent_text_hash": "19ddfdb498df"
   },
   {
     "claim_id": "CLM-031",
@@ -768,7 +768,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Trong kiến trúc Transformer [34], cơ chế chú ý tích vô hướng tỉ lệ sử dụng các ma trận Query, Key và Value để so khớp thông tin: mỗi vị trí trong chuỗi có thể tham chiếu trực tiếp đến bất kỳ vị trí nào khác mà không bị giới hạn bởi nút thắt tuần tự của mạng hồi quy, qua đó nắm bắt hiệu quả các phụ thuộc ngữ cảnh dài hạn dù đổi lại chi phí tính toán chú ý tăng theo hàm bậc hai theo chiều dài chuỗi.",
-    "parent_text_hash": "4a6a6dc9b484"
+    "parent_text_hash": "ac5112bc4134"
   },
   {
     "claim_id": "CLM-039",
@@ -846,7 +846,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT",
     "atomic_claim": "Mặc dù đạt kết quả tốt trên các tập dữ liệu phần mềm, nhóm phương pháp Semantic–Sequential đối mặt với ba rào cản khi áp dụng vào an ninh mạng [8], [3]: (1) Nguy cơ rò rỉ và thiên lệch từ dữ liệu tiền huấn luyện (Pretraining-Data Advantage): các mô hình sử dụng Transformer tiền huấn luyện trên kho văn bản tổng quát có nguy cơ tận dụng tri thức ngoài miền; khi đánh giá trong điều kiện phân vùng nghiêm ngặt, năng lực phân tách thực tế cần được kiểm chứng cẩn trọng [8]; (2) Chi phí tài nguyên tính toán: cơ chế Self-Attention trong Transformer [34] có độ phức tạp tính toán và bộ nhớ bậc hai theo độ dài chuỗi hoặc kích thước cửa sổ, đòi hỏi tài nguyên tính toán đáng kể khi triển khai trên luồng dữ liệu thời gian thực có lưu lượng lớn; (3) Giới hạn phạm vi quan sát đơn luồng: mô hình chuỗi chủ yếu theo dõi các sự kiện trên một dòng thời gian cục bộ, gặp khó khăn khi mô hình hóa trực tiếp các mối liên hệ phụ thuộc đan xen đa tiến trình, đa thực thể và vượt ranh giới máy chủ.",
-    "parent_text_hash": "6472b99ce6f9"
+    "parent_text_hash": "3fd3356bed7a"
   },
   {
     "claim_id": "CLM-043",
@@ -885,7 +885,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Trong đó V là tập các đỉnh đại diện cho các thực thể hệ thống thuộc tập kiểu ; E là tập các cạnh có hướng mô tả các tương tác luồng phụ thuộc thuộc tập kiểu ; và τ gán nhãn mốc thời gian xảy ra tương tác  [1].",
-    "parent_text_hash": "2427e51e2c52"
+    "parent_text_hash": "0c39d1298df0"
   },
   {
     "claim_id": "CLM-045",
@@ -910,7 +910,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Các hệ thống phát hiện xâm nhập dựa trên đồ thị nguồn gốc (PIDS) tiêu biểu bao gồm [1], [5]: (1) UNICORN [9] (Han et al., NDSS 2020) xây dựng đồ thị nguồn gốc luồng thời gian thực, áp dụng thuật toán băm cây con Weisfeiler-Lehman (WL-subtree kernel) để chuyển đổi đồ thị động thành vector đặc trưng đếm histogram; (2) KAIROS [24] (Cheng et al., IEEE S&P 2024) tích hợp mạng nơ-ron đồ thị nhận biết thời gian (Time-Aware GNN encoder-decoder), mã hóa đồng thời thông tin cấu trúc và sự tiến triển thời gian của đồ thị nguồn gốc để chấm điểm bất thường và tái dựng dấu vết tấn công APT; (3) NODLINK [25] (Li et al., NDSS 2024) mô hình hóa bài toán phát hiện thành cây Steiner trực tuyến (Online Steiner Tree Problem) kết hợp cơ chế bộ nhớ đệm để khôi phục đồ thị con tấn công nhỏ gọn; (4) MAGIC [26] (Jia et al., USENIX Security 2024) khai thác kiến trúc tự mã hóa đồ thị che (Masked Graph Autoencoder) kết hợp cơ chế thích ứng mô hình (model adaptation) để học biểu diễn đa độ hạt và chống trôi khái niệm (concept drift); (5) ORTHRUS [27] (Jiang et al., USENIX Security 2025) tích hợp cơ chế học biểu diễn nguồn gốc chống chịu kỹ thuật lẩn tránh.",
-    "parent_text_hash": "d123033ac9f6"
+    "parent_text_hash": "1f5bbdb252e1"
   },
   {
     "claim_id": "CLM-046",
@@ -975,7 +975,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT",
     "atomic_claim": "Từ kết quả khảo sát và phân tích đối chiếu ba nhóm phương pháp biểu diễn đặc trưng log tại Mục 1.2, có thể nhận thấy rằng mặc dù các kỹ thuật thống kê, mô hình chuỗi ngữ nghĩa và học biểu diễn đồ thị nguồn gốc đã đạt được nhiều bước tiến quan trọng, việc ứng dụng chúng vào môi trường phát hiện tấn công mạng doanh nghiệp thực tế vẫn đối mặt với những rào cản nền tảng chưa được giải quyết thấu đáo  [8],  [6],  [1],  [3].",
-    "parent_text_hash": "05c4bf80701f"
+    "parent_text_hash": "84a03d0f306b"
   },
   {
     "claim_id": "CLM-049",
@@ -995,7 +995,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT",
     "atomic_claim": "Dữ liệu thực nghiệm từ các nghiên cứu tiền nhiệm chỉ ra rằng các bộ phân tích cú pháp đóng vai trò then chốt trong việc giảm chiều không gian văn bản log thành các mẫu định dạng tĩnh  [6],  [7].",
-    "parent_text_hash": "a5af34ba4f90"
+    "parent_text_hash": "018f230bf785"
   },
   {
     "claim_id": "CLM-050",
@@ -1015,7 +1015,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Giới hạn quan trọng chưa được giải quyết là: Sự tương đương về mặt cú pháp mẫu log (Template Equivalence) không đồng nghĩa với sự tương đương về mặt ngữ nghĩa an ninh (Security Semantic Equivalence)  [2],  [3].",
-    "parent_text_hash": "5a090b0d8df0"
+    "parent_text_hash": "1b53027f9aaf"
   },
   {
     "claim_id": "CLM-051",
@@ -1059,7 +1059,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT",
     "atomic_claim": "Tuy nhiên, khi tiến hành hợp nhất hoặc gióng hàng (Cross-view Alignment) các không gian biểu diễn dị thể này trong không gian vector tiềm ẩn, các mô hình học biểu diễn tự giám sát đối mặt với nguy cơ sụp đổ chiều biểu diễn (Representation Collapse), vốn đòi hỏi các kỹ thuật điều hòa phương sai và hiệp phương sai hoặc giảm dư thừa đặc trưng để duy trì tính đa dạng (như các nguyên lý được gợi mở trong VICReg  [10] và Barlow Twins  [11]).",
-    "parent_text_hash": "2d3909e141a5"
+    "parent_text_hash": "8eef565a5ee9"
   },
   {
     "claim_id": "CLM-053",
@@ -1100,7 +1100,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Trong thực tế giám sát an ninh mạng doanh nghiệp, dữ liệu nhãn thực tế thường chỉ được ghi nhận ở mức độ hạt rất thô (Coarse Labels), chẳng hạn như gán nhãn một phiên làm việc kéo dài nhiều giờ hoặc toàn bộ một máy chủ bị xâm nhập trong một khoảng thời gian  [3],  [12],  [13].",
-    "parent_text_hash": "ee97a91b5823"
+    "parent_text_hash": "b8dfda0e5507"
   },
   {
     "claim_id": "CLM-055",
@@ -1120,7 +1120,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Thách thức này càng trở nên phức tạp do sự xuất hiện liên tục của hành vi quản trị viên hệ thống (Admin-Noise / LOLBins)  [1],  [3].",
-    "parent_text_hash": "8acb1d3375d1"
+    "parent_text_hash": "169ed1072b81"
   },
   {
     "claim_id": "CLM-056",
@@ -1140,7 +1140,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Nhiệm vụ phát hiện và điều tra các cuộc tấn công APT kéo dài đòi hỏi mô hình học biểu diễn phải duy trì khả năng liên kết có kiểm soát giữa các chuỗi hành vi của cùng một thực thể (người dùng, máy chủ, tiến trình) qua nhiều mốc thời gian khác nhau  [1],  [5].",
-    "parent_text_hash": "477d01b33efa"
+    "parent_text_hash": "468e6e2d2e7f"
   },
   {
     "claim_id": "CLM-057",
@@ -1161,7 +1161,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Tuy nhiên, việc lưu giữ khả năng liên kết này trong không gian vector biểu diễn trực tiếp làm nảy sinh các nguy cơ nghiêm trọng về quyền riêng tư và an toàn thông tin [16], [33], [17].",
-    "parent_text_hash": "a951d02f105a"
+    "parent_text_hash": "ad79bf8e8e2d"
   },
   {
     "claim_id": "CLM-058",
@@ -1180,7 +1180,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Các vector biểu diễn đặc trưng tiềm ẩn có nguy cơ bị kẻ tấn công khai thác thông qua các kỹ thuật tấn công suy luận thành viên (Membership Inference Attacks - MIA [16]) để xác định xem dữ liệu của một thực thể có nằm trong tập huấn luyện hay không.",
-    "parent_text_hash": "04d74c7cba4c"
+    "parent_text_hash": "73af2ef7b421"
   },
   {
     "claim_id": "CLM-059",
@@ -1390,7 +1390,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Hàm mã hóa thời gian liên tục điều hòa (Harmonic Time Encoding) dạng Phi(Delta t) = [cos(w_1 Delta t), sin(w_1 Delta t), ...]^T kế thừa nguyên lý mã hóa thời gian liên tục trên đồ thị động [35], cung cấp biểu diễn học được của khoảng thời gian tương đối giữa các hành vi liên tiếp.",
-    "parent_text_hash": "f80de60fc6f3"
+    "parent_text_hash": "2ce33d4d90ad"
   },
   {
     "claim_id": "CLM-069B",
@@ -1606,7 +1606,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Theo Bardes et al. [10], VICReg thiết lập cơ chế tự giám sát không tương phản dựa trên điều hòa phương sai và hiệp phương sai (variance/covariance regularization) để ngăn ngừa sụp đổ biểu diễn mà không cần khai thác các cặp mẫu âm (negative pairs).",
-    "parent_text_hash": "66fb4e141549"
+    "parent_text_hash": "fb9c7d482fe1"
   },
   {
     "claim_id": "CLM-079",
@@ -1627,7 +1627,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_PROPOSAL",
     "atomic_claim": "Giả thuyết này sẽ được kiểm chứng thực nghiệm độc lập tại Chương 3 trong mối tương quan với hai phương pháp đối chứng (Ablation Baselines) là InfoNCE [38], [37] và Barlow Twins [11].",
-    "parent_text_hash": "1f1031569166"
+    "parent_text_hash": "05c55c1ddc27"
   },
   {
     "claim_id": "CLM-080",
@@ -1703,7 +1703,7 @@
     "artifact_locator": "experiments/plans/STAGE-A2-FINAL-12-EPOCH-AUTHORITY.json:L57; research_specs/roadmap/controls.yaml:L4-L10",
     "factuality_class": "AUTHOR_SPECIFICATION",
     "atomic_claim": "Khác với các phương pháp xáo trộn ngẫu nhiên truyền thống có nguy cơ rò rỉ thông tin thời gian, nghiên cứu đề xuất và áp dụng quy trình phân chia dữ liệu theo thứ tự thời gian nhân quả nghiêm ngặt (Strict Causal Temporal Split), tuân thủ khuyến nghị tránh rò rỉ thời gian (temporal snooping) của Arp et al. [8].",
-    "parent_text_hash": "4397a5095997"
+    "parent_text_hash": "28166f437c85"
   },
   {
     "claim_id": "CLM-084",

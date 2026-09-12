@@ -2,7 +2,7 @@
   "status": "PASS",
   "gate_title": "RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE",
   "detector_version": "3.0.0-forensic-truth-repair-round-3",
-  "document_sha256": "9ac2d52fb1f67e6153c713b266dc030eabc60b5a5edb561fbfcc8111a2a3ab29",
+  "document_sha256": "57c91524a0dfec51e144f4f6e637ddc8e8b6d87f16244005770e9e18ef6a1776",
   "body_boundaries": {
     "body_start": 77,
     "body_end": 551,
@@ -40,8 +40,8 @@
       "location": "Chương (Đoạn P82, câu S0)",
       "paragraph_index": 82,
       "sentence_index": 0,
-      "text": "Các phương pháp truyền thống như Bag of Words, n-gram, TF-IDF và đặc trưng thống kê có ưu điểm về tốc độ, chi phí và khả năng giải thích, nhưng hạn chế trong việc xử lý biến thể cú pháp và quan hệ dài hạn [6], [7].",
-      "text_hash": "40ffdf58266b",
+      "text": "Các phương pháp truyền thống như Bag of Words, n-gram, TF-IDF và đặc trưng thống kê có ưu điểm về tốc độ, chi phí và khả năng giải thích, nhưng hạn chế trong việc xử lý biến thể cú pháp và quan hệ dài hạn  [6],  [7].",
+      "text_hash": "9150bafac7bc",
       "citations": [
         6,
         7
@@ -57,8 +57,8 @@
       "location": "Chương (Đoạn P82, câu S2)",
       "paragraph_index": 82,
       "sentence_index": 2,
-      "text": "Mô hình ngôn ngữ lớn mở thêm khả năng chuẩn hóa và diễn giải log, nhưng vẫn chịu hạn chế về chi phí, độ trễ, tính ổn định và bảo mật dữ liệu [7].",
-      "text_hash": "77959975ccb6",
+      "text": "Mô hình ngôn ngữ lớn mở thêm khả năng chuẩn hóa và diễn giải log, nhưng vẫn chịu hạn chế về chi phí, độ trễ, tính ổn định và bảo mật dữ liệu  [7].",
+      "text_hash": "82d19692d659",
       "citations": [
         7
       ],
@@ -171,8 +171,8 @@
       "location": "Chương (Đoạn P95, câu S0)",
       "paragraph_index": 95,
       "sentence_index": 0,
-      "text": "Trong các trung tâm điều hành an ninh mạng (SOC), dữ liệu nhật ký hệ điều hành và nhật ký kiểm toán là nguồn bằng chứng trung tâm phục vụ phát hiện, điều tra và đối phó các cuộc tấn công có chủ đích kéo dài [1].",
-      "text_hash": "08ff4f35bce1",
+      "text": "Trong các trung tâm điều hành an ninh mạng (SOC), dữ liệu nhật ký hệ điều hành và nhật ký kiểm toán là nguồn bằng chứng trung tâm phục vụ phát hiện, điều tra và đối phó các cuộc tấn công có chủ đích kéo dài  [1].",
+      "text_hash": "b7386a3e0708",
       "citations": [
         1
       ],
@@ -187,8 +187,8 @@
       "location": "Chương (Đoạn P95, câu S1)",
       "paragraph_index": 95,
       "sentence_index": 1,
-      "text": "Khác với văn bản ngôn ngữ tự nhiên hay tín hiệu hình ảnh, dữ liệu nhật ký có cấu trúc bán cấu trúc, phụ thuộc thứ tự thời gian, phản ánh quan hệ phụ thuộc thực thi giữa các tiến trình và tài nguyên hệ thống, đồng thời mang ngữ nghĩa an ninh chuyên biệt [2], [3].",
-      "text_hash": "da25052c4586",
+      "text": "Khác với văn bản ngôn ngữ tự nhiên hay tín hiệu hình ảnh, dữ liệu nhật ký có cấu trúc bán cấu trúc, phụ thuộc thứ tự thời gian, phản ánh quan hệ phụ thuộc thực thi giữa các tiến trình và tài nguyên hệ thống, đồng thời mang ngữ nghĩa an ninh chuyên biệt  [2],  [3].",
+      "text_hash": "13c674c81a33",
       "citations": [
         2,
         3
@@ -204,8 +204,8 @@
       "location": "Chương (Đoạn P95, câu S2)",
       "paragraph_index": 95,
       "sentence_index": 2,
-      "text": "Mục 1.1 hình thức hóa bài toán biểu diễn đặc trưng nhật ký phục vụ phát hiện tấn công đa giai đoạn, phân tích đặc tính không gian dữ liệu doanh nghiệp, xác lập mô hình hành vi dựa trên ma trận MITRE ATT&CK [4] và thiết lập Hợp đồng Biểu diễn nhằm bảo toàn các ràng buộc an toàn cho không gian vector đặc trưng.",
-      "text_hash": "5c028cb2f4c4",
+      "text": "Mục 1.1 hình thức hóa bài toán biểu diễn đặc trưng nhật ký phục vụ phát hiện tấn công đa giai đoạn, phân tích đặc tính không gian dữ liệu doanh nghiệp, xác lập mô hình hành vi dựa trên ma trận MITRE ATT&CK  [4] và thiết lập Hợp đồng Biểu diễn nhằm bảo toàn các ràng buộc an toàn cho không gian vector đặc trưng.",
+      "text_hash": "5159ce1b213c",
       "citations": [
         4
       ],
@@ -220,8 +220,8 @@
       "location": "Chương (Đoạn P97, câu S0)",
       "paragraph_index": 97,
       "sentence_index": 0,
-      "text": "Không gian dữ liệu nhật ký trong môi trường mạng doanh nghiệp được tổng hợp từ ba nhóm nguồn dữ liệu chính với cấu trúc và định dạng không đồng nhất [1], [5].",
-      "text_hash": "ad346d916bd1",
+      "text": "Không gian dữ liệu nhật ký trong môi trường mạng doanh nghiệp được tổng hợp từ ba nhóm nguồn dữ liệu chính với cấu trúc và định dạng không đồng nhất  [1],  [5].",
+      "text_hash": "4ce299b080bf",
       "citations": [
         1,
         5
@@ -237,11 +237,11 @@
       "location": "Chương (Đoạn P97, câu S2)",
       "paragraph_index": 97,
       "sentence_index": 2,
-      "text": "Trên các hệ thống Linux, các cơ chế thu thập viễn trắc nguồn gốc và kiểm toán mức nhân , như Linux Auditd hoặc eBPF, ghi nhận các sự kiện lời gọi hệ thống , tiêu biểu như khởi tạo tiến trình execve, thao tác tệp tin open, openat, unlink và kết nối mạng connect, accept, để phục vụ điều tra số và xây dựng đồ thị quan hệ nhân quả [2], [1].",
-      "text_hash": "4a303d757c06",
+      "text": "Trên các hệ thống Linux, các cơ chế thu thập viễn trắc nguồn gốc và kiểm toán mức nhân, như Linux Auditd hoặc eBPF, ghi nhận các sự kiện lời gọi hệ thống, tiêu biểu như khởi tạo tiến trình execve, thao tác tệp tin open, openat, unlink và kết nối mạng connect, accept, để phục vụ điều tra số và xây dựng đồ thị quan hệ nhân quả  [1],  [2].",
+      "text_hash": "0ea32de5ea77",
       "citations": [
-        2,
-        1
+        1,
+        2
       ],
       "pass_a": true,
       "pass_b": true,
@@ -254,8 +254,8 @@
       "location": "Chương (Đoạn P97, câu S3)",
       "paragraph_index": 97,
       "sentence_index": 3,
-      "text": "Trong khi đó, trên môi trường Windows, Microsoft Sysinternals Sysmon cung cấp viễn trắc an ninh mức hệ điều hành thông qua các sự kiện định danh chuẩn hóa theo đặc tả kỹ thuật chính thức của Russinovich & Garnier [41], tiêu biểu gồm: khởi tạo tiến trình (ProcessCreate - Event ID 1), kết nối mạng (NetworkConnect - Event ID 3), nạp thư viện động (ImageLoaded - Event ID 7), tạo tệp tin (FileCreate - Event ID 11), và thao tác cấu hình registry (RegistryEvent - Event ID 13).",
-      "text_hash": "907a08d53f7b",
+      "text": "Trong khi đó, trên môi trường Windows, Microsoft Sysinternals Sysmon cung cấp viễn trắc an ninh mức hệ điều hành thông qua các sự kiện định danh chuẩn hóa theo đặc tả kỹ thuật chính thức của Russinovich & Garnier  [41], tiêu biểu gồm: khởi tạo tiến trình (ProcessCreate - Event ID 1), kết nối mạng (NetworkConnect - Event ID 3), nạp thư viện động (ImageLoaded - Event ID 7), tạo tệp tin (FileCreate - Event ID 11), và thao tác cấu hình registry (RegistryEvent - Event ID 13).",
+      "text_hash": "bb15cf5bdc99",
       "citations": [
         41
       ],
@@ -285,11 +285,10 @@
       "location": "Chương (Đoạn P97, câu S5)",
       "paragraph_index": 97,
       "sentence_index": 5,
-      "text": "Nhóm thứ ba là nhật ký ứng dụng và dịch vụ phân tán, phát sinh từ máy chủ web Apache, hệ thống tệp phân tán HDFS cùng các dịch vụ tính toán cụm thuộc bộ benchmark LogHub [6], [7].",
-      "text_hash": "1f188c0b1dc8",
+      "text": "Nhóm thứ ba là nhật ký ứng dụng và dịch vụ phân tán, phát sinh từ máy chủ web Apache, hệ thống tệp phân tán HDFS cùng các dịch vụ tính toán cụm thuộc bộ benchmark LogHub  [42].",
+      "text_hash": "d03a626b3f86",
       "citations": [
-        6,
-        7
+        42
       ],
       "pass_a": true,
       "pass_b": true,
@@ -302,11 +301,11 @@
       "location": "Chương (Đoạn P103, câu S0)",
       "paragraph_index": 103,
       "sentence_index": 0,
-      "text": "Bên cạnh tính dị thể giữa các nguồn thu thập, dữ liệu nhật ký doanh nghiệp còn chịu áp lực lớn về mặt thông lượng và tỷ lệ phân bố nhãn [8], [3].",
-      "text_hash": "02ca586aae1b",
+      "text": "Bên cạnh tính dị thể giữa các nguồn thu thập, dữ liệu nhật ký doanh nghiệp còn chịu áp lực lớn về mặt thông lượng và tỷ lệ phân bố nhãn  [3],  [8].",
+      "text_hash": "ee7ce1f1fc6f",
       "citations": [
-        8,
-        3
+        3,
+        8
       ],
       "pass_a": true,
       "pass_b": true,
@@ -319,8 +318,8 @@
       "location": "Chương (Đoạn P103, câu S1)",
       "paragraph_index": 103,
       "sentence_index": 1,
-      "text": "Hệ thống tiếp nhận luồng sự kiện liên tục với tốc độ cao, đòi hỏi cơ chế xử lý dòng trực tiếp như cách tiếp cận phác họa đồ thị của UNICORN [9], đồng thời đặt ra yêu cầu kiểm soát tài nguyên bộ nhớ khi theo dõi các đồ thị nguồn gốc kéo dài.",
-      "text_hash": "3aaa8b5a2d07",
+      "text": "Hệ thống tiếp nhận luồng sự kiện liên tục với tốc độ cao, đòi hỏi cơ chế xử lý dòng trực tiếp như cách tiếp cận phác họa đồ thị của UNICORN  [9], đồng thời đặt ra yêu cầu kiểm soát tài nguyên bộ nhớ khi theo dõi các đồ thị nguồn gốc kéo dài.",
+      "text_hash": "256c477f045a",
       "citations": [
         9
       ],
@@ -335,8 +334,8 @@
       "location": "Chương (Đoạn P103, câu S2)",
       "paragraph_index": 103,
       "sentence_index": 2,
-      "text": "Tỷ lệ các dòng nhật ký liên quan đến hành vi tấn công trong thực tế thường rất nhỏ so với lưu lượng vận hành nền, tạo ra sự mất cân bằng dữ liệu sâu sắc khiến các thuật toán học máy thông thường có xu hướng bỏ qua nhóm thiểu số [8].",
-      "text_hash": "b9cecfc87a21",
+      "text": "Tỷ lệ các dòng nhật ký liên quan đến hành vi tấn công trong thực tế thường rất nhỏ so với lưu lượng vận hành nền, tạo ra sự mất cân bằng dữ liệu sâu sắc khiến các thuật toán học máy thông thường có xu hướng bỏ qua nhóm thiểu số  [8].",
+      "text_hash": "203943d9a08e",
       "citations": [
         8
       ],
@@ -351,8 +350,8 @@
       "location": "Chương (Đoạn P103, câu S3)",
       "paragraph_index": 103,
       "sentence_index": 3,
-      "text": "Bên cạnh đó, hiện tượng sụp đổ chiều biểu diễn có nguy cơ xuất hiện khi mô hình tự giám sát không có cơ chế điều hòa phương sai và hiệp phương sai phù hợp để duy trì độ phong phú của các chiều vector [10], [11].",
-      "text_hash": "4151e4e4e61e",
+      "text": "Bên cạnh đó, hiện tượng sụp đổ chiều biểu diễn có nguy cơ xuất hiện khi mô hình học biểu diễn tự giám sát trên luồng dữ liệu mất cân bằng không có cơ chế điều hòa phương sai và hiệp phương sai phù hợp để duy trì độ phong phú của các chiều vector  [10],  [11].",
+      "text_hash": "b34468e0d3e1",
       "citations": [
         10,
         11
@@ -368,8 +367,8 @@
       "location": "Chương (Đoạn P104, câu S1)",
       "paragraph_index": 104,
       "sentence_index": 1,
-      "text": "Dựa trên bản chất không dừng của luồng dữ liệu và phương pháp luận đánh giá theo thời gian [8], bốn dạng trôi dạt dữ liệu được phân định như sau:",
-      "text_hash": "2b66d31b5c23",
+      "text": "Dựa trên bản chất không dừng của luồng dữ liệu và phương pháp luận đánh giá theo thời gian  [8], bốn dạng trôi dạt dữ liệu được phân định như sau:",
+      "text_hash": "64c8474de730",
       "citations": [
         8
       ],
@@ -573,8 +572,8 @@
       "location": "Chương (Đoạn P125, câu S0)",
       "paragraph_index": 125,
       "sentence_index": 0,
-      "text": "Ba là, nhóm Điều kiện Triệt tiêu EXCLUDE: Tập hợp các thông tin giả tạo và biến số ngoài miền bắt buộc phải bị loại bỏ khỏi không gian vector z nhằm ngăn ngừa rủi ro học đường tắt [8].",
-      "text_hash": "889476ec16c8",
+      "text": "Ba là, nhóm Điều kiện Triệt tiêu EXCLUDE: Tập hợp các thông tin giả tạo và biến số ngoài miền bắt buộc phải bị loại bỏ khỏi không gian vector z nhằm ngăn ngừa rủi ro học đường tắt  [8].",
+      "text_hash": "11085d2ffb49",
       "citations": [
         8
       ],
@@ -589,8 +588,8 @@
       "location": "Chương (Đoạn P125, câu S1)",
       "paragraph_index": 125,
       "sentence_index": 1,
-      "text": "Bao gồm các mẫu định dạng đặc thù của môi trường thử nghiệm lab, các biến số gây rò rỉ phân vùng và dấu thời gian tuyệt đối của máy thử nghiệm [8], cùng các tương quan ngẫu nhiên có thể khiến mô hình đạt điểm số ảo trên tập kiểm thử nhưng suy giảm năng lực khi vận hành thực tế.",
-      "text_hash": "68f6c618374f",
+      "text": "Bao gồm các mẫu định dạng đặc thù của môi trường thử nghiệm lab, các biến số gây rò rỉ phân vùng và dấu thời gian tuyệt đối của máy thử nghiệm  [8], cùng các tương quan ngẫu nhiên có thể khiến mô hình đạt điểm số ảo trên tập kiểm thử nhưng suy giảm năng lực khi vận hành thực tế.",
+      "text_hash": "3208981f6083",
       "citations": [
         8
       ],
@@ -758,8 +757,8 @@
       "location": "Chương (Đoạn P135, câu S0)",
       "paragraph_index": 135,
       "sentence_index": 0,
-      "text": "Ba là, Tầng 3 thực hiện đánh giá phát hiện hạ nguồn: Đánh giá chất lượng của vector biểu diễn z thông qua giao thức đóng băng bộ mã hóa và huấn luyện bộ phân loại tuyến tính (Frozen Linear Probing theo chuẩn mực SimCLR [37]):",
-      "text_hash": "7d6595168012",
+      "text": "Ba là, Tầng 3 thực hiện đánh giá phát hiện hạ nguồn: Đánh giá chất lượng của vector biểu diễn z thông qua giao thức đóng băng bộ mã hóa và huấn luyện bộ phân loại tuyến tính (Frozen Linear Probing theo chuẩn mực SimCLR  [37]):",
+      "text_hash": "9d416dc60183",
       "citations": [
         37
       ],
@@ -1261,13 +1260,13 @@
       "location": "Chương (Đoạn P171, câu S0)",
       "paragraph_index": 171,
       "sentence_index": 0,
-      "text": "Kết quả khảo sát và phân tích đối chiếu ba nhóm phương pháp biểu diễn đặc trưng log tại Mục 1.2 cho thấy dù các kỹ thuật thống kê, mô hình chuỗi ngữ nghĩa và học biểu diễn đồ thị nguồn gốc đã giải quyết được từng khía cạnh phân tích riêng lẻ, việc triển khai chúng vào môi trường giám sát an ninh mạng doanh nghiệp thực tế vẫn bộc lộ các mâu thuẫn cơ bản về mặt biểu diễn [8], [6], [1], [3].",
-      "text_hash": "05c4bf80701f",
+      "text": "Kết quả khảo sát và phân tích đối chiếu ba nhóm phương pháp biểu diễn đặc trưng log tại Mục 1.2 cho thấy dù các kỹ thuật thống kê, mô hình chuỗi ngữ nghĩa và học biểu diễn đồ thị nguồn gốc đã giải quyết được từng khía cạnh phân tích riêng lẻ, việc triển khai chúng vào môi trường giám sát an ninh mạng doanh nghiệp thực tế vẫn bộc lộ các mâu thuẫn cơ bản về mặt biểu diễn  [1],  [3],  [6],  [8].",
+      "text_hash": "84a03d0f306b",
       "citations": [
-        8,
-        6,
         1,
-        3
+        3,
+        6,
+        8
       ],
       "pass_a": true,
       "pass_b": true,
@@ -1294,8 +1293,8 @@
       "location": "Chương (Đoạn P173, câu S0)",
       "paragraph_index": 173,
       "sentence_index": 0,
-      "text": "Dữ liệu thực nghiệm từ các nghiên cứu tiền nhiệm chỉ ra rằng các bộ phân tích cú pháp đóng vai trò giảm số chiều từ vựng bùng nổ của nhật ký hệ thống bằng cách gom cụm văn bản thành các khuôn mẫu định dạng tĩnh [6], [7].",
-      "text_hash": "a5af34ba4f90",
+      "text": "Dữ liệu thực nghiệm từ các nghiên cứu tiền nhiệm chỉ ra rằng các bộ phân tích cú pháp đóng vai trò giảm số chiều từ vựng bùng nổ của nhật ký hệ thống bằng cách gom cụm văn bản thành các khuôn mẫu định dạng tĩnh  [6],  [7].",
+      "text_hash": "018f230bf785",
       "citations": [
         6,
         7
@@ -1311,8 +1310,8 @@
       "location": "Chương (Đoạn P174, câu S0)",
       "paragraph_index": 174,
       "sentence_index": 0,
-      "text": "Giới hạn quan trọng chưa được giải quyết là sự tương đương về mặt cú pháp mẫu nhật ký không đồng nghĩa với sự tương đương về mặt ngữ nghĩa an ninh [2], [3].",
-      "text_hash": "5a090b0d8df0",
+      "text": "Giới hạn quan trọng chưa được giải quyết là sự tương đương về mặt cú pháp mẫu nhật ký không đồng nghĩa với sự tương đương về mặt ngữ nghĩa an ninh  [2],  [3].",
+      "text_hash": "1b53027f9aaf",
       "citations": [
         2,
         3
@@ -1377,8 +1376,8 @@
       "location": "Chương (Đoạn P179, câu S0)",
       "paragraph_index": 179,
       "sentence_index": 0,
-      "text": "Khi đưa các góc nhìn dị thể này vào không gian vector tiềm ẩn chung qua các hàm mất mát tự giám sát, mô hình đối mặt với nguy cơ sụp đổ chiều biểu diễn, tức xu hướng ánh xạ mọi đầu vào thành các vector hằng số tầm thường, vốn đòi hỏi cơ chế điều hòa phương sai và hiệp phương sai để duy trì độ đa dạng không gian [10], [11]; bên cạnh đó, việc gióng hàng trong môi trường an ninh mạng còn gặp phải hai trở ngại thực tế: Một là, rủi ro chuyển giao tiêu cực, xảy ra khi nhiễu từ chuỗi sự kiện lấn át hoặc làm suy giảm tín hiệu cấu trúc nhân quả của đồ thị nguồn gốc; Hai là, hiện tượng dữ liệu bị khuyết hoặc tương ứng từng phần, phát sinh do độ trễ truyền thông, gói tin bị thất thoát hoặc thiếu liên kết 1–1 đồng thời giữa các luồng thu thập.",
-      "text_hash": "2d3909e141a5",
+      "text": "Khi đưa các góc nhìn dị thể này vào không gian vector tiềm ẩn chung qua các hàm mất mát tự giám sát, mô hình đối mặt với nguy cơ sụp đổ chiều biểu diễn, tức xu hướng ánh xạ mọi đầu vào thành các vector hằng số tầm thường, vốn đòi hỏi cơ chế điều hòa phương sai và hiệp phương sai để duy trì độ đa dạng không gian  [10],  [11]; bên cạnh đó, việc gióng hàng trong môi trường an ninh mạng còn gặp phải hai trở ngại thực tế: Một là, rủi ro chuyển giao tiêu cực, xảy ra khi nhiễu từ chuỗi sự kiện lấn át hoặc làm suy giảm tín hiệu cấu trúc nhân quả của đồ thị nguồn gốc; Hai là, hiện tượng dữ liệu bị khuyết hoặc tương ứng từng phần, phát sinh do độ trễ truyền thông, gói tin bị thất thoát hoặc thiếu liên kết 1–1 đồng thời giữa các luồng thu thập.",
+      "text_hash": "8eef565a5ee9",
       "citations": [
         10,
         11
@@ -1454,8 +1453,8 @@
       "location": "Chương (Đoạn P188, câu S0)",
       "paragraph_index": 188,
       "sentence_index": 0,
-      "text": "Trong thực tế giám sát an ninh mạng doanh nghiệp, dữ liệu nhãn thường chỉ được ghi nhận ở mức độ hạt rất thô, chẳng hạn như gán nhãn một phiên làm việc kéo dài nhiều giờ hoặc toàn bộ một máy chủ bị xâm nhập trong một khoảng thời gian [3], [12], [13].",
-      "text_hash": "92a80f5731c3",
+      "text": "Trong thực tế giám sát an ninh mạng doanh nghiệp, dữ liệu nhãn thường chỉ được ghi nhận ở mức độ hạt rất thô, chẳng hạn như gán nhãn một phiên làm việc kéo dài nhiều giờ hoặc toàn bộ một máy chủ bị xâm nhập trong một khoảng thời gian  [3],  [12],  [13].",
+      "text_hash": "b8dfda0e5507",
       "citations": [
         3,
         12,
@@ -1472,8 +1471,8 @@
       "location": "Chương (Đoạn P189, câu S0)",
       "paragraph_index": 189,
       "sentence_index": 0,
-      "text": "Thách thức này càng trở nên phức tạp do sự xuất hiện liên tục của hành vi quản trị viên hệ thống [1], [3].",
-      "text_hash": "8acb1d3375d1",
+      "text": "Thách thức này càng trở nên phức tạp do sự xuất hiện liên tục của hành vi quản trị viên hệ thống  [1],  [3].",
+      "text_hash": "169ed1072b81",
       "citations": [
         1,
         3
@@ -1503,8 +1502,8 @@
       "location": "Chương (Đoạn P193, câu S0)",
       "paragraph_index": 193,
       "sentence_index": 0,
-      "text": "Nhiệm vụ phát hiện và điều tra các cuộc tấn công APT kéo dài đòi hỏi mô hình học biểu diễn phải duy trì khả năng liên kết có kiểm soát giữa các chuỗi hành vi của cùng một thực thể như người dùng, máy chủ và tiến trình qua nhiều mốc thời gian khác nhau [1], [5].",
-      "text_hash": "477d01b33efa",
+      "text": "Nhiệm vụ phát hiện và điều tra các cuộc tấn công APT kéo dài đòi hỏi mô hình học biểu diễn phải duy trì khả năng liên kết có kiểm soát giữa các chuỗi hành vi của cùng một thực thể như người dùng, máy chủ và tiến trình qua nhiều mốc thời gian khác nhau  [1],  [5].",
+      "text_hash": "468e6e2d2e7f",
       "citations": [
         1,
         5
@@ -1520,12 +1519,12 @@
       "location": "Chương (Đoạn P194, câu S0)",
       "paragraph_index": 194,
       "sentence_index": 0,
-      "text": "Tuy nhiên, việc lưu giữ khả năng liên kết này trong không gian vector biểu diễn trực tiếp làm nảy sinh các nguy cơ nghiêm trọng về quyền riêng tư và an toàn thông tin [16], [33], [17].",
-      "text_hash": "a951d02f105a",
+      "text": "Tuy nhiên, việc lưu giữ khả năng liên kết này trong không gian vector biểu diễn trực tiếp làm nảy sinh các nguy cơ nghiêm trọng về quyền riêng tư và an toàn thông tin  [16],  [17],  [33].",
+      "text_hash": "ad79bf8e8e2d",
       "citations": [
         16,
-        33,
-        17
+        17,
+        33
       ],
       "pass_a": true,
       "pass_b": true,
@@ -1538,8 +1537,8 @@
       "location": "Chương (Đoạn P194, câu S1)",
       "paragraph_index": 194,
       "sentence_index": 1,
-      "text": "Các vector biểu diễn đặc trưng tiềm ẩn có nguy cơ bị kẻ tấn công khai thác thông qua các kỹ thuật tấn công suy luận thành viên (Membership Inference Attacks - MIA [16]) để xác định xem dữ liệu của một thực thể có nằm trong tập huấn luyện hay không.",
-      "text_hash": "04d74c7cba4c",
+      "text": "Các vector biểu diễn đặc trưng tiềm ẩn có nguy cơ bị kẻ tấn công khai thác thông qua các kỹ thuật tấn công suy luận thành viên (Membership Inference Attacks - MIA  [16]) để xác định xem dữ liệu của một thực thể có nằm trong tập huấn luyện hay không.",
+      "text_hash": "73af2ef7b421",
       "citations": [
         16
       ],
@@ -1585,8 +1584,8 @@
       "location": "Chương (Đoạn P194, câu S5)",
       "paragraph_index": 194,
       "sentence_index": 5,
-      "text": "Một mô hình được thiết kế có nhận thức về quyền riêng tư không tự động đồng nghĩa với việc đã đạt được khả năng bảo vệ quyền riêng tư ; các quy trình kiểm thử tấn công MIA và đảo ngược mô hình được định vị là phép kiểm tra hạ nguồn và chưa được thực thi trong phạm vi thực nghiệm hiện tại [17].",
-      "text_hash": "eb0261cdde54",
+      "text": "Một mô hình được thiết kế có nhận thức về quyền riêng tư không tự động đồng nghĩa với việc đã đạt được khả năng bảo vệ quyền riêng tư ; các quy trình kiểm thử tấn công MIA và đảo ngược mô hình được định vị là phép kiểm tra hạ nguồn và chưa được thực thi trong phạm vi thực nghiệm hiện tại  [17].",
+      "text_hash": "1f75409690f5",
       "citations": [
         17
       ],
