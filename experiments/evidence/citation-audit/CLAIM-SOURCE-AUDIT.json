@@ -115,7 +115,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Trên các hệ thống Linux, các cơ chế thu thập viễn trắc nguồn gốc và kiểm toán mức nhân (như Linux Auditd hoặc eBPF) ghi nhận các sự kiện lời gọi hệ thống (system calls) — tiêu biểu như khởi tạo tiến trình (execve), thao tác tệp tin (open, openat, unlink) và kết nối socket mạng (connect, accept) — để phục vụ điều tra số và xây dựng đồ thị quan hệ nhân quả [1], [2].",
-    "parent_text_hash": "d316cc40da17"
+    "parent_text_hash": "4a303d757c06"
   },
   {
     "claim_id": "CLM-006B",
@@ -290,7 +290,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_TAXONOMY",
     "atomic_claim": "Cần lưu ý rằng MITRE khuyến nghị ATT&CK không phải là một danh Mục kiểm tra đầy đủ (checklist) khép kín; từ ontology ATT&CK và các quan sát về đồ thị nguồn gốc hệ thống [1], nghiên cứu tổng hợp ba cấu trúc phân tích đặc thù sau (đây là cấu trúc phân loại do đề tài tự tổng hợp, không phải taxonomy chính thức của MITRE ATT&CK): Một là, cấu trúc nhảy cóc giai đoạn (Step Skipping): Kẻ tấn công có thể khai thác trực tiếp lỗ hổng thực thi mã từ xa để trích xuất dữ liệu ra ngoài mà không cần thiết lập cơ chế duy trì hay di chuyển ngang; Hai là, cấu trúc lặp vòng kỹ thuật (Tactic Looping & Interleaving): Kỹ thuật thu thập thông tin nội bộ (Discovery) thường được lặp lại nhiều lần xen kẽ giữa các bước leo thang đặc quyền và chiếm đoạt thông tin xác thực; Ba là, cấu trúc phân nhánh tiến trình song song (Parallel Branching): Kẻ tấn công có thể khởi tạo đồng thời nhiều luồng tiến trình con độc lập trên các tiến trình hợp lệ khác nhau nhằm phân tán sự theo dõi của hệ thống phòng thủ.",
-    "parent_text_hash": "2a751df0947a"
+    "parent_text_hash": "feb8182c587b"
   },
   {
     "claim_id": "CLM-015",
@@ -353,7 +353,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT",
     "atomic_claim": "Xét theo dữ liệu thực nghiệm, việc mô hình hóa hành vi tấn công đòi hỏi phải phân định chuẩn xác đặc tính gán nhãn và mức độ hạt (Label Granularity) của từng bộ dữ liệu chuẩn [3]: Một là, bộ dữ liệu DARPA Transparent Computing Engagement #3 (TC E3, diễn ra vào tháng 4/2018) [12] và Engagement #5 (TC E5) [43] cung cấp dữ liệu kiểm toán hệ thống mức hạt nhân chi tiết, trong đó các kịch bản tấn công và diễn tập red-team trong các engagement của chương trình được gán nhãn ở mức độ hạt tiến trình/luồng phụ thuộc (Fine-grained Ground Truth); Hai là, bộ dữ liệu LANL Unified Host and Network Dataset (Kent, 2015) [13] phản ánh môi trường mạng doanh nghiệp quy mô lớn với hàng tỷ sự kiện xác thực và luồng mạng, trong đó nhãn mặt đất thực nghiệm được xác lập từ tệp redteam.txt ghi nhận các sự kiện xác thực bị xâm nhập cụ thể của đội Red Team (Authentication Compromise Events) theo mốc thời gian và tài khoản/máy chủ xác định; Ba là, bộ dữ liệu HDFS (Xu et al. [18], LogHub [42]) được gán nhãn bất thường theo vết thực thi ở mức khối dữ liệu (Block-level trace labels [18]), phản ánh trạng thái bình thường hoặc bất thường của một phiên giao tác phân tán hoàn chỉnh; Bốn là, bộ dữ liệu BGL (LogHub [42]) đại diện cho nhật ký siêu máy tính với nhãn bất thường được xác lập ở mức dòng log đơn lẻ (Line-level alert/non-alert labels [42]).",
-    "parent_text_hash": "8849cba29a74"
+    "parent_text_hash": "dd8d5f587cbe"
   },
   {
     "claim_id": "CLM-018",
@@ -412,7 +412,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_TAXONOMY",
     "atomic_claim": "Một là, cơ chế giả danh hóa (Pseudonymization) thông qua việc ánh xạ các định danh nhạy cảm (như username, IP, hostname) sang không gian mã băm hoặc chỉ số trừu tượng nhằm kiểm soát khả năng liên kết (controlled linkability); Hai là, đề xuất quy trình đánh giá rủi ro trước tấn công suy luận thành viên (Membership Inference Attack – MIA) [16], được định vị là phép kiểm tra hạ nguồn nhằm đánh giá khả năng đối nghịch xác định một bản ghi nhật ký cụ thể có thuộc tập huấn luyện hay không; Ba là, đề xuất quy trình đánh giá rủi ro trước tấn công đảo ngược mô hình (Model Inversion Attack) [33], cũng được định vị là phép kiểm tra hạ nguồn nhằm đánh giá nguy cơ khôi phục thông tin cấu hình từ vector biểu diễn tiềm ẩn; Bốn là, định hướng khung bảo đảm toán học về quyền riêng tư vi sai (Differential Privacy – DP) theo hướng dẫn chuẩn mực của NIST SP 800-226 [17].",
-    "parent_text_hash": "f42c95714fc6"
+    "parent_text_hash": "7d3c239feacd"
   },
   {
     "claim_id": "CLM-021",
@@ -572,7 +572,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT",
     "atomic_claim": "Trong giai đoạn phân tích cú pháp, nhiều thuật toán tiêu biểu đã được phát triển nhằm tối ưu hóa tốc độ xử lý  [6]: (1) Drain  [6] sử dụng cấu trúc cây phân tích có độ sâu cố định (Fixed-Depth Parse Tree) để nhóm các dòng log dựa trên độ dài chuỗi và các từ khóa tiền tố; trong kết quả đo chuẩn thực nghiệm của Zhu et al., thời gian xử lý của Drain tăng gần tuyến tính theo kích thước tập dữ liệu log đối với luồng dữ liệu lớn; (2) Spell  [6] áp dụng thuật toán tìm chuỗi con chung dài nhất (Longest Common Subsequence - LCS) theo cơ chế dòng để trích xuất động các thành phần tĩnh của thông điệp log; (3) LenMa và AEL  [6],  [7] lần lượt khai thác chiều dài các từ tố và tần suất xuất hiện của từ khóa để phân cụm và tách biến số ra khỏi chuỗi mẫu.",
-    "parent_text_hash": "6153bbd3ee02"
+    "parent_text_hash": "dfec4ece0098"
   },
   {
     "claim_id": "CLM-029",
@@ -589,7 +589,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_TAXONOMY",
     "atomic_claim": "Bên cạnh đếm tần suất đơn thuần, trọng số TF-IDF (Term Frequency – Inverse Document Frequency) được vận dụng nhằm cân bằng độ nổi bật của sự kiện: tần suất sự kiện (TF) đo lường mức độ xuất hiện trong một cửa sổ hoặc phiên phân tích, trong khi tần số nghịch đảo văn bản (IDF) làm giảm trọng số của các sự kiện xuất hiện phổ biến trên nhiều cửa sổ; nhờ đó, sự kiện xuất hiện nhiều trong một phiên nhưng ít phổ biến trên toàn tập sẽ nhận trọng số tương đối lớn hơn, dù TF-IDF không mô hình hóa được thứ tự thời gian, khoảng cách ngữ nghĩa hay quan hệ nhân quả giữa các sự kiện; độc lập với TF-IDF, độ hỗn loạn thông tin Shannon (Entropy) đóng vai trò là thước đo mức độ bất định và phân tán của phân phối sự kiện trong cửa sổ phân tích:",
-    "parent_text_hash": "69862b4c7919"
+    "parent_text_hash": "be017ef698f1"
   },
   {
     "claim_id": "CLM-030",
@@ -647,7 +647,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Mặc dù sở hữu ưu điểm về hiệu năng tính toán (độ phức tạp tuyến tính O(N)), nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng  [6],  [2]: (1) Mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số: các bộ log parser dựa trên biểu thức chính quy thường thay thế các tham số biến động (địa chỉ IP, đường dẫn tệp tin, tham số dòng lệnh) bằng ký tự đại diện <*> khiến nhiều thông tin an ninh mang tính phân biệt cao bị lược bỏ; (2) Lan truyền và khuếch đại sai số cú pháp (Parser Error Propagation): khi gặp các định dạng log mới chưa từng xuất hiện (unseen logs), parser có thể phân tách không chính xác, dẫn đến hiện tượng sinh ra các mẫu sự kiện giả lập hoặc gộp nhầm các sự kiện khác biệt, làm xáo trộn cấu trúc không gian vector x.",
-    "parent_text_hash": "d1cea8c1797f"
+    "parent_text_hash": "1aee879665c1"
   },
   {
     "claim_id": "CLM-033",
@@ -708,7 +708,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "DeepLog không chỉ phân tích chuỗi mã sự kiện log mà còn là một khung làm việc toàn diện gồm hai thành phần mô hình hóa: Một là, mô hình LSTM thứ nhất học biểu diễn chuỗi các mẫu log (Log-Key Anomaly Detection) nhằm phát hiện các sự kiện sai lệch khỏi trật tự thực thi bình thường theo phân phối có điều kiện ; Hai là, mô hình LSTM thứ hai kết hợp phân phối chuẩn nhiều chiều để kiểm tra sự bất thường về giá trị tham số số học (Parameter Value Anomaly Detection) [14].",
-    "parent_text_hash": "a762e6e994f2"
+    "parent_text_hash": "3df76aa8c127"
   },
   {
     "claim_id": "CLM-036",
@@ -806,7 +806,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Để kiểm soát hiện tượng này, kỹ thuật chính quy hóa VICReg [10] phân rã mục tiêu điều chuẩn hình học thành ba thành phần: Phương sai (Variance) duy trì độ phân tán theo chiều nhằm tránh co cụm về một điểm; Bất biến (Invariance) gióng hàng biểu diễn giữa các góc nhìn khác nhau; và Hiệp phương sai (Covariance) phi tương quan hóa các chiều đặc trưng nhằm ngăn ngừa sụp đổ chiều.",
-    "parent_text_hash": "de7be6f862c8"
+    "parent_text_hash": "201fb26991e7"
   },
   {
     "claim_id": "CLM-041",
@@ -846,7 +846,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT",
     "atomic_claim": "Mặc dù đạt kết quả tốt trên các tập dữ liệu phần mềm, nhóm phương pháp Semantic–Sequential đối mặt với ba rào cản khi áp dụng vào an ninh mạng [8], [3]: (1) Nguy cơ rò rỉ và thiên lệch từ dữ liệu tiền huấn luyện (Pretraining-Data Advantage): các mô hình sử dụng Transformer tiền huấn luyện trên kho văn bản tổng quát có nguy cơ tận dụng tri thức ngoài miền; khi đánh giá trong điều kiện phân vùng nghiêm ngặt, năng lực phân tách thực tế cần được kiểm chứng cẩn trọng [8]; (2) Chi phí tài nguyên tính toán: cơ chế Self-Attention trong Transformer [34] có độ phức tạp tính toán và bộ nhớ bậc hai theo độ dài chuỗi hoặc kích thước cửa sổ, đòi hỏi tài nguyên tính toán đáng kể khi triển khai trên luồng dữ liệu thời gian thực có lưu lượng lớn; (3) Giới hạn phạm vi quan sát đơn luồng: mô hình chuỗi chủ yếu theo dõi các sự kiện trên một dòng thời gian cục bộ, gặp khó khăn khi mô hình hóa trực tiếp các mối liên hệ phụ thuộc đan xen đa tiến trình, đa thực thể và vượt ranh giới máy chủ.",
-    "parent_text_hash": "c301e4b0ce93"
+    "parent_text_hash": "ad1a87c77f00"
   },
   {
     "claim_id": "CLM-043",
@@ -866,7 +866,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Khắc phục hạn chế về phạm vi quan sát của mô hình chuỗi, hướng tiếp cận dựa trên đồ thị nguồn gốc hệ thống (System Provenance Graph) mô hình hóa toàn bộ lịch sử thực thi và tương tác trong hệ điều hành dưới dạng một đồ thị có hướng, không đồng nhất và gán nhãn thời gian  [1],  [5]:",
-    "parent_text_hash": "a21fa398877f"
+    "parent_text_hash": "ea4950b0670d"
   },
   {
     "claim_id": "CLM-044",
@@ -910,7 +910,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Các hệ thống phát hiện xâm nhập dựa trên đồ thị nguồn gốc (PIDS) tiêu biểu bao gồm [1], [5]: (1) UNICORN [9] (Han et al., NDSS 2020) xây dựng đồ thị nguồn gốc luồng thời gian thực, áp dụng thuật toán băm cây con Weisfeiler-Lehman (WL-subtree kernel) để chuyển đổi đồ thị động thành vector đặc trưng đếm histogram; (2) KAIROS [24] (Cheng et al., IEEE S&P 2024) tích hợp mạng nơ-ron đồ thị nhận biết thời gian (Time-Aware GNN encoder-decoder), mã hóa đồng thời thông tin cấu trúc và sự tiến triển thời gian của đồ thị nguồn gốc để chấm điểm bất thường và tái dựng dấu vết tấn công APT; (3) NODLINK [25] (Li et al., NDSS 2024) mô hình hóa bài toán phát hiện thành cây Steiner trực tuyến (Online Steiner Tree Problem) kết hợp cơ chế bộ nhớ đệm để khôi phục đồ thị con tấn công nhỏ gọn; (4) MAGIC [26] (Jia et al., USENIX Security 2024) khai thác kiến trúc tự mã hóa đồ thị che (Masked Graph Autoencoder) kết hợp cơ chế thích ứng mô hình (model adaptation) để học biểu diễn đa độ hạt và chống trôi khái niệm (concept drift); (5) ORTHRUS [27] (Jiang et al., USENIX Security 2025) tích hợp cơ chế học biểu diễn nguồn gốc chống chịu kỹ thuật lẩn tránh.",
-    "parent_text_hash": "810f70c16fc7"
+    "parent_text_hash": "c36ba5d1b1f7"
   },
   {
     "claim_id": "CLM-046",
@@ -953,7 +953,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Tại Việt Nam, các nghiên cứu chuyên sâu của ThS. Nguyễn Thị Thu Thủy (Khoa An toàn thông tin, Học viện Kỹ thuật Mật mã)  [32] cũng đã hệ thống hóa toàn diện phương pháp luận ứng dụng Graph Learning và mạng nơ-ron đồ thị (Graph Neural Network, GNN) trên đồ thị nguồn gốc (provenance graph) để phát hiện các chiến dịch tấn công APT đa giai đoạn; đồng thời phân tích sâu sắc các thách thức về hiện tượng bùng nổ phụ thuộc, tính đa góc nhìn và yêu cầu bảo toàn tính nhân quả khi phân tích luồng sự kiện kiểm toán hệ thống.",
-    "parent_text_hash": "32da806ce850"
+    "parent_text_hash": "d17a0bac36e1"
   },
   {
     "claim_id": "CLM-048",
@@ -1218,7 +1218,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_EMPIRICAL_FACT",
     "atomic_claim": "Một mô hình được thiết kế có nhận thức về quyền riêng tư (Privacy-Aware) không tự động đồng nghĩa với việc đã đạt được khả năng bảo vệ quyền riêng tư vững chắc (Privacy-Preserving) nếu chưa trải qua các kiểm thử thực nghiệm tấn công nghiêm ngặt [17].",
-    "parent_text_hash": "63ecbf47eb47"
+    "parent_text_hash": "3ea65df7f1dc"
   },
   {
     "claim_id": "CLM-061",
@@ -1237,7 +1237,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Quá trình biểu diễn bắt đầu bằng việc hình thức hóa luồng nhật ký kiểm toán hệ thống thành một chuỗi sự kiện được gán nhãn thời gian: , trong đó mỗi sự kiện  tuân thủ thống nhất lược đồ bộ sáu kiểu hóa (Typed Six-tuple, đặc tả chi tiết tại Mục 2.2.1), bao gồm mốc thời gian xuất hiện sự kiện  (Event-Time), định danh kiểu sự kiện , thực thể tác nhân chủ động  (Actor Entity như tiến trình gốc, tài khoản người dùng), thực thể đối tượng đích chịu tác động  (Object Entity như tệp tin, cổng mạng, tiến trình con), hành động/thao tác thực hiện  (Action như fork, execve, read, write, connect, registry_set), và tập hợp các tham số động có cấu trúc  (đường dẫn tệp tin, tham số dòng lệnh thực thi, cổng mạng và địa chỉ IP kết nối)  [1].",
-    "parent_text_hash": "4455f7de4e11"
+    "parent_text_hash": "d72f6f2c8df1"
   },
   {
     "claim_id": "CLM-062",
@@ -1256,7 +1256,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Đánh giá chất lượng biểu diễn thông qua giao thức đóng băng tham số (Frozen Linear Probe: ) phục vụ phân loại và quy kết chiến thuật/kỹ thuật theo phân loại MITRE ATT&CK  [4], hoặc quy trình chấm điểm bất thường không giám sát tùy chọn (Optional Downstream Zero-Shot Anomaly Scoring Protocol).",
-    "parent_text_hash": "7bd7279ed57c"
+    "parent_text_hash": "bc2bf21b1e81"
   },
   {
     "claim_id": "CLM-063",
@@ -1352,7 +1352,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_PROPOSAL",
     "atomic_claim": "Tuy nhiên, khẳng định sự vượt trội này là một giả thuyết nghiên cứu yêu cầu kiểm thử thực nghiệm tường minh ở các mô hình hạ nguồn thông qua giao thức CTRL-PRIV-001 (đánh giá MIA [16], tấn công nghịch đảo theo nguyên lý Fredrikson et al. [33], và tấn công tái định danh); chưa được thực thi trong phạm vi thực nghiệm của chuyên đề hiện tại.",
-    "parent_text_hash": "0944914e5d5f"
+    "parent_text_hash": "9882d3037326"
   },
   {
     "claim_id": "CLM-068",
@@ -1390,7 +1390,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Hàm mã hóa thời gian liên tục điều hòa (Harmonic Time Encoding) dạng Phi(Delta t) = [cos(w_1 Delta t), sin(w_1 Delta t), ...]^T kế thừa nguyên lý mã hóa thời gian liên tục trên đồ thị động [35], cung cấp biểu diễn học được của khoảng thời gian tương đối giữa các hành vi liên tiếp.",
-    "parent_text_hash": "7f07375fa996"
+    "parent_text_hash": "f80de60fc6f3"
   },
   {
     "claim_id": "CLM-069B",
@@ -1464,7 +1464,7 @@
     "artifact_locator": "",
     "factuality_class": "EXTERNAL_TECHNICAL_FACT",
     "atomic_claim": "Khi áp dụng mạng nơ-ron đồ thị trên đồ thị nguồn gốc có đường kính lớn, hai rủi ro kiến trúc phổ biến là hiện tượng làm mịn quá mức (Over-smoothing, Oono & Suzuki  [44]) khiến biểu diễn các đỉnh hội tụ về các vector khó phân biệt, và hiện tượng nghẽn cổ chai thông tin (Over-squashing, Alon & Yahav  [31]) khi thông tin từ vùng lân cận mở rộng theo hàm mũ bị ép vào một vector kích thước cố định.",
-    "parent_text_hash": "7cae4170737d"
+    "parent_text_hash": "506070c68c21"
   },
   {
     "claim_id": "CLM-072",
@@ -1587,7 +1587,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_TAXONOMY",
     "atomic_claim": "Từ phân tích phương pháp luận trên, chuyên đề lựa chọn VICReg (Variance-Invariance-Covariance Regularization) [10] làm ứng viên gióng hàng cốt lõi (Primary Candidate).",
-    "parent_text_hash": "af7a3b1b9b34"
+    "parent_text_hash": "6adbb5314ff4"
   },
   {
     "claim_id": "CLM-078",
@@ -1606,7 +1606,7 @@
     "artifact_locator": "",
     "factuality_class": "LITERATURE_INTERPRETATION",
     "atomic_claim": "Theo Bardes et al. [10], VICReg thiết lập cơ chế tự giám sát không tương phản dựa trên điều hòa phương sai và hiệp phương sai (variance/covariance regularization) để ngăn ngừa sụp đổ biểu diễn mà không cần khai thác các cặp mẫu âm (negative pairs).",
-    "parent_text_hash": "65ef2e21ccb0"
+    "parent_text_hash": "66fb4e141549"
   },
   {
     "claim_id": "CLM-079",
@@ -1627,7 +1627,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_PROPOSAL",
     "atomic_claim": "Giả thuyết này sẽ được kiểm chứng thực nghiệm độc lập tại Chương 3 trong mối tương quan với hai phương pháp đối chứng (Ablation Baselines) là InfoNCE [38], [37] và Barlow Twins [11].",
-    "parent_text_hash": "2471a99c5803"
+    "parent_text_hash": "1f1031569166"
   },
   {
     "claim_id": "CLM-080",

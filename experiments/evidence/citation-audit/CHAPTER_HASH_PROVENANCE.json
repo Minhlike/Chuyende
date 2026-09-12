@@ -6,8 +6,8 @@
     "chapter_2_sha256": "e91bbc47de218d037d5dec3192b6ba59fda4e3c7423e51c34aea898d3db25a01"
   },
   "observed_hash": {
-    "chapter_1_sha256": "8217dde0085d8bba4fcd1cf48cc38bf4669a8c6b6c1ec82a138ab073091c2997",
-    "chapter_2_sha256": "1a7007bddc5cb776f5464058ea9aee4bf2d732b68b47cd09e0e7c1be49d23c85"
+    "chapter_1_sha256": "28785dd704157bc2e1ed8f373e60d52771bb5eadc532aba68a23adfb53fc5530",
+    "chapter_2_sha256": "915ccf0e3a66288d7a0a6338ad605093b088deea2e021bc825c0f3e303d6f06f"
   },
   "approved_edits_count": 71,
   "total_diff_hunks": 71,
