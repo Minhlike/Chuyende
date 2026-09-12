@@ -3385,13 +3385,13 @@
       "Trong các kịch bản an ninh thực tế, nhãn tấn công thường chỉ sẵn có ở mức độ thô (Coarse Labels), ví dụ: một phiên làm việc (Session), một máy chủ (Host), hoặc một cửa sổ chiến dịch kéo dài (Campaign Window) được xác định là bị xâm nhập (nhãn túi ), nhưng không thể xác định chính xác sự kiện log đơn lẻ nào là hành vi tấn công. Để giải quyết thách thức này, chuyên đề thiết lập mô đun Phân bổ Bằng chứng Yếu (Weak Evidence Attribution) tùy chọn ở Stage B dựa trên khung tiếp cận Học Đa Thể Hiện (Multiple Instance Learning, MIL)."
     ],
     "new_lines": [
-      "Kỹ thuật chiếu trực giao PCGrad giải quyết xung đột hình học cục bộ: tích vô hướng âm phản ánh góc tù (> 90°), khiến bước cập nhật theo ở xấp xỉ Taylor bậc nhất làm tăng . Chiếu lên siêu phẳng pháp tuyến triệt tiêu thành phần đối kháng, tạo vector thỏa mãn nhằm không làm suy giảm . Phép chiếu chỉ xử lý hình học cục bộ tức thời chứ không bảo chứng đồng thuận ngữ nghĩa; hiệu quả giảm thiểu chuyển giao tiêu cực được kiểm chứng tại Chương 3.",
+      "Kỹ thuật chiếu trực giao PCGrad giải quyết xung đột hình học cục bộ: tích vô hướng âm phản ánh góc tù (> 90°), khiến bước cập nhật theo ở xấp xỉ Taylor bậc nhất làm tăng . Chiếu lên siêu phẳng pháp tuyến triệt tiêu thành phần đối kháng, tạo vector thỏa mãn nhằm không làm suy giảm . Phép chiếu chỉ xử lý xung đột gradient vi mô tức thời (bậc nhất Taylor), không thay thế đồng thuận toàn cục; việc giảm chuyển giao tiêu cực là mục tiêu kiến trúc cần đánh giá hạ nguồn riêng và chưa kiểm chứng tại Chương 3.",
       "Stage B tùy chọn: Phân bổ bằng chứng yếu qua Attention-MIL",
       "Trong các kịch bản an ninh thực tế, nhãn tấn công thường chỉ sẵn có ở mức độ thô, ví dụ: một phiên làm việc, một máy chủ, hoặc một cửa sổ chiến dịch kéo dài được xác định là bị xâm nhập (nhãn túi ), nhưng không thể xác định chính xác sự kiện log đơn lẻ nào là hành vi tấn công. Để giải quyết thách thức này, chuyên đề thiết lập mô đun Phân bổ Bằng chứng Yếu tùy chọn ở Stage B dựa trên khung tiếp cận Học Đa Thể Hiện."
     ],
     "old_text_sha256": "7d3b9922d82b21811ae89cb1d8853f0662d571446b9e8d9be5d4034d5d6b1a55",
-    "new_text_sha256": "5f3c3020909cc9a1a617a435cc26de601835a662cf15c46460a1f4aed08cc15d",
-    "scientific_justification": "Giải thích hình học tường minh cho phép chiếu PCGrad tại Mục 2.4.3 (P447): tích vô hướng âm <g_align, g_preserv> < 0 phản ánh góc tù (> 90°), dưới xấp xỉ Taylor bậc nhất làm tăng hàm mất mát đối phương; chiếu lên siêu phẳng pháp tuyến triệt tiêu thành phần đối kháng, tạo vector g_align^proj thỏa mãn <g_align^proj, g_preserv> = 0 (tiếp diện) không làm suy giảm L_preserv; caveat xử lý xung đột cục bộ tức thời, không bảo chứng toàn cục và kiểm chứng qua phân tích triệt tiêu tại Chương 3; chèn 100% native OMML chuẩn.",
+    "new_text_sha256": "ca8074b4f9ee865d4fc1a1962bae7ded85b8792dc04147499ea1f878c9efda0a",
+    "scientific_justification": "Giải thích hình học tường minh cho phép chiếu PCGrad tại Mục 2.4.3 (P447): tích vô hướng âm <g_align, g_preserv> < 0 phản ánh góc tù (> 90°), dưới xấp xỉ Taylor bậc nhất làm tăng hàm mất mát đối phương; chiếu lên siêu phẳng pháp tuyến triệt tiêu thành phần đối kháng, tạo vector g_align^proj thỏa mãn <g_align^proj, g_preserv> = 0 (tiếp diện) không làm suy giảm L_preserv; caveat xử lý xung đột gradient vi mô tức thời theo Taylor bậc nhất, không thay thế đồng thuận toàn cục; việc giảm chuyển giao tiêu cực là mục tiêu kiến trúc cần đánh giá hạ nguồn riêng và chưa kiểm chứng tại Chương 3; chèn 100% native OMML chuẩn.",
     "associated_claims": [
       "PROSE-RESTRAINT"
     ],
@@ -3403,7 +3403,7 @@
       205
     ],
     "new_text": [
-      "Kỹ thuật chiếu trực giao PCGrad giải quyết xung đột hình học cục bộ: tích vô hướng âm phản ánh góc tù (> 90°), khiến bước cập nhật theo ở xấp xỉ Taylor bậc nhất làm tăng . Chiếu lên siêu phẳng pháp tuyến triệt tiêu thành phần đối kháng, tạo vector thỏa mãn nhằm không làm suy giảm . Phép chiếu chỉ xử lý hình học cục bộ tức thời chứ không bảo chứng đồng thuận ngữ nghĩa; hiệu quả giảm thiểu chuyển giao tiêu cực được kiểm chứng tại Chương 3.",
+      "Kỹ thuật chiếu trực giao PCGrad giải quyết xung đột hình học cục bộ: tích vô hướng âm phản ánh góc tù (> 90°), khiến bước cập nhật theo ở xấp xỉ Taylor bậc nhất làm tăng . Chiếu lên siêu phẳng pháp tuyến triệt tiêu thành phần đối kháng, tạo vector thỏa mãn nhằm không làm suy giảm . Phép chiếu chỉ xử lý xung đột gradient vi mô tức thời (bậc nhất Taylor), không thay thế đồng thuận toàn cục; việc giảm chuyển giao tiêu cực là mục tiêu kiến trúc cần đánh giá hạ nguồn riêng và chưa kiểm chứng tại Chương 3.",
       "Stage B tùy chọn: Phân bổ bằng chứng yếu qua Attention-MIL",
       "Trong các kịch bản an ninh thực tế, nhãn tấn công thường chỉ sẵn có ở mức độ thô, ví dụ: một phiên làm việc, một máy chủ, hoặc một cửa sổ chiến dịch kéo dài được xác định là bị xâm nhập (nhãn túi ), nhưng không thể xác định chính xác sự kiện log đơn lẻ nào là hành vi tấn công. Để giải quyết thách thức này, chuyên đề thiết lập mô đun Phân bổ Bằng chứng Yếu tùy chọn ở Stage B dựa trên khung tiếp cận Học Đa Thể Hiện."
     ]

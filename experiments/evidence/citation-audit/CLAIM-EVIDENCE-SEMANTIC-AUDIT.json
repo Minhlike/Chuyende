@@ -2065,8 +2065,8 @@
     {
       "claim_id": "CLM-SEC-008",
       "parent_detected_id": "DET-P092-S00",
-      "parent_text_hash_expected": "f7252367e8ae",
-      "parent_text_hash_observed": "f7252367e8ae",
+      "parent_text_hash_expected": "833eb4df03ed",
+      "parent_text_hash_observed": "833eb4df03ed",
       "claim_class": "DOCUMENT_DESCRIPTION",
       "factuality_class": "DOCUMENT_DESCRIPTION",
       "evidence_class": "NONE",

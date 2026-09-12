@@ -2060,7 +2060,7 @@
   {
     "claim_id": "CLM-SEC-008",
     "document_location": "Chương (Đoạn P92, câu S0)",
-    "atomic_claim": "Chương 3. Thực nghiệm, đánh giá và ứng dụng: Mô tả thiết lập thực nghiệm trên các bộ dữ liệu benchmark chuẩn (DARPA TC, LANL, HDFS, BGL), đánh giá định lượng hiệu năng phát hiện, phân tích độ bền vững trước trôi dạt dữ liệu, đề xuất khung đánh giá rủi ro quyền riêng tư và xác định MIA/Model Inversion là các phép kiểm tra hạ nguồn, chưa thực thi trong phạm vi thực nghiệm hiện tại và thảo luận khả năng tích hợp trong hệ thống SOC.",
+    "atomic_claim": "Chương 3. Thực nghiệm, đánh giá và ứng dụng: Mô tả thiết lập thực nghiệm, giao thức kiểm thử và hệ thống benchmark (DARPA TC, LANL, HDFS, BGL); báo cáo kết quả tiền huấn luyện tự giám sát Stage A2 trên tập Train/Validation (chủ yếu trên HDFS) cùng phương sai qua nhiều seed; định vị rõ khung đánh giá trôi dạt dữ liệu, rủi ro quyền riêng tư (MIA/Model Inversion) và phát hiện tấn công là các giao thức đánh giá hạ nguồn tiếp theo; thảo luận khả năng tích hợp trong hệ thống SOC.",
     "claim_class": "DOCUMENT_DESCRIPTION",
     "evidence_class": "NONE",
     "citation_numbers": [],
@@ -2070,7 +2070,7 @@
     "support_status": "AUTHOR_SPECIFICATION",
     "required_action": "NONE",
     "parent_detected_id": "DET-P092-S00",
-    "parent_text_hash": "f7252367e8ae",
+    "parent_text_hash": "833eb4df03ed",
     "factuality_class": "DOCUMENT_DESCRIPTION"
   },
   {
