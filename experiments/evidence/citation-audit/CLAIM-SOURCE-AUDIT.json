@@ -589,7 +589,7 @@
     "artifact_locator": "",
     "factuality_class": "AUTHOR_TAXONOMY",
     "atomic_claim": "Bên cạnh đếm tần suất đơn thuần, trọng số TF-IDF (Term Frequency – Inverse Document Frequency) được vận dụng nhằm cân bằng độ nổi bật của sự kiện: tần suất sự kiện (TF) đo lường mức độ xuất hiện trong một cửa sổ hoặc phiên phân tích, trong khi tần số nghịch đảo văn bản (IDF) làm giảm trọng số của các sự kiện xuất hiện phổ biến trên nhiều cửa sổ; nhờ đó, sự kiện xuất hiện nhiều trong một phiên nhưng ít phổ biến trên toàn tập sẽ nhận trọng số tương đối lớn hơn, dù TF-IDF không mô hình hóa được thứ tự thời gian, khoảng cách ngữ nghĩa hay quan hệ nhân quả giữa các sự kiện; độc lập với TF-IDF, độ hỗn loạn thông tin Shannon (Entropy) đóng vai trò là thước đo mức độ bất định và phân tán của phân phối sự kiện trong cửa sổ phân tích:",
-    "parent_text_hash": "e234249879eb"
+    "parent_text_hash": "1daced1ce22b"
   },
   {
     "claim_id": "CLM-030",

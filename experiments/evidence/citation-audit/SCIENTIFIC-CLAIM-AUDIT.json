@@ -559,9 +559,9 @@
     "support_status": "AUTHOR_SYNTHESIS",
     "required_action": "NONE",
     "parent_detected_id": "DET-P145-S01",
-    "parent_text_hash": "43b84f24b819",
+    "parent_text_hash": "1daced1ce22b",
     "factuality_class": "AUTHOR_TAXONOMY",
-    "parent_detected_text": "Bên cạnh việc đếm tần suất đơn thuần, trọng số TF-IDF được vận dụng để điều chỉnh độ nổi bật của từng mẫu sự kiện trong không gian đặc trưng; trong đó thành phần tần suất sự kiện (TF) đo lường mức độ xuất hiện cục bộ trong một cửa sổ hoặc phiên phân tích, còn tần số nghịch đảo văn bản (IDF) phạt giảm trọng số của các sự kiện phổ biến trên toàn bộ kho dữ liệu nhằm hỗ trợ làm nổi bật các biến động bất thường, song sự kiện hiếm gặp không đồng nghĩa với hành vi tấn công độc hại bởi các tác vụ bảo trì định kỳ hoặc cấu hình quản trị ít dùng cũng tạo ra tần suất thấp, đồng thời TF-IDF không mô hình hóa được thứ tự thời gian, khoảng cách ngữ nghĩa hay mối liên hệ nhân quả giữa các sự kiện; hoàn toàn độc lập với phép đánh trọng số từ vựng TF-IDF, độ hỗn loạn thông tin Shannon được xác định từ phân phối xác suất thực nghiệm để đo lường mức độ bất định và độ phân tán của các loại sự kiện trong cửa sổ: khi luồng nhật ký chỉ tập trung vào một vài hành vi quen thuộc thì entropy nhận giá trị thấp, ngược lại khi các sự kiện phân bố trải đều trên nhiều nhóm trạng thái khác nhau thì entropy đạt mức cao:"
+    "parent_detected_text": "Bên cạnh việc đếm tần suất đơn thuần, trọng số TF-IDF được vận dụng để điều chỉnh độ nổi bật của từng mẫu sự kiện trong không gian đặc trưng; trong đó thành phần tần suất sự kiện (TF) đo lường mức độ xuất hiện cục bộ trong một phiên phân tích, kết hợp cùng trọng số nghịch đảo chuỗi nhằm phạt giảm trọng số của các sự kiện phổ biến trên toàn bộ kho dữ liệu, giúp khuếch đại các sự kiện xuất hiện tập trung trong phiên nhưng hiếm gặp trên diện rộng."
   },
   {
     "claim_id": "CLM-030",

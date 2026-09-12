@@ -578,8 +578,8 @@
     {
       "claim_id": "CLM-029",
       "parent_detected_id": "DET-P145-S01",
-      "parent_text_hash_expected": "43b84f24b819",
-      "parent_text_hash_observed": "43b84f24b819",
+      "parent_text_hash_expected": "1daced1ce22b",
+      "parent_text_hash_observed": "1daced1ce22b",
       "claim_class": "AUTHOR_SYNTHESIS",
       "factuality_class": "AUTHOR_TAXONOMY",
       "evidence_class": "NONE",
