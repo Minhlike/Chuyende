@@ -1,0 +1,255 @@
+{
+  "campaign_id": "NINEPLUS-EXPERIMENT-CAMPAIGN-V2",
+  "version": "2.0.0",
+  "created_at_utc": "2026-09-13T05:36:00Z",
+  "baseline_commit": "8a00e67f79a9e787d3eb9e29f4c483aed4764246",
+  "v1_plan_reference": "experiments/plans/NINEPLUS-EXPERIMENT-CAMPAIGN-V1.json",
+  "confirmatory_code_commit": "PENDING_PILOT_VALIDATION_LOCK",
+  "namespace": "NEW_9PLUS_CAMPAIGN",
+  "legacy_stage_a2_baseline": "FROZEN_EXPLORATORY_REFERENCE_ONLY",
+  "master_docx_status": "UNTOUCHED_FROZEN",
+  "test_firewall": {
+    "test_opened": false,
+    "test_read_count": 0,
+    "policy": "CRYPTOGRAPHIC_SEALED_ZERO_READ",
+    "enforced_by": "RuntimeTestFirewallGuard",
+    "violation_exception": "TestSetSealedError"
+  },
+  "optimizer_step_accounting": {
+    "legacy_stage_a2_optimizer_steps": 29796,
+    "phase0_new_backbone_optimizer_steps": 0,
+    "phase0_new_probe_optimizer_steps": 0,
+    "phase0_new_mil_optimizer_steps": 0
+  },
+  "semantic_identity_corrections": {
+    "h4_restored_to_weak_label": true,
+    "h4_official_name": "Weak-Label Evidence Allocation & Administrator-Noise Robustness",
+    "h4_stage_scope": "Stage B / Attention-MIL / Coarse-Label Attribution",
+    "h4_current_status": "NOT_TESTED / PARTIAL (Deferred from Core 15-Day Campaign)",
+    "er1_separated": true,
+    "er1_official_name": "ER1_OPERATIONAL_RESOURCE_FEASIBILITY",
+    "er1_scope": "Engineering Resource & Latency Evaluation (Not an academic research question RQ4/H4)",
+    "er1_threshold_status": "AUTHOR_DEFINED_ENGINEERING_TARGET"
+  },
+  "hardware_environment": {
+    "execution_provider": "LOCAL_WINDOWS_GPU",
+    "device_name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+    "vram_total_bytes": 4294967296,
+    "vram_gb": 4.0,
+    "compute_capability": "8.6",
+    "cuda_version": "12.4",
+    "pytorch_version": "2.6.0+cu124",
+    "python_version": "3.12.8",
+    "cublas_workspace_config": ":4096:8",
+    "sweet_spot_profile_script": "scripts/set_training_sweetspot.ps1",
+    "empirical_sweet_spot_reference": "20.43 hours per 12-epoch full Stage-A2-class run (~94.7 min/train epoch, ~7.5 min/val epoch)"
+  },
+  "statistical_hierarchy": {
+    "model_level_replications": {
+      "confirmatory_seeds": [42, 7, 999],
+      "reporting_contract": ["metric_seed42", "metric_seed7", "metric_seed999", "mean", "standard_deviation"],
+      "interpretation": "Primary inferential unit is across model-level replications."
+    },
+    "data_level_bootstrap": {
+      "method": "Paired Cluster Bootstrap",
+      "cluster_unit": "HDFS Block ID / Session",
+      "resamples": 2000,
+      "seed": 10007,
+      "alpha": 0.05,
+      "role": "Nested within-run data sampling uncertainty quantification. STRICTLY FORBIDDEN from substituting for training seed replication (No Pseudoreplication)."
+    }
+  },
+  "primary_h2_campaign": {
+    "research_question": "Does joint multi-view alignment (Sequence + Temporal Graph with VICReg) achieve non-inferior or superior detection performance relative to matched single-view baselines under identical prospective conditions without representation collapse?",
+    "construct": "Multi-View Complementarity & Negative Transfer Prevention",
+    "status": "PRIMARY_CONFIRMATORY_ABLATION",
+    "configurations": [
+      {
+        "config_id": "SEQUENCE_ONLY",
+        "description": "Transformer Sequential Encoder trained exclusively on event sequences and dynamic parameters under prospective harness",
+        "loss_formula": "L_seq = 1.0 * L_MEP + 1.0 * L_MPP + 0.1 * L_time",
+        "max_epochs": 12
+      },
+      {
+        "config_id": "GRAPH_ONLY",
+        "description": "Temporal Graph Neural Network trained exclusively on causal graph relations and dynamic node memory under prospective harness",
+        "loss_formula": "L_graph = 1.0 * L_rel + 1.0 * L_node + 0.1 * L_time",
+        "max_epochs": 12
+      },
+      {
+        "config_id": "MULTI_VIEW_ALIGNED_VICREG",
+        "description": "Joint Multi-View Architecture connecting Sequence View, Temporal Graph View, VICReg Alignment, and Gated Dynamic Fusion",
+        "loss_formula": "L_StageA = L_seq + L_graph + 1.0 * L_VICReg + 1.0 * L_fuse_rec",
+        "max_epochs": 12
+      }
+    ],
+    "confirmatory_seeds": [42, 7, 999],
+    "total_confirmed_runs": 9,
+    "total_max_epochs": 108,
+    "historical_baselines_role": "EXPLORATORY_REFERENCE_ONLY (All 9 confirmed runs use the new prospective harness)",
+    "fair_comparability_contract": {
+      "dataset": "HDFS LogHub Benchmark (DATA-HDFS-001)",
+      "train_membership_sha256": "65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc",
+      "val_membership_sha256": "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407b0609a",
+      "fair_comparison_unit": "EQUAL_SESSION_EVENT_EXPOSURE_AND_EPOCH_CEILING",
+      "data_exposure_per_epoch": "35,000 Train Sessions (586,577 events), 7,500 Val Sessions (119,531 events)",
+      "max_epoch_budget": 12,
+      "stopping_policy": "Early stopping patience=3 epochs on validation loss or 12-epoch ceiling",
+      "downstream_probe_capacity": "Linear / Logistic Probe W in R^{128 x 2} (zero hidden layers, capacity d x C)",
+      "optimizer_notes_pre_training": "Sequence-only operates on sequence batches; Graph-only operates on event windows with 4-window accumulation; Multi-view operates on paired session streams. Steps per epoch may differ naturally by data granularity, but epoch ceiling and total event exposures are strictly matched."
+    },
+    "primary_decision_rule": {
+      "non_inferiority_margin": -0.02,
+      "comparisons": [
+        "Multi-View Aligned vs Sequence-Only (delta_vs_seq = AP_mv - AP_seq)",
+        "Multi-View Aligned vs Graph-Only (delta_vs_graph = AP_mv - AP_graph)"
+      ],
+      "anti_collapse_condition": "Latent Variance Var(z_mv) >= 0.01",
+      "verdict_criteria": {
+        "SUPPORTED": "Multi-View satisfies non-inferiority against both single-views (delta_vs_seq >= -0.02 and delta_vs_graph >= -0.02) AND achieves statistically significant superiority (delta > 0, 95% CI excludes 0) over at least one single-view baseline, with Var(z_mv) >= 0.01.",
+        "PARTIALLY_SUPPORTED": "Multi-View satisfies non-inferiority against both single-views (delta >= -0.02) without variance collapse, demonstrating robust multi-modal integration without negative transfer, but does not achieve strictly superior AP over both.",
+        "FALSIFIED": "Multi-View is significantly inferior to either Sequence-only or Graph-only (delta < -0.02 with 95% CI excluding -0.02) OR suffers representation collapse (Var(z_mv) < 0.01).",
+        "INCONCLUSIVE": "Confidence intervals span across -0.02 without definitive directional resolution across seeds."
+      }
+    },
+    "unaligned_fusion_ablation": {
+      "status": "OPTIONAL_SECONDARY_ABLATION",
+      "execution_policy": "DO_NOT_EXECUTE_BY_DEFAULT; evaluated only if remaining 15-day compute permits after 9 confirmed runs complete.",
+      "causal_claim_condition": "No causal claim regarding VICReg anti-collapse benefit can be asserted unless the matched aligned-vs-unaligned ablation is empirically executed."
+    },
+    "pcgrad_status": "DECLARED_ONLY_ABSENT_IN_CODE (No PCGrad implementation for this campaign; zero empirical PCGrad benefit claimed)."
+  },
+  "h1_parameter_fidelity_campaign": {
+    "construct": "Parameter Semantic Fidelity",
+    "status": "CONFIRMATORY_FROZEN_PROBE_EVALUATION",
+    "backbone_state": "STRICTLY_FROZEN (0 new backbone optimizer steps)",
+    "primary_direct_target": "param_targets (Categorical dynamic parameter classes: IP categories, byte size buckets)",
+    "primary_direct_metric": "Macro-F1 on Parameter Category Recovery Probe (accounting for class imbalance)",
+    "secondary_utility_metric": "Downstream Anomaly Average Precision (AP) on HDFS_ANOMALY_LABEL",
+    "masking_ablation_label": "FROZEN_INPUT_MASKING_ABLATION",
+    "masking_ablation_definition": "Evaluating the frozen parameter-aware encoder with param_slots=None versus active param_slots.",
+    "circularity_qualifier": "Because param_targets were utilized in the SSL pretraining objective (L_MPP), parameter category recovery measures whether the representation retains linearly accessible parameter semantics; it does not constitute independent proof of downstream anomaly detection superiority. Downstream Anomaly AP serves as secondary relevance evidence.",
+    "allowed_inference": "Dynamic parameter slots contribute linearly decodable security information retained in the frozen representation.",
+    "forbidden_inference": "Does not prove that a parameter-aware pretraining regime is superior to an independently trained template-only regime."
+  },
+  "h3_robustness_perturbation_campaign": {
+    "construct": "Representation Robustness & Shortcut Invariance",
+    "status": "CONFIRMATORY_FROZEN_PROBE_EVALUATION",
+    "backbone_state": "STRICTLY_FROZEN (0 new backbone optimizer steps)",
+    "dataset_split": "Validation Split Only (7,500 sessions / 119,531 events)",
+    "confirmatory_operators": [
+      {
+        "operator": "P01_Token_Deletion_Bounded",
+        "classification": "SEMANTIC_PRESERVING_WITH_WARRANT",
+        "warrant": "Drops non-structural filler words while preserving block identifiers and critical verbs; semantic session goal is invariant.",
+        "construct_tested": "Resilience to minor logging format omissions",
+        "allowed_inference": "Representation does not rely on superficial filler tokens."
+      },
+      {
+        "operator": "P02_Token_Insertion_Benign",
+        "classification": "SEMANTIC_PRESERVING_WITH_WARRANT",
+        "warrant": "Injects benign background daemon heartbeats without altering anomalous session structures.",
+        "construct_tested": "Robustness to background interleaving noise",
+        "allowed_inference": "Model filters out unrelated asynchronous system heartbeats."
+      },
+      {
+        "operator": "P03_Parameter_Obfuscation",
+        "classification": "SEMANTIC_PRESERVING_WITH_WARRANT",
+        "warrant": "Injective hex-to-decimal parameter conversion. Numerical values and relational dependencies are strictly invariant.",
+        "construct_tested": "Syntactic numerical format invariance",
+        "allowed_inference": "Representation is invariant to base-10 vs base-16 numerical formatting."
+      },
+      {
+        "operator": "P04_Event_Order_Jitter",
+        "classification": "SEMANTIC_PRESERVING_WITH_WARRANT",
+        "warrant": "Concurrency-safe reordering strictly limited to events sharing the exact same physical timestamp; causal order is preserved.",
+        "construct_tested": "Invariance to thread-scheduling non-determinism",
+        "allowed_inference": "Model is immune to arbitrary concurrency serialization order."
+      },
+      {
+        "operator": "P05_IP_Subnet_Translation",
+        "classification": "SEMANTIC_PRESERVING_WITH_WARRANT",
+        "warrant": "Bijective 1-to-1 IP translation (|unique(in)| == |unique(out)|). Communication topology and graph isomorphism are preserved.",
+        "construct_tested": "Topology-preserving address invariance",
+        "allowed_inference": "Model learns topological communication structure rather than memorizing static IP strings."
+      },
+      {
+        "operator": "P06_Path_Aliasing",
+        "classification": "SEMANTIC_PRESERVING_WITH_WARRANT",
+        "warrant": "Syntactic relative path aliasing (inserting redundant ./). Points to identical file system objects.",
+        "construct_tested": "Syntactic path normalization invariance",
+        "allowed_inference": "Model is invariant to redundant relative directory syntax."
+      },
+      {
+        "operator": "P09_Host_Reassignment",
+        "classification": "SEMANTIC_PRESERVING_WITH_WARRANT",
+        "warrant": "Bijective host name remapping preserving host-node bijection and graph topology.",
+        "construct_tested": "Entity naming invariance",
+        "allowed_inference": "Model learns structural host roles rather than static hostnames."
+      }
+    ],
+    "exploratory_operators": [
+      {
+        "operator": "P07_Burst_Interleaving",
+        "classification": "STRESS_TEST_ONLY",
+        "warrant": "Injects rapid bursts altering inter-arrival times; tests temporal encoder under traffic spikes rather than semantic invariance."
+      },
+      {
+        "operator": "P08_Unseen_Template_Shift",
+        "classification": "STRESS_TEST_ONLY",
+        "warrant": "Replaces verbs with synonyms, testing Drain parser OOD vocabulary behavior rather than within-schema invariance."
+      },
+      {
+        "operator": "P10_Entity_Pseudonym_Rotation",
+        "classification": "STRESS_TEST_ONLY",
+        "warrant": "Rotates pseudonym salts across boundaries, testing cross-window memory decay."
+      },
+      {
+        "operator": "P11_Timestamp_Skew",
+        "classification": "STRESS_TEST_ONLY",
+        "warrant": "Adds bounded temporal jitter (+/- 2s), testing sensitivity to clock drift."
+      },
+      {
+        "operator": "P12_Composite_Perturbation",
+        "classification": "STRESS_TEST_ONLY",
+        "warrant": "Compound multi-operator stress test combining multiple degradations."
+      }
+    ],
+    "decision_rule": "Confirmatory robustness conclusion is computed exclusively over the 7 SEMANTIC_PRESERVING_WITH_WARRANT operators using Benjamini-Hochberg FDR (q < 0.05). Exploratory operators are reported separately as distribution stress tests without pooling."
+  },
+  "er1_operational_feasibility": {
+    "family_id": "ER1_OPERATIONAL_RESOURCE_FEASIBILITY",
+    "status": "ENGINEERING_EVALUATION_OBJECTIVE (Separated from RQ1-RQ5)",
+    "threshold_status": "AUTHOR_DEFINED_ENGINEERING_TARGET",
+    "targets": {
+      "p95_latency_ms": 10.0,
+      "peak_host_ram_mb": 500.0,
+      "throughput_events_per_sec": 10000.0
+    },
+    "evaluation_order": "Executes after H2 confirmatory training via protocols/h4_operational_benchmark.py (0 training steps)."
+  },
+  "deferred_families": {
+    "h4_attention_mil": "DEFERRED to later phase (requires fine-grained ground truth annotations not available in HDFS).",
+    "h5_privacy_frontier": "DEFERRED to later phase to preserve core 15-day budget for H2/H1/H3."
+  },
+  "pilot_strategy": {
+    "purpose": "Hardware memory verification (VRAM < 4 GB), NaN/Inf gradient check, metric schema validation, runtime calibration",
+    "pilot_seeds": [42],
+    "pilot_epochs": 2,
+    "pilot_configurations": ["SEQUENCE_ONLY", "GRAPH_ONLY", "MULTI_VIEW_ALIGNED_VICREG"],
+    "exclusion_rule": "Pilot metrics are strictly quarantined as PILOT_DEBUG_ONLY and excluded from confirmatory statistical aggregation."
+  },
+  "code_lock_progression": {
+    "step_1": "V2 Preregistration Design Lock (This Document)",
+    "step_2": "Pilot Execution on 3 Configurations (Seed 42, 2 epochs)",
+    "step_3": "Technical Bug Fixes if Required",
+    "step_4": "Execution Manifest & CONFIRMATORY_CODE_COMMIT SHA Lock",
+    "step_5": "Launch of 9 Confirmed Backbone Runs"
+  },
+  "runtime_budget_summary": {
+    "estimated_primary_gpu_hours": 184.0,
+    "calculation_basis": "9 confirmed runs x 20.43 hours nominal full Stage-A2 runtime = ~184 GPU hours (worst-case estimate before pilot refinement).",
+    "available_window_hours": 360.0,
+    "duty_cycle": "51.1% (Leaves 176 hours buffer for cooling, display-off nocturnal runs, and analysis)."
+  }
+}
