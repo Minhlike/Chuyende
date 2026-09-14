@@ -1,10 +1,10 @@
 # scripts/sleep_after_training.ps1
-# Passively waits for Python PID 15308 to exit naturally,
+# Passively waits for Python PID 15960 to exit naturally,
 # verifies checkpoints, restores Sweet Spot, and safely suspends the PC.
 
-$targetPid = 15308
-$pilotDir = "D:\Research\experiments\nineplus\pilots\PILOT_GRAPH_ONLY_seed42_1789315134"
-$logFile = "$pilotDir\SLEEP_TRIGGER.log"
+$targetPid = 15960
+$runDir = "D:\Research\experiments\nineplus\confirmatory\CONF_MULTI_VIEW_ALIGNED_seed42_1789393292"
+$logFile = "$runDir\SLEEP_TRIGGER.log"
 
 function Log-Message ($msg) {
     $timestamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
@@ -22,18 +22,18 @@ try {
     Log-Message "Process $targetPid not found or already exited: $_"
 }
 
-Log-Message "Process $targetPid has exited naturally. Waiting 10 seconds for disk sync..."
-Start-Sleep -Seconds 10
+Log-Message "Process $targetPid has exited naturally. Waiting 15 seconds for disk sync..."
+Start-Sleep -Seconds 15
 
 # Check files
-$ckpt2 = "$pilotDir\checkpoint_epoch2.pt"
-$manifest = "$pilotDir\RUN-MANIFEST.json"
+$bestCkpt = "$runDir\best_checkpoint.pt"
+$manifest = "$runDir\RUN-MANIFEST.json"
 
-if (Test-Path $ckpt2) {
-    $size = (Get-Item $ckpt2).Length / 1MB
-    Log-Message "VERIFIED: checkpoint_epoch2.pt exists ($([math]::Round($size, 2)) MB)."
+if (Test-Path $bestCkpt) {
+    $size = (Get-Item $bestCkpt).Length / 1MB
+    Log-Message "VERIFIED: best_checkpoint.pt exists ($([math]::Round($size, 2)) MB)."
 } else {
-    Log-Message "WARNING: checkpoint_epoch2.pt not found on disk!"
+    Log-Message "WARNING: best_checkpoint.pt not found on disk!"
 }
 
 if (Test-Path $manifest) {
@@ -51,7 +51,7 @@ try {
     Log-Message "Error applying sweet spot profile: $_"
 }
 
-Log-Message "Preparing to suspend machine in 15 seconds. Good night!"
+Log-Message "Preparing to suspend machine in 15 seconds. Training complete!"
 Start-Sleep -Seconds 15
 
 # Put PC to sleep cleanly
