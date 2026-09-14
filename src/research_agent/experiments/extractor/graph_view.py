@@ -131,7 +131,7 @@ class TemporalGraphViewExtractor(nn.Module):
         memory_dim: int = 64,
         edge_feat_dim: int = 16,
         out_dim: int = 64,
-        num_relations: int = 6,
+        num_relations: int = 8,
         max_entities: int = 10000,
         late_event_policy: str = "REJECT"
     ):

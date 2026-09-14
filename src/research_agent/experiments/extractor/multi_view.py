@@ -130,6 +130,7 @@ class MultiViewRepresentationModel(nn.Module):
         graph_node_attr_dim: int = 16,
         param_vocab_size: int = 30,
         embed_dim: int = 64,
+        num_relations: int = 8,
         mode: str = "aligned",
         align_lambda: float = 1.0,
         fuse_rec_lambda: float = 1.0,
@@ -153,7 +154,8 @@ class MultiViewRepresentationModel(nn.Module):
         )
         self.graph_extractor = TemporalGraphViewExtractor(
             node_attr_dim=graph_node_attr_dim,
-            out_dim=embed_dim
+            out_dim=embed_dim,
+            num_relations=num_relations
         )
 
         # Cross-View Latent Alignment & Projections
@@ -275,7 +277,8 @@ class MultiViewRepresentationModel(nn.Module):
             masked_events=seq_inputs,
             true_event_targets=true_event_targets,
             mep_mask=mep_mask,
-            param_targets=param_targets,
+            masked_param_slots=param_targets,
+            true_param_targets=param_targets,
             mpp_mask=mpp_mask,
             true_adjacent_time_gaps=time_gap_targets
         )
