@@ -740,24 +740,29 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="Run Phase 2 Confirmatory Experiments")
     parser.add_argument("--mode", choices=["sequence_only", "multi_view", "sequence_then_multi_view"], default="multi_view")
-    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--seed", type=int, default=None)
+    parser.add_argument("--seeds", type=int, nargs="+", default=None)
     parser.add_argument("--epochs", type=int, default=12)
     parser.add_argument("--patience", type=int, default=3)
     parser.add_argument("--device", type=str, default="cuda")
     args = parser.parse_args()
 
+    seeds = args.seeds if args.seeds is not None else ([args.seed] if args.seed is not None else [42])
     base_dir = Path(r"D:\Research")
     results = {}
 
-    if args.mode in ["sequence_only", "sequence_then_multi_view"]:
-        results["sequence_only"] = run_confirmatory_sequence_only(
-            base_dir, seed=args.seed, max_epochs=args.epochs, patience=args.patience, device=args.device
-        )
+    for s in seeds:
+        if args.mode in ["sequence_only", "sequence_then_multi_view"]:
+            k = f"sequence_only_seed{s}"
+            results[k] = run_confirmatory_sequence_only(
+                base_dir, seed=s, max_epochs=args.epochs, patience=args.patience, device=args.device
+            )
 
-    if args.mode in ["multi_view", "sequence_then_multi_view"]:
-        results["multi_view"] = run_confirmatory_multi_view(
-            base_dir, seed=args.seed, max_epochs=args.epochs, patience=args.patience, device=args.device
-        )
+        if args.mode in ["multi_view", "sequence_then_multi_view"]:
+            k = f"multi_view_seed{s}"
+            results[k] = run_confirmatory_multi_view(
+                base_dir, seed=s, max_epochs=args.epochs, patience=args.patience, device=args.device
+            )
 
     print("\n" + "="*70)
     print("  CONFIRMATORY EXECUTION BATCH FINISHED SUCCESSFULLY!")

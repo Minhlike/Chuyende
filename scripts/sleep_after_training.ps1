@@ -1,10 +1,21 @@
-# scripts/sleep_after_training.ps1
-# Passively waits for Python PID 15960 to exit naturally,
-# verifies checkpoints, restores Sweet Spot, and safely suspends the PC.
+param (
+    [int]$TargetPid = 0,
+    [string]$RunDir = "D:\Research\experiments\nineplus\confirmatory"
+)
 
-$targetPid = 15960
-$runDir = "D:\Research\experiments\nineplus\confirmatory\CONF_MULTI_VIEW_ALIGNED_seed42_1789393292"
-$logFile = "$runDir\SLEEP_TRIGGER.log"
+if ($TargetPid -eq 0) {
+    $proc = Get-Process -Name python -ErrorAction SilentlyContinue | Where-Object {
+        try {
+            $cmd = (Get-CimInstance Win32_Process -Filter "ProcessId = $($_.Id)").CommandLine
+            $cmd -like "*run_nineplus_confirmatory*"
+        } catch { $false }
+    } | Select-Object -First 1
+    if ($proc) {
+        $TargetPid = $proc.Id
+    }
+}
+
+$logFile = "$RunDir\SLEEP_TRIGGER.log"
 
 function Log-Message ($msg) {
     $timestamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
@@ -13,33 +24,28 @@ function Log-Message ($msg) {
     Add-Content -Path $logFile -Value $line
 }
 
-Log-Message "Watcher started. Passively waiting for PID $targetPid to finish naturally..."
+if ($TargetPid -eq 0) {
+    Log-Message "ERROR: No target Python process found to wait for."
+    exit 1
+}
+
+Log-Message "Watcher started. Passively waiting for PID $TargetPid to finish naturally..."
 
 # Wait for target process to exit
 try {
-    Wait-Process -Id $targetPid -ErrorAction Stop
+    Wait-Process -Id $TargetPid -ErrorAction Stop
 } catch {
-    Log-Message "Process $targetPid not found or already exited: $_"
+    Log-Message "Process $TargetPid not found or already exited: $_"
 }
 
-Log-Message "Process $targetPid has exited naturally. Waiting 15 seconds for disk sync..."
+Log-Message "Process $TargetPid has exited naturally. Waiting 15 seconds for disk sync..."
 Start-Sleep -Seconds 15
 
 # Check files
-$bestCkpt = "$runDir\best_checkpoint.pt"
-$manifest = "$runDir\RUN-MANIFEST.json"
-
-if (Test-Path $bestCkpt) {
-    $size = (Get-Item $bestCkpt).Length / 1MB
-    Log-Message "VERIFIED: best_checkpoint.pt exists ($([math]::Round($size, 2)) MB)."
-} else {
-    Log-Message "WARNING: best_checkpoint.pt not found on disk!"
-}
-
-if (Test-Path $manifest) {
-    Log-Message "VERIFIED: RUN-MANIFEST.json exists."
-} else {
-    Log-Message "WARNING: RUN-MANIFEST.json not found on disk!"
+$manifests = Get-ChildItem -Path $RunDir -Recurse -Filter "RUN-MANIFEST.json"
+Log-Message "VERIFIED: Found $($manifests.Count) RUN-MANIFEST.json files across confirmatory runs."
+foreach ($m in $manifests) {
+    Log-Message "  - $($m.FullName)"
 }
 
 # Restore Sweet Spot power profile
