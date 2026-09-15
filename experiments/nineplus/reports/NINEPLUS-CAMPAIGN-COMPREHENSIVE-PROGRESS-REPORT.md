@@ -90,10 +90,14 @@ Kiến trúc `SequenceViewExtractor` (Transformer Encoder 4-layer, $d=128$, MEP 
   - **Legacy Probe AP:** **`0.7032`** | **Legacy Probe ROC-AUC:** **`0.9319`** (Phân loại: `LEGACY_PROBE_EXPLORATORY_METRIC`, chờ tính lại theo V3).
   - Phương sai biểu diễn: $	ext{Var}(z) = 0.00997$.
   - **Đánh giá Chống Sụp đổ:** Phân loại chính thức là `FAIL_UNDER_PREREGISTERED_THRESHOLD` do thấp hơn ngưỡng đăng ký trước $0.01000$. Backbone được bảo toàn để tái đánh giá Probe V3; kết luận H2 không định đoạt trên một seed đơn lẻ.
-- **Seed 7 (Đang chạy trực tiếp trên GPU):**
-  - Đã hoàn thành an toàn các epoch 1, 2, 3 với checkpoint lưu tại `checkpoint_epoch1.pt`, `checkpoint_epoch2.pt`, `checkpoint_epoch3.pt`, và `best_checkpoint.pt`.
-  - Epoch 4 đang được thực thi trên GPU (PID `12792`).
-  - **Chính sách Giám sát Dừng An toàn:** Tiến trình watcher hành chính (17:00 deadline) đã được vô hiệu hóa an toàn nhằm bảo vệ tính toàn vẹn của điều kiện dừng tự nhiên (Early stopping patience=3 hoặc trần 12 epoch).
+- **Seed 7 (Hoàn tất 100% — Early Stopping tại Epoch 6):**
+  - Số epoch hoàn thành: 6 / 12 (Kích hoạt Early Stopping khoa học tại Epoch 6 với patience=3).
+  - Điểm cực tiểu tối ưu toàn cục: **Epoch 3** (Val Loss: `49.0099`).
+  - Checkpoint tối ưu: [`best_checkpoint.pt`](file:///D:/Research/experiments/nineplus/confirmatory/CONF_MULTI_VIEW_ALIGNED_seed7_1789452137/best_checkpoint.pt).
+  - **Legacy Probe AP:** **`0.6082` (60.82%)** | **Legacy Probe ROC-AUC:** **`0.8899` (88.99%)** (Phân loại: `LEGACY_PROBE_EXPLORATORY_METRIC`, chờ tính lại theo V3).
+  - Phương sai biểu diễn: $\text{Var}(z) = 0.012643$.
+  - **Đánh giá Chống Sụp đổ:** Phân loại chính thức là **`PASS_OVER_PREREGISTERED_THRESHOLD`** ($\text{Var}(z) = 0.012643 \ge 0.01000$). Khác với Seed 42 sát ngưỡng dưới, Seed 7 vượt qua ngưỡng kiểm định chống sụp đổ biểu diễn theo hợp đồng V2/V3.
+  - Tổng số bước tối ưu hóa: 3,282 bước. Biên bản nghiệm thu đã xuất tại [`RUN-MANIFEST.json`](file:///D:/Research/experiments/nineplus/confirmatory/CONF_MULTI_VIEW_ALIGNED_seed7_1789452137/RUN-MANIFEST.json).
 - **Seed 999 (Chờ thực thi):**
   - Phân loại: `PENDING_CONFIRMATORY_REQUIRED`. Bắt buộc thực hiện đầy đủ để cấu thành bộ ba xác nhận.
 
