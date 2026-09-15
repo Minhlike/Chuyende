@@ -1,0 +1,184 @@
+{
+  "campaign_id": "NINEPLUS-EXPERIMENT-CAMPAIGN-V3",
+  "version": "3.0.0",
+  "created_at_utc": "2026-09-15T09:35:00Z",
+  "created_at_local": "2026-09-15T16:35:00+07:00",
+  "v2_reference": "experiments/plans/NINEPLUS-EXPERIMENT-CAMPAIGN-V2.json",
+  "v3_base_sha": "4df9666489fa7147d68f5e4d972305a905ff469f",
+  "amendment_classification": "PROSPECTIVE_CORRECTIVE_AMENDMENT",
+  "amendment_notice": "V3 is a PROSPECTIVE CORRECTIVE AMENDMENT, created AFTER initial exploratory/confirmatory outcomes were partially observed under V2. It is NOT a pristine pre-outcome preregistration. V3 corrects critical methodological and inferential flaws while strictly preserving live training processes, historical records, and cryptographic seals.",
+  "observed_outcomes_before_amendment": true,
+  "amendment_reasons": [
+    "A. Single-view GRAPH_ONLY confirmatory values in progress reports were evaluated from historical Stage-A2 checkpoints rather than fresh prospective runs matched to the prospective Nineplus campaign harness.",
+    "B. Downstream linear probe in legacy protocol was fitted and evaluated using an 80/20 split inside the Validation representation pool rather than training on Train representations and evaluating on the full fixed Validation population.",
+    "C. Legacy 80/20 probe split depended on model seed RNG, causing different models to be evaluated on different validation subsets.",
+    "D. Administrative wall-clock watcher (17:00 deadline) risked truncating live Multi-View Seed 7 training and misclassifying administrative stopping as scientific early stopping.",
+    "E. Previous progress reports contained speculative and unsupported causal claims exceeding observational empirical evidence."
+  ],
+  "test_firewall": {
+    "test_opened": false,
+    "test_read_count": 0,
+    "policy": "CRYPTOGRAPHIC_SEALED_ZERO_READ",
+    "enforced_by": "RuntimeTestFirewallGuard",
+    "violation_exception": "TestSetSealedError"
+  },
+  "confirmatory_seed_set": [
+    42,
+    7,
+    999
+  ],
+  "sequence_seeds_classification": {
+    "confirmatory_backbone_eligible": [
+      42,
+      7,
+      999
+    ],
+    "supplementary_exploratory": [
+      1337,
+      2024
+    ],
+    "policy": "Primary H2 confirmatory inference uses strictly seeds 42, 7, 999. Seeds 1337 and 2024 provide supplementary exploratory robustness context and must not be described as 5/5 canonical confirmatory seeds."
+  },
+  "primary_h2_architectures": [
+    {
+      "config_id": "SEQUENCE_ONLY",
+      "status": "BACKBONE_PRESERVED_RECOMPUTE_PROBE_REQUIRED",
+      "description": "Transformer Sequential Encoder (4-layer, d=128, MEP + MPP + Time SSL). Backbones from prospective confirmatory runs (Seeds 42, 7, 999) are eligible and preserved. Probes must be recomputed under V3 protocol.",
+      "seeds": [
+        42,
+        7,
+        999
+      ]
+    },
+    {
+      "config_id": "GRAPH_ONLY_FRESH",
+      "status": "FRESH_PROSPECTIVE_TRAINING_REQUIRED",
+      "description": "Temporal Graph Neural Network single-view baseline. Must be trained freshly and prospectively under the identical Nineplus campaign harness (same HDFS data authority, same Train/Val membership hashes, 12-epoch ceiling, patience=3 early stopping, seeds 42, 7, 999, V3 probe protocol, zero Test access).",
+      "seeds": [
+        42,
+        7,
+        999
+      ]
+    },
+    {
+      "config_id": "MULTI_VIEW_ALIGNED_VICREG",
+      "status": "SEED42_COMPLETE_SEED7_LIVE_SEED999_REQUIRED",
+      "description": "Joint Multi-View Architecture connecting Sequence View, Temporal Graph View, VICReg Alignment, and Gated Dynamic Fusion. Seed 42 backbone preserved with probe recomputation; Seed 7 live training preserved to natural completion; Seed 999 mandatory and deferred.",
+      "seeds": [
+        42,
+        7,
+        999
+      ]
+    }
+  ],
+  "probe_protocol": {
+    "name": "TRAIN_FIT_FULL_FIXED_VALIDATION_EVALUATE",
+    "status": "V3_AUTHORITATIVE_PROBE_PROTOCOL",
+    "step_1_representation_extraction": "Extract frozen representations for all 35,000 Train sessions from the frozen model backbone.",
+    "step_2_label_acquisition": "Acquire downstream training anomaly labels from authorized training-label vault (experiments/runs/data/vault/hdfs_probe_labels_train.pt).",
+    "step_3_probe_fitting": "Fit capacity-controlled linear/logistic probe W in R^{128 x 1} (bce loss with logits, lr=1e-2, weight_decay=1e-4, 50 epochs, batch_size=256) exclusively on Train representations.",
+    "step_4_probe_freeze": "Freeze linear probe parameters; zero further optimization.",
+    "step_5_val_extraction": "Extract frozen representations for all 7,500 sessions in the fixed Validation split.",
+    "step_6_val_evaluation": "Evaluate frozen probe across ALL 7,500 fixed Validation sessions (100% population coverage).",
+    "membership_invariants": {
+      "train_membership_sha256": "65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc",
+      "val_membership_sha256": "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407b0609a",
+      "invariance_rule": "Validation membership is strictly identical across all architectures and model seeds."
+    },
+    "probe_rng": {
+      "fixed_probe_seed": 10007,
+      "decoupling_rule": "Probe training RNG is locked and strictly decoupled from backbone model training seed."
+    },
+    "backbone_optimizer_steps": 0,
+    "test_firewall": "TEST_OPENED=false, TEST_READ_COUNT=0"
+  },
+  "metric_terminology": {
+    "average_precision": "Average Precision (AP)",
+    "prohibited_label": "AP (PR-AUC)",
+    "roc_metric": "ROC-AUC",
+    "rationale": "Average Precision is calculated via precision-recall curve interpolation/step integration; it is distinct from generic PR-AUC approximations and must be precisely labeled as Average Precision (AP)."
+  },
+  "legacy_probe_status": {
+    "classification": "LEGACY_PROBE_EXPLORATORY_METRIC",
+    "role": "Historical execution record. Retained in audit trail but strictly excluded from final confirmatory H2 decision matrix."
+  },
+  "historical_graph_status": {
+    "classification": "HISTORICAL_EXPLORATORY_REFERENCE_ONLY",
+    "role": "Exploratory reference derived from Stage A2 checkpoints. Excluded from final matched H2 confirmatory matrix; fresh Graph-only training required."
+  },
+  "multi_view_seed42_status": {
+    "backbone": "PRESERVED_CONFIRMATORY_ELIGIBLE",
+    "anti_collapse_evaluation": "FAIL_UNDER_PREREGISTERED_THRESHOLD",
+    "observed_variance": 0.00997,
+    "preregistered_threshold": 0.01,
+    "note": "Reported strictly as FAIL_UNDER_PREREGISTERED_THRESHOLD. Model artifact is preserved; single seed failure does not prejudge final multi-seed H2 verdict."
+  },
+  "multi_view_seed7_status": {
+    "current_status": "TRAINING_IN_PROGRESS",
+    "termination_policy": "NATURAL_EARLY_STOPPING_OR_12_EPOCH_CEILING_ONLY",
+    "administrative_stopping_prohibited": true
+  },
+  "multi_view_seed999_status": {
+    "current_status": "PENDING_CONFIRMATORY_REQUIRED",
+    "execution_policy": "Mandatory member of confirmatory triad [42, 7, 999]; deferred to follow-up execution turn."
+  },
+  "administrative_pause_policy": {
+    "rule": "Wall-clock deadline or operating schedule is NOT a scientific stopping rule.",
+    "procedure": "If execution must pause for machine usage or cooling, wait for current epoch completion, save clean epoch checkpoint, mark status ADMINISTRATIVE_PAUSE, and resume identical training process later.",
+    "prohibitions": [
+      "DO NOT mark early_stopped=true on administrative pause.",
+      "DO NOT mark status COMPLETED on administrative pause.",
+      "DO NOT suppress mandatory seeds on administrative pause."
+    ]
+  },
+  "scientific_early_stopping_policy": {
+    "rule": "Patience = 3 epochs without improvement in validation loss, or completion of epoch 12 ceiling.",
+    "enforcement": "Evaluated strictly by training runner validation loop."
+  },
+  "noninferiority_margin_status": {
+    "margin_value": -0.02,
+    "classification": "AUTHOR_DEFINED_A_PRIORI_PRACTICAL_NONINFERIORITY_MARGIN",
+    "nature": "Study-specific practical tolerance defined by authors; not a universal standard or literature-derived constant. Locked against post-hoc modification."
+  },
+  "statistical_hierarchy": {
+    "primary_unit": "Model-level training seed replications (Seeds 42, 7, 999).",
+    "reporting_contract": [
+      "metric_seed42",
+      "metric_seed7",
+      "metric_seed999",
+      "mean",
+      "sample_standard_deviation",
+      "paired_delta_seed42",
+      "paired_delta_seed7",
+      "paired_delta_seed999",
+      "mean_paired_delta",
+      "sample_std_paired_delta"
+    ],
+    "bootstrap_role": "Paired cluster bootstrap on validation sessions (cluster=session, 2000 resamples, seed 10007) is restricted strictly to quantifying within-seed finite sample uncertainty. FORBIDDEN from pooling across seeds or substituting for training seed replication."
+  },
+  "epistemic_invariants": {
+    "allowed_inferences": [
+      "Observational reporting of empirical AP, ROC-AUC, and latent variance under specified probe protocols.",
+      "Direct seed-to-seed and aggregate comparisons under matched evaluation protocols.",
+      "Hypothesis generation regarding alignment regularization, graph connectivity, and sequence predictability as candidate mechanisms for targeted future testing."
+    ],
+    "forbidden_inferences": [
+      "DO NOT assert Gated Fusion 'proved' compensation of graph information.",
+      "DO NOT assert HDFS linearity 'caused' Sequence-only superiority.",
+      "DO NOT assert VICReg 'caused' over-regularization or negative transfer without matched unaligned ablation.",
+      "DO NOT assert Multi-View superiority on DARPA/provenance systems without empirical campaign evidence.",
+      "DO NOT assert graph sparsity is proven cause of performance differences.",
+      "DO NOT conflate temporal/graph dependency with causal mechanism."
+    ]
+  },
+  "h2_confirmatory_status": "INCOMPLETE_PROTOCOL_REPAIR_IN_PROGRESS",
+  "master_document_integrity": {
+    "master_docx": "D:\\Research\\Chuyên đề chuyên sâu.docx",
+    "master_pdf": "D:\\Research\\Chuyên đề chuyên sâu.pdf",
+    "master_changed": false
+  },
+  "current_turn_accounting": {
+    "new_backbone_optimizer_steps_added_by_this_task": 0,
+    "new_probe_optimizer_steps_added_by_this_task": 0
+  }
+}
