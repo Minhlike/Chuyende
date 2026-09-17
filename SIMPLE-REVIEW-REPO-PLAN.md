@@ -28,7 +28,7 @@
 
 ---
 
-### 1.2. Các điểm nghẽn và mâu thuẫn cần khóa cứng (Critical Blockers)
+### 1.2. Các điểm nghẽn và mâu thuẫn kỹ thuật cần khóa cứng (Critical Blockers)
 
 > [!CAUTION]
 > **BLOCKER 1: Checkpoint `*.pt`, dữ liệu thô HDFS và cache nhị phân hiện không có trong Git**
@@ -40,8 +40,8 @@
 > Hiện tại đang tồn tại sự không nhất quán giữa các tài liệu mô tả về dung lượng trang của bản thuyết minh Master:
 > - *Quy định đề cương chuyên đề:* Tối thiểu 100 trang.
 > - *Báo cáo nghiệm thu giai đoạn trước (`FINAL-ACCEPTANCE-REPORT.md`):* Ghi nhận 104 trang (trước khi tích hợp thực nghiệm xác nhận Nineplus).
-> - *Bản Master PDF thực tế hiện tại (`Chuyên đề chuyên sâu.pdf`):* Đạt chính xác **114 trang** (sau khi mở rộng Mục 3.2, bổ sung 6 mô hình Nineplus V3 và đồng bộ 606 công thức toán học OMML).
-> **Giải pháp bắt buộc:** Khóa sự thật Master ở mốc **114 trang** và giải trình minh bạch lịch sử phát triển tài liệu (từ 104 lên 114 trang) trong mọi báo cáo nghiệm thu.
+> - *Quan sát sơ bộ PDF hiện hành:* Ghi nhận khoảng 114 trang.
+> **Giải pháp bắt buộc:** **Không khóa trước Master ở 114 trang.** Tại Bước 1 của backlog, bắt buộc phải đo kiểm trực tiếp trên tệp DOCX và PDF hiện hành, ghi nhận chính xác mã băm SHA-256, số trang (page count), số lượng nút OMML và mốc thời gian (timestamp). Chỉ sau khi có số liệu đo kiểm độc lập mới công bố số trang chính thức và giải trình lịch sử mở rộng tài liệu.
 
 > [!IMPORTANT]
 > **BLOCKER 3: Multi-View Seed 7 và Seed 999 hiện mới chỉ có result JSON trong Git**
@@ -50,6 +50,11 @@
 > [!NOTE]
 > **BLOCKER 4: Chưa chốt chỉ số đánh giá cho nhánh Đồ thị lịch sử (Graph-Only)**
 > Nhánh `GRAPH_ONLY` (Seed 42, 7, 999) thuộc giai đoạn khảo sát lịch sử Stage A2. Trong giao thức Nineplus V3 và chiến lược tối ưu hóa chi phí (`COST-OPTIMIZED EVIDENCE STRATEGY`), nhánh này được giữ nguyên ở trạng thái tham chiếu lịch sử (`HISTORICAL_EXPLORATORY_REFERENCE_ONLY`) và chưa thực hiện lại quy trình đánh giá đầu dò đóng băng V3 chuẩn hóa. Chỉ số của nhánh này phải ghi rõ là **chưa chốt (PENDING_AUDIT)** cho tới khi xác định được tệp artifact kết quả tương ứng.
+
+> [!CAUTION]
+> **BLOCKER 5: Script huấn luyện đang hard-code đường dẫn `D:\Research`**
+> Trong `scripts/run_nineplus_confirmatory.py` (dòng 755), biến đường dẫn cơ sở đang bị gán cứng: `base_dir = Path(r"D:\Research")`. Điều này khiến script sẽ gặp lỗi ngay lập tức nếu người phản biện hoặc sinh viên clone repository về thư mục khác hoặc chạy trên máy tính khác.
+> **Giải pháp bắt buộc:** Phải chuyển sang lấy đường dẫn gốc repository động (ví dụ `Path(__file__).resolve().parent.parent`) hoặc hỗ trợ tham số `--base-dir` trong backlog triển khai trước khi quy trình `manual_reproduction` được coi là khả chuyển (portable).
 
 ---
 
@@ -65,8 +70,8 @@ D:\Research\
 │   ├── README.md                          # Hướng dẫn chi tiết cho sinh viên tự chạy thực nghiệm độc lập
 │   └── run_manual_sequence42.ps1          # Script PowerShell tinh gọn chuẩn bị sẵn để sinh viên chạy
 │
-├── Chuyên đề chuyên sâu.docx              # Bản thảo Master DOCX chính thức (606 nút OMML)
-├── Chuyên đề chuyên sâu.pdf               # Bản xuất bản Master PDF 114 trang đồng bộ
+├── Chuyên đề chuyên sâu.docx              # Bản thảo Master DOCX chính thức (chứa 606 nút OMML)
+├── Chuyên đề chuyên sâu.pdf               # Bản xuất bản Master PDF đồng bộ (số trang xác định tại Bước 1)
 ├── SPECIALIZED-TOPIC-FINAL-QA-REPORT.md   # Báo cáo kiểm toán chất lượng học thuật và 8 chỉ tiêu bất biến
 ├── SPECIALIZED-TOPIC-NINEPLUS-INTEGRATION-REPORT.md # Báo cáo tích hợp số liệu V3 đã chuẩn hóa
 │
@@ -84,10 +89,10 @@ D:\Research\
 │   ├── evaluate_nineplus_v3.py            # Đánh giá đầu dò tuyến tính V3 trên tập Validation
 │   ├── run_h1_masking_ablation.py         # Kiểm thử cắt bỏ che tham số đầu vào H1
 │   ├── run_h2_sequence_noparam_sensitivity.py # Phân tích độ nhạy bỏ tham số Sequence H2
-│   └── gpu_smoke_test.py                  # Kiểm tra môi trường GPU, CUDA, PyTorch
+│   └── gpu_smoke_test.py                  # Kiểm tra môi trường GPU, CUDA, PyTorch, PyG
 │
 ├── experiments/
-│   ├── experiment_index.csv               # Bảng mục lục tra cứu nhanh các đợt thực nghiệm (9 cột)
+│   ├── experiment_index.csv               # Bảng mục lục tra cứu nhanh các đợt thực nghiệm (10 cột)
 │   └── nineplus/
 │       ├── confirmatory/                  # Checkpoints và nhật ký huấn luyện (checkpoint nạp ngoại vi)
 │       └── evaluation_v3/                 # Tệp JSON tổng hợp kết quả đánh giá V3, H1, H2
@@ -105,7 +110,7 @@ Tệp `README.md` mới sẽ được viết lại hoàn toàn bằng tiếng Vi
 1. **Tên đề tài & Thông tin chung:**
    - Tên đề tài: *Nghiên cứu các phương pháp học biểu diễn đặc trưng log phục vụ phát hiện bất thường an toàn thông tin*.
    - Đối tượng thực hiện: Sinh viên thực hiện chuyên đề nghiên cứu chuyên sâu.
-   - Tài liệu báo cáo chính thức: Liên kết tới `Chuyên đề chuyên sâu.docx` và `Chuyên đề chuyên sâu.pdf` (114 trang, 606 công thức toán học OMML).
+   - Tài liệu báo cáo chính thức: Liên kết tới `Chuyên đề chuyên sâu.docx` và `Chuyên đề chuyên sâu.pdf` (chứa 606 nút OMML).
 
 2. **Tóm tắt chuyên đề (1–2 đoạn tự nhiên):**
    - Trình bày bài toán biểu diễn đặc trưng nhật ký hệ thống (log telemetry) bảo toàn ngữ cảnh an ninh phục vụ phát hiện bất thường.
@@ -116,13 +121,15 @@ Tệp `README.md` mới sẽ được viết lại hoàn toàn bằng tiếng Vi
 4. **Yêu cầu môi trường & Khóa phụ thuộc (Dependency Lock):**
    - Hệ điều hành: Windows 11 (hoặc Linux tương đương).
    - Python: 3.12+.
-   - Cài đặt thư viện qua tệp khóa phụ thuộc: `pip install -r requirements-lock.txt` (ghim cứng các phiên bản `torch==2.6.0+cu124`, `numpy`, `scipy`, `scikit-learn`, `psutil`, `python-docx`).
-   - Phần cứng thực tế: Laptop GPU NVIDIA GeForce RTX 3050 Ti (4GB VRAM), RAM 16GB.
+   - Cài đặt thư viện qua tệp khóa phụ thuộc `requirements-lock.txt` bao gồm đầy đủ mọi import cho cả luồng smoke test và luồng huấn luyện thủ công (tối thiểu gồm `torch`, `torch-geometric`, `pandas`, `numpy`, `scipy`, `scikit-learn`, `psutil`, `python-docx`, `pypdfium2`).
+   - Ghi rõ nguồn cài đặt PyTorch CUDA wheel index (ví dụ: `--extra-index-url https://download.pytorch.org/whl/cu124`).
+   - *Lưu ý thực tế:* Không hứa hẹn môi trường giống 100% trước khi thực hiện kiểm thử độc lập từ máy sạch (clean-room test), do khác biệt phiên bản hệ điều hành, CUDA driver và phần cứng máy trạm.
+   - Cấu hình kiểm thử gốc: Laptop GPU NVIDIA GeForce RTX 3050 Ti (4GB VRAM), RAM 16GB.
 
 5. **Bộ dữ liệu thực nghiệm & Cơ chế chuẩn bị dữ liệu:**
    - Tập dữ liệu HDFS (Hadoop Distributed File System log telemetry).
    - Phân chia theo dòng thời gian chống rò rỉ (Causal Temporal Split): 35.000 phiên Train (68,4%), 7.500 phiên Validation (14,7%). Tập Test chưa từng được truy cập (`test_opened = false`, `test_reads = 0`).
-   - **Lưu ý ngoại vi:** Dữ liệu raw và cache tensor `.pt` không nằm trong Git; hướng dẫn người đọc tải về từ kho lưu trữ dữ liệu nghiên cứu công khai và kiểm tra mã băm SHA-256 đối soát với `SUBSET-MANIFEST-HDFS.json`.
+   - **Lưu ý ngoại vi:** Dữ liệu raw và cache tensor `.pt` không nằm trong Git. `SUBSET-MANIFEST-HDFS.json` chỉ chứa siêu dữ liệu phân vùng, ranh giới thời gian và mã băm phân chia phiên; tệp này **không chứa checksum của các tệp cache `.pt`**. Danh mục mã băm checksum, kích thước và nguồn gốc (provenance) của các tệp cache `.pt` được quản lý riêng qua tệp bảng kê artifact ngoại vi (`ARTIFACT-MANIFEST.json`).
 
 6. **Cách chạy nhanh (Quick Start cho Reviewer - Yêu cầu đã nạp Artifacts):**
    - Lệnh 1: Kiểm tra môi trường phần cứng (`python scripts/gpu_smoke_test.py`).
@@ -151,20 +158,21 @@ Tệp `README.md` mới sẽ được viết lại hoàn toàn bằng tiếng Vi
     python -m venv .venv
     .venv\Scripts\Activate.ps1
     ```
-  - Cài đặt các gói phụ thuộc cố định phiên bản:
+  - Cài đặt các gói phụ thuộc cố định phiên bản kèm chỉ định wheel index PyTorch:
     ```powershell
-    pip install -r requirements-lock.txt
+    pip install --extra-index-url https://download.pytorch.org/whl/cu124 -r requirements-lock.txt
     ```
-  - Tệp `requirements-lock.txt` ghim cứng chính xác: `torch==2.6.0+cu124`, `numpy==1.26.4`, `scipy==1.13.1`, `scikit-learn==1.5.0`, `python-docx==1.1.2`, `psutil==5.9.8`.
+  - Tệp `requirements-lock.txt` bao hàm mọi gói được import trong smoke/manual path: `torch==2.6.0+cu124`, `torch-geometric==2.6.1`, `pandas==2.2.3`, `numpy==1.26.4`, `scipy==1.13.1`, `scikit-learn==1.5.0`, `python-docx==1.1.2`, `psutil==5.9.8`, `pypdfium2`.
 
 - **Mục B: Kiểm tra cấu hình phần cứng và PyTorch:**
   - Lệnh thực thi: `python scripts/gpu_smoke_test.py`.
-  - Kết quả in ra kỳ vọng: Tên GPU (NVIDIA GeForce RTX 3050 Ti Laptop GPU), dung lượng VRAM khả dụng, CUDA capability 8.6, cờ xác định `CUBLAS_WORKSPACE_CONFIG=:4096:8`.
+  - *Hiện trạng output:* Script hiện in phiên bản Python, PyTorch, PyTorch CUDA, CUDA Available, Device Name, Device Capability, PyG, và kiểm tra nhân ma trận CPU/GPU.
+  - *Kế hoạch bổ sung (trong Backlog):* Bổ sung hiển thị tổng dung lượng VRAM GPU và giá trị biến môi trường `CUBLAS_WORKSPACE_CONFIG` trước khi nghiệm thu.
 
 - **Mục C: Quy trình chuẩn bị dữ liệu và Checkpoint từ máy sạch (Clean-room Preparation):**
   - Do Git không chứa dữ liệu nhị phân và checkpoint `*.pt`:
-    1. Tải gói dữ liệu đệm tiền xử lý `experiments/runs/data/hdfs/` (`hdfs_ssl_train.pt`, `hdfs_ssl_val.pt`, `hdfs_vocab.json`) và nhãn kiểm định `experiments/runs/data/vault/hdfs_probe_labels_val.pt` từ kho phát hành dữ liệu ngoại vi.
-    2. Đối soát mã băm SHA-256 của các tệp đệm với mã chuẩn trong `SUBSET-MANIFEST-HDFS.json`.
+    1. Tải gói dữ liệu đệm tiền xử lý `experiments/runs/data/hdfs/` (`hdfs_ssl_train.pt`, `hdfs_ssl_val.pt`, `hdfs_vocab.json`), kèm hai tệp nhãn phân loại: `hdfs_probe_labels_train.pt` (dùng để huấn luyện linear probe) và `hdfs_probe_labels_val.pt` (dùng để đánh giá linear probe) từ kho phát hành ngoại vi.
+    2. Đối soát mã băm SHA-256 của các tệp đệm với bảng kê artifact ngoại vi `ARTIFACT-MANIFEST.json` (không nhầm lẫn với `SUBSET-MANIFEST-HDFS.json` vốn chỉ chứa siêu dữ liệu phân vùng).
     3. Tải các tệp trọng số `best_checkpoint.pt` về đúng thư mục `experiments/nineplus/confirmatory/<run_id>/` và kiểm tra SHA-256 trước khi thực hiện đánh giá.
 
 - **Mục D: Lệnh chạy thực nghiệm đại diện (Representative Training Run):**
@@ -245,7 +253,7 @@ Thư mục `manual_reproduction/` được thiết kế riêng để sinh viên 
 
 | STT | Tên tệp ảnh dự kiến | Lệnh / Màn hình thực hiện | Mục đích chứng minh & Nội dung hiển thị thực tế |
 | :---: | :--- | :--- | :--- |
-| **1** | `01_environment_gpu_git.png` | `python scripts/gpu_smoke_test.py`<br>`git log -n 1 --oneline` | Môi trường thực tế trên máy trạm: Windows 11, GPU RTX 3050 Ti Laptop, CUDA capability, và mã commit Git hiện tại. |
+| **1** | `01_environment_gpu_git.png` | `python scripts/gpu_smoke_test.py`<br>`git log -n 1 --oneline` | Môi trường thực tế trên máy trạm: Windows 11, GPU RTX 3050 Ti Laptop, CUDA capability, và mã commit Git hiện tại.<br>*(Lưu ý: Sau khi cập nhật script ở Bước 6 của Backlog, màn hình sẽ hiển thị thêm VRAM và trạng thái CUBLAS_WORKSPACE_CONFIG)*. |
 | **2** | `02_manual_run_command.png` | Cửa sổ PowerShell với dấu nhắc `PS D:\Research>` hiển thị dòng lệnh sinh viên tự gõ để chạy Sequence-Only Seed 42. | Thao tác dòng lệnh trực tiếp từ hệ điều hành bởi sinh viên. |
 | **3** | `03_training_epochs_loss.png` | Tiến trình huấn luyện Epoch 1–3 in trên console (`Epoch x/12 \| Train: ...m \| Val: ...m \| Val Loss: ...`). | Mạng nơ-ron thực sự tối ưu hóa và hàm mất mát giảm dần.<br>*(Lưu ý: Console in thời gian và val loss; dung lượng VRAM ~170 MB được ghi nhận trong RUN-MANIFEST.json, không tuyên bố console in VRAM nếu script không in dòng này)*. |
 | **4** | `04_early_stopping_best_checkpoint.png` | Thông báo Early Stopping tại Epoch 6 (dừng sớm với patience=3, lưu best_checkpoint tại Epoch 3). | Cơ chế dừng sớm tự động và việc lưu trữ checkpoint thành công. |
@@ -261,11 +269,11 @@ Tuyển chọn 8 đoạn trích mã nguồn then chốt (mỗi đoạn từ 8 đ
 
 ### Đoạn trích 1: Phân chia tập dữ liệu theo trục thời gian và chọn lọc ngân sách nhân quả
 - **FILE:** `src/research_agent/experiments/data/hdfs_split_authority.py`
-- **FUNCTION:** `compute_and_cache_split` (Kiểm tra bất biến và chọn lọc phiên)
-- **LINE_RANGE:** 177–196 (20 dòng)
+- **FUNCTION:** `compute_and_cache_split` (Kiểm tra bất biến ranh giới và chọn lọc ngân sách phiên)
+- **LINE_RANGE:** 177–197 (21 dòng)
 - **THESIS_SECTION:** Mục 3.1.2 (Khung dữ liệu đối chuẩn và giao thức phân chia theo dòng thời gian chống rò rỉ)
-- **SHORT_CAPTION:** Phép kiểm tra tính bất giao và chọn lọc ngân sách 35.000 Train / 7.500 Val theo thời gian
-- **NỘI DUNG SINH VIÊN CẦN NẮM VỮNG:** Giải thích được các phép `assert` kiểm tra tính bất giao giữa Train, Val, Test nhằm ngăn chặn rò rỉ thông tin tương lai (`assert train_max_end < val_min_start`), kết hợp logic sắp xếp theo mốc thời gian bắt đầu của phiên để chọn lọc chính xác ngân sách nhân quả 35.000 phiên Train và 7.500 phiên Val.
+- **SHORT_CAPTION:** Phép kiểm tra bất biến ranh giới thời gian và chọn lọc ngân sách 35.000 Train / 7.500 Val
+- **NỘI DUNG SINH VIÊN CẦN NẮM VỮNG:** Giải thích được các phép `assert` kiểm tra tính bất giao và ranh giới nhân quả giữa Train, Val, Test (`assert train_max_end < val_min_start`), kết hợp logic sắp xếp mốc thời gian để chọn lọc ngân sách 35.000 phiên Train và 7.500 phiên Val.<br>*(Lưu ý chính xác: Đoạn trích này chỉ bao gồm kiểm tra bất biến và causal budget selection; logic loại bỏ phiên vắt ranh giới purge_sessions nằm ở các dòng trước đó [dòng 150–169])*.
 
 ### Đoạn trích 2: Kiểu hóa và mã giả danh tham số có nhận thức an ninh
 - **FILE:** `src/research_agent/experiments/extractor/tokenizer.py`
@@ -313,7 +321,11 @@ Tuyển chọn 8 đoạn trích mã nguồn then chốt (mỗi đoạn từ 8 đ
 - **LINE_RANGE:** 57–82 (26 dòng)
 - **THESIS_SECTION:** Mục 3.1.3 (Hệ thống thang đo ba tầng và hàm mục tiêu)
 - **SHORT_CAPTION:** Thuật toán tính toán tích phân AP và thống kê xếp hạng ROC-AUC hoàn chỉnh
-- **NỘI DUNG SINH VIÊN CẦN NẮM VỮNG:** Giải thích trọn vẹn hàm toán học từ bước kiểm tra nhãn hai lớp, tính toán tích phân hình thang Precision-Recall cho AP trên tập mất cân bằng cực đoan, tính toán thống kê Mann-Whitney U cho ROC-AUC, tới lệnh hoàn trả giá trị `return ap, auc` mà không bị cắt cụt logic.
+- **NỘI DUNG SINH VIÊN CẦN NẮM VỮNG:** Giải thích trọn vẹn hàm toán học từ bước kiểm tra nhãn hai lớp, tính toán tích phân hình thang Precision-Recall cho AP trên tập mất cân bằng cực đoan, tính toán thống kê Mann-Whitney U cho ROC-AUC, tới lệnh hoàn trả giá trị `return ap, auc`.
+- **CẢNH BÁO KỸ THUẬT (AUDIT NOTE):**
+  > [!WARNING]
+  > **Cần kiểm tra tính đúng của ROC-AUC khi scores có ties trước khi chèn vào Word:**
+  > Cách cài đặt hiện tại sử dụng `ranks = np.argsort(np.argsort(scores)) + 1` để tính tổng hạng Mann-Whitney U. Cách xếp hạng này gán các số nguyên phân biệt và không xử lý tính hạng trung bình (average ranks / fractional ties) khi có nhiều mẫu có cùng điểm số dự đoán (ties). Nếu tập kiểm định xuất hiện điểm số trùng lặp, giá trị ROC-AUC tính theo cách này có thể bị sai lệch nhẹ so với `sklearn.metrics.roc_auc_score`. Cần kiểm chứng hoặc bổ sung xử lý ties trước khi đưa vào bản thảo Word chính thức.
 
 ### Đoạn trích 8: Hàm băm SHA-256 theo khối dữ liệu lớn (Chunk-based Hashing)
 - **FILE:** `src/research_agent/core/hash_utils.py`
@@ -342,22 +354,25 @@ Rà soát các tệp mã nguồn để chuẩn bị cho giai đoạn tinh gọn 
 
 ## 9. CHỈ MỤC BẰNG CHỨNG THỰC NGHIỆM (`experiments/experiment_index.csv`)
 
-Nhằm giúp Thầy/Cô phản biện tra cứu tức thì bất kỳ mô hình nào mà không cần duyệt cây thư mục phức tạp, đề xuất xây dựng duy nhất **MỘT** bảng chỉ mục `experiments/experiment_index.csv` với cấu trúc cột phân định rạch ròi giữa `run_source_commit` (mã commit khi chạy mô hình) và `evidence_commit` (mã commit khóa nghiệm thu bằng chứng), đồng thời cập nhật chính xác `best_epoch` và hiện trạng trong Git:
+Nhằm giúp Thầy/Cô phản biện tra cứu tức thì bất kỳ mô hình nào mà không cần duyệt cây thư mục phức tạp, đề xuất xây dựng duy nhất **MỘT** bảng chỉ mục `experiments/experiment_index.csv` với cấu trúc cột phân định rạch ròi giữa `run_source_commit` (mã commit khi chạy mô hình) và `evidence_commit` (mã commit khóa nghiệm thu bằng chứng), cập nhật chính xác `best_epoch`, `best_val_loss` và hiện trạng trong Git:
 
-| run_id | architecture | seed | best_epoch | checkpoint (ngoại vi) | log / manifest | validation_result | run_source_commit | evidence_commit | status |
-| :--- | :--- | :---: | :---: | :--- | :--- | :--- | :---: | :---: | :---: |
-| `CONF_SEQUENCE_ONLY_seed42_1789413645` | SEQUENCE_ONLY | 42 | **3** | `.../best_checkpoint.pt` | `TRAIN-LOG.jsonl`<br>`RUN-MANIFEST.json` | `AP=1.0000, ROC=1.0000` | `47e4ad6` | `878a3db` | `COMPLETED` |
-| `CONF_SEQUENCE_ONLY_seed7_1789415728` | SEQUENCE_ONLY | 7 | **11** | `.../best_checkpoint.pt` | `TRAIN-LOG.jsonl`<br>`RUN-MANIFEST.json` | `AP=1.0000, ROC=1.0000` | `47e4ad6` | `878a3db` | `COMPLETED` |
-| `CONF_SEQUENCE_ONLY_seed999_1789420295` | SEQUENCE_ONLY | 999 | **12** | `.../best_checkpoint.pt` | `TRAIN-LOG.jsonl`<br>`RUN-MANIFEST.json` | `AP=1.0000, ROC=1.0000` | `47e4ad6` | `878a3db` | `COMPLETED` |
-| `CONF_MULTI_VIEW_ALIGNED_seed42_1789393292` | MULTI_VIEW_ALIGNED | 42 | **6** | `.../best_checkpoint.pt` | `TRAIN-LOG.jsonl`<br>`RUN-MANIFEST.json` | `AP=0.7604, ROC=0.9946` | `7bdcade` | `878a3db` | `COMPLETED` |
-| `CONF_MULTI_VIEW_ALIGNED_seed7_1789452137` | MULTI_VIEW_ALIGNED | 7 | **3** | `.../best_checkpoint.pt` | *(Chưa commit log/manifest)* | `AP=0.6309, ROC=0.8081` | `1dc6741` | `878a3db` | `RESULT_JSON_ONLY_IN_GIT` |
-| `CONF_MULTI_VIEW_ALIGNED_seed999_1789541331` | MULTI_VIEW_ALIGNED | 999 | **4** | `.../best_checkpoint.pt` | *(Chưa commit log/manifest)* | `AP=0.5911, ROC=0.7693` | `0cc1752` | `878a3db` | `RESULT_JSON_ONLY_IN_GIT` |
-| `CONF_GRAPH_ONLY_seed42_1789448995` | GRAPH_ONLY | 42 | 1 | *Historical Checkpoint* | `RUN-MANIFEST.json` | *Chưa chốt (Chờ artifact V3)* | `3e0bcef` | `878a3db` | `HISTORICAL_REF (PENDING_AUDIT)` |
-| `CONF_GRAPH_ONLY_seed7_1789449292` | GRAPH_ONLY | 7 | 12 | *Historical Checkpoint* | `RUN-MANIFEST.json` | *Chưa chốt (Chờ artifact V3)* | `d6fb10b` | `878a3db` | `HISTORICAL_REF (PENDING_AUDIT)` |
-| `CONF_GRAPH_ONLY_seed999_1789449583` | GRAPH_ONLY | 999 | 12 | *Historical Checkpoint* | `RUN-MANIFEST.json` | *Chưa chốt (Chờ artifact V3)* | `d6fb10b` | `878a3db` | `HISTORICAL_REF (PENDING_AUDIT)` |
+| run_id | architecture | seed | best_epoch | best_val_loss | checkpoint (ngoại vi) | log / manifest | validation_result | run_source_commit | evidence_commit | status |
+| :--- | :--- | :---: | :---: | :---: | :--- | :--- | :--- | :---: | :---: | :---: |
+| `CONF_SEQUENCE_ONLY_seed42_1789413645` | SEQUENCE_ONLY | 42 | **3** | 1.1577 | `.../best_checkpoint.pt` | `TRAIN-LOG.jsonl`<br>`RUN-MANIFEST.json` | `AP=1.0000, ROC=1.0000` | `47e4ad6` | `878a3db` | `COMPLETED` |
+| `CONF_SEQUENCE_ONLY_seed7_1789415728` | SEQUENCE_ONLY | 7 | **11** | 0.8912 | `.../best_checkpoint.pt` | `TRAIN-LOG.jsonl`<br>`RUN-MANIFEST.json` | `AP=1.0000, ROC=1.0000` | `47e4ad6` | `878a3db` | `COMPLETED` |
+| `CONF_SEQUENCE_ONLY_seed999_1789420295` | SEQUENCE_ONLY | 999 | **12** | 0.9423 | `.../best_checkpoint.pt` | `TRAIN-LOG.jsonl`<br>`RUN-MANIFEST.json` | `AP=1.0000, ROC=1.0000` | `47e4ad6` | `878a3db` | `COMPLETED` |
+| `CONF_MULTI_VIEW_ALIGNED_seed42_1789393292` | MULTI_VIEW_ALIGNED | 42 | **6** | 49.3361 | `.../best_checkpoint.pt` | `TRAIN-LOG.jsonl`<br>`RUN-MANIFEST.json` | `AP=0.7604, ROC=0.9946` | `7bdcade` | `878a3db` | `COMPLETED` |
+| `CONF_MULTI_VIEW_ALIGNED_seed7_1789452137` | MULTI_VIEW_ALIGNED | 7 | **3** | **49.0099** | `.../best_checkpoint.pt` | *(Chưa commit log/manifest)* | `AP=0.6309, ROC=0.8081` | `1dc6741` | `878a3db` | `RESULT_JSON_ONLY_IN_GIT` |
+| `CONF_MULTI_VIEW_ALIGNED_seed999_1789541331` | MULTI_VIEW_ALIGNED | 999 | **4** | **48.7659** | `.../best_checkpoint.pt` | *(Chưa commit log/manifest)* | `AP=0.5911, ROC=0.7693` | `0cc1752` | `878a3db` | `RESULT_JSON_ONLY_IN_GIT` |
+| `CONF_GRAPH_ONLY_seed42_1789448995` | GRAPH_ONLY | 42 | 1 | 6.0814 | *Historical Checkpoint* | `RUN-MANIFEST.json` | *Chưa chốt (Chờ artifact V3)* | `3e0bcef` | `878a3db` | `HISTORICAL_REF (PENDING_AUDIT)` |
+| `CONF_GRAPH_ONLY_seed7_1789449292` | GRAPH_ONLY | 7 | 12 | 5.8921 | *Historical Checkpoint* | `RUN-MANIFEST.json` | *Chưa chốt (Chờ artifact V3)* | `d6fb10b` | `878a3db` | `HISTORICAL_REF (PENDING_AUDIT)` |
+| `CONF_GRAPH_ONLY_seed999_1789449583` | GRAPH_ONLY | 999 | 12 | 5.7142 | *Historical Checkpoint* | `RUN-MANIFEST.json` | *Chưa chốt (Chờ artifact V3)* | `d6fb10b` | `878a3db` | `HISTORICAL_REF (PENDING_AUDIT)` |
 
 *Ghi chú quan trọng cho bảng chỉ mục:*
-1. **best_epoch chính xác:** Sequence seeds 42, 7, 999 lần lượt đạt val loss tối ưu tại epoch 3, 11, 12. Multi-View seeds 42, 7, 999 lần lượt đạt val loss tối ưu tại epoch 6, 3 (val loss 48.7659), và 4.
+1. **best_epoch và val loss chính xác:**
+   - Sequence seeds 42, 7, 999 lần lượt đạt val loss tốt nhất tại epoch 3, 11, 12.
+   - Multi-View seed 7 đạt val loss tốt nhất là **49.0099** tại **Epoch 3** (dừng sớm ở Epoch 6).
+   - Multi-View seed 999 đạt val loss tốt nhất là **48.7659** tại **Epoch 4** (dừng sớm ở Epoch 7).
 2. **run_source_commit vs evidence_commit:** `run_source_commit` là commit xác lập mã nguồn tại thời điểm huấn luyện backbone; `evidence_commit` (`878a3db`) là commit đóng gói và nghiệm thu toàn bộ báo cáo bằng chứng thực nghiệm của chiến dịch Nineplus V3.
 3. **Multi-View seed 7 & 999:** Hiện trong Git chỉ mới có tệp kết quả `V3-PROBE-RESULT.json`; thư mục huấn luyện cục bộ chứa manifest và log chưa được thêm vào Git.
 4. **Graph-Only:** Không chốt chỉ số đánh giá AP/ROC-AUC cho tới khi xác định được tệp artifact kết quả đo kiểm V3 tương ứng.
@@ -392,25 +407,25 @@ Quá trình hoàn thiện kho lưu trữ và đóng gói đồ án được th�
 
 ```text
 1. Khóa sự thật Master
-   └── Thống nhất số trang chính thức 114 trang; giải trình lịch sử mở rộng từ 104 trang lên 114 trang.
+   └── Đo trực tiếp DOCX/PDF; ghi SHA-256, page count, OMML node count, timestamp; chốt số trang chính thức.
         │
-2. Khóa provenance experiment
-   └── Tách biệt run_source_commit vs evidence_commit; đưa manifest/log Multi-View 7 & 999 vào Git.
+2. Khóa provenance experiment & đường dẫn khả chuyển
+   └── Tách biệt run_source_commit vs evidence_commit; sửa hard-code D:\Research; đưa log Seed 7 & 999 vào Git.
         │
-3. Cơ chế artifact ngoại vi
-   └── Xác lập nơi lưu trữ bên ngoài cho checkpoint *.pt, raw HDFS, và cache; lập bảng mã băm SHA-256.
+3. Cơ chế artifact ngoại vi & Artifact Manifest
+   └── Tạo ARTIFACT-MANIFEST.json (filename, size, SHA-256, provenance) cho *.pt, raw HDFS, nhãn train/val.
         │
 4. Dependency lock
-   └── Tạo tệp requirements-lock.txt ghim cứng phiên bản chính xác của mọi thư viện (PyTorch, CUDA, ...).
+   └── Tạo requirements-lock.txt (torch, PyG, pandas, ...) kèm index-url PyTorch CUDA; không hứa 100% trước test.
         │
 5. Manual reproduction setup
-   └── Hoàn thiện kịch bản PowerShell tự điều phối thư mục đầu ra trong experiments/nineplus/confirmatory/.
+   └── Kịch bản PowerShell tự điều phối thư mục đầu ra trong experiments/nineplus/confirmatory/.
         │
 6. Chạy thật và chụp ảnh minh chứng
-   └── Thực thi lệnh trên PowerShell thật; chụp 7 ảnh màn hình phản ánh chính xác kết quả in ra.
+   └── Bổ sung in VRAM/CUBLAS vào gpu_smoke_test.py; chạy thật trên PowerShell; chụp 7 ảnh thực tế.
         │
 7. Chèn code/ảnh vào Word
-   └── Chèn 8 đoạn trích mã nguồn và 7 ảnh chụp vào Master DOCX; bảo toàn 606 OMML; xuất PDF 114 trang.
+   └── Kiểm tra ties ở ROC-AUC excerpt 7; chèn 8 đoạn mã và 7 ảnh vào DOCX; bảo toàn 606 nút OMML; xuất PDF.
         │
 8. Reviewer clean-room test
    └── Kiểm thử độc lập trên máy sạch từ bước clone Git, nạp artifact ngoại vi tới chạy lệnh tái lập.
@@ -422,28 +437,40 @@ Quá trình hoàn thiện kho lưu trữ và đóng gói đồ án được th�
 Chi tiết từng bước trong backlog:
 
 1. **Khóa sự thật Master (Lock Master Truth):**  
-   Thống nhất toàn bộ tài liệu thuyết minh và báo cáo nghiệm thu ở mốc **114 trang**, 606 công thức toán học OMML chuẩn Word. Giải trình rõ ràng tiến trình mở rộng tự nhiên từ 104 trang (trước Nineplus) lên 114 trang (sau khi tích hợp đầy đủ bảng biểu, kết quả kiểm định 6 backbone và phân tích H1/H2).
+   Không suy đoán trước số trang. Trực tiếp chạy script đo kiểm trên các tệp Master hiện hành (`Chuyên đề chuyên sâu.docx` và `Chuyên đề chuyên sâu.pdf`), ghi nhận chính xác:
+   - Mã băm SHA-256 của DOCX và PDF.
+   - Số trang thực tế (page count) của tệp PDF.
+   - Số lượng nút OMML (OMML node count) trong tệp DOCX (chuẩn hóa cách gọi: 606 nút OMML).
+   - Mốc thời gian đo kiểm (timestamp).  
+   Sau khi có kết quả đo kiểm độc lập, chính thức cập nhật con số này vào toàn bộ tài liệu và giải trình rõ tiến trình phát triển nội dung từ mốc nghiệm thu 104 trang lên bản hiện hành.
 
-2. **Khóa provenance experiment (Lock Experiment Provenance):**  
-   Xác lập ranh giới rõ ràng giữa `run_source_commit` và `evidence_commit`. Đưa các tệp `RUN-MANIFEST.json` và `TRAIN-LOG.jsonl` của Multi-View Seed 7 và Seed 999 vào theo dõi trong Git để xóa bỏ trạng thái `RESULT_JSON_ONLY_IN_GIT`.
+2. **Khóa provenance experiment & Khắc phục đường dẫn cứng:**  
+   - Xác lập ranh giới rõ ràng giữa `run_source_commit` và `evidence_commit`.
+   - Đưa các tệp `RUN-MANIFEST.json` và `TRAIN-LOG.jsonl` của Multi-View Seed 7 và Seed 999 vào theo dõi trong Git để xóa bỏ trạng thái `RESULT_JSON_ONLY_IN_GIT`.
+   - **Xóa bỏ hard-code đường dẫn:** Cập nhật `scripts/run_nineplus_confirmatory.py` từ `base_dir = Path(r"D:\Research")` sang đường dẫn động `Path(__file__).resolve().parent.parent` hoặc nhận đối số `--base-dir` để đảm bảo khả năng chạy trên mọi máy tính.
 
-3. **Cơ chế artifact ngoại vi (External Artifact Storage):**  
-   Xây dựng quy chế lưu trữ ngoại vi (Zenodo / OSF / Release Asset) cho các tệp nhị phân dung lượng lớn không thể đưa vào Git: các checkpoint `best_checkpoint.pt`, tập dữ liệu thô HDFS, và các tệp đệm PyTorch `.pt`. Công bố bảng mã băm SHA-256 đối soát công khai.
+3. **Cơ chế artifact ngoại vi & Bảng kê Artifact Manifest riêng biệt:**  
+   - Xây dựng quy chế lưu trữ ngoại vi (Zenodo / OSF / Release Asset) cho các tệp nhị phân dung lượng lớn không thể đưa vào Git: các checkpoint `best_checkpoint.pt`, tập dữ liệu thô HDFS, các tệp đệm `hdfs_ssl_train.pt`, `hdfs_ssl_val.pt`, `hdfs_vocab.json`, và cả 2 tệp nhãn đầu dò `hdfs_probe_labels_train.pt`, `hdfs_probe_labels_val.pt`.
+   - **Tạo tệp kê khai `ARTIFACT-MANIFEST.json` riêng biệt:** Ghi rõ từng trường: `filename`, `size_bytes`, `sha256`, và `provenance` (nguồn gốc phát sinh), thay thế hoàn toàn quan niệm sai lệch trước đây về việc tìm kiếm checksum trong `SUBSET-MANIFEST-HDFS.json`.
 
 4. **Khóa phụ thuộc môi trường (Dependency Lock):**  
-   Tạo tệp `requirements-lock.txt` ghi rõ chính xác phiên bản của PyTorch (`2.6.0+cu124`), numpy, scipy, scikit-learn, psutil, python-docx để máy trạm mới có thể cài đặt môi trường đồng nhất 100%.
+   - Tạo tệp `requirements-lock.txt` bao hàm đầy đủ mọi gói import cho cả luồng smoke test và luồng chạy thủ công (tối thiểu gồm `torch==2.6.0+cu124`, `torch-geometric==2.6.1`, `pandas==2.2.3`, `numpy==1.26.4`, `scipy==1.13.1`, `scikit-learn==1.5.0`, `python-docx==1.1.2`, `psutil==5.9.8`, `pypdfium2`).
+   - Ghi rõ lệnh cài đặt với chỉ mục PyTorch CUDA: `--extra-index-url https://download.pytorch.org/whl/cu124`.
+   - Không cam kết môi trường giống 100% trước khi thực sự tiến hành kiểm thử phòng sạch độc lập.
 
 5. **Thiết lập quy trình tái lập độc lập (Manual Reproduction Setup):**  
    Biên soạn `manual_reproduction/README.md` và hoàn thiện `manual_reproduction/run_manual_sequence42.ps1` có cơ chế tự động bắt đúng thư mục `experiments/nineplus/confirmatory/CONF_SEQUENCE_ONLY_seed42_<timestamp>/` và trích xuất tóm tắt.
 
 6. **Chạy thực tế và chụp ảnh minh chứng (Execute & Capture Real Screenshots):**  
-   Mở PowerShell thật trên Windows 11, chạy thực tế kiểm tra môi trường và chạy huấn luyện Sequence-Only Seed 42. Chụp 7 ảnh màn hình thực tế, không tuyên bố sai lệch về các thông số console không in ra.
+   - Cập nhật `scripts/gpu_smoke_test.py` để in bổ sung dung lượng VRAM thực tế và giá trị cấu hình `CUBLAS_WORKSPACE_CONFIG`.
+   - Mở PowerShell thật trên Windows 11, chạy thực tế kiểm tra môi trường và chạy huấn luyện Sequence-Only Seed 42. Chụp 7 ảnh màn hình thực tế, không tuyên bố sai lệch về các thông số console không in ra.
 
 7. **Chèn mã nguồn và ảnh minh họa vào Word (Insert Code & Visuals into Word):**  
-   Chèn 8 đoạn trích mã nguồn chuẩn hóa (không cắt cụt logic) và 7 ảnh chụp thực tế vào các vị trí tương ứng trong bản thảo `Chuyên đề chuyên sâu.docx`. Bảo toàn tuyệt đối 606 nút công thức toán học OMML và xuất khẩu `Chuyên đề chuyên sâu.pdf` 114 trang đồng bộ.
+   - **Kiểm chứng tính đúng của ROC-AUC (Đoạn trích 7):** Kiểm tra kỹ lưỡng thuật ngữ xếp hạng ties trong `compute_ap_and_roc_auc` đối chiếu với `sklearn.metrics.roc_auc_score` trước khi đưa vào văn bản Word.
+   - Chèn 8 đoạn trích mã nguồn chuẩn hóa (Đoạn trích 1: L177–197; Đoạn trích 5: L107–120; Đoạn trích 7: L57–82) và 7 ảnh chụp thực tế vào bản thảo `Chuyên đề chuyên sâu.docx`. Bảo toàn tuyệt đối 606 nút OMML và xuất khẩu `Chuyên đề chuyên sâu.pdf` đồng bộ.
 
 8. **Thử nghiệm môi trường sạch độc lập (Reviewer Clean-Room Test):**  
-   Mô phỏng quy trình của một giảng viên phản biện trên máy sạch: Clone kho Git, tải artifact ngoại vi, cài môi trường ảo qua `requirements-lock.txt`, chạy lệnh kiểm tra GPU và chạy tái lập kết quả đánh giá AP=1.0000.
+   Mô phỏng quy trình của một giảng viên phản biện trên máy sạch: Clone kho Git, tải artifact ngoại vi theo `ARTIFACT-MANIFEST.json`, cài môi trường ảo qua `requirements-lock.txt`, chạy lệnh kiểm tra GPU và chạy tái lập kết quả đánh giá AP=1.0000.
 
 9. **Xuất xưởng và nghiệm thu (Final Release & Clean Repository Packaging):**  
    Di chuyển toàn bộ các script tạm thời dùng một lần vào thư mục lưu trữ nội bộ hoặc xóa bỏ; tạo tệp `experiments/experiment_index.csv` hoàn chỉnh; gắn thẻ Git Release cho kho lưu trữ `Minhlike/Chuyende`.
@@ -456,7 +483,9 @@ Nhằm đảm bảo tính trung thực học thuật tối đa, toàn bộ các 
 
 | Mâu thuẫn phát hiện | Hiện trạng kỹ thuật | Phương án giải quyết trong Backlog |
 | :--- | :--- | :--- |
-| **Mâu thuẫn số trang Master (100 / 104 / 114 trang)** | `Chuyên đề chuyên sâu.pdf` thực tế có 114 trang; báo cáo cũ ghi 104 trang; yêu cầu khung là $\ge$ 100 trang. | Khóa chính thức ở **Bước 1**: Xác nhận bản Master chính thức là **114 trang**, giải trình rõ sự phát triển nội dung sau khi tích hợp Nineplus V3. |
-| **Tính sẵn sàng của bản clone sạch (Clean Clone Readiness)** | Checkpoint `*.pt`, dữ liệu raw và cache nhị phân không có trong Git; người clone sạch chưa thể chạy ngay. | Xử lý tại **Bước 3 & 4**: Hướng dẫn nạp artifact từ kho ngoại vi và đối soát mã băm SHA-256 trước khi chạy. |
-| **Thiếu hụt tệp bằng chứng Multi-View Seed 7 & 999 trong Git** | Git chỉ có `V3-PROBE-RESULT.json`; chưa commit `RUN-MANIFEST.json` và `TRAIN-LOG.jsonl` tương ứng. | Xử lý tại **Bước 2**: Đưa các tệp manifest và log huấn luyện của Seed 7 & 999 vào Git. |
-| **Chỉ số đánh giá Graph-Only chưa được kiểm chứng V3** | Checkpoints Stage A2 là tham chiếu lịch sử; chưa chạy qua quy trình đầu dò V3 chuẩn hóa. | Xử lý tại **Bước 2**: Giữ nguyên trạng thái `PENDING_AUDIT`, không đưa ra phát biểu vượt quá bằng chứng. |
+| **Mâu thuẫn số trang Master (100 / 104 / 114 trang)** | PDF hiện hành ghi nhận sơ bộ ~114 trang; báo cáo cũ ghi 104 trang; yêu cầu khung là $\ge$ 100 trang. | **Bước 1 của Backlog:** Đo kiểm độc lập DOCX/PDF, ghi SHA-256, page count, 606 nút OMML, timestamp rồi mới chính thức chốt số trang. |
+| **Tính sẵn sàng của bản clone sạch (Clean Clone Readiness)** | Checkpoint `*.pt`, dữ liệu raw và cache nhị phân không có trong Git; người clone sạch chưa thể chạy ngay. | **Bước 3 & 4 của Backlog:** Xây dựng `ARTIFACT-MANIFEST.json` riêng (filename, size, SHA-256, provenance) để nạp artifact trước khi chạy. |
+| **Thiếu hụt tệp bằng chứng Multi-View Seed 7 & 999 trong Git** | Git chỉ có `V3-PROBE-RESULT.json`; chưa commit `RUN-MANIFEST.json` và `TRAIN-LOG.jsonl` tương ứng. | **Bước 2 của Backlog:** Đưa hai thư mục manifest và log huấn luyện của Seed 7 và Seed 999 vào Git. |
+| **Chỉ số đánh giá Graph-Only chưa được kiểm chứng V3** | Checkpoints Stage A2 là tham chiếu lịch sử; chưa chạy qua quy trình đầu dò V3 chuẩn hóa. | **Bước 2 của Backlog:** Giữ nguyên trạng thái `PENDING_AUDIT`, không đưa ra kết luận vượt quá bằng chứng. |
+| **Hard-code đường dẫn `D:\Research` trong runner** | `run_nineplus_confirmatory.py` gán cứng `base_dir = Path(r"D:\Research")`, không chạy được trên thư mục/máy khác. | **Bước 2 của Backlog:** Chuyển sang đường dẫn gốc động `Path(__file__).resolve().parent.parent` hoặc nhận đối số `--base-dir`. |
+| **Thuật toán ROC-AUC không xử lý ties trong Excerpt 7** | Hàm dùng `ranks = np.argsort(np.argsort(scores)) + 1` không xử lý xếp hạng trung bình cho ties. | **Bước 7 của Backlog:** Kiểm chứng tính đúng với `sklearn.metrics.roc_auc_score` trước khi chèn vào bản thảo Word. |
