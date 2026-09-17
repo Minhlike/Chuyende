@@ -27,12 +27,18 @@ Nghiên cứu tuân thủ các nguyên tắc phương pháp luận:
 
 ## 2. Kế toán Các Bước Tối ưu Hóa (Optimizer Step Accounting)
 
-Trong giai đoạn thẩm định chuẩn hóa V3 và kiểm toán độ nhạy, không có bất kỳ bước tối ưu hóa nào được áp dụng lên các mạng nơ-ron nền tảng (backbones):
+Trong giai đoạn thẩm định chuẩn hóa V3 và kiểm toán độ nhạy, không có bất kỳ bước tối ưu hóa nào được áp dụng lên các mạng nơ-ron nền tảng (backbones). Các bước tối ưu hóa được phân loại và kiểm toán cụ thể theo từng hạng mục:
 
 - `NEW_BACKBONE_OPTIMIZER_STEPS_THIS_PHASE`: **`0`** (Toàn bộ 6 backbone được đóng băng 100%).
 - `NEW_V3_ANOMALY_PROBE_OPTIMIZER_STEPS`: **`41,100`** (Bao gồm 6 bộ phân loại tuyến tính mỏng $W \in \mathbb{R}^{128 \times 1}$, mỗi bộ thực hiện 6.850 bước tối ưu trên 35.000 phiên Train: $6 \times 6,850 = 41,100$ bước).
+- `NEW_H1_DIRECT_PROBE_OPTIMIZER_STEPS`: **`0`** (Không huấn luyện probe trực tiếp phân loại danh mục tham số H1 do độ mịn mục tiêu không tương thích cấp độ phiên).
+- `NEW_H1_MASKING_ANOMALY_PROBE_OPTIMIZER_STEPS`: **`20,550`** (3 bộ phân loại tuyến tính phát hiện bất thường hạ nguồn tương đương cấu trúc được huấn luyện trên biểu diễn Train đóng băng của 3 hạt giống Sequence để đo lường công dụng khi che đầu vào tham số: $3 \times 6,850 = 20,550$ bước).
 - `NEW_H2_SENSITIVITY_PROBE_OPTIMIZER_STEPS`: **`20,550`** (3 bộ phân loại tuyến tính mỏng phục vụ kiểm tra độ nhạy bỏ tham số Sequence: $3 \times 6,850 = 20,550$ bước).
-- `NEW_H1_PROBE_OPTIMIZER_STEPS`: **`0`** (Không huấn luyện thêm probe H1 do độ mịn mục tiêu không tương thích cấp độ phiên; bài kiểm thử cắt bỏ che tham số sử dụng trực tiếp các probe đã huấn luyện).
+- `TOTAL_NEW_PROBE_OPTIMIZER_STEPS_V3_AND_AUDITS`: **`82,200`** ($41,100 + 20,550 + 20,550 = 82,200$ bước tối ưu probe; 0 bước backbone).
+
+*Làm rõ phân loại probe:*
+- Không có quá trình huấn luyện probe trực tiếp nào cho danh mục tham số H1 (`H1 direct parameter-category probe was NOT trained`).
+- Toàn bộ 20.550 bước tối ưu trong bài kiểm thử cắt bỏ che tham số H1 thuộc về các bộ phân loại bất thường hạ nguồn nhằm đo lường tính hữu dụng dưới điều kiện che đầu vào đóng băng, do đó không được mô tả là huấn luyện probe H1 trực tiếp (`The 20,550 H1 masking-ablation steps belong to downstream anomaly probes trained only to measure utility under frozen input masking. Therefore they must NOT be described as direct H1 probe training`).
 
 ---
 
@@ -163,7 +169,9 @@ Tiến trình huấn luyện Seed 999 đã trải qua hai lần tạm dừng hà
   ```
 
 ### 8.2. Kiểm Thử Cắt Bỏ Đầu Vào Đóng Băng (`FROZEN_INPUT_MASKING_ABLATION`)
-Được thực thi độc lập tại [`scripts/run_h1_masking_ablation.py`](file:///D:/Research/scripts/run_h1_masking_ablation.py) trên 3 mô hình `SEQUENCE_ONLY` đóng băng: trích xuất biểu diễn khi mở toàn bộ tham số (`param_slots = params`) so với khi che hoàn toàn tham số (`param_slots = None`):
+Được thực thi độc lập tại [`scripts/run_h1_masking_ablation.py`](file:///D:/Research/scripts/run_h1_masking_ablation.py) trên 3 mô hình `SEQUENCE_ONLY` đóng băng: trích xuất biểu diễn khi mở toàn bộ tham số (`param_slots = params`) so với khi che hoàn toàn tham số (`param_slots = None`).
+
+The H1 frozen-input masking ablation trained capacity-matched downstream anomaly probes on frozen Train representations for each of the three Sequence seeds. No backbone optimization and no direct parameter-category H1 probe training occurred (Kiểm thử cắt bỏ che đầu vào đóng băng H1 đã huấn luyện các bộ phân loại bất thường hạ nguồn có dung lượng tương đương trên các biểu diễn Train đóng băng cho từng hạt giống trong số ba hạt giống Sequence; không có tối ưu hóa mạng nền tảng và không có quá trình huấn luyện probe H1 trực tiếp nào diễn ra).
 
 *Bảng 4. Kết quả kiểm thử cắt bỏ che tham số đầu vào trên Sequence-Only đóng băng*
 
@@ -193,6 +201,13 @@ MICRO_AUDIT_VERIFICATION_MATRIX:
     h2_negative_result_robust_to_sequence_parameter_input_removal: true
   H1_DIRECT_STATUS: "NOT_DIRECTLY_EVALUABLE_WITH_CURRENT_SESSION_REPRESENTATION"
   H1_MASKING_ABLATION_STATUS: "AUXILIARY_OBSERVATION_ONLY"
+  OPTIMIZER_ACCOUNTING:
+    NEW_BACKBONE_OPTIMIZER_STEPS_THIS_PHASE: 0
+    NEW_V3_ANOMALY_PROBE_OPTIMIZER_STEPS: 41100
+    NEW_H1_DIRECT_PROBE_OPTIMIZER_STEPS: 0
+    NEW_H1_MASKING_ANOMALY_PROBE_OPTIMIZER_STEPS: 20550
+    NEW_H2_SENSITIVITY_PROBE_OPTIMIZER_STEPS: 20550
+    TOTAL_NEW_PROBE_OPTIMIZER_STEPS_V3_AND_AUDITS: 82200
   SEED999_RESUME_INTEGRITY: "PARTIAL_STATE_RESUME_WITH_DETERMINISTIC_RNG_RECONSTRUCTION"
   SEED999_CONFIRMATORY_STATUS: "CONFIRMATORY_WITH_DOCUMENTED_PROTOCOL_DEVIATION"
   ANTI_COLLAPSE_OPERATIONALIZATION: "AMBIGUOUS_ACROSS_LEGACY_AND_V3_EXTRACTION"
