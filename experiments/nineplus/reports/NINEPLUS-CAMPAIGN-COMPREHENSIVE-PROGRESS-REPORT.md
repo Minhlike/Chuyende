@@ -18,10 +18,10 @@
 > 2. **Nhánh `SEQUENCE_ONLY` (Seeds 1337, 2024):** Được phân loại là `SUPPLEMENTARY_EXPLORATORY`. Cung cấp ngữ cảnh độ bền bổ trợ cho phân bố $N=5$, nhưng không thuộc bộ ba hạt giống đối chứng H2 chính thức ($N=3$).
 > 3. **Nhánh `GRAPH_ONLY` (Seeds 42, 7, 999):** Toàn bộ kết quả hiện tại được đánh dấu là `HISTORICAL_EXPLORATORY_REFERENCE_ONLY` do được đánh giá từ checkpoint của giai đoạn thăm dò Stage A2 cũ. Nhánh này bắt buộc phải được huấn luyện mới hoàn toàn (`GRAPH_ONLY_FRESH`) dưới cùng harness triển vọng để bước vào ma trận quyết định H2 chính thức.
 > 4. **Nhánh `MULTI_VIEW_ALIGNED_VICREG` (Seed 42):** Backbone hoàn thành hợp lệ (`CONFIRMATORY_BACKBONE_ELIGIBLE`). Trạng thái chống sụp đổ biểu diễn được phân loại chính thức là `FAIL_UNDER_PREREGISTERED_THRESHOLD` do phương sai đạt $0.00997 < 0.01000$. Chỉ số AP/ROC-AUC hiện tại được phân loại là `LEGACY_PROBE_EXPLORATORY_METRIC` chờ tính lại theo V3.
-> 5. **Nhánh `MULTI_VIEW_ALIGNED_VICREG` (Seed 7):** Trạng thái `TRAINING_IN_PROGRESS`. Tuyệt đối không can thiệp hay rút ra kết luận sớm; tiến trình huấn luyện được để chạy tự nhiên cho đến khi thỏa mãn điều kiện early stopping hoặc chạm trần 12 epoch.
-> 6. **Nhánh `MULTI_VIEW_ALIGNED_VICREG` (Seed 999):** Trạng thái `PENDING_CONFIRMATORY_REQUIRED` (bắt buộc thực hiện, tạm hoãn cho lượt sau).
+> 5. **Nhánh `MULTI_VIEW_ALIGNED_VICREG` (Seed 7):** Hoàn tất 100% (Early stopping tại Epoch 6 với patience=3, Best Epoch 3, AP `0.6082`, ROC-AUC `0.8899`, $\text{Var}(z) = 0.01264$ PASS).
+> 6. **Nhánh `MULTI_VIEW_ALIGNED_VICREG` (Seed 999):** Hoàn tất 100% (Early stopping tại Epoch 7 với patience=3, Best Epoch 4, AP `0.6855`, ROC-AUC `0.8580`, $\text{Var}(z) = 0.014419$ PASS).
 > 7. **Kỷ luật Thuật ngữ:** Đã chuẩn hóa nhãn `Average Precision (AP)`, bãi bỏ cách gọi không chuẩn mực `AP (PR-AUC)`. Toàn bộ các suy đoán nhân quả hậu nghiệm đã được loại bỏ, thay bằng ngôn ngữ quan sát khách quan.
-> 8. **Trạng thái Hiện tại của H2:** `H2_CONFIRMATORY_STATUS = INCOMPLETE_PROTOCOL_REPAIR_IN_PROGRESS`.
+> 8. **Trạng thái Hiện tại của H2:** Bộ ba xác nhận `MULTI_VIEW_ALIGNED_VICREG` ($N=3$: Seeds 42, 7, 999) đã hoàn tất 100%. Đang chờ tính lại Probe V3 và thực hiện nhánh `GRAPH_ONLY_FRESH`.
 
 ---
 
@@ -98,8 +98,19 @@ Kiến trúc `SequenceViewExtractor` (Transformer Encoder 4-layer, $d=128$, MEP 
   - Phương sai biểu diễn: $\text{Var}(z) = 0.012643$.
   - **Đánh giá Chống Sụp đổ:** Phân loại chính thức là **`PASS_OVER_PREREGISTERED_THRESHOLD`** ($\text{Var}(z) = 0.012643 \ge 0.01000$). Khác với Seed 42 sát ngưỡng dưới, Seed 7 vượt qua ngưỡng kiểm định chống sụp đổ biểu diễn theo hợp đồng V2/V3.
   - Tổng số bước tối ưu hóa: 3,282 bước. Biên bản nghiệm thu đã xuất tại [`RUN-MANIFEST.json`](file:///D:/Research/experiments/nineplus/confirmatory/CONF_MULTI_VIEW_ALIGNED_seed7_1789452137/RUN-MANIFEST.json).
-- **Seed 999 (Chờ thực thi):**
-  - Phân loại: `PENDING_CONFIRMATORY_REQUIRED`. Bắt buộc thực hiện đầy đủ để cấu thành bộ ba xác nhận.
+- **Seed 999 (Hoàn tất 100% — Early Stopping tại Epoch 7):**
+  - Số epoch hoàn thành: 7 / 12 (Kích hoạt Early Stopping khoa học tại Epoch 7 với patience=3).
+  - Điểm cực tiểu tối ưu toàn cục: **Epoch 4** (Val Loss: `48.7659`).
+  - Checkpoint tối ưu: [`best_checkpoint.pt`](file:///D:/Research/experiments/nineplus/confirmatory/CONF_MULTI_VIEW_ALIGNED_seed999_1789541331/best_checkpoint.pt).
+  - **Legacy Probe AP:** **`0.6855` (68.55%)** | **Legacy Probe ROC-AUC:** **`0.8580` (85.80%)** (Phân loại: `LEGACY_PROBE_EXPLORATORY_METRIC`, chờ tính lại theo V3).
+  - Phương sai biểu diễn: $\text{Var}(z) = 0.014419$.
+  - **Đánh giá Chống Sụp đổ:** Phân loại chính thức là **`PASS_OVER_PREREGISTERED_THRESHOLD`** ($\text{Var}(z) = 0.014419 \ge 0.01000$).
+  - Tổng số bước tối ưu hóa: 3,829 bước. Biên bản nghiệm thu đã xuất tại [`RUN-MANIFEST.json`](file:///D:/Research/experiments/nineplus/confirmatory/CONF_MULTI_VIEW_ALIGNED_seed999_1789541331/RUN-MANIFEST.json).
+- **TỔNG KẾT BỘ BA XÁC NHẬN MULTI_VIEW ($N=3$: Seeds 42, 7, 999):**
+  - **Trạng thái:** `CONFIRMATORY_TRIAD_100_PERCENT_COMPLETED`.
+  - **Average Precision (AP) trung bình:** **`0.6656 ± 0.0505`** (`[0.7032, 0.6082, 0.6855]`).
+  - **ROC-AUC trung bình:** **`0.8933 ± 0.0371`** (`[0.9319, 0.8899, 0.8580]`).
+  - **Phương sai $\text{Var}(z)$ trung bình:** **`0.012343 ± 0.002239`** (`[0.00997, 0.01264, 0.014419]`). Tỷ lệ đạt chuẩn chống sụp đổ: **2 / 3 seeds PASS** (mức trung bình bộ ba vượt ngưỡng quy chuẩn $0.01000$).
 
 ---
 
@@ -107,14 +118,14 @@ Kiến trúc `SequenceViewExtractor` (Transformer Encoder 4-layer, $d=128$, MEP 
 
 Bảng dưới đây tổng hợp các phép đo hiện có. Lưu ý rằng các giá trị Probe thuộc nhóm giao thức cũ (`LEGACY_PROBE_EXPLORATORY_METRIC`) và nhánh Graph là dữ liệu lịch sử Stage A2:
 
-| Tiêu chí Đánh giá | `GRAPH_ONLY` (Lịch sử Stage A2, $N=3$) | `MULTI_VIEW_ALIGNED` (Seed 42, Legacy Probe) | `SEQUENCE_ONLY` ($N=3$: Seeds 42, 7, 999, Legacy Probe) | `SEQUENCE_ONLY` ($N=5$ Toàn diện, Legacy Probe) |
+| Tiêu chí Đánh giá | `GRAPH_ONLY` (Lịch sử Stage A2, $N=3$) | `MULTI_VIEW_ALIGNED` ($N=3$: Seeds 42, 7, 999, Legacy Probe) | `SEQUENCE_ONLY` ($N=3$: Seeds 42, 7, 999, Legacy Probe) | `SEQUENCE_ONLY` ($N=5$ Toàn diện, Legacy Probe) |
 | :--- | :---: | :---: | :---: | :---: |
 | **Phân loại Suy diễn** | `HISTORICAL_EXPLORATORY_REFERENCE_ONLY` | `CONFIRMATORY_BACKBONE_ELIGIBLE` (Probe V3 pending) | `CONFIRMATORY_BACKBONE_ELIGIBLE` (Probe V3 pending) | `SUPPLEMENTARY_EXPLORATORY` |
-| **Average Precision (AP)** | `0.6694 ± 0.0468` | `0.7032` | **`0.8687 ± 0.0700`** | **`0.8674 ± 0.1072`** |
-| **ROC-AUC** | `0.8142 ± 0.0675` | `0.9319` | **`0.9740 ± 0.0413`** | **`0.9727 ± 0.0358`** |
-| **Phương sai $	ext{Var}(z)$** | `0.0512 ± 0.0381` | `0.00997` (`FAIL_UNDER_PREREGISTERED_THRESHOLD`) | **`0.1130 ± 0.0284`** | **`0.1102 ± 0.0329`** |
-| **Thời gian Train / Epoch** | ~190 phút | ~23.5 phút | **~2.0 phút** | **~2.0 phút** |
-| **Bộ nhớ VRAM đỉnh** | 1,255 MB | 260.6 MB | **170.4 MB** | **170.4 MB** |
+| **Average Precision (AP)** | `0.6694 ± 0.0468` | `0.6656 ± 0.0505` | **`0.8687 ± 0.0700`** | **`0.8674 ± 0.1072`** |
+| **ROC-AUC** | `0.8142 ± 0.0675` | `0.8933 ± 0.0371` | **`0.9740 ± 0.0413`** | **`0.9727 ± 0.0358`** |
+| **Phương sai $\text{Var}(z)$** | `0.0512 ± 0.0381` | `0.0123 ± 0.0022` (`2/3 PASS_OVER_THRESHOLD`) | **`0.1130 ± 0.0284`** | **`0.1102 ± 0.0329`** |
+| **Thời gian Train / Epoch** | ~190 phút | ~65 phút | **~2.0 phút** | **~2.0 phút** |
+| **Bộ nhớ VRAM đỉnh** | 1,255 MB | 265.0 MB | **170.4 MB** | **170.4 MB** |
 
 ### Ghi nhận Quan sát Thực nghiệm (Kỷ luật Ngôn ngữ V3):
 1. **Quan sát về ROC-AUC giữa Multi-View Seed 42 và Graph-Only Lịch sử:**
