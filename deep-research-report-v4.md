@@ -1286,8 +1286,22 @@ Không che negative result bằng prose.
 
 Nếu một hypothesis chưa được test:
 
-- ghi untested;
+- ghi untested (ví dụ: `NOT_TESTED`);
 - không “gần như xác nhận” bằng proxy không tương ứng.
+
+Nếu một hypothesis bị vi phạm biên định lượng thực nghiệm:
+
+- Báo cáo trung thực trạng thái không được hỗ trợ trong phạm vi đối chứng (`NOT_SUPPORTED_WITHIN_COMPARATOR_SCOPE`);
+- Phân tích độ lệch thực nghiệm (ví dụ: $\Delta \text{AP} < -0.02$) dựa trên biên không thua kém đã tiền đăng ký;
+- Tuyệt đối không dùng văn phong để "giải cứu" giả thuyết;
+- Tuyệt đối không tuyên bố ý nghĩa thống kê khi cỡ mẫu nhỏ ($N=3$) chưa đủ điều kiện kiểm định suy diễn;
+- Phân biệt rõ kết quả đo đạc trực tiếp với các giả thuyết giải thích cơ chế (các giải thích cơ chế chỉ được nêu dưới dạng giả định cần kiểm chứng thêm trong tương lai).
+
+Nếu mục tiêu thực nghiệm không tương thích độ mịn với biểu diễn hiện tại:
+
+- Ghi nhận trạng thái chưa thể đánh giá trực tiếp (`NOT_DIRECTLY_EVALUABLE_WITH_CURRENT_REPRESENTATION`);
+- Phân định rõ ràng giữa phép đo trực tiếp và quan sát phụ trợ (ví dụ: kiểm thử cắt bỏ che đầu vào chỉ là quan sát phụ trợ, không thay thế phép đo thông tin tương hỗ ban đầu);
+- Không đánh đồng việc chưa thể đánh giá với việc giả thuyết đã được xác nhận hoặc đã thất bại hoàn toàn.
 
 ---
 
@@ -1615,6 +1629,26 @@ Không tốt:
 Tốt hơn:
 
 > Năm seed cho kết quả gần nhau cho thấy variability do khởi tạo/ngẫu nhiên huấn luyện trong setting đã khóa tương đối nhỏ. Phép đo này chưa kiểm tra dataset shift, temporal drift hoặc adversarial perturbation, nên không đủ để kết luận robustness theo các nghĩa đó.
+
+## 24.6. Từ biên thực nghiệm lên giả thuyết: Kiểm định không thua kém
+
+Không tốt:
+
+> Kết quả thực nghiệm cho thấy mô hình đa góc nhìn thất bại toàn diện, bị bác bỏ hoàn toàn và suy giảm có ý nghĩa thống kê do cơ chế VICReg làm sụp đổ biểu diễn.
+
+Tốt hơn:
+
+> Trong phạm vi đối chứng trực tiếp với Sequence-Only trên tập dữ liệu HDFS, kết quả thực nghiệm không hỗ trợ giả thuyết H2 về tính không thua kém của biểu diễn đa góc nhìn (độ suy giảm $\Delta \text{AP} = -0.3392 \pm 0.0885$, vi phạm biên định lượng $\delta \ge -0.02$ trên cả 3 hạt giống ghép cặp). Phân tích độ nhạy xác nhận kết quả này giữ nguyên ngay cả khi loại bỏ hoàn toàn tham số đầu vào khỏi nhánh chuỗi. Các giải thích về mặt cấu trúc (như tính phân tách mạnh của mẫu chuỗi sự kiện hoặc sự đánh đổi điều hòa đa góc nhìn) được xem là các giả thuyết mở cho nghiên cứu tiếp theo, không phải kết luận nhân quả đã được chứng minh.
+
+## 24.7. Từ bất tương thích mục tiêu lên trạng thái kiểm chứng: Granularity mismatch
+
+Không tốt:
+
+> Kiểm thử che tham số chứng minh mô hình hiểu ngữ nghĩa an ninh và xác nhận giả thuyết H1.
+
+Tốt hơn:
+
+> Giả thuyết H1 chưa được kiểm định trực tiếp theo phát biểu ban đầu do độ mịn của mục tiêu tham số cấp token không tương thích với biểu diễn gộp cấp phiên ở bước đánh giá hạ nguồn. Thí nghiệm cắt bỏ che đầu vào đóng băng chỉ đóng vai trò quan sát phụ trợ xác nhận các khe tham số động có đóng góp thông tin đo lường được vào không gian biểu diễn ẩn, trong khi không làm suy giảm AP phát hiện bất thường trên tập dữ liệu HDFS hiện tại.
 
 ---
 
