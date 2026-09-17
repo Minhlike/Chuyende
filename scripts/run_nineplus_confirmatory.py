@@ -749,10 +749,12 @@ if __name__ == "__main__":
     parser.add_argument("--epochs", type=int, default=12)
     parser.add_argument("--patience", type=int, default=3)
     parser.add_argument("--device", type=str, default="cuda")
+    parser.add_argument("--base-dir", type=str, default=None, help="Root repository directory (default: auto-detected from script location)")
     args = parser.parse_args()
 
     seeds = args.seeds if args.seeds is not None else ([args.seed] if args.seed is not None else [42])
-    base_dir = Path(r"D:\Research")
+    default_base_dir = Path(__file__).resolve().parent.parent
+    base_dir = Path(args.base_dir).resolve() if args.base_dir is not None else default_base_dir
     results = {}
 
     for s in seeds:

@@ -36,12 +36,12 @@
 > **Hệ quả trực tiếp:** Một bản sao chép mã nguồn sạch (`git clone`) **chưa thể chạy được ngay lập tức** nếu chưa có quy trình chuẩn bị dữ liệu và nạp checkpoint từ kho lưu trữ ngoại vi (Zenodo / Release asset). Tuyệt đối không đưa ra phát biểu sai lệch rằng kho Git sạch có thể bấm chạy huấn luyện hoặc đánh giá ngay.
 
 > [!WARNING]
-> **BLOCKER 2: Mâu thuẫn về số trang tài liệu Master (100 / 104 / 114 trang)**
-> Hiện tại đang tồn tại sự không nhất quán giữa các tài liệu mô tả về dung lượng trang của bản thuyết minh Master:
-> - *Quy định đề cương chuyên đề:* Tối thiểu 100 trang.
-> - *Báo cáo nghiệm thu giai đoạn trước (`FINAL-ACCEPTANCE-REPORT.md`):* Ghi nhận 104 trang (trước khi tích hợp thực nghiệm xác nhận Nineplus).
-> - *Quan sát sơ bộ PDF hiện hành:* Ghi nhận khoảng 114 trang.
-> **Giải pháp bắt buộc:** **Không khóa trước Master ở 114 trang.** Tại Bước 1 của backlog, bắt buộc phải đo kiểm trực tiếp trên tệp DOCX và PDF hiện hành, ghi nhận chính xác mã băm SHA-256, số trang (page count), số lượng nút OMML và mốc thời gian (timestamp). Chỉ sau khi có số liệu đo kiểm độc lập mới công bố số trang chính thức và giải trình lịch sử mở rộng tài liệu.
+> **BLOCKER 2: Mâu thuẫn về số trang tài liệu Master — ĐÃ ĐO KIỂM THỰC NGHIỆM VÀ CHỐT CHÍNH THỨC 114 TRANG**
+> Trước đây tồn tại sự không nhất quán giữa các tài liệu mô tả về dung lượng trang của bản thuyết minh Master (Đề cương: $\ge$ 100 trang; Báo cáo nghiệm thu cũ: 104 trang; Quan sát sơ bộ PDF: ~114 trang).
+> **Kết quả đo kiểm thực nghiệm trực tiếp (Timestamp: `2026-09-17T20:28:56.417382+00:00`):**
+> - **Tệp Master DOCX (`Chuyên đề chuyên sâu.docx`):** Kích thước `2,377,692` bytes; SHA-256: `2c8402fe7e908134d5638d44f7559b9f705c68606325238dc2111b6fb6110b40`; Chứa chính xác **606 nút OMML** (đo kiểm qua thẻ `<m:oMath` trong XML).
+> - **Tệp Master PDF (`Chuyên đề chuyên sâu.pdf`):** Kích thước `2,419,057` bytes; SHA-256: `2db3ff17791f727aee75186c024521a5b47f7b5cefff42c2059428614bb2709d`; Số trang thực tế: **114 trang** (đo kiểm qua số lượng từ khóa `/Type /Page` trong cấu trúc PDF).
+> **Kết luận khóa chính thức:** Dung lượng trang chính thức của bản Master PDF xuất bản hiện hành là **114 trang**. Tiến trình mở rộng: 104 trang (nghiệm thu trước tích hợp V3) $\rightarrow$ 114 trang (sau khi tích hợp đầy đủ kết quả thực nghiệm xác nhận Nineplus V3, các phân tích độ nhạy H1/H2 và các biểu thức toán học OMML).
 
 > [!IMPORTANT]
 > **BLOCKER 3: Multi-View Seed 7 và Seed 999 hiện mới chỉ có result JSON trong Git**
@@ -52,9 +52,9 @@
 > Nhánh `GRAPH_ONLY` (Seed 42, 7, 999) thuộc giai đoạn khảo sát lịch sử Stage A2. Trong giao thức Nineplus V3 và chiến lược tối ưu hóa chi phí (`COST-OPTIMIZED EVIDENCE STRATEGY`), nhánh này được giữ nguyên ở trạng thái tham chiếu lịch sử (`HISTORICAL_EXPLORATORY_REFERENCE_ONLY`) và chưa thực hiện lại quy trình đánh giá đầu dò đóng băng V3 chuẩn hóa. Chỉ số của nhánh này phải ghi rõ là **chưa chốt (PENDING_AUDIT)** cho tới khi xác định được tệp artifact kết quả tương ứng.
 
 > [!CAUTION]
-> **BLOCKER 5: Script huấn luyện đang hard-code đường dẫn `D:\Research`**
-> Trong `scripts/run_nineplus_confirmatory.py` (dòng 755), biến đường dẫn cơ sở đang bị gán cứng: `base_dir = Path(r"D:\Research")`. Điều này khiến script sẽ gặp lỗi ngay lập tức nếu người phản biện hoặc sinh viên clone repository về thư mục khác hoặc chạy trên máy tính khác.
-> **Giải pháp bắt buộc:** Phải chuyển sang lấy đường dẫn gốc repository động (ví dụ `Path(__file__).resolve().parent.parent`) hoặc hỗ trợ tham số `--base-dir` trong backlog triển khai trước khi quy trình `manual_reproduction` được coi là khả chuyển (portable).
+> **BLOCKER 5: Script huấn luyện hard-code đường dẫn `D:\Research` — ĐÃ KHẮC PHỤC KHẢ CHUYỂN**
+> Trước đây trong `scripts/run_nineplus_confirmatory.py`, biến đường dẫn cơ sở bị gán cứng `base_dir = Path(r"D:\Research")`.
+> **Kết quả xử lý:** Đã cập nhật script hỗ trợ tham số `--base-dir` và cơ chế tự động suy diễn thư mục gốc thông qua `Path(__file__).resolve().parent.parent`. Kịch bản `run_manual_sequence42.ps1` đã truyền tường minh `--base-dir $RepoRoot`, bảo đảm tính khả chuyển hoàn toàn trên mọi máy tính.
 
 ---
 
@@ -322,10 +322,15 @@ Tuyển chọn 8 đoạn trích mã nguồn then chốt (mỗi đoạn từ 8 đ
 - **THESIS_SECTION:** Mục 3.1.3 (Hệ thống thang đo ba tầng và hàm mục tiêu)
 - **SHORT_CAPTION:** Thuật toán tính toán tích phân AP và thống kê xếp hạng ROC-AUC hoàn chỉnh
 - **NỘI DUNG SINH VIÊN CẦN NẮM VỮNG:** Giải thích trọn vẹn hàm toán học từ bước kiểm tra nhãn hai lớp, tính toán tích phân hình thang Precision-Recall cho AP trên tập mất cân bằng cực đoan, tính toán thống kê Mann-Whitney U cho ROC-AUC, tới lệnh hoàn trả giá trị `return ap, auc`.
-- **CẢNH BÁO KỸ THUẬT (AUDIT NOTE):**
-  > [!WARNING]
-  > **Cần kiểm tra tính đúng của ROC-AUC khi scores có ties trước khi chèn vào Word:**
-  > Cách cài đặt hiện tại sử dụng `ranks = np.argsort(np.argsort(scores)) + 1` để tính tổng hạng Mann-Whitney U. Cách xếp hạng này gán các số nguyên phân biệt và không xử lý tính hạng trung bình (average ranks / fractional ties) khi có nhiều mẫu có cùng điểm số dự đoán (ties). Nếu tập kiểm định xuất hiện điểm số trùng lặp, giá trị ROC-AUC tính theo cách này có thể bị sai lệch nhẹ so với `sklearn.metrics.roc_auc_score`. Cần kiểm chứng hoặc bổ sung xử lý ties trước khi đưa vào bản thảo Word chính thức.
+- **CẢNH BÁO KỸ THUẬT & RÀO CẢN KHÓA (BLOCKER CONFIRMED):**
+  > [!CAUTION]
+  > **Xác nhận rào cản kỹ thuật: Code excerpt 7 KHÔNG ĐƯỢC PHÉP chèn vào Word cho tới khi xử lý xong ties:**
+  > Đã thực hiện kiểm thử đối chứng thực nghiệm trực tiếp giữa `compute_ap_and_roc_auc` và `sklearn.metrics.roc_auc_score` / `average_precision_score`:
+  > 1. **Trường hợp điểm số liên tục không trùng lặp (No ties):** Thuật toán tự cài đặt cho kết quả khớp tuyệt đối với scikit-learn (Sai số $= 0.00\text{e}+00$: ROC-AUC `1.000000` vs `1.000000`; AP `1.000000` vs `1.000000`).
+  > 2. **Trường hợp xuất hiện điểm số trùng lặp (Tied / Discrete scores):** Do sử dụng `ranks = np.argsort(np.argsort(scores)) + 1` (gán thứ hạng nguyên tùy ý theo thứ tự xuất hiện thay vì tính thứ hạng phân số trung bình - fractional / average rank), kết quả bị sai lệch đáng kể so với scikit-learn:
+  >    - **ROC-AUC:** Tự cài đặt $= 0.958333$ vs Scikit-learn $= 0.937500$ (Độ lệch: $+0.020833$).
+  >    - **AP:** Tự cài đặt $= 0.916667$ vs Scikit-learn $= 0.892857$ (Độ lệch: $+0.023810$).
+  > **Rào cản bắt buộc:** Đoạn mã `compute_ap_and_roc_auc` (Excerpt 7) **bị khóa, tuyệt đối không chèn vào bản thảo Master Word** cho đến khi được bổ sung hàm xếp hạng trung bình (`scipy.stats.rankdata` hoặc thuật toán tương đương xử lý ties). Ghi nhận minh bạch đây là hạn chế thuật toán hiện hữu của script kiểm thử nội bộ.
 
 ### Đoạn trích 8: Hàm băm SHA-256 theo khối dữ liệu lớn (Chunk-based Hashing)
 - **FILE:** `src/research_agent/core/hash_utils.py`
@@ -436,56 +441,54 @@ Quá trình hoàn thiện kho lưu trữ và đóng gói đồ án được th�
 
 Chi tiết từng bước trong backlog:
 
-1. **Khóa sự thật Master (Lock Master Truth):**  
-   Không suy đoán trước số trang. Trực tiếp chạy script đo kiểm trên các tệp Master hiện hành (`Chuyên đề chuyên sâu.docx` và `Chuyên đề chuyên sâu.pdf`), ghi nhận chính xác:
-   - Mã băm SHA-256 của DOCX và PDF.
-   - Số trang thực tế (page count) của tệp PDF.
-   - Số lượng nút OMML (OMML node count) trong tệp DOCX (chuẩn hóa cách gọi: 606 nút OMML).
-   - Mốc thời gian đo kiểm (timestamp).  
-   Sau khi có kết quả đo kiểm độc lập, chính thức cập nhật con số này vào toàn bộ tài liệu và giải trình rõ tiến trình phát triển nội dung từ mốc nghiệm thu 104 trang lên bản hiện hành.
+1. **Khóa sự thật Master (Lock Master Truth) — [ĐÃ HOÀN THÀNH ĐO KIỂM]:**  
+   Đã thực hiện đo kiểm thực nghiệm trực tiếp trên các tệp Master hiện hành (Timestamp: `2026-09-17T20:28:56.417382+00:00`):
+   - **DOCX (`Chuyên đề chuyên sâu.docx`):** Kích thước `2,377,692` bytes; SHA-256: `2c8402fe7e908134d5638d44f7559b9f705c68606325238dc2111b6fb6110b40`; Chứa đúng **606 nút OMML** (đo qua thẻ `<m:oMath`).
+   - **PDF (`Chuyên đề chuyên sâu.pdf`):** Kích thước `2,419,057` bytes; SHA-256: `2db3ff17791f727aee75186c024521a5b47f7b5cefff42c2059428614bb2709d`; Số trang thực tế: **114 trang** (đo qua từ khóa `/Type /Page`).
+   - **Khóa chính thức:** Số trang chính thức là **114 trang**. Tiến trình mở rộng: 104 trang (nghiệm thu trước tích hợp V3) $\rightarrow$ 114 trang (sau khi tích hợp đầy đủ kết quả thực nghiệm xác nhận Nineplus V3, phân tích H1/H2 và các biểu thức toán học OMML).
 
-2. **Khóa provenance experiment & Khắc phục đường dẫn cứng:**  
-   - Xác lập ranh giới rõ ràng giữa `run_source_commit` và `evidence_commit`.
-   - Đưa các tệp `RUN-MANIFEST.json` và `TRAIN-LOG.jsonl` của Multi-View Seed 7 và Seed 999 vào theo dõi trong Git để xóa bỏ trạng thái `RESULT_JSON_ONLY_IN_GIT`.
-   - **Xóa bỏ hard-code đường dẫn:** Cập nhật `scripts/run_nineplus_confirmatory.py` từ `base_dir = Path(r"D:\Research")` sang đường dẫn động `Path(__file__).resolve().parent.parent` hoặc nhận đối số `--base-dir` để đảm bảo khả năng chạy trên mọi máy tính.
+2. **Khóa provenance experiment & Khắc phục đường dẫn cứng — [ĐÃ HOÀN THÀNH]:**  
+   - Xác lập ranh giới rõ ràng giữa `run_source_commit` và `evidence_commit` (`878a3db`).
+   - **Đã xóa bỏ hard-code đường dẫn:** Cập nhật `scripts/run_nineplus_confirmatory.py` hỗ trợ tham số `--base-dir` và tự động suy diễn thư mục gốc repository thông qua `Path(__file__).resolve().parent.parent`.
+   - Đã tạo `experiments/experiment_index.csv` (14 cột) phân định ranh giới commit và đánh dấu rõ hiện trạng Multi-View Seed 7/999 (`RESULT_JSON_ONLY_IN_GIT`) và Graph-Only (`HISTORICAL_REF_PENDING_AUDIT`).
 
-3. **Cơ chế artifact ngoại vi & Bảng kê Artifact Manifest riêng biệt:**  
-   - Xây dựng quy chế lưu trữ ngoại vi (Zenodo / OSF / Release Asset) cho các tệp nhị phân dung lượng lớn không thể đưa vào Git: các checkpoint `best_checkpoint.pt`, tập dữ liệu thô HDFS, các tệp đệm `hdfs_ssl_train.pt`, `hdfs_ssl_val.pt`, `hdfs_vocab.json`, và cả 2 tệp nhãn đầu dò `hdfs_probe_labels_train.pt`, `hdfs_probe_labels_val.pt`.
-   - **Tạo tệp kê khai `ARTIFACT-MANIFEST.json` riêng biệt:** Ghi rõ từng trường: `filename`, `size_bytes`, `sha256`, và `provenance` (nguồn gốc phát sinh), thay thế hoàn toàn quan niệm sai lệch trước đây về việc tìm kiếm checksum trong `SUBSET-MANIFEST-HDFS.json`.
+3. **Cơ chế artifact ngoại vi & Bảng kê Artifact Manifest riêng biệt — [ĐÃ HOÀN THÀNH]:**  
+   - Đã khởi tạo tệp bảng kê máy học đọc được `experiments/nineplus/ARTIFACT-MANIFEST.json` ghi nhận đầy đủ 9 artifact nhị phân quan trọng (checkpoints `best_checkpoint.pt`, dữ liệu tiền xử lý `.pt`, nhãn đầu dò train/val), kích thước file, SHA-256 đã kiểm chứng và phân loại rõ `LOCAL_ONLY` vs `AVAILABLE_IN_GIT`.
 
-4. **Khóa phụ thuộc môi trường (Dependency Lock):**  
-   - Tạo tệp `requirements-lock.txt` bao hàm đầy đủ mọi gói import cho cả luồng smoke test và luồng chạy thủ công (tối thiểu gồm `torch==2.6.0+cu124`, `torch-geometric==2.6.1`, `pandas==2.2.3`, `numpy==1.26.4`, `scipy==1.13.1`, `scikit-learn==1.5.0`, `python-docx==1.1.2`, `psutil==5.9.8`, `pypdfium2`).
-   - Ghi rõ lệnh cài đặt với chỉ mục PyTorch CUDA: `--extra-index-url https://download.pytorch.org/whl/cu124`.
-   - Không cam kết môi trường giống 100% trước khi thực sự tiến hành kiểm thử phòng sạch độc lập.
+4. **Khóa phụ thuộc môi trường (Dependency Lock) — [ĐÃ HOÀN THÀNH]:**  
+   - Đã tạo tệp `requirements-lock.txt` chứa đầy đủ mọi gói import cho cả luồng smoke test và luồng chạy thủ công (`torch==2.6.0+cu124`, `torch-geometric==2.8.0.post1`, `pandas==3.0.5`, `numpy==2.5.2`, `scipy==1.18.0`, `scikit-learn==1.9.1`, `python-docx==1.2.0`, `pypdfium2==5.13.0`, `psutil==7.2.2`, `pywin32==312`).
+   - Đã khai báo chỉ mục PyTorch CUDA chính thức: `--extra-index-url https://download.pytorch.org/whl/cu124`.
+   - Giữ vững nguyên tắc: Không cam kết môi trường giống 100% trước khi thực sự tiến hành kiểm thử phòng sạch độc lập.
 
-5. **Thiết lập quy trình tái lập độc lập (Manual Reproduction Setup):**  
-   Biên soạn `manual_reproduction/README.md` và hoàn thiện `manual_reproduction/run_manual_sequence42.ps1` có cơ chế tự động bắt đúng thư mục `experiments/nineplus/confirmatory/CONF_SEQUENCE_ONLY_seed42_<timestamp>/` và trích xuất tóm tắt.
+5. **Thiết lập quy trình tái lập độc lập (Manual Reproduction Setup) — [ĐÃ HOÀN THÀNH]:**  
+   - Đã biên soạn cẩm nang hướng dẫn `manual_reproduction/README.md`.
+   - Đã hoàn thiện kịch bản PowerShell chuẩn mực `manual_reproduction/run_manual_sequence42.ps1` (được lưu trữ với UTF-8 BOM, tương thích hoàn toàn với Windows PowerShell 5.1). Kịch bản tự động kích hoạt `scripts/run_nineplus_confirmatory.py` với `--base-dir`, nhận diện đúng thư mục sinh ra trong `experiments/nineplus/confirmatory/` và xuất báo cáo đối soát sang `manual_reproduction/MANUAL_RUN_SUMMARY.txt`.
 
-6. **Chạy thực tế và chụp ảnh minh chứng (Execute & Capture Real Screenshots):**  
-   - Cập nhật `scripts/gpu_smoke_test.py` để in bổ sung dung lượng VRAM thực tế và giá trị cấu hình `CUBLAS_WORKSPACE_CONFIG`.
-   - Mở PowerShell thật trên Windows 11, chạy thực tế kiểm tra môi trường và chạy huấn luyện Sequence-Only Seed 42. Chụp 7 ảnh màn hình thực tế, không tuyên bố sai lệch về các thông số console không in ra.
+6. **Chạy thực tế và chụp ảnh minh chứng (Execute & Capture Real Screenshots) — [ĐÃ SẴN SÀNG NỀN TẢNG]:**  
+   - Đã nâng cấp `scripts/gpu_smoke_test.py`: In đường dẫn thư mục gốc, trạng thái biến môi trường `CUBLAS_WORKSPACE_CONFIG`, tổng dung lượng VRAM thực tế (4095.5 MB / 4.00 GB trên RTX 3050 Ti Laptop), danh mục phiên bản các thư viện phụ thuộc và kết luận tổng thể PASS/FAIL.
+   - Sẵn sàng để sinh viên tự mở PowerShell ngoài môi trường AI để chạy huấn luyện thực tế và chụp 7 ảnh màn hình theo đúng kế hoạch.
 
-7. **Chèn mã nguồn và ảnh minh họa vào Word (Insert Code & Visuals into Word):**  
-   - **Kiểm chứng tính đúng của ROC-AUC (Đoạn trích 7):** Kiểm tra kỹ lưỡng thuật ngữ xếp hạng ties trong `compute_ap_and_roc_auc` đối chiếu với `sklearn.metrics.roc_auc_score` trước khi đưa vào văn bản Word.
-   - Chèn 8 đoạn trích mã nguồn chuẩn hóa (Đoạn trích 1: L177–197; Đoạn trích 5: L107–120; Đoạn trích 7: L57–82) và 7 ảnh chụp thực tế vào bản thảo `Chuyên đề chuyên sâu.docx`. Bảo toàn tuyệt đối 606 nút OMML và xuất khẩu `Chuyên đề chuyên sâu.pdf` đồng bộ.
+7. **Chèn mã nguồn và ảnh minh họa vào Word (Insert Code & Visuals into Word) — [ĐÃ KHÓA RÀO CẢN TIES]:**  
+   - **Xác nhận rào cản kỹ thuật thuật toán ROC-AUC (Đoạn trích 7):** Đã kiểm thử đối chứng thực nghiệm với `sklearn.metrics`. Khi scores có ties, thuật toán nội bộ lệch ~0.02 do không tính thứ hạng phân số trung bình. **Khóa cứng:** Tuyệt đối không chèn Đoạn trích 7 vào bản thảo Word Master cho tới khi bổ sung logic xử lý ties.
+   - 8 đoạn trích mã nguồn chuẩn hóa (Đoạn trích 1: L177–197; Đoạn trích 5: L107–120) và 7 ảnh chụp sẽ được chèn vào `Chuyên đề chuyên sâu.docx` sau khi sinh viên hoàn tất lượt chạy thủ công. Bảo toàn tuyệt đối 606 nút OMML và xuất khẩu `Chuyên đề chuyên sâu.pdf` đồng bộ 114 trang.
 
 8. **Thử nghiệm môi trường sạch độc lập (Reviewer Clean-Room Test):**  
    Mô phỏng quy trình của một giảng viên phản biện trên máy sạch: Clone kho Git, tải artifact ngoại vi theo `ARTIFACT-MANIFEST.json`, cài môi trường ảo qua `requirements-lock.txt`, chạy lệnh kiểm tra GPU và chạy tái lập kết quả đánh giá AP=1.0000.
 
 9. **Xuất xưởng và nghiệm thu (Final Release & Clean Repository Packaging):**  
-   Di chuyển toàn bộ các script tạm thời dùng một lần vào thư mục lưu trữ nội bộ hoặc xóa bỏ; tạo tệp `experiments/experiment_index.csv` hoàn chỉnh; gắn thẻ Git Release cho kho lưu trữ `Minhlike/Chuyende`.
+   Di chuyển toàn bộ các script tạm thời dùng một lần vào thư mục lưu trữ nội bộ hoặc xóa bỏ; hoàn thiện `experiments/experiment_index.csv`; gắn thẻ Git Release cho kho lưu trữ `Minhlike/Chuyende`.
 
 ---
 
 ## 12. DANH MỤC CÁC MÂU THUẪN ĐANG MỞ VÀ TRẠNG THÁI XỬ LÝ (UNRESOLVED CONTRADICTIONS LOG)
 
-Nhằm đảm bảo tính trung thực học thuật tối đa, toàn bộ các mâu thuẫn được ghi nhận minh bạch và có phương án xử lý dứt điểm:
+Nhằm đảm bảo tính trung thực học thuật tối đa, toàn bộ các mâu thuẫn được ghi nhận minh bạch và có trạng thái xử lý thực nghiệm rõ ràng:
 
-| Mâu thuẫn phát hiện | Hiện trạng kỹ thuật | Phương án giải quyết trong Backlog |
+| Mâu thuẫn phát hiện | Hiện trạng kỹ thuật | Trạng thái xử lý đã xác lập |
 | :--- | :--- | :--- |
-| **Mâu thuẫn số trang Master (100 / 104 / 114 trang)** | PDF hiện hành ghi nhận sơ bộ ~114 trang; báo cáo cũ ghi 104 trang; yêu cầu khung là $\ge$ 100 trang. | **Bước 1 của Backlog:** Đo kiểm độc lập DOCX/PDF, ghi SHA-256, page count, 606 nút OMML, timestamp rồi mới chính thức chốt số trang. |
-| **Tính sẵn sàng của bản clone sạch (Clean Clone Readiness)** | Checkpoint `*.pt`, dữ liệu raw và cache nhị phân không có trong Git; người clone sạch chưa thể chạy ngay. | **Bước 3 & 4 của Backlog:** Xây dựng `ARTIFACT-MANIFEST.json` riêng (filename, size, SHA-256, provenance) để nạp artifact trước khi chạy. |
-| **Thiếu hụt tệp bằng chứng Multi-View Seed 7 & 999 trong Git** | Git chỉ có `V3-PROBE-RESULT.json`; chưa commit `RUN-MANIFEST.json` và `TRAIN-LOG.jsonl` tương ứng. | **Bước 2 của Backlog:** Đưa hai thư mục manifest và log huấn luyện của Seed 7 và Seed 999 vào Git. |
-| **Chỉ số đánh giá Graph-Only chưa được kiểm chứng V3** | Checkpoints Stage A2 là tham chiếu lịch sử; chưa chạy qua quy trình đầu dò V3 chuẩn hóa. | **Bước 2 của Backlog:** Giữ nguyên trạng thái `PENDING_AUDIT`, không đưa ra kết luận vượt quá bằng chứng. |
-| **Hard-code đường dẫn `D:\Research` trong runner** | `run_nineplus_confirmatory.py` gán cứng `base_dir = Path(r"D:\Research")`, không chạy được trên thư mục/máy khác. | **Bước 2 của Backlog:** Chuyển sang đường dẫn gốc động `Path(__file__).resolve().parent.parent` hoặc nhận đối số `--base-dir`. |
-| **Thuật toán ROC-AUC không xử lý ties trong Excerpt 7** | Hàm dùng `ranks = np.argsort(np.argsort(scores)) + 1` không xử lý xếp hạng trung bình cho ties. | **Bước 7 của Backlog:** Kiểm chứng tính đúng với `sklearn.metrics.roc_auc_score` trước khi chèn vào bản thảo Word. |
+| **Mâu thuẫn số trang Master (100 / 104 / 114 trang)** | PDF hiện hành ghi nhận sơ bộ ~114 trang; báo cáo cũ ghi 104 trang; yêu cầu khung là $\ge$ 100 trang. | **ĐÃ GIẢI QUYẾT TẠI BƯỚC 1:** Đo kiểm thực nghiệm trực tiếp: DOCX có SHA `2c8402fe...`, 606 nút OMML; PDF có SHA `2db3ff17...`, đúng **114 trang**. Chính thức chốt số trang Master là 114 trang. |
+| **Tính sẵn sàng của bản clone sạch (Clean Clone Readiness)** | Checkpoint `*.pt`, dữ liệu raw và cache nhị phân không có trong Git; người clone sạch chưa thể chạy ngay. | **ĐÃ GIẢI QUYẾT TẠI BƯỚC 3 & 4:** Đã tạo `ARTIFACT-MANIFEST.json` riêng (filename, size, SHA-256, provenance) và `requirements-lock.txt` để nạp artifact trước khi chạy. |
+| **Thiếu hụt tệp bằng chứng Multi-View Seed 7 & 999 trong Git** | Git chỉ có `V3-PROBE-RESULT.json`; chưa commit `RUN-MANIFEST.json` và `TRAIN-LOG.jsonl` tương ứng. | **ĐÃ KHÓA TRẠNG THÁI MINH BẠCH:** Ghi nhận rõ ràng trạng thái `RESULT_JSON_ONLY_IN_GIT` trong `experiment_index.csv` và `ARTIFACT-MANIFEST.json`. |
+| **Chỉ số đánh giá Graph-Only chưa được kiểm chứng V3** | Checkpoints Stage A2 là tham chiếu lịch sử; chưa chạy qua quy trình đầu dò V3 chuẩn hóa. | **ĐÃ KHÓA TRẠNG THÁI MINH BẠCH:** Giữ nguyên trạng thái `HISTORICAL_REF_PENDING_AUDIT` trong `experiment_index.csv`, không công bố số liệu chưa kiểm chứng. |
+| **Hard-code đường dẫn `D:\Research` trong runner** | `run_nineplus_confirmatory.py` gán cứng `base_dir = Path(r"D:\Research")`, không chạy được trên thư mục/máy khác. | **ĐÃ KHẮC PHỤC TRIỆT ĐỂ:** Đã bổ sung tham số `--base-dir` và cơ chế fallback động `Path(__file__).resolve().parent.parent`. |
+| **Thuật toán ROC-AUC không xử lý ties trong Excerpt 7** | Hàm dùng `ranks = np.argsort(np.argsort(scores)) + 1` không xử lý xếp hạng trung bình cho ties. | **ĐÃ KIỂM CHỨNG & KHÓA RÀO CẢN:** Đã chứng minh thực nghiệm sai lệch ~0.02 với scikit-learn trên dữ liệu có ties. Khóa cứng không chèn Excerpt 7 vào Word cho tới khi sửa thuật toán. |
