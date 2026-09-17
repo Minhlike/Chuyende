@@ -18,7 +18,7 @@ Báo cáo này được lập nhằm cung cấp cho Reviewer bức tranh toàn c
 
 Mọi số liệu trong báo cáo tuân thủ tuyệt đối các nguyên tắc phương pháp luận:
 
-1. *Niêm phong tập Test (`TEST_OPENED=false`, `TEST_READ_COUNT=0`):* Toàn bộ 7.500 phiên (119.531 sự kiện) của tập Test HDFS được niêm phong mật mã tuyệt đối. Chưa có bất kỳ lần đọc hay tính toán nào trên tập Test trong toàn bộ chiến dịch.
+1. *Niêm phong tập Test (`TEST_OPENED=false`, `TEST_READ_COUNT=0`):* Tập Test HDFS được niêm phong mật mã tuyệt đối trong toàn bộ chiến dịch. Chưa có bất kỳ lần đọc hay tính toán nào trên tập Test. Toàn bộ 7.500 phiên (119.531 sự kiện đồ thị thời gian) được thẩm định thuộc về tập Kiểm định cố định (Validation split).
 2. *Đóng băng bản thảo gốc (`MASTER_CHANGED=false`):* Các tệp luận văn chính (`Chuyên đề chuyên sâu.docx` và `.pdf`) được giữ nguyên vẹn, không chỉnh sửa số liệu hồi tố khi chưa hoàn tất nghiệm thu toàn bộ các nhánh.
 3. *Kỷ luật phân loại suy diễn:* Báo cáo phân định rạch ròi giữa số liệu đo đạc trực tiếp (`OBSERVED_RESULT`), số liệu thống kê suy diễn (`DERIVED_RESULT`) và giả thuyết giải thích (`HYPOTHESIS`), loại bỏ các kết luận nhân quả vượt quá bằng chứng đo lường thực tế.
 
@@ -114,9 +114,9 @@ Quá trình huấn luyện 3 hạt giống xác nhận của `MULTI_VIEW_ALIGNED
 
 ### 4.1. Tiến độ và Trạng thái Kiểm chứng Giả thuyết H1 (Parameter Semantic Fidelity)
 - **Tình trạng thực thi:** Các backbone của nhánh `SEQUENCE_ONLY` đã hoàn tất huấn luyện và đóng băng 100%.
-- **Dữ liệu nhãn tham số:** Kho nhãn `param_targets` đã được trích xuất và lưu trữ tại `hdfs_probe_labels_train.pt` và `hdfs_probe_labels_val.pt`.
+- **Dữ liệu nhãn tham số:** Nhãn tham số `param_targets` được lưu trữ tại `hdfs_ssl_train.pt` và `hdfs_ssl_val.pt`, tách biệt với kho nhãn phát hiện bất thường hạ nguồn (`hdfs_probe_labels_train.pt` và `hdfs_probe_labels_val.pt`).
 - **Kết quả sơ bộ quan sát:** Trong quá trình tiền huấn luyện Stage A, hàm mất mát dự đoán tham số $L_{MPP}$ giảm ổn định từ $\approx 0.50$ xuống $\approx 0.02$ đến $0.05$, cho thấy mô hình học được mối tương quan giữa chuỗi sự kiện và thuộc tính tham số.
-- **Bước hoàn thiện H1:** Chạy script đánh giá `Macro-F1` phân loại tham số trên biểu diễn đóng băng và chạy kiểm thử `FROZEN_INPUT_MASKING_ABLATION` theo đúng đặc tả mục 8 của kế hoạch V2.
+- **Bước hoàn thiện H1:** Kiểm toán độ mịn mục tiêu và thực hiện kiểm thử cắt bỏ `FROZEN_INPUT_MASKING_ABLATION`.
 
 ### 4.2. Bảng Đối chứng Ma trận Hạt giống Xác nhận Giả thuyết H2 ($N=3$)
 
@@ -137,7 +137,7 @@ Quá trình huấn luyện 3 hạt giống xác nhận của `MULTI_VIEW_ALIGNED
 | *`GRAPH_ONLY` (Lịch sử)* | 42 | Stage A2 (Ep 1) | 0.0072 | KHÔNG ĐẠT (FAIL) | 0.7090 | 0.8053 | `HISTORICAL_REFERENCE` |
 | *(Đơn đồ thị tham chiếu)*| 7 | Stage A2 (Ep 12) | 0.0727 | ĐẠT (PASS) | 0.6178 | 0.7516 | `HISTORICAL_REFERENCE` |
 | | 999 | Stage A2 (Ep 12) | 0.0738 | ĐẠT (PASS) | 0.6815 | 0.8857 | `HISTORICAL_REFERENCE` |
-| *Trung bình Graph Lịch sử*| *$N=3$* | *N/A* | *`0.0512 ± 0.0381`* | *2/3 PASS* | *`0.6694 ± 0.0468`* | *`0.8142 ± 0.0675`* | *Chờ chạy mới V3* |
+| *Trung bình Graph Lịch sử*| *$N=3$* | *N/A* | *`0.0512 ± 0.0381`* | *2/3 PASS* | *`0.6694 ± 0.0468`* | *`0.8142 ± 0.0675`* | *Chỉ để đối chứng* |
 
 ---
 
@@ -146,13 +146,13 @@ Quá trình huấn luyện 3 hạt giống xác nhận của `MULTI_VIEW_ALIGNED
 Dựa trên các số liệu thực nghiệm đo đạc thực tế, tác giả báo cáo trung thực với Reviewer ba phát hiện học thuật quan trọng:
 
 *Thứ nhất, về sự tương quan giữa Multi-View và Graph-Only:*  
-Mô hình đa góc nhìn `MULTI_VIEW_ALIGNED_VICREG` đạt ROC-AUC trung bình $0.8933 \pm 0.0371$, cải thiện rõ rệt so với mô hình đơn đồ thị lịch sử ($0.8142 \pm 0.0675$, chênh lệch $+0.0791$). Điều này cho thấy việc tích hợp thêm thông tin chuỗi sự kiện và liên kết biểu diễn giúp không gian đặc trưng đồ thị nhạy bén hơn với các mẫu bất thường phân tán. Tuy nhiên, về chỉ số AP, hai nhánh đạt mức tương đương ($0.6656$ so với $0.6694$).
+Dưới giao thức probe cũ, mô hình đa góc nhìn `MULTI_VIEW_ALIGNED_VICREG` đạt ROC-AUC trung bình $0.8933 \pm 0.0371$, cao hơn so với mô hình đơn đồ thị lịch sử ($0.8142 \pm 0.0675$). Tuy nhiên, do mô hình đơn đồ thị lịch sử không phải là mô hình đối chứng triển vọng tương thích (unmatched exploratory reference), so sánh này không cô lập được tác động của cơ chế dung hợp đa góc nhìn. Về chỉ số AP, hai nhánh đạt mức tương đương ($0.6656$ so với $0.6694$).
 
 *Thứ hai, về khoảng cách giữa Multi-View và Sequence-Only trên tập HDFS:*  
-Mô hình đơn chuỗi `SEQUENCE_ONLY` duy trì hiệu năng vượt trội trên tập dữ liệu HDFS cả về AP ($0.8687$ so với $0.6656$) và ROC-AUC ($0.9740$ so với $0.8933$). Số liệu thực tế không ủng hộ kỳ vọng lạc quan ban đầu rằng mô hình đa góc nhìn sẽ vượt trội hơn mô hình chuỗi thuần túy trên bài toán này. Tác giả bảo toàn kết quả này như một phát hiện thực nghiệm khách quan, không che giấu hay điều chỉnh số liệu.
+Mô hình đơn chuỗi `SEQUENCE_ONLY` duy trì hiệu năng vượt trội trên tập dữ liệu HDFS cả về AP ($0.8687$ so với $0.6656$) và ROC-AUC ($0.9740$ so với $0.8933$). Số liệu thực tế không hỗ trợ kỳ vọng lạc quan ban đầu rằng mô hình đa góc nhìn sẽ vượt trội hơn mô hình chuỗi thuần túy trên bài toán này. Tác giả bảo toàn kết quả này như một phát hiện thực nghiệm khách quan, không che giấu hay điều chỉnh số liệu.
 
 *Thứ ba, về hiện tượng nén phương sai biểu diễn ẩn ($\text{Var}(z)$):*  
-Phương sai ẩn trung bình của mô hình đa góc nhìn ($0.0123$) thấp hơn gần một bậc độ lớn so với mô hình đơn chuỗi ($0.1130$). Mặc dù 2 trên 3 hạt giống đạt ngưỡng chống sụp đổ đăng ký trước ($\ge 0.01000$), việc phương sai bị thu hẹp đáng kể phản ánh tác động điều hòa mạnh của hàm mất mát VICReg (đặc biệt là thành phần hiệp phương sai - covariance term) khi cố gắng căn chỉnh hai không gian đồ thị và chuỗi. Đây là đóng góp học thuật quan trọng để phân tích cơ chế cân bằng biểu diễn trong luận án.
+Mô hình đa góc nhìn thể hiện phương sai biểu diễn ẩn thấp hơn. Tác động điều hòa liên quan đến VICReg là một giả thuyết giải thích hợp lý; tuy nhiên đóng góp cụ thể của từng số hạng VICReg chưa được cô lập bằng kiểm thử cắt bỏ đối chứng. Đây là phát hiện thực nghiệm có giá trị để thảo luận sâu trong luận án.
 
 ---
 

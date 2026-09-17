@@ -27,6 +27,10 @@ import math
 import random
 import hashlib
 import psutil
+try:
+    psutil.Process().nice(psutil.ABOVE_NORMAL_PRIORITY_CLASS)
+except Exception:
+    pass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple, Set
