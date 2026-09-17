@@ -1,5 +1,5 @@
 # BÁO CÁO TIẾN ĐỘ THỰC NGHIỆM TOÀN DIỆN CHIẾN DỊCH NINEPLUS (CAMPAIGN V2 / TU CHÍNH V3)
-**Dành cho Hội đồng Đánh giá & Phản biện Khoa học (Reviewer Report)**
+**Báo cáo Đệ trình Reviewer (Peer Reviewer Report)**
 
 - **Đề tài:** Nghiên cứu phát hiện bất thường nhật ký hệ thống sử dụng biểu diễn học tự giám sát đa góc nhìn (Multi-View Self-Supervised Learning).
 - **Mã chiến dịch:** `NINEPLUS-EXPERIMENT-CAMPAIGN-V2` / Kế hoạch tu chính: [`NINEPLUS-EXPERIMENT-CAMPAIGN-V3.json`](file:///D:/Research/experiments/plans/NINEPLUS-EXPERIMENT-CAMPAIGN-V3.json)

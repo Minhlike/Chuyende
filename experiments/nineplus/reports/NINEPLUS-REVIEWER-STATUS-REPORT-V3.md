@@ -1,8 +1,8 @@
-# BÁO CÁO KHOA HỌC GỬI HỘI ĐỒNG ĐÁNH GIÁ VÀ PHẢN BIỆN
+# BÁO CÁO KHOA HỌC GỬI REVIEWER
 ## CẬP NHẬT TIẾN ĐỘ THỰC NGHIỆM CHIẾN DỊCH NINEPLUS (TU CHÍNH V3)
 ### HOÀN TẤT BỘ BA XÁC NHẬN ĐA GÓC NHÌN (MULTI-VIEW CONFIRMATORY TRIAD)
 
-**Kính gửi:** Hội đồng Đánh giá và Thầy/Cô Phản biện Khoa học  
+**Kính gửi:** Quý Reviewer (Peer Reviewer / Manuscript Reviewer)  
 **Đề tài:** Nghiên cứu phát hiện bất thường nhật ký hệ thống sử dụng biểu diễn học tự giám sát đa góc nhìn (Multi-View Self-Supervised Learning)  
 **Mã chiến dịch:** `NINEPLUS-EXPERIMENT-CAMPAIGN-V3`  
 **Thời điểm lập báo cáo:** 2026-09-18 00:15:00 (UTC+7)  
@@ -18,7 +18,7 @@ Báo cáo này đệ trình kết quả thực nghiệm mới nhất của Chi�
 Quy trình thu thập dữ liệu và báo cáo tuân thủ nghiêm ngặt ba ràng buộc phương pháp luận bắt buộc:
 
 1. *Niêm phong Mật mã Tập Test (`TEST_OPENED=false`, `TEST_READ_COUNT=0`):* Toàn bộ 7.500 phiên (sessions) của tập Test HDFS được niêm phong tuyệt đối. Không có bất kỳ tham số hay nhãn nào của tập Test được truy cập trong toàn bộ quá trình tiền huấn luyện (Stage A) và đánh giá xác thực hạ nguồn.
-2. *Tính Toàn vẹn Bản thảo Luận văn (`MASTER_CHANGED=false`):* Các tệp văn bản chính thức của luận án (`Chuyên đề chuyên sâu.docx` và `.pdf`) giữ nguyên hiện trạng, không bị chỉnh sửa hồi tố cho đến khi toàn bộ ma trận số liệu được Hội đồng thông qua.
+2. *Tính Toàn vẹn Bản thảo Luận văn (`MASTER_CHANGED=false`):* Các tệp văn bản chính thức của luận án (`Chuyên đề chuyên sâu.docx` và `.pdf`) giữ nguyên hiện trạng, không bị chỉnh sửa hồi tố cho đến khi toàn bộ ma trận số liệu được thẩm tra đầy đủ.
 3. *Kỷ luật Suy diễn Khoa học V3:* Báo cáo phân định ranh giới rõ ràng giữa kết quả quan sát trực tiếp (`OBSERVED_RESULT`), kết quả phân tích thống kê (`DERIVED_RESULT`) và các giả thuyết thảo luận (`HYPOTHESIS`), loại bỏ các khẳng định nhân quả khi chưa có kiểm thử cô lập đối chứng.
 
 ---
@@ -71,17 +71,17 @@ Với việc hoàn tất Seed 999, cả hai nhánh mô hình chủ chốt của 
 | **`SEQUENCE_ONLY`** | Seed 42 | Epoch 3 (Dừng Ep 6) | 0.0935 | ĐẠT (PASS) | 0.8994 | 0.9973 | 170.4 MB |
 | (Transformer Encoder) | Seed 7 | Epoch 11 (Trần Ep 12) | 0.0999 | ĐẠT (PASS) | 0.9179 | 0.9984 | 170.4 MB |
 | | Seed 999 | Epoch 12 (Trần Ep 12) | 0.1455 | ĐẠT (PASS) | 0.7887 | 0.9263 | 170.4 MB |
-| **Trung bình Sequence** | **$N=3$** | **—** | **`0.1130 ± 0.0284`** | **100% PASS** | **`0.8687 ± 0.0700`** | **`0.9740 ± 0.0413`** | **170.4 MB** |
+| **Trung bình Sequence** | **$N=3$** | **N/A** | **`0.1130 ± 0.0284`** | **100% PASS** | **`0.8687 ± 0.0700`** | **`0.9740 ± 0.0413`** | **170.4 MB** |
 | | | | | | | | |
 | **`MULTI_VIEW_ALIGNED`** | Seed 42 | Epoch 6 (Dừng Ep 9) | 0.00997 | KHÔNG ĐẠT (FAIL) | 0.7032 | 0.9319 | 260.6 MB |
 | (VICReg + Gated Fusion) | Seed 7 | Epoch 3 (Dừng Ep 6) | 0.01264 | ĐẠT (PASS) | 0.6082 | 0.8899 | 263.2 MB |
 | | Seed 999 | Epoch 4 (Dừng Ep 7) | 0.01442 | ĐẠT (PASS) | 0.6855 | 0.8580 | 265.0 MB |
-| **Trung bình Multi-View** | **$N=3$** | **—** | **`0.0123 ± 0.0022`** | **2/3 PASS** | **`0.6656 ± 0.0505`** | **`0.8933 ± 0.0371`** | **263.0 MB** |
+| **Trung bình Multi-View** | **$N=3$** | **N/A** | **`0.0123 ± 0.0022`** | **2/3 PASS** | **`0.6656 ± 0.0505`** | **`0.8933 ± 0.0371`** | **263.0 MB** |
 | | | | | | | | |
 | *`GRAPH_ONLY` (Lịch sử)* | Seed 42 | Stage A2 (Ep 1) | 0.0072 | KHÔNG ĐẠT (FAIL) | 0.7090 | 0.8053 | 1,255 MB |
 | *(TGN Đồ thị - Tham chiếu)*| Seed 7 | Stage A2 (Ep 12) | 0.0727 | ĐẠT (PASS) | 0.6178 | 0.7516 | 1,255 MB |
 | | Seed 999 | Stage A2 (Ep 12) | 0.0738 | ĐẠT (PASS) | 0.6815 | 0.8857 | 1,255 MB |
-| *Trung bình Graph Lịch sử* | *$N=3$* | *—* | *`0.0512 ± 0.0381`* | *2/3 PASS* | *`0.6694 ± 0.0468`* | *`0.8142 ± 0.0675`* | *1,255 MB* |
+| *Trung bình Graph Lịch sử* | *$N=3$* | *N/A* | *`0.0512 ± 0.0381`* | *2/3 PASS* | *`0.6694 ± 0.0468`* | *`0.8142 ± 0.0675`* | *1,255 MB* |
 
 *Ghi chú quan trọng:* Các chỉ số AP và ROC-AUC trong Bảng 2 được tính toán theo giao thức Linear Probe cũ (phân chia 80/20 nội bộ tập Validation, phụ thuộc seed) và được gắn nhãn phân loại `LEGACY_PROBE_EXPLORATORY_METRIC`. Các chỉ số này sẽ được thay thế bằng kết quả tính toán lại đồng bộ của Giao thức Chuẩn hóa V3.
 
@@ -89,7 +89,7 @@ Với việc hoàn tất Seed 999, cả hai nhánh mô hình chủ chốt của 
 
 ## 4. Báo cáo Nhận định Khoa học Khách quan (Objective Observations)
 
-Dựa trên số liệu đo đạc thực nghiệm đã hoàn tất của bộ ba hạt giống xác nhận, tác giả kính trình Hội đồng bốn quan sát phương pháp luận quan trọng:
+Dựa trên số liệu đo đạc thực nghiệm đã hoàn tất của bộ ba hạt giống xác nhận, tác giả đệ trình Reviewer bốn quan sát phương pháp luận quan trọng:
 
 *Một là, về khả năng phân tách nhãn tổng quát (ROC-AUC):*  
 Mô hình `MULTI_VIEW_ALIGNED_VICREG` đạt ROC-AUC trung bình **`0.8933 ± 0.0371`**, cao hơn đáng kể so với mức tham chiếu của mô hình đơn đồ thị `GRAPH_ONLY` lịch sử (**`0.8142 ± 0.0675`**). Kết quả này cho thấy việc bổ sung góc nhìn chuỗi sự kiện và liên kết biểu diễn giúp cải thiện rõ rệt độ nhạy và tính phân tách của không gian đồ thị. Tuy nhiên, mức ROC-AUC này vẫn thấp hơn mô hình đơn chuỗi `SEQUENCE_ONLY` (**`0.9740 ± 0.0413`**).
@@ -107,7 +107,7 @@ Theo Kế hoạch Tu chính V3, trạng thái của H2 được định danh là
 
 ---
 
-## 5. Lộ trình Thực hiện Tiếp theo Trình Hội đồng
+## 5. Lộ trình Thực hiện Tiếp theo Trình Reviewer
 
 Tác giả kiến nghị lộ trình kỹ thuật gồm hai bước tiếp theo để hoàn thiện toàn bộ bằng chứng thực nghiệm phục vụ việc nghiệm thu luận án:
 
@@ -153,4 +153,4 @@ Toàn bộ artifact của chiến dịch đều được kiểm soát phiên b�
   - [`d6fb10b`](https://github.com/Minhlike/Chuyende/commit/d6fb10b): Nghiệm thu Probe Graph-Only lịch sử.
   - [`0cc1752`](https://github.com/Minhlike/Chuyende/commit/0cc1752): Nghiệm thu Multi-View Seed 7 & Seed 999, hoàn tất 100% bộ ba xác nhận Multi-View.
 
-Tác giả kính trình Hội đồng Đánh giá và Thầy/Cô xem xét báo cáo tiến độ và cho ý kiến chỉ đạo đối với các bước thực thi tiếp theo.
+Tác giả kính trình Quý Reviewer xem xét báo cáo tiến độ này.
