@@ -13,8 +13,8 @@
 | :--- | :--- | :--- | :--- |
 | **DOCX File Size** | 2,377,692 bytes | 2,570,754 bytes | ĐẠT CHUẨN |
 | **DOCX SHA-256** | `2c8402fe7e908134d5638d44f7559b9f705c68606325238dc2111b6fb6110b40` | `1820f2b91ef0bb68b5d49b4cb5c043e7b0d4984c19ffaa58d267effffe95708c` | ĐÃ CẬP NHẬT |
-| **PDF File Size** | 2,419,057 bytes | 2,755,345 bytes | ĐẠT CHUẨN |
-| **PDF SHA-256** | `2db3ff17791f727aee75186c024521a5b47f7b5cefff42c2059428614bb2709d` | `72c389fe41d279919c4f758b9c5da138660ef7c09b185a805d573bb3f3a190ab` | ĐÃ CẬP NHẬT |
+| **PDF File Size** | 2,419,057 bytes | 3,195,276 bytes | ĐẠT CHUẨN |
+| **PDF SHA-256** | `2db3ff17791f727aee75186c024521a5b47f7b5cefff42c2059428614bb2709d` | `5afac098eb686ece952bdf259d2dca26c6eb94c60d02c4daae55edd3fbafc3bc` | ĐÃ CẬP NHẬT |
 | **PDF Page Count** | 114 trang | **121 trang** | ĐO ĐẠC THỰC TẾ |
 | **Nút công thức OMML** | **606 nút** (`<m:oMath>`) | **606 nút** (`<m:oMath>`) | BẢO TOÀN TUYỆT ĐỐI (606 → 606) |
 | **Đoạn công thức OMML** | 98 đoạn (`<m:oMathPara>`) | 98 đoạn (`<m:oMathPara>`) | BẢO TOÀN TUYỆT ĐỐI (98 → 98) |
@@ -116,6 +116,29 @@ Nhật ký thực thi `transcript.log` ghi nhận trạng thái `DIRTY (9 modifi
      * **Trang 105:** Các cụm từ `Nhằm xác thực`, `manual_reproduction`, `commit`, `POST_TRAINING_INTERNAL_VAL_80_20_PROBE` liền lạc 100%, không bị tách rời ký tự.
      * **Trang 106:** Tiêu đề cột và dữ liệu Bảng 3.7b (`Git Commit SHA thực thi`, `MB VRAM`, `patience`, `checkpoint`) hiển thị chữ tự nhiên, liền khối, bảng nằm trọn vẹn trong trang.
      * **Trang 107:** Ảnh chụp PowerShell Hình 3.1 và đoạn văn phân tích 3.3 / 3.3.1 sắc nét, căn lề hai bên hoàn hảo, không có lỗi kerning.
+8. **Kiểm toán Nhúng Phông chữ Toàn phần (Full Font Embedding via `pdffonts`):**
+   - **Cấu hình xuất bản Word:** Bật nhúng font TrueType (`doc.EmbedTrueTypeFonts = True`), vô hiệu hóa bỏ qua font hệ thống (`doc.DoNotEmbedSystemFonts = False`), lưu subset phông chữ (`doc.SaveSubsetFonts = True`), và xuất bản theo chuẩn in lưu trữ PDF/A (`UseISO19005_1 = True`, `BitmapMissingFonts = True`).
+   - **Kết quả kiểm toán bằng công cụ tiêu chuẩn `pdffonts`:**
+     ```
+     name                                 type              encoding         emb sub uni object ID
+     ------------------------------------ ----------------- ---------------- --- --- --- ---------
+     ABCDEE+TimesNewRomanPSMT             CID TrueType      Identity-H       yes yes yes      5  0
+     ABCDEE+TimesNewRomanPSMT             TrueType          WinAnsi          yes yes no      10  0
+     ABCDEE+TimesNewRomanPS-BoldMT        TrueType          WinAnsi          yes yes no      12  0
+     ABCDEE+TimesNewRomanPS-BoldMT        CID TrueType      Identity-H       yes yes yes     14  0
+     ABCDEE+TimesNewRomanPS-ItalicMT      TrueType          WinAnsi          yes yes no      19  0
+     ABCDEE+TimesNewRomanPS-ItalicMT      CID TrueType      Identity-H       yes yes yes     21  0
+     ABCDEE+Calibri                       TrueType          WinAnsi          yes yes no      34  0
+     ABCDEE+TimesNewRomanPS-BoldItalicMT  TrueType          WinAnsi          yes yes no      58  0
+     ABCDEE+TimesNewRomanPS-BoldItalicMT  CID TrueType      Identity-H       yes yes yes     60  0
+     ABCDEE+Arial-BoldMT                  TrueType          WinAnsi          yes yes no     297  0
+     ABCDEE+Arial-ItalicMT                TrueType          WinAnsi          yes yes no     299  0
+     ABCDEE+CambriaMath                   CID TrueType      Identity-H       yes yes yes    306  0
+     ABCEEE+ArialMT                       TrueType          WinAnsi          yes yes no     312  0
+     ABCEEE+Consolas                      TrueType          WinAnsi          yes yes no     363  0
+     ABCEEE+CambriaMath                   TrueType          WinAnsi          yes yes no     376  0
+     ```
+   - **Kết luận:** 100% các phông chữ (bao gồm toàn bộ các biến thể Times New Roman thường, đậm, nghiêng, đậm nghiêng và Arial) đều đạt trạng thái nhúng đầy đủ (`emb = yes`). Không tồn tại bất kỳ phông chữ nào có `emb = no`. Văn bản đảm bảo độc lập hoàn toàn với môi trường máy đọc, triệt tiêu vĩnh viễn nguy cơ sai lệch khoảng cách ký tự do thay thế phông cục bộ.
 
 ---
 
