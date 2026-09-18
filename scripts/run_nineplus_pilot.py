@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-Chiến dịch thử nghiệm Nineplus - trình thực thi (runner) thử nghiệm kỹ thuật thống nhất giai đoạn 1
-Thực hiện 3 lần chạy thử nghiệm liên tiếp với Seed 42 với đúng 2 epoch cho mỗi lần:
-  1. SEQUENCE_ONLY (Bộ mã hóa máy biến áp, MEP + MPP + thời gian SSL)
-  2. GRAPH_ONLY (TemporalGraphViewEncoding, rel + nút + thời gian SSL)
-  3. MULTI_VIEW_ALIGNED_VICREG (Trình tự chung + Đồ thị + VICReg + Gated Fusion)
+Chiến dịch thử nghiệm Nineplus - Bộ thực thi (runner) thử nghiệm kỹ thuật thống nhất giai đoạn 1
+Thực hiện 3 lượt chạy thử nghiệm tuần tự với Seed 42 trong đúng 2 epoch cho mỗi lượt:
+  1. SEQUENCE_ONLY (Transformer Encoder, MEP + MPP + time SSL)
+  2. GRAPH_ONLY (TemporalGraphViewEncoder, rel + node + time SSL)
+  3. MULTI_VIEW_ALIGNED_VICREG (Joint Sequence + Graph + VICReg + Gated Fusion)
 
-Thực thi:
-  - Quyền truy cập ZERO vào phân chia TEST (TEST_OPENED=false, TEST_READ_COUNT=0)
-  - Thực thi CUDA nghiêm ngặt trên NVIDIA GeForce RTX 3050 Ti Laptop GPU
-  - Cài đặt khung xác định (CUBLAS_WORKSPACE_CONFIG=:4096:8)
-  - Ghi nhật ký hiển thị dữ liệu chính xác (phiên, sự kiện, bước tối ưu hóa)
-  - Hợp đồng checkpoint (Lưu Epoch 1 -> Kiểm tra tải an toàn -> Tiếp tục Epoch 2 -> Lưu Epoch 2)
-  - Xác minh kích thước biểu diễn đầu ra (z trong R^128) và khả năng tương thích nối nhãn bộ dò (probe)
+Bắt buộc tuân thủ:
+  - Tuyệt đối ZERO truy cập vào tập TEST split (TEST_OPENED=false, TEST_READ_COUNT=0)
+  - Thực thi CUDA nghiêm ngặt trên GPU NVIDIA GeForce RTX 3050 Ti Laptop GPU
+  - Cấu hình môi trường xác định (CUBLAS_WORKSPACE_CONFIG=:4096:8)
+  - Ghi nhật ký phơi nhiễm dữ liệu chính xác (phiên, sự kiện, các bước tối ưu hóa)
+  - Hợp đồng Checkpoint (Lưu Epoch 1 -> Kiểm tra tải an toàn -> Phục hồi Epoch 2 -> Lưu Epoch 2)
+  - Xác minh kích thước biểu diễn đầu ra (z in R^128) và tính tương thích của phép nối nhãn bộ dò (probe label join)
 """
 
 import os
@@ -387,7 +387,7 @@ def run_pilot_sequence_only(
     assert z_all.dtype == torch.float32, f"Expected float32, got {z_all.dtype}"
     assert not torch.isnan(z_all).any() and not torch.isinf(z_all).any(), "NaN/Inf in representations!"
 
-    # Xác minh tham gia nhãn thăm dò
+    # Xác minh phép nối nhãn của bộ dò (probe label join)
     probe_labels = torch.load(base_dir / "experiments" / "runs" / "data" / "vault" / "hdfs_probe_labels_val.pt", weights_only=False)
     assert val_sids == probe_labels["session_ids"], "Session ID alignment mismatch with probe label vault!"
 
@@ -454,7 +454,7 @@ def run_pilot_graph_only(
     set_all_seeds(seed)
     dev = torch.device(device if torch.cuda.is_available() else "cpu")
 
-    # Tải các sự kiện biểu đồ cụ thể hóa từ bộ đệm
+    # Nạp các sự kiện đồ thị đã hiện thực hóa (materialized graph events) từ cache
     cache_path = base_dir / "datasets" / "cache" / "hdfs_graph_events.pt"
     if not cache_path.exists():
         from scripts.cache_hdfs_graph_events import materialize_and_cache
@@ -510,7 +510,7 @@ def run_pilot_graph_only(
         t_tr_start = time.perf_counter()
         print(f"[{run_id}] Starting Epoch {epoch}/{epochs} ({len(train_windows)} windows, {steps_per_epoch} steps)...")
 
-        # quy trình huấn luyện cửa sổ trong các nhóm tích lũy
+        # Xử lý các cửa sổ huấn luyện theo các nhóm tích lũy gradient (accumulation groups)
         trainer.model.train()
         for g_idx in range(0, len(train_windows), grad_accum):
             group = train_windows[g_idx:g_idx + grad_accum]
@@ -532,7 +532,7 @@ def run_pilot_graph_only(
         tr_time_min = (t_tr_end - t_tr_start) / 60.0
         train_times.append(tr_time_min)
 
-        # Thẻ xác thực
+        # Lượt kiểm định (Validation pass)
         t_val_start = time.perf_counter()
         trainer.model.eval()
         trainer.val_mask_generator.manual_seed(VALIDATION_MASK_SEED)
@@ -573,8 +573,8 @@ def run_pilot_graph_only(
                 assert torch.allclose(p1, p2, atol=0.0), "FATAL: Checkpoint load divergence!"
             print(f"[{run_id}] CHECKPOINT_CONTRACT: Safe load test passed for Epoch 1!")
 
-    # Xác minh hợp đồng đại diện đầu ra
-    # Trích xuất đại diện cho tất cả 7.500 phiên xác thực
+    # Xác minh Output Representation Contract
+    # Trích xuất biểu diễn cho toàn bộ 7.500 phiên validation
     val_seq_pkg = torch.load(base_dir / "experiments" / "runs" / "data" / "hdfs" / "hdfs_ssl_val.pt", weights_only=False)
     val_sids = val_seq_pkg["session_ids"]
     val_reps = []
@@ -650,17 +650,17 @@ def run_pilot_multi_view(
     set_all_seeds(seed)
     dev = torch.device(device if torch.cuda.is_available() else "cpu")
 
-    # Tải các gói trình tự
+    # Nạp các gói dữ liệu chuỗi (sequence packages)
     data_dir = base_dir / "experiments" / "runs" / "data" / "hdfs"
     train_pkg = torch.load(data_dir / "hdfs_ssl_train.pt", weights_only=False)
     val_pkg = torch.load(data_dir / "hdfs_ssl_val.pt", weights_only=False)
     vocab_data = json.loads((data_dir / "hdfs_vocab.json").read_text(encoding="utf-8"))
 
-    # Tải các sự kiện biểu đồ được lưu trong bộ nhớ đệm
+    # Nạp các sự kiện đồ thị đã lưu cache (cached graph events)
     cache_path = base_dir / "datasets" / "cache" / "hdfs_graph_events.pt"
     graph_pkg = torch.load(cache_path, weights_only=False)
 
-    # Nhóm các sự kiện biểu đồ theo ID khối để truy xuất ngay lập tức mỗi phiên
+    # Nhóm các sự kiện đồ thị theo block ID để truy xuất tức thì theo từng phiên
     print(f"[{run_id}] Indexing graph events by session ID...")
     train_block_events = defaultdict(list)
     for ev in graph_pkg["train_events"]:

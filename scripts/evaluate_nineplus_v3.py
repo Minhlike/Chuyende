@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Quy trình đánh giá hạ nguồn (downstream) của Chiến dịch Nineplus V3
+Pipeline đánh giá hạ nguồn (downstream) của Chiến dịch Nineplus V3
 Giao thức: TRAIN_FIT_FULL_FIXED_VALIDATION_EVALUATE
 
-Đặc điểm kỹ thuật có thẩm quyền:
-- Trích xuất đại diện tàu: ALL 35.000 phiên tàu
-- Trích xuất biểu diễn xác thực: ALL 7.500 phiên xác thực
-- Lắp bộ dò (probe): Độc quyền trên các biểu diễn Train (50 epoch, AdamW lr=1e-2, wd=1e-4, batch_size=256)
-- bộ dò (probe) RNG seed: Khóa tới 10007 (tách khỏi seed của mô hình backbone)
-- Đánh giá: 100% phân chia xác thực (7.500 phiên)
-- Xác minh bất biến thành viên:
-    Tàu SHA: 65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc
-    Giá trị SHA: 14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407b0609a
-    Tàu đã đặt hàng SHA: 35396a595ded6ab643c07ce03528da4b91c1d270979b2c52e3e11f0cebcc7e60
-    Đã đặt hàng Val SHA: 4f474991f03aab4856c2666a671bee3fc69d8e893e22e9c2d9ca1269b8bd68ae
-- Kiểm tra tường lửa: TEST_OPENED=false, TEST_READ_COUNT=0
+Quy cách chuẩn mực (Authoritative Specification):
+- Trích xuất biểu diễn Train: TOÀN BỘ 35.000 phiên Train
+- Trích xuất biểu diễn Validation: TOÀN BỘ 7.500 phiên Validation
+- Khớp bộ dò (probe fitting): Độc quyền trên các biểu diễn Train (50 epoch, AdamW lr=1e-2, wd=1e-4, batch_size=256)
+- Seed RNG của probe: Khóa cố định ở 10007 (tách biệt khỏi seed của mô hình backbone)
+- Đánh giá: 100% tập Validation (7.500 phiên)
+- Xác minh các bất biến thành viên (membership invariants):
+    Train SHA: 65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc
+    Val SHA:   14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407b0609a
+    Ordered Train SHA: 35396a595ded6ab643c07ce03528da4b91c1d270979b2c52e3e11f0cebcc7e60
+    Ordered Val SHA:   4f474991f03aab4856c2666a671bee3fc69d8e893e22e9c2d9ca1269b8bd68ae
+- Tường lửa bảo vệ tập Test (Test Firewall): TEST_OPENED=false, TEST_READ_COUNT=0
 """
 
 import os
@@ -56,15 +56,15 @@ MAX_PARAM_SLOTS = 4
 
 def compute_ap_and_roc_auc(scores: np.ndarray, y_true: np.ndarray) -> Tuple[float, float]:
     """
-    Tính toán độ chính xác trung bình (AP) thông qua tích hợp bước
-    và ROC-AUC thông qua Mann-Whitney U/tổng xếp hạng.
+    Tính toán Average Precision (AP) qua tích phân bậc thang
+    và ROC-AUC qua kiểm định Mann-Whitney U / tổng hạng (rank sum).
     """
     n_pos = int(np.sum(y_true == 1))
     n_neg = int(np.sum(y_true == 0))
     if n_pos == 0 or n_neg == 0:
         raise ValueError("Cannot compute AP/ROC-AUC with single-class ground truth.")
 
-    # tính toán AP
+    # Tính toán AP
     order = np.argsort(-scores)
     sorted_labels = y_true[order]
     tp = np.cumsum(sorted_labels == 1)
@@ -97,7 +97,7 @@ class V3Evaluator:
 
     def _verify_invariants(self):
         print("[V3Evaluator] Verifying membership invariants and Test firewall...", flush=True)
-        # 1. Kiểm tra tính bất biến (invariance) của tường lửa
+        # 1. Bất biến tường lửa tập Test (Test Firewall Invariant)
         test_opened = False
         test_read_count = 0
         assert not test_opened, "TEST_FIREWALL_BREACH: test_opened must be False"
@@ -127,7 +127,7 @@ class V3Evaluator:
         
         self.vocab = json.loads((self.data_dir / "hdfs_vocab.json").read_text(encoding="utf-8"))
         
-        # Xác minh số lượng ID phiên và thứ tự
+        # Xác minh số lượng và thứ tự Session ID
         assert len(self.train_ssl["session_ids"]) == 35000, "Train session count must be 35,000"
         assert len(self.val_ssl["session_ids"]) == 7500, "Val session count must be 7,500"
         assert self.train_ssl["session_ids"] == self.vault_train["session_ids"], "Train session IDs mismatch between SSL and Vault"
@@ -146,7 +146,7 @@ class V3Evaluator:
         print("  - Ordered Train Session-ID SHA: PASS (35396a595ded...)")
         print("  - Ordered Val Session-ID SHA:   PASS (4f474991f03a...)")
 
-        # Bộ đệm đồ thị tải lười biếng khi cần
+        # Nạp chậm (lazy load) cache đồ thị khi cần thiết
         self.graph_cache = None
         self.train_block_events = None
         self.val_block_events = None
@@ -283,12 +283,12 @@ class V3Evaluator:
         val_rep: torch.Tensor
     ) -> Dict[str, Any]:
         """
-        Chỉ phù hợp với bộ dò (probe) tuyến tính trên các biểu diễn Train,
-        sau đó đánh giá trên tất cả 7.500 biểu diễn Xác thực.
-        RNG được cố định nghiêm ngặt thành PROBE_FIXED_SEED = 10007.
+        Khớp bộ dò (probe) tuyến tính độc quyền trên biểu diễn tập Train,
+        sau đó đánh giá trên toàn bộ 7.500 biểu diễn tập Validation.
+        RNG được cố định nghiêm ngặt theo PROBE_FIXED_SEED = 10007.
         """
         print(f"[V3Evaluator] Fitting linear probe (Seed: {PROBE_FIXED_SEED}, 50 epochs, batch=256)...", flush=True)
-        # Khóa bộ dò (probe) RNG
+        # Khóa RNG của probe
         torch.manual_seed(PROBE_FIXED_SEED)
         np.random.seed(PROBE_FIXED_SEED)
         random.seed(PROBE_FIXED_SEED)
@@ -325,7 +325,7 @@ class V3Evaluator:
                 optimizer.step()
                 optimizer_steps += 1
 
-        # Đánh giá dựa trên tỷ lệ xác thực 100%
+        # Đánh giá trên 100% tập Validation
         probe.eval()
         with torch.no_grad():
             val_logits = probe(z_va).squeeze(-1)

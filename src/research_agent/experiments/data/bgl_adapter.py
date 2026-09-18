@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 """
-Công cụ vật chất hóa và bộ điều hợp dữ liệu thô BGL thực (Canonicalizer mẫu dựa trên quy tắc v1)
+Bộ điều hợp dữ liệu thô BGL thực tế và Engine hiện thực hóa dữ liệu (Real BGL Raw Data Adapter & Materialization Engine - Rule-Based Template Canonicalizer v1)
 Thực thi:
-  1. Gói tiền huấn luyện (pretraining) giai đoạn A1 SSL không có nhãn:
-     - bgl_ssl_train.pt và bgl_ssl_val.pt chứa các nhãn hạ nguồn (downstream) ZERO (được bảo vệ bởi LabelLeakageError).
-     - Nhãn cảnh báo hạ nguồn (downstream) được lưu trữ nghiêm ngặt trong kho thăm dò chỉ dành cho đánh giá (thử nghiệm/lần chạy/dữ liệu/vault/).
-  2. Giao thức lối tắt và bối cảnh nút BGL:
-     - Nhóm tính năng rõ ràng: BGL_NODE_CONTEXT (rack, midplane)
-     - Các biến thể điều khiển: BGL_FULL_CONTEXT vs BGL_WITHOUT_NODE_CONTEXT
-  3. Biểu diễn khe đa tham số:
-     - Đã sửa lỗi các khe tham số (parameter slot) cho mỗi sự kiện (max_param_slots = 4).
-     - Thứ tự ưu tiên loại xác định.
-  4. Đối chiếu toán kế toán:
-     - raw_total_record_count: 4.747.963
-     - pretest_scanned_record_count: 4.318.480
-     - pretest_valid_record_count: 4.284.010
-     - pretest_malformed_count: 34.470
+  1. Gói tiền huấn luyện (pretraining) Giai đoạn A1 SSL không có nhãn:
+     - bgl_ssl_train.pt và bgl_ssl_val.pt chứa ZERO nhãn downstream (được bảo vệ bởi LabelLeakageError).
+     - Nhãn cảnh báo downstream được lưu trữ nghiêm ngặt trong kho lưu trữ nhãn bộ dò chỉ phục vụ đánh giá (experiments/runs/data/vault/).
+  2. Giao thức bối cảnh nút và đường tắt BGL (BGL Node Context & Shortcut Protocol):
+     - Nhóm đặc trưng tường minh: BGL_NODE_CONTEXT (rack, midplane)
+     - Các biến thể đối chứng: BGL_FULL_CONTEXT vs BGL_WITHOUT_NODE_CONTEXT
+  3. Biểu diễn khe đa tham số (Multi-Parameter Slot Representation):
+     - Số khe tham số cố định trên mỗi sự kiện (max_param_slots = 4).
+     - Thứ tự ưu tiên theo kiểu tiền định.
+  4. Đối chiếu số liệu toán học chặt chẽ:
+     - raw_total_record_count: 4,747,963
+     - pretest_scanned_record_count: 4,318,480
+     - pretest_valid_record_count: 4,284,010
+     - pretest_malformed_count: 34,470
 """
 
 import os
@@ -248,7 +248,7 @@ class BGLRealDataAdapter:
                     if p not in self.train_param_to_id:
                         self.train_param_to_id[p] = len(self.train_param_to_id)
 
-        # 2. Tập hợp các chuỗi cửa sổ cho tàu (Lựa chọn xác định phân tầng)
+        # 2. Tổng hợp các chuỗi cửa sổ cho tập Train (chọn lọc tiền định theo phân tầng)
         all_train_windows = []
         for node in sorted(train_events_by_node.keys()):
             evs = train_events_by_node[node]
@@ -294,7 +294,7 @@ class BGLRealDataAdapter:
             train_session_ids.append(session_id)
             train_probe_labels.append(lbl)
 
-        # 3. Tập hợp các chuỗi cửa sổ để xác thực (Lựa chọn xác định phân tầng)
+        # 3. Tổng hợp các chuỗi cửa sổ cho Validation (chọn lọc tiền định theo phân tầng)
         all_val_windows = []
         for node in sorted(val_events_by_node.keys()):
             evs = val_events_by_node[node]
@@ -344,7 +344,7 @@ class BGLRealDataAdapter:
             val_session_ids.append(session_id)
             val_probe_labels.append(lbl)
 
-        # Bộ căng SSL không có nhãn gói
+        # Đóng gói các tensor SSL không nhãn (Package Label-Free SSL Tensors)
         bgl_ssl_train = {
             "dataset_classification": "REAL_TRAINING_MATERIALIZED",
             "sequence_source": "REAL_BGL",
@@ -368,7 +368,7 @@ class BGLRealDataAdapter:
             "session_ids": val_session_ids
         }
 
-        # Thực thi bảo vệ độ tinh khiết không có nhãn
+        # Thực thi bảo vệ tính thuần khiết không nhãn (Enforce Label-Free Purity Guard)
         enforce_ssl_package_label_free(bgl_ssl_train)
         enforce_ssl_package_label_free(bgl_ssl_val)
 

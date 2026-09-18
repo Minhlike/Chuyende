@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-GPU và smoke test trong thời gian chạy
-Xác minh thời gian chạy PyTorch CUDA, Hình học PyTorch và các hoạt động tensor CPU/GPU nhỏ
-hoàn toàn chống lại các experiments/môi trường/ENVIRONMENT-LOCK.json.
-KHÔNG CÓ MODEL TRAINING, KHÔNG BENCHMARKS, KHÔNG DATASET ACCESS.
-STRICT PASS/FAIL GATING: Thoát với mã khác 0 nếu kiểm tra ANY không thành công.
+GPU and Runtime Smoke Test
+Xác minh runtime PyTorch CUDA, PyTorch Geometric và các thao tác tensor CPU/GPU quy mô nhỏ
+đối chiếu nghiêm ngặt với experiments/environment/ENVIRONMENT-LOCK.json.
+KHÔNG HUẤN LUYỆN MÔ HÌNH, KHÔNG BENCHMARK, KHÔNG TRUY CẬP TẬP DỮ LIỆU.
+CHỐT CHẶN PASS/FAIL NGHIÊM NGẶT: Thoát với mã lỗi khác 0 nếu BẤT KỲ kiểm tra nào thất bại.
 """
 
 import os

@@ -32,7 +32,7 @@ class PositionalEncoding(nn.Module):
 
 class SequenceViewExtractor(nn.Module):
     """
-    Trục máy biến áp tự giám sát với 3 đầu SSL rõ ràng (L_MEP, L_MPP, L_time).
+    Backbone Transformer tự giám sát với 3 head SSL tường minh (L_MEP, L_MPP, L_time).
     """
     def __init__(
         self,

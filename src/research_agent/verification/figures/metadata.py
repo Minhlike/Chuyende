@@ -1,5 +1,5 @@
 """
-Hình Trình quản lý siêu dữ liệu & xuất xứ (Nhắc 6 Phần 60)
+Trình quản lý siêu dữ liệu đồ thị & nguồn gốc dữ liệu (Figure Metadata & Provenance Manager - Prompt 6 Section 60)
 """
 
 import json
@@ -10,7 +10,7 @@ from research_agent.schemas.verification import FigureSpecification
 
 class FigureMetadataManager:
     """
-    Tạo và kiểm tra các tệp siêu dữ liệu mà máy có thể đọc được đồng hành với các số liệu khoa học.
+    Khởi tạo và kiểm toán các tệp siêu dữ liệu (metadata) máy đọc được đi kèm các hình vẽ khoa học.
     """
 
     def generate_metadata_file(
@@ -18,7 +18,7 @@ class FigureMetadataManager:
         fig_spec: FigureSpecification,
         metadata_path: Path | str,
     ) -> str:
-        """Ghi hình-metadata.json liên kết hình ảnh với mã và băm dữ liệu."""
+        """Ghi tệp figure-metadata.json liên kết hình vẽ với mã nguồn và mã băm dữ liệu."""
         p = Path(metadata_path)
         p.parent.mkdir(parents=True, exist_ok=True)
 

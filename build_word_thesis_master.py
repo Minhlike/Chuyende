@@ -1,5 +1,5 @@
 """
-Trình chạy gốc dành cho Trình tạo tài liệu Word học thuật bậc thầy với Frozen Chapter Hash Invariant.
+Trình chạy gốc cho trình dựng tài liệu Word học thuật Master với bất biến mã băm chương đóng băng (Frozen Chapter Hash Invariant).
 """
 
 import hashlib

@@ -638,8 +638,8 @@ def test_failure_manifest_written(tmp_path):
 
 def test_resume_exact_three_epoch_trajectory(tmp_path):
     """
-    Xác minh rằng lần chạy 3 epoch được tiếp tục tạo ra sự phân kỳ tham số bằng 0,
-    bỏ qua/phát lại bước 0 và trạng thái dừng sớm (early stopping) giống hệt so với chạy 3 epoch liên tục.
+    Xác minh rằng lần chạy 3 epoch được phục hồi tạo ra phân kỳ tham số bằng 0,
+    tuyệt đối không bị nhảy cóc hoặc phát lại bước tối ưu (zero step skip/replay) và trạng thái dừng sớm (early stopping) giống hệt so với chạy 3 epoch liên tục.
     """
     if not torch.cuda.is_available():
         pytest.skip("CUDA not available")
@@ -651,7 +651,7 @@ def test_resume_exact_three_epoch_trajectory(tmp_path):
     fix_train = [create_synthetic_event(f"A_{i}", f"B_{i}", 1, 0, 1, 100.0 + i) for i in range(1024)]
     fix_val = [create_synthetic_event(f"C_{i}", f"D_{i}", 2, 3, 2, 200.0 + i) for i in range(256)]
     
-    train_windows = chunk_into_windows(fix_train, 256) # 4 cửa sổ -> 1 bước/epoch
+    train_windows = chunk_into_windows(fix_train, 256) # 4 windows -> 1 step/epoch
     val_windows = chunk_into_windows(fix_val, 256)     # 1 cửa sổ
     
     # Lần 1: 3 epoch liên tục
@@ -2152,7 +2152,7 @@ def test_qualification_test_firewall_stays_sealed(tmp_path):
 # ---------------------------------------------------------------------------
 
 def test_cuda_qualification_requires_environment_lock(tmp_path):
-    """Xác minh rằng trình độ CUDA không đóng được nếu thiếu ứng viên khóa môi trường."""
+    """Xác minh rằng kiểm định CUDA áp dụng cơ chế fail-closed nếu thiếu ứng viên khóa môi trường."""
     from scripts.run_stage_a2_deterministic_qualification import run_qualification
     from research_agent.experiments.training.stage_a2_trainer import ExecutionDeviceMismatchError
     if not torch.cuda.is_available():
@@ -2163,7 +2163,7 @@ def test_cuda_qualification_requires_environment_lock(tmp_path):
     assert "Environment lock candidate is mandatory for CUDA qualification" in str(exc.value)
 
 def test_cuda_worker_requires_environment_lock(tmp_path):
-    """Xác minh resume worker CUDA không đóng được nếu khóa môi trường là Không có hoặc bị thiếu."""
+    """Xác minh resume worker CUDA áp dụng cơ chế fail-closed nếu khóa môi trường là None hoặc bị thiếu."""
     from scripts.run_stage_a2_deterministic_qualification import run_worker_resume
     from research_agent.experiments.training.stage_a2_trainer import ExecutionDeviceMismatchError
     if not torch.cuda.is_available():
@@ -2175,7 +2175,7 @@ def test_cuda_worker_requires_environment_lock(tmp_path):
     assert "Environment lock is mandatory for CUDA worker resume" in str(exc.value)
 
 def test_missing_default_colab_lock_fails(tmp_path):
-    """Xác minh rằng trình độ CUDA không đóng được nếu khóa mặc định không tồn tại và không được cung cấp."""
+    """Xác minh rằng kiểm định CUDA áp dụng cơ chế fail-closed nếu khóa mặc định không tồn tại và không được cung cấp."""
     from scripts.run_stage_a2_deterministic_qualification import run_qualification
     from research_agent.experiments.training.stage_a2_trainer import ExecutionDeviceMismatchError
     if not torch.cuda.is_available():
@@ -2298,7 +2298,7 @@ def test_cell10_does_not_glob_latest_qualification():
     assert "[-1]" not in cell10_src
 
 def test_cell10_requires_cell9_runtime_binding():
-    """Xác minh rằng Ô 10 không đóng được nếu các biến định tính của Ô 9 không có trong toàn cầu()."""
+    """Xác minh rằng Cell 10 áp dụng cơ chế fail-closed nếu các biến định tính của Cell 9 không có trong globals()."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell10_src = "".join(nb_data["cells"][10]["source"])

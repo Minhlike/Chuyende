@@ -5,10 +5,10 @@ Xác minh toàn diện về:
   1. Gói tiền huấn luyện (pretraining) giai đoạn A1 SSL không có nhãn:
      - hdfs_ssl_train.pt, hdfs_ssl_val.pt, bgl_ssl_train.pt, bgl_ssl_val.pt chứa 0 nhãn.
      - LabelLeakageError tăng lên nếu nhãn được đưa vào các gói tiền huấn luyện (pretraining).
-  2. Tường lửa kiểm tra hai lần thực sự HDFS:
+  2. Tường lửa Test hai lượt thực sự HDFS (HDFS True Two-Pass Test Firewall):
      - Pass 1: chỉ phân tích cú pháp (dấu thời gian, block_id).
-     - Đạt 2: Số lượng phân tích tính năng kiểm tra = 0, Số lượng trích xuất tham số kiểm tra = 0, Đóng góp từ vựng kiểm tra = 0.
-     - Nhãn kiểm tra tiếp xúc với trainer = 0.
+     - Pass 2: Số lượng phân tích tính năng test = 0, Số lượng trích xuất tham số test = 0, Đóng góp từ vựng test = 0.
+     - Nhãn test tiếp xúc với trainer = 0.
   3. Biểu diễn khe đa tham số:
      - max_param_slots = 4 slot cho mỗi sự kiện, thứ tự ưu tiên.
      - Hơn 2 sự kiện tham số tồn tại trong quá trình hiện thực hóa.
@@ -45,7 +45,7 @@ def test_01_label_leakage_error_and_label_free_ssl_packages():
     else:
         base_dir = Path(r"D:\Research")
 
-    # 1. Kiểm tra bộ bảo vệ rò rỉ nhãn không đóng
+    # 1. Kiểm tra chốt chặn rò rỉ nhãn theo cơ chế fail-closed (Test Fail-Closed Label Leakage Guard)
     with pytest.raises(LabelLeakageError, match="prohibited label fields"):
         enforce_ssl_package_label_free({"sequences": [], "labels": [1, 0, 1]})
 
@@ -55,7 +55,7 @@ def test_01_label_leakage_error_and_label_free_ssl_packages():
     with pytest.raises(LabelLeakageError, match="prohibited label fields"):
         enforce_ssl_package_label_free({"sequences": [], "attack_class": ["ddos"]})
 
-    # 2. Khẳng định các gói SSL được cụ thể hóa thực tế là không có nhãn
+    # 2. Khẳng định các gói SSL thực tế đã hiện thực hóa (Materialized SSL Packages) không chứa nhãn
     hdfs_train = torch.load(base_dir / "experiments" / "runs" / "data" / "hdfs" / "hdfs_ssl_train.pt", weights_only=False)
     hdfs_val = torch.load(base_dir / "experiments" / "runs" / "data" / "hdfs" / "hdfs_ssl_val.pt", weights_only=False)
     bgl_train = torch.load(base_dir / "experiments" / "runs" / "data" / "bgl" / "bgl_ssl_train.pt", weights_only=False)

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-script thực thi để hiện thực hóa các đầu vào Huấn luyện trước giai đoạn không có nhãn A1 SSL thực sự
-for HDFS and BGL with true two-pass firewall, interval-causal partitioning,
-khe cắm đa thông số và ngăn chứa nhãn thăm dò riêng biệt.
+Kịch bản thực thi hiện thực hóa dữ liệu đầu vào tiền huấn luyện Stage A1 SSL không nhãn (Label-Free Stage A1 SSL Pretraining)
+cho HDFS và BGL với tường lửa hai lượt thực sự, phân vùng nhân quả theo khoảng thời gian,
+khe đa tham số và kho lưu trữ nhãn bộ dò (probe label vaults) tách biệt.
 """
 
 import sys

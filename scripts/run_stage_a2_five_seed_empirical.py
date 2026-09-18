@@ -95,7 +95,7 @@ class FrozenSourceMismatchError(RuntimeError):
     pass
 
 class RuntimeTestFirewallGuard:
-    """Quá trình cụ thể hóa trình tạo biểu đồ bao bọc tường lửa thử nghiệm thời gian chạy được kết nối."""
+    """Tường lửa kiểm thử runtime được kết nối bao bọc quá trình hiện thực hóa dữ liệu (materialization) của graph builder."""
     def __init__(
         self,
         split_authority: Optional[HDFSSplitAuthority] = None,
@@ -175,7 +175,7 @@ def enforce_framework_determinism() -> None:
 
 
 def get_nvidia_driver_version() -> str:
-    """Truy vấn phiên bản trình điều khiển NVIDIA của máy chủ hiện tại qua nvidia-smi không đóng được."""
+    """Truy vấn phiên bản driver NVIDIA của máy chủ hiện tại theo cơ chế fail-closed thông qua nvidia-smi."""
     try:
         out = subprocess.check_output([
             "nvidia-smi", "--query-gpu=driver_version", "--format=csv,noheader"

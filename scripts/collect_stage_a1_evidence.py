@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Kiểm tra và thu thập bằng chứng thực nghiệm có thể tái tạo để chấp nhận Giai đoạn A1.
-Tạo nhật ký mà máy có thể đọc được và kho lưu trữ SHA-256 trong các thử nghiệm/bằng chứng/giai đoạn-a1/.
+Kiểm toán và thu thập bằng chứng thực nghiệm có thể tái lập để nghiệm thu Giai đoạn A1.
+Tạo nhật ký máy đọc được (machine-readable logs) và bảng kê SHA-256 dưới experiments/evidence/stage-a1/.
 """
 
 import os
@@ -33,7 +33,7 @@ def collect_evidence():
     win_res = run_cmd(f"{sys.executable} -m pytest tests/ --ignore=tests/test_stage_a1_deterministic_resume.py", cwd=base_dir)
     (evidence_dir / "pytest_windows.log").write_text(win_res["stdout"] + "\n" + win_res["stderr"], encoding="utf-8")
     
-    # Phân tích đã được thông qua/bỏ qua
+    # Phân tích kết quả passed/skipped
     out_lines = win_res["stdout"].splitlines()
     summary_line = [l for l in out_lines if "passed" in l or "failed" in l or "error" in l]
     last_summary = summary_line[-1] if summary_line else "UNKNOWN"
@@ -80,7 +80,7 @@ def collect_evidence():
     inv_res = run_cmd(f"{sys.executable} scripts/verify_invariants.py", cwd=base_dir)
     (evidence_dir / "data_firewall.log").write_text(inv_res["stdout"] + "\n" + inv_res["stderr"], encoding="utf-8")
 
-    # Kiểm tra 10 bảng kê khai để kiểm tra tường lửa
+    # Kiểm tra 10 manifest cho tường lửa test (test firewall)
     manifest_reports = []
     datasets = ["HDFS", "BGL"]
     seeds = [42, 1337, 2024, 7, 999]

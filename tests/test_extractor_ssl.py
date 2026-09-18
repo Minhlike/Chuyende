@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Trình tự SSL và các thử nghiệm mục tiêu đảm bảo quyền riêng tư
+Kiểm thử SSL cho góc nhìn chuỗi (Sequence View) và các mục tiêu bảo vệ quyền riêng tư
 Xác minh:
-  1. Các đầu SSL của góc nhìn (view) trình tự (L_MEP, L_MPP, L_time) tính toán mất mát (loss) hữu hạn trên các miền mặt nạ rõ ràng.
-  2. L_time hoạt động trên các cặp ngữ cảnh liền kề [h_i ; Nhật ký nhắm mục tiêu h_i+1](1 + delta_t) với Smooth L1.
-  3. gradient truyền đến cả 3 đầu trình tự và đường trục của Máy biến áp.
-  4. Không có tham số phụ trợ mồ côi.
+  1. Các đầu SSL của Sequence View (L_MEP, L_MPP, L_time) tính toán tổn thất hữu hạn (finite losses) trên các miền mặt nạ (mask domains) rõ ràng.
+  2. L_time hoạt động trên các cặp ngữ cảnh liền kề [h_i ; h_i+1] nhắm tới mục tiêu log(1 + delta_t) với Smooth L1 loss.
+  3. Gradient lan truyền đầy đủ đến cả 3 đầu SSL và Transformer backbone.
+  4. Không có tham số phụ trợ mồ côi (zero orphan auxiliary parameters).
 """
 
 import pytest
@@ -51,7 +51,7 @@ def test_01_sequence_ssl_three_heads_finite_and_gradients():
 
     total_loss.backward()
 
-    # Xác minh gradient trên tất cả các tham số
+    # Xác minh gradient lan truyền trên tất cả các tham số
     for name, p in extractor.mep_head.named_parameters():
         assert p.grad is not None and torch.isfinite(p.grad).all(), f"mep_head {name} missing grad"
     for name, p in extractor.mpp_head.named_parameters():
@@ -64,7 +64,7 @@ def test_01_sequence_ssl_three_heads_finite_and_gradients():
 def test_02_zero_orphan_auxiliary_parameters():
     extractor = SequenceViewExtractor(event_vocab_size=30, param_vocab_size=10, d_model=16, projection_dim=16)
     
-    # Kiểm tra tất cả các tham số được đặt tên đã được đăng ký trong mô-đun con
+    # Kiểm tra tất cả tham số có tên đều được đăng ký trong các submodule
     all_param_names = [n for n, _ in extractor.named_parameters()]
     assert any("mep_head" in n for n in all_param_names)
     assert any("mpp_head" in n for n in all_param_names)

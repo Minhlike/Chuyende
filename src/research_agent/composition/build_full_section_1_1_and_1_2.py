@@ -36,7 +36,7 @@ def set_cell_border(cell):
 
 
 def omath(text: str):
-    """Tạo phần tử OMML gốc nội tuyến."""
+    """Tạo phần tử OMML nội tuyến (inline native OMML element)."""
     escaped = escape(text)
     xml_str = (
         f'<m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math">'
@@ -47,7 +47,7 @@ def omath(text: str):
 
 
 def omath_para(text: str):
-    """Tạo phần tử đoạn OMML hiển thị gốc."""
+    """Tạo phần tử đoạn OMML hiển thị (display native OMML paragraph element)."""
     escaped = escape(text)
     xml_str = (
         f'<m:oMathPara xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math">'
@@ -63,7 +63,7 @@ def build_full_sections(target_file: str = r"D:\Research\Chuyên đề chuyên s
     target_path = Path(target_file)
     backup_path = target_path.parent / (target_path.stem + ".backup.docx")
 
-    # Sử dụng bản sao lưu làm cơ sở nguyên sơ
+    # Sử dụng bản sao lưu làm tài liệu gốc ban đầu
     if not backup_path.exists():
         shutil.copyfile(target_path, backup_path)
     print(f"[1/4] Base backup verified at: {backup_path}")
@@ -442,7 +442,7 @@ def build_full_sections(target_file: str = r"D:\Research\Chuyên đề chuyên s
     except PermissionError:
         print(f"[NOTE] Active file {target_path} is open in Word. Updated document is saved at {updated_file}.")
 
-    # Kiểm tra xác thực
+    # Kiểm định tài liệu (Validation check)
     reloaded = docx.Document(updated_file)
     omml_in_reloaded = 0
     for p in reloaded.paragraphs:

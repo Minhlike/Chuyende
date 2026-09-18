@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Công cụ vật chất hóa một lần cho các Sự kiện đồ thị HDFS.
-Truyền phát HDFS_1.tar.gz một lần và tách các sự kiện thành các phần tách TRAIN và VAL
-bị ràng buộc chặt chẽ với quyền phân chia SPL-HDFS-001.
-Bộ nhớ đệm dẫn đến datasets/bộ đệm/hdfs_graph_events.pt.
+Trình hiện thực hóa dữ liệu (materializer) một lần đọc cho các sự kiện đồ thị HDFS.
+Đọc luồng HDFS_1.tar.gz một lần và phân tách các sự kiện thành hai tập TRAIN và VAL
+ràng buộc nghiêm ngặt theo thẩm quyền phân chia SPL-HDFS-001.
+Lưu kết quả vào datasets/cache/hdfs_graph_events.pt.
 """
 
 import time
@@ -61,7 +61,7 @@ def materialize_and_cache(base_dir: Path):
             if blk_id is None:
                 continue
 
-            # Kiểm tra tường lửa kiểm tra nghiêm ngặt: Bộ kiểm tra phải được đọc hoặc phân tích cú pháp NEVER để tìm các tính năng
+            # Kiểm tra tường lửa bảo vệ tập Test nghiêm ngặt: Tập Test TUYỆT ĐỐI KHÔNG (NEVER) được đọc hoặc trích xuất đặc trưng
             if blk_id in test_block_ids:
                 continue
 
@@ -78,7 +78,7 @@ def materialize_and_cache(base_dir: Path):
     print(f"[MATERIALIZATION] Raw train events extracted: {len(train_events)}")
     print(f"[MATERIALIZATION] Raw val events extracted: {len(val_events)}")
 
-    # Sắp xếp từng phần theo thứ tự thời gian
+    # Sắp xếp từng tập theo thứ tự thời gian
     train_events.sort(key=lambda e: (e["event_timestamp_utc_exact"], e["raw_line_index"]))
     val_events.sort(key=lambda e: (e["event_timestamp_utc_exact"], e["raw_line_index"]))
 
@@ -86,14 +86,14 @@ def materialize_and_cache(base_dir: Path):
     assert len(val_events) == 119531, f"Expected 119531 val events, got {len(val_events)}"
     print("[VERIFICATION] Event count conservation verified exactly (586,577 Train, 119,531 Val)!")
 
-    # Định dạng sự kiện cho trình trích xuất biểu đồ (xây dựng bản đồ thực thể và vectơ thuộc tính)
+    # Định dạng sự kiện cho các bộ trích xuất đồ thị (xây dựng bảng ánh xạ thực thể và vector thuộc tính)
     print("[PROCESSING] Formatting event node attributes and edge vectors...")
     entity_to_id = {"<UNK>": 0}
     for ev in train_events:
         for n in [ev["source_node"], ev["dest_node"]]:
             if n not in entity_to_id:
                 entity_to_id[n] = len(entity_to_id)
-    # Thực thể Val (ánh xạ quy nạp)
+    # Các thực thể tập Validation (ánh xạ quy nạp - inductive mapping)
     for ev in val_events:
         for n in [ev["source_node"], ev["dest_node"]]:
             if n not in entity_to_id:
@@ -107,18 +107,18 @@ def materialize_and_cache(base_dir: Path):
         r_id = ev["relation_id"]  # 1..8
         ts = float(ev["event_timestamp_utc_exact"])
         
-        # Thuộc tính nút 16 độ mờ (loại một điểm nóng trong 4 độ mờ đầu tiên)
+        # Thuộc tính nút 16 chiều (kiểu one-hot ở 4 chiều đầu)
         s_attr = [0.0] * 16
         s_attr[ev["source_type"]] = 1.0
         d_attr = [0.0] * 16
         d_attr[ev["dest_type"]] = 1.0
         
-        # Tính năng 16 cạnh mờ (quan hệ một điểm nóng trong 8 mờ đầu tiên, kích thước trong mờ 8)
+        # Đặc trưng cạnh 16 chiều (quan hệ one-hot ở 8 chiều đầu, kích thước ở chiều 8)
         e_feat = [0.0] * 16
         e_feat[r_id - 1] = 1.0
         e_feat[8] = float(ev.get("size_bytes", 0.0) or 0.0) / 1e6
 
-        # Giữ các trường gốc cho TemporalGraphViewEncode + thêm các trường được định dạng
+        # Giữ nguyên các trường gốc cho TemporalGraphViewEncoder + thêm các trường đã định dạng
         formatted = dict(ev)
         formatted.update({
             "timestamp": ts,

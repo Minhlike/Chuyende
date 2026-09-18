@@ -217,8 +217,8 @@ def scan_and_audit():
 
     # ---------------------------------------------------------------
     # FAIL-BEFORE-MUTATION (AUTHORITATIVE_OUTPUT_MUTATION_BEFORE_PASS=0)
-    # Tất cả tính toán được hoàn thành trong bộ nhớ. Khẳng định PASS FIRST.
-    # Chỉ viết SCIENTIFIC-CLAIM-DETECTION.json sau khi xác nhận PASS.
+    # Toàn bộ tính toán hoàn tất trong bộ nhớ. Khẳng định PASS TRƯỚC TIÊN (Assert PASS FIRST).
+    # Chỉ ghi SCIENTIFIC-CLAIM-DETECTION.json sau khi đã xác nhận PASS.
     # ---------------------------------------------------------------
     assert verification_status == 'PASS', (
         f'[FAIL-BEFORE-MUTATION] Scanner reconciliation FAILED: '
@@ -228,14 +228,14 @@ def scan_and_audit():
         f'Authoritative output files are NOT modified.'
     )
 
-    # Ghi tệp nguyên tử qua tệp tạm thời (chỉ đạt trên PASS)
+    # Ghi tệp nguyên tử (atomic file write) qua tệp tạm thời (chỉ thực hiện khi PASS)
     tmp_path = detection_path.with_suffix('.tmp')
     with open(tmp_path, 'w', encoding='utf-8') as df:
         json.dump(detection_result, df, indent=2, ensure_ascii=False)
     tmp_path.replace(detection_path)
 
-    # Mục 7: Ngôn ngữ báo cáo - chỉ RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE.
-    # NOT có báo cáo "tất cả các tuyên bố khoa học đều trung thực" dựa trên phạm vi phủ sóng của máy quét.
+    # Mục 7: Ngôn ngữ báo cáo — chỉ RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE.
+    # KHÔNG ĐƯỢC báo cáo "tất cả các tuyên bố khoa học đều trung thực" dựa trên độ phủ của bộ quét.
     print('\n==================================================')
     print('RULE-BASED SCIENTIFIC CLAIM COVERAGE SUMMARY')
     print('==================================================')

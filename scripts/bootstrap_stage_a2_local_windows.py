@@ -1,9 +1,9 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
-Giai đoạn A2 Windows cục bộ CUDA Trình tạo khóa phần cứng và khởi động môi trường (Giao thức V1.5 / Bản sửa đổi 13).
-Thực hiện khám phá phần cứng, xác minh điều kiện tiên quyết không đóng được, xác thực dữ liệu,
-phép đo xác định do máy thu thập và tạo khóa môi trường thực thi Windows cục bộ.
-Các bước tối ưu hóa ZERO HDFS.
+Stage A2 Local Windows CUDA Environment Bootstrap and Hardware Lock Generator (Protocol V1.5 / Amendment 13).
+Thực hiện nhận diện phần cứng, xác minh điều kiện tiên quyết nghiêm ngặt (fail-closed prerequisite verification),
+kiểm định tập dữ liệu (dataset Validation), đo lường tính tiền định thu thập tự động từ máy và tạo khóa môi trường thực thi Windows cục bộ.
+Tuyệt đối 0 bước tối ưu hóa HDFS (ZERO HDFS optimizer steps).
 """
 
 import os

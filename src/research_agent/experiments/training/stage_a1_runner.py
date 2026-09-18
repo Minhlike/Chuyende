@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-trình thực thi (runner) huấn luyện tự giám sát (self-supervised) giai đoạn A1 của Canonical
-Thực hiện tiền huấn luyện (pretraining) đa tác vụ chỉ theo trình tự trên bộ dữ liệu HDFS và BGL trên 5 seed chính tắc:
-  - Kiến trúc: Bộ mã hóa máy biến áp 4 lớp (d_model=128, H=4, d_ffn=512, dropout=0,10, max_seq_len=128)
+Trình thực thi huấn luyện tự giám sát chuẩn Stage A1 (Canonical Stage A1 Self-Supervised Training Runner)
+Thực thi tiền huấn luyện đa nhiệm thuần chuỗi trên các tập dữ liệu HDFS và BGL qua 5 seed chuẩn:
+  - Kiến trúc: Transformer Encoder 4 lớp (d_model=128, H=4, d_ffn=512, dropout=0.10, max_seq_len=128)
   - Biểu diễn tham số: BOUNDED_MULTI_SLOT_TYPED_PARAMETER_SET_K4
-  - Mục tiêu: L_seq = 1,0 * L_MEP + 1,0 * L_MPP + 0,1 * L_time
-  - Tối ưu hóa: AdamW (lr=5e-4, wd=0,01), Khởi động tuyến tính + Phân rã Cosine, micro_batch=16, grad_accum=4 (lô hiệu quả=64)
-  - Xác thực: Một lần cho mỗi epoch đã hoàn thành, kiên nhẫn=3 epoch, lựa chọn checkpoint ở mức Xác thực tối thiểu L_seq
-  - Tường lửa kiểm tra tuyệt đối: TestSetSealedError được thực thi, không có quyền truy cập kiểm tra.
+  - Hàm mục tiêu: L_seq = 1.0 * L_MEP + 1.0 * L_MPP + 0.1 * L_time
+  - Tối ưu hóa: AdamW (lr=5e-4, wd=0.01), Linear Warmup + Cosine Decay, micro_batch=16, grad_accum=4 (batch size hiệu dụng = 64)
+  - Validation: Thực hiện một lần cho mỗi epoch hoàn thành, patience=3 epochs, chọn checkpoint theo giá trị Validation L_seq nhỏ nhất
+  - Tường lửa Test tuyệt đối (Absolute Test Firewall): Thực thi TestSetSealedError, tuyệt đối không truy cập dữ liệu test.
 """
 
 import os

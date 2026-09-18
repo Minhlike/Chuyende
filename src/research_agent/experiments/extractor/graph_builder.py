@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 """
-Công cụ tạo & tạo biểu đồ thực thể sự kiện nhân quả Canonical HDFS (Hợp đồng V1.2).
-Bị ràng buộc chặt chẽ với Cơ quan phân chia kinh điển SPL-HDFS-001 và Ngữ nghĩa tạm thời chính xác đến một phần nghìn giây:
-  - Nguồn duy nhất của Cơ quan phân chia sự thật: HDFSplitAuthority
+Trình xây dựng đồ thị thực thể - sự kiện nhân quả chuẩn HDFS và Engine hiện thực hóa dữ liệu (Contract V1.2).
+Ràng buộc chặt chẽ với SPL-HDFS-001 Canonical Split Authority và ngữ nghĩa thời gian chính xác tới mili giây:
+  - Nguồn chân lý duy nhất cho Split Authority: HDFSSplitAuthority
   - Bảo toàn mili giây: parse_hdfs_line_timestamp (UTC epoch + ms / 1000.0)
-  - Khóa sắp xếp chuẩn: (event_timestamp_utc_exact, raw_line_index)
+  - Khóa sắp xếp chuẩn (Canonical Sort Key): (event_timestamp_utc_exact, raw_line_index)
   - Các thực thể có thể trích xuất: DATA_BLOCK (0), STORAGE_NODE (1), MANAGEMENT_SYSTEM (2), EXECUTION_THREAD (3)
-  - Mối quan hệ có căn cứ:
+  - Các quan hệ có căn cứ thực nghiệm (Grounded Relations):
       1. RECEIVES_BLOCK (dfs.DataNode$DataXceiver)
-      2. TRANSMITS_BLOCK (dfs.DataNode$Phản hồi gói)
+      2. TRANSMITS_BLOCK (dfs.DataNode$PacketResponder)
       3. ALLOCATES_BLOCK (dfs.FSNamesystem)
-      4. MONITORS_BLOCK (dfs.DataNode$Phản hồi gói)
+      4. MONITORS_BLOCK (dfs.DataNode$PacketResponder)
       5. SERVES_BLOCK (dfs.DataNode$DataXceiver)
       6. UPDATES_BLOCK_MAP (dfs.FSNamesystem)
       7. COMMANDS_REPLICATION (dfs.FSNamesystem)
       8. DELETES_BLOCK (dfs.FSNamesystem / dfs.FSDataset)
-  - Mục tiêu nút cố định: x_v_fixed_priv ở R^6 (loại 4 điểm nóng một điểm + 2 độ mờ log1p nhân quả)
-  - Tường lửa kiểm tra nghiêm ngặt: TestSetSealedError xuất hiện trên bất kỳ quá trình cụ thể hóa hoặc trích xuất tính năng thử nghiệm nào.
+  - Mục tiêu nút cố định: x_v_fixed_priv in R^6 (4-dim one-hot type + 2-dim log1p causal in/out degrees)
+  - Tường lửa kiểm thử nghiêm ngặt (Strict Test Firewall): TestSetSealedError kích hoạt khi có bất kỳ thao tác hiện thực hóa (materialization) hoặc trích xuất đặc trưng nào trên tập Test.
   - Định luật bảo toàn: eligible_split_records = materialized_graph_records + explicitly_rejected_records
 """
 

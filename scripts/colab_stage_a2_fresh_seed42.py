@@ -43,7 +43,7 @@ def compute_sha256_streaming(path: Path, chunk_size: int = 8 * 1024 * 1024) -> s
     return hasher.hexdigest()
 
 def get_nvidia_driver_version() -> str:
-    """Truy vấn phiên bản trình điều khiển NVIDIA không đóng được thông qua nvidia-smi."""
+    """Truy vấn phiên bản driver NVIDIA theo cơ chế fail-closed thông qua nvidia-smi."""
     try:
         out = subprocess.check_output([
             "nvidia-smi", "--query-gpu=driver_version", "--format=csv,noheader"

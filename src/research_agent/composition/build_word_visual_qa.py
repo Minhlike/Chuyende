@@ -1,5 +1,5 @@
 """
-Trình xây dựng lại tài liệu luận văn học thuật bậc thầy với các số liệu gốc, bảng gốc, chú thích gốc và tài liệu tham khảo chéo trong Word 2016.
+Trình tái tạo tài liệu luận văn học thuật Master với các hình vẽ native, bảng biểu native, chú thích và tham chiếu chéo trong Word 2016.
 """
 
 import os
@@ -2051,7 +2051,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "tại Chương 3 (BOUNDARY-06: Privacy Claim Requires Attack-Based Empirical Evaluation)."
     ])
 
-    # 2.2.2.1 — Đối thủ dữ liệu/thực thể
+    # 2.2.2.1 — Đối nghịch dữ liệu/thực thể (Data/entity adversary)
     add_h4("Data/Entity Adversary")
     add_p([
         "Lớp đe dọa thứ nhất là đối nghịch dữ liệu/thực thể (Data/Entity Adversary). Đối nghịch này "

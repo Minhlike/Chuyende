@@ -1,5 +1,5 @@
 """
-Công cụ vẽ và tạo hình khoa học xác định (Nhắc 6 phần 57..69, RC-09)
+Bộ tạo đồ thị khoa học tất định & Trình vẽ biểu đồ (Prompt 6 Sections 57..69, RC-09)
 """
 
 import hashlib
@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 import matplotlib
-matplotlib.use("Agg")  # Phần phụ trợ không tương tác để xác minh khoa học không cần đầu
+matplotlib.use("Agg")  # Backend phi tương tác phục vụ xác minh khoa học không cần giao diện đồ họa (headless)
 import matplotlib.pyplot as plt
 import pandas as pd
 from research_agent.core.enums import FigureType
@@ -17,8 +17,8 @@ from research_agent.schemas.verification import FigureSpecification
 
 class FigureBuilder:
     """
-    Hiển thị các số liệu khoa học cấp xuất bản và viết số liệu đồng hành-data.csv.
-    Thực thi rằng mọi điểm cốt truyện đều bắt nguồn từ các mảng có cấu trúc thô có SHA-256 được ghi lại.
+    Kết xuất các đồ thị khoa học chuẩn xuất bản và ghi tệp dữ liệu đi kèm figure-data.csv.
+    Bắt buộc mọi điểm dữ liệu trên đồ thị (plot point) phải bắt nguồn từ các mảng cấu trúc thô với mã băm SHA-256 được ghi nhận.
     """
 
     def __init__(self, output_dir: Path | str = "artifacts/figures"):
@@ -31,7 +31,7 @@ class FigureBuilder:
         figure_id: str,
         df_companion: pd.DataFrame,
     ) -> Tuple[str, str, str, str]:
-        """Lưu biểu đồ SVG và đồng hành CSV, trả về các đường dẫn tương đối và hàm băm SHA-256."""
+        """Lưu biểu đồ SVG cùng tệp CSV đồng hành, trả về các đường dẫn tương đối và mã băm SHA-256."""
         img_filename = f"{figure_id.lower()}.png"
         csv_filename = f"{figure_id.lower()}-data.csv"
 
@@ -43,14 +43,14 @@ class FigureBuilder:
 
         df_companion.to_csv(csv_path, index=False)
 
-        # Hình ảnh băm
+        # Tính mã băm SHA-256 cho hình ảnh
         hasher_img = hashlib.sha256()
         with open(img_path, "rb") as f:
             while chunk := f.read(65536):
                 hasher_img.update(chunk)
         img_sha = hasher_img.hexdigest()
 
-        # Băm đồng hành CSV
+        # Tính mã băm SHA-256 cho tệp CSV đồng hành
         hasher_csv = hashlib.sha256()
         with open(csv_path, "rb") as f:
             while chunk := f.read(65536):
@@ -69,7 +69,7 @@ class FigureBuilder:
     ) -> FigureSpecification:
         """
         Vẽ các đường cong Precision-Recall cho nhiều phương pháp.
-        curves_data: danh sách {tên, thu hồi, chính xác, pr_auc}
+        curves_data: danh sách các dictionary {name, recalls, precisions, pr_auc}
         """
         fig, ax = plt.subplots(figsize=(6.5, 4.5))
         companion_rows = []
@@ -122,7 +122,7 @@ class FigureBuilder:
         y_label: str = "F1 Score (%)",
         script_path: str = "src/research_agent/verification/figures/builder.py",
     ) -> FigureSpecification:
-        """Vẽ biểu đồ thanh với khoảng tin cậy/thanh lỗi rõ ràng 95%."""
+        """Vẽ biểu đồ cột kèm các khoảng tin cậy 95% (confidence intervals) / thanh sai số (error bars) tường minh."""
         fig, ax = plt.subplots(figsize=(7, 4.5))
 
         yerr_lower = [m - l for m, l in zip(means, ci_lows)]
@@ -168,7 +168,7 @@ class FigureBuilder:
         metric_name: str,
         script_path: str = "src/research_agent/verification/figures/builder.py",
     ) -> FigureSpecification:
-        """Vẽ sơ đồ đường cong độ nhạy thử nghiệm loại trừ (ablation) / siêu tham số."""
+        """Vẽ đường cong độ nhạy trong thử nghiệm loại trừ (ablation) / siêu tham số."""
         fig, ax = plt.subplots(figsize=(6.5, 4.5))
         ax.plot(param_values, metric_values, marker="o", lw=2, color="#d62728")
 

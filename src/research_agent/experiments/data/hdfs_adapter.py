@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 """
-Công cụ vật chất hóa và bộ điều hợp dữ liệu thô HDFS thực (Canonicalizer mẫu dựa trên quy tắc v1)
+Bộ điều hợp dữ liệu thô HDFS thực tế và Engine hiện thực hóa dữ liệu (Real HDFS Raw Data Adapter & Materialization Engine - Rule-Based Template Canonicalizer v1)
 Thực thi:
-  1. Tường lửa kiểm tra hai lần thực sự:
-     - Pass 1 (Split Authority): Chỉ phân tích cú pháp (dấu thời gian, block_id) để thiết lập các phân vùng nhân quả và xóa ranh giới.
-       Trích xuất mẫu/tham số ZERO được thực hiện trên các sự kiện Thử nghiệm tiềm năng.
+  1. Tường lửa Test hai lượt thực sự (True Two-Pass Test Firewall):
+     - Pass 1 (Split Authority): Chỉ phân tích cú pháp (dấu thời gian, block_id) để thiết lập các phân vùng nhân quả và loại bỏ giao thoa ranh giới.
+       Tuyệt đối ZERO trích xuất template/parameter (ZERO template/parameter extraction) trên các sự kiện Test tiềm năng.
      - Pass 2 (Feature Materialization): Trích xuất đặc trưng cho phân vùng Train và Val.
-       Số lần gọi trình phân tích cú pháp đại diện kiểm tra = 0, Số lần trích xuất tham số kiểm tra = 0, Đóng góp từ vựng kiểm tra = 0.
-  2. Gói tiền huấn luyện (pretraining) giai đoạn A1 SSL không có nhãn:
-     - hdfs_ssl_train.pt và hdfs_ssl_val.pt chứa các nhãn hạ nguồn (downstream) ZERO (được bảo vệ bởi LabelLeakageError).
-     - Các nhãn hạ nguồn (downstream) được lưu trữ nghiêm ngặt trong kho thăm dò chỉ dành cho đánh giá (thử nghiệm/lần chạy/dữ liệu/vault/).
+       Số lần gọi trình phân tích cú pháp biểu diễn test = 0, Số lần trích xuất tham số test = 0, Đóng góp từ vựng test = 0.
+  2. Gói tiền huấn luyện (pretraining) Giai đoạn A1 SSL không có nhãn:
+     - hdfs_ssl_train.pt và hdfs_ssl_val.pt chứa ZERO nhãn downstream (được bảo vệ bởi LabelLeakageError).
+     - Các nhãn downstream được lưu trữ nghiêm ngặt trong kho lưu trữ nhãn bộ dò chỉ phục vụ đánh giá (experiments/runs/data/vault/).
   3. Biểu diễn khe đa tham số:
-     - Bộ thông số được gõ đầy đủ với các khe cố định cho mỗi sự kiện (max_param_slots = 4).
-     - Thứ tự ưu tiên loại xác định (IP_RFC1918 > IP_PUBLIC > IP_SPECIAL > SIZE > NUM > GENERIC).
+     - Tập tham số định kiểu đầy đủ với các khe cố định cho mỗi sự kiện (max_param_slots = 4).
+     - Thứ tự ưu tiên kiểu tiền định (IP_RFC1918 > IP_PUBLIC > IP_SPECIAL > SIZE > NUM > GENERIC).
      - Tính toán chính xác đa thông số: events_with_2plus_params, parameter_retention_rate, parameters_discarded_count.
   4. Tư cách thành viên mạng RFC1918 chính xác:
      - Tư cách thành viên nghiêm ngặt trong 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 thông qua ipaddress.ip_network.
-  5. Ranh giới khoảng thời gian nhân quả & Kiểm tra kín:
+  5. Ranh giới khoảng thời gian nhân quả & Niêm phong Test:
      - max(Train end_ts) < min(Val start_ts) và max(Val end_ts) < min(Test start_ts).
 """
 
@@ -355,7 +355,7 @@ class HDFSRealDataAdapter:
                     # Phân nhánh tường lửa kiểm tra nghiêm ngặt
                     if blk_id in train_block_ids:
                         template, params = self.extract_template_and_params(content)
-                        # Từ vựng phù hợp chỉ trên tàu
+                        # Học từ vựng chỉ trên tập Train (Fit Vocabulary on Train Only)
                         if template not in self.train_template_to_id:
                             self.train_template_to_id[template] = len(self.train_template_to_id)
                         for p in params:
@@ -418,7 +418,7 @@ class HDFSRealDataAdapter:
         # =====================================================================
         # ASSEMBLE LABEL-FREE STAGE A1 SSL TENSORS (MULTI-PARAMETER SLOTS)
         # =====================================================================
-        # Chia chuyến tàu (Giới hạn ở ngân sách max_train_sessions)
+        # Tập phân chia Train (Train Split - Giới hạn theo ngân sách max_train_sessions)
         sorted_train_keys = sorted(
             train_session_events.keys(),
             key=lambda b: session_intervals[b][0]
@@ -434,7 +434,7 @@ class HDFSRealDataAdapter:
             evs = sorted(train_session_events[blk_id], key=lambda x: x["timestamp"])
             seq_t = torch.tensor([self.train_template_to_id.get(e["template"], 0) for e in evs], dtype=torch.long)
             
-            # Tenor khe đa thông số: (L, max_param_slots)
+            # Tensor khe đa tham số (Multi-parameter slot tensor: L, max_param_slots)
             param_slots_list = []
             for e in evs:
                 slot_ids = [self.train_param_to_id.get(p, 0) for p in e["params"][:self.max_param_slots]]
@@ -454,7 +454,7 @@ class HDFSRealDataAdapter:
             train_time_gaps.append(gaps_t)
             train_session_ids.append(blk_id)
 
-        # Phân chia xác thực (Giới hạn ở max_val_sessions, UNK an toàn)
+        # Tập phân chia Validation (Validation Split - Giới hạn theo max_val_sessions, UNK Safe)
         sorted_val_keys = sorted(
             val_session_events.keys(),
             key=lambda b: session_intervals[b][0]
@@ -494,7 +494,7 @@ class HDFSRealDataAdapter:
             val_time_gaps.append(torch.tensor(gaps, dtype=torch.float32))
             val_session_ids.append(blk_id)
 
-        # Bộ căng SSL không có nhãn gói
+        # Đóng gói các tensor SSL không nhãn (Package Label-Free SSL Tensors)
         hdfs_ssl_train = {
             "dataset_classification": "REAL_TRAINING_MATERIALIZED",
             "sequence_source": "REAL_HDFS",
@@ -516,7 +516,7 @@ class HDFSRealDataAdapter:
             "session_ids": val_session_ids
         }
 
-        # Thực thi bảo vệ độ tinh khiết không có nhãn
+        # Thực thi bảo vệ tính thuần khiết không nhãn (Enforce Label-Free Purity Guard)
         enforce_ssl_package_label_free(hdfs_ssl_train)
         enforce_ssl_package_label_free(hdfs_ssl_val)
 

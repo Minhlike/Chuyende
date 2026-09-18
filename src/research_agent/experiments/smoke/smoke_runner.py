@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-trình thực thi (runner) smoke test xác thực/huấn luyện CH3
-Thực hiện xác minh từ đầu đến cuối của kiến trúc Chương 2 trên các tập hợp con xác định nhỏ
-của sự phân chia TRAIN và VALIDATION.
+Bộ thực thi kiểm thử nhanh CH3 Train/Validation Smoke Test Runner
+Thực hiện xác minh end-to-end kiến trúc Chương 2 trên các tập con tiền định quy mô nhỏ
+của các phân vùng Train/Validation (train/validation splits).
 
 STRICT INVARIANTS:
   - TEST SET FIREWALL: Việc phân chia thử nghiệm được niêm phong nghiêm ngặt và đưa ra TestSetSealedError khi truy cập.
-  - IMMUTABLE RUN ARTIFACTS: Mỗi lần chạy sẽ ghi vào thư mục experiments/khói/chạy/<SMOKE_RUN_ID>/ riêng biệt của nó.
+  - IMMUTABLE RUN ARTIFACTS: Mỗi lần chạy đều ghi vào thư mục experiments/smoke/runs/<SMOKE_RUN_ID>/ cô lập riêng biệt.
   - DATA CLASSIFICATION: Được gắn thẻ rõ ràng HYBRID_SMOKE_FIXTURE (Trình tự HDFS thực + Proxy tổng hợp).
   - EXACT CHAPTER 2 STAGE A OBJECTIVE: L_StageA = L_seq_self + L_graph_self + lambda_align * L_align + lambda_fuse * L_fuse_rec.
-  - REAL ZERO-GRAD AUDIT: Khẳng định cấp độ tồn tại, hữu hạn và định mức > 1e-7 trên tất cả các tham số hoạt động dự kiến.
+  - REAL ZERO-GRAD AUDIT: Khẳng định grad tồn tại, hữu hạn và norm > 1e-7 trên tất cả các tham số hoạt động dự kiến.
   - TRUE CHECKPOINT RESUME: So sánh quá trình huấn luyện Bước N+1 không bị gián đoạn với Bước tải lại checkpoint N+1.
 """
 
@@ -293,7 +293,7 @@ class SmokeTestRunner:
                     graph_events, mask_e, mask_n
                 ) = self._prepare_batch_tensors(batch_seqs, device)
 
-                # 1. Chuyển tiếp
+                # 1. Lượt lan truyền xuôi (Forward Pass)
                 optimizer.zero_grad()
                 loss, metrics = model.compute_stage_a_loss(
                     seq_inputs=seq_in,
@@ -316,7 +316,7 @@ class SmokeTestRunner:
                     inf_loss_count += 1
                     all_losses_finite = False
 
-                # 2. Đèo ngược
+                # 2. Lượt lan truyền ngược (Backward Pass)
                 loss.backward()
 
                 # 3. Kiểm tra hữu hạn và không cấp độ thực trên các mô-đun
@@ -375,7 +375,7 @@ class SmokeTestRunner:
         if torch.cuda.is_available():
             peak_vram_mb = torch.cuda.max_memory_allocated() / (1024 * 1024)
 
-        # Viết nhật ký tàu vào run_dir
+        # Ghi nhật ký huấn luyện (Train Logs) vào run_dir
         train_log_path = self.run_dir / "train-log.jsonl"
         with open(train_log_path, "w", encoding="utf-8") as f:
             for rec in train_logs:
@@ -460,7 +460,7 @@ class SmokeTestRunner:
         resume_loss_match = bool(loss_diff < 1e-5)
         resume_param_match = bool(param_diff < 1e-5)
 
-        # Thẻ chuyển tiếp xác thực
+        # Lượt lan truyền xuôi kiểm định (Validation Forward Pass)
         model.eval()
         val_seqs_all = val_subset["sequences"]
         (

@@ -10,7 +10,7 @@ xác minh chính xác danh tính số và cấu trúc:
   2. Trạng thái tối ưu hóa (nhận dạng exp_avg, exp_avg_sq)
   3. Trạng thái lập lịch trình và lịch trình tốc độ học tập
   4. Nhúng bộ nhớ động nút (phân kỳ < 1e-6)
-  5. Bộ đếm độ vào/ra nhân quả (chính xác)
+  5. Bộ đếm bậc vào/ra nhân quả (Causal in/out degree counters) (chính xác)
   6. Dấu thời gian tương tác cuối cùng của nút (chính xác)
   7. Bộ đệm lịch sử thời gian FIFO (chính xác)
   8. Trạng thái 4 bộ RNG (chính xác)
@@ -72,7 +72,7 @@ def get_git_commit_info(repo_dir: Optional[Path] = None) -> Tuple[str, str, bool
         return "UNKNOWN_COMMIT", "UNKNOWN_BRANCH", True
 
 def get_nvidia_driver_version() -> str:
-    """Truy vấn phiên bản trình điều khiển NVIDIA của máy chủ thông qua nvidia-smi không đóng được."""
+    """Truy vấn phiên bản driver NVIDIA của máy chủ theo cơ chế fail-closed thông qua nvidia-smi."""
     try:
         out = subprocess.check_output([
             "nvidia-smi", "--query-gpu=driver_version", "--format=csv,noheader"
@@ -797,7 +797,7 @@ if __name__ == "__main__":
     parser.add_argument("--output-dir", type=str, default=None, help="Evidence output directory")
     parser.add_argument("--environment-lock", type=str, default=None, help="Path to environment lock candidate")
     
-    # Đối số của Công nhân trẻ em nội bộ
+    # Tham số cho Child Worker nội bộ (Internal Child Worker arguments)
     parser.add_argument("--worker-resume", action="store_true", default=False, help="Run as child worker process for resume")
     parser.add_argument("--checkpoint", type=str, default=None, help="Checkpoint path for worker resume")
     parser.add_argument("--output-state", type=str, default=None, help="Output state path for worker resume")

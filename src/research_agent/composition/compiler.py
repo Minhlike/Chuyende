@@ -121,7 +121,7 @@ class ThesisCompiler:
         # Chạy trình kiểm tra luận án
         audit_report = self.auditor.audit_thesis(paragraphs=all_paragraphs, mode=mode)
 
-        # Ở chế độ FINAL, không đóng được nếu tồn tại sự cố nghiêm trọng
+        # Ở chế độ FINAL, áp dụng cơ chế fail-closed nếu tồn tại lỗi nghiêm trọng
         if mode == CompositionMode.FINAL and not audit_report.is_ready_for_final_build:
             raise RuntimeError(
                 f"Thesis compilation FAILED in FINAL mode due to {len(audit_report.critical_issues)} critical issues."

@@ -149,7 +149,7 @@ def insert_thesis_table(doc, ref_p, headers, col_widths, rows_data, font_size_pt
         cell.text = h
         format_table_cell(cell, col_widths[c_i], align=WD_ALIGN_PARAGRAPH.CENTER, bold=True, font_size_pt=font_size_pt)
 
-    # Hàng cơ thể
+    # Hàng nội dung
     for r_i, row in enumerate(rows_data):
         b_row = tbl.rows[r_i + 1]
         b_trPr = b_row._tr.get_or_add_trPr()

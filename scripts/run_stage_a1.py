@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-script thực thi: Huấn luyện trước tự giám sát đa tác vụ ở giai đoạn thực A1
-Thực thi Giai đoạn chuẩn A1 trên bộ dữ liệu HDFS và BGL trên 5 seed chuẩn:
-  - Seed: [42, 1337, 2024, 7, 999]
-  - Kiến trúc: Bộ mã hóa máy biến áp 4 lớp, d_model=128, H=4, d_ffn=512, max_len=128
-  - Lô: micro_batch=16, grad_accum=4 (lô hiệu quả=64)
-  - Trình tối ưu hóa: AdamW (lr=5e-4, wd=0,01), Khởi động tuyến tính + Phân rã Cosine
-  - Xác thực: Một lần cho mỗi epoch đã hoàn thành, kiên nhẫn dừng sớm (early stopping)=3 epoch
-  - Xác minh checkpoint resume: Đã bao gồm
+Kịch bản thực thi: Huấn luyện trước tự giám sát đa nhiệm Stage A1 thực tế (Real Stage A1 Multi-Task Self-Supervised Pretraining)
+Thực thi Stage A1 chuẩn trên các tập dữ liệu HDFS và BGL qua 5 seed chuẩn:
+  - Seeds: [42, 1337, 2024, 7, 999]
+  - Kiến trúc: Transformer Encoder 4 lớp, d_model=128, H=4, d_ffn=512, max_len=128
+  - Phân chia batch: micro_batch=16, grad_accum=4 (batch size hiệu dụng = 64)
+  - Bộ tối ưu hóa: AdamW (lr=5e-4, wd=0.01), Linear Warmup + Cosine Decay
+  - Validation: Thực hiện một lần cho mỗi epoch hoàn thành, Early stopping patience=3 epochs
+  - Xác minh phục hồi Checkpoint (Checkpoint Resume Verification): Đã bao gồm
 """
 
 import sys

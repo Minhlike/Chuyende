@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 r"""
-Chiến dịch thử nghiệm Nineplus - Công cụ đánh giá thăm dò hạ nguồn chỉ dùng đồ thị
-Đánh giá bộ dò (probe) tuyến tính được kiểm soát công suất (AP & ROC-AUC) trên các biểu diễn xác thực đã cố định
-được trích xuất từ các checkpoint TemporalGraphViewEncoding Giai đoạn A2 (D:\Research\.artifacts\stage-a2\HDFS).
+Chiến dịch thử nghiệm Nineplus - Bộ đánh giá probe hạ nguồn cho mô hình chỉ dùng đồ thị (Graph-Only Downstream Probe Evaluator)
+Đánh giá bộ dò (probe) tuyến tính kiểm soát dung lượng (AP & ROC-AUC) trên các biểu diễn Validation đóng băng
+được trích xuất từ các checkpoint TemporalGraphViewEncoder Giai đoạn A2 (D:\Research\.artifacts\stage-a2\HDFS).
 
-Thực hiện nghiêm ngặt:
-  - Quyền truy cập ZERO vào phân chia TEST (TEST_OPENED=false, TEST_READ_COUNT=0)
-  - bộ dò (probe) tuyến tính điều khiển công suất (W in R^{128 x 1}, 50 epoch, AdamW)
-  - Phân chia xác thực giống hệt nhau (7.500 phiên, hdfs_probe_labels_val.pt)
-  - Hợp đồng phương sai tiềm ẩn chống sụp đổ (Var(z) >= 0,01)
+Thực thi nghiêm ngặt:
+  - ZERO quyền truy cập vào tập TEST (TEST_OPENED=false, TEST_READ_COUNT=0)
+  - Bộ dò (probe) tuyến tính kiểm soát dung lượng (W trong R^{128 x 1}, 50 epoch, AdamW)
+  - Tập Validation đồng nhất (7.500 phiên, hdfs_probe_labels_val.pt)
+  - Ràng buộc phương sai không gian ẩn chống suy biến (Var(z) >= 0.01)
 """
 
 import os
@@ -33,9 +33,9 @@ def evaluate_downstream_linear_probe(
     device: str = "cuda"
 ) -> Dict[str, float]:
     """
-    bộ dò (probe) tuyến tính được kiểm soát công suất trên các biểu diễn ẩn được đóng băng (frozen latent).
-    Tàu W trong R^{128 x 1} (mất bce, lr=1e-2, 50 epoch)
-    sử dụng phân chia huấn luyện/kiểm tra 80/20 trong nhóm biểu diễn xác thực.
+    Bộ dò (probe) tuyến tính kiểm soát dung lượng trên các biểu diễn ẩn đóng băng.
+    Huấn luyện W trong R^{128 x 1} (BCE loss, lr=1e-2, 50 epoch)
+    sử dụng phép chia 80/20 train/test nội bộ trong tập biểu diễn Validation (Train/Val pool).
     """
     dev = torch.device(device if torch.cuda.is_available() else "cpu")
     y = torch.tensor(labels, dtype=torch.float32)
@@ -131,7 +131,7 @@ def evaluate_graph_checkpoint(
     model.eval()
     model.reset_node_states()
 
-    # Truyền phát qua val_events theo từng đoạn
+    # Đọc luồng qua val_events theo từng khối (chunks)
     chunk_size = 5000
     total_events = len(val_events)
     print(f"[{seed}] Streaming {total_events:,} validation events through graph encoder...")
@@ -143,7 +143,7 @@ def evaluate_graph_checkpoint(
     dt_stream = time.perf_counter() - t0
     print(f"[{seed}] Stream completed in {dt_stream:.2f}s ({total_events / dt_stream:.1f} events/s). Nodes in memory: {len(model.node_memory):,}")
 
-    # Trích xuất đại diện cho tất cả 7.500 phiên xác thực
+    # Trích xuất biểu diễn cho toàn bộ 7.500 phiên Validation
     val_reps = []
     zero_fallback_count = 0
     for sid in val_sids:
@@ -160,7 +160,7 @@ def evaluate_graph_checkpoint(
     latent_variance = float(torch.var(z_all, dim=0).mean().item())
     anti_collapse_pass = (latent_variance >= 0.01)
 
-    # bộ dò (probe) tuyến tính hạ lưu
+    # Đánh giá bộ dò (probe) tuyến tính hạ nguồn
     probe_metrics = evaluate_downstream_linear_probe(z_all, val_labels, seed=seed, device=device)
 
     best_epoch = ckpt_data.get("early_stopping_state", {}).get("best_epoch", ckpt_data.get("completed_epoch", 1))
@@ -210,14 +210,14 @@ def main():
     print(f"  Target Seeds: {args.seeds} | Device: {args.device}")
     print("="*70)
 
-    # 1. Tải các sự kiện biểu đồ được lưu trong bộ nhớ đệm
+    # 1. Nạp các sự kiện đồ thị đã lưu trong cache
     cache_path = base_dir / "datasets" / "cache" / "hdfs_graph_events.pt"
     print("Loading cached validation graph events...")
     graph_pkg = torch.load(cache_path, weights_only=False)
     val_events = graph_pkg["val_events"]
     print(f"Loaded {len(val_events):,} validation graph events.")
 
-    # 2. Tải nhãn xác nhận
+    # 2. Nạp nhãn của tập Validation
     labels_path = base_dir / "experiments" / "runs" / "data" / "vault" / "hdfs_probe_labels_val.pt"
     print("Loading validation probe labels...")
     probe_labels = torch.load(labels_path, weights_only=False)

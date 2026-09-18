@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
 Công cụ đánh giá thuộc tính bằng chứng yếu (RQ4)
-Đánh giá phân bổ sự chú ý của Học tập nhiều phiên bản (MIL) mà không có nhãn sự kiện giả tạo.
+Đánh giá phân bổ Attention trong Học tập nhiều phiên bản (MIL attention attribution) mà không tạo nhãn sự kiện giả mạo.
 Quy tắc:
   - Nghiêm cấm các nhãn heuristic tổng hợp (e.g., giả sử 3 sự kiện cuối cùng là bất thường).
   - Trên HDFS: Trả về rõ ràng NOT_EVALUABLE_ON_HDFS khi chỉ tồn tại các nhãn cấp khối thô.
-  - Trên Provenance / DARPA: Yêu cầu đối sánh chính xác IOC / cấp độ sự kiện từ bản đồ sự thật trên mặt đất đã được xác minh.
+  - Trên Provenance / DARPA: Yêu cầu đối sánh chính xác IOC / cấp độ sự kiện từ bản đồ nhãn chuẩn (verified ground truth map) đã được xác minh.
 """
 
 from typing import Dict, Any, List, Optional, Set
@@ -17,7 +17,7 @@ def evaluate_weak_attribution_accuracy(
     dataset_name: str
 ) -> Dict[str, Any]:
     """
-    Chỉ đánh giá tỷ lệ trúng sự kiện nguyên nhân gốc Top-1, Top-3, Top-5 dựa trên sự thật thực tế đã được xác minh.
+    Chỉ đánh giá tỷ lệ trúng sự kiện nguyên nhân gốc Top-1, Top-3, Top-5 dựa trên nhãn chuẩn (verified ground truth) đã được xác minh.
     """
     if dataset_name.upper() == "HDFS":
         # HDFS chỉ cung cấp nhãn bất thường ở cấp độ khối, không cung cấp nhãn nguyên nhân gốc trên mỗi nhật ký

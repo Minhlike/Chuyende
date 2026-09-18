@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Giai đoạn A2 Trình tạo khóa phần cứng và môi trường Google Colab (Giao thức V1.5).
-Thực hiện khám phá phần cứng, xác minh điều kiện tiên quyết không đóng, xác thực dữ liệu trực tuyến,
-phép đo xác định do máy thu thập và tạo khóa môi trường Colab dự kiến.
-Các bước tối ưu hóa ZERO HDFS.
+Khởi tạo môi trường Google Colab và tạo khóa phần cứng Stage A2 (Protocol V1.5).
+Thực hiện nhận diện phần cứng, xác minh điều kiện tiên quyết nghiêm ngặt (fail-closed prerequisite verification),
+kiểm định luồng tập dữ liệu, đo lường tính tiền định thu thập tự động từ máy và tạo ứng viên khóa môi trường Colab.
+Tuyệt đối 0 bước tối ưu hóa HDFS (ZERO HDFS optimizer steps).
 """
 
 import os
@@ -106,7 +106,7 @@ def run_bootstrap(
     print(f"Local Data Path: {local_data_dest}")
     print(f"Drive Data Path: {drive_data_source}")
 
-    # 1. Xác minh đóng lỗi phần cứng GPU Discovery và CUDA
+    # 1. Phát hiện GPU và xác minh phần cứng CUDA theo cơ chế fail-closed
     if not torch.cuda.is_available():
         raise RuntimeError("FATAL: CUDA is not available! Colab session must be configured with a GPU runtime.")
 
@@ -129,7 +129,7 @@ def run_bootstrap(
 
     print(f"[BOOTSTRAP 2] Python: {py_ver} (major.minor: {py_maj_min}) | PyTorch: {torch_ver} | CUDA Runtime: {cuda_ver}")
 
-    # Kiểm tra không đóng trên khung
+    # Kiểm tra framework theo cơ chế fail-closed
     if not torch_ver.startswith("2.6.0"):
         raise RuntimeError(f"FATAL: PyTorch version mismatch! Expected PyTorch 2.6.0 series, got {torch_ver}")
     if cuda_ver != "12.4":

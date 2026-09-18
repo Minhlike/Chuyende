@@ -201,7 +201,7 @@ def main():
     })
 
     # -------------------------------------------------------------------------
-    # 3. DARPA TC Engagement 3 (E3) Nhập siêu dữ liệu và sự thật cơ bản
+    # 3. DARPA TC Engagement 3 (E3) Nhập siêu dữ liệu và nhãn chuẩn (ground truth)
     # -------------------------------------------------------------------------
     e3_meta_dir = raw_root / "darpa" / "e3" / "metadata"
     e3_meta_dir.mkdir(parents=True, exist_ok=True)

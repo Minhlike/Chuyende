@@ -1,15 +1,15 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
-bộ khung kiểm thử (test harness) tương đương số và tối ưu hóa toàn diện cho Giai đoạn A2.
-So sánh Tham chiếu với forward_event_window và process_group được tối ưu hóa.
+Bộ khung kiểm thử (Test harness) tối ưu hóa và tương đương số toàn diện cho Giai đoạn A2.
+So sánh giữa bản Tham chiếu (Reference) và bản Tối ưu hóa (Optimized) của forward_event_window và process_group.
 Kiểm tra:
-- Tử số và mẫu số mất
+- Tử số và mẫu số của hàm mất mát (Loss numerators & denominators)
 - L_rel, L_node, L_time, L_graph
-- gradient tham số
+- Gradient của các tham số (Parameter gradients)
 - Giá trị tham số sau optimizer.step()
-- Trạng thái và lịch sử nút
-- Mặt nạ chuỗi RNG
-- checkpoint / Tiếp tục tương đương
+- Trạng thái và lịch sử của các nút (Node states & history)
+- Trình tự sinh mặt nạ của RNG (Mask RNG sequence)
+- Tính tương đương khi lưu/phục hồi checkpoint (Checkpoint / Resume equivalence)
 """
 
 import os
@@ -35,10 +35,10 @@ def chunk_windows(events: List[Dict[str, Any]], window_size: int = 256) -> List[
 
 class OptimizedTemporalGraphViewEncoder(TemporalGraphViewEncoder):
     """
-    Tối ưu hóa việc triển khai TemporalGraphViewEncoding:
-    - Tính toán trước các phần nhúng sự kiện tĩnh (edge_proj, rel_emb, type_emb) theo lô trên mỗi cửa sổ.
-    - Loại bỏ phân bổ GPU theo sự kiện cho các mục tiêu, vectơ một điểm nóng và chỉ mục.
-    - Duy trì tương đương số chính xác 100% với việc triển khai tham chiếu.
+    Bản triển khai tối ưu hóa của TemporalGraphViewEncoder:
+    - Tính toán trước các embedding sự kiện tĩnh (edge_proj, rel_emb, type_emb) theo batch cho mỗi cửa sổ.
+    - Loại bỏ việc phân bổ GPU theo từng sự kiện cho các target, one-hot vector và index.
+    - Duy trì tính tương đương số học chính xác 100% với bản triển khai tham chiếu.
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -165,12 +165,12 @@ class OptimizedTemporalGraphViewEncoder(TemporalGraphViewEncoder):
             x_dst_target[4] = math.log1p(in_dst_prev)
             x_dst_target[5] = math.log1p(out_dst_prev)
 
-            # Quyết định việc che giấu một cách xác định thông qua trình tạo RNG (Chính xác thứ tự cuộc gọi RNG!)
+            # Quyết định việc tạo mặt nạ xác định qua generator của RNG (giữ nguyên chính xác thứ tự gọi RNG!)
             mask_rel = torch.rand(1, generator=mask_generator).item() < self.rel_mask_prob
             mask_node_src = torch.rand(1, generator=mask_generator).item() < self.node_mask_prob
             mask_node_dst = torch.rand(1, generator=mask_generator).item() < self.node_mask_prob
 
-            # 1a. Đầu dự đoán quan hệ Masked Edge
+            # 1a. Head dự đoán quan hệ cạnh có mặt nạ (Masked Edge Relation Prediction Head)
             rel_in = torch.cat([h_src_2d, h_dst_2d, phi_dt], dim=-1)
             rel_logits = self.rel_head(rel_in)
             if mask_rel:
@@ -179,7 +179,7 @@ class OptimizedTemporalGraphViewEncoder(TemporalGraphViewEncoder):
                 loss_rel_list.append(loss_rel_val)
                 masked_rel_count += 1
 
-            # 1b. Đầu tái tạo tính năng nút mặt nạ
+            # 1b. Head tái tạo đặc trưng nút có mặt nạ (Masked Node Feature Reconstruction Head)
             if mask_node_src:
                 node_src_pred = self.node_head(h_src_2d)
                 sq_err_src = torch.sum((node_src_pred.squeeze(0) - x_src_target) ** 2)
@@ -191,14 +191,14 @@ class OptimizedTemporalGraphViewEncoder(TemporalGraphViewEncoder):
                 loss_node_list.append(sq_err_dst)
                 masked_node_count += 1
 
-            # 1c. Đầu dự đoán khoảng cách thời gian liên tục
+            # 1c. Head dự đoán khoảng cách thời gian liên tục (Continuous Temporal Gap Prediction Head)
             time_in = torch.cat([h_src_2d, h_dst_2d], dim=-1)
             time_pred = F.relu(self.time_head(time_in)).squeeze(0)
             loss_time_val = self.loss_time_fn(time_pred, dt_tensor.squeeze(0))
             loss_time_list.append(loss_time_val)
 
             # -------------------------------------------------------------
-            # STEP 2: TEMPORAL MESSAGE PASSING & MEMORY UPDATE (Sau mất mát (loss))
+            # STEP 2: TEMPORAL MESSAGE PASSING & MEMORY UPDATE (Sau khi tính Loss)
             # -------------------------------------------------------------
             e_edge = e_edge_batch[i:i+1]
             e_rel = e_rel_batch[i:i+1]
@@ -211,7 +211,7 @@ class OptimizedTemporalGraphViewEncoder(TemporalGraphViewEncoder):
             raw_m_src = self.msg_mlp(msg_src_in)
             raw_m_dst = self.msg_mlp(msg_dst_in)
 
-            # Tổng hợp sự chú ý lịch sử
+            # Cơ chế tổng hợp Attention lịch sử (Historical Attention Aggregation)
             m_src = self._aggregate_history(src, raw_m_src, device)
             m_dst = self._aggregate_history(dst, raw_m_dst, device)
 
@@ -231,7 +231,7 @@ class OptimizedTemporalGraphViewEncoder(TemporalGraphViewEncoder):
             self._append_history(src, raw_m_src.squeeze(0).detach())
             self._append_history(dst, raw_m_dst.squeeze(0).detach())
 
-        # Ranh giới BPTT bị cắt ngắn
+        # Ranh giới BPTT cắt cụt (Truncated BPTT Boundary)
         self.node_memory = {k: v.detach() for k, v in self.node_memory.items()}
         self.node_history_buffers = {k: [msg.detach() for msg in msgs] for k, msgs in self.node_history_buffers.items()}
 
@@ -278,7 +278,7 @@ def run_deep_equivalence_test():
     fixture_p = Path("D:/Research/benchmarks/stage-a2/fixtures/train_events_10240.json")
     events = json.loads(fixture_p.read_text(encoding="utf-8"))
     
-    # 8 cửa sổ = 2 nhóm = 2048 sự kiện cho bài kiểm tra nhiều bước nghiêm ngặt
+    # 8 cửa sổ = 2 nhóm = 2048 sự kiện cho bài kiểm thử đa bước nghiêm ngặt (multi-step test)
     test_windows = chunk_windows(events[:2048], 256)
 
     # Khởi tạo mô hình tham chiếu & trình tối ưu hóa
@@ -311,7 +311,7 @@ def run_deep_equivalence_test():
         empirical_authorized=True, total_steps_override=573 * 20
     )
 
-    # 1. So sánh khởi động và tính thời gian
+    # 1. Khởi động (Warmup) & So sánh thời gian thực thi (Timed Comparison)
     print("\n--- TIMED COMPARISON OVER 2048 EVENTS (8 windows / 2 optimizer steps) ---")
     if torch.cuda.is_available():
         torch.cuda.synchronize()
@@ -337,7 +337,7 @@ def run_deep_equivalence_test():
     print(f"Optimized: {t_opt:.3f} s ({opt_eps:.1f} events/s)")
     print(f"Speedup:   {speedup:.2f}x")
 
-    # 2. Kiểm tra mất mát (loss) và số lượng mục tiêu
+    # 2. Kiểm tra giá trị hàm mất mát (loss) và số lượng mục tiêu (target counts)
     print("\n--- NUMERICAL COMPARISON ---")
     diff_loss = abs(stats_ref["train_L_graph"] - stats_opt["train_L_graph"])
     diff_rel = abs(stats_ref["train_L_rel"] - stats_opt["train_L_rel"])
@@ -354,7 +354,7 @@ def run_deep_equivalence_test():
     assert stats_ref["time_target_count"] == stats_opt["time_target_count"], "time_target_count mismatch"
     assert stats_ref["optimizer_steps"] == stats_opt["optimizer_steps"], "optimizer_steps mismatch"
 
-    # 3. Kiểm tra trọng số tham số
+    # 3. Kiểm tra trọng số tham số (parameter weights)
     max_param_diff = 0.0
     for name, p_ref in model_ref.named_parameters():
         p_opt = dict(model_opt.named_parameters())[name]
@@ -364,7 +364,7 @@ def run_deep_equivalence_test():
 
     print(f"Max Parameter Diff: {max_param_diff:.2e}")
 
-    # 4. Kiểm tra trạng thái bộ nhớ nút
+    # 4. Kiểm tra trạng thái bộ nhớ nút (node memory states)
     ref_states = model_ref.get_node_states()
     opt_states = model_opt.get_node_states()
 
@@ -380,7 +380,7 @@ def run_deep_equivalence_test():
     print(f"Node Out-Degree Match: {ref_states['node_causal_out_degrees'] == opt_states['node_causal_out_degrees']}")
     print(f"Node Timestamps Match: {ref_states['node_last_interaction_timestamps'] == opt_states['node_last_interaction_timestamps']}")
 
-    # 5. Kiểm tra tính tương đương khi resume checkpoint (checkpoint resume equivalence)
+    # 5. Kiểm tra tính tương đương khi phục hồi checkpoint (checkpoint resume equivalence)
     print("\n--- RESUME EQUIVALENCE CHECK ---")
     ckpt_ref_p = Path("D:/Research/benchmarks/stage-a2/fixtures/ckpt_ref.pt")
     trainer_ref.save_checkpoint(ckpt_ref_p)

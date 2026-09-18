@@ -209,7 +209,7 @@ def build_chapter_3():
 
     print(f"[Insertion] Located target boundary at paragraph: [{target_p.style.name}] '{target_p.text}'")
 
-    # Việc đóng của trình trợ giúp khớp với build_word_visual_qa.py
+    # Các hàm closure bổ trợ khớp với build_word_visual_qa.py
     def add_p(text_segments, bold_prefix=None, first_line_indent=True, align=WD_ALIGN_PARAGRAPH.JUSTIFY, keep_with_next=False):
         new_p = target_p.insert_paragraph_before(style="Normal")
         new_p.alignment = align
@@ -281,7 +281,7 @@ def build_chapter_3():
 
     def add_h1(text):
         new_p = target_p.insert_paragraph_before(style="Heading 1")
-        # Trong Chương 1 & 2, Tiêu đề 1 kế thừa kiểu căn giữa từ kiểu
+        # Trong Chương 1 & 2, Heading 1 kế thừa căn giữa từ style
         new_p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
         new_p.paragraph_format.space_before = Pt(12)
         new_p.paragraph_format.space_after = Pt(6)
@@ -528,7 +528,7 @@ def build_chapter_3():
     )
 
     # -------------------------------------------------------------------------
-    # Ánh xạ hiển thị mà con người có thể đọc được (chỉ ở bản trình bày; bằng chứng thô không thay đổi)
+    # Ánh xạ hiển thị cho người đọc (chỉ ở bản trình bày; bằng chứng thô giữ nguyên)
     # -------------------------------------------------------------------------
     DISPLAY_CLASSIFICATION = {
         "CANONICAL":           "Đạt chuẩn",
@@ -874,7 +874,7 @@ def build_chapter_3():
     # =========================================================================
     print("[Conclusion] Rebuilding Conclusion section with evidence-bound language...")
 
-    # Làm sạch các đoạn văn hiện có sau đây cho đến khi có thư mục
+    # Xóa các đoạn văn hiện có phía sau cho đến phần thư mục tài liệu tham khảo
     cur_elem = target_p._p.getnext()
     while cur_elem is not None:
         tag = cur_elem.tag
@@ -945,7 +945,7 @@ def build_chapter_3():
         "hướng tới việc hoàn thiện mô hình biểu diễn đa góc nhìn toàn phần và thử nghiệm đánh giá phát hiện tấn công trên dữ liệu kiểm thử khi được ủy quyền."
     )
 
-    # Đảm bảo nội dung cuối cùng sectPr tiếp tục đánh số trang (không có w:pgNumType w:start="1")
+    # Đảm bảo sectPr thân văn bản cuối tiếp tục đánh số trang (không có w:pgNumType w:start="1")
     body_sectPr = doc._element.body.find(qn("w:sectPr"))
     if body_sectPr is not None:
         for pgn in body_sectPr.findall(qn("w:pgNumType")):

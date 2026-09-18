@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-TemporalGraphViewEncoding: Mạng thần kinh đồ thị động theo thời gian liên tục nhân quả
-for Stage A2 Self-Supervised Pretraining on Event-Entity Logs (Contract V1.3 Amended).
+TemporalGraphViewEncoder: Mạng nơ-ron đồ thị động thời gian liên tục nhân quả (Causal Continuous-Time Dynamic Graph Neural Network)
+cho tiền huấn luyện tự giám sát Giai đoạn A2 trên log sự kiện - thực thể (Contract V1.3 Amended).
 
-Bất biến:
-  1. Dự đoán trước khi cập nhật: Đánh giá các dự đoán SSL phụ trợ (L_rel, L_node, L_time)
-     nghiêm ngặt về các trạng thái ẩn trước đó h(t-) cập nhật bộ nhớ BEFORE.
-  2. Tường lửa mục tiêu quan hệ: Đầu vào dự đoán [h_v(t-) || h_u(t-) || phi(delta_t)]
-     giữ lại nghiêm ngặt ID quan hệ thực sự và việc nhúng quan hệ. Chính xác là 8 lớp kinh điển.
-  3. Tường lửa mục tiêu nút: Đầu tái thiết dự đoán chính xác x_v_fixed_priv trong R^6
-     from h_v(t-) using Mean Squared Error (MSE), without direct target vector pass-through.
-  4. Nhúng loại nút hoạt động: Tích cực nhúng loại nút nguồn và đích
-     điều kiện hóa hàm thông báo tạm thời Msg().
-  5. Mục tiêu mức độ nhân quả: Các đặc điểm mức độ được tính toán ở thời điểm t- trước khi tăng cạnh.
-  6. Thiết lập lại phân chia quy nạp: Bộ nhớ động đầy đủ và trạng thái tương tác bằng 0 trên ranh giới phân chia.
+Các bất biến (Invariants):
+  1. Dự đoán trước khi cập nhật (Predict-Before-Update): Đánh giá các dự đoán SSL phụ trợ (L_rel, L_node, L_time)
+     nghiêm ngặt trên các trạng thái ẩn trước đó h(t-) TRƯỚC KHI cập nhật bộ nhớ (BEFORE memory updates).
+  2. Tường lửa mục tiêu quan hệ (Relation Target Firewall): Đầu vào dự đoán [h_v(t-) || h_u(t-) || phi(delta_t)]
+     tuyệt đối không chứa ID quan hệ thực sự và vector nhúng quan hệ. Chính xác 8 quan hệ chuẩn.
+  3. Tường lửa mục tiêu nút (Node Target Firewall): Head tái thiết dự đoán chính xác x_v_fixed_priv trong R^6
+     từ h_v(t-) sử dụng Mean Squared Error (MSE), không cho phép truyền thẳng vector mục tiêu.
+  4. Vector nhúng loại nút hoạt động: Nhúng loại nút nguồn và đích làm điều kiện cho hàm thông điệp thời gian Msg().
+  5. Mục tiêu bậc nhân quả (Causal Degree Targets): Đặc trưng bậc được tính tại t- trước khi cạnh được cập nhật.
+  6. Khởi tạo lại khi sang phân vùng (Inductive Split Reset): Toàn bộ bộ nhớ động và trạng thái tương tác được đặt về 0 tại ranh giới phân vùng.
 """
 
 import math
@@ -127,7 +126,7 @@ class TemporalGraphViewEncoder(nn.Module):
             nn.Linear(128, num_canonical_relations)
         )
 
-        # 2. Đầu tái tạo tính năng nút: h_v(t-) -> 6 (loại 4 điểm nóng một điểm + độ log1p 2 điểm mờ)
+        # 2. Đầu tái tạo đặc trưng nút: h_v(t-) -> 6 (4-dim one-hot type + 2-dim log1p degrees)
         self.node_head = nn.Sequential(
             nn.Linear(d_node, 64),
             nn.LayerNorm(64),

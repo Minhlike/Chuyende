@@ -2,18 +2,18 @@
 """
 scripts/audit_claim_evidence_semantics.py
 
-Trình xác minh ngữ nghĩa có thể tái tạo (Vòng 4).
-Kiểm tra tính xác thực ở cấp độ nội dung, ràng buộc parent_text_hash, bộ định vị tự tham chiếu,
-tính nhất quán trong kiểm tra chéo, ngữ nghĩa hỗ trợ và đảm bảo thực thi quyền riêng tư.
+Bộ kiểm định ngữ nghĩa có khả năng tái lập (Vòng 4).
+Kiểm toán tính xác thực ở cấp độ nội dung, liên kết parent_text_hash, các bộ định vị tự tham chiếu,
+tính nhất quán giữa các kết quả kiểm toán, ngữ nghĩa bằng chứng hỗ trợ và bảo đảm thực thi quyền riêng tư.
 
 Đầu vào:
-  - experiments/bằng chứng/trích dẫn-kiểm toán/SCIENTIFIC-CLAIM-AUDIT.json
-  - experiments/bằng chứng/trích dẫn-kiểm toán/SCIENTIFIC-CLAIM-DETECTION.json
-  - experiments/bằng chứng/trích dẫn-kiểm toán/CLAIM-SOURCE-AUDIT.json
-  - experiments/bằng chứng/trích dẫn-kiểm toán/EVIDENCE-LOCATOR-AUDIT.json
+  - experiments/evidence/citation-audit/SCIENTIFIC-CLAIM-AUDIT.json
+  - experiments/evidence/citation-audit/SCIENTIFIC-CLAIM-DETECTION.json
+  - experiments/evidence/citation-audit/CLAIM-SOURCE-AUDIT.json
+  - experiments/evidence/citation-audit/EVIDENCE-LOCATOR-AUDIT.json
 
 Đầu ra:
-  - experiments/bằng chứng/trích dẫn-kiểm toán/CLAIM-EVIDENCE-SEMANTIC-AUDIT.json
+  - experiments/evidence/citation-audit/CLAIM-EVIDENCE-SEMANTIC-AUDIT.json
 """
 
 import sys, json, re, hashlib
@@ -50,7 +50,7 @@ def run_semantic_audit():
 
     candidates = {c["detected_id"]: c for c in detection.get("detected_candidates", [])}
 
-    # ắc quy cổng
+    # Các biến tích lũy kiểm soát cổng (Gate accumulators)
     parent_text_hash_mismatches = 0
     privacy_contradictions = 0
     privacy_exp_without_artifact = 0
@@ -60,7 +60,7 @@ def run_semantic_audit():
     false_direct_support = 0
     cross_audit_mismatches = 0
 
-    # tính thực tế
+    # Thống kê phân loại tính xác thực (Factuality counts)
     ext_tech_facts = 0
     ext_emp_facts = 0
     ext_facts_with_evidence = 0
@@ -116,7 +116,7 @@ def run_semantic_audit():
         else:
             violations.append(f"Unknown factuality_class: {f_class}")
 
-        # Kiểm tra bằng chứng cho các sự kiện bên ngoài
+        # Kiểm tra bằng chứng cho các sự kiện thực tế ngoại sinh (external facts)
         is_external_fact = f_class in ["EXTERNAL_TECHNICAL_FACT", "EXTERNAL_EMPIRICAL_FACT"]
         if is_external_fact:
             has_valid_evid = (
@@ -130,12 +130,12 @@ def run_semantic_audit():
                 violations.append(f"External fact without valid evidence: factuality={f_class}, evidence={e_class}")
                 factual_none_evidence += 1
 
-            # Kiểm tra nếu ngụy trang dưới dạng tác giả tổng hợp mà không có bằng chứng
+            # Kiểm tra nếu bị gắn nhãn sai thành tổng hợp của tác giả (AUTHOR_SYNTHESIS) mà thiếu bằng chứng
             if c_class == "AUTHOR_SYNTHESIS" and not has_valid_evid:
                 violations.append(f"External fact disguised as AUTHOR_SYNTHESIS without valid evidence")
                 external_fact_disguised += 1
 
-        # 3. Không cho phép evidence_class == NONE đối với thông tin bên ngoài
+        # 3. Không cho phép evidence_class == NONE đối với các sự kiện thực tế ngoại sinh (external facts)
         if e_class == "NONE":
             if is_external_fact:
                 violations.append(f"evidence_class=NONE not allowed for external fact ({f_class})")
@@ -265,7 +265,7 @@ def run_semantic_audit():
         "per_claim_records": per_claim_records
     }
 
-    # Thất bại trước khi đột biến: Khẳng định PASS trước khi viết kết quả chính thức
+    # Chặn lỗi trước khi ghi đè (Fail before mutation): Bắt buộc đạt trạng thái PASS trước khi ghi kết quả chính thức
     assert overall_status == "PASS", (
         f"[FAIL-BEFORE-MUTATION] Semantic verification FAILED with {total_violations} violations: "
         f"parent_hash_mismatch={parent_text_hash_mismatches}, "

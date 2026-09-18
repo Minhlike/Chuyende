@@ -64,7 +64,7 @@ class MemoryManager:
         self.health_auditor = MemoryHealthAuditor(repository=self.repo, vector_index=self.vector_index)
 
     # -------------------------------------------------------------
-    # API ghi đã nhập (Phần 36)
+    # Các API ghi có định kiểu (Typed Write APIs - Section 36)
     # -------------------------------------------------------------
     def remember_decision(
         self,
@@ -82,7 +82,7 @@ class MemoryManager:
         actor: str = "HUMAN_ARCHITECT_OR_AGENT",
         status: DecisionStatus = DecisionStatus.ACCEPTED,
     ) -> DecisionRecord:
-        """Đăng ký Quyết định Nghiên cứu/Kiến trúc hạng nhất (RC-15, Mục 31)."""
+        """Đăng ký một Architecture/Research Decision hạng nhất (RC-15, Section 31)."""
         all_decs = self.repo.list_decisions()
         seq = len(all_decs) + 1
         dec_id = f"DEC-{seq:06d}"
@@ -367,7 +367,7 @@ class MemoryManager:
         )
 
     def create_snapshot(self) -> Path:
-        """Duy trì ảnh chụp nhanh JSON tại một thời điểm của trạng thái nghiên cứu vào bộ nhớ/ảnh chụp nhanh/."""
+        """Lưu trữ ảnh chụp nhanh JSON tại một thời điểm của trạng thái nghiên cứu vào memory/snapshots/."""
         state = self.get_research_state()
         timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
         snapshot_path = self.memory_root / "snapshots" / f"snapshot_{timestamp}.json"
@@ -376,7 +376,7 @@ class MemoryManager:
         return snapshot_path
 
     def export_human_readable_memory(self) -> Path:
-        """Xuất trạng thái bộ nhớ nghiên cứu mà con người có thể đọc được sang bộ nhớ/bộ nhớ-export.md."""
+        """Xuất trạng thái bộ nhớ nghiên cứu dưới dạng con người đọc được sang memory/memory-export.md."""
         state = self.get_research_state()
         export_path = self.memory_root / "memory-export.md"
 

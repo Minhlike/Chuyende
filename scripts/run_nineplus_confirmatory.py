@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 """
-Chiến dịch thử nghiệm Nineplus - trình thực thi (runner) xác nhận giai đoạn 2
-Thực hiện các hoạt động xác nhận tiềm năng trên 3 kiến trúc cốt lõi:
-  1. SEQUENCE_ONLY (Bộ mã hóa máy biến áp, MEP + MPP + thời gian SSL)
-  2. GRAPH_ONLY (TemporalGraphViewEncoding, rel + nút + thời gian SSL)
-  3. MULTI_VIEW_ALIGNED_VICREG (Trình tự chung + Đồ thị + VICReg + Gated Fusion)
+Chiến dịch thử nghiệm Nineplus - Trình chạy xác nhận (Confirmatory Runner) Giai đoạn 2
+Thực thi các lượt chạy xác nhận kỳ vọng trên 3 kiến trúc cốt lõi:
+  1. SEQUENCE_ONLY (Transformer Encoder, MEP + MPP + time SSL)
+  2. GRAPH_ONLY (TemporalGraphViewEncoder, rel + node + time SSL)
+  3. MULTI_VIEW_ALIGNED_VICREG (Joint Sequence + Graph + VICReg + Gated Fusion)
 
-Thực thi:
-  - Quyền truy cập ZERO vào phân chia TEST (TEST_OPENED=false, TEST_READ_COUNT=0)
+Thực thi nghiêm ngặt:
+  - ZERO quyền truy cập vào tập TEST (TEST_OPENED=false, TEST_READ_COUNT=0)
   - Thực thi CUDA nghiêm ngặt trên NVIDIA GeForce RTX 3050 Ti Laptop GPU
-  - Cài đặt khung xác định (CUBLAS_WORKSPACE_CONFIG=:4096:8)
-  - dừng sớm (early stopping) đã đăng ký trước: kiên nhẫn=3 khi mất xác thực hoặc trần 12 epoch
-  - Hợp đồng checkpoint (checkpoint epoch + best_checkpoint.pt)
-  - Đánh giá probe tuyến tính hạ nguồn (downstream) trên các biểu diễn xác thực cố định (AP, ROC-AUC)
-  - Hợp đồng phương sai tiềm ẩn chống sụp đổ (Var(z) >= 0,01)
+  - Cài đặt framework xác định (CUBLAS_WORKSPACE_CONFIG=:4096:8)
+  - Dừng sớm (early stopping) đã đăng ký trước: patience=3 theo validation loss hoặc trần 12 epoch
+  - Hợp đồng checkpoint (checkpoint từng epoch + best_checkpoint.pt)
+  - Đánh giá bộ dò (probe) tuyến tính hạ nguồn trên các biểu diễn Validation đóng băng (AP, ROC-AUC)
+  - Ràng buộc phương sai không gian ẩn chống suy biến (Var(z) >= 0.01)
 """
 
 import os
@@ -165,9 +165,9 @@ def collate_sequence_ssl(batch: List[Dict[str, Any]], max_param_slots: int = 4) 
 
 def compute_ap_and_roc_auc(scores: np.ndarray, y_true: np.ndarray) -> Tuple[float, float]:
     """
-    Tính toán Độ chính xác Trung bình (AP) và ROC-AUC với khả năng xử lý dây buộc tiêu chuẩn.
-    Xác thực các lớp nhị phân (phải chứa cả 0 và 1).
-    Ưu tiên sklearn.metrics với dự phòng cho Mann-Whitney U.
+    Tính toán Average Precision (AP) và ROC-AUC với cơ chế xử lý đồng hạng chuẩn (standard tie handling).
+    Xác thực các lớp nhị phân (phải chứa cả nhãn 0 và 1).
+    Ưu tiên dùng sklearn.metrics và dự phòng bằng phép kiểm định Mann-Whitney U dựa trên thứ hạng phân số.
     """
     scores = np.asarray(scores, dtype=np.float64)
     y_true = np.asarray(y_true, dtype=np.int64)
@@ -221,14 +221,14 @@ def evaluate_downstream_linear_probe(
     device: str = "cuda"
 ) -> Dict[str, float]:
     """
-    Đánh giá bộ dò (probe) tuyến tính trên biểu diễn đóng băng (frozen representation) z (7.500 mẫu)
-    sử dụng phân chia huấn luyện/kiểm tra 80/20 trong nhóm biểu diễn xác thực.
+    Đánh giá bộ dò (probe) tuyến tính trên biểu diễn đóng băng z (7.500 mẫu)
+    sử dụng phép chia 80/20 train/test nội bộ trong tập biểu diễn Validation (Train/Val pool).
     """
     dev = torch.device(device if torch.cuda.is_available() and device == "cuda" else "cpu")
     y = torch.tensor(labels, dtype=torch.float32)
     N = len(labels)
     
-    # Sự phân chia xác định
+    # Phép chia phân tầng xác định
     rng = np.random.RandomState(seed)
     pos_idx = [i for i, val in enumerate(labels) if val == 1]
     neg_idx = [i for i, val in enumerate(labels) if val == 0]
@@ -399,7 +399,7 @@ def run_confirmatory_sequence_only(
         tr_time_min = (t_tr_end - t_tr_start) / 60.0
         train_times.append(tr_time_min)
 
-        # Xác thực
+        # Đánh giá trên tập Validation
         t_val_start = time.perf_counter()
         model.eval()
         val_losses = []
@@ -427,7 +427,7 @@ def run_confirmatory_sequence_only(
 
         print(f"[{run_id}] Epoch {epoch}/{max_epochs} | Train: {tr_time_min:.2f}m | Val: {val_time_min:.2f}m | Val Loss: {mean_val_loss:.4f}")
 
-        # Hợp đồng checkpoint
+        # Hợp đồng lưu checkpoint (Checkpoint Contract)
         ckpt_path = run_dir / f"checkpoint_epoch{epoch}.pt"
         ckpt_data = {
             "epoch": epoch,
@@ -455,7 +455,7 @@ def run_confirmatory_sequence_only(
                 early_stopped = True
                 break
 
-    # Trích xuất đại diện bằng cách sử dụng checkpoint tốt nhất
+    # Trích xuất biểu diễn bằng cách sử dụng best_checkpoint
     best_ckpt = torch.load(run_dir / "best_checkpoint.pt", weights_only=False)
     model.load_state_dict(best_ckpt["model_state_dict"])
     model.eval()
@@ -474,7 +474,7 @@ def run_confirmatory_sequence_only(
     assert z_all.shape == (7500, 128)
     latent_variance = float(torch.var(z_all, dim=0).mean().item())
 
-    # Đánh giá thăm dò
+    # Đánh giá bộ dò (probe)
     probe_labels = torch.load(base_dir / "experiments" / "runs" / "data" / "vault" / "hdfs_probe_labels_val.pt", weights_only=False)
     assert val_sids == probe_labels["session_ids"]
     probe_metrics = evaluate_downstream_linear_probe(z_all, probe_labels["labels"], seed=seed, device=device)
@@ -658,7 +658,7 @@ def run_confirmatory_multi_view(
         tr_time_min = (t_tr_end - t_tr_start) / 60.0
         train_times.append(tr_time_min)
 
-        # Xác thực
+        # Đánh giá trên tập Validation
         t_val_start = time.perf_counter()
         model.eval()
         val_losses = []
@@ -720,7 +720,7 @@ def run_confirmatory_multi_view(
                 early_stopped = True
                 break
 
-    # Trích xuất các biểu diễn từ checkpoint tốt nhất
+    # Trích xuất biểu diễn từ best_checkpoint
     best_ckpt = torch.load(run_dir / "best_checkpoint.pt", weights_only=False)
     model.load_state_dict(best_ckpt["model_state_dict"])
     model.eval()

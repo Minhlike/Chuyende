@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-Cổng xác minh trước khi thực hiện Canonical Giai đoạn A2 (Đã sửa đổi V1.2).
-Thực hiện xác minh dựa trên bằng chứng, không đóng:
-  1. Tổ tiên từ cơ sở đã đóng băng (frozen baseline) Giai đoạn A1
-  2. Tổng kiểm tra mật mã của hợp đồng & Khóa trước khi thực hiện
-  3. Tính toàn vẹn của Tarball HDFS thô
-  4. Băm artifact phân chia thực tế (SPL-HDFS-001)
-  5. Quyền phân chia kinh điển được chia sẻ và sự rời rạc
-  6. Tính chẵn lẻ của dấu thời gian và độ phân giải mili giây
-  7. Mối quan hệ nối đất và các ràng buộc thành phần
-  8. Bảo tồn đồ thị trên các phân vùng xác thực và huấn luyện đầy đủ
-  9. Tường lửa kiểm tra nghiêm ngặt (TestSetSealedError)
-  10. Trạng thái không thực thi (0 bước tối ưu hóa, 0 mô hình được huấn luyện)
-Đầu ra STAGE_A2_PREEXECUTION_READY=PASS hoặc STAGE_A2_PREEXECUTION_READY=FAIL.
+Cổng xác minh tiền thực thi chuẩn Stage A2 (Canonical Stage A2 Pre-Execution Verification Gate - Amended V1.2).
+Thực hiện xác minh nghiêm ngặt dựa trên bằng chứng theo cơ chế fail-closed đối với:
+  1. Nguồn gốc phả hệ từ nền tảng đóng băng Stage A1 (frozen baseline)
+  2. Checksum mật mã của các hợp đồng & Pre-Execution Lock
+  3. Tính toàn vẹn của tệp tarball thô HDFS
+  4. Mã băm artifact phân chia thực tế (SPL-HDFS-001)
+  5. Split Authority chuẩn dùng chung và tính rời rạc phân vùng
+  6. Tính tương đồng dấu thời gian và độ phân giải mili giây
+  7. Ràng buộc thành phần và ánh xạ quan hệ thực tế (Relation Grounding)
+  8. Bảo toàn đồ thị trên toàn bộ các phân vùng Train & Validation
+  9. Tường lửa Test nghiêm ngặt (Strict Test Firewall - TestSetSealedError)
+  10. Trạng thái Zero-Execution (0 bước tối ưu hóa, 0 mô hình được huấn luyện)
+Xuất kết quả STAGE_A2_PREEXECUTION_READY=PASS hoặc STAGE_A2_PREEXECUTION_READY=FAIL.
 """
 
 import sys
@@ -158,7 +158,7 @@ def verify_stage_a2_preexecution():
 
     print(f"[CHECK 5] Timestamp Parity & Millisecond Fidelity: Verified (delta = 0.0) (OK)")
 
-    # 7. Kiểm tra kiểm tra bảo tồn và vật chất hóa đồ thị đầy đủ
+    # 7. Kiểm toán hiện thực hóa đồ thị đầy đủ và bảo toàn đồ thị (Full Graph Materialization & Conservation Audits)
     mat_audit_path = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / "HDFS-GRAPH-MATERIALIZATION-AUDIT.json"
     rel_audit_path = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / "RELATION-GROUNDING-AUDIT.json"
 
@@ -178,7 +178,7 @@ def verify_stage_a2_preexecution():
             failures.append("SOME_RELATIONS_LACK_RAW_TRAIN_EVIDENCE")
         print(f"[CHECK 7] Relation Raw Grounding: All {rel_data.get('total_relations')} relations empirically grounded (OK)")
 
-    # 8. Tường lửa thiết lập kiểm tra (TestSetSealedError)
+    # 8. Tường lửa tập Test (Test Set Firewall - TestSetSealedError)
     builder = HDFSGraphBuilder(base_dir=base_dir, split_authority=split_auth)
     test_sealed_pass = False
     try:

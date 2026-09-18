@@ -57,8 +57,8 @@ def set_shape_text_formatted(tf: Any, lines_spec: list, default_font_size: float
 
 def draw_fig_2_1(canvas_raw: Any):
     """
-    Vẽ FIG 2.1: Kiến trúc mặt phẳng kép (Mặt phẳng huấn luyện & Mặt phẳng suy luận truyền phát)
-    Có thể chỉnh sửa Word Shapes Vẽ Canvas.
+    Vẽ FIG 2.1: Kiến trúc hai mặt phẳng Dual-Plane (Mặt phẳng Train / Training Plane & Streaming Inference Plane)
+    Vẽ trên Word Shapes Drawing Canvas có thể chỉnh sửa.
     """
     canvas = canvas_raw
     items = canvas.CanvasItems
@@ -69,7 +69,7 @@ def draw_fig_2_1(canvas_raw: Any):
     frame.Line.ForeColor.RGB = 0x334155
     frame.Line.Weight = 1.0
 
-    # Máy bay trên cùng: Máy bay huấn luyện
+    # Mặt phẳng trên: Training / Train Plane
     p_top = items.AddTextbox(1, 8.0, 8.0, 426.0, 62.0)
     p_top.Fill.Solid()
     p_top.Fill.ForeColor.RGB = 0xFFFFFF
@@ -211,8 +211,8 @@ def draw_fig_2_1(canvas_raw: Any):
 
 def draw_fig_2_2(canvas_raw: Any):
     """
-    Vẽ FIG 2.2: Kiến trúc trích xuất tuần tự ngữ nghĩa biến áp
-    Có thể chỉnh sửa Word Shapes Vẽ Canvas.
+    Vẽ FIG 2.2: Kiến trúc bộ trích xuất tuần tự ngữ nghĩa Transformer (Transformer Semantic-Sequential Extractor Architecture)
+    Vẽ trên Word Shapes Drawing Canvas có thể chỉnh sửa.
     """
     canvas = canvas_raw
     items = canvas.CanvasItems
@@ -284,7 +284,7 @@ def draw_fig_2_2(canvas_raw: Any):
     c2.Line.Weight = 1.2
     c2.Line.EndArrowheadStyle = 2
 
-    # 3. Ô 3: Bộ mã hóa máy biến áp (Giữa bên phải)
+    # 3. Ô 3: Transformer Encoder (Giữa bên phải)
     b3 = items.AddTextbox(1, 230.0, 8.0, 116.0, 144.0)
     b3.Fill.Solid()
     b3.Fill.ForeColor.RGB = 0xFFFFFF
@@ -496,8 +496,8 @@ def draw_fig_2_4(canvas_raw: Any):
     canvas = canvas_raw
     items = canvas.CanvasItems
 
-    # Bốn giai đoạn bằng nhau: khe chính xác của chúng được chuẩn hóa lại bằng
-    # ShapeRange.Align/Phân phối bên dưới, thay vì dựa vào khe trực quan.
+    # Bốn giai đoạn bằng nhau: vị trí chính xác của chúng được chuẩn hóa lại bằng
+    # ShapeRange.Align/Distribute bên dưới, thay vì chỉ dựa vào bố cục trực quan.
     stage_x = [8.0, 116.0, 224.0, 332.0]
     stage_width = 100.0
     stage_top = 10.0
