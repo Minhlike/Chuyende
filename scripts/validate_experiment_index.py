@@ -47,8 +47,45 @@ def validate_experiment_index(csv_path: str = "experiments/experiment_index.csv"
 
         prefix = f"Row {idx} ({run_id}):"
 
-        # 1. Manifest file existence
+        m_avail = row.get("manifest_availability", "").strip()
+        csv_m_hash = row.get("manifest_sha256", "").strip()
+
+        # 1. Manifest file existence and SHA-256 validation
+        if m_avail not in ["AVAILABLE_IN_GIT", "LOCAL_EVIDENCE_ONLY"]:
+            errors.append(f"{prefix} invalid manifest_availability: '{m_avail}'")
+            continue
+
         full_m_path = repo_root / m_path
+        if m_avail == "AVAILABLE_IN_GIT":
+            try:
+                import subprocess, hashlib
+                git_bytes = subprocess.check_output(
+                    ["git", "show", f"HEAD:{m_path}"],
+                    cwd=repo_root,
+                    stderr=subprocess.PIPE
+                )
+                computed_hash = hashlib.sha256(git_bytes).hexdigest()
+                if computed_hash.lower() != csv_m_hash.lower():
+                    errors.append(
+                        f"{prefix} manifest_sha256 mismatch for AVAILABLE_IN_GIT: "
+                        f"CSV={csv_m_hash} vs Git={computed_hash}"
+                    )
+            except Exception as e:
+                errors.append(f"{prefix} failed to read manifest from git at {m_path}: {e}")
+                continue
+        elif m_avail == "LOCAL_EVIDENCE_ONLY":
+            if not full_m_path.exists():
+                errors.append(f"{prefix} LOCAL_EVIDENCE_ONLY manifest not found on disk at {m_path}")
+                continue
+            import hashlib
+            data = full_m_path.read_bytes()
+            computed_hash = hashlib.sha256(data).hexdigest()
+            if computed_hash.lower() != csv_m_hash.lower():
+                errors.append(
+                    f"{prefix} manifest_sha256 mismatch for LOCAL_EVIDENCE_ONLY: "
+                    f"CSV={csv_m_hash} vs Disk={computed_hash}"
+                )
+
         if not full_m_path.exists():
             errors.append(f"{prefix} manifest not found at {m_path}")
             continue
@@ -133,7 +170,73 @@ def validate_experiment_index(csv_path: str = "experiments/experiment_index.csv"
     print("[VALIDATOR-PASS] 100% records in experiment_index.csv match source JSON artifacts!")
     return True
 
+def validate_artifact_manifest(manifest_path: str = "experiments/nineplus/ARTIFACT-MANIFEST.json") -> bool:
+    repo_root = Path(__file__).resolve().parent.parent
+    full_manifest_path = repo_root / manifest_path
+    if not full_manifest_path.exists():
+        print(f"[VALIDATOR-FAIL] ARTIFACT-MANIFEST not found at: {full_manifest_path}")
+        return False
+
+    with open(full_manifest_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    artifacts = data.get("artifacts", [])
+    print(f"[VALIDATOR] Validating {len(artifacts)} cataloged artifacts in {manifest_path}...")
+    errors = []
+
+    for art in artifacts:
+        rel_path = art.get("relative_path", "")
+        avail = art.get("availability", "")
+        exp_size = art.get("size_bytes")
+        exp_sha = art.get("sha256")
+        target_file = repo_root / rel_path
+
+        if avail == "AVAILABLE_IN_GIT":
+            try:
+                import subprocess, hashlib
+                git_bytes = subprocess.check_output(
+                    ["git", "show", f"HEAD:{rel_path}"],
+                    cwd=repo_root,
+                    stderr=subprocess.PIPE
+                )
+                actual_size = len(git_bytes)
+                actual_sha = hashlib.sha256(git_bytes).hexdigest()
+                if actual_size != exp_size:
+                    errors.append(f"{rel_path} git size mismatch: exp={exp_size} vs actual={actual_size}")
+                if actual_sha.lower() != str(exp_sha).lower():
+                    errors.append(f"{rel_path} git sha mismatch: exp={exp_sha} vs actual={actual_sha}")
+            except Exception as e:
+                errors.append(f"{rel_path} failed to read from git: {e}")
+        elif avail == "LOCAL_ONLY":
+            if not target_file.exists():
+                errors.append(f"{rel_path} marked LOCAL_ONLY but does not exist on disk (must be UNVERIFIED_LOCAL_ONLY)")
+            else:
+                import hashlib
+                raw_bytes = target_file.read_bytes()
+                actual_size = len(raw_bytes)
+                actual_sha = hashlib.sha256(raw_bytes).hexdigest()
+                if actual_size != exp_size:
+                    errors.append(f"{rel_path} disk size mismatch: exp={exp_size} vs actual={actual_size}")
+                if actual_sha.lower() != str(exp_sha).lower():
+                    errors.append(f"{rel_path} disk sha mismatch: exp={exp_sha} vs actual={actual_sha}")
+        elif avail == "UNVERIFIED_LOCAL_ONLY":
+            if exp_size is not None or exp_sha is not None:
+                errors.append(f"{rel_path} marked UNVERIFIED_LOCAL_ONLY but size/sha are not null")
+        else:
+            errors.append(f"{rel_path} unknown availability: {avail}")
+
+    if errors:
+        print("[VALIDATOR-FAIL] ARTIFACT-MANIFEST discrepancies:")
+        for err in errors:
+            print(f"  - {err}")
+        return False
+
+    print("[VALIDATOR-PASS] 100% artifacts in ARTIFACT-MANIFEST.json verified!")
+    return True
+
 if __name__ == "__main__":
-    valid = validate_experiment_index()
-    if not valid:
+    v1 = validate_experiment_index()
+    v2 = validate_artifact_manifest()
+    if not (v1 and v2):
         sys.exit(1)
+    sys.exit(0)

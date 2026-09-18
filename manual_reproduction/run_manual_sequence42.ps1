@@ -3,7 +3,9 @@
 # Dự án: Chuyên đề chuyên sâu - Học biểu diễn đặc trưng log an ninh
 # =====================================================================
 [CmdletBinding()]
-param()
+param(
+    [switch]$PreflightOnly
+)
 
 $ErrorActionPreference = "Stop"
 
@@ -114,6 +116,17 @@ foreach ($relPath in $RequiredFiles) {
 
     $DataHashes[$fileName] = $actualHash
     Write-Host "  [OK] $fileName : $actualHash" -ForegroundColor Green
+}
+
+if ($PreflightOnly) {
+    Write-Host "`n=====================================================================" -ForegroundColor Green
+    Write-Host "  [PREFLIGHT-PASS] KIỂM TRA TIỀN THỰC THI THÀNH CÔNG 100%!" -ForegroundColor Green
+    Write-Host "  - GPU Smoke Test: PASS (Zero Model Training, 1024x1024 matmul)" -ForegroundColor Green
+    Write-Host "  - Hash Validation: 4/4 tệp dữ liệu khớp 100% với ARTIFACT-MANIFEST.json" -ForegroundColor Green
+    Write-Host "  - Runtime & Environment: Đạt chuẩn xác định và sẵn sàng cho sinh viên chạy thủ công." -ForegroundColor Green
+    Write-Host "  - Chế độ -PreflightOnly: Dừng trước bước huấn luyện theo yêu cầu kiểm tra." -ForegroundColor Green
+    Write-Host "=====================================================================" -ForegroundColor Green
+    exit 0
 }
 
 # 6. Khởi tạo thư mục phiên chạy

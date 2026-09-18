@@ -86,30 +86,46 @@ def run_smoke_test() -> bool:
     except Exception as e:
         checks.append(("PyG (torch_geometric)", expected_pyg, f"ERROR: {e}", "FAIL"))
 
-    # Check 5: Core Dependencies
-    deps = [
+    # Check 5: Hard Core Dependencies for Manual Training
+    hard_deps = [
         ("numpy", "numpy"),
         ("scipy", "scipy"),
-        ("pandas", "pandas"),
         ("scikit-learn", "sklearn"),
         ("psutil", "psutil")
     ]
-    missing_deps = []
-    for pkg_name, mod_name in deps:
+    for pkg_name, mod_name in hard_deps:
         try:
-            __import__(mod_name)
+            mod = __import__(mod_name)
+            ver = getattr(mod, "__version__", "INSTALLED")
+            checks.append((f"Dep: {pkg_name}", "Installed", ver, "PASS"))
         except ImportError:
-            missing_deps.append(pkg_name)
-    if not missing_deps:
-        checks.append(("Core Dependencies", "All installed", "numpy,scipy,pandas,sklearn,psutil", "PASS"))
-    else:
-        checks.append(("Core Dependencies", "All installed", f"Missing: {','.join(missing_deps)}", "FAIL"))
+            checks.append((f"Dep: {pkg_name}", "Installed", "NOT_INSTALLED", "FAIL"))
+        except Exception as e:
+            checks.append((f"Dep: {pkg_name}", "Installed", f"ERROR: {e}", "FAIL"))
 
-    # Check 6: GPU Tensor Transfer and Matrix Multiply
+    # Check 5b: DOCUMENT_QA_OPTIONAL (Non-blocking / informational only)
+    optional_deps = [
+        ("pandas", "pandas"),
+        ("python-docx", "docx"),
+        ("pypdfium2", "pypdfium2"),
+        ("pywin32", "win32api")
+    ]
+    for pkg_name, mod_name in optional_deps:
+        try:
+            mod = __import__(mod_name)
+            ver = getattr(mod, "__version__", "INSTALLED")
+            checks.append((f"Opt: {pkg_name}", "Optional (DocQA)", ver, "OPTIONAL"))
+        except ImportError:
+            checks.append((f"Opt: {pkg_name}", "Optional (DocQA)", "NOT_INSTALLED", "OPTIONAL"))
+        except Exception as e:
+            checks.append((f"Opt: {pkg_name}", "Optional (DocQA)", f"ERROR: {e}", "OPTIONAL"))
+
+    # Check 6: GPU Tensor Transfer and Matrix Multiply (Strictly 1024x1024)
     if cuda_avail and torch is not None:
         try:
-            a = torch.tensor([[1.0, 2.0], [3.0, 4.0]])
-            b = torch.tensor([[5.0, 6.0], [7.0, 8.0]])
+            torch.manual_seed(42)
+            a = torch.randn(1024, 1024, dtype=torch.float32)
+            b = torch.randn(1024, 1024, dtype=torch.float32)
             c_cpu = torch.matmul(a, b)
 
             a_gpu = a.to("cuda:0")
@@ -117,26 +133,27 @@ def run_smoke_test() -> bool:
             c_gpu = torch.matmul(a_gpu, b_gpu)
             c_from_gpu = c_gpu.to("cpu")
 
-            if torch.allclose(c_cpu, c_from_gpu, atol=1e-4):
-                checks.append(("GPU matmul & transfer", "allclose == True", "Verified on cuda:0", "PASS"))
+            if torch.allclose(c_cpu, c_from_gpu, atol=1e-3):
+                checks.append(("GPU matmul (1024x1024)", "allclose == True", "Verified on cuda:0", "PASS"))
             else:
-                checks.append(("GPU matmul & transfer", "allclose == True", "Mismatch detected", "FAIL"))
+                checks.append(("GPU matmul (1024x1024)", "allclose == True", "Mismatch detected", "FAIL"))
         except Exception as e:
-            checks.append(("GPU matmul & transfer", "allclose == True", f"ERROR: {e}", "FAIL"))
+            checks.append(("GPU matmul (1024x1024)", "allclose == True", f"ERROR: {e}", "FAIL"))
     else:
-        checks.append(("GPU matmul & transfer", "allclose == True", "SKIPPED (CUDA unavailable)", "FAIL"))
+        checks.append(("GPU matmul (1024x1024)", "allclose == True", "SKIPPED (CUDA unavailable)", "FAIL"))
 
     # Print Table
     print(f"{'CHECK ITEM':<26} | {'EXPECTED':<16} | {'OBSERVED':<20} | {'STATUS'}")
     print("-" * 75)
     all_passed = True
     for item, expected, observed, status in checks:
-        if status != "PASS":
+        if status == "FAIL":
             all_passed = False
         # Truncate observed if too long
         obs_display = (observed[:18] + "..") if len(observed) > 20 else observed
         exp_display = (expected[:14] + "..") if len(expected) > 16 else expected
-        print(f"{item:<26} | {exp_display:<16} | {obs_display:<20} | [{status}]")
+        status_display = f"[{status}]"
+        print(f"{item:<26} | {exp_display:<16} | {obs_display:<20} | {status_display}")
     print("-" * 75)
 
     if all_passed:

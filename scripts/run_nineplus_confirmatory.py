@@ -163,57 +163,6 @@ def collate_sequence_ssl(batch: List[Dict[str, Any]], max_param_slots: int = 4) 
 # DOWNSTREAM LINEAR PROBE EVALUATOR
 # =====================================================================
 
-def evaluate_downstream_linear_probe(
-    z_all: torch.Tensor,
-    labels: List[int],
-    seed: int = 42,
-    device: str = "cuda"
-) -> Dict[str, float]:
-    """
-    Evaluates linear probe on frozen representation z (7,500 samples)
-    using an 80/20 train/test split within the validation representation pool.
-    """
-    dev = torch.device(device if torch.cuda.is_available() else "cpu")
-    y = torch.tensor(labels, dtype=torch.float32)
-    N = len(labels)
-    
-    # Deterministic split
-    rng = np.random.RandomState(seed)
-    pos_idx = [i for i, val in enumerate(labels) if val == 1]
-    neg_idx = [i for i, val in enumerate(labels) if val == 0]
-    
-    rng.shuffle(pos_idx)
-    rng.shuffle(neg_idx)
-    
-    n_pos_train = int(len(pos_idx) * 0.8)
-    n_neg_train = int(len(neg_idx) * 0.8)
-    
-    train_idx = pos_idx[:n_pos_train] + neg_idx[:n_neg_train]
-    test_idx = pos_idx[n_pos_train:] + neg_idx[n_neg_train:]
-    rng.shuffle(train_idx)
-    rng.shuffle(test_idx)
-    
-    z_train = z_all[train_idx].to(dev)
-    y_train = y[train_idx].to(dev)
-    z_test = z_all[test_idx].to(dev)
-    y_test = y[test_idx].numpy()
-    
-    probe = nn.Linear(128, 1).to(dev)
-    optimizer = torch.optim.AdamW(probe.parameters(), lr=1e-2, weight_decay=1e-4)
-    criterion = nn.BCEWithLogitsLoss()
-    
-    probe.train()
-    batch_size = 256
-    for ep in range(50):
-        perm = torch.randperm(len(train_idx))
-        for b_start in range(0, len(train_idx), batch_size):
-            b_ids = perm[b_start:b_start + batch_size]
-            optimizer.zero_grad()
-            logits = probe(z_train[b_ids]).squeeze(-1)
-            loss = criterion(logits, y_train[b_ids])
-            loss.backward()
-            optimizer.step()
-            
 def compute_ap_and_roc_auc(scores: np.ndarray, y_true: np.ndarray) -> Tuple[float, float]:
     """
     Computes Average Precision (AP) and ROC-AUC with standard tie handling.
@@ -265,40 +214,62 @@ def compute_ap_and_roc_auc(scores: np.ndarray, y_true: np.ndarray) -> Tuple[floa
 
         return ap, auc
 
-def evaluate_linear_probe(
-    z_train: torch.Tensor,
-    y_train: torch.Tensor,
-    z_test: torch.Tensor,
-    y_test: torch.Tensor,
-    seed: int = 10007,
-    epochs: int = 50,
-    lr: float = 0.001
+def evaluate_downstream_linear_probe(
+    z_all: torch.Tensor,
+    labels: List[int],
+    seed: int = 42,
+    device: str = "cuda"
 ) -> Dict[str, float]:
-    set_all_seeds(seed)
-    dev = z_train.device
+    """
+    Evaluates linear probe on frozen representation z (7,500 samples)
+    using an 80/20 train/test split within the validation representation pool.
+    """
+    dev = torch.device(device if torch.cuda.is_available() and device == "cuda" else "cpu")
+    y = torch.tensor(labels, dtype=torch.float32)
+    N = len(labels)
+    
+    # Deterministic split
+    rng = np.random.RandomState(seed)
+    pos_idx = [i for i, val in enumerate(labels) if val == 1]
+    neg_idx = [i for i, val in enumerate(labels) if val == 0]
+    
+    rng.shuffle(pos_idx)
+    rng.shuffle(neg_idx)
+    
+    n_pos_train = int(len(pos_idx) * 0.8)
+    n_neg_train = int(len(neg_idx) * 0.8)
+    
+    train_idx = pos_idx[:n_pos_train] + neg_idx[:n_neg_train]
+    test_idx = pos_idx[n_pos_train:] + neg_idx[n_neg_train:]
+    rng.shuffle(train_idx)
+    rng.shuffle(test_idx)
+    
+    z_train = z_all[train_idx].to(dev)
+    y_train = y[train_idx].to(dev)
+    z_test = z_all[test_idx].to(dev)
+    y_test = y[test_idx].numpy()
     
     probe = nn.Linear(128, 1).to(dev)
-    optimizer = torch.optim.AdamW(probe.parameters(), lr=lr, weight_decay=1e-4)
+    optimizer = torch.optim.AdamW(probe.parameters(), lr=1e-2, weight_decay=1e-4)
     criterion = nn.BCEWithLogitsLoss()
     
     probe.train()
     batch_size = 256
-    n_train = z_train.shape[0]
-    for ep in range(epochs):
-        perm = torch.randperm(n_train)
-        for b_start in range(0, n_train, batch_size):
+    for ep in range(50):
+        perm = torch.randperm(len(train_idx))
+        for b_start in range(0, len(train_idx), batch_size):
             b_ids = perm[b_start:b_start + batch_size]
             optimizer.zero_grad()
             logits = probe(z_train[b_ids]).squeeze(-1)
             loss = criterion(logits, y_train[b_ids])
             loss.backward()
             optimizer.step()
-            
+
     probe.eval()
     with torch.no_grad():
         test_logits = probe(z_test).squeeze(-1)
         test_scores = torch.sigmoid(test_logits).cpu().numpy()
-        y_test_np = y_test.cpu().numpy() if isinstance(y_test, torch.Tensor) else np.asarray(y_test)
+        y_test_np = y_test if isinstance(y_test, np.ndarray) else y_test.cpu().numpy()
 
     ap, auc = compute_ap_and_roc_auc(test_scores, y_test_np)
     return {"probe_ap": ap, "probe_roc_auc": auc}

@@ -55,8 +55,15 @@ Các tệp dữ liệu sau đây không lưu trong Git (theo quy định `.gitig
 
 ## 3. LỆNH CHẠY THỰC NGHIỆM ĐỘC LẬP
 
-Sinh viên chỉ cần mở PowerShell thông thường tại thư mục dự án và thực thi duy nhất một lệnh:
+### 3.1. Kiểm tra tiền thực thi (Preflight Check - Không chạy huấn luyện)
+Sinh viên hoặc reviewer có thể kiểm tra toàn diện GPU, môi trường xác định và tính toàn vẹn 4 tệp dữ liệu mà không tốn thời gian huấn luyện:
+```powershell
+powershell -ExecutionPolicy Bypass -File manual_reproduction\run_manual_sequence42.ps1 -PreflightOnly
+```
+Kỳ vọng in ra `[PREFLIGHT-PASS]` với mã thoát 0.
 
+### 3.2. Huấn luyện thực tế (Full Training Run)
+Khi sẵn sàng thực hiện huấn luyện thực tế (~13.6 phút):
 ```powershell
 powershell -ExecutionPolicy Bypass -File manual_reproduction\run_manual_sequence42.ps1
 ```
