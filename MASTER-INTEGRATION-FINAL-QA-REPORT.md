@@ -11,10 +11,10 @@
 
 | Chỉ tiêu kỹ thuật | Trước khi chỉnh sửa (Baseline) | Sau khi chỉnh sửa (Post-Integration) | Trạng thái nghiệm thu |
 | :--- | :--- | :--- | :--- |
-| **DOCX File Size** | 2,377,692 bytes | 2,570,754 bytes | ĐẠT CHUẨN |
-| **DOCX SHA-256** | `2c8402fe7e908134d5638d44f7559b9f705c68606325238dc2111b6fb6110b40` | `1820f2b91ef0bb68b5d49b4cb5c043e7b0d4984c19ffaa58d267effffe95708c` | ĐÃ CẬP NHẬT |
-| **PDF File Size** | 2,419,057 bytes | 3,195,276 bytes | ĐẠT CHUẨN |
-| **PDF SHA-256** | `2db3ff17791f727aee75186c024521a5b47f7b5cefff42c2059428614bb2709d` | `5afac098eb686ece952bdf259d2dca26c6eb94c60d02c4daae55edd3fbafc3bc` | ĐÃ CẬP NHẬT |
+| **DOCX File Size** | 2,377,692 bytes | 8,772,054 bytes | ĐẠT CHUẨN (Nhúng đầy đủ font) |
+| **DOCX SHA-256** | `2c8402fe7e908134d5638d44f7559b9f705c68606325238dc2111b6fb6110b40` | `af99e98e382c78e3197a02b58ea44b042a51883f1b503c76d539d4f666c3e010` | ĐÃ CẬP NHẬT |
+| **PDF File Size** | 2,419,057 bytes | 3,194,941 bytes | ĐẠT CHUẨN |
+| **PDF SHA-256** | `2db3ff17791f727aee75186c024521a5b47f7b5cefff42c2059428614bb2709d` | `a985ad41a62bf970edddf63c974b3e53606655919784b0e15e3c1a48390c7e4a` | ĐÃ CẬP NHẬT |
 | **PDF Page Count** | 114 trang | **121 trang** | ĐO ĐẠC THỰC TẾ |
 | **Nút công thức OMML** | **606 nút** (`<m:oMath>`) | **606 nút** (`<m:oMath>`) | BẢO TOÀN TUYỆT ĐỐI (606 → 606) |
 | **Đoạn công thức OMML** | 98 đoạn (`<m:oMathPara>`) | 98 đoạn (`<m:oMathPara>`) | BẢO TOÀN TUYỆT ĐỐI (98 → 98) |
