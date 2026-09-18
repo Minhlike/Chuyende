@@ -1,5 +1,5 @@
 """
-Claim Ledger Interface (RC-04..RC-07, RC-13)
+Giao diện sổ cái yêu cầu bồi thường (RC-04..RC-07, RC-13)
 """
 
 from typing import List, Optional
@@ -12,7 +12,7 @@ from research_agent.storage.repository import ResearchRepository
 
 
 class ClaimLedger:
-    """Manages the lifecycle, epistemic status, and verification of scientific claims."""
+    """Quản lý vòng đời, trạng thái dịch bệnh và xác minh các tuyên bố khoa học."""
 
     def __init__(self, repository: ResearchRepository):
         self.repo = repository
@@ -30,7 +30,7 @@ class ClaimLedger:
         experiment_run_id: Optional[str] = None,
         falsification_conditions: Optional[str] = None,
     ) -> Claim:
-        """Register a new atomic claim with deterministic stable ID."""
+        """Đăng ký yêu cầu nguyên tử mới với ID ổn định xác định."""
         claim_id = self.repo.next_id(EntityPrefix.CLAIM)
         claim = Claim(
             claim_id=claim_id,
@@ -48,7 +48,7 @@ class ClaimLedger:
         return self.repo.save_claim(claim)
 
     def link_evidence(self, claim_id: str, evidence_id: str) -> Claim:
-        """Attach an authenticated evidence item to a claim."""
+        """Đính kèm một mục bằng chứng đã được xác thực vào yêu cầu bồi thường."""
         claim = self.repo.get_claim(claim_id)
         if not claim:
             raise EntityNotFoundError(f"Claim '{claim_id}' not found.")
@@ -68,13 +68,13 @@ class ClaimLedger:
         description: str,
         divergence_notes: Optional[str] = None,
     ) -> ContradictionRecord:
-        """Record an explicit contradiction between two claims (RC-13) and update epistemic states."""
+        """Ghi lại sự mâu thuẫn rõ ràng giữa hai tuyên bố (RC-13) và cập nhật các trạng thái nhận thức."""
         claim_a = self.repo.get_claim(claim_a_id)
         claim_b = self.repo.get_claim(claim_b_id)
         if not claim_a or not claim_b:
             raise EntityNotFoundError("Both conflicting claims must exist in the Claim Ledger.")
 
-        # Update epistemic status to CONTESTED if previously SUPPORTED or UNVERIFIED
+        # Cập nhật trạng thái dịch bệnh thành CONTESTED nếu trước đó là SUPPORTED hoặc UNVERIFIED
         if claim_a.epistemic_status in (EpistemicStatus.SUPPORTED, EpistemicStatus.UNVERIFIED):
             claim_a.epistemic_status = EpistemicStatus.CONTESTED
             self.repo.save_claim(claim_a)

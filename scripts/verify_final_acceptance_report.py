@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Canonical Acceptance Report Validator Gate
-Verifies:
-1. HEAD and Master SHA provenance.
-2. 44/44 exact citation metadata match with CITATION-INTEGRITY-AUDIT.json.
-3. 44 reference numbers unique and sequential (1..44).
-4. Zero forbidden stale hallucinated strings.
-5. Strict claim discipline (no ungrounded absolute buzzwords).
+Cổng xác thực báo cáo chấp nhận chuẩn
+Xác minh:
+1. Xuất xứ HEAD và Master SHA.
+2. Siêu dữ liệu trích dẫn chính xác 44/44 khớp với CITATION-INTEGRITY-AUDIT.json.
+3. 44 số tham chiếu duy nhất và tuần tự (1..44).
+4. Không có dây ảo giác cũ bị cấm.
+5. Kỷ luật yêu cầu nghiêm ngặt (không có từ thông dụng tuyệt đối vô căn cứ).
 """
 
 import sys
@@ -39,7 +39,7 @@ def verify_report():
 
     errors = []
 
-    # 1. Verify Master SHA Immutability
+    # 1. Xác minh tính bất biến (invariance) của Master SHA
     with open(docx_path, 'rb') as f:
         actual_docx_sha = hashlib.sha256(f.read()).hexdigest()
     with open(pdf_path, 'rb') as f:
@@ -58,14 +58,14 @@ def verify_report():
     else:
         print(f"[PASS] Master PDF hash verified: {actual_pdf_sha[:16]}...")
 
-    # 2. Verify Provenance Head metadata in Report
+    # 2. Xác minh siêu dữ liệu Đầu xuất xứ trong Báo cáo
     expected_accepted_head = "807ed9fdaeac4959ce4dd19b499c8cd27ab9d5d1"
     if f"THESIS_MASTER_ACCEPTED_AT_SHA: {expected_accepted_head}" not in report_text:
         errors.append(f"Report missing expected THESIS_MASTER_ACCEPTED_AT_SHA: {expected_accepted_head}")
     else:
         print(f"[PASS] THESIS_MASTER_ACCEPTED_AT_SHA verified: {expected_accepted_head[:16]}...")
 
-    # 3. Check Forbidden Stale Strings
+    # 3. Kiểm tra các chuỗi cũ bị cấm
     forbidden_strings = [
         "[1] Pasquier",
         "[2] Hassan",
@@ -80,14 +80,14 @@ def verify_report():
     if not any(stale in report_text for stale in forbidden_strings):
         print("[PASS] Zero forbidden stale strings detected.")
 
-    # 4. Verify Citations against CITATION-INTEGRITY-AUDIT.json
+    # 4. Xác minh các trích dẫn dựa trên CITATION-INTEGRITY-AUDIT.json
     with open(audit_path, 'r', encoding='utf-8') as f:
         audit_data = json.load(f)
 
     audit_data = sorted(audit_data, key=lambda x: x['reference_number'])
     audit_dict = {x['reference_number']: x for x in audit_data}
 
-    # Extract all citation lines: ^- \[(\d+)\]
+    # Trích xuất tất cả các dòng trích dẫn: ^- \[(\d+)\]
     citation_lines = re.findall(r'^-\s+\[\d+\].+$', report_text, re.MULTILINE)
     print(f"Citation lines extracted from report: {len(citation_lines)}")
 
@@ -145,7 +145,7 @@ def verify_report():
     if not any(f"[{r_num}]" in err for err in errors):
         print("[PASS] 44/44 citation entries matched exact equality with CITATION-INTEGRITY-AUDIT.json across all 8 fields.")
 
-    # 5. Check Claim Discipline
+    # 5. Kiểm tra kỷ luật yêu cầu bồi thường
     buzzwords = ["tuyệt đối đúng", "hoàn hảo", "phủ kín", "chính xác tuyệt đối"]
     for bw in buzzwords:
         if bw in report_text.lower():

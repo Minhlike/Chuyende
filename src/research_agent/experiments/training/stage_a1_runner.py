@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Canonical Stage A1 Self-Supervised Training Runner
-Executes sequence-only multi-task pretraining on HDFS and BGL datasets across 5 canonical seeds:
-  - Architecture: 4-layer Transformer Encoder (d_model=128, H=4, d_ffn=512, dropout=0.10, max_seq_len=128)
-  - Parameter Representation: BOUNDED_MULTI_SLOT_TYPED_PARAMETER_SET_K4
-  - Objective: L_seq = 1.0 * L_MEP + 1.0 * L_MPP + 0.1 * L_time
-  - Optimization: AdamW (lr=5e-4, wd=0.01), Linear Warmup + Cosine Decay, micro_batch=16, grad_accum=4 (effective batch=64)
-  - Validation: Once per completed epoch, patience=3 epochs, checkpoint selection on minimum Validation L_seq
-  - Absolute Test Firewall: TestSetSealedError enforced, zero test access.
+Người chạy đào tạo tự giám sát giai đoạn A1 của Canonical
+Thực hiện đào tạo trước đa tác vụ chỉ theo trình tự trên bộ dữ liệu HDFS và BGL trên 5 hạt giống chính tắc:
+  - Kiến trúc: Bộ mã hóa máy biến áp 4 lớp (d_model=128, H=4, d_ffn=512, dropout=0,10, max_seq_len=128)
+  - Biểu diễn tham số: BOUNDED_MULTI_SLOT_TYPED_PARAMETER_SET_K4
+  - Mục tiêu: L_seq = 1,0 * L_MEP + 1,0 * L_MPP + 0,1 * L_time
+  - Tối ưu hóa: AdamW (lr=5e-4, wd=0,01), Khởi động tuyến tính + Phân rã Cosine, micro_batch=16, grad_accum=4 (lô hiệu quả=64)
+  - Xác thực: Một lần cho mỗi epoch đã hoàn thành, kiên nhẫn=3 epoch, lựa chọn checkpoint ở mức Xác thực tối thiểu L_seq
+  - Tường lửa kiểm tra tuyệt đối: TestSetSealedError được thực thi, không có quyền truy cập kiểm tra.
 """
 
 import os
@@ -39,7 +39,7 @@ from research_agent.experiments.data.data_contract import (
 from research_agent.experiments.extractor.sequence_view import SequenceViewExtractor
 
 class TestSetSealedError(Exception):
-    """Raised when any code attempts to access the sealed Test split or test labels."""
+    """Xảy ra khi bất kỳ mã nào cố gắng truy cập vào phần phân chia Kiểm tra hoặc nhãn kiểm tra đã được niêm phong."""
     __test__ = False
 
 class SequenceSSLDataset(Dataset):
@@ -251,10 +251,10 @@ class StageA1Trainer:
 
     def _apply_mep_masking(self, sequences: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         """
-        15% Bernoulli masking on non-padding tokens:
+        Mặt nạ Bernoulli 15% trên các token không đệm:
           - 80% [MASK] = 2
-          - 10% random token from [3, event_vocab_size-1]
-          - 10% unchanged
+          - 10% token ngẫu nhiên từ [3, event_vocab_size-1]
+          - 10% không đổi
         """
         masked = sequences.clone()
         targets = sequences.clone()
@@ -268,20 +268,20 @@ class StageA1Trainer:
         mask_pos = mep_mask & (decision < 0.80)
         masked[mask_pos] = 2  # <MASK> = 2
 
-        # 10% Random
+        # 10% ngẫu nhiên
         rand_pos = mep_mask & (decision >= 0.80) & (decision < 0.90)
         if rand_pos.any():
             random_tokens = torch.randint(3, max(4, self.event_vocab_size), sequences.shape, device=sequences.device)
             masked[rand_pos] = random_tokens[rand_pos]
 
-        # 10% Unchanged (masked remains unchanged, but included in mep_mask for target prediction)
+        # 10% không thay đổi (mặt nạ vẫn không thay đổi, nhưng được đưa vào mep_mask để dự đoán mục tiêu)
         return masked, targets, mep_mask
 
     def _apply_mpp_masking(self, param_slots: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         """
-        15% Bernoulli masking per active parameter slot (excludes <PAD_PARAM> = 1):
-          - Replaces masked slot with <MASK_PARAM> = 2
-          - Target is original parameter slot ID
+        Mặt nạ Bernoulli 15% cho mỗi khe tham số hoạt động (không bao gồm <PAD_PARAM> = 1):
+          - Thay thế khe bị che bằng <MASK_PARAM> = 2
+          - Mục tiêu là ID khe tham số gốc
         """
         masked = param_slots.clone()
         targets = param_slots.clone()
@@ -326,7 +326,7 @@ class StageA1Trainer:
             l_time = losses["L_time"]
             total_loss = (self.lambda_MEP * l_mep) + (self.lambda_MPP * l_mpp) + (self.lambda_time * l_time)
             
-            # Scale loss for gradient accumulation
+            # Mất quy mô để tích lũy độ dốc
             loss_accum = total_loss / self.gradient_accumulation_steps
             loss_accum.backward()
 
@@ -337,10 +337,10 @@ class StageA1Trainer:
             micro_step += 1
 
             if micro_step % self.gradient_accumulation_steps == 0 or (batch_idx + 1) == len(self.train_loader):
-                # Gradient clipping
+                # Cắt bớt độ dốc
                 torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=self.clip_norm)
                 
-                # Check health gates (NaN / Inf)
+                # Kiểm tra cổng sức khỏe (NaN/Inf)
                 for p in self.model.parameters():
                     if p.grad is not None:
                         if torch.isnan(p.grad).any() or torch.isinf(p.grad).any():
@@ -480,11 +480,11 @@ class StageA1Trainer:
 
             val_l_seq = val_metrics["val_loss_seq"]
             
-            # Track hardware usage
+            # Theo dõi việc sử dụng phần cứng
             ram_mb = process.memory_info().rss / (1024 * 1024)
             vram_mb = (torch.cuda.max_memory_allocated() / (1024 * 1024)) if torch.cuda.is_available() else 0.0
 
-            # Log to files
+            # Đăng nhập vào tập tin
             with open(train_log_path, "a", encoding="utf-8") as f:
                 f.write(json.dumps({
                     "epoch": epoch,
@@ -505,7 +505,7 @@ class StageA1Trainer:
                     "vram_mb": vram_mb
                 }) + "\n")
 
-            # Checkpoint selection on minimum Validation L_seq
+            # Lựa chọn checkpoint khi xác thực tối thiểu L_seq
             if val_l_seq < (best_val_loss - 1e-4):
                 best_val_loss = val_l_seq
                 patience_counter = 0

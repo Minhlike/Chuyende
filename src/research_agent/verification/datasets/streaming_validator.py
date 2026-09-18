@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Streaming Dataset Validator and Integrity Auditor
-Provides memory-bounded streaming validation for HDFS, BGL, DARPA TC, and LANL logs.
-Enforces D-drive storage policies and prevents out-of-memory errors on multi-GB datasets.
+Trình xác thực tập dữ liệu trực tuyến và Trình kiểm tra tính toàn vẹn
+Cung cấp xác thực phát trực tuyến trong giới hạn bộ nhớ cho nhật ký HDFS, BGL, DARPA TC và LANL.
+Thực thi các chính sách lưu trữ ổ D và ngăn ngừa lỗi hết bộ nhớ trên bộ dữ liệu nhiều GB.
 """
 
 import os
@@ -18,10 +18,10 @@ from typing import Dict, Any, Generator, Tuple, Optional
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="backslashreplace")
 
-CHUNK_SIZE = 64 * 1024 * 1024  # 64 MiB stream buffer
+CHUNK_SIZE = 64 * 1024 * 1024  # Bộ đệm luồng 64 MiB
 
 def compute_streaming_sha256(file_path: Path) -> Tuple[str, int]:
-    """Computes SHA-256 and byte size using bounded streaming chunks."""
+    """Tính toán SHA-256 và kích thước byte bằng cách sử dụng các đoạn truyền phát giới hạn."""
     if not file_path.exists():
         raise FileNotFoundError(f"File not found: {file_path}")
     
@@ -38,7 +38,7 @@ def compute_streaming_sha256(file_path: Path) -> Tuple[str, int]:
     return hasher.hexdigest(), total_bytes
 
 def line_stream_reader(file_path: Path) -> Generator[Tuple[int, str], None, None]:
-    """Memory-efficient streaming line generator for plain text, gzip, and zip files."""
+    """Trình tạo dòng phát trực tuyến hiệu quả về bộ nhớ cho các tệp văn bản thuần túy, gzip và zip."""
     line_no = 0
     if file_path.suffix == ".gz":
         with gzip.open(file_path, "rt", encoding="utf-8", errors="replace") as f:
@@ -75,7 +75,7 @@ def line_stream_reader(file_path: Path) -> Generator[Tuple[int, str], None, None
                 yield line_no, line
 
 class StreamingDatasetValidator:
-    """Validator for raw datasets enforcing integrity, timestamp consistency, and state machines."""
+    """Trình xác thực cho các tập dữ liệu thô thực thi tính toàn vẹn, tính nhất quán của dấu thời gian và máy trạng thái."""
     
     def __init__(self, workspace_root: Path = Path(r"D:\Research")):
         self.workspace_root = workspace_root
@@ -84,12 +84,12 @@ class StreamingDatasetValidator:
         self.manifests_dir.mkdir(parents=True, exist_ok=True)
 
     def append_ledger_entry(self, entry: Dict[str, Any]):
-        """Appends a verified acquisition record to ACQUISITION-LEDGER.jsonl."""
+        """Thêm bản ghi chuyển đổi đã được xác minh vào ACQUISITION-LEDGER.jsonl."""
         with open(self.ledger_path, "a", encoding="utf-8") as f:
             f.write(json.dumps(entry, sort_keys=True) + "\n")
 
     def validate_hdfs(self, raw_path: Path) -> Dict[str, Any]:
-        """Validates HDFS raw archive and stream line counts."""
+        """Xác thực số lượng dòng lưu trữ thô và luồng HDFS."""
         sha256, byte_count = compute_streaming_sha256(raw_path)
         valid_rows = 0
         malformed_rows = 0
@@ -101,7 +101,7 @@ class StreamingDatasetValidator:
                 continue
             if "blk_" in line_str:
                 valid_rows += 1
-                # Sample some block ids
+                # Lấy mẫu một số id khối
                 parts = line_str.split("blk_")
                 if len(parts) > 1 and len(sample_blocks) < 100:
                     blk_id = "blk_" + parts[1].split()[0]
@@ -123,7 +123,7 @@ class StreamingDatasetValidator:
         return res
 
     def validate_bgl(self, raw_path: Path) -> Dict[str, Any]:
-        """Validates BGL raw archive, timestamp ordering, and alert flags."""
+        """Xác thực kho lưu trữ thô BGL, thứ tự dấu thời gian và cờ cảnh báo."""
         sha256, byte_count = compute_streaming_sha256(raw_path)
         valid_rows = 0
         malformed_rows = 0
@@ -147,7 +147,7 @@ class StreamingDatasetValidator:
                 else:
                     alert_count += 1
                 
-                # Check timestamp
+                # Kiểm tra dấu thời gian
                 try:
                     ts = int(parts[1])
                     if min_timestamp is None or ts < min_timestamp:
@@ -180,11 +180,11 @@ class StreamingDatasetValidator:
         return res
 
     def audit_storage_cleanliness(self) -> Dict[str, Any]:
-        """Audits C: drive for accidental large research artifacts (>=256 MiB)."""
+        """Kiểm tra C: thúc đẩy các tạo phẩm nghiên cứu lớn ngẫu nhiên (>=256 MiB)."""
         c_root = Path("C:\\")
         large_violations = []
         
-        # Check standard user temp & downloads directories
+        # Kiểm tra thư mục tải xuống và tạm thời của người dùng tiêu chuẩn
         user_profile = os.environ.get("USERPROFILE", "C:\\Users\\Default")
         check_dirs = [
             Path(user_profile) / "Downloads",
@@ -192,7 +192,7 @@ class StreamingDatasetValidator:
             Path("C:\\Temp")
         ]
 
-        threshold_bytes = 256 * 1024 * 1024  # 256 MiB
+        threshold_bytes = 256 * 1024 * 1024  # 256 MIB
 
         for d in check_dirs:
             if not d.exists():

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Render Script for Stage A2 Seed-42 Final Launch Authorization Report (Section 17).
+Tập lệnh kết xuất cho Báo cáo ủy quyền ra mắt cuối cùng của Seed-42 Giai đoạn A2 (Phần 17).
 """
 
 import json

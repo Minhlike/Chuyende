@@ -1,5 +1,5 @@
 """
-Multi-Seed Aggregator & Cherry-Picking Guard (Prompt 6 Section 42)
+Bộ tổng hợp nhiều hạt giống & Bộ bảo vệ hái anh đào (Nhắc 6 Phần 42)
 """
 
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -10,8 +10,8 @@ from research_agent.verification.statistics.confidence_intervals import Confiden
 
 class MultiSeedAggregator:
     """
-    Aggregates experiment metrics across distinct seeds (K >= 5).
-    Enforces reporting mean ± SD or median [IQR], and detects cherry-picking of best single runs.
+    Tổng hợp các số liệu thử nghiệm trên các hạt giống riêng biệt (K >= 5).
+    Thực thi báo cáo trung bình ± SD hoặc trung vị [IQR] và phát hiện việc chọn anh đào trong các lần chạy đơn lẻ tốt nhất.
     """
 
     def __init__(self):
@@ -24,8 +24,8 @@ class MultiSeedAggregator:
         metric_key: str,
     ) -> Dict[str, Any]:
         """
-        Aggregates metric values across runs.
-        Returns full summary with mean, std, CI, min, max, median, and cherry-picking warnings.
+        Tổng hợp các giá trị số liệu trên các lần chạy.
+        Trả về bản tóm tắt đầy đủ với các cảnh báo trung bình, tiêu chuẩn, CI, tối thiểu, tối đa, trung bình và hái anh đào.
         """
         values = [float(r[metric_key]) for r in seed_runs if metric_key in r and r[metric_key] is not None]
         summary = self.desc_engine.compute_summary(values)
@@ -53,8 +53,8 @@ class MultiSeedAggregator:
     ) -> Tuple[bool, Optional[str]]:
         """
         BestRunCherryPickingGuard:
-        Checks if the reported single scalar matches ONLY the maximum seed run
-        rather than the mean / distribution summary.
+        Kiểm tra xem đại lượng vô hướng đơn được báo cáo có khớp với ONLY lần chạy hạt giống tối đa hay không
+        thay vì tóm tắt giá trị trung bình/phân phối.
         """
         arr = np.array(seed_values, dtype=float)
         max_val = np.max(arr)

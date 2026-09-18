@@ -1,5 +1,5 @@
 """
-Canonical Research Roadmap Specification and Invariant Tests (TEST-RM-01..16)
+Đặc tả lộ trình nghiên cứu Canonical và các thử nghiệm bất biến (TEST-RM-01..16)
 """
 
 import json
@@ -34,7 +34,7 @@ def query_service(repo):
 
 
 def test_rm_01_node_parent_validity(query_service):
-    """TEST-RM-01: Every node with parent_node_id references an existing valid node."""
+    """TEST-RM-01: Mọi nút có parent_node_id đều tham chiếu đến một nút hợp lệ hiện có."""
     nodes = query_service.get_roadmap().nodes
     node_ids = {n.node_id for n in nodes}
     for node in nodes:
@@ -43,7 +43,7 @@ def test_rm_01_node_parent_validity(query_service):
 
 
 def test_rm_02_no_duplicate_codes(query_service):
-    """TEST-RM-02: Every node code and node_id is unique across the entire tree."""
+    """TEST-RM-02: Mỗi mã nút và node_id là duy nhất trên toàn bộ cây."""
     nodes = query_service.get_roadmap().nodes
     node_ids = [n.node_id for n in nodes]
     node_codes = [n.code for n in nodes]
@@ -52,7 +52,7 @@ def test_rm_02_no_duplicate_codes(query_service):
 
 
 def test_rm_03_unique_rqs(query_service):
-    """TEST-RM-03: Exactly 5 canonical research questions (RQ1..RQ5) are registered."""
+    """TEST-RM-03: Chính xác 5 câu hỏi nghiên cứu chính tắc (RQ1..RQ5) đã được đăng ký."""
     rqs = query_service.repo.list_research_questions()
     codes = {q.code for q in rqs}
     assert codes == {"RQ1", "RQ2", "RQ3", "RQ4", "RQ5"}
@@ -63,7 +63,7 @@ def test_rm_03_unique_rqs(query_service):
 
 
 def test_rm_04_unique_hypotheses(query_service):
-    """TEST-RM-04: Exactly 5 canonical hypotheses (H1..H5) with explicit falsification criteria."""
+    """TEST-RM-04: Chính xác 5 giả thuyết kinh điển (H1..H5) với tiêu chí giả mạo rõ ràng."""
     hyps = query_service.repo.list_hypotheses()
     codes = {h.code for h in hyps}
     assert codes == {"H1", "H2", "H3", "H4", "H5"}
@@ -74,7 +74,7 @@ def test_rm_04_unique_hypotheses(query_service):
 
 
 def test_rm_05_rq_ch1_ch2_ch3_traceability(query_service):
-    """TEST-RM-05: Every RQ traces to at least one Gap in Ch1, Mechanism in Ch2, and Evaluation in Ch3."""
+    """TEST-RM-05: Mỗi RQ đều theo dõi ít ​​nhất một Khoảng trống trong Ch1, Cơ chế trong Ch2 và Đánh giá trong Ch3."""
     traceability = query_service.repo.get_traceability_matrix()
     assert len(traceability) == 5
     for tr in traceability:
@@ -85,7 +85,7 @@ def test_rm_05_rq_ch1_ch2_ch3_traceability(query_service):
 
 
 def test_rm_06_hypothesis_test_relations(query_service):
-    """TEST-RM-06: Every hypothesis is tested in Chapter 3 evaluation sections."""
+    """TEST-RM-06: Mọi giả thuyết đều được kiểm tra trong phần đánh giá của Chương 3."""
     hyps = query_service.repo.list_hypotheses()
     for h in hyps:
         nodes = query_service.get_nodes_testing_hypothesis(h.hyp_id)
@@ -93,7 +93,7 @@ def test_rm_06_hypothesis_test_relations(query_service):
 
 
 def test_rm_07_representation_contract_categories(query_service):
-    """TEST-RM-07: Representation Contract includes PRESERVE, INVARIANT, and EXCLUDE categories."""
+    """TEST-RM-07: Hợp đồng đại diện bao gồm các danh mục PRESERVE, INVARIANT và EXCLUDE."""
     contract = query_service.repo.get_representation_contract()
     assert contract is not None
     assert len(contract.preserve) >= 3
@@ -102,7 +102,7 @@ def test_rm_07_representation_contract_categories(query_service):
 
 
 def test_rm_08_central_object_representation_z(query_service):
-    """TEST-RM-08: Central research object is strictly feature representation z, not detector/IDS."""
+    """TEST-RM-08: Đối tượng nghiên cứu trung tâm hoàn toàn là biểu diễn tính năng z, không phải máy dò/IDS."""
     roadmap = query_service.get_roadmap()
     assert "feature representation z" in roadmap.central_object
     b4 = query_service.get_boundary_constraints("Detector Score")
@@ -110,7 +110,7 @@ def test_rm_08_central_object_representation_z(query_service):
 
 
 def test_rm_09_att_ck_non_linear_evidence_space(query_service):
-    """TEST-RM-09: MITRE ATT&CK is modeled as non-linear behavioral evidence, not linear states."""
+    """TEST-RM-09: MITRE ATT&CK được mô hình hóa dưới dạng bằng chứng hành vi phi tuyến tính, không phải trạng thái tuyến tính."""
     b2 = query_service.get_boundary_constraints("ATT&CK")
     assert len(b2) >= 1
     assert "linear" in b2[0].statement.lower() or "state" in b2[0].statement.lower()
@@ -121,7 +121,7 @@ def test_rm_09_att_ck_non_linear_evidence_space(query_service):
 
 
 def test_rm_10_provenance_dependency_non_causal(query_service):
-    """TEST-RM-10: Provenance dependency is explicitly not assumed to be causal."""
+    """TEST-RM-10: Sự phụ thuộc vào xuất xứ rõ ràng không được coi là có quan hệ nhân quả."""
     b3 = query_service.get_boundary_constraints("Dependency")
     assert len(b3) >= 1
     assert "causal" in b3[0].statement.lower()
@@ -132,15 +132,15 @@ def test_rm_10_provenance_dependency_non_causal(query_service):
 
 
 def test_rm_11_idempotent_ingestion(repo):
-    """TEST-RM-11: Ingesting the roadmap multiple times produces stable state without duplicates."""
+    """TEST-RM-11: Nhập lộ trình nhiều lần sẽ tạo ra trạng thái ổn định không trùng lặp."""
     ingestion = RoadmapIngestionService(repo)
     config = get_default_config()
     with open(config.roadmap_specs_dir / "roadmap.yaml", "r", encoding="utf-8") as f:
         data = yaml.safe_load(f)
 
-    # Ingest 1
+    # Nhập 1
     r1 = ingestion.ingest_roadmap_dict(data)
-    # Ingest 2
+    # Nhập 2
     r2 = ingestion.ingest_roadmap_dict(data)
 
     assert r1.roadmap_id == r2.roadmap_id
@@ -151,7 +151,7 @@ def test_rm_11_idempotent_ingestion(repo):
 
 
 def test_rm_12_exact_canonical_wording_preserved(query_service):
-    """TEST-RM-12: Canonical titles and codes match the prompt specification exactly."""
+    """TEST-RM-12: Tiêu đề và mã chuẩn khớp chính xác với thông số nhắc nhở."""
     node_ch1 = query_service.get_node("1.0")
     node_ch2 = query_service.get_node("2.0")
     node_ch3 = query_service.get_node("3.0")
@@ -162,7 +162,7 @@ def test_rm_12_exact_canonical_wording_preserved(query_service):
 
 
 def test_rm_13_negative_results_pathways_enabled(query_service):
-    """TEST-RM-13: Failure and negative outcomes are recognized as valid scientific results."""
+    """TEST-RM-13: Thất bại và kết quả tiêu cực được công nhận là kết quả khoa học hợp lệ."""
     b10 = query_service.get_boundary_constraints("Negative Results")
     assert len(b10) >= 1
 
@@ -172,7 +172,7 @@ def test_rm_13_negative_results_pathways_enabled(query_service):
 
 
 def test_rm_14_tier_a_vs_tier_b_distinction(query_service):
-    """TEST-RM-14: Tier A is constrained as insufficient alone for cyberattack semantics."""
+    """TEST-RM-14: Cấp A bị hạn chế là không đủ cho ngữ nghĩa tấn công mạng."""
     b1 = query_service.get_boundary_constraints("Tier A")
     assert len(b1) >= 1
 
@@ -182,7 +182,7 @@ def test_rm_14_tier_a_vs_tier_b_distinction(query_service):
 
 
 def test_rm_15_intrinsic_probe_operational_order(query_service):
-    """TEST-RM-15: Evaluation order preserves Intrinsic -> Probe -> Operational."""
+    """TEST-RM-15: Thứ tự đánh giá giữ nguyên Nội tại -> Thăm dò -> Vận hành."""
     node_eval = query_service.get_node("3.1.3.1")
     assert node_eval is not None
     assert "Intrinsic -> Probe -> Operational" in node_eval.title
@@ -196,7 +196,7 @@ def test_rm_15_intrinsic_probe_operational_order(query_service):
 
 
 def test_rm_16_no_fabricated_source_references(repo):
-    """TEST-RM-16: Zero fabricated Source entities are present; all sources are verified."""
+    """TEST-RM-16: Không có thực thể Nguồn giả mạo nào; tất cả các nguồn được xác minh."""
     sources = repo.list_sources()
     # All ingested sources must have verified status and valid non-empty venue/title
     for s in sources:
@@ -207,14 +207,14 @@ def test_rm_16_no_fabricated_source_references(repo):
 
 
 def test_rm_cli_validation_exit_code_zero(repo):
-    """TEST-RM-17: CLI validation returns exit code 0 on valid canonical roadmap."""
+    """TEST-RM-17: Xác thực CLI trả về mã thoát 0 trên lộ trình chuẩn hợp lệ."""
     from research_agent.cli import validate_roadmap_command
     exit_code = validate_roadmap_command(repo)
     assert exit_code == 0
 
 
 def test_rm_query_axes_and_controls(query_service):
-    """TEST-RM-18: Query service correctly retrieves axes, controls, and defensibility questions."""
+    """TEST-RM-18: Dịch vụ truy vấn truy xuất chính xác các câu hỏi về trục, điều khiển và khả năng phòng thủ."""
     a1_nodes = query_service.get_nodes_by_axis("A1")
     assert len(a1_nodes) >= 3
 

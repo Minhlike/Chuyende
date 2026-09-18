@@ -1,6 +1,6 @@
 """
-Schemas and Data Contracts for Microsoft Word 2016 Scientific Visuals Engine
-(Diagrams, Data Figures, Statistical Charts, Native Tables, Captions, Cross-References & Visual Registry)
+Lược đồ và hợp đồng dữ liệu cho Microsoft Word 2016 Scientific Visuals Engine
+(Biểu đồ, số liệu dữ liệu, biểu đồ thống kê, bảng gốc, chú thích, tham chiếu chéo & đăng ký trực quan)
 """
 
 from datetime import datetime, timezone
@@ -32,7 +32,7 @@ class VisualNecessityReason(str, Enum):
 
 
 class VisualNecessityEvaluation(BaseModel):
-    """Evaluation result for Visual Necessity Gate."""
+    """Kết quả đánh giá cho Visual Needity Gate."""
     is_necessary: bool
     primary_reason: Optional[VisualNecessityReason] = None
     clarity_statement: str = Field(description="Clear explanation of the concept/data this visual conveys.")
@@ -41,7 +41,7 @@ class VisualNecessityEvaluation(BaseModel):
 
 
 class ShapeNodeSpec(BaseModel):
-    """Specification for a single shape in a Word diagram."""
+    """Đặc tả cho một hình dạng trong sơ đồ Word."""
     shape_id: str
     shape_type: str = Field(default="ROUNDED_RECTANGLE", description="RECTANGLE, ROUNDED_RECTANGLE, OVAL, DIAMOND, PROCESS_BOX")
     label: str
@@ -52,19 +52,19 @@ class ShapeNodeSpec(BaseModel):
     height_pt: float
     font_size_pt: float = 11.0
     is_bold: bool = False
-    fill_color_rgb: int = 0xFFFFFF  # White
-    line_color_rgb: int = 0x000000  # Black
+    fill_color_rgb: int = 0xFFFFFF  # trắng
+    line_color_rgb: int = 0x000000  # Đen
     line_weight_pt: float = 1.0
 
 
 class ConnectorSpec(BaseModel):
-    """Specification for a directional connector arrow between shapes."""
+    """Đặc điểm kỹ thuật cho mũi tên kết nối định hướng giữa các hình dạng."""
     connector_id: str
     source_shape_id: str
     target_shape_id: str
     connector_type: str = Field(default="ELBOW", description="STRAIGHT, ELBOW, CURVED")
-    start_connection_site: int = 3  # Right side usually
-    end_connection_site: int = 1    # Left side usually
+    start_connection_site: int = 3  # Bên phải thường
+    end_connection_site: int = 1    # Bên trái thường
     arrow_head: bool = True
     label: Optional[str] = None
     line_color_rgb: int = 0x000000
@@ -73,12 +73,12 @@ class ConnectorSpec(BaseModel):
 
 
 class DiagramSpecification(BaseModel):
-    """Complete specification for a Word Native Diagram."""
+    """Đặc tả đầy đủ cho Sơ đồ gốc của Word."""
     diagram_id: str = Field(description="FIG-000001 or similar")
     title: str
     caption: str
     use_canvas: bool = True
-    canvas_width_pt: float = 460.0   # ~16.2 cm (fits within page margins)
+    canvas_width_pt: float = 460.0   # ~16,2 cm (vừa với lề trang)
     canvas_height_pt: float = 220.0
     nodes: List[ShapeNodeSpec] = Field(default_factory=list)
     connectors: List[ConnectorSpec] = Field(default_factory=list)
@@ -88,7 +88,7 @@ class DiagramSpecification(BaseModel):
 
 
 class VisualRecord(BaseModel):
-    """Canonical registry entry for a scientific visual (FIG-ID / TBL-ID)."""
+    """Mục đăng ký chuẩn cho hình ảnh khoa học (FIG-ID / TBL-ID)."""
     visual_id: str = Field(description="Stable ID: FIG-000001, TBL-000001")
     node_code: str = Field(description="Associated Roadmap ResearchNode code, e.g. '1.1.1'")
     purpose: str = Field(description="Methodological purpose of the visual")

@@ -1,5 +1,5 @@
 """
-Scientific Outcome Packaging & Bundle Builders (Prompt 6 Section 98, 138)
+Kết quả khoa học Người đóng gói & đóng gói (Nhắc 6 Mục 98, 138)
 """
 
 from datetime import datetime, timezone
@@ -21,7 +21,7 @@ from research_agent.schemas.verification import (
 
 class ResultBundleBuilder:
     """
-    Assembles verified empirical outcomes into an immutable ResultBundle (Prompt 6 Section 98).
+    Tập hợp các kết quả thực nghiệm đã được xác minh thành một ResultBundle bất biến (Lời nhắc 6 Phần 98).
     """
 
     def build_bundle(
@@ -62,7 +62,7 @@ class ResultBundleBuilder:
 
 class VerifiedClaimBundleBuilder:
     """
-    Constructs guarded claim packages for Prompt 7 Chapter Composer (Prompt 6 Section 138).
+    Xây dựng các gói yêu cầu được bảo vệ cho Trình soạn thảo Chương 7 (Nhắc 6 Phần 138).
     """
 
     def build_claim_bundle(

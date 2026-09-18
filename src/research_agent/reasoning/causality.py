@@ -1,5 +1,5 @@
 """
-Causality Auditor & Causal Inflation Guard (Prompt 5 Section 27)
+Kiểm toán viên quan hệ nhân quả & Phòng chống lạm phát nhân quả (Nhắc 5 Mục 27)
 """
 
 import re
@@ -10,9 +10,9 @@ from research_agent.core.enums import ReasoningIssueType
 
 class CausalityAuditor:
     """
-    Audits research claims and inferences for unjustified causal assertions.
-    Enforces the fundamental architectural boundary:
-    PROVENANCE DEPENDENCY != CAUSAL EFFECT (Section 27, Roadmap 2.3.2).
+    Kiểm tra các tuyên bố nghiên cứu và suy luận về các khẳng định nhân quả không chính đáng.
+    Thực thi ranh giới kiến trúc cơ bản:
+    PROVENANCE DEPENDENCY != CAUSAL EFFECT (Phần 27, Lộ trình 2.3.2).
     """
 
     CAUSAL_INDICATORS = [
@@ -28,7 +28,7 @@ class CausalityAuditor:
 
     def audit_text_causality(self, entity_id: str, text: str, is_interventional: bool = False) -> List[ReasoningIssue]:
         """
-        Flags causal vocabulary if experimental basis is purely observational or correlational.
+        Gắn cờ từ vựng nhân quả nếu cơ sở thực nghiệm hoàn toàn là quan sát hoặc tương quan.
         """
         issues: List[ReasoningIssue] = []
         t_lower = text.lower()
@@ -50,7 +50,7 @@ class CausalityAuditor:
                 )
             )
 
-        # Explicit Provenance Graph Guard (Roadmap 2.3.2)
+        # Bảo vệ đồ thị xuất xứ rõ ràng (Lộ trình 2.3.2)
         if "provenance" in t_lower and ("causal effect" in t_lower or "causes" in t_lower):
             issues.append(
                 ReasoningIssue(

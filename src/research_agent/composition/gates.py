@@ -1,5 +1,5 @@
 """
-Writing Gates & Node Readiness Evaluator (Prompt 7 Section 4-5)
+Viết Trình đánh giá mức độ sẵn sàng của Cổng & Nút (Lời nhắc 7 Phần 4-5)
 """
 
 from typing import List, Optional, Tuple
@@ -16,8 +16,8 @@ from research_agent.storage.repository import ResearchRepository
 
 class WritingGate:
     """
-    Evaluates whether a Roadmap Node has met all epistemic and scientific
-    prerequisites to enter academic drafting and final composition.
+    Đánh giá xem Nút lộ trình có đáp ứng tất cả các nhận thức và khoa học hay không
+    điều kiện tiên quyết để tham gia soạn thảo học thuật và sáng tác cuối cùng.
     """
 
     def __init__(self, repository: ResearchRepository):
@@ -25,8 +25,8 @@ class WritingGate:
 
     def evaluate_node_readiness(self, node_code: str) -> NodeWritingStatus:
         """
-        Evaluates node writing readiness based on canonical roadmap requirements,
-        argument bundles, source verification, equations, and verified results.
+        Đánh giá mức độ sẵn sàng ghi nút dựa trên các yêu cầu lộ trình chuẩn,
+        gói đối số, xác minh nguồn, phương trình và kết quả được xác minh.
         """
         node = self.repo.get_roadmap_node_by_code(node_code)
         if not node:
@@ -40,12 +40,12 @@ class WritingGate:
 
         blocking_reasons: List[str] = []
 
-        # 1. Check ArgumentBundle
+        # 1. Kiểm tra ArgumentBundle
         bundles = self.repo.list_argument_bundles_by_node(node_code)
         bundle: Optional[ArgumentBundle] = bundles[-1] if bundles else None
         bundle_id = bundle.bundle_id if bundle else None
 
-        # 2. Query associated claims and evidences
+        # 2. Truy vấn các tuyên bố và bằng chứng liên quan
         claims = self.repo.list_claims_by_node(node_code)
         evidences = [e for c in claims for e in self.repo.get_claim_evidences(c.claim_id)]
         contradictions = self.repo.list_contradictions_by_node(node_code)
@@ -53,7 +53,7 @@ class WritingGate:
         node_num_claims = [nc for nc in num_claims if nc.scope_dataset and node_code in nc.scope_dataset]
         equations = self.repo.list_equations_by_node(node_code)
 
-        # 3. Node Type Specific Gate Requirements (Prompt 7 Section 5)
+        # 3. Yêu cầu về cổng cụ thể của loại nút (Lời nhắc 7 Phần 5)
         title_lower = node.title.lower()
         is_background = any(k in title_lower for k in ["background", "foundation", "definition", "overview", "survey"])
         is_gap = any(k in title_lower for k in ["gap", "challenge", "limitation", "problem", "motivation"])
@@ -62,7 +62,7 @@ class WritingGate:
         is_result = any(k in title_lower for k in ["result", "finding", "empirical", "performance", "ablation", "robustness"])
         is_discussion = any(k in title_lower for k in ["discussion", "analysis", "implication", "threat", "limitation"])
 
-        # Check critical reasoning issues
+        # Kiểm tra các vấn đề lý luận quan trọng
         if bundle:
             crit_issues = [
                 i for i in bundle.reasoning_issues
@@ -71,24 +71,24 @@ class WritingGate:
             if crit_issues:
                 blocking_reasons.append(f"Unresolved critical reasoning issues in ArgumentBundle: {[i.message for i in crit_issues]}")
 
-        # Gate checks per category
+        # Kiểm tra cổng theo danh mục
         if is_background or is_gap:
             if not claims and not evidences:
                 blocking_reasons.append(f"Node '{node_code}' lacks registered claims/evidence from peer-reviewed literature.")
 
         if is_method:
-            # Check equation verification if equations exist
+            # Kiểm tra xác minh phương trình nếu phương trình tồn tại
             unverified_eqs = [eq for eq in equations if not getattr(eq, "is_verified", True)]
             if unverified_eqs:
                 blocking_reasons.append(f"Method node '{node_code}' contains unverified equations: {[eq.equation_id for eq in unverified_eqs]}")
 
         if is_result:
-            # Result nodes require verified ResultBundle or NumericalClaims
+            # Các nút kết quả yêu cầu ResultBundle hoặc NumericalClaims đã được xác minh
             unverified_nums = [nc for nc in node_num_claims if nc.verification_status != VerificationStatus.VERIFIED]
             if unverified_nums:
                 blocking_reasons.append(f"Result node '{node_code}' contains unverified numerical claims: {[nc.numerical_claim_id for nc in unverified_nums]}")
 
-        # Determine readiness status
+        # Xác định trạng thái sẵn sàng
         if blocking_reasons:
             readiness = WritingReadiness.BLOCKED
             is_blocked = True
@@ -99,7 +99,7 @@ class WritingGate:
             readiness = WritingReadiness.READY
             is_blocked = False
 
-        # Check if already drafted
+        # Kiểm tra xem đã được soạn thảo chưa
         paragraphs = self.repo.list_paragraphs_by_node(node_code)
         if paragraphs:
             if all(p.review_status.value in ("MACHINE_AUDITED", "HUMAN_ACCEPTED") for p in paragraphs):

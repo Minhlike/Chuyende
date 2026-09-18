@@ -1,24 +1,24 @@
 # -*- coding: utf-8 -*-
 """
-H3 Canonical Test Contract & Executable Perturbation Suite (P01..P12)
-Implements Chapter 2 & Chapter 3 Frozen Robustness Protocol:
-  - Primary Ranking Metric: Average Precision (AP)
-  - Strict AP Chance Baseline: Defined by positive sample prevalence pi = N_pos / N_total
-  - 12 Fully Executable Semantic-Preserving Perturbation Operators with Invariant Verification:
-      * P01: Token Deletion (preserves block identifier integrity)
-      * P02: Token Insertion Noise (benign template injection)
-      * P03: Parameter Obfuscation (injective hex/decimal translation)
-      * P04: Event Order Jitter (CONCURRENCY-SAFE: only reorders events with same timestamp)
-      * P05: Collision-Safe Injective IP Subnet Translation (|unique(in)| == |unique(out)|)
-      * P06: Path Aliasing
-      * P07: Burst Interleaving
-      * P08: Unseen Template Shift
-      * P09: Collision-Safe Injective Host Reassignment
-      * P10: Entity Pseudonym Rotation
-      * P11: Schema-Aware Timestamp Skew (parses log timestamp formats)
-      * P12: Composite Perturbation
-  - Explicit Shortcut-Removal Robustness Evaluation
-  - Benjamini-Hochberg False Discovery Rate (BH-FDR) Multiplicity Correction.
+Hợp đồng thử nghiệm chuẩn H3 & Bộ nhiễu loạn có thể thực thi (P01..P12)
+Triển khai Giao thức về độ mạnh mẽ đông lạnh Chương 2 & Chương 3:
+  - Chỉ số xếp hạng chính: Độ chính xác trung bình (AP)
+  - baseline cơ hội AP nghiêm ngặt: Được xác định bởi tỷ lệ lưu hành mẫu dương tính pi = N_pos / N_total
+  - 12 Toán tử nhiễu loạn bảo toàn ngữ nghĩa có thể thực thi hoàn toàn với xác minh bất biến:
+      * P01: Xóa token (bảo toàn tính toàn vẹn của mã định danh khối)
+      * P02: Nhiễu chèn token (tiêm mẫu lành tính)
+      * P03: Làm xáo trộn tham số (dịch thập lục phân/thập phân nội từ)
+      * P04: Jitter thứ tự sự kiện (CONCURRENCY-SAFE: chỉ sắp xếp lại các sự kiện có cùng dấu thời gian)
+      * P05: Dịch thuật mạng con IP Injective an toàn va chạm (|duy nhất(in)| == |unique(out)|)
+      * P06: Bí danh đường dẫn
+      * P07: xen kẽ liên tục
+      * P08: Thay đổi mẫu không nhìn thấy
+      * P09: Tái chỉ định máy chủ tiêm an toàn va chạm
+      * P10: Xoay vòng bút danh thực thể
+      * P11: Schema-Aware Timestamp Skew (phân tích cú pháp các định dạng dấu thời gian của nhật ký)
+      * P12: Nhiễu loạn tổng hợp
+  - Đánh giá độ bền loại bỏ lối tắt rõ ràng
+  - Hiệu chỉnh bội số tỷ lệ phát hiện sai của Stewamini-Hochberg (BH-FDR).
 """
 
 import re
@@ -28,11 +28,11 @@ from typing import Dict, Any, List, Optional, Tuple, Callable, Set
 import numpy as np
 
 # -----------------------------------------------------------------------------
-# EXECUTABLE PERTURBATION OPERATORS (P01 .. P12)
+# EXECUTABLE PERTURBATION OPERATORS (P01.. P12)
 # -----------------------------------------------------------------------------
 
 def apply_p01_token_deletion(lines: List[str], seed: int = 42, budget: float = 0.1) -> Tuple[List[str], int]:
-    """P01: Drops budget fraction of non-critical tokens, preserving critical block tokens."""
+    """P01: Giảm phần ngân sách của các token không quan trọng, bảo toàn các token khối quan trọng."""
     rng = random.Random(seed)
     perturbed = []
     changed_count = 0
@@ -49,7 +49,7 @@ def apply_p01_token_deletion(lines: List[str], seed: int = 42, budget: float = 0
     return perturbed, changed_count
 
 def apply_p02_token_insertion_noise(lines: List[str], seed: int = 42, budget: float = 0.2) -> Tuple[List[str], int]:
-    """P02: Injects benign background noise log lines."""
+    """P02: Chèn các dòng nhật ký nhiễu nền lành tính."""
     rng = random.Random(seed)
     noise_templates = [
         "org.apache.hadoop.hdfs.server.datanode.DataNode: Periodic Block Pool Scanner complete",
@@ -66,7 +66,7 @@ def apply_p02_token_insertion_noise(lines: List[str], seed: int = 42, budget: fl
     return perturbed, changed_count
 
 def apply_p03_parameter_obfuscation(lines: List[str], seed: int = 42, budget: float = 0.2) -> Tuple[List[str], int]:
-    """P03: Injective hex/decimal parameter representation obfuscation."""
+    """P03: Làm xáo trộn biểu diễn tham số thập phân/thập phân nội xạ."""
     perturbed = []
     changed_count = 0
     for line in lines:
@@ -80,14 +80,14 @@ def apply_p03_parameter_obfuscation(lines: List[str], seed: int = 42, budget: fl
 
 def apply_p04_event_order_jitter(lines: List[str], seed: int = 42) -> Tuple[List[str], int]:
     """
-    P04: Concurrency-Safe Event Order Jitter.
-    Only reorders events sharing the EXACT SAME timestamp (concurrency cluster).
-    Never reorders chronologically ordered distinct timestamp events.
+    P04: Jitter thứ tự sự kiện an toàn đồng thời.
+    Chỉ sắp xếp lại các sự kiện chia sẻ dấu thời gian EXACT SAME (cụm đồng thời).
+    Không bao giờ sắp xếp lại các sự kiện dấu thời gian riêng biệt được sắp xếp theo thứ tự thời gian.
     """
     rng = random.Random(seed)
     
-    # Extract timestamp clusters
-    # HDFS pattern: "YYMMDD HHMMSS"
+    # Trích xuất cụm dấu thời gian
+    # Mẫu HDFS: "YYMMDD HHMMSS"
     timestamp_pattern = re.compile(r"^(\d{6}\s+\d{6})")
     
     clusters: List[List[str]] = []
@@ -120,9 +120,9 @@ def apply_p04_event_order_jitter(lines: List[str], seed: int = 42) -> Tuple[List
         else:
             perturbed.extend(cluster)
 
-    # Fallback if logs have no same-timestamp events: swap duplicate lines or concurrent markers
+    # Dự phòng nếu nhật ký không có sự kiện cùng dấu thời gian: hoán đổi các dòng trùng lặp hoặc đánh dấu đồng thời
     if changed_count == 0 and len(lines) > 1:
-        # If timestamp is identical or simulated concurrent block
+        # Nếu dấu thời gian giống hệt hoặc khối mô phỏng đồng thời
         perturbed = list(lines)
         perturbed[0], perturbed[1] = perturbed[1], perturbed[0]
         changed_count = 1
@@ -131,17 +131,17 @@ def apply_p04_event_order_jitter(lines: List[str], seed: int = 42) -> Tuple[List
 
 def apply_p05_ip_subnet_translation(lines: List[str], seed: int = 42) -> Tuple[List[str], int]:
     """
-    P05: Strictly Injective IP Subnet Translation.
-    Guarantees |unique(input_ips)| == |unique(output_ips)|.
+    P05: Dịch thuật mạng con IP có nội dung nghiêm ngặt.
+    Đảm bảo |độc nhất(input_ips)| == |độc nhất(output_ips)|.
     """
-    # 1. Identify all unique input IPs
+    # 1. Xác định tất cả IP đầu vào duy nhất
     ip_pattern = re.compile(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b")
     all_ips = list(OrderedDict.fromkeys(ip_pattern.findall("\n".join(lines))))
     
     rng = random.Random(seed)
     ip_map: Dict[str, str] = {}
 
-    # Assign strictly unique private replacement IP per unique input IP
+    # Chỉ định IP thay thế riêng tư duy nhất cho mỗi IP đầu vào duy nhất
     allocated_ips: Set[str] = set()
     for idx, ip in enumerate(all_ips):
         parts = ip.split(".")
@@ -155,7 +155,7 @@ def apply_p05_ip_subnet_translation(lines: List[str], seed: int = 42) -> Tuple[L
         allocated_ips.add(mapped)
         ip_map[ip] = mapped
 
-    # Assert injectivity
+    # Khẳng định tính tiêm nhiễm
     assert len(ip_map.values()) == len(set(ip_map.values())), "P05 translation mapping must be strictly injective"
 
     perturbed = []
@@ -171,7 +171,7 @@ def apply_p05_ip_subnet_translation(lines: List[str], seed: int = 42) -> Tuple[L
     return perturbed, changed_count
 
 def apply_p06_path_aliasing(lines: List[str], seed: int = 42) -> Tuple[List[str], int]:
-    """P06: Replaces path separators with redundant relative aliases."""
+    """P06: Thay thế các dấu phân cách đường dẫn bằng các bí danh tương đối dư thừa."""
     perturbed = []
     changed_count = 0
     for line in lines:
@@ -184,7 +184,7 @@ def apply_p06_path_aliasing(lines: List[str], seed: int = 42) -> Tuple[List[str]
     return perturbed, changed_count
 
 def apply_p07_burst_interleaving(lines: List[str], seed: int = 42, burst_count: int = 3) -> Tuple[List[str], int]:
-    """P07: Interleaves high-volume repetitive logging bursts."""
+    """P07: xen kẽ các đợt ghi nhật ký lặp đi lặp lại với khối lượng lớn."""
     burst_line = "INFO datanode.DataNode: Heartbeat received from namenode"
     perturbed = []
     changed_count = 0
@@ -196,7 +196,7 @@ def apply_p07_burst_interleaving(lines: List[str], seed: int = 42, burst_count: 
     return perturbed, changed_count
 
 def apply_p08_unseen_template_shift(lines: List[str], seed: int = 42) -> Tuple[List[str], int]:
-    """P08: Replaces verbs with semantic synonyms."""
+    """P08: Thay thế động từ bằng từ đồng nghĩa ngữ nghĩa."""
     synonyms = {"Received": "Accepted", "Served": "Delivered", "Terminated": "Ended", "Starting": "Initiating"}
     perturbed = []
     changed_count = 0
@@ -210,7 +210,7 @@ def apply_p08_unseen_template_shift(lines: List[str], seed: int = 42) -> Tuple[L
     return perturbed, changed_count
 
 def apply_p09_host_reassignment(lines: List[str], seed: int = 42) -> Tuple[List[str], int]:
-    """P09: Collision-safe injective host remapping."""
+    """P09: Ánh xạ lại máy chủ nội xạ an toàn va chạm."""
     all_hosts = list(OrderedDict.fromkeys(re.findall(r"host-\d+", "\n".join(lines))))
     host_map = {h: f"worker-node-{idx + 1:03d}" for idx, h in enumerate(all_hosts)}
 
@@ -224,7 +224,7 @@ def apply_p09_host_reassignment(lines: List[str], seed: int = 42) -> Tuple[List[
     return perturbed, changed_count
 
 def apply_p10_entity_pseudonym_rotation(lines: List[str], seed: int = 42) -> Tuple[List[str], int]:
-    """P10: Rotates entity pseudonym markers or block token salts across rotation boundaries."""
+    """P10: Xoay các điểm đánh dấu bút danh thực thể hoặc chặn muối token qua các ranh giới xoay vòng."""
     perturbed = []
     changed_count = 0
     for line in lines:
@@ -237,12 +237,12 @@ def apply_p10_entity_pseudonym_rotation(lines: List[str], seed: int = 42) -> Tup
     return perturbed, changed_count
 
 def apply_p11_timestamp_skew(lines: List[str], seed: int = 42, jitter_sec: float = 2.0) -> Tuple[List[str], int]:
-    """P11: Schema-Aware Timestamp Skew (HDFS YYMMDD HHMMSS or epoch timestamps)."""
+    """P11: Độ lệch dấu thời gian nhận biết lược đồ (HDFS YYMMDD HHMMSS hoặc dấu thời gian epoch)."""
     rng = random.Random(seed)
     perturbed = []
     changed_count = 0
     for line in lines:
-        # Match HDFS log timestamp: "YYMMDD HHMMSS"
+        # Khớp dấu thời gian nhật ký HDFS: "YYMMDD HHMMSS"
         def jitter_hdfs_ts(m):
             date_str = m.group(1)
             time_str = m.group(2)
@@ -258,7 +258,7 @@ def apply_p11_timestamp_skew(lines: List[str], seed: int = 42, jitter_sec: float
 
         new_line = re.sub(r"\b(\d{6})\s+(\d{6})\b", jitter_hdfs_ts, line)
         if new_line == line:
-            # Match unix epoch timestamp
+            # Khớp dấu thời gian epoch unix
             def jitter_epoch(m):
                 ts = int(m.group(0)) + int(rng.gauss(0, jitter_sec))
                 return str(max(0, ts))
@@ -270,7 +270,7 @@ def apply_p11_timestamp_skew(lines: List[str], seed: int = 42, jitter_sec: float
     return perturbed, changed_count
 
 def apply_p12_composite_perturbation(lines: List[str], seed: int = 42) -> Tuple[List[str], int]:
-    """P12: Composite perturbation applying P01 + P03 + P05 + P11."""
+    """P12: Nhiễu loạn tổng hợp áp dụng P01 + P03 + P05 + P11."""
     out, c1 = apply_p01_token_deletion(lines, seed=seed, budget=0.05)
     out, c2 = apply_p03_parameter_obfuscation(out, seed=seed)
     out, c3 = apply_p05_ip_subnet_translation(out, seed=seed)
@@ -279,7 +279,7 @@ def apply_p12_composite_perturbation(lines: List[str], seed: int = 42) -> Tuple[
 
 def apply_shortcut_removal(lines: List[str], shortcut_tokens: Optional[List[str]] = None) -> Tuple[List[str], int]:
     """
-    Explicit Shortcut-Removal Experiment.
+    Thử nghiệm loại bỏ lối tắt rõ ràng.
     """
     shortcuts = shortcut_tokens or ["DataXceiver", "BlockReceiver", "DataBlockScanner"]
     perturbed = []
@@ -348,7 +348,7 @@ def evaluate_h3_robustness_contract(
         p_scores = perturbed_scores_dict[p_id]
         p_ap = compute_average_precision(y_true_arr, p_scores)
 
-        # Bootstrap comparison: Clean vs Perturbed
+        # So sánh Bootstrap: Sạch sẽ và bị nhiễu loạn
         boot_res = paired_cluster_bootstrap_recompute(
             cluster_ids=cluster_ids,
             y_true=y_true_arr,

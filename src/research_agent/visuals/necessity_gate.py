@@ -1,6 +1,6 @@
 """
-Visual Necessity Gate (Rule 8)
-Guarantees that no decorative fluff or gratuitous visuals are introduced into the scientific report.
+Cổng cần thiết về thị giác (Quy tắc 8)
+Đảm bảo rằng không có hình ảnh trang trí hoặc hình ảnh vô cớ nào được đưa vào báo cáo khoa học.
 """
 
 from typing import Optional
@@ -14,7 +14,7 @@ from research_agent.visuals.schemas import (
 
 class VisualNecessityGate:
     """
-    Validates whether a proposed visual satisfies scientific necessity criteria before inclusion.
+    Xác thực xem hình ảnh được đề xuất có đáp ứng các tiêu chí cần thiết về mặt khoa học hay không trước khi đưa vào.
     """
 
     @staticmethod
@@ -27,9 +27,9 @@ class VisualNecessityGate:
         primary_reason: Optional[VisualNecessityReason] = None,
     ) -> VisualNecessityEvaluation:
         """
-        Evaluates visual necessity.
-        Requires non-empty purpose, explicit clarity statement, and concrete explanation
-        of why text/prose alone cannot adequately convey the structure or quantitative data.
+        Đánh giá sự cần thiết về mặt thị giác.
+        Yêu cầu mục đích không trống rỗng, tuyên bố rõ ràng và giải thích cụ thể
+        về lý do tại sao chỉ văn bản/văn xuôi không thể truyền tải đầy đủ cấu trúc hoặc dữ liệu định lượng.
         """
         if not purpose or len(purpose.strip()) < 10:
             return VisualNecessityEvaluation(
@@ -55,7 +55,7 @@ class VisualNecessityGate:
                 rejection_reason="Alternative prose deficiency statement required (< 15 chars). Must justify why prose is deficient.",
             )
 
-        # Map type to default reason if not provided
+        # Loại bản đồ theo lý do mặc định nếu không được cung cấp
         if not primary_reason:
             if visual_type == VisualType.CONCEPTUAL_DIAGRAM:
                 primary_reason = VisualNecessityReason.ARCHITECTURE

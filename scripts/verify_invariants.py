@@ -1,11 +1,11 @@
 """
-Automated Invariant Verification Utility (RC-18)
+Tiện ích xác minh bất biến tự động (RC-18)
 """
 
 import sys
 from pathlib import Path
 
-# Add src to sys.path
+# Thêm src vào sys.path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from research_agent.config import get_default_config
@@ -20,8 +20,8 @@ def verify_all():
 
     print("--- RUNNING CANONICAL INVARIANT CHECKS ---")
     with db_manager.session() as conn:
-        # Check 1: No claims with invalid claim_type
-        # Check 2: No experiment result claims without experiment_run_id
+        # Kiểm tra 1: Không có khiếu nại nào có claim_type không hợp lệ
+        # Kiểm tra 2: Không có tuyên bố kết quả thử nghiệm nào mà không có experiment_run_id
         invalid_runs = conn.execute(
             "SELECT claim_id FROM claims WHERE claim_type = 'EXPERIMENT_RESULT' AND (experiment_run_id IS NULL OR experiment_run_id = '')"
         ).fetchall()
@@ -29,7 +29,7 @@ def verify_all():
             print(f"[FAIL] Found EXPERIMENT_RESULT claims missing experiment_run_id: {[r[0] for r in invalid_runs]}")
             return False
 
-        # Check 3: No source equations without source_id
+        # Kiểm tra 3: Không có phương trình nguồn nào không có source_id
         invalid_eqs = conn.execute(
             "SELECT equation_id FROM equations WHERE equation_type = 'SOURCE_EQUATION' AND (source_id IS NULL OR source_id = '')"
         ).fetchall()

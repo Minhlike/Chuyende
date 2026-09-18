@@ -1,5 +1,5 @@
 """
-Tests for Subsystem Stubs (Explicit NOT_IMPLEMENTED verification)
+Kiểm tra sơ khai hệ thống con (Xác minh NOT_IMPLEMENTED rõ ràng)
 """
 
 import pytest
@@ -18,7 +18,7 @@ from research_agent.stubs import (
 
 
 def test_all_stubs_raise_not_implemented():
-    """Verify that every future subsystem stub explicitly raises NotImplementedError instead of fake success."""
+    """Xác minh rằng mọi sơ khai hệ thống con trong tương lai đều tăng NotImplementedError một cách rõ ràng thay vì thành công giả tạo."""
     with pytest.raises(NotImplementedError, match="NOT_IMPLEMENTED"):
         AdvancedRAGEngine().retrieve("log representation")
 

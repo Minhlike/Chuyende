@@ -1,5 +1,5 @@
 """
-Threshold Provenance & Anti-Tuning Auditor (Prompt 6 Section 30)
+Kiểm toán viên kiểm tra ngưỡng chứng minh và chống điều chỉnh (Nhắc 6 Mục 30)
 """
 
 from typing import Any, Dict, List, Optional, Tuple
@@ -7,9 +7,9 @@ from typing import Any, Dict, List, Optional, Tuple
 
 class ThresholdAuditor:
     """
-    Guarantees decision threshold selection provenance.
-    Enforces that thresholds are chosen on Validation split or pre-set criteria,
-    never tuned post-hoc on Test split.
+    Đảm bảo quyết định lựa chọn ngưỡng xuất xứ.
+    Thực thi các ngưỡng được chọn theo tiêu chí phân tách xác thực hoặc đặt trước,
+    không bao giờ điều chỉnh sau phần kiểm tra.
     """
 
     def audit_threshold_selection(
@@ -18,7 +18,7 @@ class ThresholdAuditor:
         split_used_for_selection: str,
         selection_criterion: str,
     ) -> Tuple[bool, Optional[str]]:
-        """Audits if threshold was legitimately chosen on validation partition."""
+        """Kiểm tra xem ngưỡng có được chọn hợp pháp trên phân vùng xác thực hay không."""
         split_clean = split_used_for_selection.strip().upper()
         if split_clean in ["TEST", "TEST_SET", "EVAL_TEST"]:
             return False, f"TEST_SET_TUNING_LEAKAGE: Threshold {threshold_value} was tuned directly on '{split_used_for_selection}'."

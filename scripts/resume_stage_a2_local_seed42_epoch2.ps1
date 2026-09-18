@@ -1,5 +1,5 @@
-# scripts/resume_stage_a2_local_seed42_epoch2.ps1
-# Resume Canonical Seed 42 from Epoch 1 Checkpoint -> Execute Epoch 2 (Detached Background Process)
+# tập lệnh/resume_stage_a2_local_seed42_epoch2.ps1
+# Tiếp tục Canonical Seed 42 từ checkpoint Epoch 1 -> Thực thi Epoch 2 (Quy trình nền tách rời)
 
 $ErrorActionPreference = "Stop"
 

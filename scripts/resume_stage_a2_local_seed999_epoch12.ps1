@@ -1,6 +1,6 @@
-﻿# scripts/resume_stage_a2_local_seed999_epoch12.ps1
-# Resume Canonical Seed 999 from Epoch 11 Checkpoint -> Execute Final Epoch 12
-# Configured for Daytime Normal Mode (Priority: Normal, Affinity: P-cores 0-7, Silent fans <= 54C, Finish <= 3 hours)
+﻿# tập lệnh/resume_stage_a2_local_seed999_epoch12.ps1
+# Tiếp tục Canonical Seed 999 từ checkpoint epoch 11 -> Thực thi epoch cuối cùng 12
+# Được định cấu hình cho Chế độ bình thường ban ngày (Ưu tiên: Bình thường, Mối quan hệ: Lõi P 0-7, Quạt im lặng <= 54C, Hoàn thành <= 3 giờ)
 
 $ErrorActionPreference = "Stop"
 
@@ -18,7 +18,7 @@ $stdoutLog = "$logDir\seed999.stdout.log"
 $stderrLog = "$logDir\seed999.stderr.log"
 $pidFile = "$logDir\seed999.pid"
 
-# 1. Ensure Daytime Normal Profile is active (Silent fans, Screen timeout 10m, CPU min 50%, CPU max 99%, ASPM 0)
+# 1. Đảm bảo Cấu hình bình thường ban ngày đang hoạt động (Quạt im lặng, Thời gian chờ màn hình 10 phút, CPU tối thiểu 50%, CPU tối đa 99%, ASPM 0)
 $schemeGuid = "0a0d0183-1b65-4b13-ad7a-e1bfc6c0ab13"
 powercfg /setactive $schemeGuid
 powercfg /setacvalueindex $schemeGuid SUB_VIDEO VIDEOIDLE 600
@@ -65,7 +65,7 @@ $process = Start-Process -FilePath $pythonExe `
 
 Start-Sleep -Seconds 2
 
-# 2. Configure Process Priority to Normal & Affinity to P-cores (0-7)
+# 2. Định cấu hình Mức độ ưu tiên của quy trình thành Bình thường & Mối quan hệ với lõi P (0-7)
 try {
     $procObj = Get-Process -Id $process.Id -ErrorAction SilentlyContinue
     if ($procObj) {
@@ -78,7 +78,7 @@ try {
     Write-Warning "Could not adjust process priority/affinity: $_"
 }
 
-# 3. Disable Windows Power Throttling (EcoQoS) via Win32 API
+# 3. Vô hiệu hóa Windows Power Throttling (EcoQoS) qua Win32 API
 try {
     $code = @"
 using System;

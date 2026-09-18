@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-H2 Canonical Test Contract: Cross-View Alignment & Non-Collapse
-Evaluates whether aligned multi-view representations z_mv Pareto-dominate single-view
-baselines (Sequence-only, Graph-only) and unaligned fusion without representation collapse.
-Eliminates observation-level oracle baselines and performs 3 distinct Bonferroni comparisons.
+Hợp đồng thử nghiệm Canonical H2: Căn chỉnh xem chéo & không thu gọn
+Đánh giá xem các biểu diễn nhiều chế độ xem có được căn chỉnh z_mv Chế độ xem đơn chiếm ưu thế Pareto hay không
+baseline (Chỉ chuỗi, chỉ đồ thị) và phản ứng tổng hợp không được căn chỉnh mà không thu gọn biểu diễn.
+Loại bỏ các baseline tiên tri ở cấp độ quan sát và thực hiện 3 phép so sánh Bonferroni riêng biệt.
 """
 
 from typing import Dict, Any
@@ -22,14 +22,14 @@ def evaluate_h2_multiview_alignment_contract(
     margin_epsilon: float = 0.02
 ) -> Dict[str, Any]:
     """
-    Executes pre-registered H2 hypothesis testing using Average Precision (AP) across 3 distinct comparisons.
+    Thực hiện kiểm tra giả thuyết H2 đã đăng ký trước bằng cách sử dụng Độ chính xác trung bình (AP) trên 3 phép so sánh riêng biệt.
     """
     from research_agent.experiments.protocols.paired_cluster_bootstrap import (
         paired_cluster_bootstrap_recompute,
         compute_average_precision
     )
     
-    # Comparison 1: Aligned Multi-View vs Sequence-Only
+    # So sánh 1: Chế độ xem nhiều chế độ được căn chỉnh và chỉ theo trình tự
     boot_vs_seq = paired_cluster_bootstrap_recompute(
         cluster_ids=cluster_ids,
         y_true=y_true,
@@ -42,7 +42,7 @@ def evaluate_h2_multiview_alignment_contract(
         correction_family="bonferroni_h2"
     )
 
-    # Comparison 2: Aligned Multi-View vs Graph-Only
+    # So sánh 2: Nhiều chế độ xem được căn chỉnh so với chỉ đồ thị
     boot_vs_graph = paired_cluster_bootstrap_recompute(
         cluster_ids=cluster_ids,
         y_true=y_true,
@@ -55,7 +55,7 @@ def evaluate_h2_multiview_alignment_contract(
         correction_family="bonferroni_h2"
     )
 
-    # Comparison 3: Aligned Multi-View vs Unaligned Fusion
+    # So sánh 3: Multi-View được căn chỉnh và Fusion không được căn chỉnh
     boot_vs_unaligned = paired_cluster_bootstrap_recompute(
         cluster_ids=cluster_ids,
         y_true=y_true,
@@ -70,8 +70,8 @@ def evaluate_h2_multiview_alignment_contract(
 
     variance_collapsed = bool(latent_variance < 0.01)
 
-    # All single-view comparisons must not significantly beat aligned
-    # Aligned must be supported against at least unaligned and not worse than single views
+    # Tất cả các so sánh một lượt xem không được đánh bại căn chỉnh đáng kể
+    # Căn chỉnh phải được hỗ trợ ít nhất là không được căn chỉnh và không tệ hơn các chế độ xem đơn lẻ
     is_falsified = (
         boot_vs_seq["verdict"] == "FALSIFIED" or
         boot_vs_graph["verdict"] == "FALSIFIED" or

@@ -1,6 +1,6 @@
 """
-Log Feature Extraction Research Engineering System
-Core Package
+Hệ thống kỹ thuật nghiên cứu khai thác tính năng nhật ký
+Gói cốt lõi
 """
 
 __version__ = "0.1.0"

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Bootstrap Engine and Statistical Invariant Tests
-Verifies:
-  1. Bootstrap engine recomputes exact whole metric per resample.
-  2. Average Precision matches sklearn.metrics.average_precision_score.
-  3. Trapezoidal PR-AUC vs AP distinction verified.
-  4. Decision semantics (SUPPORTED, INCONCLUSIVE, FALSIFIED) correctly assigned.
-  5. B=2000 and seed=10007 constraints strictly enforced.
+Công cụ Bootstrap và các bài kiểm tra bất biến thống kê
+Xác minh:
+  1. Công cụ Bootstrap tính toán lại toàn bộ số liệu chính xác cho mỗi mẫu lại.
+  2. Độ chính xác trung bình khớp với sklearn.metrics.average_precision_score.
+  3. Đã xác minh sự khác biệt giữa hình thang PR-AUC và AP.
+  4. Ngữ nghĩa quyết định (SUPPORTED, INCONCLUSIVE, FALSIFIED) được gán chính xác.
+  5. Các ràng buộc B=2000 và Seed=10007 được thực thi nghiêm ngặt.
 """
 
 import pytest
@@ -37,7 +37,7 @@ def test_02_decision_semantics_supported_vs_falsified():
     cluster_ids = np.repeat(np.arange(35), 4)
     y_true = np.array([1]*30 + [0]*110)
     
-    # Clearly superior proposed model
+    # Mô hình đề xuất rõ ràng vượt trội
     y_prop = y_true * 0.9 + rng.uniform(0, 0.1, 140)
     y_base = rng.uniform(0, 1, 140)
 

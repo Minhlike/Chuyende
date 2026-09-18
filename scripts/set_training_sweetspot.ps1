@@ -1,6 +1,6 @@
-# scripts/set_training_sweetspot.ps1
-# Configures Windows Hardware & Power for Training Sweet Spot
-# Target: Epoch runtime <= 100 minutes, zero GPU starvation, silent fans (52C), screen turns off after 20s.
+# tập lệnh/set_training_sweetspot.ps1
+# Định cấu hình phần cứng và sức mạnh của Windows để đào tạo Sweet Spot
+# Mục tiêu: Thời gian chạy Epoch <= 100 phút, không bị đói GPU, quạt im lặng (52C), màn hình tắt sau 20 giây.
 
 $ErrorActionPreference = "Stop"
 
@@ -10,41 +10,41 @@ Write-Host "==========================================================" -Foregro
 Write-Host " CONFIGURING HARDWARE SWEET SPOT PROFILE FOR TRAINING " -ForegroundColor Yellow
 Write-Host "==========================================================" -ForegroundColor Cyan
 
-# 1. Activate Acer Scheme
+# 1. Kích hoạt sơ đồ Acer
 powercfg /setactive $schemeGuid
 
-# 2. Display auto-off disabled (User uses Fn + F6 hardware backlight toggle)
+# 2. Tắt tính năng tự động tắt màn hình (Người dùng sử dụng nút bật tắt đèn nền phần cứng Fn + F6)
 powercfg /setacvalueindex $schemeGuid SUB_VIDEO VIDEOIDLE 0
 powercfg /setdcvalueindex $schemeGuid SUB_VIDEO VIDEOIDLE 0
 
-# 3. CRITICAL: Disable PCIe ASPM (Prevents RAM->VRAM batch transfer latency choke)
+# 3. CRITICAL: Vô hiệu hóa PCIe ASPM (Ngăn chặn độ trễ truyền hàng loạt RAM->VRAM)
 powercfg /setacvalueindex $schemeGuid SUB_PCIEXPRESS ASPM 0
 powercfg /setdcvalueindex $schemeGuid SUB_PCIEXPRESS ASPM 0
 
-# 4. CRITICAL: Disable Disk Idle (Prevents SSD/HDD sleep)
+# 4. CRITICAL: Tắt Disk Idle (Ngăn chặn chế độ ngủ SSD/HDD)
 powercfg /setacvalueindex $schemeGuid SUB_DISK DISKIDLE 0
 powercfg /setdcvalueindex $schemeGuid SUB_DISK DISKIDLE 0
 
-# 5. CRITICAL: Floor CPU Minimum state at 60% (~2.2 GHz base clock)
-# (Prevents Windows from downclocking CPU to 800MHz when screen turns off)
+# 5. CRITICAL: Tầng CPU Trạng thái tối thiểu ở mức 60% (xung nhịp cơ bản ~2,2 GHz)
+# (Ngăn Windows hạ xung CPU xuống 800 MHz khi màn hình tắt)
 powercfg /setacvalueindex $schemeGuid SUB_PROCESSOR PROCTHROTTLEMIN 60
 powercfg /setdcvalueindex $schemeGuid SUB_PROCESSOR PROCTHROTTLEMIN 60
 
-# 6. CRITICAL: Cap CPU Maximum state at 99%
-# (Disables aggressive Intel/AMD Turbo Boost voltage spikes -> silent fans, no overheating, 52C steady state)
+# 6. CRITICAL: Giới hạn CPU Trạng thái tối đa ở mức 99%
+# (Vô hiệu hóa các xung điện áp Intel/AMD Turbo Boost mạnh mẽ -> quạt im lặng, không quá nóng, trạng thái ổn định 52C)
 powercfg /setacvalueindex $schemeGuid SUB_PROCESSOR PROCTHROTTLEMAX 99
 powercfg /setdcvalueindex $schemeGuid SUB_PROCESSOR PROCTHROTTLEMAX 99
 
-# 7. Sleep & Lid Policies
+# 7. Chính sách về giấc ngủ và giấc ngủ
 powercfg /setacvalueindex $schemeGuid SUB_SLEEP STANDBYIDLE 0
 powercfg /setdcvalueindex $schemeGuid SUB_SLEEP STANDBYIDLE 0
 powercfg /setacvalueindex $schemeGuid SUB_BUTTONS LIDACTION 0
 powercfg /setdcvalueindex $schemeGuid SUB_BUTTONS LIDACTION 0
 
-# 8. Re-apply active scheme
+# 8. Áp dụng lại chương trình đang hoạt động
 powercfg /setactive $schemeGuid
 
-# 9. Ensure DirectX High Performance GPU preference for Python
+# 9. Đảm bảo tùy chọn GPU hiệu suất cao DirectX cho Python
 $regKey = "HKCU:\Software\Microsoft\DirectX\UserGpuPreferences"
 if (-not (Test-Path $regKey)) {
     New-Item -Path $regKey -Force | Out-Null

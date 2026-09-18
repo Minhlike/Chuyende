@@ -1,5 +1,5 @@
 """
-Argument Bundle Builder & Reasoning Readiness Gate (Prompt 5 Sections 56..64)
+Cổng xây dựng nhóm lập luận & sẵn sàng lập luận (Nhắc 5 phần 56..64)
 """
 
 from typing import List, Dict, Any, Optional
@@ -22,8 +22,8 @@ from research_agent.core.enums import (
 
 class ArgumentBundleBuilder:
     """
-    Assembles complete typed ArgumentBundle instances.
-    Evaluates strict multi-criteria readiness gate (Section 64) before handing off to writing.
+    Tập hợp các phiên bản ArgumentBundle đã được gõ hoàn chỉnh.
+    Đánh giá cổng sẵn sàng đa tiêu chí nghiêm ngặt (Phần 64) trước khi chuyển sang viết.
     """
 
     def build_bundle(
@@ -47,14 +47,14 @@ class ArgumentBundleBuilder:
         uncertainty: str = "Low to moderate remaining variance.",
     ) -> ArgumentBundle:
         """
-        Builds and gates an ArgumentBundle.
+        Xây dựng và cổng một ArgumentBundle.
         """
         all_issues = issues or []
         all_verifs = verification_requests or []
         seq = abs(hash(roadmap_node + objective)) % 1000000
         bundle_id = f"BND-{seq:06d}"
 
-        # Evaluate Readiness Gate (Section 64)
+        # Đánh giá Cổng sẵn sàng (Phần 64)
         readiness = self._evaluate_readiness_gate(
             claims=claims,
             evidence=evidence,
@@ -98,22 +98,22 @@ class ArgumentBundleBuilder:
         issues: List[ReasoningIssue],
     ) -> ArgumentReadinessState:
         """
-        Computes readiness state based on gate conditions.
+        Tính toán trạng thái sẵn sàng dựa trên điều kiện cổng.
         """
-        # Critical Issue Gate -> BLOCKED
+        # Cổng vấn đề quan trọng -> BLOCKED
         critical_issues = [iss for iss in issues if iss.severity == "CRITICAL"]
         if critical_issues:
             return ArgumentReadinessState.BLOCKED
 
-        # Active Unresolved Contradictions -> CONTESTED
+        # Những mâu thuẫn chưa được giải quyết đang hoạt động -> CONTESTED
         if contradicting_evidence and any(not c.get("is_resolved", False) for c in contradicting_evidence):
             return ArgumentReadinessState.CONTESTED
 
-        # Missing Evidence for Claims -> EVIDENCE_INCOMPLETE
+        # Thiếu bằng chứng cho khiếu nại -> EVIDENCE_INCOMPLETE
         if claims and not evidence:
             return ArgumentReadinessState.EVIDENCE_INCOMPLETE
 
-        # High Issues or Untested Fatal Assumptions -> REVIEW_REQUIRED
+        # Vấn đề cao hoặc giả định nghiêm trọng chưa được kiểm chứng -> REVIEW_REQUIRED
         high_issues = [iss for iss in issues if iss.severity == "HIGH"]
         if high_issues or any(a.status == "VIOLATED" for a in assumptions):
             return ArgumentReadinessState.REVIEW_REQUIRED

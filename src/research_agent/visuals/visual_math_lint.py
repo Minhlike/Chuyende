@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Automated Visual-Math Typography Linter & Hard Typography Lock Inspector
-Audits all figure definitions, rendering scripts, and extracted visual tokens.
-Enforces zero raw ASCII identifiers, zero pseudo-math, and rigorous scientific typography.
+Trình kiểm tra kiểu chữ kiểu chữ toán học trực quan tự động & Trình kiểm tra khóa kiểu chữ cứng
+Kiểm tra tất cả các định nghĩa hình, tập lệnh hiển thị và token trực quan được trích xuất.
+Thực thi không có mã định danh ASCII thô, không có toán giả và kiểu chữ khoa học nghiêm ngặt.
 """
 import re
 from pathlib import Path
@@ -80,7 +80,7 @@ def run_visual_math_lint() -> dict:
                         results['r_to_r_blackboard_errors'] += 1
                         results['details'].append(f'{draw_path.name} Line {idx}: plain R instead of ℝ in "{s}"')
 
-    # 2. Inspect academic_diagram_renderer.py
+    # 2. Kiểm tra academic_diagram_renderer.py
     diag_file = Path(r'D:\Research\src\research_agent\visuals\academic_diagram_renderer.py')
     if diag_file.exists():
         text = diag_file.read_text(encoding='utf-8')
@@ -89,7 +89,7 @@ def run_visual_math_lint() -> dict:
             results['r_to_r_blackboard_errors'] += len(bad_r)
             results['details'].append(f'Found plain R^ in {diag_file.name}: {bad_r}')
 
-    # Overall Status evaluation
+    # Đánh giá hiện trạng tổng thể
     error_keys = [
         'raw_z_graph_visible_count', 'raw_z_seq_visible_count', 'raw_z_mv_visible_count',
         'raw_d_graph_visible_count', 'raw_d_seq_visible_count', 'raw_underscore_math_count',

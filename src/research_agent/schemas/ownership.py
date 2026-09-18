@@ -1,5 +1,5 @@
 """
-Intellectual Ownership & Candidate Contribution Schemas (Section 4, 5, 15, 16, 17)
+Sơ đồ sở hữu trí tuệ và đóng góp của ứng viên (Phần 4, 5, 15, 16, 17)
 """
 
 from datetime import datetime, timezone
@@ -13,7 +13,7 @@ from research_agent.core.enums import (
 
 
 class OwnershipMapping(BaseModel):
-    """Explicit fine-grained ownership mapping for a roadmap node, component, or claim."""
+    """Ánh xạ quyền sở hữu chi tiết rõ ràng cho nút, thành phần hoặc xác nhận quyền sở hữu lộ trình."""
     mapping_id: str = Field(description="Stable ID e.g. 'OWN-000001'")
     node_code: str = Field(description="Roadmap canonical code e.g. '1.1.1', '2.4.3'")
     node_id: Optional[str] = None
@@ -27,7 +27,7 @@ class OwnershipMapping(BaseModel):
 
 
 class CandidateContribution(BaseModel):
-    """Canonical Candidate Contribution in Contribution Registry (Section 16, 17, 28)."""
+    """Đóng góp của Ứng viên Canonical trong Sổ đăng ký Đóng góp (Phần 16, 17, 28)."""
     contribution_id: str = Field(description="Stable ID e.g. 'CAND-01'.. 'CAND-15'")
     name: str
     description: str

@@ -1,27 +1,27 @@
 # -*- coding: utf-8 -*-
 """
-Deterministic Trajectory Qualification Runner for Stage A2 (Protocol V1.5 / Amendment 12).
+Người chạy đủ tiêu chuẩn quỹ đạo xác định cho chặng A2 (Giao thức V1.5 / Bản sửa đổi 12).
 NON_EMPIRICAL_TEST_FIXTURE = true
 
-Compares a continuous training trajectory in Process A against an independent fresh-process
-checkpoint-resumed trajectory in child Process B over multi-step gradient accumulation on CUDA/CPU,
-verifying exact numerical and structural identity:
-  1. Model parameters (max divergence < 1e-6)
-  2. Optimizer state (exp_avg, exp_avg_sq identity)
-  3. Scheduler state & learning rate schedule
-  4. Node dynamic memory embeddings (divergence < 1e-6)
-  5. Causal in/out degree counters (exact)
-  6. Node last interaction timestamps (exact)
-  7. FIFO temporal history buffers (exact)
-  8. 4-tuple RNG states (exact)
-  9. Stream cursor & operational window indexing (exact)
-  10. Fixed deterministic validation mask (15% rate)
-  11. Global epoch loss aggregation
-  12. Event-weighted partial-window accumulation
+So sánh quỹ đạo đào tạo liên tục trong Quy trình A với quy trình mới độc lập
+quỹ đạo được nối lại checkpoint trong Quy trình B con qua tích lũy độ dốc nhiều bước trên CUDA/CPU,
+xác minh chính xác danh tính số và cấu trúc:
+  1. Tham số mô hình (độ phân kỳ tối đa < 1e-6)
+  2. Trạng thái tối ưu hóa (nhận dạng exp_avg, exp_avg_sq)
+  3. Trạng thái lập lịch trình và lịch trình tốc độ học tập
+  4. Nhúng bộ nhớ động nút (phân kỳ < 1e-6)
+  5. Bộ đếm độ vào/ra nhân quả (chính xác)
+  6. Dấu thời gian tương tác cuối cùng của nút (chính xác)
+  7. Bộ đệm lịch sử thời gian FIFO (chính xác)
+  8. Trạng thái 4 bộ RNG (chính xác)
+  9. Con trỏ luồng và lập chỉ mục cửa sổ hoạt động (chính xác)
+  10. Đã sửa lỗi mặt nạ xác thực xác định (tỷ lệ 15%)
+  11. Tổng hợp mất mát (loss) epoch toàn cầu
+  12. Tích lũy một phần cửa sổ theo trọng số sự kiện
 """
 
 import os
-# Enforce deterministic CUBLAS configuration before any CUDA context is created
+# Thực thi cấu hình CUBLAS xác định trước khi bất kỳ bối cảnh CUDA nào được tạo
 os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
 
 import gc
@@ -52,7 +52,7 @@ NON_EMPIRICAL_TEST_FIXTURE = True
 DEFAULT_BASE_DIR = Path(__file__).resolve().parent.parent
 
 def compute_sha256(path: Path, chunk_size: int = 8 * 1024 * 1024) -> str:
-    """Computes SHA-256 hash using streaming chunks to prevent high memory usage."""
+    """Tính toán hàm băm SHA-256 bằng cách sử dụng các đoạn phát trực tuyến để tránh mức sử dụng bộ nhớ cao."""
     hasher = hashlib.sha256()
     with open(path, "rb") as f_in:
         while chunk := f_in.read(chunk_size):
@@ -60,7 +60,7 @@ def compute_sha256(path: Path, chunk_size: int = 8 * 1024 * 1024) -> str:
     return hasher.hexdigest()
 
 def get_git_commit_info(repo_dir: Optional[Path] = None) -> Tuple[str, str, bool]:
-    """Retrieves current git commit, branch, and dirty status of execution code."""
+    """Truy xuất cam kết git, nhánh hiện tại và trạng thái không chính xác của mã thực thi."""
     cwd = str(repo_dir) if repo_dir else str(DEFAULT_BASE_DIR)
     try:
         commit_sha = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=cwd, text=True).strip()
@@ -72,7 +72,7 @@ def get_git_commit_info(repo_dir: Optional[Path] = None) -> Tuple[str, str, bool
         return "UNKNOWN_COMMIT", "UNKNOWN_BRANCH", True
 
 def get_nvidia_driver_version() -> str:
-    """Queries host NVIDIA driver version via nvidia-smi fail-closed."""
+    """Truy vấn phiên bản trình điều khiển NVIDIA của máy chủ thông qua nvidia-smi không đóng được."""
     try:
         out = subprocess.check_output([
             "nvidia-smi", "--query-gpu=driver_version", "--format=csv,noheader"
@@ -85,7 +85,7 @@ def get_nvidia_driver_version() -> str:
         raise ExecutionDeviceMismatchError(f"FATAL: NVIDIA driver version unavailable via nvidia-smi: {e}")
 
 def generate_synthetic_fixture_stream(num_windows: int = 8, events_per_window: int = 32) -> List[List[Dict[str, Any]]]:
-    """Generates a rich, deterministic synthetic event stream with 8 relations and 4 node types."""
+    """Tạo ra một luồng sự kiện tổng hợp phong phú, mang tính xác định với 8 mối quan hệ và 4 loại nút."""
     rng = random.Random(1337)
     nodes = [f"node_{i}" for i in range(20)]
     node_types = {n: rng.randint(0, 3) for n in nodes}
@@ -126,7 +126,7 @@ def generate_synthetic_fixture_stream(num_windows: int = 8, events_per_window: i
     return windows
 
 def enforce_live_determinism():
-    """Enforces and machine-verifies deterministic runtime settings in the current process."""
+    """Thực thi và xác minh máy các cài đặt thời gian chạy xác định trong quy trình hiện tại."""
     if os.environ.get("CUBLAS_WORKSPACE_CONFIG") != ":4096:8":
         os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
     
@@ -147,7 +147,7 @@ def enforce_live_determinism():
         )
 
 def verify_against_environment_lock(env_lock_path: Path, req_device: str):
-    """Verifies live process against all 12 strict environment fields in the candidate lock."""
+    """Xác minh quy trình trực tiếp dựa trên tất cả 12 trường môi trường nghiêm ngặt trong khóa ứng viên."""
     if not env_lock_path.exists():
         raise FileNotFoundError(f"Environment lock file missing at {env_lock_path}")
     
@@ -213,8 +213,8 @@ def verify_against_environment_lock(env_lock_path: Path, req_device: str):
 
 def run_worker_resume(checkpoint_path: Path, output_state_path: Path, device: str, base_dir: Optional[Path] = None, env_lock_path: Optional[Path] = None):
     """
-    Child Process Worker: Executed in an independent fresh Python interpreter.
-    Loads checkpoint, restores complete state, processes remaining windows, and persists final state.
+    Child Process Worker: Được thực thi trong một trình thông dịch Python mới độc lập.
+    Tải checkpoint, khôi phục trạng thái hoàn chỉnh, xử lý các cửa sổ còn lại và duy trì trạng thái cuối cùng.
     """
     enforce_live_determinism()
     if device == "cuda":
@@ -229,7 +229,7 @@ def run_worker_resume(checkpoint_path: Path, output_state_path: Path, device: st
     synthetic_windows = generate_synthetic_fixture_stream(num_windows=8, events_per_window=32)
     grad_accum_steps = 2
 
-    # Fresh RNG initialization with different seed before loading checkpoint
+    # Khởi tạo RNG mới với hạt giống khác trước khi tải checkpoint
     random.seed(99999)
     np.random.seed(99999)
     torch.manual_seed(99999)
@@ -305,13 +305,13 @@ def run_qualification(
     t_start = time.time()
     t_start_iso = datetime.now(timezone.utc).isoformat()
 
-    # Determine execution device
+    # Xác định thiết bị thực hiện
     req_device = device_arg or ("cuda" if torch.cuda.is_available() else "cpu")
 
-    # 1. Enforce live determinism before anything else
+    # 1. Thực thi tính quyết định trực tiếp trước bất cứ điều gì khác
     enforce_live_determinism()
 
-    # 2. Bind and verify against environment lock if provided or on CUDA Colab mode
+    # 2. Liên kết và xác minh khóa môi trường nếu được cung cấp hoặc trên chế độ CUDA Colab
     if env_lock_path is None and req_device == "cuda":
         default_colab_lock = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
         if default_colab_lock.exists():
@@ -406,7 +406,7 @@ def run_qualification(
         losses_a.append(res["loss"])
         log(f"  [Process A] Group {g_idx + 1}/4 (Cursor={trainer_a.stream_cursor}): Loss={res['loss']:.6f}, Step={res['global_step']}, AccumPos={res['grad_accum_position']}")
         
-        # Save checkpoint at Step 2 boundary (after group 1, cursor == 4)
+        # Lưu checkpoint tại ranh giới Bước 2 (sau nhóm 1, con trỏ == 4)
         if g_idx == 1:
             log(f"  [Process A] Saving Qualification Checkpoint at Step {trainer_a.global_step} (Cursor = {trainer_a.stream_cursor})...")
             trainer_a.save_checkpoint(checkpoint_path)
@@ -422,7 +422,7 @@ def run_qualification(
     }
 
     # =================================================================
-    # PROCESS B: TRUE FRESH-PROCESS RESUME (Spawned via sys.executable)
+    # PROCESS B: TRUE FRESH-PROCESS RESUME (Được sinh ra qua sys.executable)
     # =================================================================
     log("\n--- [PROCESS B] Launching True Fresh-Process Child Interpreter for Resume ---")
     del trainer_a
@@ -458,7 +458,7 @@ def run_qualification(
     assert state_b_path.exists(), f"Expected worker state at {state_b_path}"
     state_b = torch.load(state_b_path, weights_only=False)
     
-    # Cleanup temp state artifact
+    # Làm sạch thành phần trạng thái tạm thời
     if state_b_path.exists():
         try:
             state_b_path.unlink()
@@ -466,12 +466,12 @@ def run_qualification(
             pass
 
     # =================================================================
-    # VERIFICATION OF EXACT IDENTITY (PROCESS A vs PROCESS B)
+    # VERIFICATION CỦA EXACT IDENTITY (PROCESS A so với PROCESS B)
     # =================================================================
     log("\n--- Verifying Exact Identity Between Continuous (Process A) and Resumed (Process B) ---")
     qualification_pass = True
 
-    # 1. Model Parameters
+    # 1. Thông số mô hình
     max_param_diff = 0.0
     for k in state_a["model_state"]:
         p_a = state_a["model_state"][k]
@@ -487,7 +487,7 @@ def run_qualification(
     else:
         log("     [PASS] Model parameters numerically identical.")
 
-    # 2. Optimizer States
+    # 2. Trạng thái tối ưu hóa
     opt_a = state_a["optimizer_state"]["state"]
     opt_b = state_b["optimizer_state"]["state"]
     max_opt_diff = 0.0
@@ -504,7 +504,7 @@ def run_qualification(
     else:
         log("     [PASS] Optimizer states numerically identical.")
 
-    # 3. Loss Trajectory for Groups 3 & 4
+    # 3. Quỹ đạo mất mát (loss) cho Nhóm 3 & 4
     losses_a_suffix = state_a["losses"][2:]
     losses_b_suffix = state_b["losses"]
     max_loss_diff = 0.0
@@ -520,7 +520,7 @@ def run_qualification(
     else:
         log("     [PASS] Loss trajectories numerically identical.")
 
-    # 4. Node Dynamic State Tables
+    # 4. Bảng trạng thái động của nút
     mem_a = state_a["node_states"]["node_memory_states"]
     mem_b = state_b["node_states"]["node_memory_states"]
     in_deg_a = state_a["node_states"]["node_causal_in_degrees"]
@@ -573,7 +573,7 @@ def run_qualification(
     else:
         log("     [PASS] Node dynamic state table & causal counters structurally identical.")
 
-    # 5. Global Step & Stream Cursor
+    # 5. Con trỏ bước và luồng toàn cầu
     log(f"  8. Final Global Step: Process A = {state_a['global_step']}, Process B = {state_b['global_step']}")
     log(f"  9. Final Stream Cursor: Process A = {state_a['stream_cursor']}, Process B = {state_b['stream_cursor']}")
     if state_a["global_step"] != state_b["global_step"] or state_a["stream_cursor"] != state_b["stream_cursor"]:
@@ -588,10 +588,10 @@ def run_qualification(
     log(f"\nQualification Runtime: {dur_sec:.2f} seconds")
     log(f"Qualification Gate Status: {'PASS' if qualification_pass else 'FAIL'}")
 
-    # Write log file
+    # Viết tập tin nhật ký
     log_path.write_text("\n".join(log_lines) + "\n", encoding="utf-8")
 
-    # Generate Structured Evidence JSON
+    # Tạo bằng chứng có cấu trúc JSON
     env_data = {
         "python_version": platform.python_version(),
         "python_major_minor": f"{sys.version_info.major}.{sys.version_info.minor}",
@@ -677,7 +677,7 @@ def run_qualification(
     qual_path = evidence_dir / "IMPLEMENTATION-QUALIFICATION.json"
     qual_path.write_text(json.dumps(qual_summary, indent=2) + "\n", encoding="utf-8")
 
-    # Re-compute hashes of all generated artifacts from disk
+    # Tính toán lại giá trị băm của tất cả các tạo phẩm được tạo từ đĩa
     stdout_log_sha256 = compute_sha256(log_path)
     env_sha256 = compute_sha256(env_path)
     resume_sha256 = compute_sha256(resume_path)
@@ -729,7 +729,7 @@ def run_qualification(
     exp_src_path.write_text(json.dumps(exp_source, indent=2) + "\n", encoding="utf-8")
     exp_src_sha256 = compute_sha256(exp_src_path)
 
-    # Truthful Storage Labels: Runtime generated in ephemeral workspace, pending Drive durable mirror
+    # Nhãn lưu trữ trung thực: Thời gian chạy được tạo trong không gian làm việc phù du, đang chờ nhân bản bền bỉ của Drive
     artifacts_list = [
         {
             "path": "experiments/evidence/stage-a2/implementation/IMPLEMENTATION-QUALIFICATION.json",
@@ -780,7 +780,7 @@ def run_qualification(
     manifest_path = evidence_dir / "EVIDENCE-MANIFEST.json"
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 
-    # Final byte re-validation of all manifest entries
+    # Xác thực lại byte cuối cùng của tất cả các mục kê khai
     for entry in manifest["artifacts"]:
         f_p = (evidence_dir / Path(entry["path"]).name) if (evidence_dir / Path(entry["path"]).name).exists() else (base_dir / entry["path"])
         actual_sha = compute_sha256(f_p)
@@ -797,7 +797,7 @@ if __name__ == "__main__":
     parser.add_argument("--output-dir", type=str, default=None, help="Evidence output directory")
     parser.add_argument("--environment-lock", type=str, default=None, help="Path to environment lock candidate")
     
-    # Internal Child Worker arguments
+    # Đối số của Công nhân trẻ em nội bộ
     parser.add_argument("--worker-resume", action="store_true", default=False, help="Run as child worker process for resume")
     parser.add_argument("--checkpoint", type=str, default=None, help="Checkpoint path for worker resume")
     parser.add_argument("--output-state", type=str, default=None, help="Output state path for worker resume")

@@ -1,6 +1,6 @@
 """
-Module to directly generate and append fully formatted Microsoft Word (.docx) thesis documents.
-Standard: Times New Roman 14pt, 1.5 line spacing, standard thesis margins (Top 2.5cm, Bottom 2.5cm, Left 3.5cm, Right 2.0cm).
+Mô-đun để trực tiếp tạo và nối thêm các tài liệu luận văn Microsoft Word (.docx) được định dạng đầy đủ.
+Tiêu chuẩn: Times New Roman 14pt, giãn dòng 1,5 dòng, lề luận văn chuẩn (Trên 2,5cm, Dưới 2,5cm, Trái 3,5cm, Phải 2,0cm).
 """
 
 import os
@@ -19,14 +19,14 @@ def create_or_load_thesis_docx(file_path: str = r"D:\Research\Luan_An_Tien_Si.do
         doc = docx.Document(str(p))
     else:
         doc = docx.Document()
-        # Set page margins
+        # Đặt lề trang
         for s in doc.sections:
             s.top_margin = Cm(2.5)
             s.bottom_margin = Cm(2.5)
             s.left_margin = Cm(3.5)
             s.right_margin = Cm(2.0)
 
-        # Set default Normal style
+        # Đặt mặc định kiểu Bình thường
         style = doc.styles["Normal"]
         style.font.name = "Times New Roman"
         style.font.size = Pt(14)
@@ -109,7 +109,7 @@ def add_table_data(doc: docx.Document, headers: list, rows_data: list):
     tbl = doc.add_table(rows=len(rows_data) + 1, cols=cols_count)
     tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
 
-    # Header row
+    # Hàng tiêu đề
     for c_idx, h in enumerate(headers):
         cell = tbl.cell(0, c_idx)
         cell.text = h
@@ -124,7 +124,7 @@ def add_table_data(doc: docx.Document, headers: list, rows_data: list):
             r.font.size = Pt(11)
             r.bold = True
 
-    # Body rows
+    # Hàng nội dung
     for r_idx, row in enumerate(rows_data):
         for c_idx, val in enumerate(row):
             cell = tbl.cell(r_idx + 1, c_idx)

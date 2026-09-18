@@ -1,6 +1,6 @@
 """
-Visual QA Engine (Rule 9)
-Audits Word 2016 diagrams, shapes, connectors, tables, captions, cross-references, List of Figures/Tables, and PDF output.
+Công cụ QA trực quan (Quy tắc 9)
+Kiểm tra sơ đồ, hình dạng, đường kết nối, bảng, chú thích, tham chiếu chéo, Danh sách Hình/Bảng và đầu ra PDF trong Word 2016.
 """
 
 import os
@@ -19,7 +19,7 @@ import docx
 
 class VisualQAEngine:
     """
-    Automated visual quality assurance for Word 2016 documents.
+    Tự động đảm bảo chất lượng hình ảnh cho tài liệu Word 2016.
     """
 
     def __init__(self):
@@ -31,15 +31,15 @@ class VisualQAEngine:
         export_pdf: bool = True,
     ) -> Dict[str, Any]:
         """
-        Performs full visual QA on the document:
-        1. COM Automation: updates all fields (TOC, TOF, REF, SEQ, BIBLIOGRAPHY), saves DOCX.
-        2. Exports PDF.
-        3. Validates XML & COM properties:
-           - Shapes & Connectors bounds
-           - Native Table widths, tblHeader, cantSplit
-           - Native Captions & Cross-reference integrity (No "Error! Reference source not found")
-           - List of Figures & List of Tables populated
-        4. PDF visual audit via pypdfium2.
+        Thực hiện QA trực quan đầy đủ trên tài liệu:
+        1. COM Automation: cập nhật tất cả các trường (TOC, TOF, REF, SEQ, BIBLIOGRAPHY), lưu DOCX.
+        2. Xuất khẩu PDF.
+        3. Xác thực thuộc tính XML & COM:
+           - Giới hạn hình dạng & kết nối
+           - Độ rộng bảng gốc, tblHeader, cantSplit
+           - Chú thích gốc & tính toàn vẹn tham chiếu chéo (Không có "Lỗi! Không tìm thấy nguồn tham chiếu")
+           - Danh sách hình & Danh sách bảng được điền
+        4. Kiểm tra trực quan PDF qua pypdfium2.
         """
         abs_docx = os.path.abspath(docx_path)
         pdf_path = str(Path(abs_docx).with_suffix(".pdf")) if export_pdf else None
@@ -66,10 +66,10 @@ class VisualQAEngine:
         try:
             word = win32.DispatchEx("Word.Application")
             word.Visible = False
-            word.DisplayAlerts = 0  # wdAlertsNone
+            word.DisplayAlerts = 0  # wdAlertsKhông có
             doc_com = word.Documents.Open(abs_docx)
 
-            # 1. Update all dynamic fields in the document
+            # 1. Cập nhật tất cả các trường động trong tài liệu
             for fld in doc_com.Fields:
                 try:
                     fld.Update()
@@ -88,7 +88,7 @@ class VisualQAEngine:
                 except Exception:
                     pass
 
-            # 2. Check shapes and canvases
+            # 2. Kiểm tra hình dạng và khung vẽ
             shape_count = doc_com.Shapes.Count
             canvas_count = 0
             connector_count = 0
@@ -96,7 +96,7 @@ class VisualQAEngine:
                 sh = doc_com.Shapes(i)
                 if sh.Type == 20:  # msoCanvas = 20
                     canvas_count += 1
-                    # Check items inside canvas
+                    # Kiểm tra các mục bên trong canvas
                     for j in range(1, sh.CanvasItems.Count + 1):
                         item = sh.CanvasItems(j)
                         if item.Type == 3:  # msoConnector = 3
@@ -108,13 +108,13 @@ class VisualQAEngine:
             results["stats"]["canvas_count"] = canvas_count
             results["stats"]["connector_count"] = connector_count
 
-            # 3. Check for broken cross references or fields in text
+            # 3. Kiểm tra các tham chiếu chéo hoặc các trường trong văn bản bị hỏng
             doc_text = doc_com.Content.Text
             if "Error! Reference source not found" in doc_text:
                 results["cross_references_pass"] = False
                 results["issues"].append("Broken cross-reference found: 'Error! Reference source not found'.")
 
-            # 4. Save and export PDF
+            # 4. Lưu và xuất PDF
             doc_com.Save()
             if export_pdf and pdf_path:
                 doc_com.ExportAsFixedFormat(pdf_path, 17)  # wdExportFormatPDF
@@ -140,14 +140,14 @@ class VisualQAEngine:
             except Exception:
                 pass
 
-        # 5. XML / python-docx Inspections
+        # 5. Kiểm tra XML / python-docx
         doc_xml = docx.Document(abs_docx)
         tbl_count = len(doc_xml.tables)
         results["stats"]["table_count"] = tbl_count
 
-        # Audit tables
+        # Bảng kiểm tra
         for t_idx, tbl in enumerate(doc_xml.tables):
-            # Skip cover frame table if single cell / no header
+            # Bỏ qua bảng khung bìa nếu ô đơn/không có tiêu đề
             if t_idx == 0 and len(tbl.rows) == 1:
                 continue
             hdr_tr = tbl.rows[0]._tr
@@ -156,7 +156,7 @@ class VisualQAEngine:
                 results["native_tables_pass"] = False
                 results["issues"].append(f"Table {t_idx} is missing <w:tblHeader/> on header row.")
 
-        # Check captions
+        # Kiểm tra chú thích
         captions_found = []
         for p in doc_xml.paragraphs:
             if p.style.name == "Caption" or "SEQ" in p._p.xml:
@@ -164,7 +164,7 @@ class VisualQAEngine:
 
         results["stats"]["captions_count"] = len(captions_found)
 
-        # 6. PDF visual read-back audit
+        # 6. Kiểm tra đọc lại trực quan PDF
         if export_pdf and pdf_path and os.path.exists(pdf_path):
             try:
                 pdf = pdfium.PdfDocument(pdf_path)

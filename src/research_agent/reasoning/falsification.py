@@ -1,5 +1,5 @@
 """
-Falsification Planning & Negative Control Protocol Designer (Prompt 5 Section 20)
+Lập kế hoạch giả mạo & Trình thiết kế giao thức kiểm soát tiêu cực (Lời nhắc 5 Phần 20)
 """
 
 from typing import List, Dict, Any, Optional
@@ -8,8 +8,8 @@ from research_agent.schemas.reasoning import FalsificationPlan
 
 class FalsificationPlanner:
     """
-    Designs empirical falsification protocols and negative controls for hypotheses and claims.
-    Ensures experimental setups possess genuine power to reject false assertions.
+    Thiết kế các giao thức làm sai lệch theo kinh nghiệm và các biện pháp kiểm soát tiêu cực đối với các giả thuyết và tuyên bố.
+    Đảm bảo các thiết lập thử nghiệm có sức mạnh thực sự để bác bỏ các xác nhận sai.
     """
 
     def plan_falsification(
@@ -19,7 +19,7 @@ class FalsificationPlanner:
         claim_id: Optional[str] = None,
     ) -> FalsificationPlan:
         """
-        Generates a rigorous FalsificationPlan for H1..H5 or related claims.
+        Tạo một Kế hoạch giả mạo nghiêm ngặt cho H1..H5 hoặc các khiếu nại liên quan.
         """
         seq = abs(hash(hypothesis_id + hypothesis_statement)) % 1000000
         plan_id = f"FALS-{hypothesis_id}-{seq:04d}"

@@ -1,5 +1,5 @@
 """
-High-Level Memory Manager & Research Continuation Engine (Prompt 4, Sections 36..38, 43, 73, 74, ADR-0008)
+Trình quản lý bộ nhớ cấp cao & Công cụ tiếp tục nghiên cứu (Dấu nhắc 4, Phần 36..38, 43, 73, 74, ADR-0008)
 """
 
 import json
@@ -38,8 +38,8 @@ from research_agent.memory.health import MemoryHealthAuditor
 
 class MemoryManager:
     """
-    Unified high-level facade for Research Memory, Hybrid Retrieval,
-    Consolidation, Continuation Bootstrap, and State Snapshots.
+    Mặt tiền cấp cao thống nhất cho Bộ nhớ nghiên cứu, Truy xuất kết hợp,
+    Hợp nhất, Bootstrap tiếp tục và Ảnh chụp nhanh trạng thái.
     """
 
     def __init__(
@@ -64,7 +64,7 @@ class MemoryManager:
         self.health_auditor = MemoryHealthAuditor(repository=self.repo, vector_index=self.vector_index)
 
     # -------------------------------------------------------------
-    # Typed Write APIs (Section 36)
+    # API ghi đã nhập (Phần 36)
     # -------------------------------------------------------------
     def remember_decision(
         self,
@@ -82,19 +82,19 @@ class MemoryManager:
         actor: str = "HUMAN_ARCHITECT_OR_AGENT",
         status: DecisionStatus = DecisionStatus.ACCEPTED,
     ) -> DecisionRecord:
-        """Register a first-class Architecture/Research Decision (RC-15, Section 31)."""
+        """Đăng ký Quyết định Nghiên cứu/Kiến trúc hạng nhất (RC-15, Mục 31)."""
         all_decs = self.repo.list_decisions()
         seq = len(all_decs) + 1
         dec_id = f"DEC-{seq:06d}"
 
-        # If superseding an older decision, mark older decision as SUPERSEDED
+        # Nếu thay thế quyết định cũ hơn, hãy đánh dấu quyết định cũ hơn là SUPERSEDED
         if supersedes_id:
             old_dec = self.repo.get_decision(supersedes_id)
             if old_dec:
                 old_dec.status = DecisionStatus.SUPERSEDED
                 old_dec.superseded_by_id = dec_id
                 self.repo.save_decision(old_dec)
-                # Record status transition event
+                # Ghi lại sự kiện chuyển trạng thái
                 self.record_status_transition(
                     entity_type="DECISION",
                     entity_id=supersedes_id,
@@ -144,7 +144,7 @@ class MemoryManager:
         session_id: Optional[str] = None,
         actor: str = "RESEARCH_AGENT",
     ) -> EpisodeRecord:
-        """Record an episodic execution event (M3 Episodic Memory)."""
+        """Ghi lại sự kiện thực thi theo từng tập (Bộ nhớ phân đoạn M3)."""
         episodes = self.repo.list_episodes()
         seq = len(episodes) + 1
         ep_id = f"EP-{seq:06d}"
@@ -181,7 +181,7 @@ class MemoryManager:
         related_hyp_id: Optional[str] = None,
         session_id: Optional[str] = None,
     ) -> EpisodeRecord:
-        """Explicitly record a research failure so negative results are never lost (RC-14, Section 33)."""
+        """Ghi lại rõ ràng một nghiên cứu thất bại để kết quả tiêu cực không bao giờ bị mất (RC-14, Phần 33)."""
         return self.record_episode(
             action=action,
             outcome=f"FAILED: {failure_reason}",
@@ -205,7 +205,7 @@ class MemoryManager:
         scope: Optional[str] = None,
         actionable_recommendations: Optional[List[str]] = None,
     ) -> LessonLearned:
-        """Record an actionable lesson learned from research experiments (Section 33)."""
+        """Ghi lại một bài học hữu ích rút ra từ các thí nghiệm nghiên cứu (Phần 33)."""
         all_lessons = self.repo.list_lessons_learned()
         seq = len(all_lessons) + 1
         les_id = f"LES-{seq:06d}"
@@ -236,7 +236,7 @@ class MemoryManager:
         proposed_experiment: Optional[str] = None,
         priority: str = "HIGH",
     ) -> OpenQuestion:
-        """Create a first-class Open Research Question (Section 32)."""
+        """Tạo Câu hỏi Nghiên cứu Mở hạng nhất (Phần 32)."""
         all_oqs = self.repo.list_open_questions()
         seq = len(all_oqs) + 1
         oq_id = f"OQ-{seq:06d}"
@@ -269,7 +269,7 @@ class MemoryManager:
         decision_id: Optional[str] = None,
         actor: str = "RESEARCH_AGENT",
     ) -> StatusTransitionRecord:
-        """Record an immutable status transition event (Section 8)."""
+        """Ghi lại sự kiện chuyển trạng thái bất biến (Phần 8)."""
         transitions = self.repo.list_status_transitions()
         seq = len(transitions) + 1
         trans_id = f"STR-{seq:06d}"
@@ -288,10 +288,10 @@ class MemoryManager:
         return self.repo.save_status_transition(record)
 
     # -------------------------------------------------------------
-    # Query & Retrieval APIs (Section 37)
+    # API truy vấn & truy xuất (Phần 37)
     # -------------------------------------------------------------
     def retrieve(self, query: str, max_items: int = 15, token_budget: int = 4000) -> ContextBundle:
-        """Execute hybrid retrieval across all memory and knowledge tiers."""
+        """Thực hiện truy xuất kết hợp trên tất cả các tầng kiến ​​thức và bộ nhớ."""
         return self.retrieval_engine.retrieve(query=query, max_items=max_items, token_budget=token_budget)
 
     def consolidate_session(
@@ -303,7 +303,7 @@ class MemoryManager:
         candidate_lessons: Optional[List[LessonLearned]] = None,
         candidate_questions: Optional[List[OpenQuestion]] = None,
     ) -> ConsolidationResult:
-        """Execute session memory consolidation."""
+        """Thực hiện hợp nhất bộ nhớ phiên."""
         return self.consolidation_service.consolidate_session(
             session=session,
             candidate_memories=candidate_memories,
@@ -314,20 +314,20 @@ class MemoryManager:
         )
 
     def audit_health(self) -> MemoryHealthReport:
-        """Perform comprehensive memory health check."""
+        """Thực hiện kiểm tra sức khỏe bộ nhớ toàn diện."""
         return self.health_auditor.audit()
 
     def rebuild_indexes(self) -> Tuple[int, int]:
-        """Rebuild FTS5 and Derived Vector indexes from canonical database."""
+        """Xây dựng lại các chỉ mục FTS5 và Derived Vector từ cơ sở dữ liệu chuẩn."""
         fts_count = self.repo.rebuild_fts_index()
         vec_count = self.vector_index.rebuild_from_repository(self.repo)
         return fts_count, vec_count
 
     # -------------------------------------------------------------
-    # Continuation Bootstrap & State Snapshot (Sections 43, 73, 74)
+    # Tiếp tục Bootstrap & Ảnh chụp nhanh trạng thái (Phần 43, 73, 74)
     # -------------------------------------------------------------
     def get_research_state(self) -> Dict[str, Any]:
-        """Get canonical state summary for Roadmap, Reference Map, RQ, Hypotheses, Decisions, and Open Questions."""
+        """Nhận bản tóm tắt trạng thái chuẩn cho Lộ trình, Bản đồ tham khảo, RQ, Giả thuyết, Quyết định và Câu hỏi mở."""
         roadmap = self.repo.get_roadmap()
         roadmap_ver = roadmap.version if roadmap else "1.0.0"
         central_obj = roadmap.central_object if roadmap else "feature representation z"
@@ -358,7 +358,7 @@ class MemoryManager:
         }
 
     def generate_resume_bundle(self) -> ContextBundle:
-        """Create lean bootstrap ContextBundle for resuming agent work (Section 74)."""
+        """Tạo ContextBundle khởi động tinh gọn để tiếp tục công việc của tác nhân (Phần 74)."""
         state = self.get_research_state()
         return self.retrieve(
             query="resume current research state and open questions",
@@ -367,7 +367,7 @@ class MemoryManager:
         )
 
     def create_snapshot(self) -> Path:
-        """Persist a point-in-time JSON snapshot of research state into memory/snapshots/."""
+        """Duy trì ảnh chụp nhanh JSON tại một thời điểm của trạng thái nghiên cứu vào bộ nhớ/ảnh chụp nhanh/."""
         state = self.get_research_state()
         timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
         snapshot_path = self.memory_root / "snapshots" / f"snapshot_{timestamp}.json"
@@ -376,7 +376,7 @@ class MemoryManager:
         return snapshot_path
 
     def export_human_readable_memory(self) -> Path:
-        """Export human-readable research memory status to memory/memory-export.md."""
+        """Xuất trạng thái bộ nhớ nghiên cứu mà con người có thể đọc được sang bộ nhớ/bộ nhớ-export.md."""
         state = self.get_research_state()
         export_path = self.memory_root / "memory-export.md"
 

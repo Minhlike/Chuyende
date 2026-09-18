@@ -1,5 +1,5 @@
 """
-Skills Registry & Execution Manager (Prompt 5 Sections 75..92)
+Trình quản lý Thực thi & Đăng ký Kỹ năng (Nhắc 5 Mục 75..92)
 """
 
 from typing import Dict, Any, List, Optional
@@ -54,7 +54,7 @@ from research_agent.skills.implementations import (
 
 class ResearchSkillRegistry:
     """
-    Central registry and execution manager for canonical research skills.
+    Người quản lý đăng ký và thực thi trung tâm cho các kỹ năng nghiên cứu kinh điển.
     """
 
     def __init__(self):
@@ -110,14 +110,14 @@ class ResearchSkillRegistry:
         ]
         for s in skills:
             self._skills[s.metadata.skill_id] = s
-            # Also register by canonical name
+            # Cũng đăng ký theo tên kinh điển
             self._skills[s.metadata.name] = s
 
     def get_skill(self, skill_id_or_name: str) -> Optional[BaseResearchSkill]:
         return self._skills.get(skill_id_or_name)
 
     def list_skills(self) -> List[SkillMetadata]:
-        # Return unique skills ordered by SKILL-01..SKILL-18
+        # Trả lại các kỹ năng độc đáo được yêu cầu bởi SKILL-01..SKILL-18
         unique = {s.metadata.skill_id: s.metadata for s in self._skills.values()}
         return [unique[k] for k in sorted(unique.keys())]
 

@@ -1,13 +1,13 @@
 """
-Master OMML Equation Registry with 100% Native Word Elements.
-Zero SMP characters, zero raw delimiter mismatches, explicit <w:noProof/>.
+Sổ đăng ký phương trình OMML chính với 100% thành phần từ bản địa.
+Không có ký tự SMP, không có dấu phân cách thô không khớp, <w:noProof/> rõ ràng.
 """
 
 from docx.oxml import parse_xml
 from docx.oxml.ns import nsdecls
 
 def make_evidence_space_omml():
-    """Native OMML for Y subseteq {0, 1}^{|T|} using script style on ASCII Y and T."""
+    """OMML gốc cho tập hợp con Y {0, 1}^{|T|} sử dụng kiểu tập lệnh trên ASCII Y và T."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>Y</m:t></m:r>\n'
@@ -32,7 +32,7 @@ def make_evidence_space_omml():
 
 
 def make_frequency_vector_omml():
-    """Native OMML for x = [c(e1), c(e2), ..., c(eM)]^T in R^M with full delimiter containment."""
+    """OMML gốc cho x = [c(e1), c(e2), ..., c(eM)]^T trong R^M với ngăn chặn đầy đủ dấu phân cách."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:r><m:rPr><m:sty m:val="bi"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>x</m:t></m:r>\n'
@@ -66,7 +66,7 @@ def make_frequency_vector_omml():
 
 
 def make_l_inv_omml():
-    """Native OMML for L_inv(P_seq, P_graph) = 1/B sum_{i=1}^B ||p_seq^(i) - p_graph^(i)||_2^2."""
+    """OMML gốc cho L_inv(P_seq, P_graph) = 1/B tổng_{i=1}^B ||p_seq^(i) - p_graph^(i)||_2^2."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>inv</m:t></m:r></m:sub></m:sSub>\n'
@@ -98,7 +98,7 @@ def make_l_inv_omml():
 
 
 def make_l_var_omml():
-    """Native OMML for L_var(P) = 1/d_proj sum_{j=1}^{d_proj} max(0, gamma - sqrt(Var(p_{:, j}) + eps))."""
+    """OMML gốc cho L_var(P) = 1/d_proj tổng_{j=1}^{d_proj} max(0, gamma - sqrt(Var(p_{:, j}) + eps))."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>var</m:t></m:r></m:sub></m:sSub>\n'
@@ -129,7 +129,7 @@ def make_l_var_omml():
 
 
 def make_var_formula_omml():
-    """Native OMML for Var(p_{:, j}) = 1/(B-1) sum_{i=1}^B (p_{i, j} - bar{p}_j)^2."""
+    """OMML gốc cho Var(p_{:, j}) = 1/(B-1) sum_{i=1}^B (p_{i, j} - bar{p__j)^2."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:r><w:rPr><w:noProof/></w:rPr><m:t>Var</m:t></m:r>\n'
@@ -156,7 +156,7 @@ def make_var_formula_omml():
 
 
 def make_c_matrix_omml():
-    """Native OMML for C(P) = 1/(B-1) sum_{i=1}^B (p^(i) - bar{p})(p^(i) - bar{p})^T."""
+    """OMML gốc cho C(P) = 1/(B-1) sum_{i=1}^B (p^(i) - bar{p})(p^(i) - bar{p})^T."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:r><m:rPr><m:sty m:val="bi"/></m:rPr><w:rPr><w:noProof/></w:rPr><m:t>C</m:t></m:r>\n'
@@ -188,7 +188,7 @@ def make_c_matrix_omml():
 
 
 def make_l_cov_omml():
-    """Native OMML for L_cov(P) = 1/d_proj sum_{j=1}^{d_proj} sum_{k ne j} (C_{j, k}(P))^2."""
+    """OMML gốc cho L_cov(P) = 1/d_proj tổng_{j=1}^{d_proj} sum_{k ne j} (C_{j, k}(P))^2."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>cov</m:t></m:r></m:sub></m:sSub>\n'
@@ -219,7 +219,7 @@ def make_l_cov_omml():
 
 
 def make_stage_a_loss_omml():
-    """Native OMML for L_StageA = lambda_inv L_inv + lambda_var(L_var_seq + L_var_graph) + lambda_cov(L_cov_seq + L_cov_graph) + lambda_spec L_preserv + lambda_rec L_fuse-rec."""
+    """OMML gốc cho L_StageA = lambda_inv L_inv + lambda_var(L_var_seq + L_var_graph) + lambda_cov(L_cov_seq + L_cov_graph) + lambda_spec L_preserv + lambda_rec L_fuse-rec."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>Stage-A</m:t></m:r></m:sub></m:sSub>\n'
@@ -256,7 +256,7 @@ def make_stage_a_loss_omml():
 
 
 def make_quality_vector_omml():
-    """Native OMML for q_seq = [m_seq, Cov_event, Delta t_span]^T in R^3, q_graph = [m_graph, Cov_graph, Density_edge]^T in R^3."""
+    """OMML gốc cho q_seq = [m_seq, Cov_event, Delta t_span]^T trong R^3, q_graph = [m_graph, Cov_graph, Density_edge]^T trong R^3."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:sty m:val="bi"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>q</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>seq</m:t></m:r></m:sub></m:sSub>\n'
@@ -288,7 +288,7 @@ def make_quality_vector_omml():
 
 
 def make_gating_weights_omml():
-    """Native OMML for w_rel^seq = tau + (1 - 2*tau) * exp(s_seq)/(exp(s_seq) + exp(s_graph)), w_rel^graph = 1 - w_rel^seq."""
+    """OMML gốc cho w_rel^seq = tau + (1 - 2*tau) * exp(s_seq)/(exp(s_seq) + exp(s_graph)), w_rel^graph = 1 - w_rel^seq."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSubSup><m:e><m:r><m:rPr><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>w</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>rel</m:t></m:r></m:sub><m:sup><m:r><w:rPr><w:noProof/></w:rPr><m:t>seq</m:t></m:r></m:sup></m:sSubSup>\n'
@@ -319,7 +319,7 @@ def make_gating_weights_omml():
 
 
 def make_pcgrad_omml():
-    """Native OMML for g_align <- g_align - <g_align, g_preserv>/||g_preserv||_2^2 g_preserv on Theta_shared."""
+    """OMML gốc cho g_align <- g_align - <g_align, g_preserv>/||g_preserv||_2^2 g_preserv trên Theta_shared."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:sty m:val="bi"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>g</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>align</m:t></m:r></m:sub></m:sSub>\n'
@@ -344,7 +344,7 @@ def make_pcgrad_omml():
 
 
 def make_mil_attention_omml():
-    """Native OMML for a_i = exp(w^T(tanh(V z_i) odot sigma(U z_i))) / sum_j exp(...)."""
+    """OMML gốc cho a_i = exp(w^T(tanh(V z_i) odot sigma(U z_i))) / sum_j exp(...)."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>a</m:t></m:r></m:e><m:sub><m:r><m:rPr><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/></w:rPr><m:t>i</m:t></m:r></m:sub></m:sSub>\n'
@@ -398,7 +398,7 @@ def make_mil_attention_omml():
 
 
 def make_mil_loss_omml():
-    """Native OMML for L_MIL = - Y_bag log(hat{Y}_bag) - (1 - Y_bag) log(1 - hat{Y}_bag)."""
+    """OMML gốc cho L_MIL = - Nhật ký Y_bag(hat{Y__bag) - (1 - Y_bag) nhật ký(1 - hat{Y__bag)."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>MIL</m:t></m:r></m:sub></m:sSub>\n'
@@ -416,7 +416,7 @@ def make_mil_loss_omml():
 
 
 def make_canonical_fusion_omml():
-    """Native OMML for z_mv = LayerNorm(m_seq w_rel^seq W_out^seq z_seq + m_graph w_rel^graph W_out^graph z_graph + m_seq m_graph W_out^cross u_cross)."""
+    """OMML gốc cho z_mv = LayerNorm(m_seq w_rel^seq W_out^seq z_seq + m_graph w_rel^graph W_out^graph z_graph + m_seq m_graph W_out^cross u_cross)."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:sty m:val="bi"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>z</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>mv</m:t></m:r></m:sub></m:sSub>\n'
@@ -446,7 +446,7 @@ def make_canonical_fusion_omml():
 
 
 def make_rep_bundle_omml():
-    """Native OMML for B_mv = <z_mv, [t_start, t_end], E_scope, m_seq, m_graph, w_rel>."""
+    """OMML gốc cho B_mv = <z_mv, [t_start, t_end], E_scope, m_seq, m_graph, w_rel>."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>B</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>mv</m:t></m:r></m:sub></m:sSub>\n'
@@ -473,7 +473,7 @@ def make_rep_bundle_omml():
     return parse_xml(xml_str)
 
 def make_graph_self_loss_omml():
-    """Native OMML for L_graph^self = beta_1 L_mask-node + beta_2 L_mask-edge + beta_3 L_time-gap."""
+    """OMML gốc cho L_graph^self = beta_1 L_mask-node + beta_2 L_mask-edge + beta_3 L_time-gap."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSubSup><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>graph</m:t></m:r></m:sub><m:sup><m:r><w:rPr><w:noProof/></w:rPr><m:t>self</m:t></m:r></m:sup></m:sSubSup>\n'
@@ -492,7 +492,7 @@ def make_graph_self_loss_omml():
 
 
 def make_preserv_loss_omml():
-    """Native OMML for L_preserv = L_seq^self(z_seq) + L_graph^self(z_graph)."""
+    """OMML gốc cho L_preserv = L_seq^self(z_seq) + L_graph^self(z_graph)."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>preserv</m:t></m:r></m:sub></m:sSub>\n'
@@ -508,7 +508,7 @@ def make_preserv_loss_omml():
 
 
 def make_fuse_rec_stopgrad_omml():
-    """Native OMML for L_fuse-rec = ||D_seq z_mv - stopgrad(z_seq)||_2^2 + ||D_graph z_mv - stopgrad(z_graph)||_2^2."""
+    """OMML gốc cho L_fuse-rec = ||D_seq z_mv - stopgrad(z_seq)||_2^2 + ||D_graph z_mv - stopgrad(z_graph)||_2^2."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>fuse-rec</m:t></m:r></m:sub></m:sSub>\n'
@@ -542,7 +542,7 @@ def make_fuse_rec_stopgrad_omml():
 
 
 def make_tgn_msg_omml():
-    """Portable OMML for m_{v->u}(t) = Msg(h_{v,pre}, h_{u,pre}, Delta t_v(t), e_r, x_e)."""
+    """OMML di động cho m_{v->u}(t) ​​= Msg(h_{v,pre}, h_{u,pre}, Delta t_v(t), e_r, x_e)."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:sty m:val="bi"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>m</m:t></m:r></m:e><m:sub><m:r><m:rPr><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>v</m:t></m:r><m:r><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>→</m:t></m:r><m:r><m:rPr><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>u</m:t></m:r></m:sub></m:sSub>\n'
@@ -567,7 +567,7 @@ def make_tgn_msg_omml():
 
 
 def make_tgn_agg_omml():
-    """Portable OMML for m_{u,agg}(t) = Agg({m_{v->u}(t) : (v, u) in N_t(u)})."""
+    """OMML di động cho m_{u,agg}(t) = Agg({m_{v->u}(t) ​​: (v, u) trong N_t(u)})."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:sty m:val="bi"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>m</m:t></m:r></m:e><m:sub><m:r><m:rPr><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>u</m:t></m:r><m:r><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>,</m:t></m:r><m:r><m:rPr><m:nor/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>agg</m:t></m:r></m:sub></m:sSub>\n'
@@ -591,7 +591,7 @@ def make_tgn_agg_omml():
 
 
 def make_tgn_update_omml():
-    """Portable OMML for h_u(t) = Update(h_{u,pre}, m_{u,agg}(t))."""
+    """OMML di động cho h_u(t) = Cập nhật(h_{u,pre}, m_{u,agg}(t))."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:sty m:val="bi"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>h</m:t></m:r></m:e><m:sub><m:r><m:rPr><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>u</m:t></m:r></m:sub></m:sSub>\n'
@@ -610,7 +610,7 @@ def make_tgn_update_omml():
 
 
 def make_tgn_readout_omml():
-    """Portable OMML for z_graph = Readout_graph({h_u(t) : u in V_active(W_m)}) = sum ..."""
+    """OMML di động cho z_graph = Readout_graph({h_u(t) : u in V_active(W_m)}) = sum ..."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:sty m:val="bi"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>z</m:t></m:r></m:e><m:sub><m:r><m:rPr><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>graph</m:t></m:r></m:sub></m:sSub>\n'
@@ -650,7 +650,7 @@ def make_tgn_readout_omml():
 
 
 def make_l_mep_omml():
-    """Portable OMML for L_MEP = - 1/card(M_event) sum_{i in M_event} log [softmax(phi_seq^event(h_i))]_{tau_i}."""
+    """OMML di động cho L_MEP = - 1/thẻ(M_event) sum_{i trong M_event} nhật ký [softmax(phi_seq^event(h_i))]_{tau_i}."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>MEP</m:t></m:r></m:sub></m:sSub>\n'
@@ -680,7 +680,7 @@ def make_l_mep_omml():
 
 
 def make_l_mpp_omml():
-    """Portable OMML for L_MPP = 1/card(M_param) sum_{i in M_param} sum_{(k_j, v_j) in p_i^priv} ..."""
+    """OMML di động cho L_MPP = 1/thẻ(M_param) sum_{i in M_param} sum_{(k_j, v_j) trong p_i^priv} ..."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><m:rPr><m:noProof/></m:rPr><m:t>MPP</m:t></m:r></m:sub></m:sSub>\n'
@@ -712,7 +712,7 @@ def make_l_mpp_omml():
 
 
 def make_l_seq_time_omml():
-    """Portable OMML for L_time = 1/card(M_time) sum_{i in M_time} l_delta(phi_seq^time(h_i), log(1 + Delta t_i))."""
+    """OMML di động cho L_time = 1/thẻ(M_time) tổng_{i trong M_time} l_delta(phi_seq^time(h_i), log(1 + Delta t_i))."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>time</m:t></m:r></m:sub></m:sSub>\n'
@@ -743,7 +743,7 @@ def make_l_seq_time_omml():
 
 
 def make_l_mask_node_omml():
-    """Portable OMML for L_mask-node = 1/card(V_mask) sum_{v in V_mask} ||phi_graph^node(h_v(t)) - x_v^priv||_2^2."""
+    """OMML di động cho L_mask-node = 1/card(V_mask) sum_{v trong V_mask} ||phi_graph^node(h_v(t)) - x_v^priv||_2^2."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>mask-node</m:t></m:r></m:sub></m:sSub>\n'
@@ -773,7 +773,7 @@ def make_l_mask_node_omml():
 
 
 def make_l_mask_edge_omml():
-    """Portable OMML for L_mask-edge = - 1/card(E_mask) sum_{(v,u) in E_mask} log [softmax(phi_graph^edge([h_v(t); h_u(t)]))]_{r_{(v,u)}}."""
+    """OMML di động cho L_mask-edge = - 1/card(E_mask) sum_{(v,u) trong E_mask} nhật ký [softmax(phi_graph^edge([h_v(t); h_u(t)]))]_{r_{(v,u)}}."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>mask-edge</m:t></m:r></m:sub></m:sSub>\n'
@@ -809,7 +809,7 @@ def make_l_mask_edge_omml():
 
 
 def make_l_time_gap_omml():
-    """Portable OMML for L_time-gap = 1/card(E_active) sum_{(v,u) in E_active} l_delta(phi_graph^time([h_v(t); h_u(t)]), log(1 + Delta t_{v, u}))."""
+    """OMML di động cho L_time-gap = 1/card(E_active) sum_{(v,u) trong E_active} l_delta(phi_graph^time([h_v(t); h_u(t)]), log(1 + Delta t_{v, u}))."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>time-gap</m:t></m:r></m:sub></m:sSub>\n'
@@ -846,7 +846,7 @@ def make_l_time_gap_omml():
 
 
 def make_event_embedding_omml():
-    """Portable OMML for x_i = e_tau(tau_i) + e_a(a_i) + e_v(pi_psi(v_i)) + e_o(pi_psi(o_i)) + sum e_p(k_j, v_j) + e_time(t_i) + e_pos(i)."""
+    """OMML di động cho x_i = e_tau(tau_i) + e_a(a_i) + e_v(pi_psi(v_i)) + e_o(pi_psi(o_i)) + tổng e_p(k_j, v_j) + e_time(t_i) + e_pos(i)."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:sty m:val="bi"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>x</m:t></m:r></m:e><m:sub><m:r><m:rPr><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>i</m:t></m:r></m:sub></m:sSub>\n'

@@ -1,5 +1,5 @@
 """
-Pydantic Schemas for Scientific Reasoning, Argumentation & Verification Requests (Prompt 5)
+Lược đồ Pydantic cho các yêu cầu lập luận, lập luận và xác minh khoa học (Nhắc 5)
 """
 
 from typing import List, Dict, Any, Optional
@@ -29,7 +29,7 @@ from research_agent.core.enums import (
 
 
 class ClaimScope(BaseModel):
-    """Explicit Operational & Environmental Scope bounding a Claim (Prompt 5 Section 8)."""
+    """Phạm vi hoạt động và môi trường rõ ràng giới hạn yêu cầu bồi thường (Nhắc 5 Phần 8)."""
     dataset: Optional[str] = None
     domain: Optional[str] = None
     timeframe: Optional[str] = None
@@ -41,7 +41,7 @@ class ClaimScope(BaseModel):
 
 
 class AtomicClaimCandidate(BaseModel):
-    """Atomic Claim Extracted and Normalized from Literature or Experiment (Prompt 5 Section 6, 7)."""
+    """Tuyên bố nguyên tử được trích xuất và chuẩn hóa từ tài liệu hoặc thí nghiệm (Nhắc 5 Phần 6, 7)."""
     claim_id: Optional[str] = None
     statement: str
     original_wording: Optional[str] = None
@@ -58,7 +58,7 @@ class AtomicClaimCandidate(BaseModel):
 
 
 class EvidenceGap(BaseModel):
-    """Explicit Evidence Gap when Claim lacks sufficient Empirical Support (Prompt 5 Section 11)."""
+    """Khoảng cách bằng chứng rõ ràng khi Yêu cầu bồi thường thiếu hỗ trợ thực nghiệm đầy đủ (Nhắc 5 Phần 11)."""
     gap_id: str
     claim_id: str
     missing_evidence: str
@@ -73,7 +73,7 @@ class EvidenceGap(BaseModel):
 
 
 class AssumptionRecord(BaseModel):
-    """Explicit or Implicit Theoretical/Empirical Assumption (Prompt 5 Section 16, 17)."""
+    """Giả định lý thuyết/thực nghiệm rõ ràng hoặc ngầm định (Nhắc 5 Mục 16, 17)."""
     assumption_id: str
     statement: str
     is_explicit: bool = False
@@ -86,7 +86,7 @@ class AssumptionRecord(BaseModel):
 
 
 class AlternativeExplanation(BaseModel):
-    """Competing explanation or confounder for an observed experimental outcome (Prompt 5 Section 18)."""
+    """Giải thích cạnh tranh hoặc yếu tố gây nhiễu cho một kết quả thử nghiệm được quan sát (Nhắc 5 Phần 18)."""
     alt_id: str
     explanation: str
     confounder_type: str  # CAPACITY, LEAKAGE, SHORTCUT, TUNING, STOCHASTIC, ARTIFACT
@@ -98,7 +98,7 @@ class AlternativeExplanation(BaseModel):
 
 
 class CounterargumentRecord(BaseModel):
-    """Steelman Counterargument challenging an inference or claim (Prompt 5 Section 22, 23)."""
+    """Phản biện của Steelman thách thức một suy luận hoặc khẳng định (Nhắc 5 Mục 22, 23)."""
     counter_id: str
     objection: str
     basis: str
@@ -113,7 +113,7 @@ class CounterargumentRecord(BaseModel):
 
 
 class FalsificationPlan(BaseModel):
-    """Falsification protocol and negative controls for a hypothesis (Prompt 5 Section 20)."""
+    """Quy trình giả mạo và kiểm soát phủ định đối với một giả thuyết (Nhắc 5 Phần 20)."""
     plan_id: str
     target_hypothesis_id: str
     target_claim_id: Optional[str] = None
@@ -127,7 +127,7 @@ class FalsificationPlan(BaseModel):
 
 
 class InferenceRecord(BaseModel):
-    """Explicitly justified research inference structure (Prompt 5 Section 24, 25, 26)."""
+    """Cấu trúc suy luận nghiên cứu được chứng minh rõ ràng (Nhắc 5 Mục 24, 25, 26)."""
     inference_id: str
     premises: List[str] = Field(default_factory=list)
     evidence_ids: List[str] = Field(default_factory=list)
@@ -145,7 +145,7 @@ class InferenceRecord(BaseModel):
 
 
 class CompetingHypothesis(BaseModel):
-    """Auxiliary or Competing Hypothesis stored separately from canonical H1..H5 (Prompt 5 Section 19)."""
+    """Giả thuyết phụ trợ hoặc cạnh tranh được lưu trữ riêng biệt với H1..H5 chính tắc (Nhắc 5 Phần 19)."""
     ch_id: str
     canonical_hyp_id: str  # H1..H5
     statement: str
@@ -155,7 +155,7 @@ class CompetingHypothesis(BaseModel):
 
 
 class PredictionRecord(BaseModel):
-    """Testable empirical prediction derived from a hypothesis (Prompt 5 Section 67, 68)."""
+    """Dự đoán thực nghiệm có thể kiểm chứng được bắt nguồn từ một giả thuyết (Nhắc 5 Phần 67, 68)."""
     prediction_id: str
     hypothesis_id: str
     prediction_statement: str
@@ -165,7 +165,7 @@ class PredictionRecord(BaseModel):
 
 
 class ReasoningIssue(BaseModel):
-    """Methodological or logic defect detected during adversarial audit (Prompt 5 Section 63)."""
+    """Khiếm khuyết về phương pháp hoặc logic được phát hiện trong quá trình kiểm tra đối nghịch (Lời nhắc 5 Phần 63)."""
     issue_id: str
     issue_type: ReasoningIssueType
     affected_entity_id: str
@@ -175,7 +175,7 @@ class ReasoningIssue(BaseModel):
 
 
 class ArgumentNode(BaseModel):
-    """Node in the M4 Argument Graph (Prompt 5 Section 40)."""
+    """Nút trong Biểu đồ đối số M4 (Dấu nhắc 5 Phần 40)."""
     node_id: str
     node_type: ArgumentNodeType
     title: str
@@ -186,7 +186,7 @@ class ArgumentNode(BaseModel):
 
 
 class ArgumentEdge(BaseModel):
-    """Directed Relation in the M4 Argument Graph (Prompt 5 Section 40)."""
+    """Mối quan hệ có hướng trong biểu đồ đối số M4 (Lời nhắc 5 Phần 40)."""
     edge_id: str
     source_node_id: str
     target_node_id: str
@@ -196,7 +196,7 @@ class ArgumentEdge(BaseModel):
 
 
 class ArgumentGraph(BaseModel):
-    """Complete Argument Graph Representation."""
+    """Hoàn thành biểu diễn đồ thị đối số."""
     graph_id: str
     roadmap_node: Optional[str] = None
     nodes: List[ArgumentNode] = Field(default_factory=list)
@@ -207,7 +207,7 @@ class ArgumentGraph(BaseModel):
 
 
 class DiscourseStep(BaseModel):
-    """Step in a Rhetorical Discourse Plan (Prompt 5 Section 53, 54)."""
+    """Bước vào Kế hoạch diễn thuyết tu từ (Gợi ý 5 Phần 53, 54)."""
     step_index: int
     function: DiscourseFunction
     subject_entity_ids: List[str] = Field(default_factory=list)
@@ -216,7 +216,7 @@ class DiscourseStep(BaseModel):
 
 
 class DiscoursePlan(BaseModel):
-    """Rhetorical Sequence Plan for Argument Packaging (Prompt 5 Section 53, 54)."""
+    """Sơ đồ trình tự tu từ để đóng gói lập luận (Nhắc 5 Mục 53, 54)."""
     plan_id: str
     roadmap_node: str
     argument_pattern_name: ArgumentPatternType
@@ -226,7 +226,7 @@ class DiscoursePlan(BaseModel):
 
 
 class StructuredSynthesis(BaseModel):
-    """Structured literature synthesis output across multiple papers (Prompt 5 Section 12, 14)."""
+    """Kết quả tổng hợp tài liệu có cấu trúc trên nhiều bài báo (Nhắc 5 Phần 12, 14)."""
     synthesis_id: str
     topic: str
     roadmap_node: Optional[str] = None
@@ -242,7 +242,7 @@ class StructuredSynthesis(BaseModel):
 
 
 class VerificationRequest(BaseModel):
-    """Formal Verification Request interface for Prompt 6 Toolchain (Prompt 5 Section 102, 103)."""
+    """Giao diện Yêu cầu xác minh chính thức cho Chuỗi công cụ Nhắc 6 (Nhắc 5 Phần 102, 103)."""
     request_id: str
     request_type: VerificationRequestType
     target_claim_id: Optional[str] = None
@@ -257,7 +257,7 @@ class VerificationRequest(BaseModel):
 
 
 class ResearchActionPriority(BaseModel):
-    """Information-Gain Ranked Next Research Action (Prompt 5 Section 106, 107)."""
+    """Hành động nghiên cứu tiếp theo được xếp hạng thu thập thông tin (Nhắc 5 Mục 106, 107)."""
     action_id: str
     priority: ResearchPriorityLevel
     title: str
@@ -269,7 +269,7 @@ class ResearchActionPriority(BaseModel):
 
 
 class ArgumentBundle(BaseModel):
-    """Complete Hand-off Argument Structure required before chapter composition (Prompt 5 Section 56, 57)."""
+    """Cần phải hoàn thành Cấu trúc Đối số Chuyển tiếp trước khi soạn chương (Nhắc 5 Phần 56, 57)."""
     bundle_id: str
     roadmap_node: str
     objective: str

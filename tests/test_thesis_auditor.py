@@ -1,5 +1,5 @@
 """
-Unit & Integration Tests for Thesis Auditor & Defensibility Invariant Engine (Prompt 7)
+Bài kiểm tra đơn vị & tích hợp cho Trình kiểm tra luận án & Công cụ bất biến khả năng phòng thủ (Dấu nhắc 7)
 """
 
 import pytest
@@ -39,11 +39,11 @@ def auditor(repo):
 
 
 # ======================================================================
-# TEST-AUD-01..15: Thesis Auditor Test Cases
+# TEST-AUD-01..15: Các trường hợp thử nghiệm của Kiểm toán viên Luận văn
 # ======================================================================
 
 def test_aud_01_empty_paragraphs_pass(auditor):
-    """Empty target paragraphs produce a clean pass report."""
+    """Các đoạn mục tiêu trống tạo ra một báo cáo đạt rõ ràng."""
     report = auditor.audit_thesis(paragraphs=[], mode=CompositionMode.PROVISIONAL)
     assert report.total_issues == 0
     assert report.is_ready_for_final_build is True
@@ -51,7 +51,7 @@ def test_aud_01_empty_paragraphs_pass(auditor):
 
 
 def test_aud_02_detects_needs_citation_as_critical(auditor):
-    """Sentences with NEEDS_CITATION state must be flagged as CRITICAL blocking issues."""
+    """Các câu có trạng thái NEEDS_CITATION phải được gắn cờ là sự cố chặn CRITICAL."""
     p = ParagraphRecord(
         paragraph_id="P-01",
         node_code="1.3.3",
@@ -77,7 +77,7 @@ def test_aud_02_detects_needs_citation_as_critical(auditor):
 
 
 def test_aud_03_detects_ownership_conflict_as_critical(auditor):
-    """Sentences with OWNERSHIP_CONFLICT must be flagged as CRITICAL."""
+    """Các câu có OWNERSHIP_CONFLICT phải được gắn cờ là CRITICAL."""
     p = ParagraphRecord(
         paragraph_id="P-02",
         node_code="2.1.1",
@@ -101,7 +101,7 @@ def test_aud_03_detects_ownership_conflict_as_critical(auditor):
 
 
 def test_aud_04_detects_numerically_unverified_as_critical(auditor):
-    """Sentences with NUMERICALLY_UNVERIFIED must be flagged as CRITICAL."""
+    """Các câu có NUMERICALLY_UNVERIFIED phải được gắn cờ là CRITICAL."""
     p = ParagraphRecord(
         paragraph_id="P-03",
         node_code="3.2.1",
@@ -125,7 +125,7 @@ def test_aud_04_detects_numerically_unverified_as_critical(auditor):
 
 
 def test_aud_05_detects_overgeneralized_as_high(auditor):
-    """Sentences with OVERGENERALIZED must produce HIGH severity issue."""
+    """Các câu có OVERGENERALIZED phải tạo ra vấn đề về mức độ nghiêm trọng của HIGH."""
     p = ParagraphRecord(
         paragraph_id="P-04",
         node_code="3.4.1",
@@ -150,7 +150,7 @@ def test_aud_05_detects_overgeneralized_as_high(auditor):
 
 
 def test_aud_06_detects_scope_mismatch(auditor):
-    """Sentences with SCOPE_MISMATCH must be caught as HIGH severity."""
+    """Các câu có SCOPE_MISMATCH phải bị coi là có mức độ nghiêm trọng HIGH."""
     p = ParagraphRecord(
         paragraph_id="P-05",
         node_code="3.2.2",
@@ -174,7 +174,7 @@ def test_aud_06_detects_scope_mismatch(auditor):
 
 
 def test_aud_07_detects_stale_paragraphs(auditor):
-    """Paragraphs in STALE review status must be flagged."""
+    """Các đoạn ở trạng thái xem xét STALE phải được gắn cờ."""
     p = ParagraphRecord(
         paragraph_id="P-06",
         node_code="3.2.1",
@@ -189,7 +189,7 @@ def test_aud_07_detects_stale_paragraphs(auditor):
 
 
 def test_aud_08_detects_template_attractor_repetition(auditor):
-    """Multiple paragraphs beginning with identical 3-word prefix trigger TEMPLATE_ATTRACTOR_RISK."""
+    """Nhiều đoạn bắt đầu bằng tiền tố 3 từ giống hệt nhau kích hoạt TEMPLATE_ATTRACTOR_RISK."""
     paragraphs = []
     for idx in range(4):
         p = ParagraphRecord(
@@ -217,28 +217,28 @@ def test_aud_08_detects_template_attractor_repetition(auditor):
 
 
 def test_aud_09_10_rq_and_hypothesis_coverage(auditor):
-    """Auditor evaluates RQ and Hypothesis coverage maps."""
+    """Kiểm toán viên đánh giá RQ và bản đồ bao phủ Giả thuyết."""
     report = auditor.audit_thesis(paragraphs=[], mode=CompositionMode.PROVISIONAL)
     assert "RQ1" in report.rq_coverage or len(report.rq_coverage) >= 0
     assert isinstance(report.hypothesis_statuses, dict)
 
 
 def test_aud_11_axes_coverage(auditor):
-    """Auditor evaluates A1..A5 coverage."""
+    """Kiểm toán viên đánh giá phạm vi bảo hiểm A1..A5."""
     report = auditor.audit_thesis(paragraphs=[], mode=CompositionMode.PROVISIONAL)
     assert "A1_Representation_Fidelity" in report.axes_coverage
     assert "A5_Privacy_Aware_Operational_Streaming" in report.axes_coverage
 
 
 def test_aud_12_evaluates_10_defensibility_questions(auditor):
-    """Auditor evaluates all DQ-01..DQ-10 questions."""
+    """Kiểm toán viên đánh giá tất cả các câu hỏi DQ-01..DQ-10."""
     report = auditor.audit_thesis(paragraphs=[], mode=CompositionMode.PROVISIONAL)
     assert len(report.defensibility_scores) == 10
     assert all(st == DefensibilityStatus.PASS for st in report.defensibility_scores.values())
 
 
 def test_aud_13_provisional_mode_tolerates_high_issues(auditor):
-    """In PROVISIONAL mode, presence of HIGH issues still allows overall status to be PROVISIONAL_PASS."""
+    """Ở chế độ PROVISIONAL, sự hiện diện của các vấn đề HIGH vẫn cho phép trạng thái tổng thể là PROVISIONAL_PASS."""
     p = ParagraphRecord(
         paragraph_id="P-07",
         node_code="3.4.1",
@@ -263,7 +263,7 @@ def test_aud_13_provisional_mode_tolerates_high_issues(auditor):
 
 
 def test_aud_14_final_mode_rejects_critical_issues(auditor):
-    """In FINAL mode, CRITICAL issues make is_ready_for_final_build False."""
+    """Ở chế độ FINAL, các vấn đề về CRITICAL khiến is_ready_for_final_build sai."""
     p = ParagraphRecord(
         paragraph_id="P-08",
         node_code="1.1.1",
@@ -288,7 +288,7 @@ def test_aud_14_final_mode_rejects_critical_issues(auditor):
 
 
 def test_aud_15_saves_audit_report_to_db(auditor, repo):
-    """Audit report is persisted in database and queryable."""
+    """Báo cáo kiểm toán được lưu giữ trong cơ sở dữ liệu và có thể truy vấn được."""
     report = auditor.audit_thesis(paragraphs=[], mode=CompositionMode.PROVISIONAL)
     saved = repo.get_audit_report(report.build_id) if hasattr(repo, "get_audit_report") else report
     assert saved is not None

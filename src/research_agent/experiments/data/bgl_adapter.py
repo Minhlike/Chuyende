@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 """
-Real BGL Raw Data Adapter & Materialization Engine (Rule-Based Template Canonicalizer v1)
-Enforces:
-  1. Label-Free Stage A1 SSL Pretraining Package:
-     - bgl_ssl_train.pt and bgl_ssl_val.pt contain ZERO downstream labels (guarded by LabelLeakageError).
-     - Downstream alert labels stored strictly in evaluation-only probe vault (experiments/runs/data/vault/).
-  2. BGL Node Context & Shortcut Protocol:
-     - Explicit feature group: BGL_NODE_CONTEXT (rack, midplane)
-     - Control variants: BGL_FULL_CONTEXT vs BGL_WITHOUT_NODE_CONTEXT
-  3. Multi-Parameter Slot Representation:
-     - Fixed parameter slots per event (max_param_slots = 4).
-     - Deterministic type priority ordering.
-  4. Mathematical Accounting Reconciled:
-     - raw_total_record_count: 4,747,963
-     - pretest_scanned_record_count: 4,318,480
-     - pretest_valid_record_count: 4,284,010
-     - pretest_malformed_count: 34,470
+Công cụ vật chất hóa và bộ điều hợp dữ liệu thô BGL thực (Canonicalizer mẫu dựa trên quy tắc v1)
+Thực thi:
+  1. Gói đào tạo trước giai đoạn A1 SSL không có nhãn:
+     - bgl_ssl_train.pt và bgl_ssl_val.pt chứa các nhãn hạ nguồn (downstream) ZERO (được bảo vệ bởi LabelLeakageError).
+     - Nhãn cảnh báo hạ nguồn (downstream) được lưu trữ nghiêm ngặt trong kho thăm dò chỉ dành cho đánh giá (thử nghiệm/lần chạy/dữ liệu/vault/).
+  2. Giao thức lối tắt và bối cảnh nút BGL:
+     - Nhóm tính năng rõ ràng: BGL_NODE_CONTEXT (rack, midplane)
+     - Các biến thể điều khiển: BGL_FULL_CONTEXT vs BGL_WITHOUT_NODE_CONTEXT
+  3. Biểu diễn khe đa tham số:
+     - Đã sửa lỗi các khe tham số (parameter slot) cho mỗi sự kiện (max_param_slots = 4).
+     - Thứ tự ưu tiên loại xác định.
+  4. Đối chiếu toán kế toán:
+     - raw_total_record_count: 4.747.963
+     - pretest_scanned_record_count: 4.318.480
+     - pretest_valid_record_count: 4.284.010
+     - pretest_malformed_count: 34.470
 """
 
 import os
@@ -38,7 +38,7 @@ from research_agent.experiments.data.data_contract import (
 
 class BGLRealDataAdapter:
     """
-    Streaming adapter for raw BGL supercomputer logs with label-free SSL packaging and multi-parameter slots.
+    Bộ điều hợp phát trực tuyến dành cho nhật ký siêu máy tính BGL thô có bao bì SSL không nhãn và khe cắm đa thông số.
     """
     def __init__(
         self,
@@ -84,11 +84,11 @@ class BGLRealDataAdapter:
         except ValueError:
             return None
 
-        # Binary alert tag: '-' is Normal, anything else is Alert (System Alert, NOT Cyberattack)
+        # Thẻ cảnh báo nhị phân: '-' là Bình thường, mọi thứ khác là Cảnh báo (Cảnh báo hệ thống, Tấn công mạng NOT)
         is_alert = 0 if alert_tag == "-" else 1
         
         params = []
-        # Feature Group: BGL_NODE_CONTEXT (Only included if enabled)
+        # Nhóm tính năng: BGL_NODE_CONTEXT (Chỉ được bao gồm nếu được bật)
         if self.include_node_context and len(node) >= 6:
             rack_id = node[:3]
             midplane_id = node[4:6] if len(node) >= 6 else "M0"
@@ -110,7 +110,7 @@ class BGLRealDataAdapter:
         if not params:
             params.append("PARAM_GENERIC")
 
-        # Generalized rule-based template
+        # Mẫu dựa trên quy tắc tổng quát
         template = re.sub(r"0x[0-9a-fA-F]+", "<HEX>", msg)
         template = re.sub(r"\b\d+\b", "<NUM>", template)
         template = f"{subsys}_{comp}_{level}: {template}"
@@ -148,16 +148,16 @@ class BGLRealDataAdapter:
         
         min_ts = 1117838570
         day_sec = 86400
-        train_end_ts = min_ts + (150 * day_sec)  # Days 1-150: [1117838570, 1130798570)
-        val_end_ts = min_ts + (180 * day_sec)    # Days 151-180: [1130798570, 1133390570)
-        # Days 181-215 are SEALED TEST: [1133390570, 1136390405]
+        train_end_ts = min_ts + (150 * day_sec)  # Ngày 1-150: [1117838570, 1130798570)
+        val_end_ts = min_ts + (180 * day_sec)    # Ngày 151-180: [1130798570, 1133390570)
+        # Ngày 181-215 là SEALED TEST: [1133390570, 1136390405]
 
         observed_min_ts = None
         unique_racks: Set[str] = set()
         unique_midplanes: Set[str] = set()
         node_context_token_count = 0
 
-        # Multi-parameter metrics
+        # Chỉ số đa thông số
         events_with_0_params = 0
         events_with_1_param = 0
         events_with_2plus_params = 0
@@ -228,7 +228,7 @@ class BGLRealDataAdapter:
                             node_context_token_count += 2
                         val_events_by_node.setdefault(node, []).append(parsed)
                     else:
-                        # Stop immediately at Test boundary (Days 181-215 are SEALED)
+                        # Dừng ngay tại ranh giới Kiểm tra (Ngày 181-215 là SEALED)
                         break
                 except Exception:
                     malformed_pretest_count += 1
@@ -238,7 +238,7 @@ class BGLRealDataAdapter:
         assert pretest_scanned_record_count == pretest_valid_record_count + malformed_pretest_count
         assert observed_min_ts == min_ts
 
-        # 1. FIT VOCABULARY STRICTLY ON TRAIN SPLIT (DAYS 1-150)
+        # 1. FIT VOCABULARY STRICTLY TRÊN TRAIN SPLIT (DAYS 1-150)
         for node, evs in train_events_by_node.items():
             for ev in evs:
                 tmpl = ev["template"]
@@ -248,7 +248,7 @@ class BGLRealDataAdapter:
                     if p not in self.train_param_to_id:
                         self.train_param_to_id[p] = len(self.train_param_to_id)
 
-        # 2. Assemble Window Sequences for Train (Stratified Deterministic Selection)
+        # 2. Tập hợp các chuỗi cửa sổ cho tàu (Lựa chọn xác định phân tầng)
         all_train_windows = []
         for node in sorted(train_events_by_node.keys()):
             evs = train_events_by_node[node]
@@ -294,7 +294,7 @@ class BGLRealDataAdapter:
             train_session_ids.append(session_id)
             train_probe_labels.append(lbl)
 
-        # 3. Assemble Window Sequences for Validation (Stratified Deterministic Selection)
+        # 3. Tập hợp các chuỗi cửa sổ để xác thực (Lựa chọn xác định phân tầng)
         all_val_windows = []
         for node in sorted(val_events_by_node.keys()):
             evs = val_events_by_node[node]
@@ -344,7 +344,7 @@ class BGLRealDataAdapter:
             val_session_ids.append(session_id)
             val_probe_labels.append(lbl)
 
-        # Package Label-Free SSL Tensors
+        # Bộ căng SSL không có nhãn gói
         bgl_ssl_train = {
             "dataset_classification": "REAL_TRAINING_MATERIALIZED",
             "sequence_source": "REAL_BGL",
@@ -368,7 +368,7 @@ class BGLRealDataAdapter:
             "session_ids": val_session_ids
         }
 
-        # Enforce Label-Free Purity Guard
+        # Thực thi bảo vệ độ tinh khiết không có nhãn
         enforce_ssl_package_label_free(bgl_ssl_train)
         enforce_ssl_package_label_free(bgl_ssl_val)
 
@@ -435,7 +435,7 @@ class BGLRealDataAdapter:
         mirror_manifest = self.base_dir / "datasets" / "manifests" / "REAL-DATA-CONTRACT-BGL.json"
         data_contract.write_manifest(mirror_manifest)
 
-        # Write SUBSET-MANIFEST-BGL.json
+        # Viết SUBSET-MANIFEST-BGL.json
         subset_manifest = {
             "dataset_id": "DATA-BGL-001",
             "feature_group": "BGL_NODE_CONTEXT (rack, midplane) -> LEGITIMATE_OPERATIONAL_CONTEXT + POTENTIAL_SHORTCUT",

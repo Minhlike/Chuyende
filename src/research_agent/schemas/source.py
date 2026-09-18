@@ -1,5 +1,5 @@
 """
-Source, SourceVersion, and SourceArtifact Schemas (RC-01, RC-16, Prompt 3)
+Lược đồ nguồn, SourceVersion và SourceArtifact (RC-01, RC-16, Nhắc 3)
 """
 
 from datetime import datetime, timezone
@@ -15,7 +15,7 @@ from research_agent.core.identifiers import EntityPrefix, format_stable_id
 
 
 class SourceArtifact(BaseModel):
-    """Physical or digital file corresponding to a source (PDF, TXT, BibTeX)."""
+    """Tệp vật lý hoặc kỹ thuật số tương ứng với một nguồn (PDF, TXT, BibTeX)."""
     artifact_id: str = Field(description="Stable ID: SRA-000001")
     source_id: str = Field(description="Parent Source ID: SRC-000001")
     file_path: str = Field(description="Relative path inside sources/ directory")
@@ -26,7 +26,7 @@ class SourceArtifact(BaseModel):
 
 
 class SourceVersion(BaseModel):
-    """Specific revision or edition of an external source."""
+    """Bản sửa đổi hoặc ấn bản cụ thể của nguồn bên ngoài."""
     version_id: str = Field(description="Stable ID: SRV-000001")
     source_id: str = Field(description="Parent Source ID: SRC-000001")
     version_label: str = "1.0"
@@ -36,7 +36,7 @@ class SourceVersion(BaseModel):
 
 
 class Source(BaseModel):
-    """Canonical Bibliographic Source Record (RC-01, Section 8). No fabricated sources."""
+    """Bản ghi nguồn thư mục chuẩn (RC-01, Phần 8). Không có nguồn bịa đặt."""
     source_id: str = Field(description="Stable ID: SRC-000001")
     citation_key: str = Field(description="Stable human citation key e.g. 'Arp2022DosDonts'")
     title: str = Field(min_length=3)

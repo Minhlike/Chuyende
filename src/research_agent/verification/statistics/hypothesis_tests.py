@@ -1,5 +1,5 @@
 """
-Scientific Hypothesis Testing Engine (Prompt 6 Section 38)
+Công cụ kiểm tra giả thuyết khoa học (Nhắc 6 Mục 38)
 """
 
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -12,10 +12,10 @@ from research_agent.verification.statistics.confidence_intervals import Confiden
 
 class HypothesisTestingEngine:
     """
-    Executes formal hypothesis tests with assumption evaluations:
-    - Paired Student's t-test / Wilcoxon signed-rank (matched seeds/hosts)
-    - Independent two-sample t-test / Mann-Whitney U (unmatched)
-    - Permutation tests
+    Thực hiện kiểm tra giả thuyết chính thức với các đánh giá giả định:
+    - Xếp hạng t-test của Học sinh được ghép đôi / Xếp hạng có chữ ký của Wilcoxon (hạt giống/chủ nhà phù hợp)
+    - T-test hai mẫu độc lập / Mann-Whitney U (không khớp)
+    - Kiểm tra hoán vị
     """
 
     def __init__(self):
@@ -30,7 +30,7 @@ class HypothesisTestingEngine:
         sample_unit: str = "Seed Run",
         alpha: float = 0.05,
     ) -> StatisticalResult:
-        """Runs paired test comparing OURS vs Baseline across matched seeds."""
+        """Chạy thử nghiệm ghép đôi so sánh OURS với baseline trên các hạt giống phù hợp."""
         a = np.array(group_ours, dtype=float)
         b = np.array(group_baseline, dtype=float)
 
@@ -40,7 +40,7 @@ class HypothesisTestingEngine:
         n = len(a)
         differences = a - b
 
-        # 1. Evaluate Normality of differences (Shapiro-Wilk)
+        # 1. Đánh giá tính quy luật của sự khác biệt (Shapiro-Wilk)
         assumptions_evaluated = []
         is_normal = True
         if n >= 3:
@@ -60,7 +60,7 @@ class HypothesisTestingEngine:
             stat_val = float(w_res.statistic)
             p_val = float(w_res.pvalue)
 
-        # Effect size
+        # Kích thước hiệu ứng
         hedges_g = self.effect_engine.compute_hedges_g(a, b)
         mean_diff, ci_low, ci_high = self.ci_engine.compute_bootstrap_ci(differences, confidence_level=1.0 - alpha)
 
@@ -99,12 +99,12 @@ class HypothesisTestingEngine:
         sample_unit: str = "Host / Partition",
         alpha: float = 0.05,
     ) -> StatisticalResult:
-        """Runs independent two-sample comparison test (Mann-Whitney U or Welch's t-test)."""
+        """Chạy thử nghiệm so sánh hai mẫu độc lập (T-test Mann-Whitney U hoặc Welch)."""
         a = np.array(group1, dtype=float)
         b = np.array(group2, dtype=float)
         n1, n2 = len(a), len(b)
 
-        # Check Mann-Whitney U
+        # Kiểm tra Mann-Whitney U
         u_res = stats.mannwhitneyu(a, b, alternative="two-sided")
         stat_val = float(u_res.statistic)
         p_val = float(u_res.pvalue)

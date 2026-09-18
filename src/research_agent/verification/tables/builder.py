@@ -1,5 +1,5 @@
 """
-Deterministic Scientific Table Builder (Prompt 6 Sections 53..56, RC-09)
+Trình tạo bảng khoa học xác định (Nhắc 6 Phần 53..56, RC-09)
 """
 
 import hashlib
@@ -12,8 +12,8 @@ from research_agent.schemas.verification import TableSpecification
 
 class TableBuilder:
     """
-    Builds publication-ready scientific tables deterministically from structured DataFrames.
-    Exports aligned CSV, Markdown, and LaTeX representations with SHA-256 hash and cell provenance.
+    Xây dựng các bảng khoa học sẵn sàng xuất bản một cách xác định từ các DataFrames có cấu trúc.
+    Xuất các biểu diễn CSV, Markdown và LaTeX được căn chỉnh với hàm băm SHA-256 và nguồn gốc ô.
     """
 
     def build_table(
@@ -30,14 +30,14 @@ class TableBuilder:
         incomparability_reason: Optional[str] = None,
         generation_script: Optional[str] = None,
     ) -> TableSpecification:
-        """Constructs a verified TableSpecification with multiple formats."""
+        """Xây dựng một TableSpecification đã được xác minh với nhiều định dạng."""
         columns = [str(c) for c in df.columns]
         rows_data = df.values.tolist()
 
-        # Generate CSV
+        # Tạo CSV
         csv_str = df.to_csv(index=False)
 
-        # Generate Markdown deterministically
+        # Tạo Markdown một cách xác định
         headers = [str(c) for c in df.columns]
         md_lines = ["| " + " | ".join(headers) + " |"]
         md_lines.append("| " + " | ".join(["---"] * len(headers)) + " |")
@@ -45,7 +45,7 @@ class TableBuilder:
             md_lines.append("| " + " | ".join(str(val) for val in row) + " |")
         md_str = "\n".join(md_lines)
 
-        # Generate LaTeX tabular deterministically (Booktabs style)
+        # Tạo bảng LaTeX một cách xác định (kiểu Booktabs)
         col_spec = "l" * len(headers)
         latex_lines = [
             r"\begin{table}[htbp]",
@@ -64,7 +64,7 @@ class TableBuilder:
         ])
         latex_str = "\n".join(latex_lines)
 
-        # Hash combined content
+        # Nội dung kết hợp băm
         hasher = hashlib.sha256()
         hasher.update(csv_str.encode("utf-8"))
         output_sha256 = hasher.hexdigest()

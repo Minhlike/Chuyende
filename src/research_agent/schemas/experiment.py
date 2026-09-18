@@ -1,5 +1,5 @@
 """
-Experiment and ExperimentRun Schemas (Section 14, RC-10, RC-14)
+Lược đồ thử nghiệm và chạy thử nghiệm (Phần 14, RC-10, RC-14)
 """
 
 from datetime import datetime, timezone
@@ -10,7 +10,7 @@ from research_agent.core.identifiers import EntityPrefix, format_stable_id
 
 
 class ExperimentArtifact(BaseModel):
-    """Output artifact produced by an ExperimentRun."""
+    """tạo phẩm (artifact) đầu ra được tạo bởi ExperimentRun."""
     artifact_id: str = Field(description="Stable ID: e.g. SRA-000001 or ART-000001")
     run_id: str = Field(description="Parent Experiment Run ID: RUN-000001")
     file_path: str = Field(description="Relative path within experiments/runs/")
@@ -20,7 +20,7 @@ class ExperimentArtifact(BaseModel):
 
 
 class ExperimentRun(BaseModel):
-    """Deterministic Execution Run of an Experiment (RC-10, RC-14)."""
+    """Chạy thực thi xác định của một thử nghiệm (RC-10, RC-14)."""
     run_id: str = Field(description="Stable ID: RUN-000001")
     experiment_id: str = Field(description="Parent Experiment ID: EXP-000001")
     dataset_id: str = Field(description="DATA-000001")
@@ -42,7 +42,7 @@ class ExperimentRun(BaseModel):
 
 
 class Experiment(BaseModel):
-    """Canonical Scientific Experiment Specification."""
+    """Đặc tả thí nghiệm khoa học Canonical."""
     experiment_id: str = Field(description="Stable ID: EXP-000001")
     rq_id: str = Field(description="Target Research Question: RQ-000001")
     hyp_id: str = Field(description="Target Hypothesis: HYP-000001")

@@ -1,5 +1,5 @@
 """
-Reference and Ownership Map Ingestion and Verification Interface (Prompt 3 Target)
+Giao diện xác minh và nhập bản đồ quyền sở hữu và tham chiếu (Mục tiêu nhắc 3)
 """
 
 import json
@@ -29,14 +29,14 @@ DOI_REGEX = re.compile(r"^10\.\d{4,9}/[-._;()/:A-Za-z0-9]+$")
 
 
 class ReferenceMapIngestionService:
-    """Service to ingest, validate, verify, and persist the Reference & Ownership Map."""
+    """Dịch vụ nhập, xác thực, xác minh và duy trì Bản đồ tham chiếu và quyền sở hữu."""
 
     def __init__(self, repository: ResearchRepository):
         self.repo = repository
 
     def validate_reference_map_specification(self, spec: ReferenceMapSpecification) -> None:
-        """Execute full reference map structural, bibliographic, and constitutional validation (TEST-REF-01..18)."""
-        # 1. Compatible Roadmap Version Check (TEST-REF-11)
+        """Thực hiện xác thực cấu trúc, thư mục và hiến pháp của bản đồ tham chiếu đầy đủ (TEST-REF-01..18)."""
+        # 1. Kiểm tra phiên bản lộ trình tương thích (TEST-REF-11)
         active_roadmap = self.repo.get_roadmap()
         if active_roadmap:
             if spec.compatible_roadmap_version != active_roadmap.version:
@@ -45,7 +45,7 @@ class ReferenceMapIngestionService:
                     f"does not match active Roadmap version '{active_roadmap.version}' (TEST-REF-11)."
                 )
 
-        # 2. Roadmap Node Existence Validation (TEST-REF-10)
+        # 2. Xác thực sự tồn tại của nút lộ trình (TEST-REF-10)
         existing_nodes = self.repo.list_roadmap_nodes()
         existing_codes = {n.code for n in existing_nodes}
         existing_node_ids = {n.node_id for n in existing_nodes}
@@ -67,7 +67,7 @@ class ReferenceMapIngestionService:
                         f"CandidateContribution '{cand.contribution_id}' references unknown roadmap node '{n_code}' (TEST-REF-10)."
                     )
 
-        # 3. Source DOI & Duplicate Detection (TEST-REF-01, TEST-REF-06)
+        # 3. Nguồn DOI & Phát hiện trùng lặp (TEST-REF-01, TEST-REF-06)
         seen_source_ids: Set[str] = set()
         seen_dois: Set[str] = set()
         seen_keys: Set[str] = set()
@@ -94,12 +94,12 @@ class ReferenceMapIngestionService:
                     )
                 seen_dois.add(norm_doi)
 
-        # 4. Claim & Evidence Linkage Rules (TEST-REF-02, TEST-REF-03, TEST-REF-04)
+        # 4. Quy tắc liên kết khiếu nại và bằng chứng (TEST-REF-02, TEST-REF-03, TEST-REF-04)
         evidence_by_id = {evd.evidence_id: evd for evd in spec.evidences}
         evidence_claim_bindings = {evd.supports_claim_id for evd in spec.evidences if evd.supports_claim_id}
 
         for clm in spec.claims:
-            # TEST-REF-02: SOURCE_CLAIM or SOURCE_FACT must have evidence or linked source
+            # TEST-REF-02: SOURCE_CLAIM hoặc SOURCE_FACT phải có bằng chứng hoặc nguồn được liên kết
             if clm.claim_type in (ClaimType.SOURCE_CLAIM, ClaimType.SOURCE_FACT):
                 has_direct_evidence = bool(clm.evidence_ids) or (clm.claim_id in evidence_claim_bindings)
                 if not has_direct_evidence:
@@ -107,13 +107,13 @@ class ReferenceMapIngestionService:
                         f"Claim '{clm.claim_id}' is of type '{clm.claim_type}' but lacks required source evidence (TEST-REF-02)."
                     )
 
-            # TEST-REF-14 / RC-06: SOURCE_FACT or SOURCE_CLAIM cannot have ownership OURS
+            # TEST-REF-14/RC-06: SOURCE_FACT hoặc SOURCE_CLAIM không thể có quyền sở hữu OURS
             if clm.claim_type in (ClaimType.SOURCE_FACT, ClaimType.SOURCE_CLAIM) and clm.ownership == IntellectualOwnership.OURS:
                 raise InvariantViolationError(
                     f"Claim '{clm.claim_id}' cannot have ownership OURS while claiming external source fact/claim (TEST-REF-14)."
                 )
 
-        # 5. Candidate Contribution Novelty Safety (TEST-REF-15)
+        # 5. An toàn mới lạ trong đóng góp của ứng viên (TEST-REF-15)
         for cand in spec.contributions:
             if cand.novelty_status == NoveltyStatus.POTENTIALLY_NOVEL and not cand.differentiation_notes:
                 raise InvariantViolationError(
@@ -124,7 +124,7 @@ class ReferenceMapIngestionService:
                     f"CandidateContribution '{cand.contribution_id}' must belong to OURS (TEST-REF-15)."
                 )
 
-        # 6. ATT&CK Metadata Requirement (TEST-REF-18)
+        # 6. Yêu cầu siêu dữ liệu ATT&CK (TEST-REF-18)
         attack_src = next((s for s in spec.sources if "MITRE" in s.title or "ATT&CK" in s.title), None)
         if attack_src:
             if not attack_src.access_date or not attack_src.venue:
@@ -133,7 +133,7 @@ class ReferenceMapIngestionService:
                 )
 
     def ingest_reference_map_dict(self, data: Dict[str, Any], raw_text: Optional[str] = None) -> ReferenceMapSpecification:
-        """Parse, validate, hash, and persist a Reference Map specification."""
+        """Phân tích cú pháp, xác thực, băm và duy trì đặc tả Bản đồ tham chiếu."""
         sha256 = compute_string_sha256(raw_text or json.dumps(data, sort_keys=True))
 
         sources = [Source(**s) for s in data.get("sources", [])]
@@ -162,9 +162,9 @@ class ReferenceMapIngestionService:
             unresolved_references=unresolved,
         )
 
-        # Validate
+        # Xác thực
         self.validate_reference_map_specification(spec)
 
-        # Persist
+        # kiên trì
         self.repo.save_reference_map(spec)
         return spec

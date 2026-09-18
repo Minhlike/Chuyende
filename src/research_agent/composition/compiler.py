@@ -1,5 +1,5 @@
 """
-Thesis Compiler & Multi-Format Document Assembler (Prompt 7 Sections 51..56, 77..78, 109..111)
+Trình biên dịch luận án & Trình biên dịch tài liệu đa định dạng (Nhắc 7 Mục 51..56, 77..78, 109..111)
 """
 
 import hashlib
@@ -27,9 +27,9 @@ from research_agent.composition.gates import WritingGate
 
 class ThesisCompiler:
     """
-    Assembles hierarchical Document IR chapters into final thesis drafts,
-    generates canonical BibTeX references, executes pre-build audit gates,
-    and produces cryptographic BuildManifests.
+    Tập hợp các chương IR của Tài liệu phân cấp thành bản thảo luận án cuối cùng,
+    tạo các tham chiếu BibTeX chuẩn, thực thi các cổng kiểm tra trước khi xây dựng,
+    và tạo ra BuildManifests mật mã.
     """
 
     def __init__(self, repository: ResearchRepository, output_dir: Optional[str] = None):
@@ -41,7 +41,7 @@ class ThesisCompiler:
         self.gate = WritingGate(repository)
 
     def compile_node(self, node_code: str, mode: CompositionMode = CompositionMode.PROVISIONAL) -> SubsectionRecord:
-        """Compiles a single Roadmap Node subsection."""
+        """Biên dịch một tiểu mục Nút Lộ trình duy nhất."""
         return self.composer.compose_node_subsection(node_code, mode=mode)
 
     def compile_thesis(
@@ -49,14 +49,14 @@ class ThesisCompiler:
         mode: CompositionMode = CompositionMode.PROVISIONAL,
     ) -> Tuple[ThesisDocument, ThesisAuditReport, ThesisBuildManifest]:
         """
-        Compiles the complete thesis document across all chapters and nodes.
-        Audits the resulting Document IR and writes compiled Markdown and Manifest.
+        Biên soạn tài liệu luận án hoàn chỉnh trên tất cả các chương và nút.
+        Kiểm tra Tài liệu IR kết quả và viết Markdown và Manifest đã biên soạn.
         """
         roadmap = self.repo.get_active_roadmap()
         nodes = self.repo.list_roadmap_nodes()
 
         chapters: List[ChapterRecord] = []
-        # Group nodes by Chapter (e.g. 1.x -> Ch1, 2.x -> Ch2, 3.x -> Ch3)
+        # Nhóm các nút theo Chương (e.g. 1.x -> Ch1, 2.x -> Ch2, 3.x -> Ch3)
         ch_map: Dict[str, List[Any]] = {"CH1": [], "CH2": [], "CH3": []}
 
         for n in nodes:
@@ -76,7 +76,7 @@ class ThesisCompiler:
         all_paragraphs = []
         for ch_key, ch_nodes in ch_map.items():
             sections: List[SectionRecord] = []
-            # Group by section (e.g. 1.1, 1.2, 1.3)
+            # Nhóm theo phần (e.g. 1.1, 1.2, 1.3)
             sec_map: Dict[str, List[Any]] = {}
             for cn in ch_nodes:
                 sec_code = ".".join(cn.code.split(".")[:2]) if "." in cn.code else cn.code
@@ -105,7 +105,7 @@ class ThesisCompiler:
                 )
             )
 
-        # Generate Bibliography BibTeX from Reference Map
+        # Tạo thư mục BibTeX từ bản đồ tham khảo
         bibtex = self._generate_bibtex_bibliography()
 
         thesis_doc = ThesisDocument(
@@ -118,16 +118,16 @@ class ThesisCompiler:
             bibliography_bibtex=bibtex,
         )
 
-        # Run Thesis Auditor
+        # Chạy trình kiểm tra luận án
         audit_report = self.auditor.audit_thesis(paragraphs=all_paragraphs, mode=mode)
 
-        # In FINAL mode, fail closed if critical issues exist
+        # Ở chế độ FINAL, không đóng được nếu tồn tại sự cố nghiêm trọng
         if mode == CompositionMode.FINAL and not audit_report.is_ready_for_final_build:
             raise RuntimeError(
                 f"Thesis compilation FAILED in FINAL mode due to {len(audit_report.critical_issues)} critical issues."
             )
 
-        # Render full markdown text
+        # Hiển thị văn bản đánh dấu đầy đủ
         full_md_lines = [
             f"# {thesis_doc.title}\n",
             f"**Tác giả:** {thesis_doc.author} | **Năm:** {thesis_doc.year}\n",
@@ -152,7 +152,7 @@ class ThesisCompiler:
         with open(out_file, "w", encoding="utf-8") as f:
             f.write(full_md_str)
 
-        # Calculate Hash
+        # Tính hàm băm
         hasher = hashlib.sha256()
         hasher.update(full_md_str.encode("utf-8"))
         out_sha = hasher.hexdigest()
@@ -172,7 +172,7 @@ class ThesisCompiler:
         return thesis_doc, audit_report, manifest
 
     def _generate_bibtex_bibliography(self) -> str:
-        """Generates standard BibTeX bibliography entries from Source Registry."""
+        """Tạo các mục nhập thư mục BibTeX tiêu chuẩn từ Sổ đăng ký nguồn."""
         sources = self.repo.list_sources()
         entries = []
         for s in sources:

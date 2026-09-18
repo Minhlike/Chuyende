@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Deterministic Split Manifest Generator (Pre-Acquisition State: PLANNED)
-Version: 1.1.0 (CDM18 for E3, CDM20 for E5, Pending LANL Verification)
+Trình tạo tệp kê khai phân tách xác định (Trạng thái trước khi mua lại: PLANNED)
+Phiên bản: 1.1.0 (CDM18 cho E3, CDM20 cho E5, Đang chờ xác minh LANL)
 """
 
 import json

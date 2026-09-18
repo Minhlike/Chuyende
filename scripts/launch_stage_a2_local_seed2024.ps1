@@ -1,5 +1,5 @@
-# scripts/launch_stage_a2_local_seed2024.ps1
-# Launch Canonical Seed 2024 Execution on Local CUDA GPU under Protocol V1.5
+# tập lệnh/launch_stage_a2_local_seed2024.ps1
+# Khởi chạy thực thi Canonical Seed 2024 trên CUDA GPU cục bộ theo Giao thức V1.5
 
 $ErrorActionPreference = "Stop"
 

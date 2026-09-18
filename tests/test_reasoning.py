@@ -1,5 +1,5 @@
 """
-Comprehensive Test Suite for Scientific Reasoning Engine, Argumentation & Research Skills (Prompt 5)
+Bộ bài kiểm tra toàn diện về kỹ năng suy luận khoa học, lập luận và nghiên cứu (Nhắc 5)
 """
 
 import pytest
@@ -50,11 +50,11 @@ def test_env(tmp_path):
 
 
 # ----------------------------------------------------------------------
-# GOLDEN REASONING TESTS (GOLD-01 .. GOLD-05)
+# GOLDEN REASONING TESTS (GOLD-01.. GOLD-05)
 # ----------------------------------------------------------------------
 
 def test_gold_01_claim_normalization_and_scope_extraction(test_env):
-    """GOLD-01: Claim Normalization, Qualifier Preservation, and Scope Extraction."""
+    """GOLD-01: Chuẩn hóa yêu cầu, Bảo toàn định tính và Trích xuất phạm vi."""
     engine = test_env["engine"]
     raw_text = (
         "Drain parser extracts static templates with high fidelity on HDFS dataset, "
@@ -62,17 +62,17 @@ def test_gold_01_claim_normalization_and_scope_extraction(test_env):
     )
     claims = engine.extract_atomic_claims(raw_text, source_id="SRC-TEST-01", locator="Sec. 3.2")
     assert len(claims) >= 1
-    # Check scope extraction
+    # Kiểm tra trích xuất phạm vi
     hdfs_claims = [c for c in claims if c.scope.dataset == "HDFS Log Dataset"]
     assert len(hdfs_claims) >= 1
-    # Check qualifier preservation
+    # Kiểm tra việc bảo quản vòng loại
     qual_claims = [c for c in claims if "might" in c.qualifiers or "might" in c.statement.lower()]
     assert len(qual_claims) >= 1
     assert all(c.is_normalized for c in claims)
 
 
 def test_gold_02_contradiction_10pt_analysis(test_env):
-    """GOLD-02: 10-Point Contradiction Audit distinguishes Dataset Difference from True Contradiction."""
+    """GOLD-02: Kiểm tra mâu thuẫn 10 điểm để phân biệt sự khác biệt của tập dữ liệu với mâu thuẫn thực sự."""
     engine = test_env["engine"]
     claim_a = Claim(
         claim_id="CLM-TEST-01",
@@ -95,7 +95,7 @@ def test_gold_02_contradiction_10pt_analysis(test_env):
 
 
 def test_gold_03_falsification_negative_control_design(test_env):
-    """GOLD-03: Falsification Plan defines negative controls and discriminating tests."""
+    """GOLD-03: Kế hoạch giả mạo xác định các biện pháp kiểm soát tiêu cực và các xét nghiệm phân biệt đối xử."""
     engine = test_env["engine"]
     plan = engine.plan_falsification("H3", "Model generalization is not driven by shortcut learning of hostnames.")
     assert plan.target_hypothesis_id == "H3"
@@ -107,9 +107,9 @@ def test_gold_03_falsification_negative_control_design(test_env):
 
 
 def test_gold_04_causality_and_graph_guard(test_env):
-    """GOLD-04: Enforce DEPENDS_ON != CAUSES and flag causal vocabulary inflation."""
+    """GOLD-04: Thực thi DEPENDS_ON != CAUSES và gắn cờ lạm phát từ vựng nguyên nhân."""
     engine = test_env["engine"]
-    # Observational text with causal inflation
+    # Văn bản quan sát với lạm phát nhân quả
     issues = engine.causality_auditor.audit_text_causality(
         entity_id="CLM-INFLATE-01",
         text="Observing suspicious process execution in provenance graph causes unauthorized privilege escalation.",
@@ -118,7 +118,7 @@ def test_gold_04_causality_and_graph_guard(test_env):
     assert len(issues) >= 1
     assert any(iss.issue_type == ReasoningIssueType.CAUSALITY_INFLATION for iss in issues)
 
-    # Provenance Graph Guard
+    # Bảo vệ đồ thị xuất xứ
     issues_prov = engine.causality_auditor.audit_text_causality(
         entity_id="CLM-PROV-01",
         text="System provenance audit edges prove the causal effect of file read on network beaconing.",
@@ -128,11 +128,11 @@ def test_gold_04_causality_and_graph_guard(test_env):
 
 
 def test_gold_05_argument_bundle_readiness_gate(test_env):
-    """GOLD-05: ArgumentBundle Assembly and Readiness Gate lifecycle (DRAFT -> READY)."""
+    """GOLD-05: Vòng đời của Cổng sẵn sàng và hội đối số (DRAFT -> READY)."""
     engine = test_env["engine"]
     repo = test_env["repo"]
 
-    # Incomplete bundle (claims but no evidence)
+    # Gói không đầy đủ (tuyên bố nhưng không có bằng chứng)
     bundle_draft = engine.build_argument_bundle(
         roadmap_node="CH1.SEC1",
         objective="Analyze log representation fidelity",
@@ -141,7 +141,7 @@ def test_gold_05_argument_bundle_readiness_gate(test_env):
     )
     assert bundle_draft.readiness_state == ArgumentReadinessState.EVIDENCE_INCOMPLETE
 
-    # Blocked bundle (critical leakage issue)
+    # Gói bị chặn (sự cố rò rỉ nghiêm trọng)
     from research_agent.schemas.reasoning import ReasoningIssue
     bundle_blocked = engine.build_argument_bundle(
         roadmap_node="CH1.SEC1",
@@ -160,7 +160,7 @@ def test_gold_05_argument_bundle_readiness_gate(test_env):
     )
     assert bundle_blocked.readiness_state == ArgumentReadinessState.BLOCKED
 
-    # Ready bundle
+    # Gói sẵn sàng
     bundle_ready = engine.build_argument_bundle(
         roadmap_node="CH1.SEC1",
         objective="Analyze log representation fidelity",
@@ -169,7 +169,7 @@ def test_gold_05_argument_bundle_readiness_gate(test_env):
         issues=[],
     )
     assert bundle_ready.readiness_state == ArgumentReadinessState.READY
-    # Ensure saved and retrievable
+    # Đảm bảo được lưu và có thể truy xuất được
     retrieved = repo.get_argument_bundle(bundle_ready.bundle_id)
     assert retrieved is not None
     assert retrieved.bundle_id == bundle_ready.bundle_id
@@ -180,7 +180,7 @@ def test_gold_05_argument_bundle_readiness_gate(test_env):
 # ----------------------------------------------------------------------
 
 def test_leakage_auditor_12pt_checklist(test_env):
-    """Verify 12-point evaluation leakage detector."""
+    """Xác minh máy dò rò rỉ đánh giá 12 điểm."""
     engine = test_env["engine"]
     setup_with_leakage = {
         "parser_fitted_on_test": True,
@@ -194,7 +194,7 @@ def test_leakage_auditor_12pt_checklist(test_env):
 
 
 def test_shortcut_auditor(test_env):
-    """Verify detection of candidate dataset shortcuts."""
+    """Xác minh việc phát hiện các phím tắt của tập dữ liệu ứng viên."""
     engine = test_env["engine"]
     feature_desc = "Features include raw executable paths, fixed hostnames, and static template ids."
     issues = engine.shortcut_auditor.audit_shortcuts("FEAT-01", feature_desc)
@@ -204,22 +204,22 @@ def test_shortcut_auditor(test_env):
 
 
 def test_security_guards(test_env):
-    """Verify security guards: ANOMALY_NOT_ATTACK, UNUSUAL_NOT_MALICIOUS, REPRESENTATION_NOT_DETECTOR."""
+    """Xác minh nhân viên bảo vệ: ANOMALY_NOT_ATTACK, UNUSUAL_NOT_MALICIOUS, REPRESENTATION_NOT_DETECTOR."""
     engine = test_env["engine"]
 
-    # Unusual admin tool != Malicious
+    # Công cụ quản trị bất thường != Độc hại
     issues_admin = engine.security_guards.audit_security_guards(
         "CLM-01", "Execution of PowerShell commands is strictly malicious activity."
     )
     assert any(iss.issue_type == ReasoningIssueType.ATTACK_ANOMALY_CONFLATION for iss in issues_admin)
 
-    # Representation != Detector
+    # Đại diện != Máy dò
     issues_det = engine.security_guards.audit_security_guards(
         "CLM-02", "High end-to-end detector accuracy proves feature representation is superior."
     )
     assert any(iss.issue_type == ReasoningIssueType.REPRESENTATION_DETECTOR_CONFOUND for iss in issues_det)
 
-    # Pseudonymization != Privacy
+    # Bí danh != Quyền riêng tư
     issues_priv = engine.security_guards.audit_security_guards(
         "CLM-03", "Applying pseudonymization guarantees privacy-preserving log release."
     )
@@ -227,7 +227,7 @@ def test_security_guards(test_env):
 
 
 def test_anti_harking_and_negative_result_preservation(test_env):
-    """Verify failed experiments transition hypotheses to CONTESTED/FALSIFIED without rescue."""
+    """Xác minh các giả thuyết chuyển đổi thử nghiệm thất bại sang CONTESTED/FALSIFIED mà không cần giải cứu."""
     engine = test_env["engine"]
     hyp = Hypothesis(
         hyp_id="HYP-01",
@@ -236,7 +236,7 @@ def test_anti_harking_and_negative_result_preservation(test_env):
         statement="Parameter-aware representation is robust against adversarial template drift.",
         falsification_criteria="F1 drops below 0.20 on shifted templates.",
     )
-    # Episode with hypothesis falsification
+    # Tập có giả thuyết sai lệch
     episodes = [
         EpisodeRecord(
             episode_id="EPISODE-000001",
@@ -261,18 +261,18 @@ def test_anti_harking_and_negative_result_preservation(test_env):
 
 
 def test_assumption_extraction_and_fragility(test_env):
-    """Verify implicit domain assumption extraction and classification."""
+    """Xác minh việc trích xuất và phân loại giả định miền ẩn."""
     engine = test_env["engine"]
     text = "GNN models leverage audit graphs and multiple instance learning across log event streams."
     assumptions = engine.audit_assumptions("NODE-CH2.SEC1", text)
     assert len(assumptions) >= 2
-    # Ensure testability is classified
+    # Đảm bảo khả năng kiểm tra được phân loại
     assert any(a.testability in ["TESTABLE_BY_EXPERIMENT", "TESTABLE_BY_AUDIT", "AXIOMATIC"] for a in assumptions)
     assert all(a.status == "UNTESTED" for a in assumptions)
 
 
 def test_steelman_counterargument_origin(test_env):
-    """Verify steelman counterargument tags origin as OUR_COUNTERARGUMENT."""
+    """Xác minh nguồn gốc của thẻ phản đối Steelman là OUR_COUNTERARGUMENT."""
     engine = test_env["engine"]
     ctr = engine.build_counterargument("CLM-GRAPH-01", "GNN provenance graph embeddings improve detection F1.")
     assert ctr.is_steelman is True
@@ -281,7 +281,7 @@ def test_steelman_counterargument_origin(test_env):
 
 
 def test_contribution_novelty_safety(test_env):
-    """Verify candidate contribution differentiation enforces OURS != NOVEL."""
+    """Xác minh sự khác biệt về đóng góp của ứng viên thực thi OURS != NOVEL."""
     engine = test_env["engine"]
     from research_agent.schemas.source import Source
     from research_agent.core.enums import SourceQualityTier
@@ -312,14 +312,14 @@ def test_contribution_novelty_safety(test_env):
 # ----------------------------------------------------------------------
 
 def test_argument_graph_dag_and_cycle_detection(test_env):
-    """Verify ArgumentGraph detects circular reasoning loops."""
+    """Xác minh ArgumentGraph phát hiện các vòng lặp suy luận vòng tròn."""
     engine = test_env["engine"]
     nodes = [
         ArgumentNode(node_id="N1", node_type=ArgumentNodeType.CLAIM, title="Claim 1", statement="Stmt 1"),
         ArgumentNode(node_id="N2", node_type=ArgumentNodeType.EVIDENCE, title="Evidence 2", statement="Stmt 2"),
         ArgumentNode(node_id="N3", node_type=ArgumentNodeType.INFERENCE, title="Inference 3", statement="Stmt 3"),
     ]
-    # Acyclic graph: N2 -> N3 -> N1
+    # Đồ thị tuần hoàn: N2 -> N3 -> N1
     edges_acyclic = [
         ArgumentEdge(edge_id="E1", source_node_id="N2", target_node_id="N3", relation_type=ArgumentEdgeType.SUPPORTS),
         ArgumentEdge(edge_id="E2", source_node_id="N3", target_node_id="N1", relation_type=ArgumentEdgeType.SUPPORTS),
@@ -327,14 +327,14 @@ def test_argument_graph_dag_and_cycle_detection(test_env):
     g_acyclic = engine.build_argument_graph(nodes, edges_acyclic)
     assert g_acyclic.is_cyclic is False
 
-    # Cyclic graph: N1 -> N2 -> N3 -> N1
+    # Đồ thị tuần hoàn: N1 -> N2 -> N3 -> N1
     edges_cyclic = edges_acyclic + [
         ArgumentEdge(edge_id="E3", source_node_id="N1", target_node_id="N2", relation_type=ArgumentEdgeType.SUPPORTS),
     ]
     g_cyclic = engine.build_argument_graph(nodes, edges_cyclic)
     assert g_cyclic.is_cyclic is True
 
-    # Check Mermaid export
+    # Kiểm tra xuất khẩu Nàng tiên cá
     mermaid = engine.argument_graph_engine.to_mermaid(g_acyclic)
     assert "graph TD" in mermaid
     assert "N2 -->|SUPPORTS| N3" in mermaid
@@ -345,14 +345,14 @@ def test_argument_graph_dag_and_cycle_detection(test_env):
 # ----------------------------------------------------------------------
 
 def test_rhetorical_discourse_planning_and_attractor_audit(test_env):
-    """Verify discourse planner selects patterns and detects template attractors."""
+    """Xác minh trình lập kế hoạch diễn ngôn chọn các mẫu và phát hiện các trình thu hút mẫu."""
     engine = test_env["engine"]
     p1 = engine.plan_discourse("CH1.SEC1", preferred_pattern=ArgumentPatternType.CLAIM_EVIDENCE_QUALIFICATION)
     p2 = engine.plan_discourse("CH1.SEC2", preferred_pattern=ArgumentPatternType.CLAIM_EVIDENCE_QUALIFICATION)
     p3 = engine.plan_discourse("CH1.SEC3", preferred_pattern=ArgumentPatternType.CLAIM_EVIDENCE_QUALIFICATION)
 
     assert len(p1.steps) >= 3
-    # Audit 3 consecutive identical patterns
+    # Kiểm tra 3 mẫu giống hệt nhau liên tiếp
     issues = engine.discourse_planner.audit_template_attractors([p1, p2, p3])
     assert len(issues) == 1
     assert issues[0].issue_type == ReasoningIssueType.TEMPLATE_ATTRACTOR_RISK
@@ -363,28 +363,28 @@ def test_rhetorical_discourse_planning_and_attractor_audit(test_env):
 # ----------------------------------------------------------------------
 
 def test_research_skills_registry_18_skills(test_env):
-    """Verify canonical research and verification skills are registered and executable."""
+    """Xác minh các kỹ năng xác minh và nghiên cứu kinh điển đã được đăng ký và thực thi."""
     registry = test_env["registry"]
     engine = test_env["engine"]
     skills = registry.list_skills()
     assert len(skills) >= 18
 
-    # Test executing SKILL-01 (Claim Extraction)
+    # Thực hiện kiểm tra SKILL-01 (Trích xuất yêu cầu)
     res01 = registry.run_skill("SKILL-01", {"text": "Sysflow records host audit events."}, engine)
     assert res01.success is True
     assert "atomic_claims" in res01.data
 
-    # Test executing SKILL-06 (Alternative Explanations)
+    # Thực hiện kiểm tra SKILL-06 (Giải thích thay thế)
     res06 = registry.run_skill("SKILL-06", {"claim_id": "CLM-01", "claim_statement": "Deep model outperforms baseline."}, engine)
     assert res06.success is True
     assert len(res06.data["alternatives"]) == 8
 
-    # Test executing SKILL-07 (Falsification Planning)
+    # Thực hiện kiểm tra SKILL-07 (Lập kế hoạch giả mạo)
     res07 = registry.run_skill("SKILL-07", {"hypothesis_id": "H2", "hypothesis_statement": "Cross-view alignment prevents representation collapse."}, engine)
     assert res07.success is True
     assert "falsification_plan" in res07.data
 
-    # Test executing SKILL-17 (Discourse Planning)
+    # Thực hiện kiểm tra SKILL-17 (Lập kế hoạch diễn ngôn)
     res17 = registry.run_skill("SKILL-17", {"roadmap_node": "CH2.SEC3"}, engine)
     assert res17.success is True
     assert "discourse_plan" in res17.data
@@ -395,7 +395,7 @@ def test_research_skills_registry_18_skills(test_env):
 # ----------------------------------------------------------------------
 
 def test_prompt_6_verification_request_interface(test_env):
-    """Verify formal VerificationRequest generation for Prompt 6 hand-off."""
+    """Xác minh việc tạo Yêu cầu xác minh chính thức để chuyển giao Nhắc 6."""
     engine = test_env["engine"]
     repo = test_env["repo"]
 
@@ -408,7 +408,7 @@ def test_prompt_6_verification_request_interface(test_env):
     assert req.status == VerificationRequestStatus.PENDING
     assert req.request_id.startswith("VRQ-")
 
-    # Retrieve from repository
+    # Lấy từ kho lưu trữ
     retrieved = repo.get_verification_request(req.request_id)
     assert retrieved is not None
     assert retrieved.request_type == VerificationRequestType.EQUATION_VERIFY

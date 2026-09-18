@@ -1,5 +1,5 @@
 """
-Equation Provenance & Invariant Auditor (Prompt 6 Sections 6..12, RC-08)
+Kiểm toán viên chứng minh phương trình & bất biến (Nhắc 6 Phần 6..12, RC-08)
 """
 
 from typing import Any, Dict, List, Optional, Tuple
@@ -10,15 +10,15 @@ from research_agent.core.exceptions import ProvenanceError
 
 class EquationProvenanceAuditor:
     """
-    Enforces strict typing and provenance invariants for mathematical equations.
-    Guarantees isolation of SOURCE, DERIVED, and PROPOSED equations.
+    Thực thi các bất biến về nhập và xuất xứ nghiêm ngặt đối với các phương trình toán học.
+    Đảm bảo cách ly các phương trình SOURCE, DERIVED và PROPOSED.
     """
 
     def audit_equation(self, eq: Equation) -> Tuple[bool, List[str]]:
-        """Audits an Equation for constitutional provenance invariants (RC-08)."""
+        """Kiểm tra một phương trình cho các bất biến xuất xứ hợp pháp (RC-08)."""
         issues: List[str] = []
 
-        # Invariant 1: SOURCE_EQUATION requires external source_id and locator
+        # Bất biến 1: SOURCE_EQUATION yêu cầu source_id bên ngoài và bộ định vị
         if eq.equation_type == EquationType.SOURCE_EQUATION:
             if not eq.source_id or not eq.source_id.strip():
                 issues.append(f"SOURCE_EQUATION '{eq.equation_id}' lacks mandatory source_id.")
@@ -27,7 +27,7 @@ class EquationProvenanceAuditor:
             if eq.ownership != IntellectualOwnership.SOURCE:
                 issues.append(f"SOURCE_EQUATION '{eq.equation_id}' must have ownership=SOURCE, got {eq.ownership}.")
 
-        # Invariant 2: DERIVED_EQUATION requires parent equations and derivation steps
+        # Bất biến 2: DERIVED_EQUATION yêu cầu các phương trình gốc và các bước đạo hàm
         elif eq.equation_type == EquationType.DERIVED_EQUATION:
             if not eq.derivation:
                 issues.append(f"DERIVED_EQUATION '{eq.equation_id}' lacks mandatory derivation record.")
@@ -37,12 +37,12 @@ class EquationProvenanceAuditor:
                 if not eq.derivation.derivation_steps:
                     issues.append(f"DERIVED_EQUATION '{eq.equation_id}' has empty derivation_steps.")
 
-        # Invariant 3: PROPOSED_EQUATION should have OURS ownership with constituent tracking
+        # Bất biến 3: PROPOSED_EQUATION phải có quyền sở hữu OURS với tính năng theo dõi thành phần
         elif eq.equation_type == EquationType.PROPOSED_EQUATION:
             if eq.ownership != IntellectualOwnership.OURS:
                 issues.append(f"PROPOSED_EQUATION '{eq.equation_id}' should have ownership=OURS.")
 
-        # Invariant 4: No empty LaTeX
+        # Bất biến 4: Không có LaTeX trống
         if not eq.latex or not eq.latex.strip():
             issues.append(f"Equation '{eq.equation_id}' has empty LaTeX content.")
 

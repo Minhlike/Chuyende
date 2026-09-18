@@ -1,6 +1,6 @@
 """
-Canonical Visual Registry (Rule 7)
-Maintains full provenance, metadata, bookmarks, and verification status for every figure, diagram, and table.
+Cơ quan đăng ký trực quan Canonical (Quy tắc 7)
+Duy trì đầy đủ nguồn gốc, siêu dữ liệu, dấu trang và trạng thái xác minh cho mọi hình, sơ đồ và bảng.
 """
 
 import json
@@ -11,8 +11,8 @@ from research_agent.visuals.schemas import VisualRecord, VisualType, CreationMet
 
 class VisualRegistry:
     """
-    Central repository for scientific visuals (Diagrams, Figures, Tables).
-    Guarantees stable IDs (FIG-xxxxxx, TBL-xxxxxx), bookmarks, and data provenance.
+    Kho lưu trữ trung tâm cho hình ảnh khoa học (Sơ đồ, Hình, Bảng).
+    Đảm bảo ID ổn định (FIG-xxxxxx, TBL-xxxxxx), dấu trang và nguồn gốc dữ liệu.
     """
 
     def __init__(self, db_manager: Optional[DatabaseManager] = None):
@@ -44,7 +44,7 @@ class VisualRegistry:
             """)
 
     def register_visual(self, record: VisualRecord) -> VisualRecord:
-        """Registers a visual record in the database."""
+        """Đăng ký một bản ghi trực quan trong cơ sở dữ liệu."""
         with self.db.session() as conn:
             conn.execute("""
             INSERT OR REPLACE INTO visual_records (
@@ -75,7 +75,7 @@ class VisualRegistry:
         return record
 
     def get_visual(self, visual_id: str) -> Optional[VisualRecord]:
-        """Retrieves a visual record by its stable ID."""
+        """Truy xuất bản ghi trực quan bằng ID ổn định của nó."""
         with self.db.session() as conn:
             row = conn.execute("SELECT * FROM visual_records WHERE visual_id = ?", (visual_id,)).fetchone()
             if not row:
@@ -83,7 +83,7 @@ class VisualRegistry:
             return self._row_to_record(row)
 
     def list_visuals(self, visual_type: Optional[VisualType] = None) -> List[VisualRecord]:
-        """Lists all registered visuals, optionally filtered by type."""
+        """Liệt kê tất cả các hình ảnh đã đăng ký, tùy chọn lọc theo loại."""
         with self.db.session() as conn:
             if visual_type:
                 rows = conn.execute("SELECT * FROM visual_records WHERE visual_type = ? ORDER BY seq_number", (visual_type.value,)).fetchall()

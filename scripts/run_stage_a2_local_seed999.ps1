@@ -1,5 +1,5 @@
-﻿# scripts/run_stage_a2_local_seed999.ps1
-# Launch Canonical Seed 999 (Stage A2 HDFS Empirical - FINAL SEED)
+﻿# tập lệnh/run_stage_a2_local_seed999.ps1
+# Ra mắt Canonical Seed 999 (Giai đoạn A2 HDFS Thực nghiệm - FINAL SEED)
 
 $ErrorActionPreference = "Stop"
 
@@ -15,7 +15,7 @@ $stdoutLog = "$logDir\seed999.stdout.log"
 $stderrLog = "$logDir\seed999.stderr.log"
 $pidFile = "$logDir\seed999.pid"
 
-# 1. Apply Hardware Sweet Spot Profile
+# 1. Áp dụng hồ sơ điểm ngọt phần cứng
 & "$baseDir\scripts\set_training_sweetspot.ps1"
 
 $env:CUBLAS_WORKSPACE_CONFIG = ":4096:8"
@@ -47,7 +47,7 @@ $process = Start-Process -FilePath $pythonExe `
 
 Start-Sleep -Seconds 2
 
-# 2. Lock PriorityClass to AboveNormal and Affinity to P-cores
+# 2. Khóa PriorityClass thành AboveNormal và Affinity với P-cores
 try {
     $procObj = Get-Process -Id $process.Id -ErrorAction SilentlyContinue
     if ($procObj) {
@@ -60,7 +60,7 @@ try {
     Write-Warning "Could not adjust process priority/affinity: $_"
 }
 
-# 3. Disable Windows Power Throttling (EcoQoS) via Win32 API
+# 3. Vô hiệu hóa Windows Power Throttling (EcoQoS) qua Win32 API
 try {
     $code = @"
 using System;

@@ -1,5 +1,5 @@
 """
-Master Academic Thesis Document Rebuilder with Word 2016 Native Figures, Native Tables, Native Captions, and Cross-References.
+Trình xây dựng lại tài liệu luận văn học thuật bậc thầy với các số liệu gốc, bảng gốc, chú thích gốc và tài liệu tham khảo chéo trong Word 2016.
 """
 
 import os
@@ -39,7 +39,7 @@ from research_agent.visuals.registry import VisualRegistry
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-# Initialize official Microsoft Office MathML to OMML XSLT transformer
+# Khởi tạo biến áp Microsoft Office MathML chính thức thành biến áp OMML XSLT
 XSLT_PATH = r"C:\Program Files\Microsoft Office\Office16\MML2OMML.XSL"
 xslt_tree = etree.parse(XSLT_PATH)
 transform_omml = etree.XSLT(xslt_tree)
@@ -184,7 +184,7 @@ def make_hypo_omml(num: int):
 
 
 def latex_to_clean_omml(latex_code: str):
-    """Converts a LaTeX formula into a native Word OMML element, cleaning any empty placeholders and adding noProof."""
+    """Chuyển đổi công thức LaTeX thành phần tử Word OMML gốc, xóa mọi phần giữ chỗ trống và thêm noProof."""
     try:
         sanitized_latex = latex_code.replace(r"\&", "&#38;")
         mathml = latex2mathml.converter.convert(sanitized_latex)
@@ -198,12 +198,12 @@ def latex_to_clean_omml(latex_code: str):
             lang = etree.SubElement(wrPr, "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}lang")
             lang.set("{http://schemas.openxmlformats.org/wordprocessingml/2006/main}val", "en-US")
 
-        # Clean empty m:sup in m:nary or anywhere across omml_tree
+        # Làm sạch m:sup trống trong m:nary hoặc bất cứ nơi nào trên omml_tree
         for sup_elem in omml_tree.xpath(".//m:sup", namespaces=ns):
             if len(sup_elem) == 0 and (not sup_elem.text or not sup_elem.text.strip()):
                 sup_elem.getparent().remove(sup_elem)
 
-        # Ensure naryPr has supHide="1" and subHide="0" when no sup exists
+        # Đảm bảo naryPr có supHide="1" và subHide="0" khi không có sup tồn tại
         for nary in omml_tree.xpath(".//m:nary", namespaces=ns):
             naryPr = nary.find("m:naryPr", namespaces=ns)
             sup = nary.find("m:sup", namespaces=ns)
@@ -213,7 +213,7 @@ def latex_to_clean_omml(latex_code: str):
                     supHide = etree.SubElement(naryPr, "{http://schemas.openxmlformats.org/officeDocument/2006/math}supHide")
                 supHide.set("{http://schemas.openxmlformats.org/officeDocument/2006/math}val", "1")
 
-        # Convert empty m:nary to m:sSubSup so Word doesn't draw a dotted placeholder or need U+200B
+        # Chuyển đổi m:nary trống thành m:sSubSup để Word không vẽ phần giữ chỗ có dấu chấm hoặc cần U+200B
         for nary in list(omml_tree.xpath(".//m:nary", namespaces=ns)):
             e_elem = nary.find("m:e", namespaces=ns)
             if e_elem is not None and len(e_elem) == 0 and (not e_elem.text or not e_elem.text.strip()):
@@ -254,7 +254,7 @@ def latex_to_clean_omml(latex_code: str):
 
 
 def make_citation_element(tag_or_num_list):
-    """Creates native Word CITATION field elements for a list of source IDs with clean ', ' separator."""
+    """Tạo các thành phần trường Word CITATION gốc cho danh sách ID nguồn có dấu phân cách ', ' rõ ràng."""
     if isinstance(tag_or_num_list, (int, str)):
         tag_or_num_list = [tag_or_num_list]
 
@@ -295,7 +295,7 @@ def make_citation_element(tag_or_num_list):
 
 
 def make_ref_element(bookmark_name: str, fallback_text: str, font_size_pt: float = 14.0):
-    """Creates a native Word REF dynamic cross-reference field element."""
+    """Tạo phần tử trường tham chiếu chéo động Word REF gốc."""
     sz_val = int(font_size_pt * 2)
     ref_xml = (
         f'<w:fldSimple {nsdecls("w")} w:instr="REF {bookmark_name} \\h ">\n'
@@ -450,7 +450,7 @@ def add_figure_caption(doc, target_p, chapter_num: int, seq_num: int, title_cont
 
 
 def format_table_cell(cell, width_dxa: int, align=WD_ALIGN_PARAGRAPH.LEFT, bold=False, font_size_pt=14):
-    """Sets standard cell properties: exact width, vertical centering, border, padding, and compact line spacing."""
+    """Đặt các thuộc tính ô tiêu chuẩn: chiều rộng chính xác, căn giữa theo chiều dọc, đường viền, phần đệm và khoảng cách dòng nhỏ gọn."""
     tcPr = cell._tc.get_or_add_tcPr()
     tc_xml = (
         f'<w:tcPr {nsdecls("w")}>\n'
@@ -494,7 +494,7 @@ def insert_thesis_table(
     fixed_layout=False, cell_space_before_pt=None, cell_space_after_pt=None,
     no_wrap=False
 ):
-    """Creates an elegant, professional thesis table matching original template layout, supporting OMML nodes in cells."""
+    """Tạo một bảng luận án trang nhã, chuyên nghiệp phù hợp với bố cục mẫu ban đầu, hỗ trợ các nút OMML trong các ô."""
     tbl = doc.add_table(rows=len(rows_data) + 1, cols=len(headers))
     tbl.style = "Table Grid"
     if table_alignment is not None:
@@ -565,7 +565,7 @@ def format_table_cell_rich(
     font_size_pt: float = 14.0, pad_v_dxa: int = 80, space_v_pt: float = 3.0,
     space_before_pt=None, space_after_pt=None, no_wrap=False
 ):
-    """Formats cell borders, margins, alignment and renders rich text / OMML nodes without raw math underscores."""
+    """Định dạng đường viền ô, lề, căn chỉnh và hiển thị văn bản có định dạng / nút OMML mà không có dấu gạch dưới toán học thô."""
     tcPr = cell._tc.get_or_add_tcPr()
     nowrap_xml = '  <w:noWrap/>\n' if no_wrap else ''
     tc_xml = (
@@ -599,14 +599,14 @@ def format_table_cell_rich(
     p.paragraph_format.space_before = Pt(sb)
     p.paragraph_format.space_after = Pt(sa)
 
-    # Clear default text runs
+    # Xóa văn bản mặc định chạy
     p.text = ""
     items = val if isinstance(val, list) else [val]
     for item in items:
         if isinstance(item, str):
-            # Dynamic check for math notation with underscore like [e_{t-k+1}, ..., e_t]
+            # Kiểm tra động các ký hiệu toán học có dấu gạch dưới như [e_{t-k+1}, ..., e_t]
             if "[" in item and "_{" in item and "]" in item:
-                # Convert math bracket segment to OMML
+                # Chuyển đổi phân đoạn khung toán học thành OMML
                 prefix = item[:item.find("[")]
                 math_part = item[item.find("["):item.find("]")+1]
                 suffix = item[item.find("]")+1:]
@@ -635,7 +635,7 @@ def format_table_cell_rich(
 
 
 def generate_perfect_sources_xml(sources):
-    """Generates valid Microsoft Word Bibliography Sources CustomXML with Corporate Authors & IEEE style."""
+    """Tạo các Nguồn thư mục Microsoft Word hợp lệ CustomXML với kiểu Tác giả doanh nghiệp & IEEE."""
     lines = ['<?xml version="1.0" encoding="UTF-8" standalone="no"?>']
     lines.append('<b:Sources SelectedStyle="\\IEEE.XSL" StyleName="IEEE" xmlns:b="http://schemas.openxmlformats.org/officeDocument/2006/bibliography" xmlns="http://schemas.openxmlformats.org/officeDocument/2006/bibliography">')
 
@@ -718,7 +718,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
     repo = ResearchRepository(DatabaseManager())
     sources = repo.list_sources()
 
-    # Sync Master Sources.xml in AppData
+    # Đồng bộ hóa Master Sources.xml trong AppData
     try:
         master_xml_str = generate_perfect_sources_xml(sources)
         master_xml_path = os.path.expandvars(r"%APPDATA%\Microsoft\Bibliography\Sources.xml")
@@ -737,13 +737,13 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
 
     doc = docx.Document(str(backup_path))
 
-    # Keep only Table 0 (Cover page frame)
+    # Chỉ giữ lại Bảng 0 (Khung trang bìa)
     while len(doc.tables) > 1:
         tbl_to_remove = doc.tables[1]
         tbl_to_remove._tbl.getparent().remove(tbl_to_remove._tbl)
     print("[2/6] Preserved Cover Frame Table 0.")
 
-    # Fix cover table year: 2024 -> 2026
+    # Sửa bảng bìa năm: 2024 -> 2026
     for r in doc.tables[0].rows:
         for c in r.cells:
             for p in c.paragraphs:
@@ -755,7 +755,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
                         run.bold = True
 
     # -------------------------------------------------------------------------
-    # FRONT MATTER REORGANIZATION (TOC, TOF, and 3 Chapters List)
+    # FRONT MATTER REORGANIZATION (Danh sách TOC, TOF và 3 Chương)
     # -------------------------------------------------------------------------
     p_intro = None
     for p in doc.paragraphs:
@@ -776,7 +776,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
                         curr = p_obj
                         break
 
-        # 1. Update Intro
+        # 1. Cập nhật phần giới thiệu
         p_intro.text = "Báo cáo chuyên đề được cấu trúc thành ba chương trọng tâm:"
         p_intro.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
         p_intro.paragraph_format.first_line_indent = Cm(1.27)
@@ -784,7 +784,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
             r.font.name = "Times New Roman"
             r.font.size = Pt(14)
 
-        # 2. Update Chapter 1
+        # 2. Cập nhật Chương 1
         if len(ch_paras) > 0:
             ch_paras[0].text = ""
             ch_paras[0].paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
@@ -797,7 +797,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
             r2.font.name = "Times New Roman"
             r2.font.size = Pt(14)
 
-        # 3. Update Chapter 2
+        # 3. Cập nhật chương 2
         if len(ch_paras) > 1:
             ch_paras[1].text = ""
             ch_paras[1].paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
@@ -810,7 +810,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
             r2.font.name = "Times New Roman"
             r2.font.size = Pt(14)
 
-        # 4. Update Chapter 3
+        # 4. Cập nhật Chương 3
         if len(ch_paras) > 2:
             ch_paras[2].text = ""
             ch_paras[2].paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
@@ -823,16 +823,16 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
             r2.font.name = "Times New Roman"
             r2.font.size = Pt(14)
 
-        # 5. Remove Chapter 4 & Chapter 5 paragraphs
+        # 5. Xóa đoạn Chương 4 & Chương 5
         if len(ch_paras) > 4:
             ch_paras[4]._p.getparent().remove(ch_paras[4]._p)
         if len(ch_paras) > 3:
             ch_paras[3]._p.getparent().remove(ch_paras[3]._p)
 
-    # The pristine template already contains valid TOC, LOF, and LOT fields.
+    # Mẫu nguyên sơ đã chứa các trường TOC, LOF và LOT hợp lệ.
 
     # -------------------------------------------------------------------------
-    # CLEAN OLD BODY PARAGRAPHS FROM HEADING 1 TO THE END OF TEMPLATE
+    # CLEAN OLD BODY PARAGRAPHS FROM HEADING 1 ĐẾN THE END CỦA TEMPLATE
     # -------------------------------------------------------------------------
     paragraphs_to_remove = []
     found_h1 = False
@@ -860,7 +860,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         if keep_with_next:
             new_p.paragraph_format.keep_with_next = True
         
-        # If bold_prefix contains a literal bullet character, convert to native Word list with numPr
+        # Nếu bold_prefix chứa ký tự dấu đầu dòng theo nghĩa đen, hãy chuyển đổi sang danh sách Word gốc bằng numPr
         if bold_prefix and (bold_prefix.startswith("• ") or bold_prefix.startswith("•")):
             bold_prefix = bold_prefix[2:] if bold_prefix.startswith("• ") else bold_prefix[1:]
             new_p.paragraph_format.left_indent = Cm(1.27)
@@ -966,7 +966,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         return new_p
 
     def add_display_equation(omml_node_or_latex):
-        """Adds a centered block display equation paragraph."""
+        """Thêm đoạn phương trình hiển thị khối ở giữa."""
         eq_p = doc.add_paragraph(style="Normal") if target_p is None else target_p.insert_paragraph_before(style="Normal")
         eq_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         eq_p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
@@ -1015,7 +1015,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
 
 
     def add_h4(content):
-        """Heading 4 for numbered subheadings like 2.2.1.1 etc."""
+        """Tiêu đề 4 cho các tiêu đề phụ được đánh số như 2.2.1.1, v.v."""
         p = doc.add_paragraph(style="Heading 4") if target_p is None else target_p.insert_paragraph_before(style="Heading 4")
         p.paragraph_format.space_before = Pt(8)
         p.paragraph_format.space_after = Pt(4)
@@ -1041,7 +1041,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
             r.italic = False
         return p
     def add_figure_image(img_path: str, width_inches: float = 6.2):
-        """Inserts an inline figure image centered in the document."""
+        """Chèn một hình ảnh nội tuyến vào giữa tài liệu."""
         p = doc.add_paragraph(style="Normal") if target_p is None else target_p.insert_paragraph_before(style="Normal")
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p.paragraph_format.first_line_indent = Cm(0)
@@ -1052,7 +1052,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         r.add_picture(img_path, width=docx.shared.Inches(width_inches))
         return p
 
-    # Use pre-generated pristine academic figures
+    # Sử dụng số liệu học thuật nguyên sơ được tạo trước
     fig1_path = r"D:\Research\figures\fig_1_1_observation_hierarchy.png"
     fig2_path = r"D:\Research\figures\fig_1_2_evidence_space.png"
     fig3_path = r"D:\Research\figures\fig_1_3_three_tier_architecture.png"
@@ -1851,7 +1851,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
 
     # =========================================================================
     # SECTION 2.2 — Tiền xử lý và bảo vệ dynamic parameters
-    # NOD-000055..NOD-000066 | Role: MECHANISM
+    # NOD-000055..NOD-000066 | Vai trò: MECHANISM
     # =========================================================================
     add_h2("Tiền xử lý và bảo vệ dynamic parameters")
     add_p(
@@ -1875,9 +1875,9 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "động."
     )
 
-    # 2.2.1.1 — Typed schema
+    # 2.2.1.1 — Lược đồ đã nhập
     add_h4("Typed Schema và Security-aware Parameter Retention")
-    # 2.2.1.1 — Typed schema + parameter retention (body, no heading per roadmap)
+    # 2.2.1.1 — Lược đồ đã nhập + lưu giữ tham số (nội dung, không có tiêu đề cho mỗi lộ trình)
     add_p([
         "Mỗi sự kiện thô sau khi qua bước parsing được biểu diễn dưới dạng bộ sáu có kiểu hóa (Typed "
         "Six-tuple) như sau:"
@@ -1919,7 +1919,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "có thông tin ngược từ Val/Test nào được đưa vào quá trình fit."
     ])
 
-    # 2.2.1.2 — Retain vs Normalize
+    # 2.2.1.2 — Giữ lại và chuẩn hóa
     add_h4("Typed Canonicalization và Entity Resolution")
     add_p([
         "Hạt nhân của giai đoạn chuẩn hóa là hai vị từ ngữ nghĩa bổ sung cho nhau, được áp dụng lên "
@@ -1962,7 +1962,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         " được ghi nhận tường minh và không thay đổi trong suốt quá trình thực nghiệm.",
     ])
 
-    # --- Parameter Policy Table (NOD-000058) ---
+    # --- Bảng chính sách tham số (NOD-000058) ---
     add_p(
         "Bảng 2.1 tóm tắt chính sách xử lý cho từng trường của bộ sáu kiểu hóa:",
         keep_with_next=True
@@ -1990,7 +1990,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
     insert_thesis_table(doc, target_p, _tbl22_headers, _tbl22_widths, _tbl22_rows, font_size_pt=13)
     add_p("", first_line_indent=False)
 
-    # 2.2.1.3 — Leakage-safe preprocessing
+    # 2.2.1.3 - Tiền xử lý an toàn rò rỉ
     add_h4("Leakage-safe Preprocessing")
     add_p([
         "Tất cả các thành phần tiền xử lý có trạng thái học được (bao gồm từ vựng tokenizer tham số "
@@ -2051,7 +2051,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "tại Chương 3 (BOUNDARY-06: Privacy Claim Requires Attack-Based Empirical Evaluation)."
     ])
 
-    # 2.2.2.1 — Data/entity adversary
+    # 2.2.2.1 — Đối thủ dữ liệu/thực thể
     add_h4("Data/Entity Adversary")
     add_p([
         "Lớp đe dọa thứ nhất là đối nghịch dữ liệu/thực thể (Data/Entity Adversary). Đối nghịch này "
@@ -2070,7 +2070,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "để tái định danh thực thể đã bị ẩn danh hóa."
     ])
 
-    # 2.2.2.2 — Model adversary
+    # 2.2.2.2 — Đối thủ kiểu mẫu
     add_h4("Model Adversary")
     add_p([
         "Lớp đe dọa thứ hai là đối nghịch mô hình (Model Adversary). Đối nghịch này không truy cập "
@@ -2106,7 +2106,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "tại Chương 3 (CTRL-PRIV-001)."
     ])
 
-    # 2.2.2.3 — Mechanism contract
+    # 2.2.2.3 — Hợp đồng cơ khí
     add_h4("Controlled Linkability Mechanism Contract")
     add_p([
         "Để giải quyết đồng thời hai lớp đe dọa trên trong khi vẫn bảo toàn ngữ cảnh hành vi cần "
@@ -2207,7 +2207,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "không tái định nghĩa lại."
     ])
 
-    # 2.2.3.1 — Event-time alignment
+    # 2.2.3.1 — Căn chỉnh thời gian sự kiện
     add_h4("Event-Time, Clock Skew, Watermark và Late Events")
     add_p([
         "Môi trường SOC thực tế thu thập log từ nhiều nguồn có đồng hồ hệ thống khác nhau, phát "
@@ -2240,7 +2240,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "Buffer theo Explicit Information-Loss Protocol."
     ], bold_prefix="(iii) ", first_line_indent=False)
 
-    # 2.2.3.2 — Multi-scale context windows
+    # 2.2.3.2 — Cửa sổ ngữ cảnh nhiều tỷ lệ
     add_h4("Multi-scale Context Windows")
     add_p([
         "Đặc điểm của chiến dịch APT là hoạt động trải dài nhiều tỷ lệ thời gian khác nhau "
@@ -2324,7 +2324,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
     ])
 
     # -------------------------------------------------------------------------
-    # 2.3.1. Transformer Semantic–Sequential Extractor
+    # 2.3.1. Trình trích xuất tuần tự-ngữ nghĩa biến áp
     # -------------------------------------------------------------------------
     add_h3("Bộ trích xuất tuần tự ngữ nghĩa Transformer")
     add_p([
@@ -2338,7 +2338,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "thứ tự gọi hàm hệ thống và tương tác tham số động mà không dựa trên bất kỳ nhãn phân loại tấn công nào ở hạ nguồn."
     ])
 
-    # 2.3.1.1. Event Representation
+    # 2.3.1.1. Đại diện sự kiện
     add_h4("Biểu diễn sự kiện kiểu hóa và mã hóa ngữ cảnh")
     add_p([
         "Mỗi sự kiện kiểu hóa ",
@@ -2378,7 +2378,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         " đều được xác lập dựa trên tập huấn luyện và kiểm định (Train/Validation), không sử dụng nhãn kiểm tra."
     ], first_line_indent=False)
 
-    # 2.3.1.2. Self-supervised Objectives
+    # 2.3.1.2. Mục tiêu tự giám sát
     add_h4("Mục tiêu huấn luyện tự giám sát")
     add_p([
         "Để huấn luyện bộ trích xuất tuần tự mà không gây rò rỉ nhãn tấn công hay phụ thuộc vào tri thức chuyên gia định trước, "
@@ -2459,7 +2459,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         " được tinh chỉnh trên tập Validation."
     ])
 
-    # 2.3.1.3. Sequential Output
+    # 2.3.1.3. Đầu ra tuần tự
     add_h4("Giao diện đầu ra của bộ trích xuất tuần tự")
     add_p([
         "Sau khi đi qua ",
@@ -2496,7 +2496,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         ", trong đó số hạng bậc hai phản ánh chi phí tính toán ma trận chú ý theo độ dài chuỗi."
     ])
 
-    # Insert Figure 2.2 Placeholder Canvas
+    # Chèn Hình 2.2 Canvas giữ chỗ
     p_c1 = doc.add_paragraph() if target_p is None else target_p.insert_paragraph_before()
     p_c1.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p_c1.paragraph_format.keep_with_next = True
@@ -2508,7 +2508,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
     add_figure_caption(doc, target_p, 2, 2, "Kiến trúc Bộ trích xuất tuần tự ngữ nghĩa Transformer và cơ chế học tự giám sát trên cửa sổ ngắn hạn (Nguồn: Tác giả đề xuất)", bookmark_name="BK_FIG_2_002")
 
     # -------------------------------------------------------------------------
-    # 2.3.2. Dependency–Temporal Provenance Graph Construction and Graph Fidelity
+    # 2.3.2. Sự phụ thuộc–Xây dựng biểu đồ xuất xứ tạm thời và độ trung thực của biểu đồ
     # -------------------------------------------------------------------------
     add_h3("Xây dựng đồ thị nguồn gốc phụ thuộc thời gian và đảm bảo độ chân thực đồ thị")
     add_p([
@@ -2518,7 +2518,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "và nạp cấu trúc đã tinh lọc vào mô hình Temporal GNN."
     ])
 
-    # 2.3.2.1. Typed Nodes / Edges / Temporal Attributes
+    # 2.3.2.1. Các nút được gõ/Cạnh/Thuộc tính tạm thời
     add_h4("Đỉnh kiểu hóa, cạnh có hướng và thuộc tính thời gian")
     add_p([
         "Đồ thị nguồn gốc phụ thuộc thời gian tại thời điểm ",
@@ -2556,7 +2556,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "Hệ thống không tự ý tạo cạnh nối chỉ dựa trên sự gần nhau về mặt thời gian giữa hai sự kiện rời rạc."
     ])
 
-    # 2.3.2.2. Observable Dependency != Causal Effect
+    # 2.3.2.2. Sự phụ thuộc có thể quan sát được != Hiệu ứng nhân quả
     add_h4("Quan hệ phụ thuộc quan sát được và ranh giới với quan hệ nhân quả")
     add_p([
         "Một ranh giới phương pháp luận căn bản cần được duy trì xuyên suốt chuyên đề là sự phân định giữa quan hệ phụ thuộc quan sát được (Observable Dependency) "
@@ -2575,7 +2575,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "tránh các suy diễn sai lầm trong việc truy vết nguồn gốc tấn công."
     ])
 
-    # 2.3.2.3. False Dependency / Long-lived Entity / Edge Control
+    # 2.3.2.3. Sự phụ thuộc sai/Thực thể tồn tại lâu dài/Kiểm soát biên
     add_h4("Các cơ chế ứng viên kiểm soát độ chân thực đồ thị và bùng nổ phụ thuộc")
     add_p([
         "Trong môi trường thực tế, đồ thị nguồn gốc thường đối mặt với hiện tượng bùng nổ phụ thuộc (Dependency Explosion) "
@@ -2607,7 +2607,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "không sử dụng điểm số tấn công hay nhãn kiểm tra để quyết định giữ hay xóa cạnh. Mức độ đóng góp và hiệu quả thực tế của từng cơ chế ứng viên được đánh giá định lượng thông qua phân tích triệt tiêu (Ablation Study) tại Chương 3."
     ], num_id=22)
 
-    # 2.3.2.4. Cold-start and Unseen Entities
+    # 2.3.2.4. Khởi động nguội và các thực thể không nhìn thấy
     add_h4("Xử lý thực thể khởi động lạnh và thực thể mới")
     add_p([
         "Hệ thống log thường xuyên xuất hiện các thực thể mới (tiến trình mới tạo, kết nối mạng tạm thời, máy chủ mới kết nối) "
@@ -2631,7 +2631,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
     ])
 
     # -------------------------------------------------------------------------
-    # 2.3.3. Temporal GNN Extractor
+    # 2.3.3. Trình trích xuất GNN tạm thời
     # -------------------------------------------------------------------------
     add_h3("Bộ trích xuất đồ thị động Temporal GNN")
     add_p([
@@ -2643,7 +2643,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         ", chuyên đề hình thức hóa cơ chế truyền thông điệp thời gian có kiểu hóa (Typed Temporal Message Passing) phù hợp với dữ liệu log bảo toàn ngữ cảnh an ninh."
     ])
 
-    # 2.3.3.1. Typed Temporal Message Passing
+    # 2.3.3.1. Đã nhập tin nhắn tạm thời
     add_h4("Truyền thông điệp thời gian có kiểu hóa")
     add_p([
         "Tại mỗi sự kiện tương tác ",
@@ -2686,7 +2686,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
     ], keep_with_next=True)
     add_display_equation(make_tgn_update_omml())
 
-    # 2.3.3.2. Graph Self-Supervised Objective
+    # 2.3.3.2. Mục tiêu tự giám sát của đồ thị
     add_h4("Học biểu diễn tự giám sát trên đồ thị nguồn gốc động")
     add_p([
         "Nhằm tối ưu hóa các tham số ",
@@ -2776,7 +2776,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         " tại Mục 2.4."
     ])
 
-    # 2.3.3.3. Over-smoothing / Over-squashing Controls
+    # 2.3.3.3. Điều khiển làm mịn quá mức / ép quá mức
     add_h4("Kiểm soát hiện tượng làm mịn quá mức và nghẽn cổ chai thông tin")
     add_p([
         "Khi áp dụng mạng nơ-ron đồ thị trên đồ thị nguồn gốc có đường kính lớn, hai rủi ro kiến trúc phổ biến là hiện tượng làm mịn quá mức (Over-smoothing) "
@@ -2799,7 +2799,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "nhằm kiểm tra thực nghiệm liệu chính sách sampling có gây mất mát các bằng chứng APT dài hạn (long-range evidence) hay không."
     ])
 
-    # 2.3.3.4. Graph Output
+    # 2.3.3.4. Đầu ra đồ thị
     add_h4("Giao diện đầu ra của bộ trích xuất đồ thị")
     add_p([
         "Vector biểu diễn đặc trưng đồ thị ",
@@ -2837,7 +2837,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "."
     ])
 
-    # Insert Figure 2.3 Placeholder Canvas
+    # Chèn Hình 2.3 Canvas giữ chỗ
     p_c2 = doc.add_paragraph() if target_p is None else target_p.insert_paragraph_before()
     p_c2.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p_c2.paragraph_format.keep_with_next = True
@@ -2848,7 +2848,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
     p_c2._p.append(parse_xml(f'<w:bookmarkEnd {nsdecls("w")} w:id="30203"/>'))
     add_figure_caption(doc, target_p, 2, 3, "Kiến trúc xây dựng đồ thị nguồn gốc phụ thuộc thời gian và Bộ trích xuất Temporal GNN (Nguồn: Tác giả đề xuất)", bookmark_name="BK_FIG_2_003")
 
-    # Insert Table 2.2
+    # Chèn bảng 2.2
     add_p(
         "Bảng 2.2 tóm tắt các đặc tính kiến trúc và độ phức tạp tính toán của hai bộ trích xuất đặc trưng đa góc nhìn:",
         keep_with_next=True,
@@ -2894,7 +2894,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         " tại Chương 3. Để đạt được mục tiêu này, chuyên đề thiết lập một quy trình tối ưu hóa đa tầng chặt chẽ: (1) thiết lập không gian ngữ nghĩa chung mà không gây sụp đổ biểu diễn (Representation Collapse); (2) bảo toàn đối xứng thông tin đặc thù nội góc nhìn (Symmetric Multi-View Preservation); (3) kiểm soát nhiễu đặc quyền và hành vi quản trị viên thông qua ngữ cảnh hóa đa chiều (Risk-aware Admin-Noise Control); (4) cung cấp cơ chế phân bổ bằng chứng yếu (Weak Evidence Attribution) qua mô hình học đa thể hiện (Multiple Instance Learning, MIL) tùy chọn; và (5) thích ứng linh hoạt với hiện tượng khuyết góc nhìn (Missing-View) trong môi trường phân tán mà không vi phạm nguyên tắc nhân quả thời gian (Strictly Causal / Zero Lookahead)."
     ])
 
-    # 2.4.1. Heterogeneous Cross-view Alignment
+    # 2.4.1. Căn chỉnh góc nhìn chéo không đồng nhất
     add_h3("Gióng hàng đa góc nhìn dị thể")
     add_p([
         "Mục 2.4.1 thiết lập Hợp đồng Tương ứng (Correspondence Contract), phân định ranh giới giữa Không gian Biểu diễn (Representation Space) và Không gian Chiếu (Projection Space), cùng các cơ chế điều hòa chống sụp đổ biểu diễn."
@@ -2990,7 +2990,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         ". Bảng 2.3 phân tích đối sánh chi tiết các đặc tính lý thuyết từ các công bố gốc và các giả thuyết nghiên cứu của chuyên đề đối với dữ liệu telemetry an ninh:"
     ], keep_with_next=True)
 
-    # Table 2.3
+    # Bảng 2.3
     _tbl24_headers = ["Tiêu chí phương pháp luận", "InfoNCE / Contrastive", "Barlow Twins", "VICReg (Ứng viên đề xuất)"]
     _tbl24_widths = [1800, 2200, 2200, 2400]
     _tbl24_rows = [
@@ -3134,7 +3134,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "Lưu ý phương pháp luận về tính nhân quả: Khái niệm 'Strictly Causal / Zero Lookahead' được định nghĩa chính xác theo nghĩa: hệ thống chỉ sử dụng dữ liệu đo kiểm trong quá khứ và hiện tại tại thời điểm suy luận dòng, tuyệt đối không sử dụng thông tin tương lai hay nhãn kiểm thử; khái niệm này KHÔNG hàm ý suy diễn quan hệ nhân quả (Causal-effect Inference) theo nghĩa thống kê can thiệp. Trong an ninh mạng, sự phụ thuộc quan sát được (Observable Dependency) không đồng nhất với tác động nhân quả (Dependency != Causal Effect)."
     ])
 
-    # 2.4.2. Risk-aware Admin Behavior (RQ4 Coverage)
+    # 2.4.2. Hành vi của quản trị viên nhận thức được rủi ro (Bảo hiểm RQ4)
     add_h3("Nhận thức hành vi quản trị viên và điều hòa rủi ro")
     add_p([
         "Một nguồn gây nhầm lẫn đáng chú ý trong giám sát an ninh là sự chồng lấn giữa hoạt động quản trị hợp thức và hành vi tấn công. Mục 2.4.2 thiết lập khung phương pháp luận nhận thức hành vi quản trị (Risk-aware Administrative Behavior) và các cơ chế kiểm soát nhiễu đặc quyền (Admin-Noise Controls, Đề xuất của đề tài / Ours) nhằm giải quyết trực tiếp câu hỏi nghiên cứu ",
@@ -3188,7 +3188,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "Cấm rò rỉ nhãn kiểm thử và đặc quyền giám sát (No Privileged Test Knowledge): Trong toàn bộ quá trình tiền xử lý và huấn luyện tự giám sát, hệ thống tuyệt đối không sử dụng bất kỳ thông tin nào về nhãn tấn công tương lai hay danh sách phân loại tĩnh từ tập kiểm thử, ngăn rò rỉ thông tin kiểm thử qua các kênh đã định nghĩa (Data Leakage Prevention)."
     ])
 
-    # 2.4.3. Unified Objective + Weak Evidence Attribution
+    # 2.4.3. Mục tiêu thống nhất + Ghi nhận bằng chứng yếu
     add_h3("Hàm mục tiêu thống nhất và phân bổ bằng chứng yếu")
     add_p([
         "Mục 2.4.3 tổng hợp toàn bộ đồ thị tối ưu hóa (Optimization Graph) của chuyên đề, thiết lập hàm mục tiêu tự giám sát thống nhất trong Stage A, đóng kín các luồng gradient cho toàn bộ tập tham số, và tích hợp mô đun Phân bổ Bằng chứng Yếu (Weak Evidence Attribution) qua mô hình học đa thể hiện (Multiple Instance Learning, MIL) tùy chọn trong Stage B."
@@ -3199,7 +3199,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "Nhằm bảo đảm tính chặt chẽ phương pháp luận và kiểm toán hoàn toàn các tham số có gradient (Zero Orphan Parameters), Bảng 2.4 kiểm toán toàn bộ tập tham số huấn luyện của hệ thống, chỉ rõ giai đoạn huấn luyện, hàm mục tiêu sinh gradient, thời điểm đóng băng và vai trò khi suy luận trực tuyến:"
     ], keep_with_next=True)
 
-    # Table 2.4 Parameter Audit Table
+    # Bảng 2.4 Bảng kiểm tra thông số
     _tbl25_headers = ["Khối tham số", "Giai đoạn", "Hàm mục tiêu sinh Gradient", "Thời điểm đóng băng / Vòng đời", "Dùng khi suy luận?"]
     _tbl25_widths = [1900, 1300, 3100, 1700, 1200]
     _tbl25_rows = [
@@ -3408,7 +3408,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         " là tín hiệu gợi ý điều tra (Attribution Signal), TUYỆT ĐỐI KHÔNG PHẢI là xác suất tấn công độc hại và KHÔNG PHẢI là bằng chứng giải thích nhân quả (Causal Explanation)."
     ])
 
-    # 2.4.4. Unified Representation / Interface / Complexity
+    # 2.4.4. Biểu diễn hợp nhất / Giao diện / Độ phức tạp
     add_h3("Biểu diễn thống nhất, giao diện đầu ra và độ phức tạp")
     add_p([
         "Mục 2.4.4 xác lập công thức tổng hợp biểu diễn thống nhất canonical, định nghĩa giao diện chuẩn cho các mô hình hạ nguồn ở Stage C và phân tích chi phí tính toán."
@@ -3466,7 +3466,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         " tạo thành giao diện đầu ra duy nhất của toàn bộ Khung Trích xuất Đặc trưng Đa góc nhìn (Multi-View Feature Extractor). Phù hợp với ranh giới phân định tầng tại Mục 1.1.3, Extractor tuyệt đối không chứa logic phát hiện bất thường hay ngưỡng phân lớp an ninh. Gói biểu diễn được bàn giao nguyên vẹn sang Stage C phục vụ các đầu dò tuyến tính đóng băng (Frozen Linear Probe) và quy trình chấm điểm bất thường không giám sát tùy chọn (Optional Downstream Zero-Shot Anomaly Scoring Protocol, trong đó hàm đo khoảng cách/năng lượng, phân bố nền và chính sách ngưỡng được tiền đăng ký và khóa cố định trên tập Train/Validation tại Chương 3)."
     ])
 
-    # Insert Figure 2.4 Canvas Placeholder
+    # Chèn Hình 2.4 Phần giữ chỗ Canvas
     p_c3 = doc.add_paragraph() if target_p is None else target_p.insert_paragraph_before()
     p_c3.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p_c3.paragraph_format.keep_with_next = True
@@ -3603,7 +3603,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
             r.font.name = "Times New Roman"
             r.font.size = Pt(14)
 
-    # Save directly to target_path
+    # Lưu trực tiếp vào target_path
     doc.save(str(target_path))
     del doc
     import gc
@@ -3613,7 +3613,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
     print(f"[SUCCESS] Saved and updated DOCX: {target_path}", flush=True)
 
     # =========================================================================
-    # STEP 6: AUTOMATE MICROSOFT WORD DESKTOP TO INSERT NATIVE DIAGRAMS, UPDATE ALL DYNAMIC FIELDS & EXPORT PDF
+    # STEP 6: AUTOMATE MICROSOFT WORD DESKTOP ĐẾN INSERT NATIVE DIAGRAMS, UPDATE ALL DYNAMIC FIELDS & EXPORT PDF
     # =========================================================================
     pdf_path = target_path.parent / (target_path.stem + ".pdf")
     import subprocess
@@ -3625,7 +3625,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         print(f"[WARNING] Word COM post-processor exited with code {res.returncode}", flush=True)
 
     # -------------------------------------------------------------------------
-    # REGISTER VISUAL RECORDS IN SQLITE VISUAL REGISTRY
+    # REGISTER VISUAL RECORDS TRONG SQLITE VISUAL REGISTRY
     # -------------------------------------------------------------------------
     try:
         v_reg = VisualRegistry()

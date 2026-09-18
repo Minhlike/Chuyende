@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Master Protocol Correction & Repository Governance Builder
-Applies all 20 requirements of the pre-registration correction and git baseline gate.
+Trình tạo quản trị kho lưu trữ và chỉnh sửa giao thức chính
+Áp dụng tất cả 20 yêu cầu của việc sửa lỗi đăng ký trước và cổng cơ sở git.
 """
 
 import os
@@ -300,7 +300,7 @@ A branch may only be merged into `main` after:
     print("[OK] Wrote .github/pull_request_template.md")
 
     # =========================================================================
-    # 6. DATASET-CARDS.md (DARPA CDM18/CDM20 & LANL Pending Count)
+    # 6. DATASET-CARDS.md (DARPA CDM18/CDM20 & LANL Số lượng đang chờ xử lý)
     # =========================================================================
     dataset_cards_content = """# DATASET PROTOCOL & CANONICAL DATASET CARDS
 
@@ -391,7 +391,7 @@ A branch may only be merged into `main` after:
     print("[OK] Updated DATASET-CARDS.md (CDM18/CDM20 & Pending Count)")
 
     # =========================================================================
-    # 7. STATISTICAL-PLAN.md (Paired Cluster Bootstrap, Unit Audit, Effect Sizes)
+    # 7. STATISTICAL-PLAN.md (Khởi động cụm được ghép nối, Kiểm tra đơn vị, Kích thước hiệu ứng)
     # =========================================================================
     stat_plan_content = """# STATISTICAL ANALYSIS PLAN & HYPOTHESIS TESTING CONTRACT
 
@@ -571,7 +571,7 @@ Effect sizes are defined hierarchically based on metric characteristics:
     print("[OK] Updated EXPERIMENT-MATRIX.md")
 
     # =========================================================================
-    # 9. PROTOCOL-AMENDMENTS.md (Adding AMD-002)
+    # 9. PROTOCOL-AMENDMENTS.md (Thêm AMD-002)
     # =========================================================================
     amendments_content = """# EXPERIMENTAL PROTOCOL AMENDMENT LEDGER
 
@@ -698,7 +698,7 @@ Before any branch merge into `main`:
     print("[OK] Wrote REPOSITORY-STATE.md")
 
     # =========================================================================
-    # 11. generate_split_manifests.py (CDM18/CDM20 & Pending Count)
+    # 11. generate_split_manifests.py (CDM18/CDM20 & Số lượng đang chờ xử lý)
     # =========================================================================
     split_gen_code = '''# -*- coding: utf-8 -*-
 """

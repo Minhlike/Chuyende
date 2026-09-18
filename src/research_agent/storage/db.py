@@ -1,5 +1,5 @@
 """
-SQLite Database Schema and Connection Manager (ADR-0001, ADR-0002)
+Trình quản lý kết nối và lược đồ cơ sở dữ liệu SQLite (ADR-0001, ADR-0002)
 """
 
 import sqlite3
@@ -999,7 +999,7 @@ CREATE TABLE IF NOT EXISTS thesis_build_manifests (
 
 
 class DatabaseManager:
-    """Manages SQLite database connections and schema lifecycle."""
+    """Quản lý các kết nối cơ sở dữ liệu SQLite và vòng đời lược đồ."""
 
     def __init__(self, db_path: Path | str | None = None, config: WorkspaceConfig | None = None):
         cfg = config or get_default_config()
@@ -1028,11 +1028,11 @@ class DatabaseManager:
             conn.close()
 
     def init_schema(self) -> None:
-        """Execute full schema migration and upgrade tables if needed."""
+        """Thực hiện các bảng nâng cấp và di chuyển lược đồ đầy đủ nếu cần."""
         with self.session() as conn:
             conn.executescript(SCHEMA_SQL)
             
-            # Helper to safely add column if missing
+            # Trợ giúp thêm cột một cách an toàn nếu thiếu
             def ensure_column(table: str, column: str, col_type: str, default: str = ""):
                 cursor = conn.cursor()
                 cursor.execute(f"PRAGMA table_info({table})")
@@ -1041,7 +1041,7 @@ class DatabaseManager:
                     default_clause = f" DEFAULT {default}" if default else ""
                     cursor.execute(f"ALTER TABLE {table} ADD COLUMN {column} {col_type}{default_clause}")
 
-            # Migrations for existing roadmaps tables
+            # Di chuyển các bảng lộ trình hiện có
             ensure_column("roadmaps", "central_object", "TEXT", "'feature representation z'")
             ensure_column("roadmap_nodes", "canonical_text", "TEXT")
             ensure_column("roadmap_nodes", "expected_role", "TEXT", "'SPECIFICATION'")
@@ -1052,7 +1052,7 @@ class DatabaseManager:
             ensure_column("research_questions", "canonical_wording_vi", "TEXT", "''")
             ensure_column("hypotheses", "title", "TEXT", "''")
 
-            # Migrations for sources and evidences
+            # Di chuyển các nguồn và bằng chứng
             ensure_column("sources", "citation_key", "TEXT", "''")
             ensure_column("sources", "source_type", "TEXT", "'PEER_REVIEWED'")
             ensure_column("sources", "roles_json", "TEXT", "'[]'")
@@ -1073,7 +1073,7 @@ class DatabaseManager:
             ensure_column("evidences", "caveats", "TEXT", "''")
             ensure_column("evidences", "verified_at", "TEXT", "''")
 
-            # Migrations for decision_records
+            # Di chuyển cho decision_records
             ensure_column("decision_records", "rationale", "TEXT", "''")
             ensure_column("decision_records", "alternatives_considered_json", "TEXT", "'[]'")
             ensure_column("decision_records", "evidence_ids_json", "TEXT", "'[]'")
@@ -1086,7 +1086,7 @@ class DatabaseManager:
             ensure_column("decision_records", "actor", "TEXT", "'HUMAN_ARCHITECT_OR_AGENT'")
             ensure_column("decision_records", "made_at", "TEXT", "''")
 
-            # Migrations for memory_records
+            # Di chuyển cho memory_records
             ensure_column("memory_records", "record_type", "TEXT", "'OBSERVATION'")
             ensure_column("memory_records", "promotion_state", "TEXT", "'CONSOLIDATED'")
             ensure_column("memory_records", "summary", "TEXT", "''")
@@ -1106,7 +1106,7 @@ class DatabaseManager:
             ensure_column("memory_records", "confidence_category", "TEXT", "'HIGH'")
             ensure_column("memory_records", "confidence_basis", "TEXT", "''")
 
-            # Initialize FTS5 table if supported
+            # Khởi tạo bảng FTS5 nếu được hỗ trợ
             try:
                 conn.execute(
                     """
@@ -1121,7 +1121,7 @@ class DatabaseManager:
                     """
                 )
             except Exception:
-                # Fallback standard FTS5 without extra params
+                # Tiêu chuẩn dự phòng FTS5 không có thông số bổ sung
                 try:
                     conn.execute(
                         """

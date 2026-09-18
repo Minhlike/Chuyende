@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-GPU and Runtime Smoke Test
-Verifies PyTorch CUDA runtime, PyTorch Geometric, and tiny CPU/GPU tensor operations
-strictly against experiments/environment/ENVIRONMENT-LOCK.json.
-NO MODEL TRAINING, NO BENCHMARKS, NO DATASET ACCESS.
-STRICT PASS/FAIL GATING: Exits with non-zero code if ANY check fails.
+GPU và thử nghiệm khói trong thời gian chạy
+Xác minh thời gian chạy PyTorch CUDA, Hình học PyTorch và các hoạt động tensor CPU/GPU nhỏ
+hoàn toàn chống lại các thí nghiệm/môi trường/ENVIRONMENT-LOCK.json.
+KHÔNG CÓ MODEL TRAINING, KHÔNG BENCHMARKS, KHÔNG DATASET ACCESS.
+STRICT PASS/FAIL GATING: Thoát với mã khác 0 nếu kiểm tra ANY không thành công.
 """
 
 import os
@@ -12,7 +12,7 @@ import sys
 import json
 from pathlib import Path
 
-# Auto-detect repository root
+# Tự động phát hiện gốc kho lưu trữ
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 def run_smoke_test() -> bool:
@@ -26,7 +26,7 @@ def run_smoke_test() -> bool:
 
     checks = []
 
-    # Load environment lock
+    # Tải khóa môi trường
     lock_file = REPO_ROOT / "experiments" / "environment" / "ENVIRONMENT-LOCK.json"
     lock_data = {}
     if lock_file.exists():
@@ -39,14 +39,14 @@ def run_smoke_test() -> bool:
     expected_torch = lock_data.get("runtime_stack", {}).get("pytorch_version", "2.6.0+cu124")
     expected_pyg = lock_data.get("runtime_stack", {}).get("pyg_version", "2.6.1")
 
-    # Check 1: CUBLAS_WORKSPACE_CONFIG
+    # Kiểm tra 1: CUBLAS_WORKSPACE_CONFIG
     cublas_cfg = os.environ.get("CUBLAS_WORKSPACE_CONFIG", "NOT_SET")
     if cublas_cfg == ":4096:8":
         checks.append(("CUBLAS_WORKSPACE_CONFIG", ":4096:8", cublas_cfg, "PASS"))
     else:
         checks.append(("CUBLAS_WORKSPACE_CONFIG", ":4096:8", cublas_cfg, "FAIL"))
 
-    # Check 2: PyTorch Import & CUDA Availability
+    # Kiểm tra 2: Tính khả dụng của Nhập PyTorch & CUDA
     try:
         import torch
         torch_ver = torch.__version__
@@ -58,7 +58,7 @@ def run_smoke_test() -> bool:
         cuda_avail = False
         cuda_ver = "NONE"
 
-    # Check 2a: CUDA Available
+    # Kiểm tra 2a: CUDA Có sẵn
     if cuda_avail:
         dev_name = torch.cuda.get_device_name(0)
         total_vram_mb = torch.cuda.get_device_properties(0).total_memory / (1024 ** 2)
@@ -67,13 +67,13 @@ def run_smoke_test() -> bool:
     else:
         checks.append(("CUDA Availability", "True", "False (CUDA unavailable)", "FAIL"))
 
-    # Check 3: PyTorch Version match
+    # Kiểm tra 3: Phiên bản PyTorch phù hợp
     if torch_ver == expected_torch:
         checks.append(("PyTorch Version", expected_torch, torch_ver, "PASS"))
     else:
         checks.append(("PyTorch Version", expected_torch, torch_ver, "FAIL"))
 
-    # Check 4: PyTorch Geometric (PyG)
+    # Kiểm tra 4: Hình học PyTorch (PyG)
     try:
         import torch_geometric
         pyg_ver = torch_geometric.__version__
@@ -86,7 +86,7 @@ def run_smoke_test() -> bool:
     except Exception as e:
         checks.append(("PyG (torch_geometric)", expected_pyg, f"ERROR: {e}", "FAIL"))
 
-    # Check 5: Hard Core Dependencies for Manual Training
+    # Kiểm tra 5: Sự phụ thuộc cốt lõi cho đào tạo thủ công
     hard_deps = [
         ("numpy", "numpy"),
         ("scipy", "scipy"),
@@ -103,7 +103,7 @@ def run_smoke_test() -> bool:
         except Exception as e:
             checks.append((f"Dep: {pkg_name}", "Installed", f"ERROR: {e}", "FAIL"))
 
-    # Check 5b: DOCUMENT_QA_OPTIONAL (Non-blocking / informational only)
+    # Kiểm tra 5b: DOCUMENT_QA_OPTIONAL (Không chặn / chỉ cung cấp thông tin)
     optional_deps = [
         ("pandas", "pandas"),
         ("python-docx", "docx"),
@@ -120,7 +120,7 @@ def run_smoke_test() -> bool:
         except Exception as e:
             checks.append((f"Opt: {pkg_name}", "Optional (DocQA)", f"ERROR: {e}", "OPTIONAL"))
 
-    # Check 6: GPU Tensor Transfer and Matrix Multiply (Strictly 1024x1024)
+    # Kiểm tra 6: Truyền Tenx GPU và Nhân ma trận (Nghiêm ngặt 1024x1024)
     if cuda_avail and torch is not None:
         try:
             torch.manual_seed(42)
@@ -142,14 +142,14 @@ def run_smoke_test() -> bool:
     else:
         checks.append(("GPU matmul (1024x1024)", "allclose == True", "SKIPPED (CUDA unavailable)", "FAIL"))
 
-    # Print Table
+    # Bảng in
     print(f"{'CHECK ITEM':<26} | {'EXPECTED':<16} | {'OBSERVED':<20} | {'STATUS'}")
     print("-" * 75)
     all_passed = True
     for item, expected, observed, status in checks:
         if status == "FAIL":
             all_passed = False
-        # Truncate observed if too long
+        # Cắt bớt quan sát nếu quá dài
         obs_display = (observed[:18] + "..") if len(observed) > 20 else observed
         exp_display = (expected[:14] + "..") if len(expected) > 16 else expected
         status_display = f"[{status}]"

@@ -1,5 +1,5 @@
 """
-Integration Tests for Scientific Verification Pipeline & Reproducibility (Prompt 6)
+Thử nghiệm tích hợp cho quy trình xác minh khoa học và khả năng tái tạo (Nhắc 6)
 """
 
 import pytest
@@ -53,7 +53,7 @@ def test_pipeline_env(tmp_path):
 
 
 def test_pipeline_01_equation_verification_request(test_pipeline_env):
-    """TEST-PIPE-01: Dispatches EQUATION_CHECK through pipeline and records PASS."""
+    """TEST-PIPE-01: Gửi EQUATION_CHECK qua đường dẫn và ghi lại PASS."""
     pipeline = test_pipeline_env["pipeline"]
     req = VerificationRequest(
         request_id="VRQ-000001",
@@ -68,7 +68,7 @@ def test_pipeline_01_equation_verification_request(test_pipeline_env):
 
 
 def test_pipeline_02_hypothesis_test_request(test_pipeline_env):
-    """TEST-PIPE-02: Dispatches STATISTICAL_TEST through pipeline and records PASS."""
+    """TEST-PIPE-02: Gửi STATISTICAL_TEST qua đường dẫn và ghi lại PASS."""
     pipeline = test_pipeline_env["pipeline"]
     req = VerificationRequest(
         request_id="VRQ-000002",
@@ -88,10 +88,10 @@ def test_pipeline_02_hypothesis_test_request(test_pipeline_env):
 
 
 def test_lineage_01_dag_and_invalidation_cascading(test_pipeline_env):
-    """TEST-LIN-01: Lineage DAG tracks downstream dependents and cascades invalidation."""
+    """TEST-LIN-01: Dòng DAG theo dõi các phần phụ thuộc hạ nguồn (downstream) và vô hiệu hóa tầng."""
     dag = test_pipeline_env["dag"]
     inv_mgr = test_pipeline_env["inv_mgr"]
-    # Setup graph: Dataset -> Run1 -> Metric1 -> Claim1
+    # Biểu đồ thiết lập: Tập dữ liệu -> Run1 -> Metric1 -> Claim1
     dag.add_dependency("DSV-01", "RUN-01")
     dag.add_dependency("RUN-01", "MET-01")
     dag.add_dependency("MET-01", "NUM-01")
@@ -99,7 +99,7 @@ def test_lineage_01_dag_and_invalidation_cascading(test_pipeline_env):
     downstream = dag.get_downstream_dependents("DSV-01")
     assert downstream == {"RUN-01", "MET-01", "NUM-01"}
 
-    # Invalidate dataset due to timestamp contamination
+    # Tập dữ liệu không hợp lệ do ô nhiễm dấu thời gian
     affected = inv_mgr.invalidate_entity("DSV-01", "Timestamp contamination found")
     assert affected == {"DSV-01", "RUN-01", "MET-01", "NUM-01"}
 
@@ -109,7 +109,7 @@ def test_lineage_01_dag_and_invalidation_cascading(test_pipeline_env):
 
 
 def test_repro_01_level_2_metric_divergence(test_pipeline_env):
-    """TEST-REPRO-01: Level 2 metric recomputation flags divergence."""
+    """TEST-REPRO-01: Phân kỳ cờ tính toán lại số liệu cấp 2."""
     repro_runner = test_pipeline_env["repro_runner"]
     orig = {"f1": 0.9520, "recall": 0.9200}
     recomp_identical = {"f1": 0.9520, "recall": 0.9200}
@@ -124,7 +124,7 @@ def test_repro_01_level_2_metric_divergence(test_pipeline_env):
 
 
 def test_writing_gate_01_unverified_claim_blocked(test_pipeline_env):
-    """TEST-GATE-01: Writing gate blocks unverified numerical claims from thesis composition."""
+    """TEST-GATE-01: Viết khối cổng các tuyên bố bằng số chưa được xác minh từ bố cục luận án."""
     claim_bundle_builder = test_pipeline_env["claim_bundle_builder"]
     writing_gate = test_pipeline_env["writing_gate"]
     unverified_num = NumericalClaim(
@@ -135,7 +135,7 @@ def test_writing_gate_01_unverified_claim_blocked(test_pipeline_env):
         display_value="99.9%",
         source_type="EXPERIMENT_RESULT",
         computation_id="RUN-01",
-        verification_status=VerificationStatus.PENDING,  # PENDING, not VERIFIED
+        verification_status=VerificationStatus.PENDING,  # PENDING, không phải VERIFIED
     )
     bundle = claim_bundle_builder.build_claim_bundle(
         claim_id="CLM-000001",
@@ -150,7 +150,7 @@ def test_writing_gate_01_unverified_claim_blocked(test_pipeline_env):
 
 
 def test_writing_gate_02_exaggerated_language_blocked(test_pipeline_env):
-    """TEST-GATE-02: Writing gate blocks causal/superiority language for DESCRIPTIVE_ONLY claims."""
+    """TEST-GATE-02: Viết cổng chặn ngôn ngữ nhân quả/ưu việt cho các xác nhận quyền sở hữu DESCRIPTIVE_ONLY."""
     claim_bundle_builder = test_pipeline_env["claim_bundle_builder"]
     writing_gate = test_pipeline_env["writing_gate"]
     verified_num = NumericalClaim(

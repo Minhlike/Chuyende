@@ -1,5 +1,5 @@
 """
-Canonical Reference, Ownership, and Evidence Provenance Compiler and Ingester (Prompt 3)
+Trình biên dịch và nhập dữ liệu tham khảo, quyền sở hữu và chứng cứ chuẩn mực (Nhắc 3)
 """
 
 import json
@@ -38,7 +38,7 @@ from research_agent.schemas.reference_map import ReferenceMapSpecification
 
 
 def build_canonical_reference_map_data() -> dict:
-    """Construct full verified reference map data structure."""
+    """Xây dựng cấu trúc dữ liệu bản đồ tham chiếu được xác minh đầy đủ."""
 
     sources = [
         {
@@ -745,7 +745,7 @@ def build_canonical_reference_map_data() -> dict:
             "epistemic_status": EpistemicStatus.SUPPORTED.value,
             "evidence_ids": ["EVD-000007"],
         },
-        # OUR DESIGN CLAIMS (Ownership = OURS)
+        # OUR DESIGN CLAIMS (Quyền sở hữu = OURS)
         {
             "claim_id": "CLM-000008",
             "statement": "The three-tier Representation Contract (Preserve temporal/parameters/linkage, Invariant formatting, Exclude shortcuts) formally bounds valid log feature representations.",
@@ -793,7 +793,7 @@ def build_canonical_reference_map_data() -> dict:
             "relation_type": ArgumentRelationType.MOTIVATES.value,
             "notes": "Deep MIL formulation motivates our session-to-event coarse label credit assignment design.",
         },
-        # Contradiction Pair: GNN Complexity Claim vs Simpler Baseline Finding
+        # Cặp mâu thuẫn: Yêu cầu về độ phức tạp GNN so với việc tìm kiếm baseline đơn giản hơn
         {
             "relation_id": "ARE-000004",
             "source_claim_id": "CLM-000004",
@@ -803,9 +803,9 @@ def build_canonical_reference_map_data() -> dict:
         },
     ]
 
-    # Canonical Ownership Mappings across Chapters (Sections 15.1, 15.2, 15.3)
+    # Ánh xạ quyền sở hữu hợp quy giữa các chương (Phần 15.1, 15.2, 15.3)
     ownership_mappings = [
-        # Chapter 1
+        # Chương 1
         {"mapping_id": "OWN-000001", "node_code": "1.1.1", "component_name": "Log Space Characteristics & Drift Taxonomy", "ownership": IntellectualOwnership.ADAPTED.value, "source_ids": ["SRC-000002", "SRC-000018"], "motivation_source_ids": [], "notes": "Operational taxonomy (Concept/Template/Population/Representation Drift) is OURS/ADAPTED framing."},
         {"mapping_id": "OWN-000002", "node_code": "1.1.2", "component_name": "MITRE ATT&CK Evidence Space Interpretation", "ownership": IntellectualOwnership.ADAPTED.value, "source_ids": ["SRC-000001"], "motivation_source_ids": [], "notes": "Official definitions are SOURCE; interpretation as non-linear multi-label evidence space is ADAPTED."},
         {"mapping_id": "OWN-000003", "node_code": "1.1.3.1", "component_name": "Preserve / Invariant / Exclude Representation Contract", "ownership": IntellectualOwnership.OURS.value, "source_ids": [], "motivation_source_ids": ["SRC-000008"], "notes": "Representation contract triad is strictly OURS contribution."},
@@ -819,7 +819,7 @@ def build_canonical_reference_map_data() -> dict:
         {"mapping_id": "OWN-000011", "node_code": "1.3.4", "component_name": "Weak Evidence Attribution & RQ4", "ownership": IntellectualOwnership.OURS.value, "source_ids": [], "motivation_source_ids": ["SRC-000024"], "notes": "RQ4 is OURS; MIL framework is SOURCE."},
         {"mapping_id": "OWN-000012", "node_code": "1.3.5", "component_name": "Privacy–Security Trade-off & RQ5", "ownership": IntellectualOwnership.OURS.value, "source_ids": [], "motivation_source_ids": ["SRC-000025", "SRC-000026", "SRC-000027"], "notes": "RQ5 is OURS; privacy attack threats are SOURCE."},
 
-        # Chapter 2
+        # Chương 2
         {"mapping_id": "OWN-000013", "node_code": "2.1.1", "component_name": "Canonical Extractor Abstraction f_theta and H1..H5", "ownership": IntellectualOwnership.OURS.value, "source_ids": [], "motivation_source_ids": [], "notes": "Central formalization is OURS."},
         {"mapping_id": "OWN-000014", "node_code": "2.1.2", "component_name": "Bounded-State Streaming Protocol", "ownership": IntellectualOwnership.OURS.value, "source_ids": [], "motivation_source_ids": ["SRC-000011"], "notes": "Exact TTL, compaction, and bounded state budget design is OURS."},
         {"mapping_id": "OWN-000015", "node_code": "2.1.3", "component_name": "Multi-View End-to-End Extraction Pipeline", "ownership": IntellectualOwnership.OURS.value, "source_ids": [], "motivation_source_ids": [], "notes": "Pipeline integration is OURS."},
@@ -832,7 +832,7 @@ def build_canonical_reference_map_data() -> dict:
         {"mapping_id": "OWN-000022", "node_code": "2.4.2", "component_name": "Risk-Aware Administrative Behavior Handling", "ownership": IntellectualOwnership.OURS.value, "source_ids": [], "motivation_source_ids": [], "notes": "Confounder control and admin noise separation is OURS."},
         {"mapping_id": "OWN-000023", "node_code": "2.4.3", "component_name": "Unified Objective & Detector-Agnostic Export", "ownership": IntellectualOwnership.OURS.value, "source_ids": [], "motivation_source_ids": ["SRC-000022", "SRC-000024"], "notes": "Unified loss composition is OURS; constituent loss terms retain SOURCE provenance."},
 
-        # Chapter 3
+        # Chương 3
         {"mapping_id": "OWN-000024", "node_code": "3.1.1", "component_name": "Reproducibility & Experiment Manifest Package", "ownership": IntellectualOwnership.OURS.value, "source_ids": [], "motivation_source_ids": ["SRC-000002", "SRC-000017"], "notes": "Strict reproducibility artifact protocol is OURS."},
         {"mapping_id": "OWN-000025", "node_code": "3.1.2", "component_name": "Two-Tier Benchmark & Anti-Leakage Split", "ownership": IntellectualOwnership.OURS.value, "source_ids": [], "motivation_source_ids": ["SRC-000002", "SRC-000006", "SRC-000028", "SRC-000029"], "notes": "Tier A vs Tier B distinction is OURS; datasets are SOURCE."},
         {"mapping_id": "OWN-000026", "node_code": "3.1.3", "component_name": "Three-Layer Evaluation Framework (Intrinsic -> Probe -> Operational)", "ownership": IntellectualOwnership.OURS.value, "source_ids": [], "motivation_source_ids": [], "notes": "Three-tier evaluation progression is strictly OURS."},
@@ -848,7 +848,7 @@ def build_canonical_reference_map_data() -> dict:
         {"mapping_id": "OWN-000036", "node_code": "3.4.3", "component_name": "Validity Limitations & Negative Results Protocol", "ownership": IntellectualOwnership.OURS.value, "source_ids": [], "motivation_source_ids": [], "notes": "Formal negative results acceptance is OURS."},
     ]
 
-    # Candidate Contributions CAND-01 through CAND-15 (Section 16, 17)
+    # Đóng góp của Ứng viên CAND-01 đến CAND-15 (Phần 16, 17)
     contributions = [
         {
             "contribution_id": "CAND-01",
@@ -1017,11 +1017,11 @@ def build_canonical_reference_map_data() -> dict:
         },
     ]
 
-    # Citation Firewall Rules (Section 10)
-    # A citation is READY only if Source Exists + Metadata Verified + Link Exists + Locator Exists
+    # Quy tắc tường lửa trích dẫn (Phần 10)
+    # Một trích dẫn chỉ là READY nếu Nguồn tồn tại + Đã xác minh siêu dữ liệu + Liên kết tồn tại + Bộ định vị tồn tại
     firewall_rules = []
     for s in sources:
-        # Check if source has evidence
+        # Kiểm tra xem nguồn có bằng chứng không
         src_evidences = [e for e in evidences if e["source_id"] == s["source_id"]]
         has_evidence = len(src_evidences) > 0
         has_locator = any(bool(e.get("locator")) for e in src_evidences)
@@ -1068,7 +1068,7 @@ def build_canonical_reference_map_data() -> dict:
 
 
 def generate_bibtex(sources: list) -> str:
-    """Generate standard BibTeX bibliography from verified sources."""
+    """Tạo thư mục BibTeX tiêu chuẩn từ các nguồn đã được xác minh."""
     bib_entries = []
     for s in sources:
         authors_str = " and ".join(s["authors"])
@@ -1106,7 +1106,7 @@ def compile_and_ingest_reference_map():
 
     data = build_canonical_reference_map_data()
 
-    # 1. Write YAML & BibTeX artifacts
+    # 1. Viết các tạo phẩm YAML & BibTeX
     manifest_path = ref_dir / "SOURCE-MANIFEST.yaml"
     ownership_path = ref_dir / "OWNERSHIP-MAP.yaml"
     contribution_path = ref_dir / "CONTRIBUTION-REGISTRY.yaml"
@@ -1133,14 +1133,14 @@ def compile_and_ingest_reference_map():
     with open(unresolved_path, "w", encoding="utf-8") as f:
         yaml.dump({"unresolved_references": data["unresolved_references"]}, f, sort_keys=False, allow_unicode=True, indent=2)
 
-    # Compute master hash
+    # Tính toán hàm băm chính
     raw_text = json.dumps(data, sort_keys=True)
     sha256 = compute_string_sha256(raw_text)
 
     with open(version_path, "w", encoding="utf-8") as f:
         f.write(f"REFERENCE_MAP_VERSION=1.0.0\nCOMPATIBLE_ROADMAP_VERSION=1.0.0\nSHA256={sha256}\nSTATUS=VERIFIED_SPECIFIED\n")
 
-    # 2. Ingest into SQLite database
+    # 2. Nhập vào cơ sở dữ liệu SQLite
     db_manager = DatabaseManager(config=config)
     repo = ResearchRepository(db_manager)
     ingestion_service = ReferenceMapIngestionService(repo)

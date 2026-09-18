@@ -15,7 +15,7 @@ from docx.oxml.ns import nsdecls
 
 class WordCrossReferenceManager:
     """
-    Manages native Word REF dynamic cross-reference fields.
+    Quản lý các trường tham chiếu chéo động REF của Word gốc.
     """
 
     @staticmethod
@@ -26,7 +26,7 @@ class WordCrossReferenceManager:
         font_size_pt: float = 14.0,
     ):
         r"""
-        Creates an XML element for a native Word REF field with hyperlink switch (\h).
+        Tạo phần tử XML cho trường Word REF gốc bằng khóa chuyển siêu liên kết (\h).
         """
         sz_val = int(font_size_pt * 2)
         ref_xml = (

@@ -1,5 +1,5 @@
 """
-Alternative Explanations & Competing Hypotheses Generator (Prompt 5 Sections 18, 19)
+Các giải thích thay thế & Trình tạo giả thuyết cạnh tranh (Nhắc 5 Phần 18, 19)
 """
 
 from typing import List, Dict, Any, Optional
@@ -9,11 +9,11 @@ from research_agent.core.enums import EpistemicStatus
 
 class AlternativeExplanationsEngine:
     """
-    Generates competing explanations and confounders for observed performance gains.
-    Links every alternative explanation to an explicit negative control or discriminating test.
+    Tạo ra những lời giải thích cạnh tranh và những yếu tố gây nhiễu cho việc đạt được hiệu suất quan sát được.
+    Liên kết mọi lời giải thích thay thế với một biện pháp kiểm soát tiêu cực rõ ràng hoặc thử nghiệm phân biệt đối xử.
     """
 
-    # 8 Standard Methodological Confounders (Section 18)
+    # 8 yếu tố gây nhiễu về phương pháp tiêu chuẩn (Phần 18)
     CANONICAL_CONFOUNDERS = [
         ("A1_CAPACITY", "CAPACITY", "Observed gain is due to higher model parameter count rather than representation architecture.", "Train equal-parameter baseline with standard MLP/CNN."),
         ("A2_LEAKAGE", "LEAKAGE", "Test dataset statistics or vocabulary leaked into preprocessing/normalization.", "Rerun pipeline with strict train-only fit and split isolation."),
@@ -27,7 +27,7 @@ class AlternativeExplanationsEngine:
 
     def generate_alternatives(self, claim_id: str, claim_statement: str) -> List[AlternativeExplanation]:
         """
-        Generate explicit alternative explanations for a performance claim.
+        Tạo các giải thích thay thế rõ ràng cho yêu cầu về hiệu suất.
         """
         results: List[AlternativeExplanation] = []
         for code, c_type, explanation, test in self.CANONICAL_CONFOUNDERS:
@@ -53,7 +53,7 @@ class AlternativeExplanationsEngine:
         discriminating_test: str,
     ) -> CompetingHypothesis:
         """
-        Creates an auxiliary competing hypothesis without modifying canonical H1..H5 (Section 19).
+        Tạo giả thuyết cạnh tranh phụ trợ mà không sửa đổi H1..H5 chính tắc (Phần 19).
         """
         seq = abs(hash(canonical_hyp_id + statement)) % 1000000
         return CompetingHypothesis(

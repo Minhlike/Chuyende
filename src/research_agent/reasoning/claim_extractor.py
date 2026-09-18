@@ -1,5 +1,5 @@
 """
-Atomic Claim Extraction, Proposition Normalization & Scope Extraction (Prompt 5 Sections 6, 7, 8)
+Trích xuất yêu cầu nguyên tử, chuẩn hóa đề xuất & trích xuất phạm vi (Nhắc 5 Phần 6, 7, 8)
 """
 
 import re
@@ -17,11 +17,11 @@ from research_agent.schemas.reasoning import (
 
 class ClaimExtractor:
     """
-    Extracts atomic claims from unstructured or semi-structured scientific text.
-    Enforces proposition normalization and qualifier/scope preservation.
+    Trích xuất các tuyên bố nguyên tử từ văn bản khoa học phi cấu trúc hoặc bán cấu trúc.
+    Thực thi chuẩn hóa đề xuất và bảo toàn vòng loại/phạm vi.
     """
 
-    # Qualifier preservation patterns (Prompt 5 Section 7)
+    # Các mẫu bảo toàn vòng loại (Nhắc 5 Phần 7)
     WEAK_QUALIFIERS = [
         "may", "might", "could", "suggests", "indicates", "appears to",
         "under specific conditions", "partially", "observed in",
@@ -41,7 +41,7 @@ class ClaimExtractor:
         ownership: IntellectualOwnership = IntellectualOwnership.SOURCE,
     ) -> List[AtomicClaimCandidate]:
         """
-        Decomposes compound sentences into atomic propositional assertions.
+        Phân tách các câu ghép thành các khẳng định mệnh đề nguyên tử.
         """
         raw_sentences = self._split_sentences(text)
         candidates: List[AtomicClaimCandidate] = []
@@ -51,7 +51,7 @@ class ClaimExtractor:
             if not sent_clean or len(sent_clean) < 15:
                 continue
 
-            # Split compound conjunctions where distinct empirical claims exist
+            # Phân chia các liên từ ghép nơi tồn tại các yêu cầu thực nghiệm riêng biệt
             sub_propositions = self._split_compound_conjunctions(sent_clean)
             for prop in sub_propositions:
                 scope = self._extract_scope(prop)
@@ -77,22 +77,22 @@ class ClaimExtractor:
         return candidates
 
     def _split_sentences(self, text: str) -> List[str]:
-        # Split on sentence boundaries, avoiding decimals like 1.2 or citations like Bilot et al.
+        # Phân chia ranh giới câu, tránh số thập phân như 1,2 hoặc trích dẫn như Bilot et al.
         pattern = r'(?<!\bet al)(?<!\bFig)(?<!\bSec)(?<!\bEq)(?<!\b[0-9])\.\s+'
         return re.split(pattern, text)
 
     def _split_compound_conjunctions(self, sentence: str) -> List[str]:
-        """Splits multi-clause claims into atomic assertions."""
-        # Check for multiple independent clauses joined by ', and ' or '; '
+        """Tách các yêu cầu nhiều mệnh đề thành các khẳng định nguyên tử."""
+        # Kiểm tra nhiều mệnh đề độc lập được nối bởi ' và ' hoặc '; '
         clauses = re.split(r';\s+|\s*,\s*and\s+(?=[A-Z0-9a-z_]+\s+(?:is|was|had|outperformed|achieved|reduced))', sentence)
         return [c.strip() for c in clauses if c.strip()]
 
     def _extract_scope(self, text: str) -> ClaimScope:
-        """Extracts dataset, domain, metric, and experimental parameters bounding the claim."""
+        """Trích xuất các tham số tập dữ liệu, tên miền, số liệu và thử nghiệm giới hạn xác nhận quyền sở hữu."""
         scope = ClaimScope()
         t_lower = text.lower()
 
-        # Datasets
+        # Bộ dữ liệu
         if "darpa" in t_lower:
             scope.dataset = "DARPA TC (Transparent Computing)"
         elif "lanl" in t_lower:
@@ -104,13 +104,13 @@ class ClaimExtractor:
         elif "thunderbird" in t_lower:
             scope.dataset = "Thunderbird Log Dataset"
 
-        # Domain
+        # Tên miền
         if "provenance" in t_lower or "graph" in t_lower or "sysflow" in t_lower:
             scope.domain = "Host Provenance Telemetry"
         elif "system log" in t_lower or "drain" in t_lower or "logbert" in t_lower:
             scope.domain = "System Event Logs"
 
-        # Metric
+        # Số liệu
         metrics = ["f1", "precision", "recall", "auc", "pr-auc", "latency", "throughput", "fpr"]
         found_metrics = [m for m in metrics if re.search(rf'\b{m}\b', t_lower)]
         if found_metrics:
@@ -135,11 +135,11 @@ class ClaimExtractor:
 
     def _normalize_proposition(self, text: str, qualifiers: List[str]) -> str:
         """
-        Normalizes wording without inflating strength (Section 7).
-        Preserves qualifiers like 'may', 'under setup X'.
+        Bình thường hóa cách diễn đạt mà không tăng cường độ mạnh (Phần 7).
+        Giữ nguyên các vòng loại như 'có thể', 'theo thiết lập X'.
         """
         norm = text.strip()
-        # Ensure sentence capitalization and clean punctuation
+        # Đảm bảo viết hoa câu và dấu câu rõ ràng
         if norm and not norm[0].isupper():
             norm = norm[0].upper() + norm[1:]
         if not norm.endswith(('.', '!', '?')):

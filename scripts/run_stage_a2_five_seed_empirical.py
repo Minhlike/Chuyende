@@ -1,29 +1,29 @@
 # -*- coding: utf-8 -*-
 """
-Canonical Five-Seed Empirical Pretraining Runner for Stage A2 (Contract V1.4.1 / V1.5 Locked).
-Dataset: HDFS (SPL-HDFS-001 Canonical Split Authority)
-Authorized Execution Scope: 35,000 Train Sessions (586,577 events) | 7,500 Val Sessions (119,531 events)
-Canonical Seeds: [42, 1337, 2024, 7, 999]
+Người chạy thử nghiệm sơ bộ theo kinh nghiệm năm hạt giống Canonical cho Giai đoạn A2 (Hợp đồng V1.4.1 / V1.5 đã bị khóa).
+Bộ dữ liệu: HDFS (SPL-HDFS-001 Cơ quan phân chia Canonical)
+Phạm vi thực thi được ủy quyền: 35.000 phiên đào tạo (586.577 sự kiện) | 7.500 phiên Val (119.531 sự kiện)
+Hạt giống kinh điển: [42, 1337, 2024, 7, 999]
 
-Usage:
-  # Dry-run validation across all 5 seeds (0 optimizer steps executed):
-  python scripts/run_stage_a2_five_seed_empirical.py --all --dry-run
-  
-  # Single seed dry-run:
-  python scripts/run_stage_a2_five_seed_empirical.py --seed 42 --dry-run
+Cách sử dụng:
+  # Xác thực chạy thử trên tất cả 5 hạt giống (thực hiện 0 bước tối ưu hóa):
+  tập lệnh python/run_stage_a2_five_seed_empirical.py --all --dry-run
 
-  # Resume interrupted run from checkpoint:
-  python scripts/run_stage_a2_five_seed_empirical.py --seed 42 --resume .artifacts/stage-a2/HDFS/seed-42/last_checkpoint.pt --authorize-real-empirical-execution
+  # Chạy khô một hạt:
+  tập lệnh python/run_stage_a2_five_seed_empirical.py --seed 42 --dry-run
 
-  # Real empirical training (Requires explicit authorization, executed sequentially one seed at a time):
-  python scripts/run_stage_a2_five_seed_empirical.py --seed 42 --authorize-real-empirical-execution
+  # Tiếp tục quá trình chạy bị gián đoạn từ checkpoint:
+  tập lệnh python/run_stage_a2_five_seed_empirical.py --seed 42 --resume .artifacts/stage-a2/HDFS/seed-42/last_checkpoint.pt --authorize-real-empirical-execution
 
-  # Google Colab / Cross-Platform with durable Google Drive root:
-  python scripts/run_stage_a2_five_seed_empirical.py --seed 42 --base-dir /content/Research --dataset-path /content/stage-a2-data/HDFS_1.tar.gz --durable-root /content/drive/MyDrive/Chuyende-stage-a2/runs --plan experiments/plans/STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json --dry-run
+  # Đào tạo theo kinh nghiệm thực tế (Yêu cầu ủy quyền rõ ràng, được thực hiện tuần tự từng hạt giống một):
+  tập lệnh python/run_stage_a2_five_seed_empirical.py --seed 42 --authorize-real-theo kinh nghiệm-thực thi
+
+  # Google Colab/Đa nền tảng với root Google Drive bền bỉ:
+  tập lệnh python/run_stage_a2_five_seed_empirical.py --seed 42 --base-dir /content/Research --dataset-path /content/stage-a2-data/HDFS_1.tar.gz --durable-root /content/drive/MyDrive/Chuyende-stage-a2/runs --plan Experiment/plans/STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json --dry-run
 """
 
 import os
-# Enforce deterministic CUBLAS configuration before any CUDA context is created
+# Thực thi cấu hình CUBLAS xác định trước khi bất kỳ bối cảnh CUDA nào được tạo
 os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
 
 import gc
@@ -71,31 +71,31 @@ VAL_MEMBERSHIP_SHA = "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407
 DEFAULT_BASE_DIR = Path(__file__).resolve().parent.parent
 
 class LaunchAuthorizationMissingError(FileNotFoundError):
-    """Raised when the mandatory launch authorization artifact is missing for real empirical execution."""
+    """Xảy ra khi thiếu cấu phần phần mềm ủy quyền khởi chạy bắt buộc để thực thi theo kinh nghiệm thực tế."""
     pass
 
 class ExistingRunArtifactError(RuntimeError):
-    """Raised when an attempt is made to start a new real run in an existing non-empty directory."""
+    """Xảy ra khi cố gắng bắt đầu một lần chạy thực mới trong một thư mục hiện có không trống."""
     pass
 
 class ResumeCheckpointNotFoundError(FileNotFoundError):
-    """Raised when a specified resume checkpoint file does not exist."""
+    """Xảy ra khi tệp checkpoint sơ yếu lý lịch được chỉ định không tồn tại."""
     pass
 
 class CompletedRunResumeError(RuntimeError):
-    """Raised when attempting to resume a run that has already completed."""
+    """Xảy ra khi cố gắng tiếp tục quá trình chạy đã hoàn thành."""
     pass
 
 class CheckpointIntegrityMismatchError(ValueError):
-    """Raised when a resume checkpoint fails cryptographic or semantic binding checks."""
+    """Xảy ra khi checkpoint sơ yếu lý lịch không thực hiện được các bước kiểm tra ràng buộc về mật mã hoặc ngữ nghĩa."""
     pass
 
 class FrozenSourceMismatchError(RuntimeError):
-    """Raised when execution source files differ from the authorized frozen code commit."""
+    """Xảy ra khi các tệp nguồn thực thi khác với cam kết mã cố định được ủy quyền."""
     pass
 
 class RuntimeTestFirewallGuard:
-    """Connected runtime test firewall wrapping graph builder materialization."""
+    """Quá trình cụ thể hóa trình tạo biểu đồ bao bọc tường lửa thử nghiệm thời gian chạy được kết nối."""
     def __init__(
         self,
         split_authority: Optional[HDFSSplitAuthority] = None,
@@ -141,7 +141,7 @@ class RuntimeTestFirewallGuard:
         }
 
 def compute_sha256(path: Path, chunk_size: int = 8 * 1024 * 1024) -> str:
-    """Computes SHA-256 hash using streaming chunks to prevent high memory usage."""
+    """Tính toán hàm băm SHA-256 bằng cách sử dụng các đoạn phát trực tuyến để tránh mức sử dụng bộ nhớ cao."""
     hasher = hashlib.sha256()
     with open(path, "rb") as f:
         while chunk := f.read(chunk_size):
@@ -150,13 +150,13 @@ def compute_sha256(path: Path, chunk_size: int = 8 * 1024 * 1024) -> str:
 
 def enforce_framework_determinism() -> None:
     """
-    Enforces deterministic execution state across framework and hardware runtime:
-      - Requires / sets CUBLAS_WORKSPACE_CONFIG == ':4096:8'
-      - Enables torch.use_deterministic_algorithms(True)
-      - If CUDA:
+    Thực thi trạng thái thực thi xác định trong thời gian chạy khung và phần cứng:
+      - Yêu cầu/bộ CUBLAS_WORKSPACE_CONFIG == ':4096:8'
+      - Bật torch.use_deterministic_algorithms(Đúng)
+      - Nếu CUDA:
           torch.backends.cudnn.deterministic = True
           torch.backends.cudnn.benchmark = False
-      - Verifies live settings after assignment fail-closed.
+      - Xác minh cài đặt trực tiếp sau khi đóng nhiệm vụ không thành công.
     """
     if os.environ.get("CUBLAS_WORKSPACE_CONFIG") != ":4096:8":
         os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
@@ -175,7 +175,7 @@ def enforce_framework_determinism() -> None:
 
 
 def get_nvidia_driver_version() -> str:
-    """Queries current host NVIDIA driver version via nvidia-smi fail-closed."""
+    """Truy vấn phiên bản trình điều khiển NVIDIA của máy chủ hiện tại qua nvidia-smi không đóng được."""
     try:
         out = subprocess.check_output([
             "nvidia-smi", "--query-gpu=driver_version", "--format=csv,noheader"
@@ -188,7 +188,7 @@ def get_nvidia_driver_version() -> str:
         raise ExecutionDeviceMismatchError(f"FATAL: NVIDIA driver version unavailable via nvidia-smi: {e}")
 
 def get_git_info() -> Tuple[str, str, bool]:
-    """Retrieves current git commit, branch, and porcelain status."""
+    """Truy xuất trạng thái cam kết git, chi nhánh và sứ hiện tại."""
     try:
         commit_sha = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
         branch = subprocess.check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"], text=True).strip()
@@ -203,8 +203,8 @@ def get_git_info() -> Tuple[str, str, bool]:
 
 def verify_frozen_execution_source(base_dir: Path, expected_commit_sha: str) -> None:
     """
-    Verifies that all execution-relevant source code files are byte-identical
-    to the expected frozen execution code commit.
+    Xác minh rằng tất cả các tệp mã nguồn liên quan đến việc thực thi đều giống nhau theo byte
+    đến cam kết mã thực thi bị đóng băng dự kiến.
     """
     source_paths = [
         "src/research_agent/experiments",
@@ -233,15 +233,15 @@ def verify_preflight(
     raw_tar_path: Optional[Path] = None
 ) -> Dict[str, Any]:
     """
-    Strict Fail-Closed Pre-Flight Verification:
-      1. Git clean source code tree & frozen execution commit match
-      2. Protocol Lock SHA-256 match
-      3. Environment Lock SHA-256 match & exact strict runtime property comparison
-      4. Raw dataset file SHA-256 match
-      5. Execution membership recomputed via canonical split authority
-      6. Hardware CUDA device verification
-      7. Canonical seed validation
-      8. Connected test firewall validation
+    Xác minh nghiêm ngặt trước khi đóng cửa chuyến bay:
+      1. Cây mã nguồn sạch Git và khớp cam kết thực thi bị đóng băng
+      2. Khóa giao thức SHA-256 khớp
+      3. Khóa môi trường SHA-256 khớp và so sánh thuộc tính thời gian chạy nghiêm ngặt chính xác
+      4. Tệp dữ liệu thô SHA-256 khớp
+      5. Tư cách thành viên thực thi được tính toán lại thông qua quyền phân chia chuẩn
+      6. Xác minh thiết bị CUDA phần cứng
+      7. Xác thực hạt giống chuẩn
+      8. Xác thực tường lửa thử nghiệm được kết nối
     """
     print("=================================================================")
     print(f"   STAGE A2 EMPIRICAL PRE-FLIGHT AUDIT (Seed: {target_seed})     ")
@@ -252,7 +252,7 @@ def verify_preflight(
 
     commit_sha, branch, is_dirty = get_git_info()
 
-    # 1. Resolve Plan
+    # 1. Kế hoạch giải quyết
     if plan_path:
         plan_p = Path(plan_path).resolve()
     elif (base_dir / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN.json").exists():
@@ -267,7 +267,7 @@ def verify_preflight(
     plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
     is_v15_plan = (plan_data.get("protocol_version") == "1.5.0" or plan_data.get("execution_provider") == "GOOGLE_COLAB")
 
-    # 2. Authorization Artifact / Template Resolution
+    # 2. tạo phẩm (artifact) ủy quyền / Độ phân giải mẫu
     if auth_path:
         auth_p = Path(auth_path).resolve()
         auth_template_p = None
@@ -348,7 +348,7 @@ def verify_preflight(
         expected_code_commit = plan_data.get("execution_code_commit_sha") if plan_p.exists() else None
         print(f"[PRE-FLIGHT 1] Execution Code Commit / HEAD: {commit_sha} (dirty={is_dirty})")
 
-    # 3. Protocol Lock Verification
+    # 3. Xác minh khóa giao thức
     if not is_v15_plan:
         protocol_lock_p = base_dir / "experiments" / "protocol" / "STAGE-A2-EXECUTION-LOCK-V1.4.json"
         if not protocol_lock_p.exists():
@@ -362,7 +362,7 @@ def verify_preflight(
         actual_proto_sha = compute_sha256(proto_amend_p) if proto_amend_p.exists() else "AMENDMENT_12_V1.5"
         print(f"[PRE-FLIGHT 2] Protocol V1.5 (Amendment 12): LOCKED")
 
-    # 4. Environment Lock Verification
+    # 4. Xác minh khóa môi trường
     if env_lock_path:
         env_lock_p = Path(env_lock_path).resolve()
     elif is_v15_plan:
@@ -407,40 +407,40 @@ def verify_preflight(
                 raise ExecutionDeviceMismatchError("FATAL: automatic_cpu_fallback must be strictly False in execution environment lock!")
             print(f"[PRE-FLIGHT 3] Environment Lock Strict Properties: MATCH ({actual_env_sha[:16]}...) [{curr_gpu_name}, {total_vram_gb:.2f} GB VRAM]")
         else:
-            # Colab V1.5 Strict Environment Alignment (Amendment 12 - 12 Strict Fields)
+            # Colab V1.5 Điều chỉnh môi trường nghiêm ngặt (Sửa đổi 12 - 12 trường nghiêm ngặt)
             if not torch.cuda.is_available():
                 raise ExecutionDeviceMismatchError("FATAL: CUDA is not available! Colab empirical execution requires CUDA GPU.")
             
-            # 1. Live Python major.minor check
+            # 1. Kiểm tra Python major.minor trực tiếp
             curr_py_maj_min = f"{sys.version_info.major}.{sys.version_info.minor}"
             if "python_major_minor" in env_lock and curr_py_maj_min != env_lock["python_major_minor"]:
                 raise ExecutionDeviceMismatchError(f"FATAL: Python major.minor mismatch: {curr_py_maj_min} != {env_lock['python_major_minor']}")
             
-            # 2. Live PyTorch version check
+            # 2. Kiểm tra phiên bản PyTorch trực tiếp
             curr_torch_ver = torch.__version__
             if curr_torch_ver != env_lock["pytorch_version"]:
                 raise ExecutionDeviceMismatchError(f"FATAL: PyTorch version mismatch: {curr_torch_ver} != {env_lock['pytorch_version']}")
             
-            # 3. Live CUDA compiler runtime check
+            # 3. Kiểm tra thời gian chạy của trình biên dịch CUDA trực tiếp
             curr_cuda_runtime = torch.version.cuda
             if curr_cuda_runtime != env_lock.get("torch_cuda_runtime", env_lock.get("cuda_runtime")):
                 raise ExecutionDeviceMismatchError(f"FATAL: CUDA runtime mismatch: {curr_cuda_runtime} != {env_lock.get('torch_cuda_runtime')}")
             
-            # 4. Live Device Type check
+            # 4. Kiểm tra loại thiết bị trực tiếp
             if env_lock.get("device_type") != "cuda":
                 raise ExecutionDeviceMismatchError(f"FATAL: device_type {env_lock.get('device_type')} != cuda")
             
-            # 5. Live GPU Device Name check
+            # 5. Kiểm tra tên thiết bị GPU trực tiếp
             if curr_gpu_name != env_lock["device_name"]:
                 raise ExecutionDeviceMismatchError(f"FATAL: GPU device name mismatch: {curr_gpu_name} != {env_lock['device_name']}")
             
-            # 6. Live GPU Compute Capability check
+            # 6. Kiểm tra khả năng tính toán GPU trực tiếp
             device_props = torch.cuda.get_device_properties(0)
             curr_compute_cap = f"{device_props.major}.{device_props.minor}"
             if "device_compute_capability" in env_lock and curr_compute_cap != env_lock["device_compute_capability"]:
                 raise ExecutionDeviceMismatchError(f"FATAL: GPU compute capability mismatch: {curr_compute_cap} != {env_lock['device_compute_capability']}")
             
-            # 7. Live NVIDIA Host Driver Version check (Fail-Closed)
+            # 7. Kiểm tra phiên bản trình điều khiển máy chủ NVIDIA trực tiếp (Đóng không thành công)
             curr_driver = get_nvidia_driver_version()
             expected_driver = env_lock.get("nvidia_driver_version")
             if not expected_driver or curr_driver != expected_driver:
@@ -448,39 +448,39 @@ def verify_preflight(
                     f"FATAL: NVIDIA driver version mismatch! Live: {curr_driver} != Lock: {expected_driver}"
                 )
             
-            # 8. Live CUBLAS Workspace Config check
+            # 8. Kiểm tra cấu hình không gian làm việc CUBLAS trực tiếp
             live_cublas = os.environ.get("CUBLAS_WORKSPACE_CONFIG", "")
             if live_cublas != env_lock.get("cublas_workspace_config") or live_cublas != ":4096:8":
                 raise ExecutionDeviceMismatchError(
                     f"FATAL: Live CUBLAS_WORKSPACE_CONFIG ({live_cublas}) mismatch with lock ({env_lock.get('cublas_workspace_config')})"
                 )
             
-            # 9. Live Deterministic Algorithms Enabled check
+            # 9. Kiểm tra kích hoạt thuật toán xác định trực tiếp
             live_det_algo = torch.are_deterministic_algorithms_enabled()
             if live_det_algo != env_lock.get("deterministic_algorithms_enabled") or not live_det_algo:
                 raise ExecutionDeviceMismatchError(
                     f"FATAL: Live torch.are_deterministic_algorithms_enabled() ({live_det_algo}) mismatch with lock ({env_lock.get('deterministic_algorithms_enabled')})"
                 )
             
-            # 10. Live cuDNN Deterministic check
+            # 10. Kiểm tra xác định cuDNN trực tiếp
             live_cudnn_det = bool(torch.backends.cudnn.deterministic)
             if live_cudnn_det != env_lock.get("cudnn_deterministic") or not live_cudnn_det:
                 raise ExecutionDeviceMismatchError(
                     f"FATAL: Live torch.backends.cudnn.deterministic ({live_cudnn_det}) mismatch with lock ({env_lock.get('cudnn_deterministic')})"
                 )
             
-            # 11. Live cuDNN Benchmark check
+            # 11. Kiểm tra điểm chuẩn cuDNN trực tiếp
             live_cudnn_bench = bool(torch.backends.cudnn.benchmark)
             if live_cudnn_bench != env_lock.get("cudnn_benchmark") or live_cudnn_bench:
                 raise ExecutionDeviceMismatchError(
                     f"FATAL: Live torch.backends.cudnn.benchmark ({live_cudnn_bench}) mismatch with lock ({env_lock.get('cudnn_benchmark')})"
                 )
             
-            # 12. Automatic CPU Fallback check
+            # 12. Tự động kiểm tra dự phòng CPU
             if env_lock.get("automatic_cpu_fallback") is not False:
                 raise ExecutionDeviceMismatchError("FATAL: automatic_cpu_fallback != False")
             
-            # Descriptive only: gpu_uuid is recorded but does NOT raise mismatch
+            # Chỉ mang tính mô tả: gpu_uuid được ghi lại nhưng NOT có tăng sự không khớp
             descriptive_uuid = env_lock.get("gpu_uuid_descriptive", "N/A")
             print(f"[PRE-FLIGHT 3] Colab Environment Lock Strict Properties: MATCH ({actual_env_sha[:16]}...) [{curr_gpu_name}, Driver: {curr_driver}, Compute {curr_compute_cap}, {total_vram_gb:.2f} GB VRAM, UUID: {descriptive_uuid}]")
     else:
@@ -492,7 +492,7 @@ def verify_preflight(
         else:
             raise FileNotFoundError(f"Environment lock file missing at {env_lock_p}")
 
-    # 5. Raw Dataset Tarball Streaming Verification
+    # 5. Xác minh phát trực tuyến Tarball tập dữ liệu thô
     raw_tar_p = Path(raw_tar_path).resolve() if raw_tar_path else (base_dir / "datasets" / "raw" / "hdfs" / "HDFS_1.tar.gz")
     if not raw_tar_p.exists():
         raise FileNotFoundError(f"Raw HDFS tarball missing at {raw_tar_p}")
@@ -501,7 +501,7 @@ def verify_preflight(
         raise ValueError(f"RAW_HDFS_TAR_SHA mismatch: {act_raw_sha} != {RAW_HDFS_TAR_SHA}")
     print(f"[PRE-FLIGHT 4] Raw HDFS Tarball SHA: MATCH ({act_raw_sha[:16]}...) [{raw_tar_p}]")
 
-    # 6. Canonical Recomputation of Execution Membership
+    # 6. Tính toán lại Canonical tư cách thành viên thực thi
     split_auth = HDFSSplitAuthority(base_dir=base_dir, raw_tar_path=raw_tar_p)
     split_info = split_auth.get_split()
     
@@ -521,7 +521,7 @@ def verify_preflight(
     print(f"[PRE-FLIGHT 5] Train Membership Recomputed: MATCH ({recomputed_train_sha[:16]}...) [35,000 sessions / 586,577 events]")
     print(f"[PRE-FLIGHT 6] Val Membership Recomputed:   MATCH ({recomputed_val_sha[:16]}...) [7,500 sessions / 119,531 events]")
 
-    # 7. Connected Test Firewall Verification
+    # 7. Xác minh tường lửa kiểm tra kết nối
     guard = RuntimeTestFirewallGuard(split_authority=split_auth, base_dir=base_dir, raw_tar_path=raw_tar_p)
     guard.assert_sealed()
     print("[PRE-FLIGHT 7] Connected Test Firewall: LOCKED (TEST_OPENED=false, READ_COUNT=0)")
@@ -548,7 +548,7 @@ def verify_preflight(
     }
 
 def chunk_into_windows(events: List[Dict[str, Any]], window_size: int = 256) -> List[List[Dict[str, Any]]]:
-    """Partitions chronological event sequence into discrete temporal windows."""
+    """Phân chia chuỗi sự kiện theo trình tự thời gian thành các cửa sổ thời gian riêng biệt."""
     windows = []
     for i in range(0, len(events), window_size):
         windows.append(events[i:i+window_size])
@@ -556,8 +556,8 @@ def chunk_into_windows(events: List[Dict[str, Any]], window_size: int = 256) -> 
 
 def sync_to_durable_storage(files_to_sync: List[Tuple[Path, str]], dest_dir: Path, run_state_file: Optional[Tuple[Path, str]] = None):
     """
-    Atomically mirrors completed epoch files to durable Google Drive storage.
-    Verifies post-copy SHA-256 before committing RUN-STATE.json.
+    Phản chiếu nguyên tử các tệp epoch đã hoàn thành vào bộ lưu trữ Google Drive bền bỉ.
+    Xác minh SHA-256 sau khi sao chép trước khi xác nhận RUN-STATE.json.
     """
     dest_dir.mkdir(parents=True, exist_ok=True)
     for src_file, rel_name in files_to_sync:
@@ -598,7 +598,7 @@ def run_single_seed_pipeline(
     raw_tar_path: Optional[Path] = None
 ) -> Dict[str, Any]:
     """
-    Complete end-to-end execution pipeline for a canonical Stage A2 run.
+    Hoàn thiện quy trình thực thi từ đầu đến cuối cho lần chạy Giai đoạn A2 chuẩn mực.
     """
     enforce_framework_determinism()
     preflight = verify_preflight(
@@ -617,7 +617,7 @@ def run_single_seed_pipeline(
 
     run_id = f"RUN-STAGE-A2-HDFS-SEED{seed}"
     
-    # Strict Namespace Isolation
+    # Cách ly không gian tên nghiêm ngặt
     if fixture_mode:
         if fixture_output_root is not None:
             run_evidence_dir = Path(fixture_output_root) / "evidence"
@@ -630,7 +630,7 @@ def run_single_seed_pipeline(
         run_evidence_dir = base_dir / "experiments" / "runs" / "stage-a2" / "HDFS" / f"seed-{seed}"
         artifact_checkpoint_dir = base_dir / ".artifacts" / "stage-a2" / "HDFS" / f"seed-{seed}"
 
-    # Verify namespace isolation invariant
+    # Xác minh sự bất biến cách ly không gian tên
     if fixture_mode:
         real_canonical_run_dir = base_dir / "experiments" / "runs" / "stage-a2" / "HDFS" / f"seed-{seed}"
         real_canonical_art_dir = base_dir / ".artifacts" / "stage-a2" / "HDFS" / f"seed-{seed}"
@@ -649,7 +649,7 @@ def run_single_seed_pipeline(
 
     # --- DRY-RUN PATH ---
     if is_dry_run:
-        # Check real directory cleanliness for real runs
+        # Kiểm tra độ sạch của thư mục thực để chạy thực
         if not fixture_mode:
             has_evidence = run_evidence_dir.exists() and any(run_evidence_dir.iterdir())
             has_checkpoints = artifact_checkpoint_dir.exists() and any(artifact_checkpoint_dir.iterdir())
@@ -676,7 +676,7 @@ def run_single_seed_pipeline(
             f"FATAL: Empirical execution for seed {seed} requested but empirical_authorized is False!"
         )
 
-    # Initialize / Load Environment Info
+    # Khởi tạo/Tải thông tin môi trường
     env_data = {
         "environment_id": f"ENV-STAGE-A2-SEED{seed}",
         "python_executable": sys.executable,
@@ -694,7 +694,7 @@ def run_single_seed_pipeline(
 
     is_resume = (resume_checkpoint is not None)
 
-    # For fresh runs, seed framework RNGs so initial model weights and operations are determined by canonical seed
+    # Đối với các lần chạy mới, RNG của khung hạt giống nên trọng số và hoạt động của mô hình ban đầu được xác định bằng hạt giống chuẩn
     if not is_resume:
         random.seed(seed)
         np.random.seed(seed)
@@ -702,7 +702,7 @@ def run_single_seed_pipeline(
         if torch.cuda.is_available():
             torch.cuda.manual_seed_all(seed)
 
-    # Model & Trainer Architecture Instantiation
+    # Khởi tạo kiến trúc mô hình & huấn luyện viên
     model = TemporalGraphViewEncoder(
         d_node=128,
         d_edge=64,
@@ -741,11 +741,11 @@ def run_single_seed_pipeline(
 
     # --- RESUME RUN PATH vs FRESH RUN PATH ---
     if is_resume:
-        # 1. Require checkpoint to exist
+        # 1. Yêu cầu tồn tại checkpoint
         if not resume_checkpoint.exists():
             raise ResumeCheckpointNotFoundError(f"FATAL: Specified resume checkpoint does not exist: {resume_checkpoint}")
 
-        # 2. Require existing real run directory & RUN-STATE.json
+        # 2. Yêu cầu thư mục chạy thực hiện có & RUN-STATE.json
         if not run_evidence_dir.exists() or not run_state_p.exists():
             raise FileNotFoundError(f"FATAL: Cannot resume run {run_id}: RUN-STATE.json not found in {run_evidence_dir}")
 
@@ -757,7 +757,7 @@ def run_single_seed_pipeline(
         if existing_state.get("run_id") != run_id:
             raise CheckpointIntegrityMismatchError(f"FATAL: RUN-STATE run_id {existing_state.get('run_id')} != requested run_id {run_id}")
 
-        # 3. Checkpoint SHA validation
+        # 3. Xác thực checkpoint SHA
         actual_ckpt_sha = compute_sha256(resume_checkpoint)
         if resume_sha256 and actual_ckpt_sha != resume_sha256:
             raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint SHA mismatch: {actual_ckpt_sha} != {resume_sha256}")
@@ -768,7 +768,7 @@ def run_single_seed_pipeline(
             if actual_ckpt_sha not in inv_shas:
                 raise CheckpointIntegrityMismatchError(f"FATAL: Resume checkpoint SHA {actual_ckpt_sha} not found in CHECKPOINT-INVENTORY.json!")
 
-        # 4. Load checkpoint and verify binding metadata
+        # 4. Tải checkpoint và xác minh siêu dữ liệu liên kết
         raw_ckpt = torch.load(resume_checkpoint, map_location=trainer.device, weights_only=False)
         ckpt_meta = raw_ckpt.get("checkpoint_metadata", {})
         if ckpt_meta:
@@ -790,7 +790,7 @@ def run_single_seed_pipeline(
             if ckpt_meta.get("environment_lock_sha256") and ckpt_meta.get("environment_lock_sha256") != preflight.get("env_lock_sha"):
                 raise CheckpointIntegrityMismatchError(f"FATAL: Checkpoint environment lock SHA mismatch!")
 
-        # 5. Restore state - INCOMPLETE_EPOCH_REPLAY_FROM_LAST_DURABLE_BOUNDARY Policy
+        # 5. Khôi phục trạng thái - Chính sách INCOMPLETE_EPOCH_REPLAY_FROM_LAST_DURABLE_BOUNDARY
         orig_start_time = existing_state.get("start_time", datetime.now(timezone.utc).isoformat())
         cumulative_runtime_seconds = existing_state.get("cumulative_runtime_seconds", 0.0)
         t_resume_start = time.time()
@@ -861,7 +861,7 @@ def run_single_seed_pipeline(
         run_state_p.write_text(json.dumps(run_state, indent=2) + "\n", encoding="utf-8")
 
     try:
-        # 1. Materialize / Prepare Chronological Streams
+        # 1. Hiện thực hóa/Chuẩn bị các dòng thời gian
         if fixture_mode:
             train_events = fixture_train_events or []
             val_events = fixture_val_events or []
@@ -890,7 +890,7 @@ def run_single_seed_pipeline(
         assert len(train_windows) == expected_train_windows, f"Train windows {len(train_windows)} != {expected_train_windows}"
         assert len(val_windows) == expected_val_windows, f"Val windows {len(val_windows)} != {expected_val_windows}"
 
-        # 2. Verify / Enforce Deterministic Framework Flags without re-seeding RNGs
+        # 2. Xác minh/Thực thi Cờ khung xác định mà không cần gieo lại RNG
         enforce_framework_determinism()
 
         patience_counter = trainer.patience_counter
@@ -911,18 +911,18 @@ def run_single_seed_pipeline(
             "epoch_runtime_sec": 0.0
         }
 
-        # 3. Epoch Loop
+        # 3. Vòng lặp epoch
         epochs_to_run = trainer.max_epochs
         for epoch in range(start_epoch, epochs_to_run):
             t_epoch_start = time.time()
             trainer.current_epoch = epoch
             print(f"\n[{run_id}] --- Starting Epoch {epoch + 1}/{epochs_to_run} ---")
             
-            # Reset stream cursor for train epoch
+            # Đặt lại con trỏ luồng cho epoch tàu
             trainer.stream_cursor = 0
             steps_before = trainer.global_step
 
-            # Train One Epoch
+            # Đào tạo một epoch
             train_stats = trainer.train_one_epoch(train_windows)
             steps_after = trainer.global_step
             delta_steps = steps_after - steps_before
@@ -931,18 +931,18 @@ def run_single_seed_pipeline(
                 assert delta_steps == 573, f"Expected 573 optimizer steps per epoch, got {delta_steps}"
                 assert train_stats["events_count"] == 586577, f"Expected 586577 events, got {train_stats['events_count']}"
 
-            # Validate One Epoch
+            # Xác thực một epoch
             val_stats = trainer.validate_one_epoch(val_windows)
             if not fixture_mode:
                 assert val_stats["events_count"] == 119531, f"Expected 119531 val events, got {val_stats['events_count']}"
 
             guard.assert_sealed()
 
-            # Record CUDA memory
+            # Ghi lại bộ nhớ CUDA
             peak_alloc = torch.cuda.max_memory_allocated() if torch.cuda.is_available() else 0
             peak_res = torch.cuda.max_memory_reserved() if torch.cuda.is_available() else 0
 
-            # Update Early Stopping & Best Checkpoint state
+            # Cập nhật trạng thái dừng sớm (early stopping) & checkpoint tốt nhất
             curr_val_loss = val_stats["val_L_graph"]
             is_best = curr_val_loss < best_val_loss
 
@@ -983,11 +983,11 @@ def run_single_seed_pipeline(
                 trainer.patience_counter = patience_counter
                 print(f"[{run_id}] Validation Loss did not improve ({curr_val_loss:.6f} >= {best_val_loss:.6f}). Patience: {patience_counter}/{trainer.early_stopping_patience}")
 
-            # Save Last Checkpoint
+            # Lưu checkpoint cuối cùng
             trainer.save_checkpoint(last_checkpoint_p, metadata=ckpt_metadata)
             last_ckpt_sha = compute_sha256(last_checkpoint_p)
 
-            # Checkpoint Inventory
+            # Kiểm kê checkpoint
             ckpt_inv = {
                 "run_id": run_id,
                 "seed": seed,
@@ -1014,7 +1014,7 @@ def run_single_seed_pipeline(
                 })
             ckpt_inv_p.write_text(json.dumps(ckpt_inv, indent=2) + "\n", encoding="utf-8")
 
-            # Incremental Log Record
+            # Bản ghi nhật ký gia tăng
             log_record = {
                 "epoch": epoch + 1,
                 "global_step": trainer.global_step,
@@ -1059,7 +1059,7 @@ def run_single_seed_pipeline(
             epoch_dur = time.time() - t_epoch_start
             cumulative_runtime_seconds += epoch_dur
 
-            # Update Run State
+            # Cập nhật trạng thái chạy
             run_state.update({
                 "current_epoch": epoch + 1,
                 "completed_epoch": epoch + 1,
@@ -1076,7 +1076,7 @@ def run_single_seed_pipeline(
             })
             run_state_p.write_text(json.dumps(run_state, indent=2) + "\n", encoding="utf-8")
 
-            # Google Drive Durable Mirroring at Completed Epoch Boundary
+            # Phản chiếu bền bỉ của Google Drive ở ranh giới epoch đã hoàn thành
             if durable_root:
                 durable_seed_dir = Path(durable_root) / f"seed-{seed}"
                 files_to_sync = [
@@ -1095,7 +1095,7 @@ def run_single_seed_pipeline(
 
         t_end_iso = datetime.now(timezone.utc).isoformat()
 
-        # Final Metrics
+        # Số liệu cuối cùng
         metrics_data = {
             "run_id": run_id,
             "seed": seed,
@@ -1123,7 +1123,7 @@ def run_single_seed_pipeline(
         }
         metrics_p.write_text(json.dumps(metrics_data, indent=2) + "\n", encoding="utf-8")
 
-        # Test Firewall Record
+        # Kiểm tra bản ghi tường lửa
         firewall_data = guard.to_dict()
         firewall_p.write_text(json.dumps(firewall_data, indent=2) + "\n", encoding="utf-8")
 
@@ -1133,7 +1133,7 @@ def run_single_seed_pipeline(
             except ValueError:
                 return str(p)
 
-        # Experimental Source Record
+        # Bản ghi nguồn thử nghiệm
         source_data = {
             "claim_id": f"CLAIM-STAGE-A2-HDFS-SEED{seed}",
             "stage": "STAGE_A2",
@@ -1168,7 +1168,7 @@ def run_single_seed_pipeline(
         }
         source_p.write_text(json.dumps(source_data, indent=2) + "\n", encoding="utf-8")
 
-        # Run Manifest
+        # Chạy bản kê (manifest)
         manifest_data = {
             "manifest_version": "1.5.0" if is_v15_plan else "1.4.1",
             "run_id": run_id,
@@ -1186,11 +1186,11 @@ def run_single_seed_pipeline(
         }
         manifest_p.write_text(json.dumps(manifest_data, indent=2) + "\n", encoding="utf-8")
 
-        # Mark Run State Completed
+        # Trạng thái đánh dấu đã hoàn thành
         run_state["status"] = "COMPLETED"
         run_state_p.write_text(json.dumps(run_state, indent=2) + "\n", encoding="utf-8")
 
-        # Final Durable Sync
+        # Đồng bộ hóa bền vững cuối cùng
         if durable_root:
             durable_seed_dir = Path(durable_root) / f"seed-{seed}"
             final_files = [
@@ -1259,7 +1259,7 @@ def main():
     auth_path = Path(args.authorization).resolve() if args.authorization else None
     env_lock_path = Path(args.environment_lock).resolve() if args.environment_lock else None
 
-    # Strict Safety Guard: --all is strictly prohibited for real empirical execution
+    # Bảo vệ an toàn nghiêm ngặt: --tất cả đều bị nghiêm cấm thực hiện theo kinh nghiệm thực tế
     if args.all and args.authorize_real_empirical_execution and not args.dry_run:
         raise ValueError("FATAL: --all is strictly prohibited for real empirical execution! Real runs must be executed sequentially one canonical seed at a time.")
 

@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Stage A2 Google Colab Environment Bootstrap and Hardware Lock Generator (Protocol V1.5).
-Executes hardware discovery, fail-closed prerequisite verification, streaming dataset validation,
-machine-collected determinism measurement, and generates the candidate Colab environment lock.
-ZERO HDFS optimizer steps.
+Giai đoạn A2 Trình tạo khóa phần cứng và môi trường Google Colab (Giao thức V1.5).
+Thực hiện khám phá phần cứng, xác minh điều kiện tiên quyết không đóng, xác thực dữ liệu trực tuyến,
+phép đo xác định do máy thu thập và tạo khóa môi trường Colab dự kiến.
+Các bước tối ưu hóa ZERO HDFS.
 """
 
 import os
-# Enforce deterministic CUBLAS configuration before any CUDA context is created
+# Thực thi cấu hình CUBLAS xác định trước khi bất kỳ bối cảnh CUDA nào được tạo
 os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
 
 import sys
@@ -53,7 +53,7 @@ V15_DESCRIPTIVE_ENVIRONMENT_FIELDS = [
 ]
 
 def compute_sha256(path: Path, chunk_size: int = 8 * 1024 * 1024) -> str:
-    """Computes SHA-256 hash using streaming chunks to prevent high memory usage."""
+    """Tính toán hàm băm SHA-256 bằng cách sử dụng các đoạn phát trực tuyến để tránh mức sử dụng bộ nhớ cao."""
     hasher = hashlib.sha256()
     with open(path, "rb") as f:
         while chunk := f.read(chunk_size):
@@ -106,7 +106,7 @@ def run_bootstrap(
     print(f"Local Data Path: {local_data_dest}")
     print(f"Drive Data Path: {drive_data_source}")
 
-    # 1. GPU Discovery and CUDA Hardware Fail-Closed Verification
+    # 1. Xác minh đóng lỗi phần cứng GPU Discovery và CUDA
     if not torch.cuda.is_available():
         raise RuntimeError("FATAL: CUDA is not available! Colab session must be configured with a GPU runtime.")
 
@@ -121,7 +121,7 @@ def run_bootstrap(
     print(f"[BOOTSTRAP 1] GPU Detected: {device_name} (Compute Cap: {compute_cap}, VRAM: {total_vram_gb:.2f} GB)")
     print(f"[BOOTSTRAP 1] NVIDIA Driver: {driver_ver} | GPU UUID (descriptive): {gpu_uuid}")
 
-    # 2. Software Runtime Checks (Strict Target Framework: PyTorch 2.6.0 + CUDA 12.4)
+    # 2. Kiểm tra thời gian chạy phần mềm (Khung mục tiêu nghiêm ngặt: PyTorch 2.6.0 + CUDA 12.4)
     py_ver = platform.python_version()
     py_maj_min = f"{sys.version_info.major}.{sys.version_info.minor}"
     torch_ver = torch.__version__
@@ -129,13 +129,13 @@ def run_bootstrap(
 
     print(f"[BOOTSTRAP 2] Python: {py_ver} (major.minor: {py_maj_min}) | PyTorch: {torch_ver} | CUDA Runtime: {cuda_ver}")
 
-    # Fail-closed checks on framework
+    # Kiểm tra không đóng trên khung
     if not torch_ver.startswith("2.6.0"):
         raise RuntimeError(f"FATAL: PyTorch version mismatch! Expected PyTorch 2.6.0 series, got {torch_ver}")
     if cuda_ver != "12.4":
         raise RuntimeError(f"FATAL: CUDA runtime mismatch! Expected CUDA 12.4, got {cuda_ver}")
 
-    # 3. Machine-Collect Determinism State
+    # 3. Trạng thái xác định của máy thu thập
     os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
     torch.use_deterministic_algorithms(True)
     torch.backends.cudnn.deterministic = True
@@ -154,11 +154,11 @@ def run_bootstrap(
             f"cudnn_det={cudnn_det}, cudnn_bench={cudnn_bench}, cublas_cfg={cublas_cfg})"
         )
 
-    # 4. Repository Commit Verification
+    # 4. Xác minh cam kết kho lưu trữ
     commit_sha = get_git_commit_sha(repo_dir)
     print(f"[BOOTSTRAP 4] Repository HEAD: {commit_sha}")
 
-    # 5. HDFS Source Streaming Verification and Local Copy
+    # 5. Xác minh nguồn phát trực tuyến HDFS và bản sao cục bộ
     if drive_data_source.exists():
         print(f"[BOOTSTRAP 5] Streaming SHA-256 verification of Drive source: {drive_data_source}...")
         t_hash_0 = time.time()
@@ -168,7 +168,7 @@ def run_bootstrap(
         if src_sha != EXPECTED_HDFS_SHA:
             raise ValueError(f"FATAL: Source HDFS SHA-256 mismatch: {src_sha} != {EXPECTED_HDFS_SHA}")
 
-        # Copy to local fast ephemeral disk if different
+        # Sao chép vào đĩa tạm thời nhanh cục bộ nếu khác
         if local_data_dest != drive_data_source:
             local_data_dest.parent.mkdir(parents=True, exist_ok=True)
             print(f"[BOOTSTRAP 5] Copying HDFS tarball to fast local storage: {local_data_dest}...")
@@ -189,7 +189,7 @@ def run_bootstrap(
     else:
         print(f"[BOOTSTRAP 5] WARNING: HDFS tarball not found at {drive_data_source} or {local_data_dest}. Ensure dataset is downloaded/copied.")
 
-    # 6. Generate Machine-Collected Environment Lock Candidate
+    # 6. Tạo ứng viên khóa môi trường được thu thập bằng máy
     env_lock_p.parent.mkdir(parents=True, exist_ok=True)
     env_candidate = {
         "environment_id": "ENV-STAGE-A2-COLAB-V1.5",
@@ -241,8 +241,8 @@ def mirror_qualification_artifacts(
     qual_run_id: Optional[str] = None
 ) -> Path:
     """
-    Mirrors all qualification evidence artifacts to durable Google Drive storage
-    and verifies source vs destination SHA-256 for each copied file.
+    Phản ánh tất cả các tạo phẩm bằng chứng đủ tiêu chuẩn vào bộ lưu trữ Google Drive lâu bền
+    và xác minh nguồn so với đích SHA-256 cho mỗi tệp được sao chép.
     """
     base_dir = Path(base_dir).resolve()
     durable_root = Path(durable_root).resolve()
@@ -320,7 +320,7 @@ def mirror_qualification_artifacts(
     manifest_path.write_text(json.dumps(final_manifest, indent=2) + "\n", encoding="utf-8")
     manifest_sha = compute_sha256(manifest_path)
     
-    # Also write QUALIFICATION-MIRROR-MANIFEST.json for historical compatibility
+    # Đồng thời viết QUALIFICATION-MIRROR-MANIFEST.json để đảm bảo tính tương thích trong lịch sử
     mirror_manifest_path = dest_dir / "QUALIFICATION-MIRROR-MANIFEST.json"
     mirror_manifest_path.write_text(json.dumps(final_manifest, indent=2) + "\n", encoding="utf-8")
     

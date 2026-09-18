@@ -1,4 +1,4 @@
-﻿# scripts/status_stage_a2_local_seed42.ps1
+﻿# tập lệnh/status_stage_a2_local_seed42.ps1
 $baseDir = "D:\Research"
 $logDir = "D:\Research\logs\stage-a2"
 $stdoutLog = "$logDir\seed42.stdout.log"

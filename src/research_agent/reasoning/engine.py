@@ -1,5 +1,5 @@
 """
-Unified Scientific Reasoning & Argumentation Engine (Prompt 5)
+Công cụ lập luận và lập luận khoa học thống nhất (Dấu nhắc 5)
 """
 
 from typing import List, Dict, Any, Optional, Tuple
@@ -78,8 +78,8 @@ from research_agent.reasoning.bundle_builder import ArgumentBundleBuilder
 
 class ScientificReasoningEngine:
     """
-    Unified entry point and coordinator for scientific reasoning, methodological auditing,
-    argument graph assembly, and verification request generation.
+    Điểm đầu vào thống nhất và điều phối viên cho lý luận khoa học, kiểm tra phương pháp luận,
+    tập hợp biểu đồ đối số và tạo yêu cầu xác minh.
     """
 
     def __init__(
@@ -90,7 +90,7 @@ class ScientificReasoningEngine:
         self.repo = repo or ResearchRepository()
         self.memory_mgr = memory_mgr or MemoryManager(self.repo)
 
-        # Core Engines
+        # Động cơ cốt lõi
         self.claim_extractor = ClaimExtractor()
         self.evidence_aligner = EvidenceAlignmentEngine()
         self.synthesis_engine = LiteratureSynthesisEngine()
@@ -102,14 +102,14 @@ class ScientificReasoningEngine:
         self.inference_engine = InferenceEngine()
         self.causality_auditor = CausalityAuditor()
         
-        # Auditors
+        # Kiểm toán viên
         self.leakage_auditor = LeakageAuditor()
         self.shortcut_auditor = ShortcutAuditor()
         self.validity_auditor = ValidityAuditor()
         self.security_guards = SecurityGuards()
         self.fairness_auditor = BaselineFairnessAuditor()
         
-        # Evaluators & Bundlers
+        # Người đánh giá & Người đóng gói
         self.hypothesis_evaluator = HypothesisEvaluator()
         self.contribution_differentiator = ContributionDifferentiator()
         self.argument_graph_engine = ArgumentGraphEngine()
@@ -118,7 +118,7 @@ class ScientificReasoningEngine:
         self.bundle_builder = ArgumentBundleBuilder()
 
     # -------------------------------------------------------------
-    # High-Level Reasoning Workflows
+    # Quy trình lập luận cấp cao
     # -------------------------------------------------------------
     def extract_atomic_claims(
         self,
@@ -210,7 +210,7 @@ class ScientificReasoningEngine:
         experimental_setup: Optional[Dict[str, Any]] = None,
     ) -> List[ReasoningIssue]:
         """
-        Executes complete methodological check across causality, security guards, leakage, and shortcuts.
+        Thực hiện kiểm tra phương pháp hoàn chỉnh về quan hệ nhân quả, nhân viên bảo vệ, rò rỉ và đường tắt.
         """
         issues: List[ReasoningIssue] = []
         issues.extend(self.causality_auditor.audit_text_causality(entity_id, statement_or_setup))
@@ -271,7 +271,7 @@ class ScientificReasoningEngine:
         assumptions = self.repo.list_assumptions()
         verifs = self.repo.list_verification_requests(status=VerificationRequestStatus.PENDING)
         
-        # Check contested hypotheses
+        # Kiểm tra các giả thuyết gây tranh cãi
         hyps = self.repo.list_hypotheses()
         contested = []
         for h in hyps:
@@ -296,7 +296,7 @@ class ScientificReasoningEngine:
         target_table_or_figure_id: Optional[str] = None,
     ) -> VerificationRequest:
         """
-        Creates and stores a formal VerificationRequest for the Prompt 6 toolchain.
+        Tạo và lưu trữ Yêu cầu xác minh chính thức cho chuỗi công cụ Nhắc 6.
         """
         seq = abs(hash(str(request_type) + description)) % 1000000
         req = VerificationRequest(
@@ -332,7 +332,7 @@ class ScientificReasoningEngine:
         verification_requests: Optional[List[VerificationRequest]] = None,
     ) -> ArgumentBundle:
         """
-        Builds, audits, and persists an ArgumentBundle.
+        Xây dựng, kiểm tra và duy trì ArgumentBundle.
         """
         bundle = self.bundle_builder.build_bundle(
             roadmap_node=roadmap_node,
@@ -356,7 +356,7 @@ class ScientificReasoningEngine:
 
     def execute_verification_request(self, request_or_id: Any) -> Any:
         """
-        Executes a VerificationRequest through the ScientificVerificationPipeline.
+        Thực thi Yêu cầu xác minh thông qua ScientificVerificationPipeline.
         """
         from research_agent.verification.pipeline import ScientificVerificationPipeline
         pipeline = ScientificVerificationPipeline(self.repo)

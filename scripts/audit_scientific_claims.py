@@ -102,7 +102,7 @@ def scan_and_audit():
     candidates = []
     candidates_by_id = {}
 
-    # Scan every paragraph in [body_start, body_end] without skipping
+    # Quét từng đoạn trong [body_start, body_end] mà không bỏ qua
     for pidx in range(body_start, body_end + 1):
         p = doc.paragraphs[pidx]
         txt = p.text.strip()
@@ -130,7 +130,7 @@ def scan_and_audit():
                 candidates.append(c_dict)
                 candidates_by_id[cand_id] = c_dict
 
-    # Scan body tables: tables occurring between body_start and body_end, excluding bibliography table
+    # Quét các bảng nội dung: các bảng xuất hiện giữa body_start và body_end, không bao gồm bảng thư mục
     p_start_elm = doc.paragraphs[body_start]._element
     p_end_elm = doc.paragraphs[body_end]._element
     in_body = False
@@ -169,7 +169,7 @@ def scan_and_audit():
                 candidates.append(c_dict)
                 candidates_by_id[cand_id] = c_dict
 
-    # Strict 1:N reconciliation through explicit parent_detected_id
+    # Đối chiếu nghiêm ngặt 1:N thông qua parent_detected_id rõ ràng
     missing_parent_detected_id = 0
     orphan_audit_records = 0
 
@@ -187,7 +187,7 @@ def scan_and_audit():
     unaudited_detected_claims = len([c for c in candidates if len(c['reconciled_claim_ids']) == 0])
     count_reconciliation_errors = missing_parent_detected_id + orphan_audit_records + unaudited_detected_claims
 
-    # Verification status
+    # Trạng thái xác minh
     verification_status = 'PASS' if count_reconciliation_errors == 0 else 'FAIL'
 
     detection_result = {
@@ -217,8 +217,8 @@ def scan_and_audit():
 
     # ---------------------------------------------------------------
     # FAIL-BEFORE-MUTATION (AUTHORITATIVE_OUTPUT_MUTATION_BEFORE_PASS=0)
-    # All computation is complete in memory. Assert PASS FIRST.
-    # Only write SCIENTIFIC-CLAIM-DETECTION.json after confirming PASS.
+    # Tất cả tính toán được hoàn thành trong bộ nhớ. Khẳng định PASS FIRST.
+    # Chỉ viết SCIENTIFIC-CLAIM-DETECTION.json sau khi xác nhận PASS.
     # ---------------------------------------------------------------
     assert verification_status == 'PASS', (
         f'[FAIL-BEFORE-MUTATION] Scanner reconciliation FAILED: '
@@ -228,14 +228,14 @@ def scan_and_audit():
         f'Authoritative output files are NOT modified.'
     )
 
-    # Atomic file write via temporary file (only reached on PASS)
+    # Ghi tệp nguyên tử qua tệp tạm thời (chỉ đạt trên PASS)
     tmp_path = detection_path.with_suffix('.tmp')
     with open(tmp_path, 'w', encoding='utf-8') as df:
         json.dump(detection_result, df, indent=2, ensure_ascii=False)
     tmp_path.replace(detection_path)
 
-    # Item 7: Reporting language — RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE only.
-    # Do NOT report "all scientific claims are truthful" based on scanner coverage.
+    # Mục 7: Ngôn ngữ báo cáo - chỉ RULE_BASED_SCIENTIFIC_CLAIM_COVERAGE.
+    # NOT có báo cáo "tất cả các tuyên bố khoa học đều trung thực" dựa trên phạm vi phủ sóng của máy quét.
     print('\n==================================================')
     print('RULE-BASED SCIENTIFIC CLAIM COVERAGE SUMMARY')
     print('==================================================')

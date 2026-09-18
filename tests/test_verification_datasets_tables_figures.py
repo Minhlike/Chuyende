@@ -1,5 +1,5 @@
 """
-Unit Tests for Datasets, Metrics, Tables & Figures (Prompt 6, TEST-DATA, TEST-METRIC, TEST-TBL, TEST-FIG)
+Kiểm tra đơn vị cho Bộ dữ liệu, Số liệu, Bảng & Hình (Dấu nhắc 6, TEST-DATA, TEST-METRIC, TEST-TBL, TEST-FIG)
 """
 
 import os
@@ -34,7 +34,7 @@ class TestDatasetsTablesFigures:
         self.fig_metadata = FigureMetadataManager()
 
     def test_data_01_hash_and_schema_validation(self):
-        """TEST-DATA-01: Verifies file SHA-256 and schema checks."""
+        """TEST-DATA-01: Xác minh tệp SHA-256 và kiểm tra lược đồ."""
         tmp_file = Path(self.tmp_dir) / "test_data.csv"
         df = pd.DataFrame({
             "timestamp": ["2026-01-01 10:00:00", "2026-01-01 10:01:00"],
@@ -54,7 +54,7 @@ class TestDatasetsTablesFigures:
         assert len(issues) == 0
 
     def test_data_02_temporal_leakage_detection(self):
-        """TEST-DATA-02: Flags temporal leakage (train timestamp > test timestamp)."""
+        """TEST-DATA-02: Cờ rò rỉ thời gian (dấu thời gian tàu > dấu thời gian kiểm tra)."""
         train_df = pd.DataFrame({"timestamp": ["2026-01-05 12:00:00", "2026-01-06 12:00:00"]})
         test_df = pd.DataFrame({"timestamp": ["2026-01-02 12:00:00", "2026-01-03 12:00:00"]})
         valid, issues = self.split_val.audit_temporal_order(train_df, None, test_df, "timestamp")
@@ -62,15 +62,15 @@ class TestDatasetsTablesFigures:
         assert any("TEMPORAL_LEAKAGE" in i for i in issues)
 
     def test_data_03_entity_holdout_leakage(self):
-        """TEST-DATA-03: Flags host/entity leakage across train and test."""
+        """TEST-DATA-03: Đánh dấu sự rò rỉ của máy chủ/thực thể trong quá trình đào tạo và kiểm tra."""
         train_df = pd.DataFrame({"host": ["host-01", "host-02", "host-03"]})
-        test_df = pd.DataFrame({"host": ["host-03", "host-04"]})  # host-03 leaks
+        test_df = pd.DataFrame({"host": ["host-03", "host-04"]})  # rò rỉ máy chủ-03
         valid, issues = self.split_val.audit_entity_holdout(train_df, test_df, "host")
         assert valid is False
         assert any("ENTITY_LEAKAGE" in i for i in issues)
 
     def test_metric_01_confusion_matrix_and_f1(self):
-        """TEST-METRIC-01: Deterministic Precision, Recall, F1 calculation."""
+        """TEST-METRIC-01: Độ chính xác xác định, Thu hồi, tính toán F1."""
         y_true = [1, 1, 1, 1, 0, 0, 0, 0]
         y_pred = [1, 1, 1, 0, 0, 0, 1, 0]  # TP=3, FN=1, FP=1, TN=3
         cm = self.metric_eng.compute_confusion_matrix(y_true, y_pred)
@@ -84,7 +84,7 @@ class TestDatasetsTablesFigures:
         assert cm.fpr == 0.25
 
     def test_metric_02_trapezoidal_pr_auc(self):
-        """TEST-METRIC-02: Deterministic PR-AUC integration."""
+        """TEST-METRIC-02: Tích hợp PR-AUC mang tính quyết định."""
         y_true = [1, 0, 1, 0, 1]
         y_scores = [0.9, 0.8, 0.7, 0.2, 0.1]
         auc, r_curve, p_curve, thrs = self.metric_eng.compute_pr_curve_and_auc(y_true, y_scores)
@@ -92,7 +92,7 @@ class TestDatasetsTablesFigures:
         assert len(r_curve) == len(p_curve)
 
     def test_tbl_01_deterministic_table_export(self):
-        """TEST-TBL-01: TableBuilder produces aligned CSV, Markdown, LaTeX with SHA-256."""
+        """TEST-TBL-01: TableBuilder tạo ra CSV, Markdown, LaTeX được căn chỉnh với SHA-256."""
         df = pd.DataFrame({
             "Method": ["Baseline", "OURS"],
             "F1": [85.2, 98.4],
@@ -110,7 +110,7 @@ class TestDatasetsTablesFigures:
         assert "tabular" in spec.output_latex
 
     def test_tbl_02_table_fairness_mismatch_audit(self):
-        """TEST-TBL-02: Flags comparability mismatch when splits or granularities differ."""
+        """TEST-TBL-02: Khả năng so sánh của cờ không khớp khi phần tách hoặc độ chi tiết khác nhau."""
         methods = [
             {"method_name": "PriorWork", "dataset_version": "v1.0", "split_strategy": "RANDOM", "granularity": "EVENT"},
             {"method_name": "OURS", "dataset_version": "v1.0", "split_strategy": "TEMPORAL", "granularity": "EVENT"},
@@ -120,7 +120,7 @@ class TestDatasetsTablesFigures:
         assert "SPLIT_STRATEGY_MISMATCH" in reason
 
     def test_fig_01_pr_curve_generation_and_companion_data(self):
-        """TEST-FIG-01: Generates PR curve image, companion CSV data, and metadata JSON."""
+        """TEST-FIG-01: Tạo hình ảnh đường cong PR, dữ liệu CSV đồng hành và siêu dữ liệu JSON."""
         curves = [
             {"name": "Baseline", "recalls": [0.0, 0.5, 1.0], "precisions": [1.0, 0.8, 0.5], "pr_auc": 0.75},
             {"name": "OURS", "recalls": [0.0, 0.7, 1.0], "precisions": [1.0, 0.95, 0.9], "pr_auc": 0.95},

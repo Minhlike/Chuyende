@@ -1,5 +1,5 @@
 """
-Decision and Contradiction Record Schemas (Section 8, Section 23, Section 31, RC-13, RC-15)
+Lược đồ hồ sơ quyết định và mâu thuẫn (Mục 8, Mục 23, Mục 31, RC-13, RC-15)
 """
 
 from datetime import datetime, timezone
@@ -9,7 +9,7 @@ from research_agent.core.enums import DecisionStatus
 
 
 class DecisionRecord(BaseModel):
-    """Architecture / Research Decision Record (ADR / RDR) (RC-15, Section 23, Section 31)."""
+    """Bản ghi Quyết định Nghiên cứu / Kiến trúc (ADR / RDR) (RC-15, Mục 23, Mục 31)."""
     decision_id: str = Field(description="Stable ID: DEC-000001")
     title: str = Field(min_length=5)
     status: DecisionStatus = Field(default=DecisionStatus.ACCEPTED)
@@ -33,7 +33,7 @@ class DecisionRecord(BaseModel):
 
 
 class ContradictionRecord(BaseModel):
-    """Explicit Contradiction Unit between Conflicting Claims / Evidences (RC-13, Section 15)."""
+    """Đơn vị mâu thuẫn rõ ràng giữa các tuyên bố/bằng chứng xung đột (RC-13, Phần 15)."""
     contradiction_id: str = Field(description="Stable ID: CTR-000001")
     claim_a_id: str = Field(description="Subject Claim ID")
     claim_b_id: str = Field(description="Conflicting Claim ID")

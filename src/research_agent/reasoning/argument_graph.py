@@ -1,5 +1,5 @@
 """
-M4 Argument Graph Engine, Cycle Detector & Visual Exporters (Prompt 5 Sections 40, 41, 42)
+Công cụ đồ thị đối số M4, Trình phát hiện chu trình & Trình xuất hình ảnh (Nhắc 5 Phần 40, 41, 42)
 """
 
 from typing import List, Dict, Any, Optional, Set
@@ -17,8 +17,8 @@ from research_agent.core.enums import (
 
 class ArgumentGraphEngine:
     """
-    Builds, validates, and visualizes typed M4 Argument Graphs.
-    Detects circular support loops and exports to Mermaid, DOT, and JSON.
+    Xây dựng, xác thực và trực quan hóa các Biểu đồ đối số M4 đã nhập.
+    Phát hiện các vòng hỗ trợ hình tròn và xuất sang Nàng tiên cá, DOT và JSON.
     """
 
     def build_graph(
@@ -29,12 +29,12 @@ class ArgumentGraphEngine:
         roadmap_node: Optional[str] = None,
     ) -> ArgumentGraph:
         """
-        Constructs and validates an ArgumentGraph.
+        Xây dựng và xác nhận một ArgumentGraph.
         """
         is_cyclic = self.detect_cycles(nodes, edges)
         root_claims = [n.node_id for n in nodes if n.node_type == ArgumentNodeType.CLAIM]
         
-        # Calculate completeness score: ratio of supported nodes to total claims
+        # Tính điểm hoàn thiện: tỷ lệ các nút được hỗ trợ trên tổng số yêu cầu
         claim_nodes = {n.node_id for n in nodes if n.node_type == ArgumentNodeType.CLAIM}
         supported_claims = {e.target_node_id for e in edges if e.relation_type in [ArgumentEdgeType.SUPPORTS, ArgumentEdgeType.DERIVED_FROM]}
         completeness = len(supported_claims.intersection(claim_nodes)) / len(claim_nodes) if claim_nodes else 1.0
@@ -51,7 +51,7 @@ class ArgumentGraphEngine:
 
     def detect_cycles(self, nodes: List[ArgumentNode], edges: List[ArgumentEdge]) -> bool:
         """
-        Checks for directed cycles among support/dependency relations.
+        Kiểm tra các chu kỳ có định hướng giữa các mối quan hệ hỗ trợ/phụ thuộc.
         """
         adj: Dict[str, List[str]] = {n.node_id: [] for n in nodes}
         for e in edges:
@@ -81,10 +81,10 @@ class ArgumentGraphEngine:
 
     def to_mermaid(self, graph: ArgumentGraph) -> str:
         """
-        Exports graph as a GitHub-compatible Mermaid diagram.
+        Xuất biểu đồ dưới dạng sơ đồ Nàng tiên cá tương thích với GitHub.
         """
         lines = ["graph TD"]
-        # Node styling classes
+        # Các lớp tạo kiểu nút
         lines.append("    classDef claim fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;")
         lines.append("    classDef evidence fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;")
         lines.append("    classDef assumption fill:#fff8e1,stroke:#fbc02d,stroke-width:2px;")
@@ -101,7 +101,7 @@ class ArgumentGraphEngine:
 
     def to_dot(self, graph: ArgumentGraph) -> str:
         """
-        Exports graph as Graphviz DOT format.
+        Xuất biểu đồ dưới định dạng Graphviz DOT.
         """
         lines = ["digraph ArgumentGraph {", "    rankdir=LR;", "    node [shape=box, style=rounded];"]
         for n in graph.nodes:

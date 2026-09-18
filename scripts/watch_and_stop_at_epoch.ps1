@@ -1,4 +1,4 @@
-# scripts/watch_and_stop_at_epoch.ps1
+# tập lệnh/watch_and_stop_at_epoch.ps1
 param (
     [int]$TargetEpoch = 5,
     [int]$Seed = 1337,
@@ -31,10 +31,10 @@ while ($true) {
             Write-Host $msg -ForegroundColor Yellow
             Add-Content -Path $watcherLog -Value $msg
             
-            # Allow 5 seconds for last checkpoint flush and durable sync to finalize
+            # Chờ 5 giây để hoàn tất quá trình xóa checkpoint cuối cùng và đồng bộ hóa lâu bền
             Start-Sleep -Seconds 5
             
-            # Find and stop all python and powershell processes for this seed
+            # Tìm và dừng tất cả các tiến trình python và powershell cho hạt giống này
             $processes = Get-CimInstance Win32_Process -Filter "CommandLine LIKE '%--seed $Seed%'"
             foreach ($p in $processes) {
                 Stop-Process -Id $p.ProcessId -Force -ErrorAction SilentlyContinue
@@ -48,7 +48,7 @@ while ($true) {
             Write-Host $doneMsg -ForegroundColor Green
             Add-Content -Path $watcherLog -Value $doneMsg
 
-            # Update RUN-STATE.json to PAUSED and sync to durable
+            # Cập nhật RUN-STATE.json thành PAUSED và đồng bộ hóa để bền
             $runStateP = "$baseDir\experiments\runs\stage-a2\HDFS\seed-$Seed\RUN-STATE.json"
             $durableStateP = "$baseDir\durable\stage-a2\HDFS\seed-$Seed\RUN-STATE.json"
             if (Test-Path $runStateP) {
@@ -65,7 +65,7 @@ while ($true) {
                 }
             }
 
-            # Restore system CPU, GPU, fan, and sleep defaults to normal
+            # Khôi phục mặc định hệ thống CPU, GPU, quạt và chế độ ngủ về trạng thái bình thường
             $restoreMsg = "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] Restoring system CPU, GPU, and Sleep settings to factory defaults..."
             Write-Host $restoreMsg -ForegroundColor Cyan
             Add-Content -Path $watcherLog -Value $restoreMsg

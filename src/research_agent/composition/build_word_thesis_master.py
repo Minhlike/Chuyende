@@ -1,7 +1,7 @@
 """
-Master Document Builder - Chapter 1 & Chapter 2 Section 2.1
-Assembles the complete thesis into Word 2016 (.docx) with Word Desktop COM automation,
-generating updated TOC, List of Figures, List of Tables, and Bibliography.
+Trình tạo tài liệu chính - Chương 1 & Chương 2 Phần 2.1
+Tập hợp luận văn hoàn chỉnh vào Word 2016 (.docx) với tính năng tự động hóa Word Desktop COM,
+tạo TOC, Danh sách Hình, Danh sách Bảng và Thư mục được cập nhật.
 """
 
 import os
@@ -37,7 +37,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     repo = ResearchRepository(DatabaseManager())
     sources = repo.list_sources()
 
-    # Sync Master Sources.xml in AppData
+    # Đồng bộ hóa Master Sources.xml trong AppData
     try:
         master_xml_str = generate_perfect_sources_xml(sources)
         master_xml_path = os.path.expandvars(r"%APPDATA%\Microsoft\Bibliography\Sources.xml")
@@ -47,7 +47,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     except Exception as e:
         print(f"[WARNING] Could not sync master Sources.xml: {e}")
 
-    # Generate high-resolution figures
+    # Tạo số liệu có độ phân giải cao
     fig_paths = generate_all_figures()
     fig1_path, fig2_path, fig3_path, fig4_path, fig5_path = fig_paths
 
@@ -57,7 +57,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     print(f"[1/6] Loading template from: {template_path}")
     doc = docx.Document(str(template_path))
 
-    # Identify insertion point (Cover frame and TOC preserved)
+    # Xác định điểm chèn (Khung bìa và TOC được giữ nguyên)
     insertion_p_idx = None
     for idx, p in enumerate(doc.paragraphs):
         txt = p.text.strip().lower()
@@ -70,7 +70,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     else:
         target_p = doc.paragraphs[insertion_p_idx]
 
-    # Clean old body paragraphs
+    # Làm sạch các đoạn nội dung cũ
     cleaned_count = 0
     p_curr = target_p
     while p_curr is not None:
@@ -80,9 +80,9 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         p_curr = docx.text.paragraph.Paragraph(p_next, doc) if p_next is not None and p_next.tag.endswith('p') else None
     print(f"[2/6] Cleaned {cleaned_count} old body paragraphs. Insertion target ready.")
 
-    target_p = None  # Append to end
+    target_p = None  # Nối vào cuối
 
-    # Helper paragraph builders
+    # Trình tạo đoạn văn trợ giúp
     def add_h1(text):
         p = doc.add_paragraph(style="Heading 1")
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -876,7 +876,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     add_h1("Tài liệu tham khảo")
     print("[5/6] Creating native Word BIBLIOGRAPHY field...")
 
-    # Build dynamic Bibliography paragraph
+    # Xây dựng đoạn Thư mục động
     bib_p = doc.add_paragraph(style="Normal")
     bib_p.alignment = WD_ALIGN_PARAGRAPH.LEFT
     bib_p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
@@ -905,11 +905,11 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     fld_xml_parts.append('</w:fldSimple>')
     bib_p._p.append(parse_xml('\n'.join(fld_xml_parts)))
 
-    # Save to temp docx
+    # Lưu vào tạm thời docx
     temp_file = target_path.parent / (target_path.stem + ".temp.docx")
     doc.save(str(temp_file))
 
-    # Inject customXml/item1.xml into zip package
+    # Tiêm customXml/item1.xml vào gói zip
     sources_xml_data = generate_perfect_sources_xml(sources).encode("utf-8")
     updated_file = target_path.parent / (target_path.stem + ".updated.docx")
     
@@ -928,7 +928,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     print(f"[SUCCESS] Saved and updated DOCX: {target_path}")
 
     # =========================================================================
-    # STEP 6: AUTOMATE MICROSOFT WORD DESKTOP TO INSERT NATIVE DIAGRAMS, UPDATE ALL DYNAMIC FIELDS & EXPORT PDF
+    # STEP 6: AUTOMATE MICROSOFT WORD DESKTOP ĐẾN INSERT NATIVE DIAGRAMS, UPDATE ALL DYNAMIC FIELDS & EXPORT PDF
     # =========================================================================
     print("[6/6] Launching Desktop Microsoft Word to render Native Diagrams, update all dynamic fields and export PDF...")
     word = None
@@ -938,12 +938,12 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     try:
         word = win32.DispatchEx("Word.Application")
         word.Visible = False
-        word.DisplayAlerts = 0  # wdAlertsNone
+        word.DisplayAlerts = 0  # wdAlertsKhông có
         
         abs_target = os.path.abspath(str(target_path))
         doc_com = word.Documents.Open(abs_target)
 
-        # Update dynamic fields
+        # Cập nhật các trường động
         for fld in doc_com.Fields:
             try:
                 fld.Update()
@@ -962,11 +962,11 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
             except Exception:
                 pass
 
-        # Save the fully resolved and updated docx
+        # Lưu docx đã được giải quyết và cập nhật đầy đủ
         doc_com.Save()
         print(f"[SUCCESS] Microsoft Word updated and saved: {abs_target}")
 
-        # Export as PDF
+        # Xuất dưới dạng PDF
         abs_pdf = os.path.abspath(str(pdf_path))
         doc_com.ExportAsFixedFormat(abs_pdf, 17)  # 17 = wdExportFormatPDF
         print(f"[SUCCESS] Exported PDF: {abs_pdf}")

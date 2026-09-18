@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-Temporal & Relational Provenance Graph View Extractor
-Implements Chapter 2 Frozen Specification (Section 2.2 & Bang 2.2):
-  - Dynamic Provenance Interaction Events: e_i = (t_i, relation_type, src, dst, edge_features, src_node_attr, dst_node_attr)
-  - Sinusoidal Relative Time Encoding: Phi(delta_t)
-  - Continuous-Time Entity Memory Bank with GRU update, LRU capacity bounding, and state accounting
-  - Message Function: Msg(h_src_pre, h_dst_pre, Phi(delta_src), relation_emb, edge_feat_emb, src_node_attr, dst_node_attr)
-  - Grouped Same-Time Aggregation: m_u_agg(t) = Agg({m_v->u(t)}) before single memory update
-  - Graph Readout: z_graph(t)
-  - Three Anti-Leakage Graph Self-Supervised Learning (SSL) Heads:
-      1. L_mask_node: Reconstructs masked continuous privacy-safe node attribute vector x_v^priv with Smooth L1
-      2. L_mask_edge: Predicts relation type from masked edge embedding (zero target leakage)
-      3. L_time_gap: Predicts temporal gap log(1 + delta_t) with Smooth L1 loss
-  - Strict Global Monotonic Temporal Event Order Validation & Late-Event Rejection
+Trình trích xuất biểu đồ xuất xứ theo thời gian và quan hệ
+Triển khai Đặc tả đông lạnh Chương 2 (Phần 2.2 & Bang 2.2):
+  - Sự kiện tương tác chứng minh nguồn động: e_i = (t_i, relation_type, src, dst, edge_features, src_node_attr, dst_node_attr)
+  - Mã hóa thời gian tương đối hình sin: Phi(delta_t)
+  - Ngân hàng bộ nhớ thực thể thời gian liên tục với bản cập nhật GRU, giới hạn dung lượng LRU và tính toán trạng thái
+  - Chức năng thông báo: Msg(h_src_pre, h_dst_pre, Phi(delta_src), relation_emb, edge_feat_emb, src_node_attr, dst_node_attr)
+  - Tập hợp cùng thời gian được nhóm: m_u_agg(t) = Agg({m_v->u(t)}) trước khi cập nhật bộ nhớ đơn
+  - Đọc đồ thị: z_graph(t)
+  - Ba đầu học tập tự giám sát đồ thị chống rò rỉ (SSL):
+      1. L_mask_node: Tái tạo vectơ thuộc tính nút an toàn quyền riêng tư liên tục được che dấu x_v^priv với Smooth L1
+      2. L_mask_edge: Dự đoán loại mối quan hệ từ việc nhúng cạnh bị che (không rò rỉ mục tiêu)
+      3. L_time_gap: Dự đoán nhật ký khoảng cách thời gian(1 + delta_t) với mất Smooth L1
+  - Xác thực đơn hàng sự kiện tạm thời đơn điệu toàn cầu nghiêm ngặt & Từ chối sự kiện muộn
 """
 
 import math
@@ -24,7 +24,7 @@ import torch.nn.functional as F
 
 class SinusoidalTimeEncoding(nn.Module):
     """
-    Fourier / Harmonic Relative Time Encoding:
+    Mã hóa thời gian tương đối Fourier / hài hòa:
     Phi(delta_t) = [cos(w_1 delta_t), sin(w_1 delta_t), ..., cos(w_k delta_t), sin(w_k delta_t)]
     """
     def __init__(self, time_dim: int):
@@ -44,7 +44,7 @@ class SinusoidalTimeEncoding(nn.Module):
 
 class BoundedEntityMemoryBank(nn.Module):
     """
-    LRU-bounded Dynamic Entity Memory Bank tracking state h_u(t) and last interaction timestamp t_u.
+    Trạng thái theo dõi Ngân hàng bộ nhớ thực thể động được giới hạn LRU h_u(t) và dấu thời gian tương tác cuối cùng t_u.
     """
     def __init__(self, memory_dim: int, max_entities: int = 10000):
         super().__init__()
@@ -82,7 +82,7 @@ class BoundedEntityMemoryBank(nn.Module):
         self.last_timestamps[entity_id] = timestamp
         self.last_global_timestamp = max(self.last_global_timestamp, timestamp)
 
-        # LRU Eviction when capacity exceeded
+        # LRU Trục xuất khi vượt quá dung lượng
         while len(self.memory_store) > self.max_entities:
             oldest_id, _ = self.memory_store.popitem(last=False)
             if oldest_id in self.last_timestamps:
@@ -121,8 +121,8 @@ class BoundedEntityMemoryBank(nn.Module):
 
 class TemporalGraphViewExtractor(nn.Module):
     """
-    Continuous-Time Temporal GNN Extractor for Provenance Telemetry.
-    Implements Msg -> Same-Time Aggregation -> Memory Update -> Readout.
+    Bộ trích xuất GNN tạm thời theo thời gian liên tục để đo từ xa nguồn gốc.
+    Triển khai tin nhắn -> Tổng hợp cùng thời gian -> Cập nhật bộ nhớ -> Đọc.
     """
     def __init__(
         self,
@@ -144,7 +144,7 @@ class TemporalGraphViewExtractor(nn.Module):
         self.num_relations = num_relations
         self.late_event_policy = late_event_policy
 
-        # Embeddings & Encoders
+        # Nhúng & Bộ mã hóa
         self.node_attr_encoder = nn.Sequential(
             nn.Linear(node_attr_dim, node_attr_dim),
             nn.GELU(),
@@ -153,21 +153,21 @@ class TemporalGraphViewExtractor(nn.Module):
         self.mask_node_token = nn.Parameter(torch.zeros(1, node_attr_dim))
         nn.init.normal_(self.mask_node_token, std=0.02)
 
-        self.relation_emb = nn.Embedding(num_relations + 1, memory_dim)  # +1 for MASK_RELATION
+        self.relation_emb = nn.Embedding(num_relations + 1, memory_dim)  # +1 cho MASK_RELATION
         self.mask_relation_idx = num_relations
         self.time_encoder = SinusoidalTimeEncoding(time_dim=time_dim)
 
-        # Edge feature encoder (x_e)
+        # Bộ mã hóa tính năng cạnh (x_e)
         self.edge_feat_encoder = nn.Sequential(
             nn.Linear(edge_feat_dim, edge_feat_dim),
             nn.GELU(),
             nn.Linear(edge_feat_dim, edge_feat_dim)
         )
 
-        # Memory Bank
+        # Ngân hàng bộ nhớ
         self.memory_bank = BoundedEntityMemoryBank(memory_dim=memory_dim, max_entities=max_entities)
 
-        # Message Function: Msg(h_src, h_dst, phi(delta), r_emb, edge_feat, x_v_src, x_v_dst)
+        # Chức năng thông báo: Msg(h_src, h_dst, phi(delta), r_emb, edge_feat, x_v_src, x_v_dst)
         msg_in_dim = memory_dim * 2 + time_dim + memory_dim + edge_feat_dim + node_attr_dim * 2
         self.msg_net = nn.Sequential(
             nn.Linear(msg_in_dim, memory_dim),
@@ -176,10 +176,10 @@ class TemporalGraphViewExtractor(nn.Module):
             nn.Linear(memory_dim, memory_dim)
         )
 
-        # Memory Update Cell (GRU)
+        # Ô cập nhật bộ nhớ (GRU)
         self.gru_cell = nn.GRUCell(input_size=memory_dim, hidden_size=memory_dim)
 
-        # Readout Projection
+        # Chiếu đọc
         self.readout_proj = nn.Sequential(
             nn.Linear(memory_dim, out_dim),
             nn.LayerNorm(out_dim)
@@ -188,7 +188,7 @@ class TemporalGraphViewExtractor(nn.Module):
         # ---------------------------------------------------------------------
         # THREE ANTI-LEAKAGE GRAPH SSL HEADS
         # ---------------------------------------------------------------------
-        # 1. L_mask_node: Continuous x_v^priv Reconstruction Head
+        # 1. L_mask_node: Đầu tái tạo x_v^priv liên tục
         self.ssl_mask_node_head = nn.Sequential(
             nn.Linear(memory_dim, memory_dim),
             nn.GELU(),
@@ -196,7 +196,7 @@ class TemporalGraphViewExtractor(nn.Module):
             nn.Linear(memory_dim, node_attr_dim)
         )
 
-        # 2. L_mask_edge: Masked Relation Prediction Head
+        # 2. L_mask_edge: Đầu dự đoán mối quan hệ đeo mặt nạ
         self.ssl_mask_edge_head = nn.Sequential(
             nn.Linear(memory_dim, memory_dim),
             nn.GELU(),
@@ -204,7 +204,7 @@ class TemporalGraphViewExtractor(nn.Module):
             nn.Linear(memory_dim, num_relations)
         )
 
-        # 3. L_time_gap: Temporal Gap Prediction Head (predicts log(1 + delta_t))
+        # 3. L_time_gap: Đầu dự đoán khoảng cách thời gian (nhật ký dự đoán(1 + delta_t))
         self.ssl_time_gap_head = nn.Sequential(
             nn.Linear(memory_dim, memory_dim),
             nn.GELU(),
@@ -220,11 +220,11 @@ class TemporalGraphViewExtractor(nn.Module):
         mask_node_indices: Optional[Set[int]] = None
     ) -> Tuple[torch.Tensor, Dict[str, torch.Tensor]]:
         """
-        Processes dynamic events with:
-          1. Strict global temporal monotonicity check across event sequence
-          2. Explicit node attribute vector x_v^priv in message path with true masking
-          3. Grouped same-time message aggregation per destination: Agg({m_{v->u}(t)})
-          4. Single memory update per destination at time t
+        Xử lý các sự kiện động với:
+          1. Kiểm tra tính đơn điệu thời gian toàn cục một cách nghiêm ngặt xuyên suốt chuỗi sự kiện
+          2. Vectơ thuộc tính nút rõ ràng x_v^priv trong đường dẫn thông báo với mặt nạ thực sự
+          3. Tập hợp tin nhắn cùng lúc được nhóm theo đích đến: Agg({m_{v->u}(t)})
+          4. Cập nhật bộ nhớ đơn cho mỗi đích tại thời điểm t
         """
         if not events:
             h_init = self.memory_bank.h_init.to(device)
@@ -233,7 +233,7 @@ class TemporalGraphViewExtractor(nn.Module):
         mask_edge_indices = mask_edge_indices or set()
         mask_node_indices = mask_node_indices or set()
 
-        # 1. Strict Monotonicity Check across the entire event stream
+        # 1. Kiểm tra tính đơn điệu nghiêm ngặt trên toàn bộ luồng sự kiện
         for i in range(1, len(events)):
             if events[i]["timestamp"] < events[i - 1]["timestamp"]:
                 if self.late_event_policy == "REJECT":
@@ -250,7 +250,7 @@ class TemporalGraphViewExtractor(nn.Module):
                         f"Global late event rejected: event timestamp {t} < last processed {self.memory_bank.last_global_timestamp}"
                     )
 
-        # Group events by timestamp to implement causal micro-batches
+        # Nhóm các sự kiện theo dấu thời gian để triển khai các đợt vi mô nhân quả
         time_to_events: Dict[float, List[Tuple[int, Dict[str, Any]]]] = OrderedDict()
         for idx, ev in enumerate(events):
             t = ev["timestamp"]
@@ -272,7 +272,7 @@ class TemporalGraphViewExtractor(nn.Module):
                 d_id = ev["dst"]
                 r_type = ev["relation_type"]
 
-                # 1. Node Attributes x_v^priv (Source and Destination)
+                # 1. Thuộc tính nút x_v^priv (Nguồn và Đích)
                 raw_src_attr = ev.get("src_node_attr", None)
                 if raw_src_attr is not None:
                     src_attr_tensor = torch.tensor(raw_src_attr, dtype=torch.float32, device=device).view(1, -1)
@@ -285,7 +285,7 @@ class TemporalGraphViewExtractor(nn.Module):
                 else:
                     dst_attr_tensor = torch.zeros(1, self.node_attr_dim, dtype=torch.float32, device=device)
 
-                # Node Masking: Replace x_v^priv with mask token BEFORE message computation
+                # Mặt nạ nút: Thay thế x_v^priv bằng tính toán thông báo token mặt nạ BEFORE
                 if global_idx in mask_node_indices:
                     enc_src_attr = self.mask_node_token
                 else:
@@ -293,7 +293,7 @@ class TemporalGraphViewExtractor(nn.Module):
 
                 enc_dst_attr = self.node_attr_encoder(dst_attr_tensor)
 
-                # 2. Edge Features (x_e)
+                # 2. Tính năng cạnh (x_e)
                 raw_ef = ev.get("edge_features", None)
                 if raw_ef is not None:
                     ef_tensor = torch.tensor(raw_ef, dtype=torch.float32, device=device).view(1, -1)
@@ -301,7 +301,7 @@ class TemporalGraphViewExtractor(nn.Module):
                     ef_tensor = torch.zeros(1, self.edge_feat_dim, dtype=torch.float32, device=device)
                 ef_emb = self.edge_feat_encoder(ef_tensor)
 
-                # 3. Memory & Delta Times
+                # 3. Bộ nhớ & Thời gian Delta
                 h_s_pre, delta_s = self.memory_bank.get_memory(s_id, t_step, device)
                 h_d_pre, delta_d = self.memory_bank.get_memory(d_id, t_step, device)
 
@@ -310,13 +310,13 @@ class TemporalGraphViewExtractor(nn.Module):
 
                 phi_delta = self.time_encoder(torch.tensor([delta_s], dtype=torch.float32, device=device))
 
-                # Relation embedding with masking support
+                # Nhúng mối quan hệ với sự hỗ trợ mặt nạ
                 if global_idx in mask_edge_indices:
                     r_emb = self.relation_emb(torch.tensor([self.mask_relation_idx], dtype=torch.long, device=device))
                 else:
                     r_emb = self.relation_emb(torch.tensor([r_type], dtype=torch.long, device=device))
 
-                # Msg includes: h_src, h_dst, phi(delta), r_emb, ef_emb, enc_src_attr, enc_dst_attr
+                # Msg bao gồm: h_src, h_dst, phi(delta), r_emb, ef_emb, enc_src_attr, enc_dst_attr
                 msg_in = torch.cat([
                     h_s_pre.unsqueeze(0),
                     h_d_pre.unsqueeze(0),
@@ -339,14 +339,14 @@ class TemporalGraphViewExtractor(nn.Module):
                     all_pred_node_attrs.append(self.ssl_mask_node_head(msg_v_u.unsqueeze(0)))
                     all_true_node_attrs.append(src_attr_tensor)
 
-            # Same-Time Aggregation per Destination
+            # Tổng hợp cùng thời gian cho mỗi điểm đến
             for d_id, msg_list in dest_messages.items():
                 m_agg = torch.stack(msg_list, dim=0).mean(dim=0, keepdim=True)
                 h_prev = dest_prev_h[d_id].unsqueeze(0)
                 h_new = self.gru_cell(m_agg, h_prev).squeeze(0)
                 self.memory_bank.update_entity(d_id, h_new, t_step)
 
-        # Graph Readout Pooling
+        # Nhóm đọc đồ thị
         active_states = list(self.memory_bank.memory_store.values())
         if active_states:
             pooled_state = torch.stack(active_states, dim=0).mean(dim=0, keepdim=True)
@@ -360,7 +360,7 @@ class TemporalGraphViewExtractor(nn.Module):
         ssl_losses = {}
         all_msg_tensor = torch.stack(all_messages, dim=0)
 
-        # 1. L_mask_node: Vector reconstruction of x_v^priv
+        # 1. L_mask_node: Tái tạo vectơ của x_v^priv
         if all_pred_node_attrs:
             pred_n_attr = torch.cat(all_pred_node_attrs, dim=0)
             true_n_attr = torch.cat(all_true_node_attrs, dim=0)
@@ -380,7 +380,7 @@ class TemporalGraphViewExtractor(nn.Module):
             dummy_e = torch.zeros(pred_e.size(0), dtype=torch.long, device=device)
             ssl_losses["L_mask_edge"] = F.cross_entropy(pred_e, dummy_e) * 0.0
 
-        # 3. L_time_gap: log(1 + delta_t) with Smooth L1
+        # 3. L_time_gap: log(1 + delta_t) với Smooth L1
         pred_time = self.ssl_time_gap_head(all_msg_tensor).squeeze(-1)
         true_deltas = torch.tensor(all_delta_dests, dtype=torch.float32, device=device)
         target_log_gap = torch.log1p(true_deltas)

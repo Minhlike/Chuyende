@@ -1,5 +1,5 @@
 """
-Claim and Claim Relation Schemas (RC-04, RC-05, RC-06, RC-07, RC-02)
+Khiếu nại và Lược đồ quan hệ yêu cầu bồi thường (RC-04, RC-05, RC-06, RC-07, RC-02)
 """
 
 from datetime import datetime, timezone
@@ -15,7 +15,7 @@ from research_agent.core.exceptions import ProvenanceError
 
 
 class Claim(BaseModel):
-    """Canonical Atomic Claim Entity (RC-04..RC-07)."""
+    """Thực thể yêu cầu nguyên tử chuẩn (RC-04..RC-07)."""
     claim_id: str = Field(description="Stable ID: CLM-000001")
     statement: str = Field(min_length=5, description="Unambiguous atomic proposition")
     claim_type: ClaimType = Field(description="Taxonomy: SOURCE_FACT, OUR_DESIGN, etc. (RC-05)")
@@ -34,7 +34,7 @@ class Claim(BaseModel):
 
     @model_validator(mode="after")
     def validate_invariants(self) -> "Claim":
-        # RC-02 / TEST 4 Invariant: EXPERIMENT_RESULT claims MUST link to an ExperimentRun
+        # RC-02 / TEST 4 Bất biến: EXPERIMENT_RESULT xác nhận liên kết MUST tới một ExperimentRun
         if self.claim_type == ClaimType.EXPERIMENT_RESULT:
             if not self.experiment_run_id or not self.experiment_run_id.strip():
                 raise ProvenanceError(
@@ -42,7 +42,7 @@ class Claim(BaseModel):
                     message=f"Claim '{self.claim_id}' of type EXPERIMENT_RESULT must specify a valid experiment_run_id."
                 )
 
-        # Invariant: SOURCE_FACT or SOURCE_CLAIM should not have ownership OURS
+        # Bất biến: SOURCE_FACT hoặc SOURCE_CLAIM không được có quyền sở hữu OURS
         if self.claim_type in (ClaimType.SOURCE_FACT, ClaimType.SOURCE_CLAIM) and self.ownership == IntellectualOwnership.OURS:
             raise ValueError(f"Claim '{self.claim_id}' with type {self.claim_type} cannot have ownership OURS (RC-06).")
 
@@ -50,7 +50,7 @@ class Claim(BaseModel):
 
 
 class ClaimRelation(BaseModel):
-    """Explicit Directed Logical Relation between Two Claims."""
+    """Mối quan hệ logic có định hướng rõ ràng giữa hai yêu cầu."""
     relation_id: str = Field(description="Stable ID: ARE-000001 or relation UUID")
     source_claim_id: str = Field(description="Subject Claim ID")
     target_claim_id: str = Field(description="Object Claim ID")

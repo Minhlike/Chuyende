@@ -1,5 +1,5 @@
 """
-Argument Graph Interface (Section 11, Section 8)
+Giao diện đồ thị đối số (Phần 11, Phần 8)
 """
 
 import json
@@ -12,13 +12,13 @@ from research_agent.storage.repository import ResearchRepository
 
 
 class ArgumentGraph:
-    """Manages the formal argument graph connecting premises, inferences, and conclusions."""
+    """Quản lý biểu đồ lập luận chính thức kết nối các tiền đề, suy luận và kết luận."""
 
     def __init__(self, repository: ResearchRepository):
         self.repo = repository
 
     def add_node(self, claim_id: str, role: str = "PREMISE", summary: str = "") -> ArgumentNode:
-        """Add an argument node associated with a canonical claim."""
+        """Thêm nút đối số được liên kết với xác nhận quyền sở hữu chính tắc."""
         claim = self.repo.get_claim(claim_id)
         if not claim:
             raise EntityNotFoundError(f"Claim '{claim_id}' does not exist.")
@@ -48,7 +48,7 @@ class ArgumentGraph:
         weight: float = 1.0,
         rationale: Optional[str] = None,
     ) -> ArgumentEdge:
-        """Add a directed typed edge between two argument nodes."""
+        """Thêm một cạnh được định hướng giữa hai nút đối số."""
         edge_id = self.repo.next_id(EntityPrefix.ARGUMENT_EDGE)
         edge = ArgumentEdge(
             edge_id=edge_id,

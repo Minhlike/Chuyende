@@ -1,5 +1,5 @@
 """
-Contribution Differentiation & Novelty Safety Engine (Prompt 5 Sections 38, 39)
+Đóng góp khác biệt & Công cụ an toàn mới lạ (Nhắc 5 Mục 38, 39)
 """
 
 from typing import List, Dict, Any, Optional, Tuple
@@ -12,9 +12,9 @@ from research_agent.core.enums import ReasoningIssueType
 
 class ContributionDifferentiator:
     """
-    Evaluates candidate research contributions (CAND-01..CAND-15) against prior art.
-    Enforces the fundamental novelty invariant:
-    OURS != NOVEL (Prompt 5 Section 39, Reference Map Invariant).
+    Đánh giá những đóng góp cho nghiên cứu của ứng viên (CAND-01..CAND-15) so với tình trạng kỹ thuật trước đó.
+    Thực thi tính bất biến (invariance) mới cơ bản:
+    OURS != NOVEL (Lời nhắc 5 Phần 39, Bất biến bản đồ tham khảo).
     """
 
     def differentiate(
@@ -23,7 +23,7 @@ class ContributionDifferentiator:
         prior_sources: List[Source],
     ) -> Tuple[NoveltyReasoningState, Dict[str, Any], List[ReasoningIssue]]:
         """
-        Differentiates candidate contribution across 6 dimensions:
+        Phân biệt sự đóng góp của ứng viên trên 6 khía cạnh:
         1. closest_prior_work
         2. what_they_did
         3. what_they_did_not_do
@@ -35,7 +35,7 @@ class ContributionDifferentiator:
         c_title = contribution.name.lower()
         c_diff = (contribution.differentiation_notes or contribution.description).lower()
 
-        # Check for empty prior art search
+        # Kiểm tra tìm kiếm nghệ thuật trống
         if not prior_sources:
             return (
                 NoveltyReasoningState.CANDIDATE,
@@ -52,7 +52,7 @@ class ContributionDifferentiator:
                 ]
             )
 
-        # Check if difference is trivial or overclaiming
+        # Kiểm tra xem sự khác biệt có tầm thường hay bị đánh giá quá cao
         if "first to ever" in c_diff or ("novel" in c_title and len(c_diff) < 20):
             issues.append(
                 ReasoningIssue(

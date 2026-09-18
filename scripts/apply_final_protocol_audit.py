@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Final Protocol Audit & Baseline Locking Script
-Applies all 10 audit corrections from the final pre-registration audit.
+Tập lệnh kiểm tra giao thức cuối cùng và khóa baseline
+Áp dụng tất cả 10 bản sửa lỗi kiểm tra từ lần kiểm tra đăng ký trước cuối cùng.
 """
 
 import sys
@@ -17,7 +17,7 @@ def main():
     protocol_dir.mkdir(parents=True, exist_ok=True)
     manifests_dir.mkdir(parents=True, exist_ok=True)
 
-    # Master Hashes
+    # Băm chính
     master_docx_sha256 = "07cdd037868ffbca135498d077bdef291c6e5638b619d41b60175d80cac80463"
     ch1_norm_hash = "b7912883570e369e765c7a6daa7fc626db570c8b53050e976d4f652a2dc7e16e"
     ch2_norm_hash = "e91bbc47de218d037d5dec3192b6ba59fda4e3c7423e51c34aea898d3db25a01"
@@ -115,7 +115,7 @@ $$\\mathcal{{L}}_{{1:t}} \\xrightarrow{{\\quad f_\\theta \\quad}} \\mathbf{{z}}_
     print("[OK] Updated CH3-PRE-REGISTRATION.md with exact DOCX hashes")
 
     # =========================================================================
-    # 2. DATASET-CARDS.md (DARPA exact scope & LANL redteam boundary locked)
+    # 2. DATASET-CARDS.md (Phạm vi chính xác DARPA & ranh giới nhóm đỏ LANL bị khóa)
     # =========================================================================
     dataset_cards = """# DATASET PROTOCOL & CANONICAL DATASET CARDS
 
@@ -202,7 +202,7 @@ To prevent post-hoc performer or scenario cherry-picking, the DARPA TC evaluatio
     print("[OK] Updated DATASET-CARDS.md with DARPA exact scope and LANL boundary")
 
     # =========================================================================
-    # 3. SPLIT-PROTOCOL.md (State Machine: PLANNED -> ACQUIRED -> SEALED)
+    # 3. SPLIT-PROTOCOL.md (Máy trạng thái: PLANNED -> ACQUIRED -> SEALED)
     # =========================================================================
     split_protocol = """# ANTI-LEAKAGE CAUSAL SPLIT PROTOCOL & SPLIT MANIFEST STATE MACHINE
 
@@ -272,7 +272,7 @@ Before any split manifest transitions from `PLANNED` to `ACQUIRED` and `SEALED`,
     print("[OK] Updated SPLIT-PROTOCOL.md with state machine specification")
 
     # =========================================================================
-    # 4. STATISTICAL-PLAN.md (Exact Decision Tree, Families, Bootstrap Contract)
+    # 4. STATISTICAL-PLAN.md (Cây quyết định chính xác, Gia đình, Hợp đồng Bootstrap)
     # =========================================================================
     stat_plan = """# STATISTICAL ANALYSIS PLAN & HYPOTHESIS TESTING CONTRACT
 
@@ -360,7 +360,7 @@ To prevent invalid row-level independence assumptions in correlated log streams:
     print("[OK] Updated STATISTICAL-PLAN.md with decision tree and bootstrap contract")
 
     # =========================================================================
-    # 5. PROTOCOL-AMENDMENTS.md (Amendment Tracking Ledger)
+    # 5. PROTOCOL-AMENDMENTS.md (Sổ cái theo dõi sửa đổi)
     # =========================================================================
     protocol_amendments = """# EXPERIMENTAL PROTOCOL AMENDMENT LEDGER
 
@@ -410,7 +410,7 @@ Any modification to the locked pre-registration protocol after registration date
     print("[OK] Created PROTOCOL-AMENDMENTS.md")
 
     # =========================================================================
-    # 6. Update generate_split_manifests.py to State: PLANNED
+    # 6. Cập nhật generate_split_manifests.py thành trạng thái: PLANNED
     # =========================================================================
     split_gen_code = '''# -*- coding: utf-8 -*-
 """

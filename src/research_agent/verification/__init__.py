@@ -1,5 +1,5 @@
 """
-Scientific Verification Package (Prompt 6, RC-08, RC-09, RC-10, RC-14, RC-16, RC-18)
+Gói xác minh khoa học (Nhắc 6, RC-08, RC-09, RC-10, RC-14, RC-16, RC-18)
 """
 
 from research_agent.verification.equations.symbolic_engine import SymbolicVerificationEngine

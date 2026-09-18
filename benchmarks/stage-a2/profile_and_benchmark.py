@@ -1,8 +1,8 @@
 ﻿# -*- coding: utf-8 -*-
 """
-Stage A2 Baseline Profiler and Benchmark Harness.
-Measures reference implementation throughput, latency, GPU/CPU utilization,
-and profiles hotpaths with cProfile and PyTorch profiler.
+Trình phân tích baseline và khai thác điểm chuẩn giai đoạn A2.
+Đo lường thông lượng triển khai tham chiếu, độ trễ, mức sử dụng GPU/CPU,
+và lập hồ sơ các đường dẫn nóng với trình lược tả cProfile và PyTorch.
 """
 
 import os
@@ -31,7 +31,7 @@ def run_benchmark(fixture_path: Path):
     print("   STAGE A2 BASELINE PERFORMANCE PROFILING & BENCHMARK    ")
     print("==========================================================")
 
-    # 1. Enforce determinism
+    # 1. Thực thi chủ nghĩa quyết định
     torch.use_deterministic_algorithms(True)
     if torch.cuda.is_available():
         torch.backends.cudnn.deterministic = True
@@ -40,7 +40,7 @@ def run_benchmark(fixture_path: Path):
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     print(f"Device: {device} ({torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU'})")
 
-    # 2. Load fixture
+    # 2. Vật cố định tải
     raw_data = json.loads(fixture_path.read_text(encoding="utf-8"))
     print(f"Loaded {len(raw_data)} fixture events from {fixture_path.name}")
 
@@ -52,7 +52,7 @@ def run_benchmark(fixture_path: Path):
     timed_windows = chunk_windows(timed_events, 256)
     profile_windows = chunk_windows(profile_events, 256)
 
-    # 3. Model & Trainer setup
+    # 3. Thiết lập người mẫu & huấn luyện viên
     torch.manual_seed(42)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(42)
@@ -88,7 +88,7 @@ def run_benchmark(fixture_path: Path):
         total_steps_override=573 * 20
     )
 
-    # 4. Warmup
+    # 4. Khởi động
     print(f"Running Warmup ({len(warmup_events)} events, {len(warmup_windows)} windows)...")
     if torch.cuda.is_available():
         torch.cuda.synchronize()
@@ -97,7 +97,7 @@ def run_benchmark(fixture_path: Path):
         torch.cuda.synchronize()
     print("Warmup complete.")
 
-    # 5. Timed Baseline
+    # 5. baseline theo thời gian
     print(f"\nRunning Timed Baseline ({len(timed_events)} events, {len(timed_windows)} windows)...")
     trainer.model.reset_node_states()
     trainer.mask_generator.manual_seed(42)
@@ -129,7 +129,7 @@ def run_benchmark(fixture_path: Path):
     print(f"Throughput: {events_per_sec:.1f} events/s | {windows_per_sec:.2f} windows/s | {steps_per_sec:.2f} opt_steps/s")
     print(f"VRAM Peak: {vram_alloc_mb:.1f} MB allocated | {vram_res_mb:.1f} MB reserved")
 
-    # Projections (ESTIMATE)
+    # Phép chiếu (ESTIMATE)
     train_total_events = 586577
     val_total_events = 119531
     est_train_time_sec = train_total_events / events_per_sec
@@ -141,7 +141,7 @@ def run_benchmark(fixture_path: Path):
     print(f"ESTIMATE Val Time (119,531 events):   {est_val_time_sec / 60.0:.2f} min ({est_val_time_sec:.1f} s)")
     print(f"ESTIMATE Total Epoch Time:             {est_total_epoch_sec / 60.0:.2f} min ({est_total_epoch_sec:.1f} s)")
 
-    # 6. Detailed Profiling
+    # 6. Hồ sơ chi tiết
     print(f"\nProfiling Hotpath ({len(profile_events)} events)...")
     trainer.model.reset_node_states()
     trainer.mask_generator.manual_seed(42)

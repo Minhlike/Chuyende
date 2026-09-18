@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Canonical Stage A1 Acceptance Gate Script.
-Performs strict, automated verification of all Stage A1 scientific invariants,
-manifest inventories, deterministic resumption, test firewall sealing, and evidence artifacts.
-Outputs STAGE_A1_ACCEPTANCE=PASS or STAGE_A1_ACCEPTANCE=FAIL.
+Tập lệnh cổng chấp nhận giai đoạn A1 của Canonical.
+Thực hiện xác minh tự động, nghiêm ngặt tất cả các bất biến khoa học Giai đoạn A1,
+bản kê (manifest), tiếp tục xác định, kiểm tra việc niêm phong tường lửa và các tạo phẩm bằng chứng.
+Đầu ra STAGE_A1_ACCEPTANCE=PASS hoặc STAGE_A1_ACCEPTANCE=FAIL.
 """
 
 import sys
@@ -19,7 +19,7 @@ def verify_stage_a1():
     print("      STAGE A1 FINAL ACCEPTANCE GATE VERIFICATION AUDIT          ")
     print("=================================================================")
 
-    # 1. Protocol Lock File & Contract Hash Check
+    # 1. Kiểm tra hàm băm hợp đồng và tệp khóa giao thức
     lock_path = base_dir / "experiments" / "protocol" / "STAGE-A1-PREEXECUTION-LOCK.json"
     if not lock_path.exists():
         failures.append("MISSING_PROTOCOL_LOCK_FILE")
@@ -39,7 +39,7 @@ def verify_stage_a1():
         print(f"[CHECK 1] Protocol Lock File SHA256: {file_sha256} (OK)")
         print(f"[CHECK 1] Inside Contract SHA256:    {contract_sha256} (OK)")
 
-    # 2. Manifest Inventory Check (5 Seeds HDFS + 5 Seeds BGL)
+    # 2. Kiểm tra hàng tồn kho kê khai (5 hạt HDFS + 5 hạt BGL)
     datasets = ["HDFS", "BGL"]
     canonical_seeds = [42, 1337, 2024, 7, 999]
     manifest_count = 0
@@ -63,7 +63,7 @@ def verify_stage_a1():
             manifest_count += 1
             mf = json.loads(mf_path.read_text(encoding="utf-8"))
 
-            # Test Firewall
+            # Kiểm tra tường lửa
             if mf.get("test_opened") is not False:
                 failures.append(f"TEST_OPENED_TRUE_{ds}_SEED_{seed}")
             if mf.get("test_feature_read_count", -1) != 0:
@@ -73,18 +73,18 @@ def verify_stage_a1():
             if mf.get("test_metric_count", -1) != 0:
                 failures.append(f"TEST_METRIC_NONZERO_{ds}_SEED_{seed}")
 
-            # NaN / Inf Health Gates
+            # Cổng sức khỏe NaN / Inf
             if mf.get("nan_loss_count", -1) != 0 or mf.get("inf_loss_count", -1) != 0:
                 failures.append(f"NAN_INF_LOSS_DETECTED_{ds}_SEED_{seed}")
             if mf.get("nan_grad_count", -1) != 0 or mf.get("inf_grad_count", -1) != 0:
                 failures.append(f"NAN_INF_GRAD_DETECTED_{ds}_SEED_{seed}")
 
-            # Checkpoint SHA
+            # checkpoint SHA
             ckpt_sha = mf.get("best_checkpoint_sha256", "")
             if not ckpt_sha or len(ckpt_sha) != 64:
                 failures.append(f"INVALID_CHECKPOINT_SHA_{ds}_SEED_{seed}: {ckpt_sha}")
 
-            # Result class
+            # Lớp kết quả
             if mf.get("result_class") != "SELF_SUPERVISED_PRETRAINING":
                 failures.append(f"INVALID_RESULT_CLASS_{ds}_SEED_{seed}")
             if mf.get("confirmatory_hypothesis_result") is not False:
@@ -94,7 +94,7 @@ def verify_stage_a1():
     if manifest_count != 10:
         failures.append(f"INCOMPLETE_MANIFEST_COUNT: {manifest_count}/10")
 
-    # 3. Provenance Audit Document
+    # 3. Tài liệu kiểm tra xuất xứ
     prov_path = base_dir / "experiments" / "reports" / "STAGE-A1-PROVENANCE-AUDIT.json"
     if not prov_path.exists():
         failures.append("MISSING_STAGE_A1_PROVENANCE_AUDIT")
@@ -104,7 +104,7 @@ def verify_stage_a1():
             failures.append("PROVENANCE_AUDIT_INCOMPLETE_RUNS")
         print(f"[CHECK 4] Provenance Audit: {prov_data.get('total_audited_runs')}/10 Runs Attested (OK)")
 
-    # 4. Evidence Artifacts & Inventory Check
+    # 4. Kiểm tra hiện vật chứng cứ & hàng tồn kho
     evidence_dir = base_dir / "experiments" / "evidence" / "stage-a1"
     evidence_manifest_path = evidence_dir / "EVIDENCE-MANIFEST.json"
     sha256sums_path = evidence_dir / "SHA256SUMS.txt"

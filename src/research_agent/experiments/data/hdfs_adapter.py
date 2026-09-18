@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
 """
-Real HDFS Raw Data Adapter & Materialization Engine (Rule-Based Template Canonicalizer v1)
-Enforces:
-  1. True Two-Pass Test Firewall:
-     - Pass 1 (Split Authority): Parses only (timestamp, block_id) to establish causal partitions and boundary purges.
-       ZERO template/parameter extraction performed on prospective Test events.
-     - Pass 2 (Feature Materialization): Extracts features strictly for Train and Val partitions.
-       Test representation parser invocation count = 0, Test parameter extraction count = 0, Test vocab contribution = 0.
-  2. Label-Free Stage A1 SSL Pretraining Package:
-     - hdfs_ssl_train.pt and hdfs_ssl_val.pt contain ZERO downstream labels (guarded by LabelLeakageError).
-     - Downstream labels stored strictly in evaluation-only probe vault (experiments/runs/data/vault/).
-  3. Multi-Parameter Slot Representation:
-     - Full typed parameter set with fixed slots per event (max_param_slots = 4).
-     - Deterministic type priority ordering (IP_RFC1918 > IP_PUBLIC > IP_SPECIAL > SIZE > NUM > GENERIC).
-     - Exact multi-parameter accounting: events_with_2plus_params, parameter_retention_rate, parameters_discarded_count.
-  4. Exact RFC1918 Network Membership:
-     - Strict membership in 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 via ipaddress.ip_network.
-  5. Causal Interval Boundaries & Sealed Test:
-     - max(Train end_ts) < min(Val start_ts) and max(Val end_ts) < min(Test start_ts).
+Công cụ vật chất hóa và bộ điều hợp dữ liệu thô HDFS thực (Canonicalizer mẫu dựa trên quy tắc v1)
+Thực thi:
+  1. Tường lửa kiểm tra hai lần thực sự:
+     - Pass 1 (Split Authority): Chỉ phân tích cú pháp (dấu thời gian, block_id) để thiết lập các phân vùng nhân quả và xóa ranh giới.
+       Trích xuất mẫu/tham số ZERO được thực hiện trên các sự kiện Thử nghiệm tiềm năng.
+     - Pass 2 (Feature Materialization): Trích xuất đặc trưng cho phân vùng Train và Val.
+       Số lần gọi trình phân tích cú pháp đại diện kiểm tra = 0, Số lần trích xuất tham số kiểm tra = 0, Đóng góp từ vựng kiểm tra = 0.
+  2. Gói đào tạo trước giai đoạn A1 SSL không có nhãn:
+     - hdfs_ssl_train.pt và hdfs_ssl_val.pt chứa các nhãn hạ nguồn (downstream) ZERO (được bảo vệ bởi LabelLeakageError).
+     - Các nhãn hạ nguồn (downstream) được lưu trữ nghiêm ngặt trong kho thăm dò chỉ dành cho đánh giá (thử nghiệm/lần chạy/dữ liệu/vault/).
+  3. Biểu diễn khe đa tham số:
+     - Bộ thông số được gõ đầy đủ với các khe cố định cho mỗi sự kiện (max_param_slots = 4).
+     - Thứ tự ưu tiên loại xác định (IP_RFC1918 > IP_PUBLIC > IP_SPECIAL > SIZE > NUM > GENERIC).
+     - Tính toán chính xác đa thông số: events_with_2plus_params, parameter_retention_rate, parameters_discarded_count.
+  4. Tư cách thành viên mạng RFC1918 chính xác:
+     - Tư cách thành viên nghiêm ngặt trong 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 thông qua ipaddress.ip_network.
+  5. Ranh giới khoảng thời gian nhân quả & Kiểm tra kín:
+     - max(Train end_ts) < min(Val start_ts) và max(Val end_ts) < min(Test start_ts).
 """
 
 import os
@@ -48,10 +48,10 @@ from research_agent.experiments.data.hdfs_split_authority import (
 )
 
 class TestSetSealedError(Exception):
-    """Raised when any code attempts to access the sealed Test split or test labels."""
+    """Xảy ra khi bất kỳ mã nào cố gắng truy cập vào phần phân chia Kiểm tra hoặc nhãn kiểm tra đã được niêm phong."""
     __test__ = False
 
-# Explicit RFC1918 and Special Network Definitions
+# RFC1918 rõ ràng và định nghĩa mạng đặc biệt
 NET_10 = ipaddress.ip_network("10.0.0.0/8")
 NET_172 = ipaddress.ip_network("172.16.0.0/12")
 NET_192 = ipaddress.ip_network("192.168.0.0/16")
@@ -61,7 +61,7 @@ NET_LINK_LOCAL = ipaddress.ip_network("169.254.0.0/16")
 NET_SHARED = ipaddress.ip_network("100.64.0.0/10")
 NET_SPECIAL = ipaddress.ip_network("192.0.0.0/24")
 
-# Canonical Rule-Based Template Patterns for HDFS (RULE_BASED_TEMPLATE_CANONICALIZER_V1)
+# Các mẫu mẫu dựa trên quy tắc chuẩn cho HDFS (RULE_BASED_TEMPLATE_CANONICALIZER_V1)
 HDFS_TEMPLATES = [
     (r"Receiving block (blk_[-0-9]+) src: (/[\d\.:]+) dest: (/[\d\.:]+)", "Receiving block <*> src: <*> dest: <*>"),
     (r"Received block (blk_[-0-9]+) of size (\d+) from (/[\d\.:]+)", "Received block <*> of size <*> from <*>"),
@@ -81,7 +81,7 @@ HDFS_TEMPLATES = [
 
 class HDFSRealDataAdapter:
     """
-    Two-pass streaming adapter for raw HDFS logs with strict test firewall and multi-parameter retention.
+    Bộ điều hợp phát trực tuyến hai lượt cho nhật ký HDFS thô với tường lửa kiểm tra nghiêm ngặt và lưu giữ nhiều thông số.
     """
     def __init__(
         self,
@@ -116,14 +116,14 @@ class HDFSRealDataAdapter:
 
     def parse_line_timestamp(self, date_str: str, time_str: str, ms_str: str) -> Optional[float]:
         """
-        Fast, deterministic, cross-platform UTC numerical epoch conversion preserving millisecond precision.
+        Chuyển đổi epoch số UTC nhanh chóng, xác định, đa nền tảng duy trì độ chính xác đến mili giây.
         """
         return parse_hdfs_line_timestamp(date_str, time_str, ms_str)
 
     def classify_ip(self, ip_str: str) -> str:
         """
-        Exact RFC1918 network membership testing.
-        Explicitly distinguishes RFC1918 from Loopback, Link-Local, Shared, and Special-Use.
+        Kiểm tra thành viên mạng RFC1918 chính xác.
+        Phân biệt rõ ràng RFC1918 với Loopback, Link-Local, Shared và Special-Use.
         """
         clean_ip = ip_str.lstrip("/").split(":")[0].strip()
         try:
@@ -150,7 +150,7 @@ class HDFSRealDataAdapter:
                 extracted_params = []
                 for g in m.groups():
                     if g.startswith("blk_"):
-                        # Block ID is excluded from feature representation to prevent shortcut leakage
+                        # ID khối được loại trừ khỏi biểu diễn tính năng để tránh rò rỉ phím tắt
                         continue
                     elif "/" in g and any(c.isdigit() for c in g):
                         extracted_params.append(self.classify_ip(g))
@@ -162,11 +162,11 @@ class HDFSRealDataAdapter:
                             extracted_params.append(f"PARAM_SIZE_BUCKET_{min(val // 10000, 20)}")
                     else:
                         extracted_params.append("PARAM_STR_GENERIC")
-                # Deterministic sorting of parameters by priority
+                # Sắp xếp xác định các tham số theo mức độ ưu tiên
                 sorted_params = self.sort_parameters_by_priority(extracted_params)
                 return template, sorted_params
         
-        # Fallback generic template
+        # Mẫu chung dự phòng
         cleaned = re.sub(r"blk_[-0-9]+", "<*>", content)
         cleaned = re.sub(r"/\d+\.\d+\.\d+\.\d+(:\d+)?", "<*>", cleaned)
         cleaned = re.sub(r"\b\d+\b", "<*>", cleaned)
@@ -265,7 +265,7 @@ class HDFSRealDataAdapter:
 
         assert raw_total_line_count == block_associated_event_count + no_block_id_count + malformed_line_count
 
-        # Deterministic Sort of Sessions by (start_ts, blk_id)
+        # Sắp xếp xác định các phiên theo (start_ts, blk_id)
         session_list = [
             (blk_id, vals[0], vals[1], vals[2])
             for blk_id, vals in session_intervals.items()
@@ -319,7 +319,7 @@ class HDFSRealDataAdapter:
         test_param_extraction_count = 0
         test_vocab_contribution_count = 0
 
-        # Metrics for Multi-Parameter Accounting
+        # Số liệu cho kế toán đa thông số
         events_with_0_params = 0
         events_with_1_param = 0
         events_with_2plus_params = 0
@@ -352,10 +352,10 @@ class HDFSRealDataAdapter:
                         continue
                     blk_id = blk_match.group(1)
 
-                    # Strict Test Firewall Branching
+                    # Phân nhánh tường lửa kiểm tra nghiêm ngặt
                     if blk_id in train_block_ids:
                         template, params = self.extract_template_and_params(content)
-                        # Fit Vocabulary on Train Only
+                        # Từ vựng phù hợp chỉ trên tàu
                         if template not in self.train_template_to_id:
                             self.train_template_to_id[template] = len(self.train_template_to_id)
                         for p in params:
@@ -403,7 +403,7 @@ class HDFSRealDataAdapter:
                         })
 
                     elif blk_id in test_block_ids:
-                        # ZERO FEATURE EXTRACTION OR VOCABULARY CONTRIBUTION
+                        # ZERO FEATURE EXTRACTION HOẶC VOCABULARY CONTRIBUTION
                         test_feature_parse_count += 0
                         test_param_extraction_count += 0
                         test_vocab_contribution_count += 0
@@ -418,7 +418,7 @@ class HDFSRealDataAdapter:
         # =====================================================================
         # ASSEMBLE LABEL-FREE STAGE A1 SSL TENSORS (MULTI-PARAMETER SLOTS)
         # =====================================================================
-        # Train Split (Capped to max_train_sessions budget)
+        # Chia chuyến tàu (Giới hạn ở ngân sách max_train_sessions)
         sorted_train_keys = sorted(
             train_session_events.keys(),
             key=lambda b: session_intervals[b][0]
@@ -434,7 +434,7 @@ class HDFSRealDataAdapter:
             evs = sorted(train_session_events[blk_id], key=lambda x: x["timestamp"])
             seq_t = torch.tensor([self.train_template_to_id.get(e["template"], 0) for e in evs], dtype=torch.long)
             
-            # Multi-parameter slot tensor: (L, max_param_slots)
+            # Tenor khe đa thông số: (L, max_param_slots)
             param_slots_list = []
             for e in evs:
                 slot_ids = [self.train_param_to_id.get(p, 0) for p in e["params"][:self.max_param_slots]]
@@ -454,7 +454,7 @@ class HDFSRealDataAdapter:
             train_time_gaps.append(gaps_t)
             train_session_ids.append(blk_id)
 
-        # Validation Split (Capped to max_val_sessions, UNK Safe)
+        # Phân chia xác thực (Giới hạn ở max_val_sessions, UNK an toàn)
         sorted_val_keys = sorted(
             val_session_events.keys(),
             key=lambda b: session_intervals[b][0]
@@ -494,7 +494,7 @@ class HDFSRealDataAdapter:
             val_time_gaps.append(torch.tensor(gaps, dtype=torch.float32))
             val_session_ids.append(blk_id)
 
-        # Package Label-Free SSL Tensors
+        # Bộ căng SSL không có nhãn gói
         hdfs_ssl_train = {
             "dataset_classification": "REAL_TRAINING_MATERIALIZED",
             "sequence_source": "REAL_HDFS",
@@ -516,7 +516,7 @@ class HDFSRealDataAdapter:
             "session_ids": val_session_ids
         }
 
-        # Enforce Label-Free Purity Guard
+        # Thực thi bảo vệ độ tinh khiết không có nhãn
         enforce_ssl_package_label_free(hdfs_ssl_train)
         enforce_ssl_package_label_free(hdfs_ssl_val)
 
@@ -568,7 +568,7 @@ class HDFSRealDataAdapter:
             "labels": val_probe_labels
         }, vault_dir / "hdfs_probe_labels_val.pt")
 
-        # Sealed Test Metadata Manifest
+        # bản kê (manifest) siêu dữ liệu thử nghiệm kín
         sorted_test_ids = sorted(list(test_block_ids))
         test_metadata_manifest = {
             "test_status": "SEALED",
@@ -617,7 +617,7 @@ class HDFSRealDataAdapter:
         mirror_manifest = self.base_dir / "datasets" / "manifests" / "REAL-DATA-CONTRACT-HDFS.json"
         data_contract.write_manifest(mirror_manifest)
 
-        # Write SUBSET-MANIFEST-HDFS.json
+        # Viết SUBSET-MANIFEST-HDFS.json
         subset_manifest = {
             "dataset_id": "DATA-HDFS-001",
             "eligible_population_train_sessions": len(train_block_ids),

@@ -1,5 +1,5 @@
 """
-Root runner for Master Academic Word Document Builder with Frozen Chapter Hash Invariant.
+Trình chạy gốc dành cho Trình tạo tài liệu Word học thuật bậc thầy với Frozen Chapter Hash Invariant.
 """
 
 import hashlib
@@ -9,7 +9,7 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)
 sys.stderr.reconfigure(encoding="utf-8", line_buffering=True)
 
-# Ensure D:\Research\src is in sys.path
+# Đảm bảo D:\Research\src nằm trong sys.path
 src_dir = Path(__file__).parent / "src"
 if str(src_dir) not in sys.path:
     sys.path.insert(0, str(src_dir))

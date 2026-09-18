@@ -1,33 +1,33 @@
 # -*- coding: utf-8 -*-
 """
-StageA2Trainer: Deterministic Causal Temporal Graph Pretraining Runner (Contract V1.4.1 Locked).
+StageA2Trainer: Người chạy trước khi đào tạo bằng đồ thị thời gian xác định nguyên nhân (Hợp đồng V1.4.1 đã bị khóa).
 
-Features:
-  1. Execution Device Guard: Explicit locked execution device ('cuda' or 'cpu').
-     Fails immediately before any optimizer step if CUDA is requested but unavailable,
-     with ZERO automatic CPU fallback.
-  2. Exact Multi-Task Group Objective: In training, windows are organized into chronological
-     accumulation groups (up to gradient_accumulation_steps = 4 windows).
-     The exact multi-task group objective is computed over all masked targets in the group:
+Tính năng:
+  1. Bảo vệ thiết bị thực thi: Thiết bị thực thi bị khóa rõ ràng ('cuda' hoặc 'cpu').
+     Thất bại ngay trước bất kỳ bước tối ưu hóa nào nếu CUDA được yêu cầu nhưng không có sẵn,
+     với dự phòng CPU tự động ZERO.
+  2. Mục tiêu chính xác của nhóm đa nhiệm vụ: Trong đào tạo, các cửa sổ được sắp xếp theo trình tự thời gian
+     nhóm tích lũy (tối đa gradient_accumulation_steps = 4 cửa sổ).
+     Mục tiêu chính xác của nhóm đa nhiệm được tính toán trên tất cả các mục tiêu được che giấu trong nhóm:
        L_rel_group  = sum(rel_loss_sum_k) / max(1, sum(rel_target_count_k))
        L_node_group = sum(node_sq_err_sum_k) / max(1, sum(node_element_count_k))
        L_time_group = sum(time_loss_sum_k) / max(1, sum(time_target_count_k))
        L_graph_group = 1.0 * L_rel_group + 1.0 * L_node_group + 0.1 * L_time_group
-     Backpropagates exact group objective in a single backward pass per optimizer step.
-  3. Fixed Deterministic Validation Mask: Uses dedicated validation RNG generator reset to
+     Truyền ngược mục tiêu nhóm chính xác trong một lần truyền ngược cho mỗi bước tối ưu hóa.
+  3. Mặt nạ xác thực xác định đã sửa lỗi: Sử dụng trình tạo RNG xác thực chuyên dụng được đặt lại thành
      VALIDATION_MASK_SEED = 20260823 on each validation epoch (Bernoulli p=0.15 for relations and nodes).
-     Independent from training RNG trajectory.
-  4. Global Epoch Loss Aggregation: Exact summation of loss numerators and target counts across all
-     windows in an epoch (no mean-of-window-means).
-  5. Partial Final Window & Group Weighting: 2,291 full windows (256 events) + 1 partial window (81 events)
-     grouped into 572 groups of 1024 events + 1 group of 849 events (256 + 256 + 256 + 81).
-  6. Operational Stream Cursor: stream_cursor advances on every window; checkpoints serialize
-     exact next-window position; resume uses stream_cursor directly.
-  7. Dynamic Scope-Bound Scheduler: Exact calculation from authorized execution subset (586,577 events).
-  8. Inductive Split Boundary Reset: Clears dynamic node memory on validation transition.
-  9. NaN / Inf Fail-Closed Protection: Detects floating point anomalies and aborts immediately.
-  10. Checkpoint Boundary Policy: CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY (grad_accum_position == 0).
-  11. 14 Mandatory Mutable States: Full state serialization and exact restoration.
+     Độc lập với quỹ đạo đào tạo RNG.
+  4. Tổng hợp mất mát (loss) epoch toàn cầu: Tổng hợp chính xác các tử số mất mát (loss) và số lượng mục tiêu trên tất cả
+     cửa sổ trong một epoch (không có nghĩa là cửa sổ).
+  5. Cửa sổ cuối cùng một phần & Trọng số nhóm: 2.291 cửa sổ đầy đủ (256 sự kiện) + 1 cửa sổ một phần (81 sự kiện)
+     được nhóm thành 572 nhóm gồm 1024 sự kiện + 1 nhóm 849 sự kiện (256 + 256 + 256 + 81).
+  6. Con trỏ luồng hoạt động: stream_cursor tiến lên trên mọi cửa sổ; tuần tự hóa các checkpoint
+     khe chính xác của cửa sổ tiếp theo; sơ yếu lý lịch sử dụng stream_cursor trực tiếp.
+  7. Bộ lập lịch giới hạn phạm vi động: Tính toán chính xác từ tập hợp con thực thi được ủy quyền (586.577 sự kiện).
+  8. Đặt lại ranh giới phân chia quy nạp: Xóa bộ nhớ nút động khi chuyển đổi xác thực.
+  9. NaN/Inf Fail-Closed Protection: Phát hiện các điểm bất thường của dấu phẩy động và hủy bỏ ngay lập tức.
+  10. Chính sách ranh giới checkpoint: CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY (grad_accum_position == 0).
+  11. 14 Trạng thái có thể thay đổi bắt buộc: Tuần tự hóa trạng thái đầy đủ và khôi phục chính xác.
 """
 
 import os
@@ -48,19 +48,19 @@ from research_agent.experiments.models.temporal_graph_view_encoder import Tempor
 VALIDATION_MASK_SEED = 20260823
 
 class EmpiricalExecutionNotAuthorizedError(RuntimeError):
-    """Raised when real empirical execution is attempted without authorization."""
+    """Xảy ra khi cố gắng thực hiện theo kinh nghiệm thực tế mà không được phép."""
     pass
 
 class CheckpointBoundaryViolationError(RuntimeError):
-    """Raised when checkpoint save is attempted mid-gradient-accumulation."""
+    """Tăng lên khi cố gắng lưu checkpoint khi cố gắng tích lũy giữa độ dốc."""
     pass
 
 class FloatingPointAnomalyError(FloatingPointError):
-    """Raised when NaN or Inf is encountered in loss or gradients (Fail-Closed)."""
+    """Tăng lên khi gặp NaN hoặc Inf trong tình trạng mất mát hoặc độ dốc (Đóng không thành công)."""
     pass
 
 class ExecutionDeviceMismatchError(RuntimeError):
-    """Raised when the locked execution device cannot be satisfied (No Fallback)."""
+    """Xảy ra khi không thể đáp ứng được thiết bị thực thi bị khóa (Không dự phòng)."""
     pass
 
 def get_cosine_schedule_with_warmup(
@@ -69,7 +69,7 @@ def get_cosine_schedule_with_warmup(
     num_training_steps: int,
     min_lr_ratio: float = 0.02
 ):
-    """Linear warmup followed by cosine decay."""
+    """Sự khởi động tuyến tính theo sau là sự phân rã cosin."""
     def lr_lambda(current_step: int):
         if current_step < num_warmup_steps:
             return float(current_step) / float(max(1, num_warmup_steps))
@@ -80,7 +80,7 @@ def get_cosine_schedule_with_warmup(
 
 class StageA2Trainer:
     """
-    Orchestrates Stage A2 causal temporal graph pretraining with strict deterministic resumption.
+    Sắp xếp quá trình huấn luyện trước biểu đồ thời gian nhân quả Giai đoạn A2 với khả năng tiếp tục xác định nghiêm ngặt.
     """
     def __init__(
         self,
@@ -95,8 +95,8 @@ class StageA2Trainer:
         max_epochs: int = 12,
         early_stopping_patience: int = 3,
         seed: int = 42,
-        execution_device: str = "cuda", # "cuda" or "cpu"
-        execution_mode: str = "FIXTURE_TEST", # "FIXTURE_TEST" or "REAL_EMPIRICAL"
+        execution_device: str = "cuda", # "cuda" hoặc "cpu"
+        execution_mode: str = "FIXTURE_TEST", # "FIXTURE_TEST" hoặc "REAL_EMPIRICAL"
         empirical_authorized: bool = False,
         total_steps_override: Optional[int] = None
     ):
@@ -115,7 +115,7 @@ class StageA2Trainer:
         self.execution_mode = execution_mode
         self.empirical_authorized = empirical_authorized
 
-        # Device Verification & Strict No-Fallback Guard
+        # Xác minh thiết bị & Bảo vệ không dự phòng nghiêm ngặt
         if self.execution_device == "cuda":
             if not torch.cuda.is_available():
                 raise ExecutionDeviceMismatchError(
@@ -130,7 +130,7 @@ class StageA2Trainer:
 
         self.model.to(self.device)
 
-        # Optimizer: AdamW
+        # Trình tối ưu hóa: AdamW
         self.optimizer = AdamW(
             self.model.parameters(),
             lr=self.learning_rate,
@@ -139,7 +139,7 @@ class StageA2Trainer:
             weight_decay=self.weight_decay
         )
 
-        # Schedule configuration
+        # Lên lịch cấu hình
         if total_steps_override is not None:
             self.total_steps = total_steps_override
             self.warmup_steps = max(1, int(self.total_steps * self.warmup_ratio))
@@ -154,31 +154,31 @@ class StageA2Trainer:
             min_lr_ratio=min_ratio
         )
 
-        # Training Masking RNG Generator for deterministic training sequence
+        # Trình tạo mặt nạ đào tạo RNG cho trình tự đào tạo xác định
         self.mask_generator = torch.Generator(device="cpu")
         self.mask_generator.manual_seed(seed)
 
-        # Validation Masking RNG Generator for fixed validation mask across epochs/seeds
+        # Trình tạo mặt nạ xác thực RNG cho mặt nạ xác thực cố định trên các epoch/hạt giống
         self.val_mask_generator = torch.Generator(device="cpu")
         self.val_mask_generator.manual_seed(VALIDATION_MASK_SEED)
 
-        # Mutable Trajectory State
+        # Trạng thái quỹ đạo có thể thay đổi
         self.current_epoch = 0
         self.completed_epoch = 0
         self.next_epoch_to_run = 0
         self.global_step = 0
         self.grad_accum_position = 0 # 0..gradient_accumulation_steps-1
-        self.stream_cursor = 0        # Operational cursor indexing next window to process
+        self.stream_cursor = 0        # Lập chỉ mục con trỏ hoạt động của cửa sổ tiếp theo để xử lý
         self.current_split = "TRAIN"
 
-        # Early Stopping State
+        # Trạng thái dừng sớm (early stopping)
         self.best_val_loss = float("inf")
         self.patience_counter = 0
         self.best_epoch = 0
         self.best_checkpoint_global_step = 0
         self.best_checkpoint_path: Optional[str] = None
 
-        # Guard
+        # bảo vệ
         if self.execution_mode == "REAL_EMPIRICAL" and not self.empirical_authorized:
             raise EmpiricalExecutionNotAuthorizedError(
                 "Real empirical HDFS execution is NOT authorized in this session."
@@ -186,15 +186,15 @@ class StageA2Trainer:
 
     def configure_empirical_schedule(self, train_events_count: int = 586577):
         """
-        Derives exact scheduler parameters from authorized execution subset:
-          - Train graph events: 586,577
-          - Window size: 256
-          - Windows per epoch: ceil(586577 / 256) = 2292
-          - Grad accum: 4
-          - Optimizer steps per epoch: 2292 // 4 = 573
-          - Max epochs: 12
-          - Max optimizer steps: 12 * 573 = 6,876
-          - Warmup steps: 6,876 * 0.05 = 343
+        Lấy các tham số bộ lập lịch chính xác từ tập hợp con thực thi được ủy quyền:
+          - Sự kiện đồ thị tàu: 586.577
+          - Kích thước cửa sổ: 256
+          - Windows mỗi epoch: ceil(586577/256) = 2292
+          - Điểm tích lũy tốt nghiệp: 4
+          - Các bước tối ưu hóa trên mỗi epoch: 2292 // 4 = 573
+          - epoch tối đa: 12
+          - Các bước tối ưu hóa tối đa: 12 * 573 = 6.876
+          - Các bước khởi động: 6.876 * 0,05 = 343
         """
         self.train_windows_per_epoch = math.ceil(train_events_count / self.temporal_window_size)
         self.optimizer_steps_per_epoch = self.train_windows_per_epoch // self.gradient_accumulation_steps
@@ -207,18 +207,18 @@ class StageA2Trainer:
         is_training: bool = True
     ) -> Dict[str, Any]:
         """
-        Processes a multi-window accumulation group (up to gradient_accumulation_steps windows):
-          1. Sequential forward passes over windows in chronological order with dynamic memory updates.
-          2. Preserves truncated BPTT by detaching memory at each window boundary.
-          3. Collects exact loss numerator tensors and mask target counts across all windows in the group.
-          4. Computes exact multi-task group objective:
+        Xử lý nhóm tích lũy nhiều cửa sổ (tối đa cửa sổ gradient_accumulation_steps):
+          1. Chuyển tiếp tuần tự qua các cửa sổ theo thứ tự thời gian với các cập nhật bộ nhớ động.
+          2. Giữ nguyên BPTT bị cắt bớt bằng cách tách bộ nhớ ở mỗi ranh giới cửa sổ.
+          3. Thu thập các tensor tử số mất mát (loss) chính xác và che số mục tiêu trên tất cả các cửa sổ trong nhóm.
+          4. Tính toán chính xác mục tiêu nhóm đa nhiệm:
                L_rel_group  = sum(rel_loss_sum_k) / max(1, sum(rel_target_count_k))
                L_node_group = sum(node_sq_err_sum_k) / max(1, sum(node_element_count_k))
                L_time_group = sum(time_loss_sum_k) / max(1, sum(time_target_count_k))
                L_graph_group = 1.0 * L_rel_group + 1.0 * L_node_group + 0.1 * L_time_group
-          5. Backpropagates exact group objective in a single backward pass per optimizer step.
-          6. Performs gradient clipping, optimizer step, and scheduler step at group boundary.
-          7. Advances operational stream_cursor by len(group_windows).
+          5. Truyền ngược mục tiêu nhóm chính xác trong một lần truyền ngược cho mỗi bước tối ưu hóa.
+          6. Thực hiện cắt gradient, bước tối ưu hóa và bước lập lịch ở ranh giới nhóm.
+          7. Tiến hành hoạt động stream_cursor theo len(group_windows).
         """
         self.model.train() if is_training else self.model.eval()
 
@@ -252,12 +252,12 @@ class StageA2Trainer:
 
             self.stream_cursor += 1
 
-        # Sum numerators across group
+        # Tổng các tử số trong nhóm
         sum_rel_tensor = torch.stack(group_rel_losses).sum() if group_rel_losses else torch.tensor(0.0, device=self.device)
         sum_node_tensor = torch.stack(group_node_losses).sum() if group_node_losses else torch.tensor(0.0, device=self.device)
         sum_time_tensor = torch.stack(group_time_losses).sum() if group_time_losses else torch.tensor(0.0, device=self.device)
 
-        # Exact multi-task group denominators
+        # Mẫu số nhóm đa nhiệm chính xác
         L_rel_group = sum_rel_tensor / max(1, total_rel_targets) if total_rel_targets > 0 else torch.tensor(0.0, device=self.device)
         L_node_group = sum_node_tensor / max(1, total_node_elements) if total_node_elements > 0 else torch.tensor(0.0, device=self.device)
         L_time_group = sum_time_tensor / max(1, total_time_targets) if total_time_targets > 0 else torch.tensor(0.0, device=self.device)
@@ -273,7 +273,7 @@ class StageA2Trainer:
         if is_training:
             L_graph_group.backward()
 
-            # NaN / Inf Check on Parameter Gradients
+            # Kiểm tra NaN / Inf trên Độ dốc tham số
             for name, param in self.model.named_parameters():
                 if param.grad is not None:
                     if torch.isnan(param.grad).any() or torch.isinf(param.grad).any():
@@ -316,13 +316,13 @@ class StageA2Trainer:
         is_training: bool = True,
         group_total_events: Optional[int] = None
     ) -> Dict[str, Any]:
-        """Convenience single-window processing method."""
+        """Phương pháp xử lý một cửa sổ tiện lợi."""
         return self.process_group([window_events], is_training=is_training)
 
     def train_one_epoch(self, window_stream: Iterable[List[Dict[str, Any]]]) -> Dict[str, Any]:
         """
-        Executes one full training epoch over chronological windows by batching into
-        accumulation groups and computing exact multi-task group objectives.
+        Thực hiện một epoch huấn luyện đầy đủ trên các cửa sổ theo trình tự thời gian bằng cách gộp vào
+        nhóm tích lũy và tính toán chính xác các mục tiêu của nhóm đa nhiệm vụ.
         """
         self.current_split = "TRAIN"
         self.model.train()
@@ -352,7 +352,7 @@ class StageA2Trainer:
                 total_events += stats["num_events"]
                 curr_group = []
 
-        # Flush final partial group if present
+        # Xóa nhóm phần cuối cùng nếu có
         if curr_group:
             stats = self.process_group(curr_group, is_training=True)
             total_rel_loss_sum += stats["rel_loss_sum"]
@@ -396,20 +396,20 @@ class StageA2Trainer:
 
     def validate_one_epoch(self, window_stream: Iterable[List[Dict[str, Any]]]) -> Dict[str, Any]:
         """
-        Executes one full validation epoch:
-          - Applies INDUCTIVE_SPLIT_RESET_ZERO_MEMORY before validation
-          - Resets validation mask generator to fixed VALIDATION_MASK_SEED = 20260823
-          - Computes exact global metric aggregation (numerators / denominators)
-          - Zero gradients, no optimizer/scheduler updates
-          - Applies INDUCTIVE_SPLIT_RESET_ZERO_MEMORY after validation before returning to train
+        Thực hiện một epoch xác thực đầy đủ:
+          - Áp dụng INDUCTIVE_SPLIT_RESET_ZERO_MEMORY trước khi xác thực
+          - Đặt lại trình tạo mặt nạ xác thực thành VALIDATION_MASK_SEED cố định = 20260823
+          - Tính toán tổng hợp số liệu toàn cầu chính xác (tử số / mẫu số)
+          - Không có độ dốc, không có cập nhật trình tối ưu hóa/lập lịch
+          - Áp dụng INDUCTIVE_SPLIT_RESET_ZERO_MEMORY sau khi xác thực trước khi quay lại huấn luyện
         """
         self.current_split = "VAL"
         self.model.eval()
 
-        # Split Boundary Reset: Inductive evaluation requires zero initial memory
+        # Thiết lập lại ranh giới phân chia: Đánh giá quy nạp không yêu cầu bộ nhớ ban đầu
         self.model.reset_node_states()
 
-        # Reset fixed validation mask generator to guarantee identical masks across epochs and seeds
+        # Đặt lại trình tạo mặt nạ xác thực cố định để đảm bảo mặt nạ giống hệt nhau trên các epoch và hạt giống
         self.val_mask_generator.manual_seed(VALIDATION_MASK_SEED)
 
         total_rel_loss_sum = 0.0
@@ -439,7 +439,7 @@ class StageA2Trainer:
                 windows_count += 1
                 self.stream_cursor += 1
 
-        # Post-Validation Split Boundary Reset: Do not carry validation interactions into next Train epoch
+        # Đặt lại ranh giới phân chia sau xác thực: Không thực hiện các tương tác xác thực vào epoch đào tạo tiếp theo
         self.model.reset_node_states()
 
         epoch_runtime = time.time() - t0
@@ -471,8 +471,8 @@ class StageA2Trainer:
 
     def save_checkpoint(self, path: Path, metadata: Optional[Dict[str, Any]] = None):
         """
-        Atomically saves the complete 14-element mutable checkpoint state.
-        Enforces CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY (grad_accum_position == 0).
+        Lưu nguyên tử trạng thái checkpoint có thể thay đổi 14 phần tử hoàn chỉnh.
+        Thực thi CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY (grad_accum_position == 0).
         """
         if self.grad_accum_position != 0:
             raise CheckpointBoundaryViolationError(
@@ -482,7 +482,7 @@ class StageA2Trainer:
 
         path.parent.mkdir(parents=True, exist_ok=True)
 
-        # 4-tuple RNG states
+        # 4-bộ trạng thái RNG
         rng_states_4tuple = {
             "python_random": random.getstate(),
             "numpy_random": np.random.get_state(),
@@ -507,7 +507,7 @@ class StageA2Trainer:
                 "current_epoch": self.current_epoch,
                 "completed_epoch": self.completed_epoch,
                 "next_epoch_to_run": self.next_epoch_to_run,
-                "stream_cursor": self.stream_cursor, # Points to exact NEXT window to process
+                "stream_cursor": self.stream_cursor, # Trỏ tới cửa sổ NEXT chính xác để xử lý
                 "grad_accum_position": self.grad_accum_position
             },
             "masking_rng_state": self.mask_generator.get_state(),
@@ -529,21 +529,21 @@ class StageA2Trainer:
         torch.save(state_dict, path)
 
     def load_checkpoint(self, path: Path):
-        """Restores complete 14-element state from checkpoint."""
+        """Khôi phục trạng thái 14 phần tử hoàn chỉnh từ checkpoint."""
         if not path.exists():
             raise FileNotFoundError(f"Checkpoint not found at {path}")
 
         checkpoint = torch.load(path, map_location=self.device, weights_only=False)
 
-        # 1. Model, Optimizer, Scheduler
+        # 1. Mô hình, Trình tối ưu hóa, Trình lập lịch
         self.model.load_state_dict(checkpoint["model_state_dict"])
         self.optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
         self.scheduler.load_state_dict(checkpoint["scheduler_state_dict"])
 
-        # 2. Node Dynamic Memory and Interaction States
+        # 2. Bộ nhớ động và trạng thái tương tác của nút
         self.model.set_node_states(checkpoint, self.device)
 
-        # 3. RNG States
+        # 3. Trạng thái RNG
         rng_4tuple = checkpoint["rng_states_4tuple"]
         random.setstate(rng_4tuple["python_random"])
         np.random.set_state(rng_4tuple["numpy_random"])
@@ -561,13 +561,13 @@ class StageA2Trainer:
                 cuda_rng = cuda_rng.cpu()
             torch.cuda.set_rng_state_all(cuda_rng)
 
-        # 4. Masking RNG Generator State
+        # 4. Che dấu trạng thái máy phát RNG
         mask_rng = checkpoint["masking_rng_state"]
         if isinstance(mask_rng, torch.Tensor):
             mask_rng = mask_rng.cpu()
         self.mask_generator.set_state(mask_rng)
 
-        # 5. Trajectory & Stream Iterator State
+        # 5. Trạng thái quỹ đạo và luồng lặp
         stream_st = checkpoint["stream_iterator_state"]
         self.current_split = stream_st["current_split"]
         self.current_epoch = stream_st["current_epoch"]
@@ -577,7 +577,7 @@ class StageA2Trainer:
         self.grad_accum_position = stream_st["grad_accum_position"]
         self.global_step = checkpoint["global_step"]
 
-        # 6. Early Stopping State
+        # 6. Trạng thái dừng sớm (early stopping)
         es_st = checkpoint["early_stopping_state"]
         self.best_val_loss = es_st["best_val_loss"]
         self.patience_counter = es_st["patience_counter"]

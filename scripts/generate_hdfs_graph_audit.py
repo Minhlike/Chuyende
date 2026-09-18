@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Audits both Full Population and Authorized Execution Subsets for Stage A2 (Contract V1.3):
+Kiểm tra cả Tập hợp con toàn bộ và Tập hợp con thực thi được ủy quyền cho Giai đoạn A2 (Hợp đồng V1.3):
   1. HDFS-EXECUTION-MEMBERSHIP.json
-  2. HDFS-EXECUTION-SUBSET-AUDIT.json (35,000 Train + 7,500 Val)
-  3. HDFS-GRAPH-MATERIALIZATION-AUDIT.json (Full 357,133 Train + 50,204 Val)
-  4. RELATION-GROUNDING-AUDIT.json (All 8 grounded relations)
+  2. HDFS-EXECUTION-SUBSET-AUDIT.json (35.000 Tàu + 7.500 Val)
+  3. HDFS-GRAPH-MATERIALIZATION-AUDIT.json (Toàn bộ 357.133 Tàu + 50.204 Val)
+  4. RELATION-GROUNDING-AUDIT.json (Tất cả 8 quan hệ nối đất)
 """
 
 import re
@@ -43,7 +43,7 @@ def run_audits():
 
     builder = HDFSGraphBuilder(base_dir=base_dir, split_authority=split_auth)
 
-    # Counters for Population
+    # Máy đếm dân số
     pop_train_scanned = 0
     pop_train_materialized = 0
     pop_train_rejected = 0
@@ -62,7 +62,7 @@ def run_audits():
     pop_val_min_ts = float("inf")
     pop_val_max_ts = float("-inf")
 
-    # Counters for Execution Subset (35,000 / 7,500)
+    # Bộ đếm cho tập hợp con thực thi (35.000 / 7.500)
     sub_train_scanned = 0
     sub_train_materialized = 0
     sub_train_rejected = 0
@@ -128,7 +128,7 @@ def run_audits():
                     pop_train_rejected += 1
                     pop_train_rejections[reject_reason] += 1
 
-                # Check if in Authorized Execution Subset
+                # Kiểm tra xem có trong Tập hợp con thực thi được ủy quyền không
                 if blk_id in selected_train_ids:
                     sub_train_scanned += 1
                     if event is not None:
@@ -158,7 +158,7 @@ def run_audits():
                     pop_val_rejected += 1
                     pop_val_rejections[reject_reason] += 1
 
-                # Check if in Authorized Execution Subset
+                # Kiểm tra xem có trong Tập hợp con thực thi được ủy quyền không
                 if blk_id in selected_val_ids:
                     sub_val_scanned += 1
                     if event is not None:
@@ -176,7 +176,7 @@ def run_audits():
                         sub_val_rejected += 1
                         sub_val_rejections[reject_reason] += 1
 
-    # 1. Save HDFS-EXECUTION-MEMBERSHIP.json
+    # 1. Lưu HDFS-EXECUTION-MEMBERSHIP.json
     membership_manifest = {
         "manifest_version": "1.3.0",
         "split_id": "SPL-HDFS-001",
@@ -201,7 +201,7 @@ def run_audits():
     membership_path.write_text(json.dumps(membership_manifest, indent=2), encoding="utf-8")
     print(f"[SAVED] {membership_path}")
 
-    # 2. Save HDFS-EXECUTION-SUBSET-AUDIT.json
+    # 2. Lưu HDFS-EXECUTION-SUBSET-AUDIT.json
     subset_audit = {
         "audit_version": "1.3.0",
         "audit_scope": "AUTHORIZED_EXECUTION_BUDGET_SUBSET",
@@ -255,7 +255,7 @@ def run_audits():
     subset_path.write_text(json.dumps(subset_audit, indent=2), encoding="utf-8")
     print(f"[SAVED] {subset_path}")
 
-    # 3. Update HDFS-GRAPH-MATERIALIZATION-AUDIT.json (Full Population Audit)
+    # 3. Cập nhật HDFS-GRAPH-MATERIALIZATION-AUDIT.json (Kiểm tra toàn bộ dân số)
     pop_audit = {
         "audit_version": "1.3.0",
         "audit_scope": "FULL_ELIGIBLE_POPULATION_AUDIT",
@@ -302,7 +302,7 @@ def run_audits():
     pop_path.write_text(json.dumps(pop_audit, indent=2), encoding="utf-8")
     print(f"[SAVED] {pop_path}")
 
-    # 4. Save RELATION-GROUNDING-AUDIT.json
+    # 4. Lưu RELATION-GROUNDING-AUDIT.json
     relation_evidence = {}
     for rule in HDFS_RELATION_RULES:
         rel_name = rule["relation_name"]

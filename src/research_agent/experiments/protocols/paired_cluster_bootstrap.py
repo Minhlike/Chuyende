@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 """
-Paired Cluster Bootstrap Engine with Full Metric Recomputation
-Implements Chapter 3 Pre-Registered Statistical Protocol:
-  - Exact B = 2000 resamples, exact seed = 10007
-  - Primary Metric: Average Precision (AP), matching sklearn.metrics.average_precision_score
-  - Auxiliary Metric: Trapezoidal PR-AUC
-  - Reconstructs whole sample observation pools per cluster resample
-  - Multiple Testing Adjustments:
-      * H1: Bonferroni family of 4 (alpha = 0.0125)
-      * H2: Bonferroni family of 3 (alpha = 0.0167)
-      * H3: Benjamini-Hochberg FDR across P01..P12
-      * H5: Step-down Holm-Bonferroni across adversary tests
-  - Statistical Decision States: SUPPORTED, INCONCLUSIVE, FALSIFIED (Zero ACCEPT_H0)
+Công cụ Bootstrap cụm được ghép nối với tính toán lại số liệu đầy đủ
+Triển khai Chương 3 Giao thức thống kê được đăng ký trước:
+  - Chính xác B = 2000 mẫu lại, hạt giống chính xác = 10007
+  - Chỉ số chính: Độ chính xác trung bình (AP), khớp với sklearn.metrics.average_precision_score
+  - Hệ mét phụ: Hình thang PR-AUC
+  - Tái tạo lại toàn bộ nhóm quan sát mẫu trên mỗi mẫu lại cụm
+  - Nhiều điều chỉnh thử nghiệm:
+      * H1: Họ Bonferroni gồm 4 người (alpha = 0,0125)
+      * H2: Họ Bonferroni gồm 3 người (alpha = 0,0167)
+      * H3: Stewamini-Hochberg FDR trên P01..P12
+      * H5: Holm-Bonferroni hạ bệ qua các bài kiểm tra đối thủ
+  - Trạng thái quyết định thống kê: SUPPORTED, INCONCLUSIVE, FALSIFIED (Zero ACCEPT_H0)
 """
 
 from typing import Dict, Any, List, Tuple, Optional, Callable
@@ -19,9 +19,9 @@ import numpy as np
 
 def compute_average_precision(y_true: np.ndarray, y_score: np.ndarray) -> float:
     """
-    Computes Average Precision (AP) as step-integral over precision-recall curve.
-    Exact mathematical definition: AP = sum_n (R_n - R_{n-1}) * P_n
-    Matches sklearn.metrics.average_precision_score.
+    Tính toán Độ chính xác trung bình (AP) dưới dạng tích phân từng bước trên đường cong thu hồi độ chính xác.
+    Định nghĩa toán học chính xác: AP = sum_n (R_n - R_{n-1}) * P_n
+    Phù hợp với sklearn.metrics.average_precision_score.
     """
     y_true = np.asarray(y_true, dtype=np.int32)
     y_score = np.asarray(y_score, dtype=np.float64)
@@ -30,7 +30,7 @@ def compute_average_precision(y_true: np.ndarray, y_score: np.ndarray) -> float:
     if pos_count == 0 or len(y_true) == 0:
         return 0.0
 
-    # Sort descending by score
+    # Sắp xếp giảm dần theo điểm
     sort_idx = np.argsort(-y_score)
     sorted_true = y_true[sort_idx]
 
@@ -39,17 +39,17 @@ def compute_average_precision(y_true: np.ndarray, y_score: np.ndarray) -> float:
     recalls = cum_tp / pos_count
     precisions = cum_tp / (cum_tp + cum_fp)
 
-    # Prepend recall=0, precision=1
+    # Trả trước thu hồi=0, độ chính xác=1
     recalls_with_zero = np.insert(recalls, 0, 0.0)
     precisions_with_one = np.insert(precisions, 0, 1.0)
     
-    # Step-integral
+    # Bước tích phân
     ap = float(np.sum((recalls_with_zero[1:] - recalls_with_zero[:-1]) * precisions_with_one[1:]))
     return max(0.0, min(1.0, ap))
 
 def compute_trapezoidal_pr_auc(y_true: np.ndarray, y_score: np.ndarray) -> float:
     """
-    Computes Trapezoidal Area Under the Precision-Recall Curve.
+    Tính diện tích hình thang theo đường cong thu hồi chính xác.
     """
     y_true = np.asarray(y_true, dtype=np.int32)
     y_score = np.asarray(y_score, dtype=np.float64)
@@ -69,13 +69,13 @@ def compute_trapezoidal_pr_auc(y_true: np.ndarray, y_score: np.ndarray) -> float
     recalls_padded = np.insert(recalls, 0, 0.0)
     precisions_padded = np.insert(precisions, 0, precisions[0] if len(precisions) > 0 else 1.0)
 
-    # Trapezoidal rule: (r_i - r_{i-1}) * (p_i + p_{i-1}) / 2
+    # Quy tắc hình thang: (r_i - r_{i-1}) * (p_i + p_{i-1}) / 2
     dr = recalls_padded[1:] - recalls_padded[:-1]
     avg_p = 0.5 * (precisions_padded[1:] + precisions_padded[:-1])
     pr_auc = float(np.sum(dr * avg_p))
     return max(0.0, min(1.0, pr_auc))
 
-# Alias for backward compatibility
+# Bí danh cho khả năng tương thích ngược
 compute_pr_auc = compute_average_precision
 
 def compute_f1_score(y_true: np.ndarray, y_score: np.ndarray, threshold: float = 0.5) -> float:
@@ -104,7 +104,7 @@ def paired_cluster_bootstrap_recompute(
     correction_family: str = "none"
 ) -> Dict[str, Any]:
     """
-    Executes Paired Cluster Bootstrap by resampling clusters and recomputing the exact whole metric.
+    Thực thi Bootstrap theo cụm được ghép nối bằng cách lấy mẫu lại các cụm và tính toán lại toàn bộ số liệu chính xác.
     """
     if b_resamples != 2000:
         raise ValueError(f"Confirmatory protocol requires exact B=2000, got B={b_resamples}")
@@ -173,7 +173,7 @@ def paired_cluster_bootstrap_recompute(
     elif correction_family == "bonferroni_h2":
         adjusted_alpha = alpha / 3.0
 
-    # Decision Semantics: SUPPORTED, INCONCLUSIVE, FALSIFIED
+    # Ngữ nghĩa quyết định: SUPPORTED, INCONCLUSIVE, FALSIFIED
     is_supported = bool(p_val <= adjusted_alpha and ci_lower > 0.0)
     is_falsified = bool(obs_delta < 0.0 and p_val <= adjusted_alpha and ci_upper < 0.0)
     

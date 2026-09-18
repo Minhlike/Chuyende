@@ -1,5 +1,5 @@
 """
-Assumption Extraction & Challenge Auditor (Prompt 5 Sections 16, 17)
+Trích xuất giả định & Thử thách Kiểm toán viên (Nhắc 5 Mục 16, 17)
 """
 
 from typing import List, Dict, Any, Optional
@@ -8,11 +8,11 @@ from research_agent.schemas.reasoning import AssumptionRecord
 
 class AssumptionAuditor:
     """
-    Identifies and challenges explicit and implicit methodological assumptions.
-    Evaluates empirical testability and downstream consequences if assumptions fail.
+    Xác định và thách thức các giả định về phương pháp luận rõ ràng và tiềm ẩn.
+    Đánh giá khả năng kiểm chứng thực nghiệm và hậu quả tiếp theo nếu các giả định thất bại.
     """
 
-    # Domain-specific canonical implicit assumptions
+    # Các giả định ngầm định chuẩn theo miền cụ thể
     KNOWN_IMPLICIT_ASSUMPTIONS = {
         "gnn": [
             ("Audit graph edges reflect observable causality rather than mere coincidence.", "TESTABLE_BY_AUDIT", "Spurious edges induce over-smoothing and noisy representations."),
@@ -35,13 +35,13 @@ class AssumptionAuditor:
 
     def audit_assumptions(self, entity_id: str, text: str) -> List[AssumptionRecord]:
         """
-        Extract explicit and implicit assumptions for an architecture or claim.
+        Trích xuất các giả định rõ ràng và tiềm ẩn cho một kiến ​​trúc hoặc yêu cầu.
         """
         assumptions: List[AssumptionRecord] = []
         t_lower = text.lower()
         seq = 1
 
-        # Check for matching implicit domain assumptions
+        # Kiểm tra các giả định miền ngầm phù hợp
         for key, assumed_list in self.KNOWN_IMPLICIT_ASSUMPTIONS.items():
             if key in t_lower or (key == "log" and any(w in t_lower for w in ["template", "drain", "bert", "parser"])):
                 for statement, testability, consequence in assumed_list:
@@ -60,7 +60,7 @@ class AssumptionAuditor:
                     )
                     seq += 1
 
-        # Check for explicit condition words in text
+        # Kiểm tra các từ điều kiện rõ ràng trong văn bản
         if "assuming" in t_lower or "provided that" in t_lower or "relies on" in t_lower:
             ass_id = f"ASM-{abs(hash(entity_id + 'explicit')) % 1000000:06d}"
             assumptions.append(

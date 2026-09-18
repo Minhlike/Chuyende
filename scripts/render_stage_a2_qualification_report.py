@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Render Script for Stage A2 CUDA V1.4 Final Authorization Report.
-Reads verified disk artifacts, manifest entries, and git status to produce a 100% accurate,
-cryptographically grounded Markdown report matching Protocol V1.4 specifications.
+Kết xuất tập lệnh cho Giai đoạn A2 CUDA V1.4 Báo cáo ủy quyền cuối cùng.
+Đọc các tạo phẩm đĩa đã được xác minh, mục nhập tệp kê khai và trạng thái git để tạo ra kết quả chính xác 100%,
+Báo cáo Markdown dựa trên mật mã phù hợp với thông số kỹ thuật của Giao thức V1.4.
 """
 
 import json
@@ -19,7 +19,7 @@ def render_report():
     preexec_dir = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution"
     plans_dir = base_dir / "experiments" / "plans"
 
-    # Git Metadata
+    # Siêu dữ liệu Git
     local_head = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
     branch = subprocess.check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"], text=True).strip()
     try:
@@ -40,7 +40,7 @@ def render_report():
     exec_code_commit = resume_data.get("execution_code_commit_sha", local_head)
     evidence_commit = local_head
 
-    # Verify hashes of manifest items
+    # Xác minh giá trị băm của các mục kê khai
     manifest_match = True
     for item in manifest["artifacts"]:
         actual_hash = compute_sha256(base_dir / item["path"])

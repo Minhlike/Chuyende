@@ -1,5 +1,5 @@
 """
-Information-Gain Research Action Prioritizer (Prompt 5 Sections 106, 107)
+Công cụ Ưu tiên Hành động Nghiên cứu Thu được Thông tin (Nhắc 5 Phần 106, 107)
 """
 
 from typing import List, Dict, Any, Optional
@@ -14,8 +14,8 @@ from research_agent.core.enums import ResearchPriorityLevel, EpistemicStatus
 
 class ResearchActionPrioritizer:
     """
-    Ranks next best research actions ordered by expected uncertainty reduction.
-    Focuses effort on falsifying discriminating tests rather than redundant support gathering.
+    Xếp hạng các hành động nghiên cứu tốt nhất tiếp theo theo thứ tự giảm độ không chắc chắn dự kiến.
+    Tập trung nỗ lực vào việc làm sai lệch các bài kiểm tra phân biệt đối xử thay vì thu thập hỗ trợ dư thừa.
     """
 
     def prioritize_actions(
@@ -26,11 +26,11 @@ class ResearchActionPrioritizer:
         contested_hypotheses: List[str],
     ) -> List[ResearchActionPriority]:
         """
-        Computes ordered list of research priorities.
+        Tính toán danh sách theo thứ tự ưu tiên nghiên cứu.
         """
         actions: List[ResearchActionPriority] = []
 
-        # 1. Contested Hypotheses (CRITICAL)
+        # 1. Các giả thuyết gây tranh cãi (CRITICAL)
         for hyp_id in contested_hypotheses:
             actions.append(
                 ResearchActionPriority(
@@ -43,7 +43,7 @@ class ResearchActionPrioritizer:
                 )
             )
 
-        # 2. Open High/Critical Evidence Gaps (CRITICAL / HIGH)
+        # 2. Khoảng trống bằng chứng quan trọng/cao mở (CRITICAL / HIGH)
         for gap in gaps:
             if gap.status == "OPEN":
                 pri = ResearchPriorityLevel.CRITICAL if gap.severity == "CRITICAL" else ResearchPriorityLevel.HIGH
@@ -58,7 +58,7 @@ class ResearchActionPrioritizer:
                     )
                 )
 
-        # 3. Untested Fragile Assumptions (HIGH)
+        # 3. Các giả định mong manh chưa được kiểm chứng (HIGH)
         for ass in assumptions:
             if ass.status == "UNTESTED" and ass.testability in ["TESTABLE_BY_EXPERIMENT", "TESTABLE_BY_AUDIT"]:
                 actions.append(
@@ -71,7 +71,7 @@ class ResearchActionPrioritizer:
                     )
                 )
 
-        # 4. Pending Verification Requests (HIGH / MEDIUM)
+        # 4. Yêu cầu xác minh đang chờ xử lý (HIGH / MEDIUM)
         for req in verification_requests:
             if req.status.value == "PENDING":
                 actions.append(
@@ -84,7 +84,7 @@ class ResearchActionPrioritizer:
                     )
                 )
 
-        # Sort by Priority: CRITICAL -> HIGH -> MEDIUM -> LOW
+        # Sắp xếp theo mức độ ưu tiên: CRITICAL -> HIGH -> MEDIUM -> LOW
         pri_order = {
             ResearchPriorityLevel.CRITICAL: 0,
             ResearchPriorityLevel.HIGH: 1,

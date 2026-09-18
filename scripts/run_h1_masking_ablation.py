@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-H1 Frozen Input Masking Ablation Pipeline
-Protocol: FROZEN_INPUT_MASKING_ABLATION
+Đường ống cắt bỏ mặt nạ đầu vào đông lạnh H1
+Giao thức: FROZEN_INPUT_MASKING_ABLATION
 
-Evaluates the exact same frozen SEQUENCE_ONLY backbones (Seeds 42, 7, 999)
-with parameter inputs PRESENT (param_slots=params) vs MASKED (param_slots=None).
+Đánh giá các xương sống SEQUENCE_ONLY được đông lạnh giống hệt nhau (Hạt 42, 7, 999)
+với thông số đầu vào PRESENT (param_slots=params) so với MASKED (param_slots=None).
 
-Allowed inference:
-Dynamic parameter slots contribute information used by the learned frozen representation.
+Suy luận được phép:
+Các khe tham số động đóng góp thông tin được sử dụng bởi biểu diễn cố định đã học.
 
-Forbidden inference:
-Parameter-aware training is proven superior to a separately trained template-only model.
+Cấm suy luận:
+Đào tạo nhận biết tham số được chứng minh là vượt trội so với mô hình chỉ có mẫu được đào tạo riêng biệt.
 """
 
 import json
@@ -74,11 +74,11 @@ def run_ablation():
         model.load_state_dict(ckpt["model_state_dict"])
         model.eval()
 
-        # 1. Load cached unmasked representation (from V3 evaluation)
+        # 1. Tải biểu diễn không được che giấu được lưu trong bộ nhớ đệm (từ đánh giá V3)
         cached_val = BASE_DIR / "experiments" / "nineplus" / "evaluation_v3" / run_id / "val_rep.pt"
         z_present = torch.load(cached_val, map_location="cpu", weights_only=False)
 
-        # 2. Extract masked representation (param_slots=None)
+        # 2. Trích xuất biểu diễn bị che (param_slots=None)
         reps_masked = []
         with torch.no_grad():
             for i in range(0, n_total, batch_size):
@@ -93,15 +93,15 @@ def run_ablation():
                 reps_masked.append(z_m.cpu())
         z_masked = torch.cat(reps_masked, dim=0)
 
-        # Compute cosine similarity and L2 distance between present and masked representations
+        # Tính độ tương tự cosin và khoảng cách L2 giữa biểu diễn hiện tại và biểu diễn bị che
         cos_sim = F.cosine_similarity(z_present, z_masked, dim=-1)
         mean_cos_sim = float(cos_sim.mean().item())
         min_cos_sim = float(cos_sim.min().item())
         l2_dist = torch.norm(z_present - z_masked, dim=-1)
         mean_l2_dist = float(l2_dist.mean().item())
 
-        # 3. Downstream evaluation of the trained probe on masked representations
-        # Load probe trained on Train representations with seed 10007
+        # 3. Đánh giá hạ nguồn (downstream) của thăm dò đã được huấn luyện trên các biểu diễn bị che
+        # bộ dò (probe) tải được đào tạo về biểu diễn Train với hạt giống 10007
         train_rep_p = BASE_DIR / "experiments" / "nineplus" / "evaluation_v3" / run_id / "train_rep.pt"
         train_rep = torch.load(train_rep_p, map_location=dev, weights_only=False)
         y_train = torch.tensor(torch.load(vault_dir / "hdfs_probe_labels_train.pt", weights_only=False)["labels"], dtype=torch.float32, device=dev)

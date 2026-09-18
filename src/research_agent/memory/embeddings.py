@@ -1,5 +1,5 @@
 """
-Embedding Provider Abstraction and Lightweight Local Vectorizer (Prompt 4, Section 23, Section 46, ADR-0008)
+Nhúng tính trừu tượng của nhà cung cấp và công cụ vectơ cục bộ nhẹ (Dấu nhắc 4, Phần 23, Phần 46, ADR-0008)
 """
 
 import re
@@ -12,7 +12,7 @@ from pydantic import BaseModel, Field
 
 
 class EmbeddingVector(BaseModel):
-    """Derived dense vector embedding with provenance metadata."""
+    """Việc nhúng vectơ dày đặc có nguồn gốc với siêu dữ liệu xuất xứ."""
     entity_id: str
     entity_type: str
     model_id: str
@@ -24,7 +24,7 @@ class EmbeddingVector(BaseModel):
 
 
 class EmbeddingProvider(ABC):
-    """Abstract interface for local or remote embedding backends (Section 46)."""
+    """Giao diện trừu tượng cho các chương trình phụ trợ nhúng cục bộ hoặc từ xa (Phần 46)."""
 
     @property
     @abstractmethod
@@ -43,19 +43,19 @@ class EmbeddingProvider(ABC):
 
     @abstractmethod
     def embed_text(self, text: str) -> List[float]:
-        """Embed a single text string into a normalized dense vector."""
+        """Nhúng một chuỗi văn bản vào một vectơ dày đặc được chuẩn hóa."""
         pass
 
     def embed_batch(self, texts: List[str]) -> List[List[float]]:
-        """Embed a list of text strings."""
+        """Nhúng danh sách các chuỗi văn bản."""
         return [self.embed_text(t) for t in texts]
 
 
 class LocalBM25TFIDFEmbeddingProvider(EmbeddingProvider):
     """
-    Deterministic, high-performance, local feature-hash vectorizer.
-    Produces L2-normalized 128-dimensional dense vectors from text tokens.
-    Guarantees reproducible similarity ranking without external network or heavy dependencies.
+    Công cụ vector hóa băm tính năng cục bộ, hiệu suất cao, xác định.
+    Tạo vectơ dày đặc 128 chiều được chuẩn hóa L2 từ token văn bản.
+    Đảm bảo xếp hạng tương tự có thể tái tạo mà không cần mạng bên ngoài hoặc phụ thuộc nặng nề.
     """
 
     def __init__(self, dim: int = 128, model_version: str = "1.0.0"):
@@ -77,7 +77,7 @@ class LocalBM25TFIDFEmbeddingProvider(EmbeddingProvider):
 
     def _tokenize(self, text: str) -> List[str]:
         cleaned = text.lower()
-        # Keep alphanumeric, hyphens, and dots for identifiers (e.g., CLM-001, 1.3.3)
+        # Giữ lại chữ và số, dấu gạch ngang và dấu chấm cho số nhận dạng (e.g., CLM-001, 1.3.3)
         tokens = re.findall(r'[a-z0-9_\-\.]+', cleaned)
         return tokens
 
@@ -92,15 +92,15 @@ class LocalBM25TFIDFEmbeddingProvider(EmbeddingProvider):
             tf_dict[token] = tf_dict.get(token, 0) + 1
 
         for token, count in tf_dict.items():
-            # Sublinear term frequency: 1 + ln(count)
+            # Tần số thuật ngữ tuyến tính: 1 + ln(count)
             weight = 1.0 + math.log(count)
-            # Hash to index and sign for feature hashing
+            # Băm để lập chỉ mục và ký để băm tính năng
             h_val = int(hashlib.md5(token.encode('utf-8')).hexdigest(), 16)
             idx = h_val % self._dim
             sign = 1.0 if ((h_val >> 8) & 1) == 0 else -1.0
             vec[idx] += sign * weight
 
-        # L2 Normalize
+        # L2 Bình thường hóa
         norm = math.sqrt(sum(v * v for v in vec))
         if norm > 1e-9:
             vec = [v / norm for v in vec]

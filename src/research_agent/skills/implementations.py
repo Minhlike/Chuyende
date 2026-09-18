@@ -1,5 +1,5 @@
 """
-Executable Implementations of the 18 Canonical Research Skills (Prompt 5 Sections 75..92)
+Triển khai có thể thực hiện được 18 Kỹ năng Nghiên cứu Kinh điển (Nhắc 5 Phần 75..92)
 """
 
 import time
@@ -1074,7 +1074,7 @@ class SkillWordDiagramBuilder(BaseResearchSkill):
         builder = WordDiagramBuilder()
         spec_data = payload.get("diagram_spec", {})
         spec = DiagramSpecification(**spec_data) if isinstance(spec_data, dict) else spec_data
-        # Note: can execute against open Word COM doc if provided
+        # Lưu ý: có thể thực thi đối với tài liệu Word COM đang mở nếu được cung cấp
         return SkillResult(
             skill_id=self.metadata.skill_id,
             success=True,

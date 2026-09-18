@@ -1,5 +1,5 @@
 """
-Equation Registry Schemas (Section 12, RC-08)
+Lược đồ đăng ký phương trình (Phần 12, RC-08)
 """
 
 from datetime import datetime, timezone
@@ -14,7 +14,7 @@ from research_agent.core.exceptions import ProvenanceError
 
 
 class SymbolDefinition(BaseModel):
-    """Canonical mathematical symbol definition with explicit scope (Section 12)."""
+    """Định nghĩa ký hiệu toán học chuẩn với phạm vi rõ ràng (Phần 12)."""
     symbol_id: str = Field(description="Stable ID: SYM-000001")
     symbol_latex: str = Field(description="LaTeX string, e.g. '\\mathbf{z}', '\\lambda'")
     name: str
@@ -25,7 +25,7 @@ class SymbolDefinition(BaseModel):
 
 
 class EquationDerivation(BaseModel):
-    """Mathematical proof / derivation lineage."""
+    """Chứng minh toán học/dòng đạo hàm."""
     parent_equation_ids: List[str] = Field(default_factory=list, description="IDs of prerequisite equations")
     derivation_steps: List[str] = Field(default_factory=list, description="Ordered derivation steps in LaTeX/text")
     assumptions_applied: List[str] = Field(default_factory=list)
@@ -33,7 +33,7 @@ class EquationDerivation(BaseModel):
 
 
 class Equation(BaseModel):
-    """Canonical Equation Entity (RC-08)."""
+    """Thực thể phương trình Canonical (RC-08)."""
     equation_id: str = Field(description="Stable ID: EQ-000001")
     latex: str = Field(min_length=1, description="Raw LaTeX representation")
     normalized_representation: Optional[str] = None
@@ -55,7 +55,7 @@ class Equation(BaseModel):
 
     @model_validator(mode="after")
     def validate_provenance_invariants(self) -> "Equation":
-        # RC-08 / TEST 3 Invariant: SOURCE_EQUATION must have source_id
+        # RC-08/TEST 3 Bất biến: SOURCE_EQUATION phải có source_id
         if self.equation_type == EquationType.SOURCE_EQUATION:
             if not self.source_id or not self.source_id.strip():
                 raise ProvenanceError(

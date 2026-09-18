@@ -32,7 +32,7 @@ from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.oxml import parse_xml
 from docx.oxml.ns import nsdecls, qn
 
-# Ensure D:\Research\src is in sys.path
+# Đảm bảo D:\Research\src nằm trong sys.path
 SRC_DIR = Path(r"D:\Research\src")
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
@@ -48,7 +48,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 
 def make_stage_a2_loss_omml():
-    """Native OMML for L_{graph} = 1.0 L_{rel} + 1.0 L_{node} + 0.1 L_{time}."""
+    """OMML gốc cho L_{graph} = 1,0 L_{rel} + 1,0 L_{node} + 0,1 L_{time}."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>graph</m:t></m:r></m:sub></m:sSub>\n'
@@ -64,8 +64,9 @@ def make_stage_a2_loss_omml():
 
 
 def make_inline_l_sub(sub: str):
-    """Inline OMML: uppercase italic L with true subscript (e.g., L_{rel}).
-    No visible underscore. Uses Word-native math rendering (Cambria Math).
+    """
+Nội tuyến OMML: chữ in nghiêng L có chỉ số dưới thực (e.g., L_{rel}).
+    Không nhìn thấy dấu gạch dưới. Sử dụng kết xuất toán học gốc Word (Cambria Math).
     """
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>'
@@ -87,8 +88,9 @@ def make_inline_l_sub(sub: str):
 
 
 def make_native_citation_runs(tag: str, num_str: str, font_size_pt: float = 14.0):
-    """Constructs Word 2016 native CITATION field elements.
-    In Word 2016, right-clicking on this field shows 'Edit Citation' and 'Edit Source'.
+    """
+Xây dựng các phần tử trường CITATION gốc của Word 2016.
+    Trong Word 2016, nhấp chuột phải vào trường này sẽ hiển thị 'Chỉnh sửa trích dẫn' và 'Chỉnh sửa nguồn'.
     """
     sz_val = str(int(font_size_pt * 2))
     xml_str = f'''<w:p {nsdecls("w")}>
@@ -147,27 +149,27 @@ def load_source_metrics() -> dict:
 
 def soft_break(text: str, chunk_size: int = 8) -> str:
     """
-    Inserts zero-width space (ZWSP \\u200b) into long uninterrupted tokens (hashes, paths, long identifiers)
-    to provide Microsoft Word with line-break opportunities in justified paragraphs, preventing wide whitespace gaps.
+    Chèn không gian có độ rộng bằng 0 (ZWSP \u200b) vào các token dài không bị gián đoạn (băm, đường dẫn, mã định danh dài)
+    để cung cấp cho Microsoft Word cơ hội ngắt dòng trong các đoạn văn được căn đều, ngăn chặn các khoảng trắng rộng.
     """
     if not text or not isinstance(text, str):
         return text
     import re
-    # 1. Soft breaks after / and \\ in file paths
+    # 1. Ngắt nhẹ sau / và \\ trong đường dẫn tệp
     text = text.replace("/", "/\u200b").replace("\\", "\\\u200b")
-    # 2. Break hex hashes (32+ consecutive hex chars) into chunk_size chunks
+    # 2. Chia các băm hex (hơn 32 ký tự hex liên tiếp) thành các khối chunk_size
     def wrap_hex(m):
         h = m.group(0)
         return "\u200b".join([h[i:i+chunk_size] for i in range(0, len(h), chunk_size)])
     text = re.sub(r"[0-9a-fA-F]{32,}", wrap_hex, text)
-    # 3. Soft breaks after _ in long snake_case tokens
+    # 3. Nghỉ mềm sau _ trong token snake_case dài
     def wrap_identifier(m):
         tok = m.group(0)
         if len(tok) > 15 and "_" in tok:
             return tok.replace("_", "_\u200b")
         return tok
     text = re.sub(r"[A-Za-z0-9_]+", wrap_identifier, text)
-    # 4. Soft breaks after - in long kebab-case tokens
+    # 4. Nghỉ giải lao nhẹ sau - trong token trường hợp kebab dài
     def wrap_kebab(m):
         tok = m.group(0)
         if len(tok) > 18 and "-" in tok:
@@ -184,7 +186,7 @@ def build_chapter_3():
     if not backup_path.exists():
         raise FileNotFoundError(f"Canonical backup not found at {backup_path}")
 
-    # Restore from canonical backup before building
+    # Khôi phục từ bản sao lưu chuẩn trước khi xây dựng
     shutil.copyfile(backup_path, master_docx_path)
     print(f"[Restore] Restored clean canonical document from: {backup_path}")
 
@@ -207,7 +209,7 @@ def build_chapter_3():
 
     print(f"[Insertion] Located target boundary at paragraph: [{target_p.style.name}] '{target_p.text}'")
 
-    # Helper closures matching build_word_visual_qa.py
+    # Việc đóng của trình trợ giúp khớp với build_word_visual_qa.py
     def add_p(text_segments, bold_prefix=None, first_line_indent=True, align=WD_ALIGN_PARAGRAPH.JUSTIFY, keep_with_next=False):
         new_p = target_p.insert_paragraph_before(style="Normal")
         new_p.alignment = align
@@ -279,7 +281,7 @@ def build_chapter_3():
 
     def add_h1(text):
         new_p = target_p.insert_paragraph_before(style="Heading 1")
-        # In Chapter 1 & 2, Heading 1 inherits center alignment from style
+        # Trong Chương 1 & 2, Tiêu đề 1 kế thừa kiểu căn giữa từ kiểu
         new_p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
         new_p.paragraph_format.space_before = Pt(12)
         new_p.paragraph_format.space_after = Pt(6)
@@ -374,7 +376,7 @@ def build_chapter_3():
         f"Đặc tả môi trường được niêm phong trong tệp bằng chứng {hw['environment_lock_path']} với mã băm SHA-256: {hw['environment_lock_sha256']}."
     )
 
-    # Table 3.1
+    # Bảng 3.1
     add_table_caption(doc, target_p, 1, "Thông số kỹ thuật môi trường thực nghiệm và khóa xác thực mật mã", bookmark_name="BK_TBL_3_001", chapter_num=3)
     t1_headers = ["Thành phần", "Thông số kỹ thuật phần cứng / phần mềm", "Khóa xác thực mật mã / Ghi chú"]
     t1_widths = [2200, 4800, 2605]
@@ -436,7 +438,7 @@ def build_chapter_3():
         bold_prefix="3. Phân vùng Kiểm thử Niêm phong (Sealed Test Split): "
     )
 
-    # Table 3.2
+    # Bảng 3.2
     add_table_caption(doc, target_p, 2, "Phân chia tập dữ liệu HDFS theo giao thức nhân quả chống rò rỉ", bookmark_name="BK_TBL_3_002", chapter_num=3)
     t2_headers = ["Phân vùng dữ liệu", "Số phiên khối (Sessions)", "Số sự kiện log (Events)", "Số cửa sổ ngữ cảnh (W=256)", "Mã băm tập hợp (Membership SHA-256)"]
     t2_widths = [1700, 1800, 1800, 1800, 2505]
@@ -526,7 +528,7 @@ def build_chapter_3():
     )
 
     # -------------------------------------------------------------------------
-    # Human-readable display mapping (presentation-only; raw evidence unchanged)
+    # Ánh xạ hiển thị mà con người có thể đọc được (chỉ ở bản trình bày; bằng chứng thô không thay đổi)
     # -------------------------------------------------------------------------
     DISPLAY_CLASSIFICATION = {
         "CANONICAL":           "Đạt chuẩn",
@@ -549,7 +551,7 @@ def build_chapter_3():
         bookmark_name="BK_TBL_3_003", chapter_num=3
     )
 
-    # Inline OMML headers for L_rel, L_node, L_time (no visible underscore)
+    # Tiêu đề OMML nội tuyến cho L_rel, L_node, L_time (không hiển thị dấu gạch dưới)
     t3_headers = [
         "Hạt giống",
         "Epoch",
@@ -562,7 +564,7 @@ def build_chapter_3():
         make_inline_l_sub("node"),
         make_inline_l_sub("time"),
     ]
-    # Column widths (dxa) — total 9540 dxa ≈ 477pt → fits A4 portrait text area
+    # Độ rộng cột (dxa) - tổng cộng 9540 dxa ≈ 477pt → vừa với vùng văn bản dọc A4
     t3_widths = [1050, 700, 900, 1050, 900, 1200, 1200, 880, 880, 780]
 
     t3_rows = []
@@ -582,7 +584,7 @@ def build_chapter_3():
 
     ag_dev = ag["protocol_deviation"]
 
-    # Aggregate row (3 protocol-deviation seeds)
+    # Hàng tổng hợp (3 hạt lệch giao thức)
     t3_rows.append([
         "TB lệch thủ tục (3 seed)",
         "-",
@@ -598,15 +600,15 @@ def build_chapter_3():
 
     t3_body_align = [
         WD_ALIGN_PARAGRAPH.CENTER,  # Hạt giống
-        WD_ALIGN_PARAGRAPH.CENTER,  # Epoch
+        WD_ALIGN_PARAGRAPH.CENTER,  # epoch
         WD_ALIGN_PARAGRAPH.RIGHT,   # Số bước
-        WD_ALIGN_PARAGRAPH.RIGHT,   # Train loss
-        WD_ALIGN_PARAGRAPH.CENTER,  # Best epoch
-        WD_ALIGN_PARAGRAPH.RIGHT,   # Best val loss
+        WD_ALIGN_PARAGRAPH.RIGHT,   # Mất tàu
+        WD_ALIGN_PARAGRAPH.CENTER,  # epoch tốt nhất
+        WD_ALIGN_PARAGRAPH.RIGHT,   # Mất val tốt nhất
         WD_ALIGN_PARAGRAPH.RIGHT,   # Val loss cuối
         WD_ALIGN_PARAGRAPH.RIGHT,   # L_rel
         WD_ALIGN_PARAGRAPH.RIGHT,   # L_node
-        WD_ALIGN_PARAGRAPH.RIGHT,   # L_time
+        WD_ALIGN_PARAGRAPH.RIGHT,   # L_thời gian
     ]
 
     insert_thesis_table(
@@ -704,7 +706,7 @@ def build_chapter_3():
         "không cấu thành tuyên bố thực nghiệm so sánh hơn về độ chính xác phát hiện bất thường downstream khi chưa tiến hành đánh giá end-to-end có gắn nhãn."
     )
 
-    # Table 3.5
+    # Bảng 3.5
     add_table_caption(doc, target_p, 5, "Đối sánh đặc tính phương pháp luận giữa khung biểu diễn đề xuất và các phương pháp cơ sở", bookmark_name="BK_TBL_3_005", chapter_num=3)
     t4_headers = ["Phương pháp cơ sở", "Mô hình biểu diễn", "Xử lý tham số & thời gian", "Đặc tính cấu trúc & Phân tích khoảng trống"]
     t4_widths = [1800, 2200, 2600, 3005]
@@ -872,7 +874,7 @@ def build_chapter_3():
     # =========================================================================
     print("[Conclusion] Rebuilding Conclusion section with evidence-bound language...")
 
-    # Clean existing following paragraphs until bibliography
+    # Làm sạch các đoạn văn hiện có sau đây cho đến khi có thư mục
     cur_elem = target_p._p.getnext()
     while cur_elem is not None:
         tag = cur_elem.tag
@@ -887,7 +889,7 @@ def build_chapter_3():
         else:
             cur_elem = cur_elem.getnext()
 
-    # Find next boundary after target_p
+    # Tìm ranh giới tiếp theo sau target_p
     next_p = None
     for p in doc.paragraphs:
         txt = p.text.strip()
@@ -943,13 +945,13 @@ def build_chapter_3():
         "hướng tới việc hoàn thiện mô hình biểu diễn đa góc nhìn toàn phần và thử nghiệm đánh giá phát hiện tấn công trên dữ liệu kiểm thử khi được ủy quyền."
     )
 
-    # Ensure final body sectPr continues page numbering (no w:pgNumType w:start="1")
+    # Đảm bảo nội dung cuối cùng sectPr tiếp tục đánh số trang (không có w:pgNumType w:start="1")
     body_sectPr = doc._element.body.find(qn("w:sectPr"))
     if body_sectPr is not None:
         for pgn in body_sectPr.findall(qn("w:pgNumType")):
             body_sectPr.remove(pgn)
 
-    # Save document
+    # Lưu tài liệu
     doc.save(str(master_docx_path))
     print(f"[SUCCESS] Master DOCX successfully updated at: {master_docx_path}")
 

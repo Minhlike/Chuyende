@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Canonical HDFS Split Authority (SPL-HDFS-001 Shared Module).
-Provides single-source-of-truth session interval extraction, causal partition boundaries,
-disjointness assertions, and exact millisecond-accurate timestamp parsing for HDFS logs.
-Shared across HDFSRealDataAdapter and HDFSGraphBuilder to prevent split logic drift.
+Cơ quan phân chia HDFS Canonical (Mô-đun chia sẻ SPL-HDFS-001).
+Cung cấp khả năng trích xuất khoảng thời gian phiên một nguồn tin cậy, ranh giới phân vùng nguyên nhân,
+các xác nhận rời rạc và phân tích cú pháp dấu thời gian chính xác đến từng mili giây cho nhật ký HDFS.
+Được chia sẻ trên HDFSRealDataAdapter và HDFSGraphBuilder để ngăn chặn tình trạng lệch logic phân tách.
 """
 
 import re
@@ -17,8 +17,8 @@ from typing import Dict, Any, List, Optional, Tuple, Set
 
 def parse_hdfs_line_timestamp(date_str: str, time_str: str, ms_str: str) -> Optional[float]:
     """
-    Fast, deterministic UTC numerical epoch conversion preserving exact millisecond fidelity.
-    Formula: UTC epoch seconds + (ms / 1000.0)
+    Chuyển đổi epoch số UTC nhanh chóng, mang tính xác định, đảm bảo độ chính xác đến từng mili giây.
+    Công thức: UTC giây epoch + (ms/1000.0)
     """
     try:
         year = 2000 + int(date_str[:2])
@@ -36,7 +36,7 @@ def parse_hdfs_line_timestamp(date_str: str, time_str: str, ms_str: str) -> Opti
 
 class HDFSSplitAuthority:
     """
-    Single-source-of-truth causal partition authority for SPL-HDFS-001.
+    Cơ quan phân vùng nhân quả nguồn tin cậy duy nhất cho SPL-HDFS-001.
     """
     def __init__(
         self,
@@ -60,14 +60,14 @@ class HDFSSplitAuthority:
         self._split_data: Optional[Dict[str, Any]] = None
 
     def get_split(self) -> Dict[str, Any]:
-        """Loads cached split authority metadata or computes from raw tarball."""
+        """Tải siêu dữ liệu về quyền phân chia được lưu trong bộ nhớ đệm hoặc tính toán từ tarball thô."""
         if self._split_data is not None:
             return self._split_data
 
         if self.cache_path.exists():
             try:
                 data = json.loads(self.cache_path.read_text(encoding="utf-8"))
-                # Convert list back to sets for membership checking
+                # Chuyển đổi danh sách trở lại bộ để kiểm tra thành viên
                 data["train_block_ids"] = set(data["train_block_ids"])
                 data["val_block_ids"] = set(data["val_block_ids"])
                 data["test_block_ids"] = set(data["test_block_ids"])
@@ -81,7 +81,7 @@ class HDFSSplitAuthority:
         return self.compute_and_cache_split()
 
     def compute_and_cache_split(self) -> Dict[str, Any]:
-        """Computes exact session intervals across full 11.17M raw lines and enforces boundary purges."""
+        """Tính toán các khoảng thời gian phiên chính xác trên toàn bộ 11,17 triệu dòng thô và thực thi việc xóa ranh giới."""
         if not self.raw_tar_path.exists():
             raise FileNotFoundError(f"Raw HDFS tarball missing at {self.raw_tar_path}")
 
@@ -128,7 +128,7 @@ class HDFSSplitAuthority:
                 except Exception:
                     malformed_lines += 1
 
-        # Causal sorting
+        # Phân loại nhân quả
         sorted_sessions = sorted(
             session_intervals.keys(),
             key=lambda b: (session_intervals[b][0], b)
@@ -174,7 +174,7 @@ class HDFSSplitAuthority:
         test_min_start = min(session_intervals[b][0] for b in test_block_ids) if test_block_ids else 0.0
         test_max_end = max(session_intervals[b][1] for b in test_block_ids) if test_block_ids else 0.0
 
-        # Invariant checks
+        # Kiểm tra bất biến
         assert train_max_end < val_min_start, "Train-Val boundary causal violation!"
         assert val_max_end < test_min_start, "Val-Test boundary causal violation!"
         assert train_block_ids.isdisjoint(val_block_ids), "Train and Val block IDs overlap!"
@@ -183,7 +183,7 @@ class HDFSSplitAuthority:
         assert purged_train_val_ids.isdisjoint(train_block_ids), "Purged sessions leaked into Train!"
         assert purged_val_test_ids.isdisjoint(val_block_ids), "Purged sessions leaked into Val!"
 
-        # Causal budget selection (Earliest 35,000 Train sessions, Earliest 7,500 Val sessions)
+        # Lựa chọn ngân sách nhân quả (35.000 phiên Train sớm nhất, 7.500 phiên Val sớm nhất)
         selected_train_block_ids = sorted(
             train_block_ids,
             key=lambda b: (session_intervals[b][0], b)
@@ -231,7 +231,7 @@ class HDFSSplitAuthority:
             "selected_val_block_ids": selected_val_block_ids
         }
 
-        # Cache serializable JSON
+        # Bộ đệm có thể tuần tự hóa JSON
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         serializable = dict(split_dict)
         serializable["train_block_ids"] = sorted(list(train_block_ids))

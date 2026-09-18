@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Environment and Storage Manifest Builder
-Generates sanitized HOST-MANIFEST.json, STORAGE-MANIFEST.json, and ENVIRONMENT-LOCK.json.
-Enforces public repository sanitization (no usernames, IPs, MAC addresses, or machine hostnames).
+Trình tạo bản kê (manifest) môi trường và lưu trữ
+Tạo HOST-MANIFEST.json, STORAGE-MANIFEST.json đã được vệ sinh và ENVIRONMENT-LOCK.json.
+Thực thi việc vệ sinh kho lưu trữ công cộng (không có tên người dùng, IP, địa chỉ MAC hoặc tên máy chủ).
 """
 
 import os
@@ -19,7 +19,7 @@ def generate_manifests():
     env_dir = root / "experiments" / "environment"
     env_dir.mkdir(parents=True, exist_ok=True)
 
-    # 1. HOST-MANIFEST.json (Sanitized Public Manifest)
+    # 1. HOST-MANIFEST.json (bản kê (manifest) công cộng đã được vệ sinh)
     host_manifest = {
         "schema_version": "HOST_MANIFEST_V1",
         "system_architecture": {

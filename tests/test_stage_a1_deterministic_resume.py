@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Regression Test for Deterministic Checkpoint Continuation in Stage A1 Trainer.
-Verifies that resuming training from a saved checkpoint produces an EXACT identical
-training trajectory (data batch order, loss values, gradients, optimizer state, scheduler state,
-and model weights) as an uninterrupted continuous training run.
+Kiểm tra hồi quy để tiếp tục checkpoint xác định trong giai đoạn huấn luyện viên A1.
+Xác minh rằng việc tiếp tục đào tạo từ checkpoint đã lưu sẽ tạo ra EXACT giống hệt
+quỹ đạo huấn luyện (thứ tự lô dữ liệu, giá trị mất, độ dốc, trạng thái tối ưu hóa, trạng thái lập lịch,
+và trọng số mô hình) như một quá trình huấn luyện liên tục không bị gián đoạn.
 """
 
 import os
@@ -28,7 +28,7 @@ from research_agent.experiments.training.stage_a1_runner import (
 
 
 def create_synthetic_data_package(num_sessions: int = 64, seq_len: int = 32, num_slots: int = 4):
-    """Creates a deterministic synthetic SSL package for regression testing."""
+    """Tạo gói SSL tổng hợp xác định để kiểm tra hồi quy."""
     torch.manual_seed(42)
     seqs = [torch.randint(3, 50, (seq_len,), dtype=torch.long) for _ in range(num_sessions)]
     params = [torch.randint(2, 30, (seq_len, num_slots), dtype=torch.long) for _ in range(num_sessions)]
@@ -45,7 +45,7 @@ def create_synthetic_data_package(num_sessions: int = 64, seq_len: int = 32, num
 
 
 def create_dummy_lock_file(lock_path: Path):
-    """Creates a minimal mock lock file for the test trainer."""
+    """Tạo một tệp khóa mô phỏng tối thiểu cho người huấn luyện kiểm tra."""
     lock_content = {
         "lock_identifier": "TEST-LOCK-STAGE-A1",
         "contract_sha256": "mock_contract_hash",
@@ -89,7 +89,7 @@ def create_dummy_lock_file(lock_path: Path):
 
 
 class MockStageA1Trainer(StageA1Trainer):
-    """Mock trainer overriding dataset loading with deterministic synthetic data."""
+    """Trình huấn luyện mô phỏng ghi đè tải tập dữ liệu bằng dữ liệu tổng hợp xác định."""
     def __init__(self, seed: int, base_dir: Path, device: torch.device, lock_path: Path):
         self.mock_lock_path = lock_path
         super().__init__(
@@ -129,11 +129,11 @@ class MockStageA1Trainer(StageA1Trainer):
 
 def test_stage_a1_exact_deterministic_resume():
     """
-    Verifies that:
-    1. Continuous Run A (Epoch 1 -> Epoch 2)
-    2. Resumed Run B (Epoch 1 -> Save Checkpoint -> Fresh Process/Trainer -> Load Checkpoint -> Epoch 2)
-    Yield identical next-batch trajectories, identical loss values, identical optimizer states,
-    identical learning rates, and identical model parameter weights (max parameter divergence < 1e-6).
+    Xác minh rằng:
+    1. Chạy liên tục A (epoch 1 -> epoch 2)
+    2. Tiếp tục chạy B (epoch 1 -> Lưu checkpoint -> Quy trình mới/Huấn luyện viên -> Tải checkpoint -> epoch 2)
+    Mang lại quỹ đạo lô tiếp theo giống hệt nhau, giá trị mất mát (loss) giống hệt nhau, trạng thái tối ưu hóa giống hệt nhau,
+    tốc độ học giống hệt nhau và trọng số tham số mô hình giống hệt nhau (độ phân kỳ tham số tối đa < 1e-6).
     """
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     seed = 42
@@ -145,14 +145,14 @@ def test_stage_a1_exact_deterministic_resume():
         ckpt_path = base_dir / "ckpt_epoch1.pt"
 
         # ==========================================
-        # 1. CONTINUOUS RUN A: Epoch 1 -> Epoch 2
+        # 1. CONTINUOUS RUN A: epoch 1 -> epoch 2
         # ==========================================
         trainer_a = MockStageA1Trainer(seed=seed, base_dir=base_dir, device=device, lock_path=lock_path)
         
-        # Train Epoch 1
+        # epoch tàu 1
         metrics_a_ep1, step_a_ep1 = trainer_a.train_epoch(epoch=1, global_step=0)
         
-        # Save Checkpoint at end of Epoch 1
+        # Lưu Checkpoint vào cuối epoch 1
         trainer_a.save_checkpoint(
             filepath=ckpt_path,
             epoch=1,
@@ -161,26 +161,26 @@ def test_stage_a1_exact_deterministic_resume():
             patience_counter=0
         )
         
-        # Continue uninterrupted to Epoch 2
+        # Tiếp tục không gián đoạn đến epoch 2
         metrics_a_ep2, step_a_ep2 = trainer_a.train_epoch(epoch=2, global_step=step_a_ep1)
         lr_a_ep2 = trainer_a.scheduler.get_last_lr()[0]
         state_dict_a = {k: v.clone() for k, v in trainer_a.model.state_dict().items()}
         opt_state_a = trainer_a.optimizer.state_dict()
 
         # ==========================================
-        # 2. RESUMED RUN B: Fresh Trainer -> Load Checkpoint -> Epoch 2
+        # 2. RESUMED RUN B: Huấn luyện viên mới -> checkpoint tải -> epoch 2
         # ==========================================
-        # Delete trainer_a to guarantee clean slate
+        # Xóa trainer_a để đảm bảo phương tiện chặn sạch sẽ
         del trainer_a
 
         trainer_b = MockStageA1Trainer(seed=seed, base_dir=base_dir, device=device, lock_path=lock_path)
         
-        # Load Checkpoint from Epoch 1
+        # Tải checkpoint từ epoch 1
         ep_res, step_res, best_loss_res, pat_res = trainer_b.load_checkpoint(ckpt_path)
         assert ep_res == 1, f"Expected epoch 1, got {ep_res}"
         assert step_res == step_a_ep1, f"Expected step {step_a_ep1}, got {step_res}"
 
-        # Train Epoch 2 from resumed state
+        # Huấn luyện Epoch 2 từ trạng thái được tiếp tục
         metrics_b_ep2, step_b_ep2 = trainer_b.train_epoch(epoch=2, global_step=step_res)
         lr_b_ep2 = trainer_b.scheduler.get_last_lr()[0]
         state_dict_b = {k: v.clone() for k, v in trainer_b.model.state_dict().items()}
@@ -189,16 +189,16 @@ def test_stage_a1_exact_deterministic_resume():
         # ==========================================
         # 3. VERIFY EXACT DETERMINISTIC TRAJECTORY
         # ==========================================
-        # A. Global step & Learning rate
+        # A. Bước toàn cầu & tốc độ học tập
         assert step_a_ep2 == step_b_ep2, f"Global step divergence: {step_a_ep2} vs {step_b_ep2}"
         assert abs(lr_a_ep2 - lr_b_ep2) < 1e-12, f"Learning rate divergence: {lr_a_ep2} vs {lr_b_ep2}"
 
-        # B. Loss metrics
+        # B. Số liệu mất mát (loss)
         for key in ["train_loss_seq", "train_loss_mep", "train_loss_mpp", "train_loss_time"]:
             diff_loss = abs(metrics_a_ep2[key] - metrics_b_ep2[key])
             assert diff_loss < 1e-6, f"Loss divergence on {key}: {metrics_a_ep2[key]} vs {metrics_b_ep2[key]} (diff={diff_loss})"
 
-        # C. Model Parameter Divergence
+        # C. Sự phân kỳ tham số mô hình
         max_param_diff = 0.0
         for name in state_dict_a:
             p_a = state_dict_a[name].float()
@@ -210,8 +210,8 @@ def test_stage_a1_exact_deterministic_resume():
         print(f"\n[DETERMINISTIC RESUME REGRESSION] Max Parameter Divergence: {max_param_diff:.8e}")
         assert max_param_diff < 1e-6, f"Parameter divergence exceeded threshold: {max_param_diff}"
         
-        # D. Optimizer State Divergence
-        # Check step counts in optimizer state
+        # D. Phân kỳ trạng thái tối ưu hóa
+        # Kiểm tra số bước ở trạng thái tối ưu hóa
         for p_idx in opt_state_a["state"]:
             state_a = opt_state_a["state"][p_idx]
             state_b = opt_state_b["state"][p_idx]
@@ -225,7 +225,7 @@ def test_stage_a1_exact_deterministic_resume():
 
 
 def test_resume_fails_on_tampered_rng_or_dataloader():
-    """Verifies that the deterministic test would correctly detect any corrupted or non-restored RNG state."""
+    """Xác minh rằng thử nghiệm xác định sẽ phát hiện chính xác mọi trạng thái RNG bị hỏng hoặc không được khôi phục."""
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     seed = 42
 
@@ -246,20 +246,20 @@ def test_resume_fails_on_tampered_rng_or_dataloader():
         )
         del trainer_a
 
-        # Load checkpoint but tamper with train_generator
+        # Tải checkpoint nhưng giả mạo train_generator
         trainer_b = MockStageA1Trainer(seed=seed, base_dir=base_dir, device=device, lock_path=lock_path)
         trainer_b.load_checkpoint(ckpt_path)
-        # Manually alter generator seed
+        # Thay đổi hạt giống máy phát điện theo cách thủ công
         trainer_b.train_generator.manual_seed(99999)
 
-        # Train Epoch 2
+        # epoch tàu 2
         metrics_b_ep2, _ = trainer_b.train_epoch(epoch=2, global_step=step_a_ep1)
 
-        # Baseline continuous
+        # baseline liên tục
         trainer_c = MockStageA1Trainer(seed=seed, base_dir=base_dir, device=device, lock_path=lock_path)
         trainer_c.train_epoch(epoch=1, global_step=0)
         metrics_c_ep2, _ = trainer_c.train_epoch(epoch=2, global_step=step_a_ep1)
 
-        # Because generator was tampered, batch order and losses must differ
+        # Bởi vì máy phát điện bị giả mạo nên thứ tự lô và mất mát (loss) phải khác nhau
         diff = abs(metrics_b_ep2["train_loss_seq"] - metrics_c_ep2["train_loss_seq"])
         assert diff > 1e-4, f"Expected tampered generator to cause divergence, but diff was {diff}"

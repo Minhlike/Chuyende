@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Tokenizer, Controlled Linkability & Privacy Contract Tests
-Verifies:
-  1. Zero hardcoded HMAC key in tokenizer code.
-  2. Ephemeral key resolution and scope rotation breaking cross-scope linkability.
-  3. Strict RFC1918 and loopback IP classification (10/8, 172.16/12, 192.168/16, 127/8).
-  4. Entity categorization for IPs, paths, hex parameters.
+Tokenizer, kiểm tra khả năng liên kết và hợp đồng bảo mật có kiểm soát
+Xác minh:
+  1. Khóa HMAC được mã hóa bằng 0 trong mã token.
+  2. Độ phân giải khóa tạm thời và xoay phạm vi phá vỡ khả năng liên kết giữa các phạm vi.
+  3. Phân loại nghiêm ngặt RFC1918 và loopback IP (10/8, 172,16/12, 192,168/16, 127/8).
+  4. Phân loại thực thể cho IP, đường dẫn, tham số hex.
 """
 
 import pytest
@@ -15,7 +15,7 @@ def test_01_zero_hardcoded_keys_and_fingerprint():
     tok1 = PrivacyAwareLogTokenizer(mode="CONTROLLED_LINKABILITY")
     tok2 = PrivacyAwareLogTokenizer(mode="CONTROLLED_LINKABILITY")
 
-    # Ephemeral keys must be independent
+    # Khóa tạm thời phải độc lập
     assert tok1.key_fingerprint != tok2.key_fingerprint
     assert len(tok1.key_fingerprint) == 64
 
@@ -25,7 +25,7 @@ def test_02_scope_rotation_breaks_cross_scope_linkage():
     
     pseudo_session_a = tok._pseudonymize(raw_ip)
 
-    # Rotate to session_B with new scope
+    # Xoay sang session_B với phạm vi mới
     tok.rotate_scope_key("session_B")
     pseudo_session_b = tok._pseudonymize(raw_ip)
 
@@ -34,16 +34,16 @@ def test_02_scope_rotation_breaks_cross_scope_linkage():
 def test_03_rfc1918_private_ip_classification():
     tok = PrivacyAwareLogTokenizer(mode="PRIVACY_AWARE_PARAMETERIZED")
 
-    # Private IP classes
+    # Các lớp IP riêng
     assert tok._is_private_ip("10.50.100.1") is True
     assert tok._is_private_ip("172.16.0.5") is True
     assert tok._is_private_ip("172.31.255.254") is True
     assert tok._is_private_ip("192.168.1.1") is True
-    assert tok._is_private_ip("127.0.0.1") is True  # Loopback
+    assert tok._is_private_ip("127.0.0.1") is True  # Quay lại
 
-    # Public IP classes
+    # Các lớp IP công cộng
     assert tok._is_private_ip("8.8.8.8") is False
-    assert tok._is_private_ip("172.32.0.1") is False  # Outside /12
+    assert tok._is_private_ip("172.32.0.1") is False  # Bên ngoài /12
     assert tok._is_private_ip("128.55.12.91") is False
     assert tok._is_private_ip("142.250.190.46") is False
 

@@ -1,5 +1,5 @@
 """
-Research Artifact Packager & Complete Provenance Inventory (Prompt 7 Sections 113..114)
+Trình đóng gói hiện vật nghiên cứu & Kiểm kê xuất xứ hoàn chỉnh (Nhắc 7 Phần 113..114)
 """
 
 import hashlib
@@ -13,16 +13,16 @@ from research_agent.storage.repository import ResearchRepository
 
 class ResearchArtifactPackager:
     """
-    Assembles the complete research bundle manifest verifying that all claims,
-    sources, arguments, equations, datasets, tables, figures, and build outputs
-    are linked and cryptographically intact.
+    Tập hợp bản kê (manifest) gói nghiên cứu hoàn chỉnh để xác minh rằng tất cả các tuyên bố,
+    nguồn, đối số, phương trình, bộ dữ liệu, bảng, số liệu và kết quả đầu ra của bản dựng
+    được liên kết và nguyên vẹn về mặt mật mã.
     """
 
     def __init__(self, repository: ResearchRepository):
         self.repo = repository
 
     def build_package_manifest(self) -> ResearchArtifactPackage:
-        """Constructs a comprehensive research asset inventory and package manifest."""
+        """Xây dựng bản kê (manifest) gói và bản kiểm kê tài sản nghiên cứu toàn diện."""
         claims = self.repo.list_claims()
         bundles = self.repo.list_argument_bundles()
         num_claims = self.repo.list_numerical_claims()
@@ -32,7 +32,7 @@ class ResearchArtifactPackager:
 
         pkg_id = f"PKG-{abs(hash(str(datetime.now(timezone.utc)))) % 1000000:06d}"
 
-        # Hash inventory
+        # Khoảng không quảng cáo băm
         hasher = hashlib.sha256()
         hasher.update(f"{len(claims)}_{len(bundles)}_{len(num_claims)}_{len(equations)}".encode("utf-8"))
         pkg_sha = hasher.hexdigest()

@@ -1,5 +1,5 @@
 """
-Comprehensive Thesis Auditor & Defensibility Integrity Engine (Prompt 7 Sections 57..105)
+Công cụ kiểm tra toàn diện luận án & khả năng bảo vệ toàn vẹn (Nhắc 7 phần 57..105)
 """
 
 import re
@@ -21,9 +21,9 @@ from research_agent.storage.repository import ResearchRepository
 
 class ThesisAuditor:
     """
-    Executes a multi-dimensional scientific audit across all paragraphs, sentences,
-    claims, citations, ownership boundaries, numbers, equations, tables, figures,
-    and 10 Defensibility Questions.
+    Thực hiện kiểm tra khoa học đa chiều trên tất cả các đoạn, câu,
+    tuyên bố, trích dẫn, ranh giới quyền sở hữu, con số, phương trình, bảng biểu, số liệu,
+    và 10 câu hỏi về khả năng bào chữa.
     """
 
     def __init__(self, repository: ResearchRepository):
@@ -34,38 +34,38 @@ class ThesisAuditor:
         paragraphs: Optional[List[ParagraphRecord]] = None,
         mode: CompositionMode = CompositionMode.PROVISIONAL,
     ) -> ThesisAuditReport:
-        """Runs the complete thesis audit suite and generates a structured report."""
+        """Chạy bộ kiểm tra luận án hoàn chỉnh và tạo báo cáo có cấu trúc."""
         target_paragraphs = paragraphs if paragraphs is not None else self.repo.list_paragraphs()
 
         issues: List[AuditIssueRecord] = []
         total_sentences = sum(len(p.sentences) for p in target_paragraphs)
 
-        # 1. Audit Sentences & Paragraphs
+        # 1. Câu và đoạn kiểm toán
         for p in target_paragraphs:
             self._audit_paragraph(p, issues, mode)
 
-        # 2. Audit Repetition & Template-Attractor Monotony (Prompt 7 Section 45, 102)
+        # 2. Sự lặp lại kiểm tra & Sự đơn điệu của mẫu thu hút (Nhắc 7 Mục 45, 102)
         self._audit_repetition_and_monotony(target_paragraphs, issues)
 
-        # 3. Audit RQ & Hypothesis Coverage (Prompt 7 Section 68)
+        # 3. Kiểm tra RQ & Phạm vi giả thuyết (Nhắc 7 Mục 68)
         rq_coverage, hyp_statuses = self._audit_rq_and_hypothesis_coverage(target_paragraphs, issues)
 
-        # 4. Audit Contributions Coverage (Prompt 7 Section 69)
+        # 4. Phạm vi đóng góp kiểm toán (Nhắc 7 Mục 69)
         self._audit_contributions(target_paragraphs, issues)
 
-        # 5. Audit 5 Research Axes (Prompt 7 Section 98)
+        # 5. Kiểm toán 5 trục nghiên cứu (Nhắc 7 Mục 98)
         axes_coverage = self._audit_axes_coverage(target_paragraphs, issues)
 
-        # 6. Evaluate 10 Defensibility Questions (Prompt 7 Section 99)
+        # 6. Đánh giá 10 câu hỏi về khả năng bào chữa (Nhắc 7 mục 99)
         defensibility = self._evaluate_defensibility_questions(target_paragraphs)
 
-        # Classify by severity
+        # Phân loại theo mức độ nghiêm trọng
         crit = [i for i in issues if i.severity == AuditSeverity.CRITICAL]
         high = [i for i in issues if i.severity == AuditSeverity.HIGH]
         med = [i for i in issues if i.severity == AuditSeverity.MEDIUM]
         low = [i for i in issues if i.severity == AuditSeverity.LOW]
 
-        # Aggregate counts by category
+        # Tổng hợp số lượng theo danh mục
         issues_by_cat: Dict[str, int] = {}
         for i in issues:
             issues_by_cat[i.category.value] = issues_by_cat.get(i.category.value, 0) + 1
@@ -77,7 +77,7 @@ class ThesisAuditor:
             "LOW": len(low),
         }
 
-        # Final build readiness: no CRITICAL issues in FINAL mode
+        # Tính sẵn sàng của bản dựng cuối cùng: không có vấn đề về CRITICAL ở chế độ FINAL
         is_ready = len(crit) == 0 and (mode == CompositionMode.PROVISIONAL or len(high) == 0)
         overall_status = "PASS" if len(crit) == 0 and len(high) == 0 else ("PROVISIONAL_PASS" if len(crit) == 0 else "FAIL")
 
@@ -104,8 +104,8 @@ class ThesisAuditor:
         return self.repo.save_audit_report(report)
 
     def _audit_paragraph(self, p: ParagraphRecord, issues: List[AuditIssueRecord], mode: CompositionMode):
-        """Audits individual paragraph and its constituent sentences."""
-        # Check review status
+        """Kiểm tra từng đoạn văn và các câu cấu thành của nó."""
+        # Kiểm tra trạng thái đánh giá
         if p.review_status == ParagraphReviewStatus.STALE:
             issues.append(
                 AuditIssueRecord(
@@ -186,7 +186,7 @@ class ThesisAuditor:
                 )
 
     def _audit_repetition_and_monotony(self, paragraphs: List[ParagraphRecord], issues: List[AuditIssueRecord]):
-        """Audits document-wide structural monotony and template-attractor patterns (Prompt 7 Section 45)."""
+        """Kiểm tra sự đơn điệu về cấu trúc trên toàn tài liệu và các mẫu thu hút mẫu (Lời nhắc 7 Phần 45)."""
         openings: List[str] = []
         for p in paragraphs:
             if p.sentences:
@@ -194,7 +194,7 @@ class ThesisAuditor:
                 prefix = " ".join(words[:3]) if len(words) >= 3 else ""
                 openings.append(prefix)
 
-        # Detect repeated prefix
+        # Phát hiện tiền tố lặp lại
         prefix_counts: Dict[str, int] = {}
         for op in openings:
             if op:
@@ -217,7 +217,7 @@ class ThesisAuditor:
     def _audit_rq_and_hypothesis_coverage(
         self, paragraphs: List[ParagraphRecord], issues: List[AuditIssueRecord]
     ) -> Tuple[Dict[str, str], Dict[str, str]]:
-        """Verifies coverage of RQ1..RQ5 and H1..H5."""
+        """Xác minh phạm vi bao phủ của RQ1..RQ5 và H1..H5."""
         full_text = " ".join(p.audited_text for p in paragraphs)
 
         rqs = self.repo.list_research_questions()
@@ -241,15 +241,15 @@ class ThesisAuditor:
         return rq_coverage, hyp_statuses
 
     def _audit_contributions(self, paragraphs: List[ParagraphRecord], issues: List[AuditIssueRecord]):
-        """Audits candidate contribution status across CAND-01..15."""
+        """Kiểm tra trạng thái đóng góp của ứng viên trên CAND-01..15."""
         full_text = " ".join(p.audited_text for p in paragraphs)
         contributions = self.repo.list_candidate_contributions()
         for cand in contributions:
-            # Check if mentioned or covered
+            # Kiểm tra nếu được đề cập hoặc được bảo hiểm
             pass
 
     def _audit_axes_coverage(self, paragraphs: List[ParagraphRecord], issues: List[AuditIssueRecord]) -> Dict[str, str]:
-        """Audits coverage across A1..A5."""
+        """Kiểm toán phạm vi trên A1..A5."""
         return {
             "A1_Representation_Fidelity": "COVERED",
             "A2_Multi_View_Representation": "COVERED",
@@ -259,7 +259,7 @@ class ThesisAuditor:
         }
 
     def _evaluate_defensibility_questions(self, paragraphs: List[ParagraphRecord]) -> Dict[str, DefensibilityStatus]:
-        """Evaluates 10 Defensibility Questions (DQ-01..DQ-10)."""
+        """Đánh giá 10 câu hỏi về khả năng phòng thủ (DQ-01..DQ-10)."""
         return {
             "DQ-01_What_Exactly_Is_Learned": DefensibilityStatus.PASS,
             "DQ-02_Why_Should_It_Work": DefensibilityStatus.PASS,

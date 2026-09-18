@@ -1,5 +1,5 @@
 """
-Scientific Lineage DAG & Traceability Graph (Prompt 6 Section 85)
+Dòng khoa học DAG & Biểu đồ truy xuất nguồn gốc (Nhắc 6 Phần 85)
 """
 
 from typing import Dict, List, Set
@@ -7,8 +7,8 @@ from typing import Dict, List, Set
 
 class ScientificLineageDAG:
     """
-    Tracks dependencies across the entire scientific lifecycle:
-    DatasetVersion -> SplitManifest -> ExperimentRun -> Metric -> StatisticalResult -> Table/Figure -> NumericalClaim.
+    Theo dõi sự phụ thuộc trong toàn bộ vòng đời khoa học:
+    DatasetVersion -> SplitManifest -> ExperimentRun -> Số liệu -> StatisticalResult -> Bảng/Hình -> NumericalClaim.
     """
 
     def __init__(self):
@@ -16,7 +16,7 @@ class ScientificLineageDAG:
         self._backward_edges: Dict[str, Set[str]] = {}
 
     def add_dependency(self, parent_id: str, child_id: str):
-        """Records that child_id depends on parent_id."""
+        """Ghi lại rằng child_id phụ thuộc vào parent_id."""
         if parent_id not in self._forward_edges:
             self._forward_edges[parent_id] = set()
         self._forward_edges[parent_id].add(child_id)
@@ -26,7 +26,7 @@ class ScientificLineageDAG:
         self._backward_edges[child_id].add(parent_id)
 
     def get_downstream_dependents(self, entity_id: str) -> Set[str]:
-        """Returns all transitive downstream artifacts that depend on entity_id."""
+        """Trả về tất cả các tạo phẩm hạ nguồn (downstream) bắc cầu phụ thuộc vào entity_id."""
         visited: Set[str] = set()
         queue = [entity_id]
 
@@ -40,7 +40,7 @@ class ScientificLineageDAG:
         return visited
 
     def get_upstream_provenance(self, entity_id: str) -> Set[str]:
-        """Returns all transitive upstream inputs that produced entity_id."""
+        """Trả về tất cả các đầu vào thượng nguồn (upstream) bắc cầu đã tạo ra entity_id."""
         visited: Set[str] = set()
         queue = [entity_id]
 

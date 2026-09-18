@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-Multi-View Extractor & Optimization Engine
-Implements Chapter 2 Frozen Multi-View Representation Contract (Section 2.4 & Bang 2.4):
-  - True Per-Sample Correspondence: Each sample i has its own sequence input and graph event list
-  - Explicit Multi-View Memory Scope:
-      * "independent" (Default for windowed anomaly detection): Each sample i has isolated/reset memory bank.
-      * "continuous_streaming": Continuous memory state maintained across strict causal stream.
-  - Real Batch VICReg Anti-Collapse Optimization over paired representations [z_seq, z_graph]
-  - Multi-View Gated Fusion with Reconstruction Loss:
+Công cụ tối ưu hóa và trích xuất nhiều chế độ xem
+Triển khai Hợp đồng đại diện nhiều chế độ xem cố định theo Chương 2 (Phần 2.4 & Bang 2.4):
+  - Tương ứng đúng trên mỗi mẫu: Mỗi mẫu i có danh sách sự kiện đồ thị và đầu vào trình tự riêng
+  - Phạm vi bộ nhớ nhiều chế độ xem rõ ràng:
+      * "độc lập" (Mặc định để phát hiện dị thường theo cửa sổ): Mỗi mẫu tôi có ngân hàng bộ nhớ bị cô lập/đặt lại.
+      * "continuous_streaming": Trạng thái bộ nhớ liên tục được duy trì trên luồng nhân quả nghiêm ngặt.
+  - Tối ưu hóa chống thu gọn VICReg hàng loạt thực tế trên các biểu diễn được ghép nối [z_seq, z_graph]
+  - Kết hợp nhiều chế độ xem với mất mát (loss) tái tạo:
       L_fuse_rec = 0.5 * ||z_mv - stopgrad(z_seq)||^2 + 0.5 * ||z_mv - stopgrad(z_graph)||^2
-      Trains gating mechanism W_gate without conflicting extractor gradients.
-  - Complete Stage A Multi-Task Objective:
+      Đào tạo cơ chế kiểm soát W_gate mà không xung đột độ dốc của bộ trích xuất.
+  - Hoàn thành Giai đoạn A Mục tiêu đa nhiệm vụ:
       L_StageA = L_seq_self + L_graph_self + lambda_align * L_align + lambda_fuse * L_fuse_rec
 """
 
@@ -26,7 +26,7 @@ from research_agent.experiments.extractor.graph_view import TemporalGraphViewExt
 @dataclass
 class MultiViewCorrespondence:
     """
-    Explicit correspondence metadata contract linking Sequence and Graph view telemetry per sample.
+    Hợp đồng siêu dữ liệu tương ứng rõ ràng liên kết phép đo từ xa ở chế độ xem Trình tự và Biểu đồ trên mỗi mẫu.
     """
     correspondence_id: str
     time_interval: Tuple[float, float]
@@ -42,7 +42,7 @@ class MultiViewCorrespondence:
 
 class VICRegLoss(nn.Module):
     """
-    Variance-Invariance-Covariance Regularization Loss for Multi-View Latent Alignment.
+    Mất chính quy phương sai-bất biến-hiệp phương sai cho việc căn chỉnh tiềm ẩn nhiều chế độ xem.
     """
     def __init__(self, sim_coeff: float = 25.0, var_coeff: float = 25.0, cov_coeff: float = 1.0, gamma: float = 1.0):
         super().__init__()
@@ -69,15 +69,15 @@ class VICRegLoss(nn.Module):
             sim_loss = F.mse_loss(z_seq, z_graph)
             return self.sim_coeff * sim_loss, {"sim_loss": float(sim_loss.item()), "var_loss": 0.0, "cov_loss": 0.0}
 
-        # 1. Invariance / Similarity Loss (MSE)
+        # 1. Mất tính bất biến (invariance)/sự tương đồng (MSE)
         sim_loss = F.mse_loss(z_seq, z_graph)
 
-        # 2. Variance Loss (Anti-Collapse)
+        # 2. Mất phương sai (Chống sụp đổ)
         std_seq = torch.sqrt(z_seq.var(dim=0) + 1e-04)
         std_graph = torch.sqrt(z_graph.var(dim=0) + 1e-04)
         var_loss = torch.mean(F.relu(self.gamma - std_seq)) + torch.mean(F.relu(self.gamma - std_graph))
 
-        # 3. Covariance Loss (Decorrelation)
+        # 3. Mất hiệp phương sai (Giải tương quan)
         z_seq_centered = z_seq - z_seq.mean(dim=0)
         z_graph_centered = z_graph - z_graph.mean(dim=0)
         
@@ -100,7 +100,7 @@ class VICRegLoss(nn.Module):
 
 class GatedMultiViewFusion(nn.Module):
     """
-    Gated Dynamic Fusion mechanism:
+    Cơ chế kết hợp động có cổng:
     alpha = sigmoid(W_gate [z^(seq); z^(graph)])
     z_mv = alpha * z^(seq) + (1 - alpha) * z^(graph)
     """
@@ -121,8 +121,8 @@ class GatedMultiViewFusion(nn.Module):
 
 class MultiViewRepresentationModel(nn.Module):
     """
-    Complete Multi-View Architecture connecting Sequence View, Temporal Graph View,
-    VICReg Alignment, and Gated Fusion.
+    Kiến trúc nhiều chế độ xem hoàn chỉnh kết nối Chế độ xem trình tự, Chế độ xem biểu đồ tạm thời,
+    Căn chỉnh VICReg và Gated Fusion.
     """
     def __init__(
         self,
@@ -146,7 +146,7 @@ class MultiViewRepresentationModel(nn.Module):
         self.fuse_rec_lambda = fuse_rec_lambda
         self.memory_scope_mode = memory_scope_mode
 
-        # Extractors
+        # Máy chiết
         self.seq_extractor = SequenceViewExtractor(
             event_vocab_size=seq_vocab_size,
             param_vocab_size=param_vocab_size,
@@ -158,7 +158,7 @@ class MultiViewRepresentationModel(nn.Module):
             num_relations=num_relations
         )
 
-        # Cross-View Latent Alignment & Projections
+        # Căn chỉnh và dự đoán tiềm ẩn trong chế độ xem chéo
         self.seq_proj_align = nn.Sequential(
             nn.Linear(embed_dim, embed_dim),
             nn.GELU(),
@@ -173,7 +173,7 @@ class MultiViewRepresentationModel(nn.Module):
         self.vicreg = VICRegLoss()
         self.fusion = GatedMultiViewFusion(embed_dim=embed_dim)
         
-        # Missing View Learned Fallback Token
+        # Thiếu token dự phòng đã học của chế độ xem
         self.missing_graph_token = nn.Parameter(torch.zeros(1, embed_dim))
         nn.init.normal_(self.missing_graph_token, std=0.02)
         
@@ -187,8 +187,8 @@ class MultiViewRepresentationModel(nn.Module):
         device: torch.device
     ) -> Tuple[torch.Tensor, torch.Tensor]:
         """
-        Extracts genuine per-sample graph embeddings for each item in the batch.
-        In 'independent' mode, resets memory bank per sample for strict isolation.
+        Trích xuất các phần nhúng biểu đồ chính hãng trên mỗi mẫu cho từng mục trong lô.
+        Ở chế độ 'độc lập', đặt lại ngân hàng bộ nhớ cho mỗi mẫu để cách ly nghiêm ngặt.
         """
         z_graph_list = []
         valid_flags = []
@@ -264,7 +264,7 @@ class MultiViewRepresentationModel(nn.Module):
         device: Optional[torch.device] = None
     ) -> Tuple[torch.Tensor, Dict[str, float]]:
         """
-        Computes exact Chapter 2 Stage A multi-task objective:
+        Tính toán chính xác Chương 2 Giai đoạn Một mục tiêu đa nhiệm:
           L_StageA = L_seq_self + L_graph_self + lambda_align * L_align + lambda_fuse * L_fuse_rec
         """
         if device is None:
@@ -272,7 +272,7 @@ class MultiViewRepresentationModel(nn.Module):
 
         batch_size = seq_inputs.size(0)
 
-        # 1. Sequence SSL Losses
+        # 1. mất mát (loss) chuỗi SSL
         seq_losses = self.seq_extractor.compute_sequence_ssl_losses(
             masked_events=seq_inputs,
             true_event_targets=true_event_targets,
@@ -284,7 +284,7 @@ class MultiViewRepresentationModel(nn.Module):
         )
         l_seq_total = sum(seq_losses.values())
 
-        # 2. Graph SSL Losses and Per-Sample Extraction
+        # 2. Biểu đồ mất mát (loss) SSL và trích xuất trên mỗi mẫu
         z_graph_list = []
         graph_loss_list = []
         graph_ssl_detailed: Dict[str, List[torch.Tensor]] = {}
@@ -324,19 +324,19 @@ class MultiViewRepresentationModel(nn.Module):
         else:
             l_graph_total = torch.tensor(0.0, device=device, requires_grad=True)
 
-        # 3. Real Batch VICReg Alignment Loss
+        # 3. Mất căn chỉnh VICreg hàng loạt thực
         z_seq_pool = self.seq_extractor.forward_pool(seq_inputs)
         p_seq = self.seq_proj_align(z_seq_pool)
         p_graph = self.graph_proj_align(z_graph_batch)
 
         l_vicreg, vicreg_metrics = self.vicreg(p_seq, p_graph, valid_mask=valid_mask)
 
-        # 4. Multi-View Gated Fusion Reconstruction Loss
+        # 4. Mất khả năng tái tạo kết hợp cổng đa chế độ xem
         # L_fuse_rec = 0.5 * ||z_mv - stopgrad(z_seq)||^2 + 0.5 * ||z_mv - stopgrad(z_graph)||^2
         z_mv, alpha_gate = self.fusion(z_seq_pool, z_graph_batch)
         l_fuse_rec = 0.5 * F.mse_loss(z_mv, z_seq_pool.detach()) + 0.5 * F.mse_loss(z_mv, z_graph_batch.detach())
 
-        # 5. Total Combined Stage A Objective
+        # 5. Tổng hợp giai đoạn A Mục tiêu
         total_loss = l_seq_total + l_graph_total + self.align_lambda * l_vicreg + self.fuse_rec_lambda * l_fuse_rec
 
         metrics_summary = {

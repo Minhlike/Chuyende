@@ -1,5 +1,5 @@
 """
-Equation Registry Interface (Section 12, RC-08)
+Giao diện đăng ký phương trình (Phần 12, RC-08)
 """
 
 from typing import List, Optional
@@ -11,7 +11,7 @@ from research_agent.storage.repository import ResearchRepository
 
 
 class EquationRegistry:
-    """Manages LaTeX mathematical formulations, derivations, and symbol scoping."""
+    """Quản lý các công thức toán học LaTeX, đạo hàm và phạm vi ký hiệu."""
 
     def __init__(self, repository: ResearchRepository):
         self.repo = repository
@@ -24,7 +24,7 @@ class EquationRegistry:
         dimension: Optional[str] = None,
         domain: Optional[str] = None,
     ) -> SymbolDefinition:
-        """Define a scoped mathematical symbol (RC-08)."""
+        """Xác định ký hiệu toán học có phạm vi (RC-08)."""
         symbol_id = self.repo.next_id(EntityPrefix.SYMBOL)
         sym = SymbolDefinition(
             symbol_id=symbol_id,
@@ -62,7 +62,7 @@ class EquationRegistry:
         derivation: Optional[EquationDerivation] = None,
         normalized_representation: Optional[str] = None,
     ) -> Equation:
-        """Register an equation with strict provenance checks (RC-08)."""
+        """Đăng ký một phương trình với kiểm tra xuất xứ nghiêm ngặt (RC-08)."""
         eq_id = self.repo.next_id(EntityPrefix.EQUATION)
         equation = Equation(
             equation_id=eq_id,

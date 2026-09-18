@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-Nineplus Experiment Campaign - Phase 1 Unified Technical Pilot Runner
-Executes 3 sequential pilot runs with Seed 42 for exactly 2 epochs each:
-  1. SEQUENCE_ONLY (Transformer Encoder, MEP + MPP + time SSL)
-  2. GRAPH_ONLY (TemporalGraphViewEncoder, rel + node + time SSL)
-  3. MULTI_VIEW_ALIGNED_VICREG (Joint Sequence + Graph + VICReg + Gated Fusion)
+Chiến dịch thử nghiệm Nineplus - Người chạy thử nghiệm kỹ thuật thống nhất giai đoạn 1
+Thực hiện 3 lần chạy thử nghiệm liên tiếp với Seed 42 với đúng 2 epoch cho mỗi lần:
+  1. SEQUENCE_ONLY (Bộ mã hóa máy biến áp, MEP + MPP + thời gian SSL)
+  2. GRAPH_ONLY (TemporalGraphViewEncoding, rel + nút + thời gian SSL)
+  3. MULTI_VIEW_ALIGNED_VICREG (Trình tự chung + Đồ thị + VICReg + Gated Fusion)
 
-Enforces:
-  - ZERO access to TEST split (TEST_OPENED=false, TEST_READ_COUNT=0)
-  - Strict CUDA execution on NVIDIA GeForce RTX 3050 Ti Laptop GPU
-  - Deterministic framework settings (CUBLAS_WORKSPACE_CONFIG=:4096:8)
-  - Exact data exposure logging (sessions, events, optimizer steps)
-  - Checkpoint contract (Epoch 1 save -> safe load test -> Epoch 2 resume -> Epoch 2 save)
-  - Output representation dimension verification (z in R^128) and probe label join compatibility
+Thực thi:
+  - Quyền truy cập ZERO vào phân chia TEST (TEST_OPENED=false, TEST_READ_COUNT=0)
+  - Thực thi CUDA nghiêm ngặt trên NVIDIA GeForce RTX 3050 Ti Laptop GPU
+  - Cài đặt khung xác định (CUBLAS_WORKSPACE_CONFIG=:4096:8)
+  - Ghi nhật ký hiển thị dữ liệu chính xác (phiên, sự kiện, bước tối ưu hóa)
+  - Hợp đồng checkpoint (Lưu Epoch 1 -> Kiểm tra tải an toàn -> Tiếp tục Epoch 2 -> Lưu Epoch 2)
+  - Xác minh kích thước biểu diễn đầu ra (z trong R^128) và khả năng tương thích nối nhãn bộ dò (probe)
 """
 
 import os
@@ -56,7 +56,7 @@ VAL_MEMBERSHIP_SHA = "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407
 RAW_HDFS_TAR_SHA = "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169"
 
 class TestSetSealedError(RuntimeError):
-    """Raised if any test split access is attempted."""
+    """Tăng lên nếu có bất kỳ quyền truy cập phân chia thử nghiệm nào được thử."""
     pass
 
 def compute_file_sha256(path: Path) -> str:
@@ -138,14 +138,14 @@ def collate_sequence_ssl(batch: List[Dict[str, Any]], max_param_slots: int = 4) 
         padded_seqs[i, :l_i] = seq_i
         true_targets[i, :l_i] = seq_i
 
-        # 15% random MEP mask
+        # Mặt nạ MEP ngẫu nhiên 15%
         mask_pos = (torch.rand(l_i) < 0.15)
         if not mask_pos.any() and l_i > 0:
             mask_pos[0] = True
         mep_mask[i, :l_i] = mask_pos
         padded_seqs[i, :l_i][mask_pos] = 2 # <MASK> = 2
 
-        # 20% random MPP mask
+        # Mặt nạ MPP ngẫu nhiên 20%
         padded_params[i, :l_i, :params_i.shape[1]] = params_i
         p_mask_pos = (torch.rand(l_i, max_param_slots) < 0.2) & (padded_params[i, :l_i] != 1)
         mpp_mask[i, :l_i] = p_mask_pos
@@ -191,7 +191,7 @@ def run_pilot_sequence_only(
     if device == "cuda" and not torch.cuda.is_available():
         raise ExecutionDeviceMismatchError("CUDA requested but not available!")
 
-    # Data loading
+    # Đang tải dữ liệu
     data_dir = base_dir / "experiments" / "runs" / "data" / "hdfs"
     train_pkg = torch.load(data_dir / "hdfs_ssl_train.pt", weights_only=False)
     val_pkg = torch.load(data_dir / "hdfs_ssl_val.pt", weights_only=False)
@@ -248,7 +248,7 @@ def run_pilot_sequence_only(
     inf_count = 0
     global_step = 0
 
-    # Training Loop with Checkpoint Contract
+    # Vòng đào tạo với hợp đồng checkpoint
     for epoch in range(1, epochs + 1):
         t_tr_start = time.perf_counter()
         model.train()
@@ -309,7 +309,7 @@ def run_pilot_sequence_only(
         tr_time_min = (t_tr_end - t_tr_start) / 60.0
         train_times.append(tr_time_min)
 
-        # Validation
+        # Xác thực
         t_val_start = time.perf_counter()
         model.eval()
         val_losses = []
@@ -341,7 +341,7 @@ def run_pilot_sequence_only(
 
         print(f"[{run_id}] Epoch {epoch}/{epochs} | Train: {tr_time_min:.2f}m | Val: {val_time_min:.2f}m | Val L_seq: {mean_val_loss:.4f}")
 
-        # Checkpoint Contract: Save at end of Epoch 1, Safe Load & Resume into Epoch 2
+        # Hợp đồng checkpoint: Lưu vào cuối epoch 1, Tải an toàn & Tiếp tục vào epoch 2
         ckpt_path = run_dir / f"checkpoint_epoch{epoch}.pt"
         ckpt_data = {
             "epoch": epoch,
@@ -357,7 +357,7 @@ def run_pilot_sequence_only(
         torch.save(ckpt_data, ckpt_path)
 
         if epoch == 1:
-            # Safe Load Test
+            # Kiểm tra tải an toàn
             test_model = SequenceViewExtractor(
                 event_vocab_size=len(vocab_data["template_to_id"]),
                 param_vocab_size=len(vocab_data["param_to_id"]),
@@ -370,7 +370,7 @@ def run_pilot_sequence_only(
                 assert torch.allclose(p1, p2, atol=0.0), "FATAL: Checkpoint load parameter divergence!"
             print(f"[{run_id}] CHECKPOINT_CONTRACT: Safe load test passed for Epoch 1!")
 
-    # Output Representation Contract Verification
+    # Xác minh hợp đồng đại diện đầu ra
     model.eval()
     val_reps = []
     val_sids = []
@@ -387,7 +387,7 @@ def run_pilot_sequence_only(
     assert z_all.dtype == torch.float32, f"Expected float32, got {z_all.dtype}"
     assert not torch.isnan(z_all).any() and not torch.isinf(z_all).any(), "NaN/Inf in representations!"
 
-    # Probe label join verification
+    # Xác minh tham gia nhãn thăm dò
     probe_labels = torch.load(base_dir / "experiments" / "runs" / "data" / "vault" / "hdfs_probe_labels_val.pt", weights_only=False)
     assert val_sids == probe_labels["session_ids"], "Session ID alignment mismatch with probe label vault!"
 
@@ -454,7 +454,7 @@ def run_pilot_graph_only(
     set_all_seeds(seed)
     dev = torch.device(device if torch.cuda.is_available() else "cpu")
 
-    # Load materialized graph events from cache
+    # Tải các sự kiện biểu đồ cụ thể hóa từ bộ đệm
     cache_path = base_dir / "datasets" / "cache" / "hdfs_graph_events.pt"
     if not cache_path.exists():
         from scripts.cache_hdfs_graph_events import materialize_and_cache
@@ -510,7 +510,7 @@ def run_pilot_graph_only(
         t_tr_start = time.perf_counter()
         print(f"[{run_id}] Starting Epoch {epoch}/{epochs} ({len(train_windows)} windows, {steps_per_epoch} steps)...")
 
-        # Process training windows in accumulation groups
+        # Quy trình đào tạo cửa sổ trong các nhóm tích lũy
         trainer.model.train()
         for g_idx in range(0, len(train_windows), grad_accum):
             group = train_windows[g_idx:g_idx + grad_accum]
@@ -532,7 +532,7 @@ def run_pilot_graph_only(
         tr_time_min = (t_tr_end - t_tr_start) / 60.0
         train_times.append(tr_time_min)
 
-        # Validation pass
+        # Thẻ xác thực
         t_val_start = time.perf_counter()
         trainer.model.eval()
         trainer.val_mask_generator.manual_seed(VALIDATION_MASK_SEED)
@@ -550,12 +550,12 @@ def run_pilot_graph_only(
 
         print(f"[{run_id}] Epoch {epoch}/{epochs} | Train: {tr_time_min:.2f}m | Val: {val_time_min:.2f}m | Val L_graph: {mean_val_loss:.4f}")
 
-        # Checkpoint Contract
+        # Hợp đồng checkpoint
         ckpt_path = run_dir / f"checkpoint_epoch{epoch}.pt"
         trainer.save_checkpoint(ckpt_path, metadata={"run_id": run_id, "epoch": epoch, "val_loss": mean_val_loss})
 
         if epoch == 1:
-            # Safe load test
+            # Kiểm tra tải an toàn
             test_model = TemporalGraphViewEncoder(
                 d_node=128, d_edge=64, d_msg=128, n_heads=4,
                 d_time_proj=32, d_rel_emb=32, d_type_emb=32,
@@ -573,8 +573,8 @@ def run_pilot_graph_only(
                 assert torch.allclose(p1, p2, atol=0.0), "FATAL: Checkpoint load divergence!"
             print(f"[{run_id}] CHECKPOINT_CONTRACT: Safe load test passed for Epoch 1!")
 
-    # Output Representation Contract Verification
-    # Extract representation for all 7,500 validation sessions
+    # Xác minh hợp đồng đại diện đầu ra
+    # Trích xuất đại diện cho tất cả 7.500 phiên xác thực
     val_seq_pkg = torch.load(base_dir / "experiments" / "runs" / "data" / "hdfs" / "hdfs_ssl_val.pt", weights_only=False)
     val_sids = val_seq_pkg["session_ids"]
     val_reps = []
@@ -650,17 +650,17 @@ def run_pilot_multi_view(
     set_all_seeds(seed)
     dev = torch.device(device if torch.cuda.is_available() else "cpu")
 
-    # Load sequence packages
+    # Tải các gói trình tự
     data_dir = base_dir / "experiments" / "runs" / "data" / "hdfs"
     train_pkg = torch.load(data_dir / "hdfs_ssl_train.pt", weights_only=False)
     val_pkg = torch.load(data_dir / "hdfs_ssl_val.pt", weights_only=False)
     vocab_data = json.loads((data_dir / "hdfs_vocab.json").read_text(encoding="utf-8"))
 
-    # Load cached graph events
+    # Tải các sự kiện biểu đồ được lưu trong bộ nhớ đệm
     cache_path = base_dir / "datasets" / "cache" / "hdfs_graph_events.pt"
     graph_pkg = torch.load(cache_path, weights_only=False)
 
-    # Group graph events by block ID for instant per-session retrieval
+    # Nhóm các sự kiện biểu đồ theo ID khối để truy xuất ngay lập tức mỗi phiên
     print(f"[{run_id}] Indexing graph events by session ID...")
     train_block_events = defaultdict(list)
     for ev in graph_pkg["train_events"]:
@@ -783,7 +783,7 @@ def run_pilot_multi_view(
         tr_time_min = (t_tr_end - t_tr_start) / 60.0
         train_times.append(tr_time_min)
 
-        # Validation
+        # Xác thực
         t_val_start = time.perf_counter()
         model.eval()
         val_losses = []
@@ -818,7 +818,7 @@ def run_pilot_multi_view(
 
         print(f"[{run_id}] Epoch {epoch}/{epochs} | Train: {tr_time_min:.2f}m | Val: {val_time_min:.2f}m | Val L_StageA: {mean_val_loss:.4f}")
 
-        # Checkpoint Contract
+        # Hợp đồng checkpoint
         ckpt_path = run_dir / f"checkpoint_epoch{epoch}.pt"
         ckpt_data = {
             "epoch": epoch,
@@ -843,7 +843,7 @@ def run_pilot_multi_view(
                 assert torch.allclose(p1, p2, atol=0.0), "FATAL: Checkpoint load divergence!"
             print(f"[{run_id}] CHECKPOINT_CONTRACT: Safe load test passed for Epoch 1!")
 
-    # Output Representation Contract Verification
+    # Xác minh hợp đồng đại diện đầu ra
     model.eval()
     val_reps = []
     val_sids = []

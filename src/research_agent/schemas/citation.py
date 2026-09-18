@@ -1,5 +1,5 @@
 """
-Citation Firewall Rule and Verification Schemas (Section 10, Section 34, Prompt 3)
+Quy tắc tường lửa trích dẫn và sơ đồ xác minh (Phần 10, Phần 34, Lời nhắc 3)
 """
 
 from datetime import datetime, timezone
@@ -12,7 +12,7 @@ from research_agent.core.enums import (
 
 
 class CitationFirewallRule(BaseModel):
-    """Citation Firewall audit state for a specific citation key (Section 10)."""
+    """Trạng thái kiểm tra Tường lửa trích dẫn cho một khóa trích dẫn cụ thể (Phần 10)."""
     source_id: str = Field(description="Stable Source ID e.g. 'SRC-000001'")
     citation_key: str = Field(description="Stable citation key e.g. 'Arp2022DosDonts'")
     status: CitationFirewallStatus = Field(default=CitationFirewallStatus.BLOCKED)

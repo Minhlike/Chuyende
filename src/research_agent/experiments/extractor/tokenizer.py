@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 """
-Privacy-Aware, Parameterized, and Controlled Linkability Tokenizer
-Implements Chapter 2 Frozen Specification (Section 2.1 & Bang 2.1):
-  - 4 Tokenization Regimes:
+Trình token khả năng liên kết nhận biết quyền riêng tư, được tham số hóa và được kiểm soát
+Triển khai Đặc tả đông lạnh Chương 2 (Phần 2.1 & Bang 2.1):
+  - 4 chế độ token hóa:
       1. RAW_IDENTIFIERS
       2. EXTREME_ANONYMIZATION
-      3. CONTROLLED_LINKABILITY (Keyed HMAC with Ephemeral/Rotated Keys)
-      4. PRIVACY_AWARE_PARAMETERIZED (Proposed Multi-Tier Representation)
-  - Key Governance:
-      * Zero hard-coded keys in repository.
-      * Dynamic key resolution via environment variable or ephemeral os.urandom(32).
-      * Stores only key_fingerprint (SHA-256) in manifests.
-      * Session/Scope key rotation contract.
-  - RFC1918 & IPv4/IPv6 Parsing:
-      * Standard ipaddress.ip_address validation for 10/8, 172.16/12, 192.168/16, 127/8.
+      3. CONTROLLED_LINKABILITY (Có khóa HMAC với các phím tạm thời/xoay)
+      4. PRIVACY_AWARE_PARAMETERIZED (Đề xuất đại diện nhiều tầng)
+  - Quản trị chủ chốt:
+      * Không có khóa mã hóa cứng trong kho lưu trữ.
+      * Độ phân giải khóa động thông qua biến môi trường hoặc os.urandom(32).
+      * Chỉ lưu trữ key_fingerprint (SHA-256) trong bảng kê khai.
+      * Hợp đồng luân chuyển khóa Phiên/Phạm vi.
+  - Phân tích cú pháp RFC1918 & IPv4/IPv6:
+      * Xác thực ipaddress.ip_address tiêu chuẩn cho 10/8, 172,16/12, 192,168/16, 127/8.
 """
 
 import os
@@ -26,7 +26,7 @@ from typing import Dict, List, Tuple, Optional, Set
 
 class PrivacyAwareLogTokenizer:
     """
-    Privacy-Preserving Log Tokenizer with Dynamic Key Management and Scope Rotation.
+    Trình token nhật ký bảo vệ quyền riêng tư với tính năng Quản lý khóa động và Xoay vòng phạm vi.
     """
     MODES = [
         "RAW_IDENTIFIERS",
@@ -48,7 +48,7 @@ class PrivacyAwareLogTokenizer:
         self.vocab_size = vocab_size
         self.active_scope_id = active_scope_id or "default_session"
 
-        # 1. Key Governance: Resolve key dynamically or generate ephemeral key
+        # 1. Quản trị khóa: Giải quyết khóa động hoặc tạo khóa tạm thời
         if hmac_key is not None:
             self._key = hmac_key
         else:
@@ -56,10 +56,10 @@ class PrivacyAwareLogTokenizer:
             if env_key:
                 self._key = env_key.encode("utf-8")
             else:
-                # Ephemeral runtime key (never hardcoded, never committed)
+                # Khóa thời gian chạy tạm thời (không bao giờ được mã hóa cứng, không bao giờ được cam kết)
                 self._key = secrets.token_bytes(32)
 
-        # Cryptographic key fingerprint for audit manifests
+        # Dấu vân tay của khóa mật mã cho bảng kê khai kiểm tra
         self.key_fingerprint = hashlib.sha256(self._key).hexdigest()
 
         self.template2id: Dict[str, int] = {"<PAD>": 0, "<UNK>": 1, "<MASK>": 2, "<CLS>": 3}
@@ -68,19 +68,19 @@ class PrivacyAwareLogTokenizer:
 
     def rotate_scope_key(self, new_scope_id: str, new_key: Optional[bytes] = None):
         """
-        Rotates key or scope boundary, ensuring cross-scope unlinkability.
+        Xoay ranh giới khóa hoặc phạm vi, đảm bảo khả năng không liên kết trên nhiều phạm vi.
         """
         self.active_scope_id = new_scope_id
         if new_key is not None:
             self._key = new_key
         else:
-            # Ephemeral rotation
+            # Vòng quay phù du
             self._key = secrets.token_bytes(32)
         self.key_fingerprint = hashlib.sha256(self._key).hexdigest()
 
     def _pseudonymize(self, val: str) -> str:
         """
-        Generates deterministic keyed HMAC pseudonym within current active scope.
+        Tạo bút danh HMAC có khóa xác định trong phạm vi hoạt động hiện tại.
         """
         scoped_val = f"{self.active_scope_id}:{val}".encode("utf-8")
         sig = hmac.new(self._key, scoped_val, hashlib.sha256).hexdigest()[:8]
@@ -88,11 +88,11 @@ class PrivacyAwareLogTokenizer:
 
     def _is_private_ip(self, ip_str: str) -> bool:
         """
-        Strict RFC1918 / Loopback IP address check.
+        Kiểm tra địa chỉ IP RFC1918 / Loopback nghiêm ngặt.
         """
         try:
             ip_obj = ipaddress.ip_address(ip_str)
-            # RFC 1918: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 or 127.0.0.0/8
+            # RFC 1918: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 hoặc 127.0.0.0/8
             is_rfc1918 = (
                 ip_obj in ipaddress.ip_network("10.0.0.0/8") or
                 ip_obj in ipaddress.ip_network("172.16.0.0/12") or
@@ -105,16 +105,16 @@ class PrivacyAwareLogTokenizer:
 
     def tokenize_line(self, line: str) -> str:
         """
-        Transforms a raw log line based on active privacy-utility representation regime.
+        Chuyển đổi dòng nhật ký thô dựa trên chế độ trình bày tiện ích-quyền riêng tư đang hoạt động.
         """
         text = line.strip()
 
         if self.mode == "RAW_IDENTIFIERS":
-            # Unmodified raw text
+            # Văn bản thô chưa sửa đổi
             return text
 
         elif self.mode == "EXTREME_ANONYMIZATION":
-            # Strips all dynamic parameters to static invariant template skeletons
+            # Tách tất cả các tham số động thành khung mẫu bất biến tĩnh
             text = re.sub(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b", "<IP>", text)
             text = re.sub(r"(/[a-zA-Z0-9_\.\-]+)+", "<PATH>", text)
             text = re.sub(r"blk_-?\d+", "<BLK>", text)
@@ -123,7 +123,7 @@ class PrivacyAwareLogTokenizer:
             return text
 
         elif self.mode == "CONTROLLED_LINKABILITY":
-            # Keyed HMAC pseudonymization preserving entity co-occurrence within scope
+            # Bí danh HMAC có khóa duy trì sự xuất hiện đồng thời của thực thể trong phạm vi
             def replace_ip(m):
                 return self._pseudonymize(m.group(0))
             def replace_blk(m):
@@ -136,8 +136,8 @@ class PrivacyAwareLogTokenizer:
             return text
 
         elif self.mode == "PRIVACY_AWARE_PARAMETERIZED":
-            # Security-aware multi-tier tokenization:
-            # Categorize dynamic parameters into invariant security parameter classes
+            # token đa tầng nhận biết bảo mật:
+            # Phân loại các tham số động thành các lớp tham số bảo mật bất biến
             def classify_ip(m):
                 ip_str = m.group(0)
                 if self._is_private_ip(ip_str):
@@ -147,7 +147,7 @@ class PrivacyAwareLogTokenizer:
             text = re.sub(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b", classify_ip, text)
             text = re.sub(r"blk_-?\d+", lambda m: f"<BLK:{self._pseudonymize(m.group(0))}>", text)
             
-            # Security-critical path classification
+            # Phân loại đường dẫn quan trọng về bảo mật
             text = re.sub(r"/etc/[a-zA-Z0-9_\.\-]+", "<PATH_CONFIG>", text)
             text = re.sub(r"/tmp/[a-zA-Z0-9_\.\-]+", "<PATH_STAGING>", text)
             text = re.sub(r"/var/log/[a-zA-Z0-9_\.\-]+", "<PATH_LOG>", text)
@@ -160,7 +160,7 @@ class PrivacyAwareLogTokenizer:
         return text
 
     def fit(self, log_lines: List[str]):
-        """Fits vocabulary strictly on Train split."""
+        """Phù hợp với từ vựng nghiêm ngặt trên phần chia Train."""
         counts = {}
         for line in log_lines:
             tmpl = self.tokenize_line(line)
@@ -178,7 +178,7 @@ class PrivacyAwareLogTokenizer:
 
     def encode(self, line: str) -> int:
         tmpl = self.tokenize_line(line)
-        return self.template2id.get(tmpl, 1)  # 1 is <UNK>
+        return self.template2id.get(tmpl, 1)  # 1 là <UNK>
 
     def encode_sequence(self, lines: List[str]) -> List[int]:
         return [self.encode(l) for l in lines]

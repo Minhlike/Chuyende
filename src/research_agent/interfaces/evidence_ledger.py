@@ -1,5 +1,5 @@
 """
-Evidence Ledger Interface (RC-01, RC-11, RC-12)
+Giao diện sổ cái bằng chứng (RC-01, RC-11, RC-12)
 """
 
 from typing import Optional
@@ -11,7 +11,7 @@ from research_agent.storage.repository import ResearchRepository
 
 
 class EvidenceLedger:
-    """Manages the registration and validation of empirical and textual evidence."""
+    """Quản lý việc đăng ký và xác nhận bằng chứng thực nghiệm và văn bản."""
 
     def __init__(self, repository: ResearchRepository):
         self.repo = repository
@@ -27,7 +27,7 @@ class EvidenceLedger:
         context_notes: Optional[str] = None,
         extraction_method: str = "MANUAL_EXTRACT",
     ) -> Evidence:
-        """Register a new evidence item with mandatory source validation."""
+        """Đăng ký một mục bằng chứng mới với xác nhận nguồn bắt buộc."""
         source = self.repo.get_source(source_id)
         if not source:
             raise EntityNotFoundError(f"Source '{source_id}' does not exist in Source Store (RC-01).")

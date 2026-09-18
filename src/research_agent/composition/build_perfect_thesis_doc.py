@@ -22,20 +22,20 @@ from docx.oxml.ns import nsdecls
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-# Initialize official Microsoft Office MathML to OMML XSLT transformer
+# Khởi tạo biến áp Microsoft Office MathML chính thức thành biến áp OMML XSLT
 XSLT_PATH = r"C:\Program Files\Microsoft Office\Office16\MML2OMML.XSL"
 xslt_tree = etree.parse(XSLT_PATH)
 transform_omml = etree.XSLT(xslt_tree)
 
 
 def latex_to_clean_omml(latex_code: str):
-    """Converts a LaTeX formula into a native Word OMML element, cleaning any empty <m:e/> placeholders."""
+    """Chuyển đổi công thức LaTeX thành phần tử Word OMML gốc, xóa mọi phần giữ chỗ <m:e/> trống."""
     try:
         mathml = latex2mathml.converter.convert(latex_code)
         tree = etree.fromstring(mathml)
         omml_tree = transform_omml(tree)
 
-        # Fix empty <m:e/> in <m:nary> operators which produces dotted square placeholder boxes in Word
+        # Sửa các toán tử <m:e/> trống trong <m:nary> tạo ra các hộp giữ chỗ hình vuông có dấu chấm trong Word
         ns = {"m": "http://schemas.openxmlformats.org/officeDocument/2006/math"}
         for nary in omml_tree.xpath(".//m:nary", namespaces=ns):
             e_elem = nary.find("m:e", namespaces=ns)
@@ -89,7 +89,7 @@ def latex_to_clean_omml(latex_code: str):
 
 
 def format_table_cell(cell, width_dxa: int, align=WD_ALIGN_PARAGRAPH.LEFT, bold=False, font_size_pt=14):
-    """Sets standard cell properties: exact width, vertical centering, border, padding, and compact line spacing."""
+    """Đặt các thuộc tính ô tiêu chuẩn: chiều rộng chính xác, căn giữa theo chiều dọc, đường viền, phần đệm và khoảng cách dòng nhỏ gọn."""
     tcPr = cell._tc.get_or_add_tcPr()
     tc_xml = (
         f'<w:tcPr {nsdecls("w")}>\n'
@@ -115,7 +115,7 @@ def format_table_cell(cell, width_dxa: int, align=WD_ALIGN_PARAGRAPH.LEFT, bold=
     p = cell.paragraphs[0]
     p.alignment = align
     p.paragraph_format.first_line_indent = Cm(0)
-    p.paragraph_format.line_spacing = 1.0  # Compact line spacing for elegant tables
+    p.paragraph_format.line_spacing = 1.0  # Khoảng cách dòng nhỏ gọn cho các bảng thanh lịch
     p.paragraph_format.space_before = Pt(3)
     p.paragraph_format.space_after = Pt(3)
     for r in p.runs:
@@ -126,19 +126,19 @@ def format_table_cell(cell, width_dxa: int, align=WD_ALIGN_PARAGRAPH.LEFT, bold=
 
 
 def insert_thesis_table(doc, ref_p, headers, col_widths, rows_data, font_size_pt=14):
-    """Creates an elegant, professional thesis table matching original template layout."""
+    """Tạo một bảng luận văn trang nhã, chuyên nghiệp phù hợp với bố cục mẫu ban đầu."""
     tbl = doc.add_table(rows=len(rows_data) + 1, cols=len(headers))
     tbl.style = "Table Grid"
     tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
     if ref_p is not None:
         ref_p._p.addprevious(tbl._tbl)
 
-    # tblPr width
+    # chiều rộng tblPr
     tblPr = tbl._tbl.tblPr
     total_w = sum(col_widths)
     tblPr.append(parse_xml(f'<w:tblW {nsdecls("w")} w:w="{total_w}" w:type="dxa"/>'))
 
-    # Header Row
+    # Hàng tiêu đề
     hdr_row = tbl.rows[0]
     hdr_trPr = hdr_row._tr.get_or_add_trPr()
     hdr_trPr.append(parse_xml(f'<w:tblHeader {nsdecls("w")}/>'))
@@ -149,7 +149,7 @@ def insert_thesis_table(doc, ref_p, headers, col_widths, rows_data, font_size_pt
         cell.text = h
         format_table_cell(cell, col_widths[c_i], align=WD_ALIGN_PARAGRAPH.CENTER, bold=True, font_size_pt=font_size_pt)
 
-    # Body Rows
+    # Hàng cơ thể
     for r_i, row in enumerate(rows_data):
         b_row = tbl.rows[r_i + 1]
         b_trPr = b_row._tr.get_or_add_trPr()
@@ -172,13 +172,13 @@ def build_perfect_document(target_file: str = r"D:\Research\Chuyên đề chuyê
 
     doc = docx.Document(str(backup_path))
 
-    # Keep only Table 0 (Cover page frame)
+    # Chỉ giữ lại Bảng 0 (Khung trang bìa)
     while len(doc.tables) > 1:
         tbl_to_remove = doc.tables[1]
         tbl_to_remove._tbl.getparent().remove(tbl_to_remove._tbl)
     print("[2/4] Preserved Cover Frame Table 0.")
 
-    # Remove old body paragraphs from Heading 1 to Conclusion
+    # Loại bỏ các đoạn nội dung cũ từ Tiêu đề 1 đến Kết luận
     paragraphs_to_remove = []
     found_h1 = False
     for p in doc.paragraphs:
@@ -289,7 +289,7 @@ def build_perfect_document(target_file: str = r"D:\Research\Chuyên đề chuyê
         "Tính dị thể sâu sắc của dữ liệu đặt ra bài toán khoa học về việc lựa chọn đơn vị quan sát (Unit of Observation) phù hợp cho mô hình học biểu diễn. Việc phân cấp đơn vị quan sát quyết định trực tiếp đến mức độ bảo toàn thông tin và độ phức tạp tính toán:"
     )
 
-    # TABLE 1 (Exact widths from original template: 1551, 2028, 1791, 1806, 2429 dxa)
+    # TABLE 1 (Chiều rộng chính xác từ mẫu gốc: 1551, 2028, 1791, 1806, 2429 dxa)
     tbl1_headers = ["Mức độ hạt", "Đơn vị quan sát", "Dữ liệu đại diện", "Ưu điểm cốt lõi", "Thách thức và Mất mát ngữ nghĩa"]
     tbl1_widths = [1551, 2028, 1791, 1806, 2429]
     tbl1_rows = [
@@ -359,7 +359,7 @@ def build_perfect_document(target_file: str = r"D:\Research\Chuyên đề chuyê
         ":"
     ])
 
-    # TABLE 2 (Exact widths from original template: 2458, 3933, 3214 dxa)
+    # TABLE 2 (Chiều rộng chính xác từ mẫu gốc: 2458, 3933, 3214 dxa)
     tbl2_headers = ["Nhóm quy tắc", "Mô tả hình thức", "Danh mục thuộc tính Telemetry áp dụng"]
     tbl2_widths = [2458, 3933, 3214]
     tbl2_rows = [
@@ -480,7 +480,7 @@ def build_perfect_document(target_file: str = r"D:\Research\Chuyên đề chuyê
         "Tuy nhiên, việc triển khai GNN trên đồ thị nguồn gốc quy mô thực tế đối mặt với ba rào cản lý thuyết và thực nghiệm sâu sắc: (1) Hiện tượng bùng nổ phụ thuộc (Dependency Explosion): các tiến trình hệ thống chạy dài hạn (như systemd, sshd, hoặc trình duyệt web) liên tục đọc/ghi hàng triệu tệp tin và socket, khiến hầu hết mọi nút trong đồ thị đều có đường đi liên kết đến nhau, tạo ra các phụ thuộc giả (False Dependencies) làm loãng dấu vết tấn công thực sự; (2) Ngộ nhận giữa quan hệ phụ thuộc cấu trúc và tác động nhân quả thực tế (Dependency != Causal Effect): công trình của Bilot et al. ('Sometimes Simpler is Better', USENIX Security 2025) chứng minh rằng nhiều mô hình GNN phức tạp thực chất chỉ học đặc trưng đường tắt như tần suất bậc của nút; khi kiểm soát rò rỉ, các bộ phân loại tuyến tính đơn giản đạt hiệu năng tương đương với chi phí thấp hơn hàng chục lần; (3) Hiện tượng nghẽn cổ chai thông tin (Over-smoothing và Over-squashing): khi tăng độ sâu GNN, Over-smoothing làm vector biểu diễn của các nút bị đồng nhất hóa, trong khi Over-squashing (Alon & Yahav, ICLR 2021) nén ép lượng thông tin cấu trúc tăng theo hàm mũ vào vector kích thước cố định, làm mất mát các tín hiệu tấn công tinh vi."
     )
 
-    # TABLE 3: Summary Table (Exact widths allocated: 2200, 2450, 2450, 2505 dxa, sum = 9605 dxa)
+    # TABLE 3: Bảng tóm tắt (Độ rộng chính xác được phân bổ: 2200, 2450, 2450, 2505 dxa, sum = 9605 dxa)
     tbl3_headers = ["Tiêu chí đánh giá", "Nhóm Thống kê / Cú pháp\n(Drain, PCA)", "Nhóm Chuỗi Semantic\n(DeepLog, LogBERT)", "Nhóm Đồ thị Nguồn gốc\n(UNICORN, MAGIC)"]
     tbl3_widths = [2200, 2450, 2450, 2505]
     tbl3_rows = [
@@ -498,7 +498,7 @@ def build_perfect_document(target_file: str = r"D:\Research\Chuyên đề chuyê
         "Tổng kết lại, phân tích so sánh đối chiếu chỉ ra rằng không có bất kỳ phương pháp đơn lẻ nào trong ba nhóm trên giải quyết trọn vẹn bài toán biểu diễn đặc trưng log. Nhóm thống kê đạt hiệu năng cao nhưng mất mát tham số an ninh; nhóm chuỗi nắm bắt ngữ nghĩa tốt nhưng thiếu tầm nhìn đồ thị đa thực thể; nhóm đồ thị mô hình hóa quan hệ xuất sắc nhưng chịu gánh nặng bùng nổ phụ thuộc và chi phí tính toán. Thực trạng khoa học này trực tiếp đặt ra yêu cầu phải xác lập và giải quyết năm khoảng trống nghiên cứu cốt lõi tại Mục 1.3 tiếp theo."
     )
 
-    # Save
+    # Lưu
     updated_file = str(target_path.parent / (target_path.stem + ".updated.docx"))
     doc.save(updated_file)
     print(f"[SUCCESS] Saved to updated file: {updated_file}")

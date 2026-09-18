@@ -1,5 +1,5 @@
 """
-Helper module to build native Microsoft Word OMML equations and format Word documents.
+Mô-đun trợ giúp để xây dựng các phương trình Microsoft Word OMML gốc và định dạng tài liệu Word.
 """
 
 from xml.sax.saxutils import escape
@@ -8,7 +8,7 @@ from docx.oxml import parse_xml
 
 
 def omath(text: str):
-    """Create an inline OMML element."""
+    """Tạo phần tử OMML nội tuyến."""
     escaped = escape(text)
     xml_str = (
         f'<m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math">'
@@ -19,7 +19,7 @@ def omath(text: str):
 
 
 def omath_para(text: str):
-    """Create a display OMML paragraph element."""
+    """Tạo phần tử đoạn văn OMML hiển thị."""
     escaped = escape(text)
     xml_str = (
         f'<m:oMathPara xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math">'

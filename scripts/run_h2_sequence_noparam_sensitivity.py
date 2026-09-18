@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-H2 Sequence No-Param Sensitivity Evaluation Pipeline
-Interface: H2_SEQUENCE_NOPARAM_SENSITIVITY
+Quy trình đánh giá độ nhạy không có thông số trình tự H2
+Giao diện: H2_SEQUENCE_NOPARAM_SENSITIVITY
 
-Audits whether the performance advantage of SEQUENCE_ONLY over MULTI_VIEW
-is an artifact of explicit parameter inputs in Sequence vs implicit parameter
-handling in MultiViewRepresentationModel.extract_representation().
+Kiểm tra xem lợi thế về hiệu suất của SEQUENCE_ONLY so với MULTI_VIEW
+là một tạo phẩm của các đầu vào tham số rõ ràng trong Trình tự so với tham số ẩn
+xử lý trong MultiViewRepresentationModel.extract_representation().
 
-Protocol:
-For Sequence Seeds [42, 7, 999]:
-1. Extract ALL 35,000 Train representations with param_slots=None.
-2. Extract ALL 7,500 Validation representations with param_slots=None.
-3. Fit a NEW linear probe on MASKED TRAIN representations (Seed 10007, 50 epochs, AdamW lr=1e-2, wd=1e-4, batch 256).
-4. Evaluate on MASKED VALIDATION representations.
-5. Compute paired deltas against MULTI_VIEW_ALIGNED.
+Giao thức:
+Đối với Hạt giống trình tự [42, 7, 999]:
+1. Trích xuất ALL 35.000 Huấn luyện biểu diễn với param_slots=None.
+2. Trích xuất ALL 7.500 biểu diễn xác thực với param_slots=None.
+3. Lắp bộ dò (probe) tuyến tính NEW trên biểu diễn MASKED TRAIN (Seed 10007, 50 epoch, AdamW lr=1e-2, wd=1e-4, batch 256).
+4. Đánh giá các biểu diễn MASKED VALIDATION.
+5. Tính toán các delta được ghép nối với MULTI_VIEW_ALIGNED.
 """
 
 import sys
@@ -44,7 +44,7 @@ SEQUENCE_RUNS = {
     999: "CONF_SEQUENCE_ONLY_seed999_1789420295"
 }
 
-# Load already computed V3 MULTI_VIEW results for matched comparison
+# Tải kết quả V3 MULTI_VIEW đã được tính toán để so sánh phù hợp
 V3_SUMMARY_P = OUTPUT_DIR / "V3_SIX_BACKBONE_EVALUATION_SUMMARY.json"
 v3_summary = json.loads(V3_SUMMARY_P.read_text(encoding="utf-8"))
 mv_results = {r["model_seed"]: r for r in v3_summary["results"] if r["architecture"] == "MULTI_VIEW_ALIGNED"}
@@ -113,7 +113,7 @@ def run_sequence_noparam_sensitivity():
         t_va = time.perf_counter() - t0
         print(f"  - Val extracted:   {val_rep.shape} in {t_va:.2f}s", flush=True)
 
-        # Train linear probe on masked Train representations exclusively
+        # Huấn luyện thăm dò tuyến tính trên các biểu diễn Train đeo mặt nạ độc quyền
         print(f"[Seed {seed}] Fitting linear probe on MASKED Train representations (Seed 10007)...", flush=True)
         torch.manual_seed(10007)
         np.random.seed(10007)
@@ -140,7 +140,7 @@ def run_sequence_noparam_sensitivity():
 
         total_probe_steps += probe_steps
 
-        # Evaluate on MASKED Validation representations
+        # Đánh giá các biểu diễn xác thực MASKED
         probe.eval()
         with torch.no_grad():
             val_logits = probe(z_va).squeeze(-1)

@@ -36,7 +36,7 @@ def set_cell_border(cell):
 
 
 def omath(text: str):
-    """Create an inline native OMML element."""
+    """Tạo phần tử OMML gốc nội tuyến."""
     escaped = escape(text)
     xml_str = (
         f'<m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math">'
@@ -47,7 +47,7 @@ def omath(text: str):
 
 
 def omath_para(text: str):
-    """Create a display native OMML paragraph element."""
+    """Tạo phần tử đoạn OMML hiển thị gốc."""
     escaped = escape(text)
     xml_str = (
         f'<m:oMathPara xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math">'
@@ -63,21 +63,21 @@ def build_full_sections(target_file: str = r"D:\Research\Chuyên đề chuyên s
     target_path = Path(target_file)
     backup_path = target_path.parent / (target_path.stem + ".backup.docx")
 
-    # Use backup as the pristine base
+    # Sử dụng bản sao lưu làm cơ sở nguyên sơ
     if not backup_path.exists():
         shutil.copyfile(target_path, backup_path)
     print(f"[1/4] Base backup verified at: {backup_path}")
 
-    # Load fresh document from backup
+    # Tải tài liệu mới từ bản sao lưu
     doc = docx.Document(str(backup_path))
 
-    # Keep only Table 0 (Cover frame)
+    # Chỉ giữ lại Bảng 0 (Khung bìa)
     while len(doc.tables) > 1:
         tbl_to_remove = doc.tables[1]
         tbl_to_remove._tbl.getparent().remove(tbl_to_remove._tbl)
     print("[2/4] Preserved Cover Frame Table 0. Cleaned old body tables.")
 
-    # Remove old body paragraphs from Heading 1 to Conclusion
+    # Loại bỏ các đoạn nội dung cũ từ Tiêu đề 1 đến Kết luận
     paragraphs_to_remove = []
     found_h1 = False
     for p in doc.paragraphs:
@@ -101,11 +101,11 @@ def build_full_sections(target_file: str = r"D:\Research\Chuyên đề chuyên s
 
     print(f"[3/4] Removed {len(paragraphs_to_remove)} old paragraphs. Insertion target located.")
 
-    # Helper insertion functions
+    # Chức năng chèn trợ giúp
     def add_p(text_segments, bold_prefix=None, first_line_indent=True, align=WD_ALIGN_PARAGRAPH.JUSTIFY):
         """
-        text_segments can be a string or a list of items (strings and OMML elements).
-        All text runs are strictly Times New Roman 14pt.
+        text_segments có thể là một chuỗi hoặc một danh sách các mục (chuỗi và phần tử OMML).
+        Tất cả các dòng văn bản đều đúng theo Times New Roman 14pt.
         """
         new_p = doc.add_paragraph(style="Normal") if target_p is None else target_p.insert_paragraph_before(style="Normal")
         new_p.alignment = align
@@ -132,7 +132,7 @@ def build_full_sections(target_file: str = r"D:\Research\Chuyên đề chuyên s
                     r.font.name = "Times New Roman"
                     r.font.size = Pt(14)
                 else:
-                    # OMML XML element
+                    # Phần tử OMML XML
                     new_p._p.append(seg)
         return new_p
 
@@ -174,7 +174,7 @@ def build_full_sections(target_file: str = r"D:\Research\Chuyên đề chuyên s
         if target_p is not None:
             target_p._p.addprevious(tbl._tbl)
 
-        # Header row
+        # Hàng tiêu đề
         for c_idx, h in enumerate(headers):
             cell = tbl.cell(0, c_idx)
             cell.text = h
@@ -189,7 +189,7 @@ def build_full_sections(target_file: str = r"D:\Research\Chuyên đề chuyên s
                 r.font.size = Pt(14)  # STRICTLY 14PT
                 r.bold = True
 
-        # Body rows
+        # Hàng nội dung
         for r_idx, row in enumerate(rows_data):
             for c_idx, val in enumerate(row):
                 cell = tbl.cell(r_idx + 1, c_idx)
@@ -204,7 +204,7 @@ def build_full_sections(target_file: str = r"D:\Research\Chuyên đề chuyên s
                     r.font.name = "Times New Roman"
                     r.font.size = Pt(14)  # STRICTLY 14PT
 
-        # Spacing after table
+        # Khoảng cách sau bảng
         add_p("", first_line_indent=False)
 
     print("[4/4] Writing Section 1.1 and Section 1.2 with native OMML equations...")
@@ -414,7 +414,7 @@ def build_full_sections(target_file: str = r"D:\Research\Chuyên đề chuyên s
         "Tuy nhiên, việc triển khai GNN trên đồ thị nguồn gốc quy mô thực tế đối mặt với ba rào cản lý thuyết và thực nghiệm sâu sắc: (1) Hiện tượng bùng nổ phụ thuộc (Dependency Explosion): các tiến trình hệ thống chạy dài hạn (như systemd, sshd, hoặc trình duyệt web) liên tục đọc/ghi hàng triệu tệp tin và socket, khiến hầu hết mọi nút trong đồ thị đều có đường đi liên kết đến nhau, tạo ra các phụ thuộc giả (False Dependencies) làm loãng dấu vết tấn công thực sự; (2) Ngộ nhận giữa quan hệ phụ thuộc cấu trúc và tác động nhân quả thực tế (Dependency != Causal Effect): công trình của Bilot et al. ('Sometimes Simpler is Better', USENIX Security 2025) chứng minh rằng nhiều mô hình GNN phức tạp thực chất chỉ học đặc trưng đường tắt như tần suất bậc của nút; khi kiểm soát rò rỉ, các bộ phân loại tuyến tính đơn giản đạt hiệu năng tương đương với chi phí thấp hơn hàng chục lần; (3) Hiện tượng nghẽn cổ chai thông tin (Over-smoothing và Over-squashing): khi tăng độ sâu GNN, Over-smoothing làm vector biểu diễn của các nút bị đồng nhất hóa, trong khi Over-squashing (Alon & Yahav, ICLR 2021) nén ép lượng thông tin cấu trúc tăng theo hàm mũ vào vector kích thước cố định, làm mất mát các tín hiệu tấn công tinh vi."
     )
 
-    # Table 3: Summary Table
+    # Bảng 3: Bảng tóm tắt
     tbl3_headers = ["Tiêu chí đánh giá", "Nhóm Thống kê / Cú pháp (Drain, PCA)", "Nhóm Chuỗi Semantic (DeepLog, LogBERT)", "Nhóm Đồ thị Nguồn gốc (UNICORN, MAGIC)"]
     tbl3_rows = [
         ["Cơ chế biểu diễn cốt lõi", "Vector đếm tần suất Event ID trên cửa sổ trượt", "Vector nhúng ngữ cảnh từ chuỗi sự kiện tuần tự", "Vector nhúng cấu trúc đồ thị luồng phụ thuộc dị thể"],
@@ -430,19 +430,19 @@ def build_full_sections(target_file: str = r"D:\Research\Chuyên đề chuyên s
         "Tổng kết lại, phân tích so sánh đối chiếu chỉ ra rằng không có bất kỳ phương pháp đơn lẻ nào trong ba nhóm trên giải quyết trọn vẹn bài toán biểu diễn đặc trưng log. Nhóm thống kê đạt hiệu năng cao nhưng mất mát tham số an ninh; nhóm chuỗi nắm bắt ngữ nghĩa tốt nhưng thiếu tầm nhìn đồ thị đa thực thể; nhóm đồ thị mô hình hóa quan hệ xuất sắc nhưng chịu gánh nặng bùng nổ phụ thuộc và chi phí tính toán. Thực trạng khoa học này trực tiếp đặt ra yêu cầu phải xác lập và giải quyết năm khoảng trống nghiên cứu cốt lõi tại Mục 1.3 tiếp theo."
     )
 
-    # Save to updated file first
+    # Lưu vào tập tin cập nhật đầu tiên
     updated_file = str(target_path.parent / (target_path.stem + ".updated.docx"))
     doc.save(updated_file)
     print(f"[SUCCESS] Written full 1.1 + 1.2 to: {updated_file}")
 
-    # Attempt direct overwrite of active file
+    # Cố gắng ghi đè trực tiếp lên tập tin đang hoạt động
     try:
         doc.save(str(target_path))
         print(f"[SUCCESS] Overwritten active document: {target_path}")
     except PermissionError:
         print(f"[NOTE] Active file {target_path} is open in Word. Updated document is saved at {updated_file}.")
 
-    # Validation check
+    # Kiểm tra xác thực
     reloaded = docx.Document(updated_file)
     omml_in_reloaded = 0
     for p in reloaded.paragraphs:

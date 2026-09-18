@@ -1,5 +1,5 @@
 """
-Academic Composer & Layered Thesis Writing Pipeline (Prompt 7 Sections 6..44, 84..92)
+Nhà soạn nhạc học thuật & Quy trình viết luận văn theo lớp (Nhắc 7 Phần 6..44, 84..92)
 """
 
 import hashlib
@@ -32,8 +32,8 @@ from research_agent.composition.gates import WritingGate
 
 class AcademicComposer:
     """
-    Composes publication-ready and thesis-ready structured subsections from
-    epistemic ArgumentBundles, VerifiedClaimBundles, ResultBundles, and Registries.
+    Soạn thảo các tiểu mục có cấu trúc sẵn sàng xuất bản và luận văn từ
+    Epistemia ArgumentBundles, AddedClaimBundles, ResultBundles và Registries.
     """
 
     def __init__(self, repository: ResearchRepository):
@@ -47,9 +47,9 @@ class AcademicComposer:
         mode: CompositionMode = CompositionMode.PROVISIONAL,
     ) -> SubsectionRecord:
         """
-        Main composition entrypoint for a single Roadmap Node.
-        Evaluates writing gate, selects discourse plan, synthesizes paragraphs,
-        injects citations/equations/tables/figures, and compiles sentences.
+        Điểm vào thành phần chính cho một Nút Lộ trình duy nhất.
+        Đánh giá cổng viết, chọn bố cục diễn ngôn, tổng hợp các đoạn văn,
+        chèn các trích dẫn/phương trình/bảng/số liệu và biên dịch các câu.
         """
         node = self.repo.get_roadmap_node_by_code(node_code)
         if not node:
@@ -62,7 +62,7 @@ class AcademicComposer:
         bundles = self.repo.list_argument_bundles_by_node(node_code)
         bundle: Optional[ArgumentBundle] = bundles[-1] if bundles else None
 
-        # Fetch entities
+        # Tìm nạp thực thể
         claims = self.repo.list_claims_by_node(node_code)
         equations = self.repo.list_equations_by_node(node_code)
         tables = self.repo.list_tables_by_node(node_code) if hasattr(self.repo, "list_tables_by_node") else []
@@ -79,20 +79,20 @@ class AcademicComposer:
         elif any(k in title_lower for k in ["discussion", "implication", "threat", "limitation"]):
             paragraphs = self._compose_discussion_paragraphs(node, bundle, contradictions, mode)
         else:
-            # Default background / literature synthesis / research gap
+            # Bối cảnh mặc định/tổng hợp tài liệu/khoảng trống nghiên cứu
             paragraphs = self._compose_synthesis_paragraphs(node, bundle, claims, contradictions, mode)
 
-        # Audit and save paragraphs
+        # Kiểm tra và lưu đoạn văn
         audited_paragraphs: List[ParagraphRecord] = []
         for p in paragraphs:
-            # Run sentences through AntiHallucinationCompiler
+            # Chạy câu thông qua AntiHallucinationCompiler
             compiled_sentences = []
             for s in p.sentences:
                 c_sent = self.compiler.compile_sentence(s, argument_bundle=bundle)
                 compiled_sentences.append(c_sent)
             p.sentences = compiled_sentences
 
-            # Update audited text
+            # Cập nhật văn bản được kiểm tra
             p.audited_text = " ".join(s.text for s in p.sentences)
             p.review_status = (
                 ParagraphReviewStatus.MACHINE_AUDITED
@@ -102,7 +102,7 @@ class AcademicComposer:
             saved_p = self.repo.save_paragraph(p)
             audited_paragraphs.append(saved_p)
 
-        # Render combined markdown and latex
+        # Kết xuất markdown và latex kết hợp
         md_text = f"### {node.code} {node.title}\n\n" + "\n\n".join(p.audited_text for p in audited_paragraphs)
         latex_text = f"\\subsection{{{node.title}}}\n\\label{{sec:{node.code.replace('.', '_')}}}\n\n" + "\n\n".join(p.audited_text for p in audited_paragraphs)
 
@@ -124,12 +124,12 @@ class AcademicComposer:
         contradictions: List[Any],
         mode: CompositionMode,
     ) -> List[ParagraphRecord]:
-        """Synthesizes literature by issue and mechanism rather than paper-by-paper catalog."""
+        """Tổng hợp tài liệu theo vấn đề và cơ chế thay vì danh mục từng tờ giấy."""
         paragraphs = []
         p1_id = f"P-{node.code}-01"
         sentences_p1: List[SentenceRecord] = []
 
-        # Sentence 1: Framing
+        # Câu 1: Đóng khung
         sentences_p1.append(
             SentenceRecord(
                 sentence_id=f"S-{p1_id}-01",
@@ -141,7 +141,7 @@ class AcademicComposer:
             )
         )
 
-        # Sentence 2..N: Grounded literature claims
+        # Câu 2..N: Lời khẳng định văn học có căn cứ
         anchors: List[CitationAnchor] = []
         if claims:
             for idx, c in enumerate(claims[:3]):
@@ -175,7 +175,7 @@ class AcademicComposer:
                     )
                 )
 
-        # Sentence on contradictions if present
+        # Câu mâu thuẫn nếu có
         if contradictions:
             contra = contradictions[0]
             sentences_p1.append(
@@ -209,13 +209,13 @@ class AcademicComposer:
         equations: List[Any],
         mode: CompositionMode,
     ) -> List[ParagraphRecord]:
-        """Composes methodology sections with explicit ownership isolation, equations, and assumptions."""
+        """Soạn thảo các phần phương pháp luận với sự tách biệt quyền sở hữu, phương trình và giả định rõ ràng."""
         paragraphs = []
         p1_id = f"P-{node.code}-01"
         sentences: List[SentenceRecord] = []
         eq_anchors: List[EquationAnchor] = []
 
-        # Proposition 1: Architectural Objective
+        # Đề xuất 1: Mục tiêu kiến trúc
         sentences.append(
             SentenceRecord(
                 sentence_id=f"S-{p1_id}-01",
@@ -227,7 +227,7 @@ class AcademicComposer:
             )
         )
 
-        # Proposition 2: Mathematical Formulation
+        # Mệnh đề 2: Công thức toán học
         if equations:
             eq = equations[0]
             sentences.append(
@@ -276,7 +276,7 @@ class AcademicComposer:
         figures: List[Any],
         mode: CompositionMode,
     ) -> List[ParagraphRecord]:
-        """Composes results paragraphs following Observation -> Uncertainty -> Interpretation."""
+        """Soạn các đoạn kết quả theo Quan sát -> Sự không chắc chắn -> Giải thích."""
         paragraphs = []
         p1_id = f"P-{node.code}-01"
         sentences: List[SentenceRecord] = []
@@ -285,7 +285,7 @@ class AcademicComposer:
 
         num_claims = self.repo.list_numerical_claims()
 
-        # Observation
+        # Quan sát
         if num_claims:
             nc = num_claims[0]
             sentences.append(
@@ -312,7 +312,7 @@ class AcademicComposer:
                     )
                 )
 
-        # Interpretation (strictly separated from raw observation)
+        # Giải thích (tách biệt hoàn toàn với quan sát thô)
         sentences.append(
             SentenceRecord(
                 sentence_id=f"S-{p1_id}-02",
@@ -343,7 +343,7 @@ class AcademicComposer:
         contradictions: List[Any],
         mode: CompositionMode,
     ) -> List[ParagraphRecord]:
-        """Composes discussion paragraphs with competing explanations and explicit limitations."""
+        """Soạn các đoạn thảo luận với những lời giải thích cạnh tranh và những hạn chế rõ ràng."""
         paragraphs = []
         p1_id = f"P-{node.code}-01"
         sentences: List[SentenceRecord] = []
@@ -383,7 +383,7 @@ class AcademicComposer:
         return paragraphs
 
     def build_abstract(self) -> str:
-        """Constructs final thesis abstract strictly from audited research state."""
+        """Xây dựng bản tóm tắt luận án cuối cùng một cách chặt chẽ từ trạng thái nghiên cứu đã được kiểm toán."""
         return (
             "Luận án nghiên cứu các thách thức cốt lõi trong học biểu diễn đặc trưng phục vụ phát hiện tấn công mạng "
             "từ luồng nhật ký và đồ thị nguồn gốc hệ thống (provenance graphs). Luận án đề xuất khung kiến trúc biểu diễn "
@@ -392,7 +392,7 @@ class AcademicComposer:
         )
 
     def build_conclusion(self) -> str:
-        """Constructs final thesis conclusion summarizing RQ answers and surviving hypotheses."""
+        """Xây dựng kết luận luận án cuối cùng tóm tắt các câu trả lời RQ và các giả thuyết còn tồn tại."""
         return (
             "Luận án đã giải quyết hệ thống câu hỏi nghiên cứu RQ1–RQ5 thông qua việc chứng minh các giả thuyết H1–H4 "
             "dưới điều kiện thực nghiệm chuẩn mực. Các đóng góp chính về cơ chế biểu diễn vector và lược đồ suy giảm trôi dạt "

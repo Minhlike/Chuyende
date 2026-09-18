@@ -1,6 +1,6 @@
 """
-Automated Test Suite for Word 2016 Scientific Visuals Engine
-(Diagrams, Data Figures, Native Tables, Captions, Cross-References & Visual QA)
+Bộ kiểm tra tự động cho Công cụ hình ảnh khoa học Word 2016
+(Sơ đồ, Số liệu dữ liệu, Bảng gốc, Chú thích, Tài liệu tham khảo chéo & QA trực quan)
 """
 
 import os
@@ -33,7 +33,7 @@ from research_agent.skills.registry import ResearchSkillRegistry
 
 class TestWordVisualsEngine:
     """
-    Comprehensive tests for all 10 rules of the Word 2016 Scientific Visuals specification.
+    Các bài kiểm tra toàn diện cho tất cả 10 quy tắc của đặc tả Hình ảnh khoa học của Word 2016.
     """
 
     @pytest.fixture(autouse=True)
@@ -43,8 +43,8 @@ class TestWordVisualsEngine:
         self.pdf_path = str(self.test_dir / "test_visuals.pdf")
 
     def test_01_visual_necessity_gate(self):
-        """Rule 8: Visual Necessity Gate rejects fluff and accepts necessary architectural visuals."""
-        # 1. Reject vague purpose
+        """Quy tắc 8: Cổng cần thiết trực quan loại bỏ những thứ vớ vẩn và chấp nhận những hình ảnh kiến ​​trúc cần thiết."""
+        # 1. Từ chối mục đích mơ hồ
         eval_fail1 = VisualNecessityGate.evaluate(
             visual_id="FIG-000099",
             visual_type=VisualType.CONCEPTUAL_DIAGRAM,
@@ -55,7 +55,7 @@ class TestWordVisualsEngine:
         assert not eval_fail1.is_necessary
         assert "vague" in eval_fail1.rejection_reason.lower() or "deficient" in eval_fail1.rejection_reason.lower()
 
-        # 2. Accept valid architectural diagram
+        # 2. Chấp nhận sơ đồ kiến trúc hợp lệ
         eval_pass = VisualNecessityGate.evaluate(
             visual_id="FIG-000001",
             visual_type=VisualType.CONCEPTUAL_DIAGRAM,
@@ -71,7 +71,7 @@ class TestWordVisualsEngine:
         """Rule 3 & Rule 4: Native Word Table with repeat header, cantSplit, and SEQ Bảng caption above."""
         doc = docx.Document()
         
-        # Build Table Spec
+        # Xây dựng bảng thông số
         df = pd.DataFrame({
             "Phương pháp": ["PCA", "DeepLog", "UNICORN", "Khung đề xuất"],
             "Độ phức tạp": ["O(N)", "O(N * L^2)", "O(|V| + |E|)", "O(N)"],
@@ -88,7 +88,7 @@ class TestWordVisualsEngine:
             output_sha256="aabbccddeeff",
         )
 
-        # 1. Add Table Caption ABOVE Table
+        # 1. Thêm chú thích bảng Bảng ABOVE
         WordCaptionManager.add_table_caption(
             doc=doc,
             ref_paragraph=None,
@@ -98,7 +98,7 @@ class TestWordVisualsEngine:
             bookmark_name="BK_TBL_001"
         )
 
-        # 2. Insert Table
+        # 2. Chèn bảng
         tbl = WordTableBuilder.insert_table(
             doc=doc,
             ref_paragraph=None,
@@ -108,12 +108,12 @@ class TestWordVisualsEngine:
 
         doc.save(self.docx_path)
 
-        # Verify XML invariants
+        # Xác minh các bất biến XML
         doc_read = docx.Document(self.docx_path)
         assert len(doc_read.tables) == 1
         t = doc_read.tables[0]
         assert len(t.rows) == 5
-        # Check tblHeader and cantSplit
+        # Kiểm tra tblHeader và cantSplit
         hdr_xml = t.rows[0]._tr.xml
         assert "tblHeader" in hdr_xml
         assert "cantSplit" in hdr_xml
@@ -150,9 +150,9 @@ class TestWordVisualsEngine:
 
         doc.save(self.docx_path)
 
-        # Verify insertion
+        # Xác minh chèn
         doc_read = docx.Document(self.docx_path)
-        # 1 image paragraph, 1 caption paragraph
+        # 1 đoạn hình ảnh, 1 đoạn chú thích
         assert len(doc_read.paragraphs) >= 2
         cap_p = doc_read.paragraphs[1]
         assert "Hình 1." in cap_p.text
@@ -160,7 +160,7 @@ class TestWordVisualsEngine:
         assert record.bookmark_name == "BK_FIG_1_001"
 
     def test_04_cross_reference_manager(self):
-        """Rule 5: Cross-Reference Manager generates native Word REF fields without plain text hardcoding."""
+        """Quy tắc 5: Trình quản lý tham chiếu chéo tạo các trường Word REF gốc mà không cần mã hóa văn bản thuần túy."""
         doc = docx.Document()
         p = doc.add_paragraph()
         WordCrossReferenceManager.append_cross_reference_to_paragraph(
@@ -180,7 +180,7 @@ class TestWordVisualsEngine:
         assert "REF BK_FIG_1_001" in p_read._p.xml
 
     def test_05_skill_registry_registration(self):
-        """Rule 10: All 6 required visual skills are registered and executable by name in ResearchSkillRegistry."""
+        """Quy tắc 10: Tất cả 6 kỹ năng trực quan bắt buộc đều được đăng ký và thực thi theo tên trong ResearchSkillRegistry."""
         registry = ResearchSkillRegistry()
         required_skills = [
             "word-diagram-builder",
@@ -195,19 +195,19 @@ class TestWordVisualsEngine:
             assert skill is not None, f"Skill '{skill_name}' was not found in ResearchSkillRegistry."
 
     def test_06_word_com_diagram_and_visual_qa(self):
-        """Rule 1, Rule 6 & Rule 9: Word COM Drawing Canvas, Shapes, Connectors, TOC/TOF Update, and PDF Visual QA."""
-        # Create a rich Word document with TOC, TOF, Native Diagram, Native Table, Native Cross-references
+        """Quy tắc 1, Quy tắc 6 & Quy tắc 9: Canvas vẽ Word COM, Hình dạng, Đường kết nối, Cập nhật TOC/TOF và QA trực quan PDF."""
+        # Tạo tài liệu Word phong phú với TOC, TOF, Sơ đồ gốc, Bảng gốc, Tham chiếu chéo gốc
         doc = docx.Document()
 
-        # TOC & TOF headings
+        # Tiêu đề TOC & TOF
         doc.add_paragraph("MỤC LỤC", style="Normal")
         doc.add_paragraph("DANH MỤC HÌNH VẼ", style="Normal")
         doc.add_paragraph("DANH MỤC BẢNG", style="Normal")
 
-        # Heading 1
+        # Tiêu đề 1
         h1 = doc.add_paragraph("CHƯƠNG 1. TỔNG QUAN HỆ THỐNG BIỂU DIỄN", style="Heading 1")
 
-        # Body paragraph with cross references
+        # Đoạn nội dung có tham chiếu chéo
         p_body = doc.add_paragraph()
         WordCrossReferenceManager.append_cross_reference_to_paragraph(
             paragraph=p_body,
@@ -226,7 +226,7 @@ class TestWordVisualsEngine:
             font_size_pt=14.0
         )
 
-        # Diagram anchor paragraph & caption below
+        # Sơ đồ đoạn neo và chú thích bên dưới
         p_diag_anchor = doc.add_paragraph()
         WordCaptionManager.add_figure_caption(
             doc=doc,
@@ -237,7 +237,7 @@ class TestWordVisualsEngine:
             bookmark_name="BK_FIG_1_001"
         )
 
-        # Native Table
+        # Bảng gốc
         df = pd.DataFrame({
             "Thuộc tính": ["Độ trễ", "Bộ nhớ", "F1-Score"],
             "Giá trị": ["1.2 ms", "128 MB", "98.4%"]
@@ -263,7 +263,7 @@ class TestWordVisualsEngine:
 
         doc.save(self.docx_path)
 
-        # Open in Word COM, add Native Diagram Canvas, update fields, save and export PDF
+        # Mở trong Word COM, thêm Canvas sơ đồ gốc, cập nhật các trường, lưu và xuất PDF
         import win32com.client as win32
         import pythoncom
         pythoncom.CoInitialize()
@@ -272,7 +272,7 @@ class TestWordVisualsEngine:
         word.DisplayAlerts = 0
         doc_com = word.Documents.Open(os.path.abspath(self.docx_path))
 
-        # Add diagram spec
+        # Thêm thông số sơ đồ
         diag_spec = DiagramSpecification(
             diagram_id="FIG-000001",
             title="Kiến trúc biểu diễn đa góc nhìn",
@@ -352,7 +352,7 @@ class TestWordVisualsEngine:
         del word
         pythoncom.CoUninitialize()
 
-        # Run Visual QA Engine
+        # Chạy công cụ QA trực quan
         qa_engine = VisualQAEngine()
         qa_res = qa_engine.run_full_visual_qa(docx_path=self.docx_path, export_pdf=True)
 
@@ -360,7 +360,7 @@ class TestWordVisualsEngine:
         assert qa_res["pdf_visual_qa_pass"], f"PDF Visual QA failed: {qa_res['issues']}"
 
     def test_07_frozen_chapter_1_hash_check(self):
-        """Validates that Chapter 1 code and text block remain strictly frozen with immutable SHA-256 hash."""
+        """Xác thực rằng mã Chương 1 và khối văn bản vẫn được cố định nghiêm ngặt bằng hàm băm SHA-256 bất biến."""
         import hashlib
         code_path = Path(r"D:\Research\src\research_agent\composition\build_word_visual_qa.py")
         assert code_path.exists(), f"File {code_path} not found"

@@ -1,5 +1,5 @@
 """
-Canonical Research Roadmap, Execution Graph, Axes, RQs, Hypotheses, and Contracts (Prompt 2)
+Lộ trình nghiên cứu Canonical, Biểu đồ thực hiện, Trục, RQ, Giả thuyết và Hợp đồng (Nhắc 2)
 """
 
 from datetime import datetime, timezone
@@ -9,7 +9,7 @@ from research_agent.core.identifiers import EntityPrefix, format_stable_id
 
 
 class ResearchQuestion(BaseModel):
-    """Canonical Research Question (RQ1..RQ5)."""
+    """Câu hỏi nghiên cứu kinh điển (RQ1..RQ5)."""
     rq_id: str = Field(description="Stable ID: RQ-000001..RQ-000005")
     code: str = Field(description="Human label e.g., 'RQ1', 'RQ2'")
     title: str = Field(description="Short title e.g., 'REPRESENTATION FIDELITY'")
@@ -20,7 +20,7 @@ class ResearchQuestion(BaseModel):
 
 
 class Hypothesis(BaseModel):
-    """Canonical Scientific Hypothesis (H1..H5)."""
+    """Giả thuyết khoa học kinh điển (H1..H5)."""
     hyp_id: str = Field(description="Stable ID: HYP-000001..HYP-000005")
     code: str = Field(description="Human label e.g., 'H1', 'H2'")
     rq_id: str = Field(description="Associated Research Question ID")
@@ -31,7 +31,7 @@ class Hypothesis(BaseModel):
 
 
 class ResearchAxis(BaseModel):
-    """One of the five core Research Axes (A1..A5) modeling orthogonal research dimensions."""
+    """Một trong năm Trục nghiên cứu cốt lõi (A1..A5) mô hình hóa các chiều nghiên cứu trực giao."""
     axis_id: str = Field(description="e.g. 'AXIS-A1'")
     code: str = Field(description="e.g. 'A1'")
     name: str = Field(description="e.g. 'REPRESENTATION FIDELITY'")
@@ -42,20 +42,20 @@ class ResearchAxis(BaseModel):
 
 
 class RepresentationContractCategory(BaseModel):
-    """Items within one category of the Representation Contract (Preserve / Invariant / Exclude)."""
+    """Các mục thuộc một danh mục của Hợp đồng đại diện (Bảo toàn/Không thay đổi/Loại trừ)."""
     category: str = Field(description="'PRESERVE', 'INVARIANT', or 'EXCLUDE'")
     items: List[str] = Field(description="List of specific constraints / properties")
 
 
 class RepresentationContract(BaseModel):
-    """Canonical Three-Tier Representation Contract (Section 8)."""
+    """Hợp đồng đại diện ba cấp Canonical (Phần 8)."""
     preserve: List[str] = Field(description="temporal order, security-relevant parameters, entity linkage, dependency context")
     invariant: List[str] = Field(description="benign formatting changes, template renaming, non-semantic identifiers")
     exclude: List[str] = Field(description="dataset IDs, campaign IDs, split-specific identifiers, leakage-derived info, shortcuts")
 
 
 class NegativeControl(BaseModel):
-    """Methodological Negative Control Requirement (Section 16)."""
+    """Yêu cầu kiểm soát tiêu cực về mặt phương pháp (Phần 16)."""
     control_id: str = Field(description="e.g. 'CTRL-LEAK-001'")
     category: str = Field(description="e.g. 'LEAKAGE', 'SHORTCUT', 'PROBE', 'PRIVACY'")
     name: str
@@ -64,7 +64,7 @@ class NegativeControl(BaseModel):
 
 
 class ResearchBoundary(BaseModel):
-    """Explicit Epistemic and Methodological Claim Boundary (Section 17)."""
+    """Ranh giới yêu cầu phương pháp luận và nhận thức rõ ràng (Phần 17)."""
     boundary_id: str = Field(description="e.g. 'BOUNDARY-01'")
     title: str
     statement: str
@@ -73,14 +73,14 @@ class ResearchBoundary(BaseModel):
 
 
 class DefensibilityQuestion(BaseModel):
-    """One of the Ten Defensibility Questions (Section 12, DQ-01..DQ-10)."""
+    """Một trong mười câu hỏi về khả năng phòng thủ (Phần 12, DQ-01..DQ-10)."""
     question_id: str = Field(description="e.g. 'DQ-01'")
     question_text: str
     target_audit_scope: str
 
 
 class TraceabilityEntry(BaseModel):
-    """Machine-readable traceability entry linking RQ, Hypotheses, Gaps, Mechanisms, and Evaluations."""
+    """Mục nhập truy xuất nguồn gốc có thể đọc được bằng máy liên kết RQ, Giả thuyết, Khoảng trống, Cơ chế và Đánh giá."""
     rq_id: str
     code: str
     chapter1_gap_nodes: List[str] = Field(default_factory=list)
@@ -91,7 +91,7 @@ class TraceabilityEntry(BaseModel):
 
 
 class ResearchNode(BaseModel):
-    """Hierarchical node in Research Roadmap (Chapter / Section / Subsection / Topic)."""
+    """Nút phân cấp trong Lộ trình nghiên cứu (Chương/Mục/Tiểu mục/Chủ đề)."""
     node_id: str = Field(description="Stable ID: NOD-000001")
     parent_node_id: Optional[str] = None
     level: int = Field(ge=1, le=5, description="1=Chapter, 2=Section, 3=Subsection, 4=Paragraph/Topic, 5=Subtopic")
@@ -110,7 +110,7 @@ class ResearchNode(BaseModel):
 
 
 class ResearchRoadmap(BaseModel):
-    """Canonical Versioned Research Specification Roadmap (Prompt 2 target)."""
+    """Lộ trình đặc tả nghiên cứu được phiên bản Canonical (mục tiêu Lời nhắc 2)."""
     roadmap_id: str = Field(default_factory=lambda: format_stable_id(EntityPrefix.ROADMAP, 1))
     version: str = "1.0.0"
     title: str = "Nghiên cứu phương pháp trích xuất đặc trưng đối với dữ liệu log trong phát hiện tấn công"

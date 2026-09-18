@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-H5 Canonical Test Contract: Controlled Linkability & Multi-Adversary Pareto Frontier
-Implements Chapter 2 & Chapter 3 Frozen Protocol & Amendment 4:
-  - 4 Executable Adversarial Attack Interfaces with Sealed Train/Val/Test Split Provenance:
-      1. ReIdentificationAdversary (Train on attack-TRAIN, tune on attack-VAL, evaluate on sealed attack-TEST)
-      2. LinkageAdversary (Linkage AUC & Advantage: 2 * |AUC - 0.5|)
-      3. MIAAdversary (Membership Inference AUC & Advantage: 2 * |AUC - 0.5|)
-      4. InversionAdversary (Attribute Reconstruction or NOT_EVALUABLE with reason)
-  - Split Index Disjointness Enforcement (Zero Attack Split Overlap)
-  - AUC Attack Reversal Safety: Defense = 1 - (2 * |AUC - 0.5|)
-  - True Multi-Criteria Pareto Dominance:
-      Point A dominates Point B (A > B) iff for all axes k, A_k >= B_k and at least one A_j > B_j.
+Hợp đồng thử nghiệm Canonical H5: Khả năng liên kết có kiểm soát & Biên giới Pareto đa đối thủ
+Thực hiện Chương 2 & Chương 3 Giao thức đông lạnh & Bản sửa đổi 4:
+  - 4 Giao diện tấn công đối thủ có thể thực thi được với nguồn gốc phân chia tàu/Val/thử nghiệm kín:
+      1. Xác định lại đối thủ (Huấn luyện tấn công-TRAIN, điều chỉnh tấn công-VAL, đánh giá về cuộc tấn công kín-TEST)
+      2. LinkageAdversary (Liên kết AUC & Ưu điểm: 2 * |AUC - 0,5|)
+      3. MIAĐối thủ (Suy luận thành viên AUC & Lợi thế: 2 * |AUC - 0,5|)
+      4. InversionAdversary (Tái tạo thuộc tính hoặc NOT_EVALUABLE có lý do)
+  - Thực thi phân tách chỉ mục phân chia (Chồng chéo phân chia tấn công bằng không)
+  - An toàn đảo ngược tấn công AUC: Phòng thủ = 1 - (2 * |AUC - 0,5|)
+  - Sự thống trị Pareto đa tiêu chí thực sự:
+      Điểm A chiếm ưu thế Điểm B (A > B) iff cho tất cả các trục k, A_k >= B_k và ít nhất một A_j > B_j.
 """
 
 from typing import Dict, Any, List, Optional, Tuple, Set
@@ -36,8 +36,8 @@ CANONICAL_H5_ADVERSARIES = [
 
 class ReIdentificationAdversary:
     """
-    Evaluates attacker predicting true entity ID from representation z.
-    Strictly trained on attack-TRAIN, tuned on attack-VAL, and evaluated on sealed attack-TEST.
+    Đánh giá kẻ tấn công dự đoán ID thực thể thực từ biểu diễn z.
+    Được huấn luyện nghiêm ngặt về cuộc tấn công-TRAIN, điều chỉnh cuộc tấn công-VAL và đánh giá về cuộc tấn công kín-TEST.
     """
     def evaluate_sealed(
         self,
@@ -51,7 +51,7 @@ class ReIdentificationAdversary:
         val_ids: Optional[Set[Any]] = None,
         test_ids: Optional[Set[Any]] = None
     ) -> Dict[str, Any]:
-        # Enforce split disjointness
+        # Thực thi sự phân chia rời rạc
         if train_ids is not None and val_ids is not None and test_ids is not None:
             train_val_overlap = len(set(train_ids) & set(val_ids))
             train_test_overlap = len(set(train_ids) & set(test_ids))
@@ -66,15 +66,15 @@ class ReIdentificationAdversary:
         try:
             from sklearn.linear_model import LogisticRegression
             
-            # Fit on attack-TRAIN
+            # Sẵn sàng tấn công-TRAIN
             clf = LogisticRegression(max_iter=200, random_state=10007)
             clf.fit(train_embeddings, train_labels)
 
-            # Evaluate on sealed attack-TEST
+            # Đánh giá về đòn tấn công kín-TEST
             test_acc = float(clf.score(test_embeddings, test_labels))
             reid_defense = max(0.0, min(1.0, 1.0 - test_acc))
         except ImportError:
-            # Fallback simple nearest centroid on train
+            # Dự phòng trung tâm đơn giản gần nhất trên tàu
             centroids = {}
             for label in np.unique(train_labels):
                 centroids[label] = np.mean(train_embeddings[train_labels == label], axis=0)
@@ -95,7 +95,7 @@ class ReIdentificationAdversary:
         }
 
     def evaluate(self, embeddings: np.ndarray, entity_labels: np.ndarray) -> Dict[str, float]:
-        """Convenience fallback for synthetic tests splitting into 50% train, 25% val, 25% test."""
+        """Dự phòng thuận tiện cho các bài kiểm tra tổng hợp chia thành 50% đào tạo, 25% val, 25% kiểm tra."""
         n = len(embeddings)
         n_train = n // 2
         n_val = n // 4
@@ -122,7 +122,7 @@ class ReIdentificationAdversary:
         return {"reid_accuracy": res["reid_accuracy"], "reid_defense": res["reid_defense"]}
 
 class LinkageAdversary:
-    """Evaluates adversary AUC linking pairs of sessions originating from the same entity."""
+    """Đánh giá đối thủ AUC liên kết các cặp phiên có nguồn gốc từ cùng một thực thể."""
     def evaluate(self, session_embeddings_a: np.ndarray, session_embeddings_b: np.ndarray, pair_labels: np.ndarray) -> Dict[str, float]:
         norm_a = session_embeddings_a / np.linalg.norm(session_embeddings_a, axis=1, keepdims=True).clip(min=1e-8)
         norm_b = session_embeddings_b / np.linalg.norm(session_embeddings_b, axis=1, keepdims=True).clip(min=1e-8)
@@ -145,7 +145,7 @@ class LinkageAdversary:
         }
 
 class MIAAdversary:
-    """Evaluates Membership Inference Attack advantage from prediction loss / confidence."""
+    """Đánh giá lợi thế tấn công suy luận của thành viên từ sự mất mát/độ tin cậy dự đoán."""
     def evaluate(self, train_confidences: np.ndarray, test_confidences: np.ndarray) -> Dict[str, float]:
         y_true = np.concatenate([np.ones(len(train_confidences)), np.zeros(len(test_confidences))])
         y_score = np.concatenate([train_confidences, test_confidences])

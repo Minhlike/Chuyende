@@ -1,5 +1,5 @@
 """
-Table and Figure Provenance Schemas (Section 13, RC-09)
+Sơ đồ xuất xứ theo bảng và hình (Phần 13, RC-09)
 """
 
 from datetime import datetime, timezone
@@ -10,7 +10,7 @@ from research_agent.core.exceptions import ProvenanceError
 
 
 class TableArtifact(BaseModel):
-    """Canonical Table with verifiable cryptographic and computation lineage (RC-09)."""
+    """Bảng Canonical với dòng tính toán và mật mã có thể kiểm chứng được (RC-09)."""
     table_id: str = Field(description="Stable ID: TBL-000001")
     title: str = Field(min_length=3)
     caption: str
@@ -43,7 +43,7 @@ class TableArtifact(BaseModel):
 
 
 class FigureArtifact(BaseModel):
-    """Canonical Visual Figure with strict code and dataset lineage (RC-09)."""
+    """Hình ảnh Canonical với dòng dữ liệu và mã nghiêm ngặt (RC-09)."""
     figure_id: str = Field(description="Stable ID: FIG-000001")
     title: str = Field(min_length=3)
     caption: str

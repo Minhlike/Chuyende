@@ -1,5 +1,5 @@
 """
-Reference Map Specification Schema (Prompt 3 Target, Section 48)
+Sơ đồ đặc tả bản đồ tham khảo (Nhắc mục tiêu 3, Phần 48)
 """
 
 from datetime import datetime, timezone
@@ -13,7 +13,7 @@ from research_agent.schemas.citation import CitationFirewallRule
 
 
 class ReferenceMapSpecification(BaseModel):
-    """Canonical Versioned Reference & Intellectual Ownership Map Specification."""
+    """Thông số bản đồ quyền sở hữu trí tuệ và tài liệu tham khảo được phiên bản chuẩn."""
     reference_map_id: str = "REF-000001"
     version: str = "1.0.0"
     compatible_roadmap_version: str = "1.0.0"

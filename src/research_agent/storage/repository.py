@@ -1,5 +1,5 @@
 """
-Canonical Repository Layer (ADR-0001, ADR-0002)
+Lớp lưu trữ Canonical (ADR-0001, ADR-0002)
 """
 
 import json
@@ -122,13 +122,13 @@ from research_agent.storage.db import DatabaseManager
 
 
 class ResearchRepository:
-    """Canonical Repository providing typed CRUD and transactional persistence."""
+    """Kho lưu trữ Canonical cung cấp CRUD đã nhập và tính bền vững của giao dịch."""
 
     def __init__(self, db_manager: Optional[DatabaseManager] = None):
         self.db = db_manager or DatabaseManager()
 
     def next_id(self, prefix: EntityPrefix) -> str:
-        """Atomically increment and allocate the next stable identifier."""
+        """Tăng dần và phân bổ mã định danh ổn định tiếp theo."""
         p_val = prefix.value
         with self.db.session() as conn:
             cursor = conn.cursor()
@@ -143,7 +143,7 @@ class ResearchRepository:
             return format_stable_id(prefix, seq)
 
     # -------------------------------------------------------------
-    # Project
+    # dự án
     # -------------------------------------------------------------
     def save_project(self, project: ResearchProject) -> ResearchProject:
         with self.db.session() as conn:
@@ -189,7 +189,7 @@ class ResearchRepository:
             )
 
     # -------------------------------------------------------------
-    # Sources & Evidences
+    # Nguồn & Bằng chứng
     # -------------------------------------------------------------
     def save_source(self, source: Source) -> Source:
         with self.db.session() as conn:
@@ -433,7 +433,7 @@ class ResearchRepository:
         return self.get_research_question(code_or_id)
 
     # -------------------------------------------------------------
-    # Ownership Mappings
+    # Ánh xạ quyền sở hữu
     # -------------------------------------------------------------
     def save_ownership_mapping(self, mapping: OwnershipMapping) -> OwnershipMapping:
         with self.db.session() as conn:
@@ -502,7 +502,7 @@ class ResearchRepository:
             ]
 
     # -------------------------------------------------------------
-    # Candidate Contributions
+    # Đóng góp của ứng viên
     # -------------------------------------------------------------
     def save_candidate_contribution(self, contrib: CandidateContribution) -> CandidateContribution:
         with self.db.session() as conn:
@@ -590,7 +590,7 @@ class ResearchRepository:
             ]
 
     # -------------------------------------------------------------
-    # Citation Firewall Rules
+    # Quy tắc tường lửa trích dẫn
     # -------------------------------------------------------------
     def save_citation_firewall_rule(self, rule: CitationFirewallRule) -> CitationFirewallRule:
         with self.db.session() as conn:
@@ -680,7 +680,7 @@ class ResearchRepository:
             ]
 
     # -------------------------------------------------------------
-    # Reference Map Specification
+    # Bản đồ tham khảo Đặc điểm kỹ thuật
     # -------------------------------------------------------------
     def save_reference_map(self, spec: ReferenceMapSpecification) -> ReferenceMapSpecification:
         with self.db.session() as conn:
@@ -708,7 +708,7 @@ class ResearchRepository:
                 )
             )
 
-        # Ingest child entities
+        # Nhập các thực thể con
         for src in spec.sources:
             self.save_source(src)
         for evd in spec.evidences:
@@ -750,7 +750,7 @@ class ResearchRepository:
             )
 
     # -------------------------------------------------------------
-    # Claims & Relations
+    # Khiếu nại & Quan hệ
     # -------------------------------------------------------------
     def save_claim(self, claim: Claim) -> Claim:
         with self.db.session() as conn:
@@ -925,7 +925,7 @@ class ResearchRepository:
             ]
 
     # -------------------------------------------------------------
-    # Equations
+    # phương trình
     # -------------------------------------------------------------
     def save_equation(self, eq: Equation) -> Equation:
         with self.db.session() as conn:
@@ -994,7 +994,7 @@ class ResearchRepository:
             )
 
     # -------------------------------------------------------------
-    # Experiments & Runs
+    # Thử nghiệm & Chạy
     # -------------------------------------------------------------
     def save_experiment(self, exp: Experiment) -> Experiment:
         with self.db.session() as conn:
@@ -1084,7 +1084,7 @@ class ResearchRepository:
             )
 
     # -------------------------------------------------------------
-    # Tables & Figures
+    # Bảng & Hình
     # -------------------------------------------------------------
     def save_table_artifact(self, tbl: TableArtifact) -> TableArtifact:
         with self.db.session() as conn:
@@ -1156,7 +1156,7 @@ class ResearchRepository:
         return fig
 
     # -------------------------------------------------------------
-    # Decisions & Contradictions (Prompt 4, Section 31)
+    # Quyết định & Mâu thuẫn (Nhắc 4, Mục 31)
     # -------------------------------------------------------------
     def save_decision(self, dec: DecisionRecord) -> DecisionRecord:
         with self.db.session() as conn:
@@ -1213,7 +1213,7 @@ class ResearchRepository:
                     dec.created_at.isoformat(),
                 )
             )
-            # Index into FTS using active connection
+            # Lập chỉ mục vào FTS bằng kết nối hoạt động
             self._index_fts_on_conn(
                 conn=conn,
                 entity_id=dec.decision_id,
@@ -1332,7 +1332,7 @@ class ResearchRepository:
             ]
 
     # -------------------------------------------------------------
-    # Memory Records (M0..M5)
+    # Bản ghi bộ nhớ (M0..M5)
     # -------------------------------------------------------------
     def save_memory(self, mem: MemoryRecord) -> MemoryRecord:
         with self.db.session() as conn:
@@ -1406,7 +1406,7 @@ class ResearchRepository:
                     mem.updated_at.isoformat(),
                 )
             )
-            # Index into FTS using active connection
+            # Lập chỉ mục vào FTS bằng kết nối hoạt động
             self._index_fts_on_conn(
                 conn=conn,
                 entity_id=mem.memory_id,
@@ -1490,7 +1490,7 @@ class ResearchRepository:
             return [self._row_to_memory(r) for r in rows]
 
     # -------------------------------------------------------------
-    # Episodes (M3)
+    # Các tập (M3)
     # -------------------------------------------------------------
     def save_episode(self, ep: EpisodeRecord) -> EpisodeRecord:
         with self.db.session() as conn:
@@ -1540,7 +1540,7 @@ class ResearchRepository:
                     ep.created_at.isoformat(),
                 )
             )
-            # Index into FTS using active connection
+            # Lập chỉ mục vào FTS bằng kết nối hoạt động
             self._index_fts_on_conn(
                 conn=conn,
                 entity_id=ep.episode_id,
@@ -1595,7 +1595,7 @@ class ResearchRepository:
             return [self._row_to_episode(r) for r in rows]
 
     # -------------------------------------------------------------
-    # Open Questions
+    # Câu hỏi mở
     # -------------------------------------------------------------
     def save_open_question(self, oq: OpenQuestion) -> OpenQuestion:
         with self.db.session() as conn:
@@ -1638,7 +1638,7 @@ class ResearchRepository:
                     oq.updated_at.isoformat(),
                 )
             )
-            # Index into FTS using active connection
+            # Lập chỉ mục vào FTS bằng kết nối hoạt động
             self._index_fts_on_conn(
                 conn=conn,
                 entity_id=oq.question_id,
@@ -1704,7 +1704,7 @@ class ResearchRepository:
             return results
 
     # -------------------------------------------------------------
-    # Lessons Learned
+    # Bài học kinh nghiệm
     # -------------------------------------------------------------
     def save_lesson_learned(self, les: LessonLearned) -> LessonLearned:
         with self.db.session() as conn:
@@ -1736,7 +1736,7 @@ class ResearchRepository:
                     les.created_at.isoformat(),
                 )
             )
-            # Index into FTS using active connection
+            # Lập chỉ mục vào FTS bằng kết nối hoạt động
             self._index_fts_on_conn(
                 conn=conn,
                 entity_id=les.lesson_id,
@@ -1783,7 +1783,7 @@ class ResearchRepository:
             ]
 
     # -------------------------------------------------------------
-    # Research Sessions
+    # Phiên nghiên cứu
     # -------------------------------------------------------------
     def save_research_session(self, sess: SessionRecord) -> SessionRecord:
         with self.db.session() as conn:
@@ -1883,7 +1883,7 @@ class ResearchRepository:
             ]
 
     # -------------------------------------------------------------
-    # Skills (M5 Procedural)
+    # Kỹ năng (Thủ tục M5)
     # -------------------------------------------------------------
     def save_skill(self, sk: SkillRecord) -> SkillRecord:
         with self.db.session() as conn:
@@ -1989,7 +1989,7 @@ class ResearchRepository:
             return results
 
     # -------------------------------------------------------------
-    # Status Transitions (Section 8, Section 9)
+    # Chuyển đổi trạng thái (Mục 8, Mục 9)
     # -------------------------------------------------------------
     def save_status_transition(self, trans: StatusTransitionRecord) -> StatusTransitionRecord:
         with self.db.session() as conn:
@@ -2052,7 +2052,7 @@ class ResearchRepository:
             ]
 
     # -------------------------------------------------------------
-    # Full-Text Search (FTS5) Indexing & Query
+    # Lập chỉ mục & Truy vấn Tìm kiếm Toàn văn bản (FTS5)
     # -------------------------------------------------------------
     def _index_fts_on_conn(self, conn: Any, entity_id: str, entity_type: str, title: str, body: str, tags: str = "") -> None:
         try:
@@ -2073,7 +2073,7 @@ class ResearchRepository:
 
     def search_fts(self, query_str: str, entity_type: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
         with self.db.session() as conn:
-            # Clean search query for FTS5 syntax
+            # Truy vấn tìm kiếm rõ ràng cho cú pháp FTS5
             safe_terms = [f'"{t.replace('"', '')}"' for t in query_str.split() if t.strip()]
             if not safe_terms:
                 return []
@@ -2091,7 +2091,7 @@ class ResearchRepository:
                     ).fetchall()
                 return [dict(r) for r in rows]
             except Exception:
-                # Fallback substring search
+                # Tìm kiếm chuỗi con dự phòng
                 fallback_query = "%" + query_str.strip() + "%"
                 rows = conn.execute(
                     "SELECT entity_id, entity_type, title, body, tags, 0.0 as rank FROM memory_fts WHERE title LIKE ? OR body LIKE ? OR tags LIKE ? LIMIT ?",
@@ -2100,7 +2100,7 @@ class ResearchRepository:
                 return [dict(r) for r in rows]
 
     def rebuild_fts_index(self) -> int:
-        """Rebuild entire FTS5 index from canonical sources, claims, decisions, episodes, lessons, and questions."""
+        """Xây dựng lại toàn bộ chỉ mục FTS5 từ các nguồn chính tắc, xác nhận quyền sở hữu, quyết định, tập, bài học và câu hỏi."""
         count = 0
         with self.db.session() as conn:
             try:
@@ -2108,7 +2108,7 @@ class ResearchRepository:
             except Exception:
                 pass
 
-        # Index Sources
+        # Nguồn chỉ mục
         for s in self.list_sources():
             self.index_fts_entity(
                 entity_id=s.source_id,
@@ -2119,7 +2119,7 @@ class ResearchRepository:
             )
             count += 1
 
-        # Index Claims
+        # Xác nhận quyền sở hữu chỉ mục
         for c in self.list_claims():
             self.index_fts_entity(
                 entity_id=c.claim_id,
@@ -2130,7 +2130,7 @@ class ResearchRepository:
             )
             count += 1
 
-        # Index Decisions
+        # Quyết định chỉ số
         for d in self.list_decisions():
             self.index_fts_entity(
                 entity_id=d.decision_id,
@@ -2141,7 +2141,7 @@ class ResearchRepository:
             )
             count += 1
 
-        # Index Episodes
+        # Chỉ mục các tập
         for e in self.list_episodes():
             self.index_fts_entity(
                 entity_id=e.episode_id,
@@ -2152,7 +2152,7 @@ class ResearchRepository:
             )
             count += 1
 
-        # Index Lessons
+        # Bài học chỉ mục
         for l in self.list_lessons_learned():
             self.index_fts_entity(
                 entity_id=l.lesson_id,
@@ -2163,7 +2163,7 @@ class ResearchRepository:
             )
             count += 1
 
-        # Index Open Questions
+        # Chỉ mục các câu hỏi mở
         for o in self.list_open_questions():
             self.index_fts_entity(
                 entity_id=o.question_id,
@@ -2174,7 +2174,7 @@ class ResearchRepository:
             )
             count += 1
 
-        # Index Memory Records
+        # Bản ghi bộ nhớ chỉ mục
         for m in self.list_memories():
             self.index_fts_entity(
                 entity_id=m.memory_id,
@@ -2188,7 +2188,7 @@ class ResearchRepository:
         return count
 
     # -------------------------------------------------------------
-    # Canonical Roadmap & Execution Graph
+    # Lộ trình Canonical & Biểu đồ thực hiện
     # -------------------------------------------------------------
     def save_roadmap(self, roadmap: ResearchRoadmap) -> ResearchRoadmap:
         with self.db.session() as conn:
@@ -2216,7 +2216,7 @@ class ResearchRepository:
                 )
             )
 
-            # Insert/Update Nodes
+            # Chèn/Cập nhật nút
             for node in roadmap.nodes:
                 conn.execute(
                     """
@@ -2258,7 +2258,7 @@ class ResearchRepository:
                     )
                 )
 
-            # Insert/Update Questions
+            # Chèn/Cập nhật câu hỏi
             for q in roadmap.questions:
                 conn.execute(
                     """
@@ -2274,7 +2274,7 @@ class ResearchRepository:
                     (q.rq_id, q.code, q.title, q.canonical_wording_en, q.canonical_wording_vi, q.target_representation_aspect, q.created_at.isoformat())
                 )
 
-            # Insert/Update Hypotheses
+            # Chèn/Cập nhật giả thuyết
             for h in roadmap.hypotheses:
                 conn.execute(
                     """
@@ -2290,7 +2290,7 @@ class ResearchRepository:
                     (h.hyp_id, h.code, h.rq_id, h.title, h.statement, h.falsification_criteria, h.created_at.isoformat())
                 )
 
-            # Insert/Update Axes
+            # Chèn/Cập nhật trục
             for ax in roadmap.axes:
                 conn.execute(
                     """
@@ -2307,7 +2307,7 @@ class ResearchRepository:
                     (ax.axis_id, ax.code, ax.name, ax.problem_summary, json.dumps(ax.path_nodes), ax.core_question, json.dumps(ax.core_risks))
                 )
 
-            # Insert/Update Representation Contract
+            # Chèn/Cập nhật hợp đồng đại diện
             if roadmap.representation_contract:
                 conn.execute(
                     """
@@ -2327,7 +2327,7 @@ class ResearchRepository:
                     )
                 )
 
-            # Insert/Update Negative Controls
+            # Chèn/Cập nhật Kiểm soát Tiêu cực
             for ctrl in roadmap.controls:
                 conn.execute(
                     """
@@ -2342,7 +2342,7 @@ class ResearchRepository:
                     (ctrl.control_id, ctrl.category, ctrl.name, ctrl.description, json.dumps(ctrl.target_nodes))
                 )
 
-            # Insert/Update Research Boundaries
+            # Chèn/Cập nhật ranh giới nghiên cứu
             for b in roadmap.boundaries:
                 conn.execute(
                     """
@@ -2357,7 +2357,7 @@ class ResearchRepository:
                     (b.boundary_id, b.title, b.statement, b.rationale, json.dumps(b.affected_sections))
                 )
 
-            # Insert/Update Defensibility Questions
+            # Chèn/Cập nhật câu hỏi về khả năng bảo vệ
             for dq in roadmap.defensibility_questions:
                 conn.execute(
                     """
@@ -2370,7 +2370,7 @@ class ResearchRepository:
                     (dq.question_id, dq.question_text, dq.target_audit_scope)
                 )
 
-            # Insert/Update Traceability Entries
+            # Chèn/Cập nhật mục nhập truy nguyên
             for tr in roadmap.traceability_matrix:
                 conn.execute(
                     """
@@ -2654,7 +2654,7 @@ class ResearchRepository:
             ]
 
     # -------------------------------------------------------------
-    # Argument Bundles (Prompt 5 Section 57)
+    # Nhóm Lập Luận (Nhắc 5 Phần 57)
     # -------------------------------------------------------------
     def save_argument_bundle(self, bundle: ArgumentBundle) -> ArgumentBundle:
         with self.db.session() as conn:
@@ -2714,7 +2714,7 @@ class ResearchRepository:
                     bundle.version,
                 )
             )
-            # Index into FTS
+            # Lập chỉ mục vào FTS
             self._index_fts_on_conn(
                 conn=conn,
                 entity_id=bundle.bundle_id,
@@ -2848,7 +2848,7 @@ class ResearchRepository:
         )
 
     # -------------------------------------------------------------
-    # Evidence Gaps (Prompt 5 Section 11)
+    # Khoảng trống bằng chứng (Nhắc 5 Phần 11)
     # -------------------------------------------------------------
     def save_evidence_gap(self, gap: EvidenceGap) -> EvidenceGap:
         with self.db.session() as conn:
@@ -2885,7 +2885,7 @@ class ResearchRepository:
                     gap.updated_at.isoformat(),
                 )
             )
-            # Index into FTS
+            # Lập chỉ mục vào FTS
             self._index_fts_on_conn(
                 conn=conn,
                 entity_id=gap.gap_id,
@@ -2939,7 +2939,7 @@ class ResearchRepository:
             ]
 
     # -------------------------------------------------------------
-    # Assumptions (Prompt 5 Section 16)
+    # Giả định (Nhắc 5 Phần 16)
     # -------------------------------------------------------------
     def save_assumption(self, ass: AssumptionRecord) -> AssumptionRecord:
         with self.db.session() as conn:
@@ -2971,7 +2971,7 @@ class ResearchRepository:
                     ass.created_at.isoformat(),
                 )
             )
-            # Index into FTS
+            # Lập chỉ mục vào FTS
             self._index_fts_on_conn(
                 conn=conn,
                 entity_id=ass.assumption_id,
@@ -3018,7 +3018,7 @@ class ResearchRepository:
             ]
 
     # -------------------------------------------------------------
-    # Verification Requests (Prompt 5 Section 102, Prompt 6 Interface)
+    # Yêu cầu xác minh (Lời nhắc 5 Phần 102, Giao diện Lời nhắc 6)
     # -------------------------------------------------------------
     def save_verification_request(self, req: VerificationRequest) -> VerificationRequest:
         with self.db.session() as conn:
@@ -3094,7 +3094,7 @@ class ResearchRepository:
             ]
 
     # -------------------------------------------------------------
-    # Reasoning Issues (Prompt 5 Section 63)
+    # Các vấn đề về lý luận (Nhắc 5 mục 63)
     # -------------------------------------------------------------
     def save_reasoning_issue(self, issue: ReasoningIssue) -> ReasoningIssue:
         with self.db.session() as conn:
@@ -3140,7 +3140,7 @@ class ResearchRepository:
             ]
 
     # -------------------------------------------------------------
-    # Argument Graph Nodes & Edges (Prompt 5 Section 40)
+    # Nút và cạnh của đồ thị đối số (Nhắc 5 Phần 40)
     # -------------------------------------------------------------
     def save_argument_node(self, node: ArgumentNode) -> ArgumentNode:
         with self.db.session() as conn:
@@ -3230,7 +3230,7 @@ class ResearchRepository:
             )
 
     # -------------------------------------------------------------
-    # Scientific Verification Layer (Prompt 6)
+    # Lớp xác minh khoa học (Nhắc 6)
     # -------------------------------------------------------------
 
     def save_numerical_claim(self, claim: NumericalClaim) -> NumericalClaim:
@@ -3880,7 +3880,7 @@ class ResearchRepository:
                     p.updated_at.isoformat(),
                 ),
             )
-            # Save sentences
+            # Lưu câu
             conn.execute("DELETE FROM thesis_sentences WHERE paragraph_id = ?", (p.paragraph_id,))
             for s in p.sentences:
                 conn.execute(
@@ -4014,7 +4014,7 @@ class ResearchRepository:
                     datetime.now(timezone.utc).isoformat(),
                 ),
             )
-            # Also save issues directly on same connection
+            # Đồng thời lưu các vấn đề trực tiếp trên cùng một kết nối
             all_issues = report.critical_issues + report.high_issues + report.medium_issues + report.low_issues
             for issue in all_issues:
                 conn.execute(

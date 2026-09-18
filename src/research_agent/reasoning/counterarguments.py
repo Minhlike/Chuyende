@@ -1,5 +1,5 @@
 """
-Steelman Counterargument Generator & Dialectic Builder (Prompt 5 Sections 22, 23)
+Trình tạo phản biện Steelman & Trình tạo biện chứng (Nhắc 5 Phần 22, 23)
 """
 
 from typing import List, Dict, Any, Optional
@@ -8,8 +8,8 @@ from research_agent.schemas.reasoning import CounterargumentRecord
 
 class CounterargumentBuilder:
     """
-    Constructs steelman counterarguments against research claims and candidate inferences.
-    Distinguishes agent-derived objections (OUR_COUNTERARGUMENT) from literature-backed criticisms.
+    Xây dựng các lập luận phản bác của Steelman chống lại các tuyên bố nghiên cứu và suy luận của ứng cử viên.
+    Phân biệt những phản đối có nguồn gốc từ tác nhân (OUR_COUNTERARGUMENT) với những lời chỉ trích dựa trên tài liệu.
     """
 
     def build_counterargument(
@@ -19,7 +19,7 @@ class CounterargumentBuilder:
         topic: str = "general",
     ) -> CounterargumentRecord:
         """
-        Builds the strongest plausible objection against the given claim.
+        Xây dựng sự phản đối hợp lý mạnh mẽ nhất chống lại tuyên bố đã đưa ra.
         """
         c_lower = claim_statement.lower()
         seq = abs(hash(claim_id + topic)) % 1000000

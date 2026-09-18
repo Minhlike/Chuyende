@@ -1,5 +1,5 @@
 """
-Deterministic Metric Recomputation Engine (Prompt 6 Sections 28..32, 73..77)
+Công cụ tính toán lại số liệu xác định (Nhắc 6 Phần 28..32, 73..77)
 """
 
 import math
@@ -12,8 +12,8 @@ from research_agent.schemas.verification import ConfusionMatrixRecord
 
 class MetricRecomputationEngine:
     """
-    Deterministic metric calculation from machine predictions and ground truth labels.
-    Never relies on log text or LLM memory; recalculates from raw arrays.
+    Tính toán số liệu xác định từ dự đoán của máy và nhãn chân lý cơ bản.
+    Không bao giờ dựa vào văn bản nhật ký hoặc bộ nhớ LLM; tính toán lại từ mảng thô.
     """
 
     def compute_confusion_matrix(
@@ -23,7 +23,7 @@ class MetricRecomputationEngine:
         threshold: Optional[float] = None,
         granularity: MetricGranularity = MetricGranularity.EVENT,
     ) -> ConfusionMatrixRecord:
-        """Calculates deterministic TP, FP, TN, FN and basic classification metrics."""
+        """Tính toán các chỉ số TP, FP, TN, FN và phân loại cơ bản xác định."""
         y_t = np.array(y_true, dtype=int)
         y_p = np.array(y_pred, dtype=int)
 
@@ -64,8 +64,8 @@ class MetricRecomputationEngine:
         y_scores: Union[List[float], np.ndarray],
     ) -> Tuple[float, List[float], List[float], List[float]]:
         """
-        Computes PR curve (Precision, Recall) across all unique score thresholds
-        and calculates Area Under PR Curve (PR-AUC) via trapezoidal integration.
+        Tính toán đường cong PR (Chính xác, Thu hồi) trên tất cả các ngưỡng điểm duy nhất
+        và tính Diện tích Dưới Đường cong PR (PR-AUC) thông qua tích phân hình thang.
         """
         y_t = np.array(y_true, dtype=int)
         scores = np.array(y_scores, dtype=float)
@@ -87,12 +87,12 @@ class MetricRecomputationEngine:
         recalls = tps / total_positives
         precisions = tps / (tps + fps)
 
-        # Prepend boundary (Recall 0, Precision 1)
+        # Thêm ranh giới (Thu hồi 0, Độ chính xác 1)
         r_curve = np.r_[0.0, recalls]
         p_curve = np.r_[1.0, precisions]
         thresholds = scores_sorted[threshold_indices]
 
-        # Calculate PR-AUC using trapezoidal integration
+        # Tính PR-AUC bằng cách sử dụng tích phân hình thang
         pr_auc = float(np.sum((r_curve[1:] - r_curve[:-1]) * p_curve[1:]))
 
         return pr_auc, list(r_curve), list(p_curve), list(thresholds)
@@ -103,8 +103,8 @@ class MetricRecomputationEngine:
         warmup_samples: int = 10,
     ) -> Dict[str, float]:
         """
-        Computes latency percentiles and event throughput.
-        Automatically excludes warmup iterations.
+        Tính toán phần trăm độ trễ và thông lượng sự kiện.
+        Tự động loại trừ các lần lặp khởi động.
         """
         if len(latencies_ms) <= warmup_samples:
             valid_latencies = latencies_ms

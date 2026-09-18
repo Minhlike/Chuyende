@@ -1,5 +1,5 @@
 """
-Anti-Leakage Split Validator (Prompt 6 Section 25, RC-14)
+Trình xác thực phân tách chống rò rỉ (Nhắc 6 Phần 25, RC-14)
 """
 
 from typing import Any, Dict, List, Optional, Set, Tuple
@@ -8,8 +8,8 @@ import pandas as pd
 
 class AntiLeakageSplitValidator:
     """
-    Audits experiment dataset splits for data leakage, temporal overlap,
-    entity holdout contamination, and feature normalization leakage.
+    Kiểm tra việc phân chia tập dữ liệu thử nghiệm để phát hiện rò rỉ dữ liệu, chồng chéo thời gian,
+    ô nhiễm giữ lại thực thể và rò rỉ chuẩn hóa tính năng.
     """
 
     def audit_temporal_order(
@@ -20,8 +20,8 @@ class AntiLeakageSplitValidator:
         timestamp_col: str,
     ) -> Tuple[bool, List[str]]:
         """
-        Validates strict temporal progression:
-        max(Train_ts) <= min(Val_ts) and max(Val_ts) <= min(Test_ts).
+        Xác nhận sự tiến triển theo thời gian nghiêm ngặt:
+        max(Train_ts) <= min(Val_ts) và max(Val_ts) <= min(Test_ts).
         """
         issues = []
         train_ts = pd.to_datetime(train_df[timestamp_col], errors="coerce")
@@ -53,8 +53,8 @@ class AntiLeakageSplitValidator:
         entity_col: str,
     ) -> Tuple[bool, List[str]]:
         """
-        Audits if train and test share identical entities (hosts, users, IP addresses).
-        Enforces strict entity-level holdout for out-of-distribution evaluation.
+        Kiểm tra nếu đào tạo và kiểm tra chia sẻ các thực thể giống hệt nhau (máy chủ, người dùng, địa chỉ IP).
+        Thực thi mức giữ lại cấp thực thể nghiêm ngặt để đánh giá ngoài phân phối.
         """
         issues = []
         train_entities = set(train_df[entity_col].dropna().unique())
@@ -74,7 +74,7 @@ class AntiLeakageSplitValidator:
         test_df: pd.DataFrame,
         feature_cols: Optional[List[str]] = None,
     ) -> Tuple[bool, List[str]]:
-        """Checks for duplicate raw events appearing in both train and test partitions."""
+        """Kiểm tra các sự kiện thô trùng lặp xuất hiện trong cả phân vùng huấn luyện và phân vùng thử nghiệm."""
         issues = []
         cols = feature_cols if feature_cols else list(train_df.columns)
         common_cols = [c for c in cols if c in train_df.columns and c in test_df.columns]
@@ -98,7 +98,7 @@ class AntiLeakageSplitValidator:
         fitted_on: str,
         transformation_name: str,
     ) -> Tuple[bool, Optional[str]]:
-        """Flags if a parser, normalizer, or vocabulary was fitted on the entire dataset."""
+        """Gắn cờ nếu trình phân tích cú pháp, trình chuẩn hóa hoặc từ vựng được trang bị trên toàn bộ tập dữ liệu."""
         if fitted_on.upper() not in ["TRAIN", "TRAIN_ONLY", "TRAIN_SPLIT"]:
             return False, f"PREPROCESSING_LEAKAGE: '{transformation_name}' was fitted on '{fitted_on}' instead of 'TRAIN_ONLY'."
         return True, None

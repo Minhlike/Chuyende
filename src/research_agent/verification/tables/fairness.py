@@ -1,5 +1,5 @@
 """
-Table Fairness & Comparability Auditor (Prompt 6 Section 56)
+Kiểm toán viên về tính công bằng và khả năng so sánh của bảng (Nhắc 6 Mục 56)
 """
 
 from typing import Any, Dict, List, Optional, Tuple
@@ -7,10 +7,10 @@ from typing import Any, Dict, List, Optional, Tuple
 
 class TableFairnessAuditor:
     """
-    Audits comparison tables to prevent misleading cross-paper comparisons:
-    - Differing dataset splits (e.g. 80/20 vs 60/40)
-    - Differing evaluation granularities (e.g. event vs entity vs host)
-    - Differing metric interpolation methods
+    Kiểm tra các bảng so sánh để ngăn chặn việc so sánh giữa các giấy tờ gây hiểu lầm:
+    - Phân chia tập dữ liệu khác nhau (e.g. 80/20 so với 60/40)
+    - Mức độ chi tiết đánh giá khác nhau (e.g. sự kiện so với thực thể và máy chủ)
+    - Các phương pháp nội suy số liệu khác nhau
     """
 
     def audit_comparison_fairness(
@@ -18,8 +18,8 @@ class TableFairnessAuditor:
         method_metadata: List[Dict[str, Any]],
     ) -> Tuple[bool, Optional[str]]:
         """
-        Audits a list of {method_name, dataset_version, split_strategy, granularity, source_type}.
-        Returns (is_directly_comparable, incomparability_reason).
+        Kiểm tra danh sách {method_name, dataset_version, split_strategy, mức độ chi tiết, source_type}.
+        Trả về (is_directly_comparable, incomparability_reason).
         """
         if len(method_metadata) <= 1:
             return True, None

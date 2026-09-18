@@ -1,5 +1,5 @@
 """
-Human-in-the-Loop Workflow, Versioning & Upstream Invalidation Manager (Prompt 7 Sections 79..83)
+Quy trình làm việc của con người trong vòng lặp, Trình quản lý vô hiệu hóa phiên bản và thượng nguồn (upstream) (Nhắc 7 phần 79..83)
 """
 
 from datetime import datetime, timezone
@@ -15,8 +15,8 @@ from research_agent.storage.repository import ResearchRepository
 
 class HumanWorkflowManager:
     """
-    Manages paragraph versioning, manual human edits preservation,
-    and cascading invalidation propagation from upstream research changes.
+    Quản lý phiên bản đoạn văn, bảo quản các chỉnh sửa thủ công của con người,
+    và lan truyền vô hiệu theo tầng từ những thay đổi nghiên cứu thượng nguồn (upstream).
     """
 
     def __init__(self, repository: ResearchRepository):
@@ -29,8 +29,8 @@ class HumanWorkflowManager:
         edit_notes: Optional[str] = None,
     ) -> ParagraphRecord:
         """
-        Records manual human modifications to an accepted paragraph.
-        Guarantees that automated recompilation will never silently overwrite this text.
+        Ghi lại các sửa đổi thủ công của con người đối với một đoạn được chấp nhận.
+        Đảm bảo rằng việc biên dịch lại tự động sẽ không bao giờ âm thầm ghi đè lên văn bản này.
         """
         p = self.repo.get_paragraph(paragraph_id)
         if not p:
@@ -52,8 +52,8 @@ class HumanWorkflowManager:
         reason: str,
     ) -> List[str]:
         """
-        Identifies all paragraphs and thesis sections depending on an invalidated entity
-        (source, claim, numerical result, equation) and marks them STALE / REVIEW_REQUIRED.
+        Xác định tất cả các đoạn văn và phần luận án tùy thuộc vào một thực thể không hợp lệ
+        (nguồn, khẳng định, kết quả bằng số, phương trình) và đánh dấu chúng là STALE / REVIEW_REQUIRED.
         """
         affected_paragraph_ids: List[str] = []
         all_paragraphs = self.repo.list_paragraphs()
@@ -61,7 +61,7 @@ class HumanWorkflowManager:
         for p in all_paragraphs:
             is_affected = False
 
-            # Check sentences for references
+            # Kiểm tra câu để tham khảo
             for s in p.sentences:
                 if (
                     invalidated_entity_id in s.citation_source_ids
@@ -81,7 +81,7 @@ class HumanWorkflowManager:
                 )
                 affected_paragraph_ids.append(p.paragraph_id)
 
-                # Record an audit issue
+                # Ghi lại một vấn đề kiểm toán
                 self.repo.save_audit_issue(
                     AuditIssueRecord(
                         issue_id=f"ISS-INV-{p.paragraph_id}",

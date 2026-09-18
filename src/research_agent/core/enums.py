@@ -1,12 +1,12 @@
 """
-Core Enums defining Epistemic, Claim, Ownership, Memory, and Retrieval taxonomies (Prompt 1, 2, 3, 4).
+Core Enums xác định các phân loại Nhận thức, Yêu cầu, Quyền sở hữu, Bộ nhớ và Truy xuất (Nhắc 1, 2, 3, 4).
 """
 
 from enum import Enum
 
 
 class ClaimType(str, Enum):
-    """Canonical Claim Types (RC-05)."""
+    """Các loại xác nhận quyền sở hữu chuẩn (RC-05)."""
     SOURCE_FACT = "SOURCE_FACT"
     SOURCE_CLAIM = "SOURCE_CLAIM"
     SYNTHESIS = "SYNTHESIS"
@@ -17,7 +17,7 @@ class ClaimType(str, Enum):
 
 
 class IntellectualOwnership(str, Enum):
-    """Canonical 4-class Intellectual Ownership Boundaries (RC-06, Section 4)."""
+    """Ranh giới sở hữu trí tuệ 4 cấp độ Canonical (RC-06, Phần 4)."""
     SOURCE = "SOURCE"
     ADAPTED = "ADAPTED"
     OURS = "OURS"
@@ -25,7 +25,7 @@ class IntellectualOwnership(str, Enum):
 
 
 class EpistemicStatus(str, Enum):
-    """Epistemic Status Lifecycle Matrix (RC-07)."""
+    """Ma trận vòng đời trạng thái nhận thức (RC-07)."""
     UNVERIFIED = "UNVERIFIED"
     SUPPORTED = "SUPPORTED"
     PARTIALLY_SUPPORTED = "PARTIALLY_SUPPORTED"
@@ -35,7 +35,7 @@ class EpistemicStatus(str, Enum):
 
 
 class SourceVerificationState(str, Enum):
-    """Bibliographic & Content Verification States (Section 7)."""
+    """Các trạng thái xác minh thư mục và nội dung (Phần 7)."""
     DISCOVERED = "DISCOVERED"
     METADATA_VERIFIED = "METADATA_VERIFIED"
     CONTENT_VERIFIED = "CONTENT_VERIFIED"
@@ -46,7 +46,7 @@ class SourceVerificationState(str, Enum):
 
 
 class SourceRole(str, Enum):
-    """Functional roles of an external source in the research graph (Section 18)."""
+    """Vai trò chức năng của nguồn bên ngoài trong biểu đồ nghiên cứu (Phần 18)."""
     DEFINITION = "DEFINITION"
     BACKGROUND = "BACKGROUND"
     METHOD = "METHOD"
@@ -63,7 +63,7 @@ class SourceRole(str, Enum):
 
 
 class SourceQualityTier(str, Enum):
-    """Bibliographic quality and provenance classes (Section 19)."""
+    """Phân loại chất lượng thư mục và xuất xứ (Phần 19)."""
     PRIMARY_STANDARD = "PRIMARY_STANDARD"
     PEER_REVIEWED_TOP_VENUE = "PEER_REVIEWED_TOP_VENUE"
     PEER_REVIEWED = "PEER_REVIEWED"
@@ -76,7 +76,7 @@ class SourceQualityTier(str, Enum):
 
 
 class SupportType(str, Enum):
-    """Citation Firewall support type relationship (Section 10)."""
+    """Mối quan hệ loại hỗ trợ Tường lửa trích dẫn (Phần 10)."""
     DIRECT_SUPPORT = "DIRECT_SUPPORT"
     PARTIAL_SUPPORT = "PARTIAL_SUPPORT"
     BACKGROUND = "BACKGROUND"
@@ -88,14 +88,14 @@ class SupportType(str, Enum):
 
 
 class EvidenceStrength(str, Enum):
-    """Categorical strength of evidence binding (Section 11)."""
+    """Sức mạnh phân loại của ràng buộc bằng chứng (Phần 11)."""
     STRONG = "STRONG"
     MODERATE = "MODERATE"
     WEAK = "WEAK"
 
 
 class NoveltyStatus(str, Enum):
-    """Novelty evaluation lifecycle states for candidate contributions (Section 17)."""
+    """Trạng thái vòng đời đánh giá mới lạ đối với đóng góp của ứng viên (Phần 17)."""
     CANDIDATE = "CANDIDATE"
     PRIOR_ART_SEARCHED = "PRIOR_ART_SEARCHED"
     POTENTIALLY_NOVEL = "POTENTIALLY_NOVEL"
@@ -105,21 +105,21 @@ class NoveltyStatus(str, Enum):
 
 
 class CitationFirewallStatus(str, Enum):
-    """Citation readiness state in Citation Firewall (Section 10)."""
+    """Trạng thái sẵn sàng trích dẫn trong Tường lửa trích dẫn (Phần 10)."""
     READY = "READY"
     BLOCKED = "BLOCKED"
     UNRESOLVED = "UNRESOLVED"
 
 
 class EquationType(str, Enum):
-    """Equation Provenance Taxonomy (RC-08)."""
+    """Phân loại xuất xứ phương trình (RC-08)."""
     SOURCE_EQUATION = "SOURCE_EQUATION"
     DERIVED_EQUATION = "DERIVED_EQUATION"
     PROPOSED_EQUATION = "PROPOSED_EQUATION"
 
 
 class ArgumentRelationType(str, Enum):
-    """Argument Graph Edge Relations (Section 11)."""
+    """Quan hệ cạnh đồ thị đối số (Phần 11)."""
     SUPPORTS = "SUPPORTS"
     CONTRADICTS = "CONTRADICTS"
     QUALIFIES = "QUALIFIES"
@@ -136,7 +136,7 @@ class ArgumentRelationType(str, Enum):
 
 
 class VerificationStatus(str, Enum):
-    """Verification States."""
+    """Các quốc gia xác minh."""
     PENDING = "PENDING"
     VERIFIED = "VERIFIED"
     REJECTED = "REJECTED"
@@ -144,7 +144,7 @@ class VerificationStatus(str, Enum):
 
 
 class MemoryTier(str, Enum):
-    """Canonical 6-Tier Research Memory Architecture (Prompt 4 Section 5)."""
+    """Kiến trúc bộ nhớ nghiên cứu 6 tầng Canonical (Lời nhắc 4 Phần 5)."""
     M0_WORKING = "M0_WORKING"
     M1_SOURCE = "M1_SOURCE"
     M2_SEMANTIC = "M2_SEMANTIC"
@@ -154,7 +154,7 @@ class MemoryTier(str, Enum):
 
 
 class MemoryRecordType(str, Enum):
-    """Typed Research Memory Record Categories (Prompt 4 Section 6)."""
+    """Đã đánh máy Danh mục bản ghi bộ nhớ nghiên cứu (Nhắc 4 Phần 6)."""
     FACT_REFERENCE = "FACT_REFERENCE"
     CLAIM_REFERENCE = "CLAIM_REFERENCE"
     EVIDENCE_REFERENCE = "EVIDENCE_REFERENCE"
@@ -175,7 +175,7 @@ class MemoryRecordType(str, Enum):
 
 
 class MemoryPromotionState(str, Enum):
-    """Memory Consolidation Lifecycle States (Prompt 4 Section 13)."""
+    """Các trạng thái vòng đời hợp nhất bộ nhớ (Lời nhắc 4 Phần 13)."""
     CAPTURED = "CAPTURED"
     CLASSIFIED = "CLASSIFIED"
     VALIDATED = "VALIDATED"
@@ -185,7 +185,7 @@ class MemoryPromotionState(str, Enum):
 
 
 class DecisionStatus(str, Enum):
-    """Architecture and Research Decision Status (Prompt 4 Section 31)."""
+    """Trạng thái quyết định về kiến ​​trúc và nghiên cứu (Nhắc 4 Phần 31)."""
     ACTIVE = "ACTIVE"
     ACCEPTED = "ACCEPTED"
     SUPERSEDED = "SUPERSEDED"
@@ -196,7 +196,7 @@ class DecisionStatus(str, Enum):
 
 
 class OpenQuestionStatus(str, Enum):
-    """Open Research Question Lifecycle States (Prompt 4 Section 32)."""
+    """Các trạng thái vòng đời của câu hỏi nghiên cứu mở (Lời nhắc 4 Phần 32)."""
     OPEN = "OPEN"
     INVESTIGATING = "INVESTIGATING"
     RESOLVED = "RESOLVED"
@@ -205,7 +205,7 @@ class OpenQuestionStatus(str, Enum):
 
 
 class EpisodeStatus(str, Enum):
-    """Episodic Event Lifecycle Status (Prompt 4 Section 5)."""
+    """Trạng thái vòng đời sự kiện theo từng giai đoạn (Lời nhắc 4 Phần 5)."""
     COMPLETED = "COMPLETED"
     FAILED = "FAILED"
     ABORTED = "ABORTED"
@@ -213,7 +213,7 @@ class EpisodeStatus(str, Enum):
 
 
 class SkillStatus(str, Enum):
-    """Procedural Skill Lifecycle Status (Prompt 4 Section 35)."""
+    """Trạng thái Vòng đời Kỹ năng Thủ tục (Nhắc 4 Phần 35)."""
     DRAFT = "DRAFT"
     ACTIVE = "ACTIVE"
     DEPRECATED = "DEPRECATED"
@@ -221,7 +221,7 @@ class SkillStatus(str, Enum):
 
 
 class QueryIntentType(str, Enum):
-    """Hybrid Retrieval Intent Classifications (Prompt 4 Section 21)."""
+    """Phân loại mục đích truy xuất kết hợp (Nhắc 4 Phần 21)."""
     SOURCE_LOOKUP = "SOURCE_LOOKUP"
     CLAIM_LOOKUP = "CLAIM_LOOKUP"
     EVIDENCE_LOOKUP = "EVIDENCE_LOOKUP"
@@ -239,7 +239,7 @@ class QueryIntentType(str, Enum):
 
 
 class PrivacyClassification(str, Enum):
-    """Research Memory Privacy and Access Boundary (Prompt 4 Section 48)."""
+    """Nghiên cứu ranh giới quyền riêng tư và truy cập bộ nhớ (Lời nhắc 4 Phần 48)."""
     PUBLIC = "PUBLIC"
     INTERNAL = "INTERNAL"
     SENSITIVE = "SENSITIVE"
@@ -247,7 +247,7 @@ class PrivacyClassification(str, Enum):
 
 
 class ExperimentStatus(str, Enum):
-    """Experiment and Run Lifecycles (RC-10, RC-14)."""
+    """Thử nghiệm và chạy vòng đời (RC-10, RC-14)."""
     QUEUED = "QUEUED"
     RUNNING = "RUNNING"
     COMPLETED = "COMPLETED"
@@ -256,7 +256,7 @@ class ExperimentStatus(str, Enum):
 
 
 class ArtifactCategory(str, Enum):
-    """Canonical Artifact Categories."""
+    """Danh mục tạo phẩm (artifact) kinh điển."""
     EQUATION = "EQUATION"
     TABLE = "TABLE"
     FIGURE = "FIGURE"
@@ -268,11 +268,11 @@ class ArtifactCategory(str, Enum):
 
 
 # ----------------------------------------------------------------------
-# PROMPT 5 ENUMS: Scientific Reasoning & Argumentation (Sections 5..48)
+# PROMPT 5 ENUMS: Lập luận và lập luận khoa học (Phần 5..48)
 # ----------------------------------------------------------------------
 
 class ReasoningMode(str, Enum):
-    """Scientific Reasoning Modes (Prompt 5 Section 5)."""
+    """Các phương thức suy luận khoa học (Gợi ý 5 Phần 5)."""
     DEFINITIONAL = "DEFINITIONAL"
     COMPARATIVE = "COMPARATIVE"
     DEDUCTIVE = "DEDUCTIVE"
@@ -292,7 +292,7 @@ class ReasoningMode(str, Enum):
 
 
 class EvidenceAlignmentStatus(str, Enum):
-    """Evidence Alignment Classification (Prompt 5 Section 10)."""
+    """Phân loại căn chỉnh bằng chứng (Nhắc 5 Phần 10)."""
     DIRECT_SUPPORT = "DIRECT_SUPPORT"
     PARTIAL_SUPPORT = "PARTIAL_SUPPORT"
     BACKGROUND = "BACKGROUND"
@@ -303,7 +303,7 @@ class EvidenceAlignmentStatus(str, Enum):
 
 
 class ContradictionType(str, Enum):
-    """Granular Contradiction Typology (Prompt 5 Section 15)."""
+    """Loại hình mâu thuẫn chi tiết (Nhắc 5 Phần 15)."""
     TRUE_CONTRADICTION = "TRUE_CONTRADICTION"
     APPARENT_CONTRADICTION = "APPARENT_CONTRADICTION"
     SCOPE_DIFFERENCE = "SCOPE_DIFFERENCE"
@@ -314,7 +314,7 @@ class ContradictionType(str, Enum):
 
 
 class NegativeResultType(str, Enum):
-    """Negative Result Interpretation Categories (Prompt 5 Section 46)."""
+    """Hạng mục Giải thích Kết quả Âm tính (Nhắc 5 Phần 46)."""
     TECHNICAL_FAILURE = "TECHNICAL_FAILURE"
     NULL_RESULT = "NULL_RESULT"
     NEGATIVE_RESULT = "NEGATIVE_RESULT"
@@ -323,7 +323,7 @@ class NegativeResultType(str, Enum):
 
 
 class ArgumentReadinessState(str, Enum):
-    """ArgumentBundle Readiness Lifecycle (Prompt 5 Section 64)."""
+    """Vòng đời sẵn sàng của ArgumentBundle (Lời nhắc 5 Phần 64)."""
     DRAFT = "DRAFT"
     EVIDENCE_INCOMPLETE = "EVIDENCE_INCOMPLETE"
     CONTESTED = "CONTESTED"
@@ -333,7 +333,7 @@ class ArgumentReadinessState(str, Enum):
 
 
 class ReasoningIssueType(str, Enum):
-    """Taxonomy of Reasoning and Methodological Audit Issues (Prompt 5 Section 63)."""
+    """Phân loại các vấn đề về lý luận và kiểm tra phương pháp luận (Nhắc 5 Phần 63)."""
     UNSUPPORTED_CLAIM = "UNSUPPORTED_CLAIM"
     OVERGENERALIZATION = "OVERGENERALIZATION"
     SCOPE_MISMATCH = "SCOPE_MISMATCH"
@@ -359,7 +359,7 @@ class ReasoningIssueType(str, Enum):
 
 
 class DiscourseFunction(str, Enum):
-    """Rhetorical Discourse Functions (Prompt 5 Section 53)."""
+    """Chức năng tu từ của diễn ngôn (Gợi ý 5 Mục 53)."""
     DEFINE = "DEFINE"
     DELIMIT = "DELIMIT"
     DISTINGUISH = "DISTINGUISH"
@@ -381,7 +381,7 @@ class DiscourseFunction(str, Enum):
 
 
 class ArgumentNodeType(str, Enum):
-    """Argument Graph Node Types (Prompt 5 Section 40)."""
+    """Các loại nút đồ thị đối số (Lời nhắc 5 Phần 40)."""
     CLAIM = "CLAIM"
     EVIDENCE = "EVIDENCE"
     ASSUMPTION = "ASSUMPTION"
@@ -397,7 +397,7 @@ class ArgumentNodeType(str, Enum):
 
 
 class ArgumentEdgeType(str, Enum):
-    """Argument Graph Edge Types (Prompt 5 Section 40)."""
+    """Các loại cạnh của đồ thị đối số (Nhắc 5 Phần 40)."""
     SUPPORTS = "SUPPORTS"
     CONTRADICTS = "CONTRADICTS"
     QUALIFIES = "QUALIFIES"
@@ -415,7 +415,7 @@ class ArgumentEdgeType(str, Enum):
 
 
 class RQStatus(str, Enum):
-    """Research Question Epistemic Status (Prompt 5 Section 37)."""
+    """Câu hỏi nghiên cứu Tình trạng nhận thức (Nhắc 5 Mục 37)."""
     OPEN = "OPEN"
     PARTIALLY_ANSWERED = "PARTIALLY_ANSWERED"
     ANSWERED_WITH_LIMITATIONS = "ANSWERED_WITH_LIMITATIONS"
@@ -424,7 +424,7 @@ class RQStatus(str, Enum):
 
 
 class NoveltyReasoningState(str, Enum):
-    """Fine-Grained Novelty Reasoning Lifecycle (Prompt 5 Section 39)."""
+    """Vòng đời lý luận mới lạ chi tiết (Lời nhắc 5 Phần 39)."""
     CANDIDATE = "CANDIDATE"
     PRIOR_ART_SEARCHED = "PRIOR_ART_SEARCHED"
     POTENTIALLY_NOVEL = "POTENTIALLY_NOVEL"
@@ -434,7 +434,7 @@ class NoveltyReasoningState(str, Enum):
 
 
 class VerificationRequestType(str, Enum):
-    """Scientific Verification Request Types for Prompt 6 Interface (Prompt 5 Section 103, Prompt 6 Section 5)."""
+    """Các loại yêu cầu xác minh khoa học cho giao diện Lời nhắc 6 (Lời nhắc 5 Phần 103, Lời nhắc 6 Phần 5)."""
     EQUATION_CHECK = "EQUATION_CHECK"
     EQUATION_VERIFY = "EQUATION_VERIFY"
     EQUATION_DERIVE = "EQUATION_DERIVE"
@@ -450,7 +450,7 @@ class VerificationRequestType(str, Enum):
 
 
 class VerificationRequestStatus(str, Enum):
-    """Verification Request Processing Lifecycle (Prompt 6 Section 5)."""
+    """Vòng đời xử lý yêu cầu xác minh (Lời nhắc 6 Phần 5)."""
     REQUESTED = "REQUESTED"
     VALIDATING = "VALIDATING"
     READY = "READY"
@@ -460,7 +460,7 @@ class VerificationRequestStatus(str, Enum):
     INCONCLUSIVE = "INCONCLUSIVE"
     BLOCKED = "BLOCKED"
     SUPERSEDED = "SUPERSEDED"
-    # Legacy / Compatibility aliases
+    # Bí danh kế thừa/tương thích
     PENDING = "REQUESTED"
     IN_PROGRESS = "RUNNING"
     VERIFIED = "PASS"
@@ -469,7 +469,7 @@ class VerificationRequestStatus(str, Enum):
 
 
 class ResearchPriorityLevel(str, Enum):
-    """Information-Gain Research Action Priorities (Prompt 5 Section 107)."""
+    """Ưu tiên hành động nghiên cứu thu được thông tin (Lời nhắc 5 Phần 107)."""
     CRITICAL = "CRITICAL"
     HIGH = "HIGH"
     MEDIUM = "MEDIUM"
@@ -477,7 +477,7 @@ class ResearchPriorityLevel(str, Enum):
 
 
 class ArgumentPatternType(str, Enum):
-    """Reusable Non-Rigid Argument Patterns (Prompt 5 Section 55)."""
+    """Các mẫu đối số không cứng nhắc có thể tái sử dụng (Nhắc 5 Phần 55)."""
     PROBLEM_MECHANISM_CONSEQUENCE = "PROBLEM_MECHANISM_CONSEQUENCE"
     CLAIM_EVIDENCE_QUALIFICATION = "CLAIM_EVIDENCE_QUALIFICATION"
     METHOD_A_VS_METHOD_B_TRADEOFF = "METHOD_A_VS_METHOD_B_TRADEOFF"
@@ -491,7 +491,7 @@ class ArgumentPatternType(str, Enum):
 
 
 class SymbolicEqualityState(str, Enum):
-    """Symbolic Expression Equivalence Classification (Prompt 6 Section 14)."""
+    """Phân loại tương đương biểu thức ký hiệu (Nhắc 6 Phần 14)."""
     PROVEN_EQUIVALENT = "PROVEN_EQUIVALENT"
     NUMERICALLY_CONSISTENT = "NUMERICALLY_CONSISTENT"
     NOT_EQUIVALENT = "NOT_EQUIVALENT"
@@ -501,7 +501,7 @@ class SymbolicEqualityState(str, Enum):
 
 
 class EquationType(str, Enum):
-    """Scientific Equation Classifications (Prompt 6 Section 10, RC-09)."""
+    """Phân loại phương trình khoa học (Dấu nhắc 6 Mục 10, RC-09)."""
     SOURCE_EQUATION = "SOURCE_EQUATION"
     DERIVED_EQUATION = "DERIVED_EQUATION"
     OUR_EQUATION = "OUR_EQUATION"
@@ -514,7 +514,7 @@ class EquationType(str, Enum):
 
 
 class NumericalClaimType(str, Enum):
-    """Numerical Claim Origin Classification (Prompt 6 Section 50)."""
+    """Phân loại nguồn gốc yêu cầu bằng số (Nhắc 6 Phần 50)."""
     SOURCE_REPORTED = "SOURCE_REPORTED"
     RECOMPUTED = "RECOMPUTED"
     EXPERIMENT_RESULT = "EXPERIMENT_RESULT"
@@ -523,7 +523,7 @@ class NumericalClaimType(str, Enum):
 
 
 class TableType(str, Enum):
-    """Scientific Table Classifications (Prompt 6 Section 54)."""
+    """Phân loại bảng khoa học (Dấu nhắc 6 Phần 54)."""
     EVIDENCE_TABLE = "EVIDENCE_TABLE"
     COMPUTED_TABLE = "COMPUTED_TABLE"
     SUMMARY_TABLE = "SUMMARY_TABLE"
@@ -532,7 +532,7 @@ class TableType(str, Enum):
 
 
 class FigureType(str, Enum):
-    """Scientific Visualization Types (Prompt 6 Section 67)."""
+    """Các kiểu hình dung khoa học (Gợi ý 6 Phần 67)."""
     LINE_PLOT = "LINE_PLOT"
     SCATTER_PLOT = "SCATTER_PLOT"
     BAR_PLOT = "BAR_PLOT"
@@ -546,7 +546,7 @@ class FigureType(str, Enum):
 
 
 class ReproducibilityLevel(str, Enum):
-    """5-Tier Reproducibility Hierarchy (Prompt 6 Section 80)."""
+    """Hệ thống phân cấp khả năng tái tạo 5 bậc (Nhắc 6 Mục 80)."""
     LEVEL_1_INTEGRITY = "LEVEL_1_INTEGRITY"
     LEVEL_2_METRIC = "LEVEL_2_METRIC"
     LEVEL_3_ANALYSIS = "LEVEL_3_ANALYSIS"
@@ -555,7 +555,7 @@ class ReproducibilityLevel(str, Enum):
 
 
 class AllowedWordingStrength(str, Enum):
-    """Scientific Wording Policy Bounds for Thesis Writing (Prompt 6 Section 139)."""
+    """Giới hạn chính sách về từ ngữ khoa học đối với việc viết luận văn (Nhắc 6 Phần 139)."""
     DESCRIPTIVE_ONLY = "DESCRIPTIVE_ONLY"
     ASSOCIATIONAL = "ASSOCIATIONAL"
     COMPARATIVE = "COMPARATIVE"
@@ -565,7 +565,7 @@ class AllowedWordingStrength(str, Enum):
 
 
 class MetricGranularity(str, Enum):
-    """Telemetry Metric Evaluation Granularities (Prompt 6 Section 29)."""
+    """Chi tiết đánh giá số liệu đo từ xa (Nhắc 6 Phần 29)."""
     EVENT = "EVENT"
     ENTITY = "ENTITY"
     SESSION = "SESSION"
@@ -575,7 +575,7 @@ class MetricGranularity(str, Enum):
 
 
 class ProtocolLockState(str, Enum):
-    """Experiment Protocol Execution Lifecycle (Prompt 6 Section 83)."""
+    """Vòng đời thực thi giao thức thử nghiệm (Lời nhắc 6 Phần 83)."""
     DRAFT = "DRAFT"
     LOCKED = "LOCKED"
     EXECUTED = "EXECUTED"
@@ -584,7 +584,7 @@ class ProtocolLockState(str, Enum):
 
 
 class UnitOfMeasurement(str, Enum):
-    """Standardized Physical and Computing Units (Prompt 6 Section 91)."""
+    """Các đơn vị vật lý và máy tính được tiêu chuẩn hóa (Nhắc 6 Mục 91)."""
     MILLISECONDS = "ms"
     SECONDS = "s"
     EVENTS_PER_SEC = "events/s"
@@ -597,7 +597,7 @@ class UnitOfMeasurement(str, Enum):
 
 
 class TransformationOp(str, Enum):
-    """Mathematical and Derivation Transformation Operations (Prompt 6 Section 11)."""
+    """Các phép biến đổi toán học và đạo hàm (Lời nhắc 6 Phần 11)."""
     SUBSTITUTE = "SUBSTITUTE"
     EXPAND = "EXPAND"
     FACTOR = "FACTOR"
@@ -615,8 +615,8 @@ class TransformationOp(str, Enum):
 # ======================================================================
 
 class DiscourseFunction(str, Enum):
-    """Rhetorical and Argument Discourse Step Functions (Prompt 5 Section 53, Prompt 7 Section 7)."""
-    # Prompt 5 granular functions
+    """Chức năng của bước diễn ngôn tu từ và tranh luận (Lời nhắc 5 Phần 53, Lời nhắc 7 Phần 7)."""
+    # Nhắc 5 chức năng chi tiết
     DEFINE = "DEFINE"
     DELIMIT = "DELIMIT"
     DISTINGUISH = "DISTINGUISH"
@@ -635,7 +635,7 @@ class DiscourseFunction(str, Enum):
     LIMIT = "LIMIT"
     TRANSITION = "TRANSITION"
     FALSIFY = "FALSIFY"
-    # Prompt 7 composite functions
+    # Nhắc 7 chức năng tổng hợp
     CLAIM_INTRODUCTION = "CLAIM_INTRODUCTION"
     EVIDENCE_INTEGRATION = "EVIDENCE_INTEGRATION"
     HYPOTHESIS_FORMULATION = "HYPOTHESIS_FORMULATION"
@@ -646,7 +646,7 @@ class DiscourseFunction(str, Enum):
 
 
 class WritingReadiness(str, Enum):
-    """Roadmap Node Writing Readiness State (Prompt 7 Section 4)."""
+    """Trạng thái sẵn sàng ghi nút lộ trình (Lời nhắc 7 Phần 4)."""
     NOT_READY = "NOT_READY"
     PROVISIONAL = "PROVISIONAL"
     READY = "READY"
@@ -657,7 +657,7 @@ class WritingReadiness(str, Enum):
 
 
 class SentenceClaimType(str, Enum):
-    """Sentence-Level Propositional Classification (Prompt 7 Section 8)."""
+    """Phân loại mệnh đề cấp độ câu (Nhắc 7 Phần 8)."""
     SOURCE_FACT = "SOURCE_FACT"
     SOURCE_CLAIM = "SOURCE_CLAIM"
     SYNTHESIS = "SYNTHESIS"
@@ -671,7 +671,7 @@ class SentenceClaimType(str, Enum):
 
 
 class SentenceCompilationState(str, Enum):
-    """Sentence Anti-Hallucination Compilation State (Prompt 7 Section 10)."""
+    """Trạng thái biên soạn câu chống ảo giác (Nhắc 7 mục 10)."""
     DRAFT = "DRAFT"
     VALIDATING = "VALIDATING"
     PASS = "PASS"
@@ -687,7 +687,7 @@ class SentenceCompilationState(str, Enum):
 
 
 class ParagraphReviewStatus(str, Enum):
-    """Document IR Paragraph Lifecycle & Review Status (Prompt 7 Section 83)."""
+    """Trạng thái đánh giá và vòng đời đoạn IR của tài liệu (Nhắc 7 Mục 83)."""
     DRAFT = "DRAFT"
     GENERATED = "GENERATED"
     AUDIT_FAILED = "AUDIT_FAILED"
@@ -699,7 +699,7 @@ class ParagraphReviewStatus(str, Enum):
 
 
 class AuditCategory(str, Enum):
-    """Thesis Multi-Dimensional Audit Categories (Prompt 7 Section 57)."""
+    """Luận án Các hạng mục kiểm toán đa chiều (Lời nhắc 7 Phần 57)."""
     CLAIMS = "CLAIMS"
     CITATIONS = "CITATIONS"
     OWNERSHIP = "OWNERSHIP"
@@ -721,7 +721,7 @@ class AuditCategory(str, Enum):
 
 
 class AuditSeverity(str, Enum):
-    """Audit Finding Severity Levels (Prompt 7 Section 131)."""
+    """Kiểm toán phát hiện mức độ nghiêm trọng (Lời nhắc 7 Mục 131)."""
     CRITICAL = "CRITICAL"
     HIGH = "HIGH"
     MEDIUM = "MEDIUM"
@@ -730,7 +730,7 @@ class AuditSeverity(str, Enum):
 
 
 class AuditIssueStatus(str, Enum):
-    """Lifecycle of Identified Audit Issues (Prompt 7 Section 132)."""
+    """Vòng đời của các vấn đề kiểm toán đã xác định (Lời nhắc 7 Mục 132)."""
     OPEN = "OPEN"
     ACKNOWLEDGED = "ACKNOWLEDGED"
     FIXED = "FIXED"
@@ -739,13 +739,13 @@ class AuditIssueStatus(str, Enum):
 
 
 class CompositionMode(str, Enum):
-    """Thesis Compilation Modes (Prompt 7 Section 54-55)."""
+    """Các chế độ biên soạn luận án (Nhắc 7 Mục 54-55)."""
     PROVISIONAL = "PROVISIONAL"
     FINAL = "FINAL"
 
 
 class DefensibilityStatus(str, Enum):
-    """10 Defensibility Questions Evaluation Status (Prompt 7 Section 99)."""
+    """10 Tình trạng đánh giá câu hỏi về khả năng bào chữa (Nhắc 7 Mục 99)."""
     PASS = "PASS"
     PARTIAL = "PARTIAL"
     FAIL = "FAIL"

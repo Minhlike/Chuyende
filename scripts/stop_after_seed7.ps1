@@ -1,8 +1,8 @@
-# scripts/stop_after_seed7.ps1
-# Monitors Seed 7 Multi-View run:
-# 1. If RUN-MANIFEST.json appears naturally (early stopping), stops process so Seed 999 is skipped.
-# 2. If clock passes 17:00:00, waits for the current in-progress epoch to finish its checkpoint,
-#    then stops training, runs finalize_multiview_checkpoint.py, and leaves PC awake.
+# tập lệnh/stop_after_seed7.ps1
+# Màn hình chạy Seed 7 Multi-View:
+# 1. Nếu RUN-MANIFEST.json xuất hiện một cách tự nhiên (dừng sớm (early stopping)), hãy dừng quá trình để Seed 999 bị bỏ qua.
+# 2. Nếu đồng hồ vượt qua 17:00:00, hãy đợi epoch đang diễn ra hiện tại kết thúc checkpoint của nó,
+# sau đó dừng đào tạo, chạy finalize_multiview_checkpoint.py và để PC ở trạng thái hoạt động.
 
 $targetDir = "D:\Research\experiments\nineplus\confirmatory\CONF_MULTI_VIEW_ALIGNED_seed7_1789452137"
 $manifest = "$targetDir\RUN-MANIFEST.json"
@@ -18,7 +18,7 @@ function Log-Msg ($msg) {
 Log-Msg "Watcher active. Monitoring Seed 7 (Natural Early Stop or 17:00:00 Deadline Cutoff)..."
 
 while ($true) {
-    # 1. Check natural completion
+    # 1. Kiểm tra hoàn thành tự nhiên
     if (Test-Path $manifest) {
         $item = Get-Item $manifest -ErrorAction SilentlyContinue
         if ($item -and $item.Length -gt 100) {
@@ -42,7 +42,7 @@ while ($true) {
         }
     }
 
-    # 2. Check 17:00:00 deadline cutoff
+    # 2. Kiểm tra thời hạn 17:00:00
     $now = Get-Date
     if ($now.Hour -ge 17) {
         Log-Msg "DEADLINE REACHED: Current time is $($now.ToString('HH:mm:ss')) >= 17:00:00."
@@ -62,7 +62,7 @@ while ($true) {
             Start-Sleep -Seconds 5
         }
         
-        # Stop training runner
+        # Dừng tập chạy
         $procs = Get-Process -Name python -ErrorAction SilentlyContinue | Where-Object {
             try {
                 $cmd = (Get-CimInstance Win32_Process -Filter "ProcessId = $($_.Id)").CommandLine

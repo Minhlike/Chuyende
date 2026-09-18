@@ -1,5 +1,5 @@
 """
-Argument Graph Schemas (Section 11, Section 8)
+Lược đồ đồ thị đối số (Phần 11, Phần 8)
 """
 
 from datetime import datetime, timezone
@@ -9,7 +9,7 @@ from research_agent.core.enums import ArgumentRelationType
 
 
 class ArgumentNode(BaseModel):
-    """Node in the Formal Argument Graph."""
+    """Nút trong biểu đồ đối số chính thức."""
     node_id: str = Field(description="Stable ID: ARG-000001")
     claim_id: str = Field(description="Associated Claim ID: CLM-000001")
     role: str = Field(default="PREMISE", description="PREMISE, INFERENCE, CONCLUSION, COUNTERARGUMENT, REBUTTAL")
@@ -19,7 +19,7 @@ class ArgumentNode(BaseModel):
 
 
 class ArgumentEdge(BaseModel):
-    """Directed Logical Edge in Argument Graph."""
+    """Cạnh logic có hướng trong đồ thị đối số."""
     edge_id: str = Field(description="Stable ID: ARE-000001")
     from_node_id: str = Field(description="Origin Argument Node ID")
     to_node_id: str = Field(description="Target Argument Node ID")

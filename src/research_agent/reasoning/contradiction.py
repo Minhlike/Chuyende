@@ -1,5 +1,5 @@
 """
-10-Point Scientific Contradiction Analyzer (Prompt 5 Section 15)
+Máy phân tích mâu thuẫn khoa học 10 điểm (Nhắc 5 Mục 15)
 """
 
 from typing import Dict, Any, Optional, Tuple
@@ -8,7 +8,7 @@ from research_agent.schemas.claim import Claim
 
 
 class ContradictionAnalysisResult:
-    """Detailed evaluation report for a contradiction between two claims."""
+    """Báo cáo đánh giá chi tiết về sự mâu thuẫn giữa hai yêu cầu bồi thường."""
 
     def __init__(
         self,
@@ -29,8 +29,8 @@ class ContradictionAnalysisResult:
 
 class ContradictionAnalyzer:
     """
-    Evaluates apparent conflicts between scientific claims across 10 methodological dimensions.
-    Prevents false assumptions of 'reproducibility failure' when divergence stems from differing scopes.
+    Đánh giá những xung đột rõ ràng giữa các tuyên bố khoa học trên 10 khía cạnh phương pháp luận.
+    Ngăn chặn các giả định sai lầm về 'thất bại về khả năng tái tạo' khi sự phân kỳ bắt nguồn từ các phạm vi khác nhau.
     """
 
     def analyze(
@@ -40,7 +40,7 @@ class ContradictionAnalyzer:
         context_notes: Optional[str] = None,
     ) -> ContradictionAnalysisResult:
         """
-        Execute 10-point contradiction audit across:
+        Thực hiện kiểm toán mâu thuẫn 10 điểm trên:
         1. same_question
         2. same_dataset
         3. same_labels
@@ -69,26 +69,26 @@ class ContradictionAnalyzer:
             "same_operational_constraints": True,
         }
 
-        # 1. Dataset difference check
+        # 1. Kiểm tra sự khác biệt của tập dữ liệu
         datasets = ["darpa", "lanl", "bgl", "hdfs", "thunderbird", "optc"]
         found_in_a = [d for d in datasets if d in ca_text]
         found_in_b = [d for d in datasets if d in cb_text]
         if found_in_a and found_in_b and found_in_a != found_in_b:
             checklist["same_dataset"] = False
 
-        # 2. Metric difference check
+        # 2. Kiểm tra chênh lệch số liệu
         metrics = ["f1", "precision", "recall", "pr-auc", "auc", "latency", "throughput"]
         m_in_a = [m for m in metrics if m in ca_text]
         m_in_b = [m for m in metrics if m in cb_text]
         if m_in_a and m_in_b and m_in_a != m_in_b:
             checklist["same_metric"] = False
 
-        # 3. Threat model & baseline checks
+        # 3. Mô hình mối đe dọa & kiểm tra cơ bản
         if "baseline" in notes or "simple" in ca_text or "simple" in cb_text:
             if "synthetic" in ca_text or "synthetic" in cb_text or "darpa" in ca_text or "lanl" in cb_text:
                 checklist["same_information_budget"] = False
 
-        # Determine Classification
+        # Xác định phân loại
         if not checklist["same_dataset"]:
             c_type = ContradictionType.DATASET_DIFFERENCE
             diagnosis = f"Claims evaluate disjoint dataset domains ({found_in_a} vs {found_in_b}). Divergence is environmental rather than fundamental."
@@ -102,7 +102,7 @@ class ContradictionAnalyzer:
             diagnosis = "Methods had unequal access to host identifiers, template caches, or parameter dictionaries."
             strategy = "Equalize information budgets and rerun under strict identifier masking."
         else:
-            # If all dimensions appear identical and empirical claims directly contradict
+            # Nếu tất cả các khía cạnh có vẻ giống hệt nhau và các tuyên bố thực nghiệm mâu thuẫn trực tiếp
             c_type = ContradictionType.TRUE_CONTRADICTION
             diagnosis = "Both claims address identical setup, dataset, and metric with opposing empirical findings."
             strategy = "Execute controlled direct replication experiment (Negative Control / Intrinsic Probe)."

@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-Comprehensive Unit and Regression Test Suite for Stage A2 Graph Contract V1.3:
-  1. Shared Canonical Split Authority Binding
-  2. Exact Session Count Verification (35,000 Train, 7,500 Val)
-  3. Deterministic Membership Reproducibility
-  4. Disjointness and Boundary Purges
-  5. Millisecond Timestamp Parity (delta = 0.0)
-  6. Relation Direction Grounding & Component Constraints
-  7. Test Firewall Protection (TestSetSealedError)
-  8. Target-Leakage Prevention for L_rel and L_node
-  9. Complete Mutable Checkpoint State Contract (14 elements)
-  10. Optimizer Boundary Checkpointing Policy
-  11. Experimental Source Contract Schema Requirements
-  12. Implementation Readiness Gate Verification
+Bộ kiểm tra đơn vị và hồi quy toàn diện cho Hợp đồng đồ thị giai đoạn A2 V1.3:
+  1. Ràng buộc quyền phân chia Canonical được chia sẻ
+  2. Xác minh số phiên chính xác (35.000 chuyến tàu, 7.500 Val)
+  3. Khả năng tái tạo thành viên xác định
+  4. Sự rời rạc và sự thanh lọc ranh giới
+  5. Tính chẵn lẻ của dấu thời gian tính bằng mili giây (delta = 0,0)
+  6. Các ràng buộc về hướng nối đất và thành phần
+  7. Kiểm tra bảo vệ tường lửa (TestSetSealedError)
+  8. Ngăn chặn rò rỉ mục tiêu cho L_rel và L_node
+  9. Hoàn thành Hợp đồng trạng thái checkpoint có thể thay đổi (14 yếu tố)
+  10. Chính sách checkpoint ranh giới của trình tối ưu hóa
+  11. Yêu cầu về lược đồ hợp đồng nguồn thử nghiệm
+  12. Xác minh cổng sẵn sàng triển khai
 NON_EMPIRICAL_TEST_FIXTURE = true
 """
 
@@ -196,7 +196,7 @@ def test_experimental_source_schema_requires_test_firewall(base_dir):
 
 def test_implementation_readiness_verifier_passes():
     from scripts.verify_stage_a2_implementation_readiness import verify_stage_a2_implementation_readiness
-    # Should exit cleanly or return
+    # Nên thoát sạch hoặc quay lại
     try:
         verify_stage_a2_implementation_readiness()
     except SystemExit as e:

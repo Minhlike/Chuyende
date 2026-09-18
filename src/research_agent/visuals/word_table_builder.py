@@ -1,7 +1,7 @@
 """
-Word Native Table Builder (Rule 3)
-Builds publication-grade native Word tables matching strict thesis specifications.
-Enforces: Repeat header, CantSplit, Exact column widths fitting page margins, Single 0.5pt black border, 14pt Times New Roman, Cell provenance tracking.
+Trình tạo bảng gốc của Word (Quy tắc 3)
+Xây dựng các bảng Word gốc cấp xuất bản phù hợp với các thông số kỹ thuật luận án nghiêm ngặt.
+Thực thi: Tiêu đề lặp lại, CantSplit, Độ rộng cột chính xác phù hợp với lề trang, Đường viền đen đơn 0,5pt, Times New Roman 14pt, Theo dõi xuất xứ ô.
 """
 
 from typing import Any, Dict, List, Optional
@@ -19,10 +19,10 @@ from research_agent.core.enums import TableType
 
 class WordTableBuilder:
     """
-    Constructs compliant Word tables from TableSpecification or pandas DataFrame.
+    Xây dựng các bảng Word tuân thủ từ TableSpecification hoặc Pandas DataFrame.
     """
 
-    PAGE_WIDTH_DXA = 9600  # Standard body width between 3.5cm left and 2.0cm right margins on A4
+    PAGE_WIDTH_DXA = 9600  # Chiều rộng thân tiêu chuẩn từ 3,5cm lề trái đến 2,0cm lề phải trên khổ A4
 
     @staticmethod
     def format_table_cell(
@@ -32,7 +32,7 @@ class WordTableBuilder:
         bold: bool = False,
         font_size_pt: float = 14.0,
     ):
-        """Formats an individual table cell with exact width, padding, borders, and line spacing."""
+        """Định dạng một ô bảng riêng lẻ với chiều rộng, phần đệm, đường viền và khoảng cách dòng chính xác."""
         tcPr = cell._tc.get_or_add_tcPr()
         tc_xml = (
             f'<w:tcPr {nsdecls("w")}>\n'
@@ -77,7 +77,7 @@ class WordTableBuilder:
         custom_col_widths_dxa: Optional[List[int]] = None,
     ) -> docx.table.Table:
         """
-        Creates and inserts a native Word Table according to TableSpecification.
+        Tạo và chèn Bảng Word gốc theo TableSpecification.
         """
         headers = spec.columns
         rows_data = spec.rows_data
@@ -100,7 +100,7 @@ class WordTableBuilder:
         total_w = sum(col_widths)
         tblPr.append(parse_xml(f'<w:tblW {nsdecls("w")} w:w="{total_w}" w:type="dxa"/>'))
 
-        # Header Row
+        # Hàng tiêu đề
         hdr_row = tbl.rows[0]
         hdr_trPr = hdr_row._tr.get_or_add_trPr()
         hdr_trPr.append(parse_xml(f'<w:tblHeader {nsdecls("w")}/>'))
@@ -117,7 +117,7 @@ class WordTableBuilder:
                 font_size_pt=font_size_pt
             )
 
-        # Body Rows
+        # Hàng cơ thể
         for r_i, row in enumerate(rows_data):
             b_row = tbl.rows[r_i + 1]
             b_trPr = b_row._tr.get_or_add_trPr()
@@ -126,7 +126,7 @@ class WordTableBuilder:
             for c_i, val in enumerate(row):
                 cell = b_row.cells[c_i]
                 cell.text = str(val)
-                # First column centered if category/ID, left-aligned if description
+                # Cột đầu tiên được căn giữa nếu danh mục/ID, căn trái nếu mô tả
                 c_align = WD_ALIGN_PARAGRAPH.CENTER if (c_i == 0 and num_cols >= 4) else WD_ALIGN_PARAGRAPH.LEFT
                 cls.format_table_cell(
                     cell,

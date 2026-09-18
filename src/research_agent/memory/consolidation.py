@@ -1,5 +1,5 @@
 """
-Controlled Memory Consolidation Pipeline & Session Handoff Engine (Prompt 4, Sections 11..14, 38, ADR-0008)
+Đường ống hợp nhất bộ nhớ được kiểm soát & Công cụ chuyển giao phiên (Nhắc 4, Phần 11..14, 38, ADR-0008)
 """
 
 import re
@@ -29,7 +29,7 @@ from research_agent.storage.repository import ResearchRepository
 
 
 class ConsolidationResult:
-    """Outcome report for a memory consolidation execution."""
+    """Báo cáo kết quả cho việc thực hiện hợp nhất bộ nhớ."""
 
     def __init__(self, session_id: str):
         self.session_id = session_id
@@ -45,11 +45,11 @@ class ConsolidationResult:
 
 class MemoryConsolidationService:
     """
-    Deterministic rule-driven consolidation pipeline enforcing:
-    - MR-01..MR-06 Anti-hallucination safeguards
-    - Canonical reference verification
-    - Deduplication & Conflict resolution
-    - Session handoff & Journal persistence
+    Thực thi quy trình hợp nhất theo quy tắc xác định:
+    - MR-01..MR-06 Biện pháp bảo vệ chống ảo giác
+    - Xác minh tham chiếu Canonical
+    - Chống trùng lặp và giải quyết xung đột
+    - Chuyển giao phiên & kiên trì ghi nhật ký
     """
 
     def __init__(self, repository: ResearchRepository, memory_root: Path | str = "memory"):
@@ -58,21 +58,21 @@ class MemoryConsolidationService:
 
     def validate_candidate_memory(self, candidate: MemoryRecord) -> Tuple[bool, Optional[str]]:
         """
-        Enforce Invariants MR-01 through MR-06 and provenance integrity.
+        Thực thi các Bất biến MR-01 đến MR-06 và tính toàn vẹn xuất xứ.
         """
-        # MR-01: LLM-generated statement without provenance cannot become SOURCE_FACT
+        # MR-01: Tuyên bố do LLM tạo mà không có nguồn gốc thì không thể trở thành SOURCE_FACT
         if candidate.ownership == IntellectualOwnership.SOURCE and not candidate.reference_id:
             if not candidate.associated_entity_ids:
                 return False, "MR-01 VIOLATION: Source fact memory must reference a verified canonical source ID."
 
-        # MR-03 & MR-05: Generated summary must point to canonical records and cannot self-support
+        # MR-03 & MR-05: Bản tóm tắt được tạo phải trỏ đến các bản ghi chuẩn và không thể tự hỗ trợ
         if candidate.is_generated_summary:
             if not candidate.associated_entity_ids and not candidate.reference_id:
                 return False, "MR-03 VIOLATION: Generated summary must reference underlying canonical IDs."
             if candidate.memory_id in candidate.associated_entity_ids:
                 return False, "MR-05 VIOLATION: Circular self-support detected in memory record."
 
-        # Validate canonical reference exists if provided
+        # Xác thực tham chiếu chuẩn tồn tại nếu được cung cấp
         if candidate.reference_id:
             ref_id = candidate.reference_id
             exists = False
@@ -110,11 +110,11 @@ class MemoryConsolidationService:
         candidate_questions: Optional[List[OpenQuestion]] = None,
     ) -> ConsolidationResult:
         """
-        Execute full session consolidation, persist verified entities, and write human-readable journal.
+        Thực hiện hợp nhất toàn bộ phiên, duy trì các thực thể đã được xác minh và viết nhật ký mà con người có thể đọc được.
         """
         result = ConsolidationResult(session_id=session.session_id)
 
-        # 1. Consolidate Candidate Memories
+        # 1. Củng cố ký ức của ứng viên
         existing_memories = self.repo.list_memories()
         existing_topics = {m.topic.strip().lower() for m in existing_memories}
 
@@ -126,10 +126,10 @@ class MemoryConsolidationService:
                     result.rejected_records.append({"memory_id": cand.memory_id, "reason": reason})
                     continue
 
-                # Deduplication check
+                # Kiểm tra chống trùng lặp
                 norm_topic = cand.topic.strip().lower()
                 if norm_topic in existing_topics:
-                    # Check if exact duplicate content
+                    # Kiểm tra xem nội dung có trùng lặp chính xác không
                     cand.promotion_state = MemoryPromotionState.REJECTED
                     result.rejected_records.append({
                         "memory_id": cand.memory_id,
@@ -137,7 +137,7 @@ class MemoryConsolidationService:
                     })
                     continue
 
-                # Promote & Save
+                # Quảng cáo & Lưu
                 cand.promotion_state = MemoryPromotionState.CONSOLIDATED
                 cand.session_id = session.session_id
                 cand.updated_at = datetime.now(timezone.utc)
@@ -145,14 +145,14 @@ class MemoryConsolidationService:
                 result.promoted_records.append(saved_mem)
                 existing_topics.add(norm_topic)
 
-        # 2. Consolidate Decisions
+        # 2. Hợp nhất các quyết định
         if candidate_decisions:
             for dec in candidate_decisions:
                 saved_dec = self.repo.save_decision(dec)
                 result.decisions_consolidated.append(saved_dec)
                 session.decisions_made.append(f"{dec.decision_id}: {dec.title}")
 
-        # 3. Consolidate Episodes
+        # 3. Hợp nhất các tập
         if candidate_episodes:
             for ep in candidate_episodes:
                 ep.session_id = session.session_id
@@ -161,20 +161,20 @@ class MemoryConsolidationService:
                 if ep.is_failure:
                     session.unresolved_items.append(f"FAILURE: {ep.action} ({ep.failure_reason or 'unspecified'})")
 
-        # 4. Consolidate Lessons
+        # 4. Củng cố bài học
         if candidate_lessons:
             for les in candidate_lessons:
                 saved_les = self.repo.save_lesson_learned(les)
                 result.lessons_consolidated.append(saved_les)
 
-        # 5. Consolidate Open Questions
+        # 5. Củng cố các câu hỏi mở
         if candidate_questions:
             for oq in candidate_questions:
                 saved_oq = self.repo.save_open_question(oq)
                 result.open_questions_consolidated.append(saved_oq)
                 session.unresolved_items.append(f"OPEN QUESTION: {oq.question_id} - {oq.question}")
 
-        # 6. Generate Handoff Summary
+        # 6. Tạo Tóm tắt Bàn giao
         handoff_md = self._generate_handoff_markdown(session, result)
         session.handoff_summary = handoff_md
         session.end_time = datetime.now(timezone.utc)
@@ -182,7 +182,7 @@ class MemoryConsolidationService:
         self.repo.save_research_session(session)
         result.handoff_markdown = handoff_md
 
-        # 7. Write Session Journal
+        # 7. Viết nhật ký buổi học
         journal_path = self._write_session_journal(session, result)
         result.journal_path = str(journal_path)
 

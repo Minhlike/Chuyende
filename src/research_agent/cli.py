@@ -1,5 +1,5 @@
 """
-Research Agent Command Line Interface (CLI) (Roadmap & Reference Map Tools)
+Giao diện dòng lệnh của tác nhân nghiên cứu (CLI) (Công cụ bản đồ lộ trình và tham khảo)
 """
 
 import argparse
@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-# Ensure UTF-8 output on Windows console
+# Đảm bảo đầu ra UTF-8 trên bảng điều khiển Windows
 if hasattr(sys.stdout, "reconfigure"):
     try:
         sys.stdout.reconfigure(encoding="utf-8", errors="backslashreplace")
@@ -26,7 +26,7 @@ from research_agent.interfaces.reference_map_ingestion import ReferenceMapIngest
 
 
 def validate_roadmap_command(repo: ResearchRepository) -> int:
-    """Validate full roadmap integrity, schema, hierarchy, coverage, and constitutional rules."""
+    """Xác thực tính toàn vẹn của lộ trình, lược đồ, phân cấp, phạm vi bao phủ và các quy tắc hiến pháp."""
     print("==================================================")
     print("CANONICAL RESEARCH ROADMAP INTEGRITY VALIDATION")
     print("==================================================")
@@ -49,11 +49,11 @@ def validate_roadmap_command(repo: ResearchRepository) -> int:
         print(f"[FAIL] Schema/hierarchy validation error: {e}")
         return 1
 
-    # Check Nodes count
+    # Kiểm tra số lượng nút
     nodes = roadmap.nodes
     print(f"[PASS] Total Hierarchical Nodes: {len(nodes)}")
 
-    # Check Chapter distribution
+    # Kiểm tra phân phối chương
     ch1_nodes = [n for n in nodes if n.code.startswith("1.")]
     ch2_nodes = [n for n in nodes if n.code.startswith("2.")]
     ch3_nodes = [n for n in nodes if n.code.startswith("3.")]
@@ -61,7 +61,7 @@ def validate_roadmap_command(repo: ResearchRepository) -> int:
     print(f"[PASS] Chapter 2 Nodes: {len(ch2_nodes)}")
     print(f"[PASS] Chapter 3 Nodes: {len(ch3_nodes)}")
 
-    # Check Questions & Hypotheses
+    # Kiểm tra câu hỏi và giả thuyết
     print(f"[PASS] Research Questions: {[q.code for q in roadmap.questions]}")
     print(f"[PASS] Hypotheses:         {[h.code for h in roadmap.hypotheses]}")
     print(f"[PASS] Research Axes:       {[a.code for a in roadmap.axes]}")
@@ -69,7 +69,7 @@ def validate_roadmap_command(repo: ResearchRepository) -> int:
     print(f"[PASS] Claim Boundaries:    {len(roadmap.boundaries)} registered")
     print(f"[PASS] Defensibility Qs:    {len(roadmap.defensibility_questions)} registered")
 
-    # Check Traceability Matrix coverage
+    # Kiểm tra mức độ bao phủ của Ma trận truy xuất nguồn gốc
     traceability = roadmap.traceability_matrix
     if len(traceability) != 5:
         print(f"[FAIL] Traceability matrix incomplete: expected 5 entries, found {len(traceability)}")
@@ -83,7 +83,7 @@ def validate_roadmap_command(repo: ResearchRepository) -> int:
 
 
 def validate_reference_map_command(repo: ResearchRepository) -> int:
-    """Validate reference map, bibliographic verification, ownership invariants, and citation firewall."""
+    """Xác thực bản đồ tham chiếu, xác minh thư mục, bất biến quyền sở hữu và tường lửa trích dẫn."""
     print("==================================================")
     print("VERIFIED REFERENCE MAP & CITATION FIREWALL VALIDATION")
     print("==================================================")
@@ -120,7 +120,7 @@ def validate_reference_map_command(repo: ResearchRepository) -> int:
     print(f"[PASS] Registered Contributions:       {len(contribs)} (CAND-01..CAND-15)")
     print(f"[PASS] Citation Firewall Active Rules: {len(firewall)}")
 
-    # Check peer review vs preprints
+    # Kiểm tra đánh giá ngang hàng so với bản in trước
     preprints = [s for s in sources if s.source_type.value == "PREPRINT"]
     top_venues = [s for s in sources if s.source_type.value == "PEER_REVIEWED_TOP_VENUE"]
     standards = [s for s in sources if s.source_type.value == "PRIMARY_STANDARD"]
@@ -141,7 +141,7 @@ def main(args: Optional[list] = None):
     parser = argparse.ArgumentParser(description="Research Agent CLI")
     subparsers = parser.add_subparsers(dest="subcommand", help="Available subcommands")
 
-    # 1. Roadmap parser
+    # 1. Trình phân tích lộ trình
     roadmap_parser = subparsers.add_parser("roadmap", help="Roadmap operations")
     roadmap_subparsers = roadmap_parser.add_subparsers(dest="action", help="Roadmap actions")
     roadmap_subparsers.add_parser("validate", help="Validate roadmap integrity and constitutional invariants")
@@ -162,7 +162,7 @@ def main(args: Optional[list] = None):
     roadmap_subparsers.add_parser("show-boundaries", help="List all Research Claim Boundaries")
     roadmap_subparsers.add_parser("show-traceability", help="Display Traceability Matrix")
 
-    # 2. References parser
+    # 2. Trình phân tích tài liệu tham khảo
     refs_parser = subparsers.add_parser("refs", help="Reference & Ownership Map operations")
     refs_subparsers = refs_parser.add_subparsers(dest="action", help="Reference map actions")
 
@@ -182,7 +182,7 @@ def main(args: Optional[list] = None):
     refs_subparsers.add_parser("firewall", help="Audit Citation Firewall status across all sources")
     refs_subparsers.add_parser("coverage", help="Display overall reference, ownership, and citation coverage")
 
-    # 3. Memory parser (Prompt 4)
+    # 3. Trình phân tích bộ nhớ (Nhắc 4)
     memory_parser = subparsers.add_parser("memory", help="Long-Term Research Memory operations")
     memory_subparsers = memory_parser.add_subparsers(dest="action", help="Memory actions")
     memory_subparsers.add_parser("status", help="Display memory health and metrics")
@@ -206,15 +206,15 @@ def main(args: Optional[list] = None):
     memory_subparsers.add_parser("validate", help="Validate memory invariants (MQ-01..MQ-15)")
     memory_subparsers.add_parser("state", help="Display canonical research state summary")
 
-    # 4. Resume parser (Prompt 4 Section 74)
+    # 4. Trình phân tích cú pháp sơ yếu lý lịch (Nhắc 4 Phần 74)
     subparsers.add_parser("resume", help="Continuation bootstrap ContextBundle")
 
-    # 5. Research parser
+    # 5. Trình phân tích cú pháp nghiên cứu
     research_parser = subparsers.add_parser("research", help="Research state operations")
     research_subparsers = research_parser.add_subparsers(dest="action", help="Research actions")
     research_subparsers.add_parser("state", help="Display canonical research state summary")
 
-    # 6. Reason parser (Prompt 5)
+    # 6. Trình phân tích cú pháp lý do (Dấu nhắc 5)
     reason_parser = subparsers.add_parser("reason", help="Scientific reasoning and argumentation operations")
     reason_subparsers = reason_parser.add_subparsers(dest="action", help="Reasoning actions")
 
@@ -248,7 +248,7 @@ def main(args: Optional[list] = None):
 
     reason_subparsers.add_parser("validate", help="Validate reasoning and argument graph invariants")
 
-    # 7. Skills parser (Prompt 5)
+    # 7. Trình phân tích cú pháp kỹ năng (Dấu nhắc 5)
     skills_parser = subparsers.add_parser("skills", help="Procedural research skills")
     skills_subparsers = skills_parser.add_subparsers(dest="action", help="Skills actions")
 
@@ -263,7 +263,7 @@ def main(args: Optional[list] = None):
     sk_run.add_argument("skill_id", help="Skill ID or name")
     sk_run.add_argument("--payload", help="JSON payload string", default="{}")
 
-    # 8. Verify parser (Prompt 6 Scientific Verification Toolchain)
+    # 8. Xác minh trình phân tích cú pháp (Prompt 6 Scientific Verification Toolchain)
     verify_parser = subparsers.add_parser("verify", help="Scientific verification and deterministic computation operations")
     verify_subparsers = verify_parser.add_subparsers(dest="action", help="Verification actions")
 
@@ -305,7 +305,7 @@ def main(args: Optional[list] = None):
 
     verify_subparsers.add_parser("validate", help="Run complete scientific verification toolchain self-test")
 
-    # 9. Thesis parser (Prompt 7 Academic Composer & Thesis Auditor)
+    # 9. Trình phân tích luận văn (Prompt 7 Academic Composer & Thesis Auditor)
     thesis_parser = subparsers.add_parser("thesis", help="Academic composer and thesis auditing operations")
     thesis_subparsers = thesis_parser.add_subparsers(dest="action", help="Thesis actions")
 
@@ -325,11 +325,11 @@ def main(args: Optional[list] = None):
     th_node = thesis_subparsers.add_parser("node", help="Display node writing readiness and paragraph details")
     th_node.add_argument("node_code", help="Roadmap node code (e.g. 1.3.3)")
 
-    # 10. Trace parser (Prompt 7 Section 130)
+    # 10. Trình phân tích cú pháp theo dõi (Nhắc 7 Phần 130)
     trace_p = subparsers.add_parser("trace", help="Trace provenance chain from sentence to source / run / dataset")
     trace_p.add_argument("target_id", help="Target entity ID (Paragraph, Sentence, Claim, Numerical Claim, Contribution, Source)")
 
-    # 11. Doctor parser (Prompt 7 Section 154)
+    # 11. Trình phân tích cú pháp bác sĩ (Nhắc 7 Phần 154)
     subparsers.add_parser("doctor", help="Run full system health check across all research subsystems")
 
     parsed_args = parser.parse_args(args)
@@ -510,7 +510,7 @@ def main(args: Optional[list] = None):
             sys.exit(0)
 
     # -------------------------------------------------------------
-    # MEMORY SUBCOMMANDS (Prompt 4)
+    # MEMORY SUBCOMMANDS (Dấu nhắc 4)
     # -------------------------------------------------------------
     elif parsed_args.subcommand == "memory":
         from research_agent.memory.manager import MemoryManager
@@ -702,7 +702,7 @@ def main(args: Optional[list] = None):
             sys.exit(0)
 
     # -------------------------------------------------------------
-    # RESUME BOOTSTRAP COMMAND (Prompt 4, Section 74)
+    # RESUME BOOTSTRAP COMMAND (Dấu nhắc 4, Mục 74)
     # -------------------------------------------------------------
     elif parsed_args.subcommand == "resume":
         from research_agent.memory.manager import MemoryManager
@@ -725,7 +725,7 @@ def main(args: Optional[list] = None):
         sys.exit(0)
 
     # -------------------------------------------------------------
-    # RESEARCH STATE COMMAND (Prompt 4 Section 73)
+    # RESEARCH STATE COMMAND (Nhắc 4 Mục 73)
     # -------------------------------------------------------------
     elif parsed_args.subcommand == "research" and parsed_args.action == "state":
         from research_agent.memory.manager import MemoryManager
@@ -753,7 +753,7 @@ def main(args: Optional[list] = None):
         sys.exit(0)
 
     # -------------------------------------------------------------
-    # SCIENTIFIC REASONING COMMANDS (Prompt 5)
+    # SCIENTIFIC REASONING COMMANDS (Dấu nhắc 5)
     # -------------------------------------------------------------
     elif parsed_args.subcommand == "reason":
         from research_agent.reasoning.engine import ScientificReasoningEngine
@@ -964,7 +964,7 @@ def main(args: Optional[list] = None):
             sys.exit(0)
 
     # -------------------------------------------------------------
-    # RESEARCH SKILLS COMMANDS (Prompt 5)
+    # RESEARCH SKILLS COMMANDS (Dấu nhắc 5)
     # -------------------------------------------------------------
     elif parsed_args.subcommand == "skills":
         from research_agent.skills.registry import ResearchSkillRegistry
@@ -1035,7 +1035,7 @@ def main(args: Optional[list] = None):
             sys.exit(0 if res.success else 1)
 
     # -------------------------------------------------------------
-    # SCIENTIFIC VERIFICATION SUBCOMMANDS (Prompt 6)
+    # SCIENTIFIC VERIFICATION SUBCOMMANDS (Dấu nhắc 6)
     # -------------------------------------------------------------
     elif parsed_args.subcommand == "verify":
         from research_agent.verification.pipeline import ScientificVerificationPipeline
@@ -1133,15 +1133,15 @@ def main(args: Optional[list] = None):
             print("==================================================")
             print("SCIENTIFIC VERIFICATION TOOLCHAIN VALIDATION")
             print("==================================================")
-            # Test 1: Symbolic equivalence
+            # Bài kiểm tra 1: Tương đương về mặt ký hiệu
             st, _ = pipeline.symbolic_engine.verify_algebraic_equivalence("(x + 1)**2", "x**2 + 2*x + 1")
             print(f"[PASS] Symbolic Equivalence Engine: {st.value}")
 
-            # Test 2: Confusion matrix
+            # Bài kiểm tra 2: Ma trận nhầm lẫn
             cm = pipeline.metric_engine.compute_confusion_matrix([1, 0, 1, 0], [1, 0, 0, 0])
             print(f"[PASS] Metric Recomputation Engine: F1={cm.f1:.2f}, Recall={cm.recall:.2f}")
 
-            # Test 3: Statistical test
+            # Bài kiểm tra 3: Kiểm tra thống kê
             s_res = pipeline.hyp_engine.run_paired_test([0.9, 0.92, 0.95, 0.94, 0.96], [0.8, 0.82, 0.81, 0.83, 0.85], question="Self-test")
             print(f"[PASS] Statistical Hypothesis Engine: p={s_res.p_value:.4e}, effect={s_res.effect_size_name} {s_res.effect_size_value:.2f}")
 
@@ -1150,7 +1150,7 @@ def main(args: Optional[list] = None):
             sys.exit(0)
 
     # -------------------------------------------------------------
-    # THESIS COMPOSITION & AUDIT SUBCOMMANDS (Prompt 7)
+    # THESIS COMPOSITION & AUDIT SUBCOMMANDS (Nhắc 7)
     # -------------------------------------------------------------
     elif parsed_args.subcommand == "thesis":
         from research_agent.composition import AcademicComposer, ThesisAuditor, ThesisCompiler, WritingGate
@@ -1240,14 +1240,14 @@ def main(args: Optional[list] = None):
             sys.exit(0)
 
     # -------------------------------------------------------------
-    # TRACE & PROVENANCE (Prompt 7 Section 130)
+    # TRACE & PROVENANCE (Nhắc 7 Mục 130)
     # -------------------------------------------------------------
     elif parsed_args.subcommand == "trace":
         tid = parsed_args.target_id
         print("==================================================")
         print(f"RESEARCH PROVENANCE TRACE: {tid}")
         print("==================================================")
-        # Check if paragraph
+        # Kiểm tra xem đoạn văn
         p = repo.get_paragraph(tid)
         if p:
             print(f"[ENTITY: PARAGRAPH] ID={p.paragraph_id}, Node={p.node_code}, Status={p.review_status.value}")
@@ -1282,40 +1282,40 @@ def main(args: Optional[list] = None):
         sys.exit(0)
 
     # -------------------------------------------------------------
-    # SYSTEM DOCTOR HEALTH CHECK (Prompt 7 Section 154)
+    # SYSTEM DOCTOR HEALTH CHECK (Nhắc 7 Mục 154)
     # -------------------------------------------------------------
     elif parsed_args.subcommand == "doctor":
         print("==================================================")
         print("RESEARCH AGENT DOCTOR SYSTEM HEALTH CHECK")
         print("==================================================")
-        # 1. DB & Workspace
+        # 1. Cơ sở dữ liệu & Không gian làm việc
         print("[PASS] Workspace & Config: D:\\Research")
         print("[PASS] SQLite Database & Schema: Operational")
 
-        # 2. Roadmap
+        # 2. Lộ trình
         rqs = repo.list_research_questions()
         hyps = repo.list_hypotheses()
         nodes = repo.list_roadmap_nodes()
         print(f"[PASS] Canonical Roadmap: 3 Chapters, {len(nodes)} Nodes, {len(rqs)} RQs (RQ1..RQ5), {len(hyps)} Hypotheses (H1..H5)")
 
-        # 3. Reference Map
+        # 3. Bản đồ tham khảo
         sources = repo.list_sources()
         claims = repo.list_claims()
         print(f"[PASS] Reference Map & Citation Firewall: {len(sources)} Sources, {len(claims)} Canonical Claims")
 
-        # 4. Reasoning & Skills
+        # 4. Lý luận & Kỹ năng
         from research_agent.skills.registry import ResearchSkillRegistry
         skill_reg = ResearchSkillRegistry()
         skills = skill_reg.list_skills()
         print(f"[PASS] Scientific Reasoning & Procedural Skills: {len(skills)} / 38 Canonical Research Skills Loaded")
 
-        # 5. Verification
+        # 5. Xác minh
         from research_agent.verification.pipeline import ScientificVerificationPipeline
         pipeline = ScientificVerificationPipeline(repo)
         st, _ = pipeline.symbolic_engine.verify_algebraic_equivalence("a + b", "b + a")
         print(f"[PASS] Scientific Verification Toolchain: Symbolic Solver ({st.value}), Statistics & Datasets")
 
-        # 6. Thesis Composer & Frozen Chapter 1 Invariant
+        # 6. Người soạn luận văn & Frozen Chương 1 Bất biến
         import hashlib
         code_p = Path("D:/Research/src/research_agent/composition/build_word_visual_qa.py")
         if code_p.exists():

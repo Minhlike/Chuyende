@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Multi-View VICReg and Per-Sample Correspondence Tests
-Verifies:
-  1. Multi-View Memory Scope Isolation: Sample B representation is invariant whether evaluated alone or after unrelated sample A.
-  2. Per-sample correspondence: Two distinct graph samples in same batch produce two distinct graph embeddings.
-  3. Real batch VICReg loss optimization with non-zero gradients.
+Các bài kiểm tra tương ứng nhiều chế độ xem VICReg và mỗi mẫu
+Xác minh:
+  1. Cách ly phạm vi bộ nhớ nhiều chế độ xem: Biểu diễn mẫu B là bất biến cho dù được đánh giá một mình hay sau mẫu A không liên quan.
+  2. Sự tương ứng trên mỗi mẫu: Hai mẫu biểu đồ riêng biệt trong cùng một lô tạo ra hai phần nhúng biểu đồ riêng biệt.
+  3. Tối ưu hóa mất mát (loss) VICreg hàng loạt thực với độ dốc khác 0.
 """
 
 import pytest
@@ -35,15 +35,15 @@ def test_01_independent_sample_memory_isolation():
     seq_b = torch.randint(1, 30, (1, 6))
     events_b = [{"timestamp": 1.0, "src": 3, "dst": 4, "relation_type": 2}]
 
-    # Evaluate sample B alone
+    # Đánh giá riêng mẫu B
     z_b_alone = model.extract_representation(seq_b, graph_events_batch=[events_b], device=device)
 
-    # Evaluate batch [sample A, sample B]
+    # Đánh giá lô [mẫu A, mẫu B]
     seq_batch = torch.cat([seq_a, seq_b], dim=0)
     events_batch = [events_a, events_b]
     z_batch = model.extract_representation(seq_batch, graph_events_batch=events_batch, device=device)
 
-    # Sample B representation in batch must match sample B alone exactly (Zero State Leakage)
+    # Sự thể hiện mẫu B trong lô phải khớp chính xác với mẫu B (Rò rỉ trạng thái bằng 0)
     assert torch.allclose(z_b_alone[0], z_batch[1], atol=1e-5), "Sample B representation must be invariant to preceding batch items in independent mode."
 
 def test_02_per_sample_distinct_graph_embeddings():

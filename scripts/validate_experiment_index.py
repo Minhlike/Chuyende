@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Automated Validator for experiments/experiment_index.csv
-Validates each CSV record against source JSON artifacts.
-Exits with code 1 upon any discrepancy.
+Trình xác thực tự động cho thử nghiệm/experiment_index.csv
+Xác thực từng bản ghi CSV dựa trên các tạo phẩm JSON nguồn.
+Thoát với mã 1 nếu có bất kỳ sự khác biệt nào.
 """
 
 import os
@@ -50,7 +50,7 @@ def validate_experiment_index(csv_path: str = "experiments/experiment_index.csv"
         m_avail = row.get("manifest_availability", "").strip()
         csv_m_hash = row.get("manifest_sha256", "").strip()
 
-        # 1. Manifest file existence and SHA-256 validation
+        # 1. Sự tồn tại của tệp kê khai và xác thực SHA-256
         if m_avail not in ["AVAILABLE_IN_GIT", "LOCAL_EVIDENCE_ONLY"]:
             errors.append(f"{prefix} invalid manifest_availability: '{m_avail}'")
             continue
@@ -97,28 +97,28 @@ def validate_experiment_index(csv_path: str = "experiments/experiment_index.csv"
             errors.append(f"{prefix} failed to parse JSON in {m_path}: {e}")
             continue
 
-        # 2. Check architecture family
+        # 2. Kiểm tra họ kiến trúc
         m_arch = m_data.get("architecture", "")
         if arch == "MULTI_VIEW_ALIGNED" and m_arch not in ["MULTI_VIEW_ALIGNED", "MULTI_VIEW_ALIGNED_VICREG"]:
             errors.append(f"{prefix} architecture mismatch: CSV={arch} vs JSON={m_arch}")
         elif arch != "MULTI_VIEW_ALIGNED" and arch != m_arch:
             errors.append(f"{prefix} architecture mismatch: CSV={arch} vs JSON={m_arch}")
 
-        # 3. Check seed
+        # 3. Kiểm tra hạt giống
         if int(seed_str) != int(m_data.get("seed", -1)):
             errors.append(f"{prefix} seed mismatch: CSV={seed_str} vs JSON={m_data.get('seed')}")
 
-        # 4. Check best_epoch
+        # 4. Kiểm tra best_epoch
         if int(best_epoch_str) != int(m_data.get("best_epoch", -1)):
             errors.append(f"{prefix} best_epoch mismatch: CSV={best_epoch_str} vs JSON={m_data.get('best_epoch')}")
 
-        # 5. Check best_val_loss
+        # 5. Kiểm tra best_val_loss
         m_loss = float(m_data.get("best_val_loss", -1.0))
         csv_loss = float(best_loss_str)
         if abs(m_loss - csv_loss) > 1e-9:
             errors.append(f"{prefix} best_val_loss mismatch: CSV={csv_loss} vs JSON={m_loss}")
 
-        # 6. Check internal probe metrics
+        # 6. Kiểm tra số liệu thăm dò nội bộ
         if "probe_ap" in m_data:
             m_iap = float(m_data["probe_ap"])
             csv_iap = float(internal_ap_str)
@@ -131,7 +131,7 @@ def validate_experiment_index(csv_path: str = "experiments/experiment_index.csv"
             if abs(m_iauc - csv_iauc) > 1e-9:
                 errors.append(f"{prefix} internal probe_roc_auc mismatch: CSV={csv_iauc} vs JSON={m_iauc}")
 
-        # 7. Check V3 result artifact and protocol separation
+        # 7. Kiểm tra sự tách biệt giữa kết quả và giao thức V3
         if v3_path != "NO_V3_RESULT_ARTIFACT":
             full_v3_path = repo_root / v3_path
             if not full_v3_path.exists():

@@ -1,5 +1,5 @@
 """
-Symbolic Mathematical Verification Engine (Prompt 6 Sections 13..17)
+Công cụ xác minh toán học tượng trưng (Nhắc 6 phần 13..17)
 """
 
 import math
@@ -11,13 +11,13 @@ from research_agent.core.enums import SymbolicEqualityState
 
 class SymbolicVerificationEngine:
     """
-    Deterministic symbolic verification backend using SymPy.
-    Performs algebraic equality checks, calculus derivations, domain constraint
-    auditing, ML tensor shape dimension checks, and loss function composition audits.
+    Phần phụ trợ xác minh ký hiệu xác định bằng SymPy.
+    Thực hiện kiểm tra đẳng thức đại số, đạo hàm tính toán, ràng buộc miền
+    kiểm tra, kiểm tra kích thước hình dạng tensor ML và kiểm tra thành phần hàm mất mát.
     """
 
     def parse_expression(self, expr_str: str) -> Tuple[Optional[sp.Expr], Optional[str]]:
-        """Parses a mathematical expression string into a SymPy expression."""
+        """Phân tích chuỗi biểu thức toán học thành biểu thức SymPy."""
         clean_expr = expr_str.replace("\\cdot", "*").replace("\\times", "*").replace("^", "**")
         clean_expr = clean_expr.replace("{", "(").replace("}", ")").replace("\\", "")
         try:
@@ -34,8 +34,8 @@ class SymbolicVerificationEngine:
         num_random_samples: int = 20,
     ) -> Tuple[SymbolicEqualityState, Dict[str, Any]]:
         """
-        Determines if expr_a and expr_b are mathematically equivalent.
-        Combines SymPy symbolic simplification with randomized numerical sanity checks.
+        Xác định xem expr_a và expr_b có tương đương về mặt toán học hay không.
+        Kết hợp việc đơn giản hóa biểu tượng của SymPy với việc kiểm tra độ chính xác bằng số ngẫu nhiên.
         """
         expr_a, err_a = self.parse_expression(expr_a_str)
         expr_b, err_b = self.parse_expression(expr_b_str)
@@ -47,7 +47,7 @@ class SymbolicVerificationEngine:
                 "expr_b": expr_b_str,
             }
 
-        # 1. Direct symbolic difference simplification
+        # 1. Đơn giản hóa sự khác biệt biểu tượng trực tiếp
         diff = sp.simplify(expr_a - expr_b)
         if diff == 0:
             return SymbolicEqualityState.PROVEN_EQUIVALENT, {
@@ -55,7 +55,7 @@ class SymbolicVerificationEngine:
                 "difference": "0",
             }
 
-        # 2. Check with domain assumptions (e.g. positive symbols)
+        # 2. Kiểm tra các giả định về miền (e.g. ký hiệu dương)
         symbols = expr_a.free_symbols.union(expr_b.free_symbols)
         assumed_symbols = {s: sp.Symbol(s.name, positive=True, real=True) for s in symbols}
         subbed_a = expr_a.subs(assumed_symbols)
@@ -67,7 +67,7 @@ class SymbolicVerificationEngine:
                 "assumptions_required": ["symbols > 0", "real values"],
             }
 
-        # 3. Randomized numerical evaluation across valid domain points
+        # 3. Đánh giá số ngẫu nhiên trên các điểm miền hợp lệ
         num_matches = 0
         tolerance = 1e-7
         random.seed(42)
@@ -103,7 +103,7 @@ class SymbolicVerificationEngine:
         var_name: str,
         claimed_derivative_str: str,
     ) -> Tuple[SymbolicEqualityState, Dict[str, Any]]:
-        """Verifies if claimed_derivative matches d(func)/d(var)."""
+        """Xác minh xem claimed_derivative có khớp với d(func)/d(var) hay không."""
         func_expr, err = self.parse_expression(func_expr_str)
         if err or func_expr is None:
             return SymbolicEqualityState.PARSE_FAILED, {"error": err}
@@ -114,13 +114,13 @@ class SymbolicVerificationEngine:
         return self.verify_algebraic_equivalence(actual_str, claimed_derivative_str)
 
     def audit_domain_validity(self, expr_str: str) -> List[Dict[str, Any]]:
-        """Audits expression for division by zero, negative logarithms, or square root domain issues."""
+        """Kiểm tra biểu thức chia cho số 0, logarit âm hoặc các vấn đề về miền căn bậc hai."""
         issues = []
         expr, err = self.parse_expression(expr_str)
         if err or expr is None:
             return [{"issue_type": "SYNTAX_PARSE_ERROR", "details": err}]
 
-        # Check for explicit division denominators
+        # Kiểm tra mẫu số phân chia rõ ràng
         for atom in expr.atoms(sp.Pow):
             if atom.exp.is_negative:
                 denom = atom.base
@@ -130,7 +130,7 @@ class SymbolicVerificationEngine:
                     "mitigation": f"Ensure denominator {denom} != 0 via regularization or epsilon.",
                 })
 
-        # Check for logarithms
+        # Kiểm tra logarit
         for atom in expr.atoms(sp.log):
             arg = atom.args[0]
             issues.append({
@@ -148,8 +148,8 @@ class SymbolicVerificationEngine:
         expected_output_shape: Optional[Tuple[int, ...]] = None,
     ) -> Tuple[bool, Optional[str]]:
         """
-        Audits ML representation shape compatibility (Prompt 6 Section 16).
-        E.g. alignment between z_seq in R^d and z_graph in R^d.
+        Kiểm tra khả năng tương thích của hình dạng biểu diễn ML (Lời nhắc 6 Phần 16).
+        E.g. căn chỉnh giữa z_seq trong R^d và z_graph trong R^d.
         """
         if operation_type == "ALIGNMENT_COSINE":
             if len(operand_shapes) != 2:
@@ -179,9 +179,9 @@ class SymbolicVerificationEngine:
         loss_terms: List[Dict[str, Any]],
     ) -> Tuple[bool, List[str]]:
         """
-        Audits multi-objective loss functions (Prompt 6 Section 17):
+        Kiểm tra các hàm mất mát đa mục tiêu (Nhắc 6 Phần 17):
         L = sum lambda_i * L_i
-        Checks scalar outputs, positive lambda constraints, constituent provenance.
+        Kiểm tra kết quả đầu ra vô hướng, ràng buộc lambda dương, xuất xứ thành phần.
         """
         issues = []
         for i, term in enumerate(loss_terms):

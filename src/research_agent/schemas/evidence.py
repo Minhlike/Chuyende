@@ -1,5 +1,5 @@
 """
-Evidence Schema (Section 10, Section 11, RC-01, RC-11, RC-12)
+Lược đồ bằng chứng (Phần 10, Phần 11, RC-01, RC-11, RC-12)
 """
 
 from datetime import datetime, timezone
@@ -14,7 +14,7 @@ from research_agent.core.identifiers import EntityPrefix, format_stable_id
 
 
 class Evidence(BaseModel):
-    """Canonical Evidence Unit tied explicitly to a Source."""
+    """Đơn vị Bằng chứng Canonical được gắn rõ ràng với Nguồn."""
     evidence_id: str = Field(description="Stable ID: EVD-000001")
     source_id: str = Field(description="Parent Source ID: SRC-000001")
     source_version_id: Optional[str] = None

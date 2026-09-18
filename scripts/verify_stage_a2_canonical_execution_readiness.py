@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-Verification Script for Stage A2 Seed-42 Real Empirical Execution Readiness & Launch Authorization Gate (Contract V1.4.1 Locked).
-Executes actual verification checks for every single gate criterion.
+Tập lệnh xác minh cho Giai đoạn A2 Seed-42 Cổng ủy quyền khởi chạy và sẵn sàng thực hiện theo kinh nghiệm thực tế (Hợp đồng V1.4.1 đã bị khóa).
+Thực hiện kiểm tra xác minh thực tế cho từng tiêu chí cổng duy nhất.
 
-Output: STAGE_A2_SEED42_LAUNCH_AUTHORIZED=PASS or FAIL.
+Đầu ra: STAGE_A2_SEED42_LAUNCH_AUTHORIZED=PASS hoặc FAIL.
 """
 
 import os
 import sys
 from pathlib import Path
 
-# Ensure root directory is in python path
+# Đảm bảo thư mục gốc nằm trong đường dẫn python
 DEFAULT_BASE_DIR = Path(__file__).resolve().parent.parent
 if str(DEFAULT_BASE_DIR) not in sys.path:
     sys.path.insert(0, str(DEFAULT_BASE_DIR))
@@ -64,7 +64,7 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
 
     failed_checks = []
 
-    # 1. Real Runner Implementation Audit (No NotImplementedError or placeholder)
+    # 1. Kiểm tra triển khai Real Runner (Không có NotImplementedError hoặc phần giữ chỗ)
     runner_p = base_dir / "scripts" / "run_stage_a2_five_seed_empirical.py"
     if not runner_p.exists():
         failed_checks.append("MISSING_CANONICAL_RUNNER_SCRIPT")
@@ -78,7 +78,7 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
             print("[CHECK 1] REAL_RUNNER_IMPLEMENTED = PASS")
             print("[CHECK 2] REAL_RUNNER_NOTIMPLEMENTED_COUNT = 0 (PASS)")
 
-    # 2. Authorization Gate Verification
+    # 2. Xác minh cổng ủy quyền
     from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
     try:
         run_single_seed_pipeline(
@@ -95,7 +95,7 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
     except Exception as e:
         failed_checks.append(f"AUTHORIZATION_GATE_UNEXPECTED_ERROR: {e}")
 
-    # 3. Real --all Mode Forbidden Check
+    # 3. Kiểm tra chế độ thực --tất cả bị cấm
     from scripts.run_stage_a2_five_seed_empirical import main as runner_main
     orig_argv = sys.argv
     sys.argv = ["run_stage_a2_five_seed_empirical.py", "--all", "--authorize-real-empirical-execution"]
@@ -112,7 +112,7 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
     finally:
         sys.argv = orig_argv
 
-    # 4. Clean Seed-42 Real Directory Check
+    # 4. Kiểm tra thư mục thực Seed-42 sạch
     real_run_dir = base_dir / "experiments" / "runs" / "stage-a2" / "HDFS" / "seed-42"
     real_art_dir = base_dir / ".artifacts" / "stage-a2" / "HDFS" / "seed-42"
     if (real_run_dir.exists() and any(real_run_dir.iterdir())) or (real_art_dir.exists() and any(real_art_dir.iterdir())):
@@ -120,7 +120,7 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
     else:
         print("[CHECK 5] SEED42_REAL_DIRECTORY_CLEAN = PASS")
 
-    # 5. Read Expected Execution Code Commit from Authorization Artifact or Plan
+    # 5. Đọc cam kết mã thực thi dự kiến từ tạo phẩm hoặc kế hoạch ủy quyền
     auth_p = preexec_dir / "SEED42-LAUNCH-AUTHORIZATION.json"
     plan_p = plans_dir / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN.json"
     expected_code_commit = None
@@ -141,7 +141,7 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
         except FrozenSourceMismatchError as fse:
             failed_checks.append(f"FROZEN_SOURCE_MISMATCH: {fse}")
 
-    # 6. Protocol Lock Verification
+    # 6. Xác minh khóa giao thức
     proto_lock_p = protocol_dir / "STAGE-A2-EXECUTION-LOCK-V1.4.json"
     if not proto_lock_p.exists():
         failed_checks.append("MISSING_STAGE_A2_EXECUTION_LOCK_V1.4_JSON")
@@ -152,7 +152,7 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
         else:
             print("[CHECK 8] V1_4_EFFECTIVE_PROTOCOL_LOCK = PASS")
 
-    # 7. Environment Lock Verification & Strict Field Policies
+    # 7. Xác minh khóa môi trường & Chính sách trường nghiêm ngặt
     env_lock_p = preexec_dir / "STAGE-A2-EXECUTION-ENVIRONMENT.json"
     if not env_lock_p.exists():
         failed_checks.append("MISSING_STAGE_A2_EXECUTION_ENVIRONMENT_JSON")
@@ -187,14 +187,14 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
                     print("[CHECK 10] RUNTIME_ENVIRONMENT_EXACT_MATCH = PASS")
                     print("[CHECK 11] CUDA_NO_FALLBACK = PASS")
 
-    # 8. PyTorch Determinism Configuration
+    # 8. Cấu hình xác định PyTorch
     torch.use_deterministic_algorithms(True)
     if not torch.are_deterministic_algorithms_enabled():
         failed_checks.append("PYTORCH_DETERMINISTIC_ALGORITHMS_NOT_ACTIVE")
     else:
         print("[CHECK 12] PYTORCH_DETERMINISTIC_ALGORITHMS = PASS")
 
-    # 9. Raw HDFS Tarball & Dataset Verification
+    # 9. Xác minh tập dữ liệu và Tarball HDFS thô
     raw_tar_p = base_dir / "datasets" / "raw" / "hdfs" / "HDFS_1.tar.gz"
     if not raw_tar_p.exists():
         failed_checks.append("MISSING_RAW_HDFS_TARBALL")
@@ -205,7 +205,7 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
         else:
             print(f"[CHECK 13] RAW_HDFS_SHA_VERIFIED = PASS ({actual_raw_sha[:16]}...)")
 
-    # 10. Recompute Execution Membership
+    # 10. Tính toán lại tư cách thành viên thực thi
     split_auth = HDFSSplitAuthority(base_dir=base_dir)
     split_info = split_auth.get_split()
     recomputed_train_sha = hashlib.sha256("\n".join(split_info["selected_train_block_ids"]).encode()).hexdigest()
@@ -223,7 +223,7 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
         print("[CHECK 17] TRAIN_WINDOW_COUNTS = PASS (2,292 windows -> 573 steps/epoch)")
         print("[CHECK 18] VAL_WINDOW_COUNTS = PASS (467 windows)")
 
-    # 11. Connected Runtime Test Firewall
+    # 11. Tường lửa kiểm tra thời gian chạy được kết nối
     guard = RuntimeTestFirewallGuard(split_authority=split_auth, base_dir=base_dir)
     try:
         guard.materialize_split("TEST")
@@ -234,7 +234,7 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
         else:
             failed_checks.append("FIREWALL_STATE_NOT_RECORDED")
 
-    # 12. Checkpoint & Resume Trajectory Substantive Independent Verification
+    # 12. checkpoint và tiếp tục xác minh độc lập nội dung về quỹ đạo
     model_test = TemporalGraphViewEncoder()
     trainer_test = StageA2Trainer(model=model_test, execution_mode="FIXTURE_TEST", total_steps_override=4)
     tmp_ckpt_p = base_dir / ".tmp" / "test_ckpt.pt"
@@ -260,11 +260,11 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
     }
     trainer_test.save_checkpoint(tmp_ckpt_p, metadata=test_meta)
     
-    # Load into fresh instance
+    # Tải vào phiên bản mới
     trainer_fresh = StageA2Trainer(model=TemporalGraphViewEncoder(), execution_mode="FIXTURE_TEST", total_steps_override=4)
     loaded_raw = trainer_fresh.load_checkpoint(tmp_ckpt_p)
     
-    # Check 20: END_OF_EPOCH_CHECKPOINT_STATE
+    # Kiểm tra 20: END_OF_EPOCH_CHECKPOINT_STATE
     required_ckpt_keys = {
         "model_state_dict", "optimizer_state_dict", "scheduler_state_dict",
         "global_step", "stream_iterator_state", "current_epoch",
@@ -278,14 +278,14 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
     else:
         print("[CHECK 20] END_OF_EPOCH_CHECKPOINT_STATE = PASS")
     
-    # Check 21: NEXT_EPOCH_RESUME
+    # Kiểm tra 21: NEXT_EPOCH_RESUME
     if trainer_fresh.next_epoch_to_run != 2 or trainer_fresh.stream_cursor != 2292 or trainer_fresh.global_step != 573:
         failed_checks.append(f"NEXT_EPOCH_RESUME_INCORRECT: next_epoch={trainer_fresh.next_epoch_to_run}, cursor={trainer_fresh.stream_cursor}")
     else:
         print("[CHECK 21] NEXT_EPOCH_RESUME = PASS")
         
-    # Check 22: NO_EPOCH_REPLAY
-    # Range of epochs executed starting from next_epoch_to_run (2) up to max_epochs (4) excludes completed epochs 0 and 1
+    # Kiểm tra 22: NO_EPOCH_REPLAY
+    # Phạm vi các epoch được thực hiện bắt đầu từ next_epoch_to_run (2) đến max_epochs (4) không bao gồm các epoch đã hoàn thành 0 và 1
     unexecuted_epochs = list(range(0, trainer_fresh.next_epoch_to_run))
     remaining_epochs = list(range(trainer_fresh.next_epoch_to_run, 4))
     if 0 in remaining_epochs or 1 in remaining_epochs or unexecuted_epochs != [0, 1]:
@@ -293,19 +293,19 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
     else:
         print("[CHECK 22] NO_EPOCH_REPLAY = PASS")
         
-    # Check 23: NO_EPOCH_SKIP
+    # Kiểm tra 23: NO_EPOCH_SKIP
     if trainer_fresh.next_epoch_to_run != loaded_raw.get("completed_epoch") + 1:
         failed_checks.append(f"EPOCH_SKIP_OR_GAP_DETECTED: completed={loaded_raw.get('completed_epoch')}, next={trainer_fresh.next_epoch_to_run}")
     else:
         print("[CHECK 23] NO_EPOCH_SKIP = PASS")
         
-    # Check 24: EARLY_STOP_STATE_RESUME
+    # Kiểm tra 24: EARLY_STOP_STATE_RESUME
     if trainer_fresh.patience_counter != 1 or trainer_fresh.best_val_loss != 1.2345 or trainer_fresh.best_epoch != 1:
         failed_checks.append(f"EARLY_STOP_STATE_MISMATCH: patience={trainer_fresh.patience_counter}, best_val={trainer_fresh.best_val_loss}")
     else:
         print("[CHECK 24] EARLY_STOP_STATE_RESUME = PASS")
         
-    # Check 25: BEST_CHECKPOINT_METADATA
+    # Kiểm tra 25: BEST_CHECKPOINT_METADATA
     ckpt_meta = loaded_raw.get("checkpoint_metadata", {})
     meta_valid = (
         ckpt_meta.get("seed") == 42 and
@@ -325,7 +325,7 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
     if tmp_ckpt_p.exists():
         tmp_ckpt_p.unlink()
 
-    # 13. Evidence Storage Revalidation with Strict Git Tracking Verification
+    # 13. Xác thực lại lưu trữ bằng chứng bằng xác minh theo dõi Git nghiêm ngặt
     manifest_p = impl_dir / "EVIDENCE-MANIFEST.json"
     if not manifest_p.exists():
         failed_checks.append("MISSING_EVIDENCE_MANIFEST_JSON")
@@ -336,12 +336,12 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
             art_p = base_dir / entry["path"]
             rel_path = entry["path"]
             if entry["storage_status"] == "COMMITTED_GIT":
-                # Check local existence & hash
+                # Kiểm tra sự tồn tại và hàm băm cục bộ
                 if not art_p.exists() or compute_sha256(art_p) != entry["sha256"]:
                     storage_reval_pass = False
                     failed_checks.append(f"COMMITTED_GIT_ARTIFACT_INVALID: {rel_path}")
                     continue
-                # Check Git tracking
+                # Kiểm tra theo dõi Git
                 try:
                     res_ls = subprocess.run(
                         ["git", "ls-files", "--error-unmatch", rel_path],
@@ -363,7 +363,7 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
         if storage_reval_pass:
             print("[CHECK 26] EVIDENCE_STORAGE_REVALIDATION = PASS")
 
-    # 14. Invariant Guard: Real Empirical Runs = 0
+    # 14. Bảo vệ bất biến: Số lần chạy thực nghiệm thực = 0
     runs_dir = base_dir / "experiments" / "runs" / "stage-a2"
     empirical_pt_files = list(runs_dir.glob("HDFS/seed-*/*.pt")) if runs_dir.exists() else []
     if len(empirical_pt_files) > 0:

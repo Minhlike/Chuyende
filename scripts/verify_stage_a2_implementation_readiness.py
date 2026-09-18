@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Stage A2 Implementation Readiness Gate Verifier (V1.3).
-Verifies complete execution scope disambiguation, membership hashing,
-target-leakage masking contracts, checkpoint mutable state tuple,
-and experimental source provenance contracts before implementation.
-Outputs STAGE_A2_IMPLEMENTATION_READY=PASS or STAGE_A2_IMPLEMENTATION_READY=FAIL.
+Trình xác minh cổng sẵn sàng triển khai giai đoạn A2 (V1.3).
+Xác minh việc phân định phạm vi thực thi hoàn chỉnh, băm thành viên,
+hợp đồng che giấu rò rỉ mục tiêu, bộ dữ liệu trạng thái có thể thay đổi checkpoint,
+và hợp đồng xuất xứ nguồn thực nghiệm trước khi triển khai.
+Đầu ra STAGE_A2_IMPLEMENTATION_READY=PASS hoặc STAGE_A2_IMPLEMENTATION_READY=FAIL.
 """
 
 import sys
@@ -29,7 +29,7 @@ def verify_stage_a2_implementation_readiness():
     print("   STAGE A2 IMPLEMENTATION READINESS GATE AUDIT (V1.3)           ")
     print("=================================================================")
 
-    # 1. Base Artifacts & Lock Check
+    # 1. Hiện vật cơ sở & Kiểm tra khóa
     lock_path = base_dir / "experiments" / "protocol" / "STAGE-A2-PREEXECUTION-LOCK.json"
     prereg_path = base_dir / "experiments" / "protocol" / "STAGE-A2-PREREGISTRATION.md"
     graph_contract_path = base_dir / "experiments" / "schemas" / "STAGE-A2-GRAPH-CONTRACT.json"
@@ -58,7 +58,7 @@ def verify_stage_a2_implementation_readiness():
         print("STAGE_A2_IMPLEMENTATION_READY=FAIL")
         sys.exit(1)
 
-    # 2. Cryptographic Checksums
+    # 2. Tổng kiểm tra mật mã
     lock_data = json.loads(lock_path.read_text(encoding="utf-8"))
     
     def check_hash(path: Path, expected_hash_key: str):
@@ -81,7 +81,7 @@ def verify_stage_a2_implementation_readiness():
 
     print("[CHECK 1] Cryptographic Hashes of all V1.3 Contracts & Manifests: VERIFIED (OK)")
 
-    # 3. Execution Membership Exact Check
+    # 3. Kiểm tra chính xác tư cách thành viên thực thi
     split_auth = HDFSSplitAuthority(base_dir=base_dir)
     split_info = split_auth.get_split()
     mem_data = json.loads(membership_path.read_text(encoding="utf-8"))
@@ -100,7 +100,7 @@ def verify_stage_a2_implementation_readiness():
     print(f"          Train Membership SHA-256: {mem_data.get('selected_train_block_ids_sha256')} (OK)")
     print(f"          Val Membership SHA-256:   {mem_data.get('selected_val_block_ids_sha256')} (OK)")
 
-    # 4. Scope Disambiguation: Population vs Execution Subset
+    # 4. Phân định phạm vi: Tập hợp con dân số và thực thi
     subset_data = json.loads(subset_audit_path.read_text(encoding="utf-8"))
     pop_data = json.loads(pop_audit_path.read_text(encoding="utf-8"))
 
@@ -118,7 +118,7 @@ def verify_stage_a2_implementation_readiness():
     print(f"          Execution Subset: Train ({train_sub_events} events), Val ({subset_data['validation']['materialized_graph_events']} events)")
     print(f"          Full Population:  Train ({train_pop_events} events), Val ({pop_data['validation']['materialized_graph_events']} events)")
 
-    # 5. Target Masking Semantics Check
+    # 5. Kiểm tra ngữ nghĩa mặt nạ mục tiêu
     contract_data = json.loads(graph_contract_path.read_text(encoding="utf-8"))
     masking_policies = contract_data.get("target_masking_visibility_policies", {})
     
@@ -132,7 +132,7 @@ def verify_stage_a2_implementation_readiness():
 
     print("[CHECK 4] Target-Leakage Masking Policies: VERIFIED (OK)")
 
-    # 6. Complete Checkpoint Mutable State Contract
+    # 6. Hoàn thành hợp đồng trạng thái có thể thay đổi checkpoint
     ckpt_contract = contract_data.get("checkpoint_state_contract", {})
     if ckpt_contract.get("checkpoint_boundary_policy") != "CHECKPOINT_ONLY_AT_OPTIMIZER_BOUNDARY":
         failures.append("CHECKPOINT_BOUNDARY_POLICY_NOT_AT_OPTIMIZER_BOUNDARY")
@@ -151,7 +151,7 @@ def verify_stage_a2_implementation_readiness():
 
     print(f"[CHECK 5] Checkpoint Boundary Policy & All 14 Mutable State Elements: VERIFIED (OK)")
 
-    # 7. Test Firewall Check
+    # 7. Kiểm tra tường lửa Kiểm tra
     builder = HDFSGraphBuilder(base_dir=base_dir, split_authority=split_auth)
     test_sealed_pass = False
     try:
@@ -166,7 +166,7 @@ def verify_stage_a2_implementation_readiness():
 
     print("[CHECK 6] Test Firewall: TestSetSealedError strictly enforced (OK)")
 
-    # 8. Zero Execution State Check
+    # 8. Kiểm tra trạng thái thực thi bằng 0
     exec_state = lock_data.get("execution_state", {})
     if exec_state.get("optimizer_steps", -1) != 0:
         failures.append("REAL_OPTIMIZER_STEPS_NON_ZERO")

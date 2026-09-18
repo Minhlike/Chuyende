@@ -1,5 +1,5 @@
 """
-Deterministic Dataset Profiler (Prompt 6 Section 23)
+Trình phân tích tập dữ liệu xác định (Nhắc 6 Phần 23)
 """
 
 import hashlib
@@ -12,8 +12,8 @@ from research_agent.schemas.verification import DataProfile
 
 class DataProfiler:
     """
-    Computes deterministic statistical summaries of log datasets.
-    Links dataset version, computing script, and SHA-256 profile hash.
+    Tính toán tóm tắt thống kê xác định của bộ dữ liệu nhật ký.
+    Liên kết phiên bản tập dữ liệu, tập lệnh điện toán và hàm băm hồ sơ SHA-256.
     """
 
     def compute_profile(
@@ -27,7 +27,7 @@ class DataProfiler:
         entity_col: Optional[str] = None,
         template_col: Optional[str] = None,
     ) -> DataProfile:
-        """Computes summary statistics and generates a hashed DataProfile."""
+        """Tính toán số liệu thống kê tóm tắt và tạo DataProfile được băm."""
         total_events = len(df)
         total_entities = df[entity_col].nunique() if entity_col and entity_col in df.columns else 0
         template_count = df[template_col].nunique() if template_col and template_col in df.columns else None

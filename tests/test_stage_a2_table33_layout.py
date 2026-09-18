@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
 """
-Automated Test Suite for Table 3.3 & Table 3.4 Layout & Formatting Verification.
-Verifies:
-1. Bookmark-based location of Table 3.3 (BK_TBL_3_003) and Table 3.4 (BK_TBL_3_004).
-2. Structural shape:
-   - Table 3.3: 7 rows x 10 columns (Metric table)
-   - Table 3.4: 7 rows x 3 columns (Provenance / Status table)
-3. Style: "Table Grid".
-4. Table alignment: CENTER (<w:jc w:val="center"/>).
-5. Table layout: FIXED (<w:tblLayout w:type="fixed"/>).
-6. Row properties: cantSplit enabled across all rows.
-7. Cell vertical alignment: CENTER (<w:vAlign w:val="center"/>) across all cells.
-8. Cell paragraph formatting:
-   - horizontal alignment according to semantic specifications
-   - space_before: 0 pt
-   - space_after: 0 pt
-   - first_line_indent: 0 cm
-9. Non-empty cell content (accounting for OMML elements).
-10. Exact parity between displayed scientific metrics/labels and CHAPTER3-SOURCE-METRICS.json.
+Bộ kiểm tra tự động để xác minh bố cục và định dạng Bảng 3.3 & Bảng 3.4.
+Xác minh:
+1. khe dựa trên dấu trang của Bảng 3.3 (BK_TBL_3_003) và Bảng 3.4 (BK_TBL_3_004).
+2. Hình dạng kết cấu:
+   - Bảng 3.3: 7 hàng x 10 cột (Bảng Metric)
+   - Bảng 3.4: 7 hàng x 3 cột (Bảng Xuất xứ/Tình trạng)
+3. Kiểu dáng: "Lưới bàn".
+4. Căn chỉnh bảng: CENTER (<w:jc w:val="center"/>).
+5. Bố cục bảng: FIXED (<w:tblLayout w:type="fixed"/>).
+6. Thuộc tính hàng: cantSplit được bật trên tất cả các hàng.
+7. Căn chỉnh theo chiều dọc ô: CENTER (<w:vAlign w:val="center"/>) trên tất cả các ô.
+8. Định dạng đoạn ô:
+   - căn chỉnh theo chiều ngang theo thông số kỹ thuật ngữ nghĩa
+   - space_before: 0 điểm
+   - space_after: 0 điểm
+   - first_line_indent: 0cm
+9. Nội dung ô không trống (chiếm phần tử OMML).
+10. Sự tương đương chính xác giữa số liệu/nhãn khoa học được hiển thị và CHAPTER3-SOURCE-METRICS.json.
 """
 
 import json
@@ -45,15 +45,15 @@ DISPLAY_STOP_REASON = {
 
 EXPECTED_T33_BODY_ALIGNMENTS = [
     WD_ALIGN_PARAGRAPH.CENTER,  # 0: Hạt giống
-    WD_ALIGN_PARAGRAPH.CENTER,  # 1: Epoch
+    WD_ALIGN_PARAGRAPH.CENTER,  # 1: epoch
     WD_ALIGN_PARAGRAPH.RIGHT,   # 2: Số bước
-    WD_ALIGN_PARAGRAPH.RIGHT,   # 3: Train loss
-    WD_ALIGN_PARAGRAPH.CENTER,  # 4: Best epoch
-    WD_ALIGN_PARAGRAPH.RIGHT,   # 5: Best val loss
+    WD_ALIGN_PARAGRAPH.RIGHT,   # 3: Mất tàu
+    WD_ALIGN_PARAGRAPH.CENTER,  # 4: Thời đại tốt nhất
+    WD_ALIGN_PARAGRAPH.RIGHT,   # 5: Mất giá trị tốt nhất
     WD_ALIGN_PARAGRAPH.RIGHT,   # 6: Val loss cuối
     WD_ALIGN_PARAGRAPH.RIGHT,   # 7: L_rel
     WD_ALIGN_PARAGRAPH.RIGHT,   # 8: L_node
-    WD_ALIGN_PARAGRAPH.RIGHT    # 9: L_time
+    WD_ALIGN_PARAGRAPH.RIGHT    # 9: L_thời gian
 ]
 
 EXPECTED_T34_BODY_ALIGNMENTS = [
@@ -205,7 +205,7 @@ def test_table33_source_metrics_parity(doc_and_metrics):
     st = source_metrics["seeds_table"]
     ag_dev = source_metrics["aggregates"]["protocol_deviation"]
 
-    # Check 5 seeds (rows 1..5)
+    # Kiểm tra 5 hạt (hàng 1..5)
     for i, s in enumerate(st):
         row = table.rows[i + 1]
         cells = [c.text.strip() for c in row.cells]
@@ -220,7 +220,7 @@ def test_table33_source_metrics_parity(doc_and_metrics):
         assert cells[8] == f"{s['l_node']:.4f}"
         assert cells[9] == f"{s['l_time']:.4f}"
 
-    # Check aggregate row (row 6)
+    # Kiểm tra hàng tổng hợp (hàng 6)
     agg_row = table.rows[6]
     agg_cells = [c.text.strip() for c in agg_row.cells]
     assert agg_cells[0] == "TB lệch thủ tục (3 seed)"
@@ -241,13 +241,13 @@ def test_table34_source_metrics_parity(doc_and_metrics):
     assert table is not None
     st = source_metrics["seeds_table"]
 
-    # Header check
+    # Kiểm tra tiêu đề
     hdr_cells = [c.text.strip() for c in table.rows[0].cells]
     assert hdr_cells[0] == "Hạt giống"
     assert "Trạng thái hồ sơ" in hdr_cells[1] or "Trạng thái" in hdr_cells[1]
     assert hdr_cells[2] == "Lý do kết thúc"
 
-    # Check 5 seeds
+    # Kiểm tra 5 hạt
     for i, s in enumerate(st):
         row = table.rows[i + 1]
         cells = [c.text.strip() for c in row.cells]
@@ -255,7 +255,7 @@ def test_table34_source_metrics_parity(doc_and_metrics):
         assert cells[1] == DISPLAY_CLASSIFICATION[s["classification"]]
         assert cells[2] == DISPLAY_STOP_REASON[s["stop_reason"]]
 
-    # Check aggregate row
+    # Kiểm tra hàng tổng hợp
     agg_row = table.rows[6]
     agg_cells = [c.text.strip() for c in agg_row.cells]
     assert agg_cells[0] == "TB lệch thủ tục (3 seed)"
@@ -264,7 +264,7 @@ def test_table34_source_metrics_parity(doc_and_metrics):
 
 
 def test_table33_and_34_display_mapping_is_presentation_only(doc_and_metrics):
-    """Verifies that machine-readable source JSON retains raw enum strings."""
+    """Xác minh rằng nguồn JSON có thể đọc được bằng máy vẫn giữ lại các chuỗi enum thô."""
     _, source_metrics = doc_and_metrics
     st = source_metrics["seeds_table"]
     raw_classifications = {s["classification"] for s in st}

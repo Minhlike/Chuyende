@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Nineplus Experiment Campaign - Multi-View Checkpoint Finalizer
-Safely loads best_checkpoint.pt from a Multi-View run directory,
-extracts representations on validation set (7,500 sessions),
-evaluates downstream linear probe (AP & ROC-AUC),
-and generates the authoritative RUN-MANIFEST.json.
+Chiến dịch thử nghiệm Nineplus - Trình hoàn thiện checkpoint nhiều chế độ xem
+Tải best_checkpoint.pt một cách an toàn từ thư mục chạy Multi-View,
+trích xuất các biểu diễn trên bộ xác thực (7.500 phiên),
+đánh giá bộ dò (probe) tuyến tính hạ nguồn (downstream) (AP & ROC-AUC),
+và tạo ra RUN-MANIFEST.json có thẩm quyền.
 """
 
 import os
@@ -38,7 +38,7 @@ def finalize_run(run_dir: Path, base_dir: Path, seed: int = 7, device: str = "cu
 
     best_ckpt_path = run_dir / "best_checkpoint.pt"
     if not best_ckpt_path.exists():
-        # Fallback to newest checkpoint
+        # Dự phòng về checkpoint mới nhất
         ckpts = sorted(run_dir.glob("checkpoint_epoch*.pt"), key=lambda p: p.stat().st_mtime)
         if not ckpts:
             raise FileNotFoundError(f"No checkpoint found in {run_dir}")
@@ -48,7 +48,7 @@ def finalize_run(run_dir: Path, base_dir: Path, seed: int = 7, device: str = "cu
     print(f"Loading checkpoint: {best_ckpt_path.name}...")
     best_ckpt = torch.load(best_ckpt_path, map_location=dev, weights_only=False)
 
-    # Data loading
+    # Đang tải dữ liệu
     data_dir = base_dir / "experiments" / "runs" / "data" / "hdfs"
     val_pkg = torch.load(data_dir / "hdfs_ssl_val.pt", weights_only=False)
     vocab_data = json.loads((data_dir / "hdfs_vocab.json").read_text(encoding="utf-8"))
@@ -99,19 +99,19 @@ def finalize_run(run_dir: Path, base_dir: Path, seed: int = 7, device: str = "cu
     latent_variance = float(torch.var(z_all, dim=0).mean().item())
     anti_collapse_pass = (latent_variance >= 0.01)
 
-    # Downstream probe
+    # bộ dò (probe) hạ lưu
     print("Evaluating downstream linear probe...")
     probe_labels = torch.load(base_dir / "experiments" / "runs" / "data" / "vault" / "hdfs_probe_labels_val.pt", weights_only=False)
     assert val_sids == probe_labels["session_ids"]
     probe_metrics = evaluate_downstream_linear_probe(z_all, probe_labels["labels"], seed=seed, device=device)
 
-    # Calculate train minutes from TRAIN-LOG.jsonl if available
+    # Tính số phút tàu từ TRAIN-LOG.jsonl nếu có
     train_log_p = run_dir / "TRAIN-LOG.jsonl"
     global_step = best_ckpt.get("global_step", 0)
     best_epoch = best_ckpt.get("epoch", 1)
     best_val_loss = best_ckpt.get("val_loss", 0.0)
 
-    # Count completed checkpoints
+    # Đếm các checkpoint đã hoàn thành
     ckpts_completed = len(list(run_dir.glob("checkpoint_epoch*.pt")))
 
     manifest = {

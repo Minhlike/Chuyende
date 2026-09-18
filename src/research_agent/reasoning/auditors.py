@@ -1,5 +1,5 @@
 """
-Methodological, Security & Epistemic Auditors (Prompt 5 Sections 28..35, 44, 72, 73)
+Kiểm toán viên về Phương pháp luận, An ninh & Nhận thức (Nhắc 5 Phần 28..35, 44, 72, 73)
 """
 
 import re
@@ -10,7 +10,7 @@ from research_agent.core.enums import ReasoningIssueType
 
 class LeakageAuditor:
     """
-    12-Point Data and Evaluation Leakage Auditor (Section 33).
+    Kiểm toán viên đánh giá và đánh giá rò rỉ dữ liệu 12 điểm (Phần 33).
     """
 
     LEAKAGE_CHECKS = [
@@ -47,7 +47,7 @@ class LeakageAuditor:
 
 class ShortcutAuditor:
     """
-    Dataset Shortcut & Trivial Heuristic Auditor (Section 34).
+    Phím tắt tập dữ liệu & Kiểm toán viên Heuristic tầm thường (Phần 34).
     """
 
     CANDIDATE_SHORTCUTS = [
@@ -83,17 +83,17 @@ class ShortcutAuditor:
 
 class ValidityAuditor:
     """
-    Four-Factor Experimental Validity Auditor (Section 35, Roadmap 3.4.3).
-    - Construct Validity
-    - Internal Validity
-    - External Validity
-    - Statistical Validity
+    Kiểm toán viên về tính hợp lệ thử nghiệm bốn yếu tố (Phần 35, Lộ trình 3.4.3).
+    - Xây dựng tính hợp lệ
+    - Hiệu lực nội bộ
+    - Hiệu lực bên ngoài
+    - Hiệu lực thống kê
     """
 
     def audit_validity(self, entity_id: str, setup_info: Dict[str, Any]) -> List[ReasoningIssue]:
         issues: List[ReasoningIssue] = []
 
-        # Construct Validity: Anomaly vs Cyberattack
+        # Tính hợp lệ của cấu trúc: Sự bất thường và tấn công mạng
         if setup_info.get("dataset_family") in ["HDFS", "BGL"] and setup_info.get("claims_attack_detection", False):
             issues.append(
                 ReasoningIssue(
@@ -106,7 +106,7 @@ class ValidityAuditor:
                 )
             )
 
-        # External Validity: Single dataset evaluation
+        # Hiệu lực bên ngoài: Đánh giá tập dữ liệu đơn lẻ
         if setup_info.get("datasets_evaluated_count", 1) == 1:
             issues.append(
                 ReasoningIssue(
@@ -124,14 +124,14 @@ class ValidityAuditor:
 
 class SecurityGuards:
     """
-    Security and Epistemic Risk Guards (Sections 28..31, 72, 73).
+    Các biện pháp bảo vệ rủi ro an ninh và dịch bệnh (Phần 28..31, 72, 73).
     """
 
     def audit_security_guards(self, entity_id: str, statement: str) -> List[ReasoningIssue]:
         issues: List[ReasoningIssue] = []
         s_lower = statement.lower()
 
-        # Unusual != Malicious (Section 30)
+        # Bất thường != Độc hại (Phần 30)
         if any(tool in s_lower for tool in ["powershell", "psexec", "nmap", "wmic", "remote administration"]):
             if "malicious" in s_lower and "context" not in s_lower and "privilege" not in s_lower:
                 issues.append(
@@ -145,7 +145,7 @@ class SecurityGuards:
                     )
                 )
 
-        # Representation != Detector Performance (Section 31)
+        # Biểu diễn != Hiệu suất của máy dò (Phần 31)
         if "detector" in s_lower and "representation" in s_lower and "proves" in s_lower:
             issues.append(
                 ReasoningIssue(
@@ -158,7 +158,7 @@ class SecurityGuards:
                 )
             )
 
-        # Pseudonymization != Privacy (Section 72)
+        # Bí danh != Quyền riêng tư (Phần 72)
         if "pseudonym" in s_lower or "masking" in s_lower:
             if "privacy-preserving" in s_lower or "guarantees privacy" in s_lower:
                 issues.append(
@@ -172,7 +172,7 @@ class SecurityGuards:
                     )
                 )
 
-        # Offline Benchmark != SOC Deployable (Section 73)
+        # Điểm chuẩn ngoại tuyến != SOC có thể triển khai (Phần 73)
         if "deployable" in s_lower or "production ready" in s_lower:
             if not any(w in s_lower for w in ["throughput", "eps", "latency", "backpressure"]):
                 issues.append(
@@ -191,7 +191,7 @@ class SecurityGuards:
 
 class BaselineFairnessAuditor:
     """
-    Baseline Comparison Fairness Auditor (Section 44).
+    Kiểm toán viên về tính công bằng so sánh cơ bản (Phần 44).
     """
 
     def audit_baseline_fairness(self, comparison_setup: Dict[str, Any]) -> List[ReasoningIssue]:

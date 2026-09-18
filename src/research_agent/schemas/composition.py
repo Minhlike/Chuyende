@@ -1,5 +1,5 @@
 """
-Pydantic Schemas for Academic Composition, Document Intermediate Representation (IR) & Thesis Auditing (Prompt 7)
+Lược đồ Pydantic cho bố cục học thuật, trình bày tài liệu trung gian (IR) và kiểm tra luận án (Nhắc 7)
 """
 
 from datetime import datetime, timezone
@@ -22,7 +22,7 @@ from research_agent.core.enums import (
 
 
 class CitationAnchor(BaseModel):
-    """Anchor linking a text span to a citation-ready source in Reference Map."""
+    """Neo liên kết một đoạn văn bản với nguồn sẵn sàng trích dẫn trong Bản đồ tham khảo."""
     anchor_id: str
     source_id: str
     citation_key: str
@@ -31,7 +31,7 @@ class CitationAnchor(BaseModel):
 
 
 class EquationAnchor(BaseModel):
-    """Anchor linking mathematical formula to Equation Registry."""
+    """Neo liên kết công thức toán học với Sổ đăng ký phương trình."""
     anchor_id: str
     equation_id: str
     latex_code: str
@@ -40,7 +40,7 @@ class EquationAnchor(BaseModel):
 
 
 class TableAnchor(BaseModel):
-    """Anchor linking tabular data to Table Specification in registry."""
+    """Neo liên kết dữ liệu dạng bảng với Đặc tả bảng trong sổ đăng ký."""
     anchor_id: str
     table_id: str
     caption: str
@@ -49,7 +49,7 @@ class TableAnchor(BaseModel):
 
 
 class FigureAnchor(BaseModel):
-    """Anchor linking figure illustration to Figure Specification in registry."""
+    """Neo liên kết hình minh họa với Đặc tả hình trong sổ đăng ký."""
     anchor_id: str
     figure_id: str
     caption: str
@@ -58,7 +58,7 @@ class FigureAnchor(BaseModel):
 
 
 class SentenceRecord(BaseModel):
-    """Granular proposition within Document IR with full anti-hallucination metadata."""
+    """Đề xuất chi tiết trong Tài liệu IR với đầy đủ siêu dữ liệu chống ảo giác."""
     sentence_id: str
     paragraph_id: str
     sentence_index: int = 0
@@ -76,7 +76,7 @@ class SentenceRecord(BaseModel):
 
 
 class ParagraphRecord(BaseModel):
-    """Document IR Paragraph containing structured sentences, anchors, and review status."""
+    """Tài liệu Đoạn IR chứa các câu có cấu trúc, các điểm neo và trạng thái đánh giá."""
     paragraph_id: str
     node_code: str
     section_code: str = ""
@@ -99,7 +99,7 @@ class ParagraphRecord(BaseModel):
 
 
 class SubsectionRecord(BaseModel):
-    """Document IR Subsection compiling paragraphs for a specific Roadmap Node."""
+    """Tiểu mục IR tài liệu biên soạn các đoạn văn cho một Nút Lộ trình cụ thể."""
     subsection_id: str
     node_code: str
     title: str
@@ -111,7 +111,7 @@ class SubsectionRecord(BaseModel):
 
 
 class SectionRecord(BaseModel):
-    """Document IR Section grouping subsections."""
+    """Tài liệu IR Phần nhóm các tiểu mục."""
     section_code: str
     title: str
     subsections: List[SubsectionRecord] = Field(default_factory=list)
@@ -119,14 +119,14 @@ class SectionRecord(BaseModel):
 
 
 class ChapterRecord(BaseModel):
-    """Document IR Chapter."""
+    """Tài liệu Chương IR."""
     chapter_code: str
     title: str
     sections: List[SectionRecord] = Field(default_factory=list)
 
 
 class ThesisDocument(BaseModel):
-    """Complete structured thesis intermediate representation."""
+    """Hoàn thành cấu trúc luận án trình bày trung gian."""
     document_id: str
     title: str
     author: str = "Nguyen Van A"
@@ -139,7 +139,7 @@ class ThesisDocument(BaseModel):
 
 
 class NodeWritingStatus(BaseModel):
-    """Readiness and compilation audit overview for a Roadmap Node."""
+    """Tổng quan về kiểm tra mức độ sẵn sàng và biên soạn cho Roadmap Node."""
     node_code: str
     title: str
     readiness: WritingReadiness = WritingReadiness.NOT_READY
@@ -157,7 +157,7 @@ class NodeWritingStatus(BaseModel):
 
 
 class AuditIssueRecord(BaseModel):
-    """Structured audit issue emitted by ThesisAuditor."""
+    """Vấn đề kiểm tra có cấu trúc do ThesisAuditor phát ra."""
     issue_id: str
     category: AuditCategory
     severity: AuditSeverity
@@ -172,7 +172,7 @@ class AuditIssueRecord(BaseModel):
 
 
 class ThesisAuditReport(BaseModel):
-    """Multi-category thesis audit report."""
+    """Báo cáo kiểm tra luận án đa chuyên mục."""
     build_id: str
     mode: CompositionMode = CompositionMode.PROVISIONAL
     total_sentences: int = 0
@@ -193,7 +193,7 @@ class ThesisAuditReport(BaseModel):
 
 
 class ThesisBuildManifest(BaseModel):
-    """Cryptographic and procedural manifest for thesis compilation."""
+    """bản kê (manifest) mật mã và thủ tục để biên soạn luận án."""
     build_id: str
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     mode: CompositionMode = CompositionMode.PROVISIONAL
@@ -211,7 +211,7 @@ class ThesisBuildManifest(BaseModel):
 
 
 class ResearchArtifactPackage(BaseModel):
-    """Manifest describing all bundled research assets."""
+    """bản kê (manifest) mô tả tất cả tài sản nghiên cứu đi kèm."""
     package_id: str
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     git_commit: str = ""

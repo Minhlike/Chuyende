@@ -1,5 +1,5 @@
 """
-Structured Research Inference Engine & Scope Controller (Prompt 5 Sections 24, 25, 26)
+Công cụ suy luận nghiên cứu có cấu trúc & Bộ điều khiển phạm vi (Nhắc 5 Phần 24, 25, 26)
 """
 
 import re
@@ -12,8 +12,8 @@ from research_agent.core.enums import ReasoningIssueType
 
 class InferenceEngine:
     """
-    Constructs structured research inferences and enforces scope containment.
-    Strictly validates: conclusion_scope ⊆ justified_scope (Prompt 5 Section 26).
+    Xây dựng các suy luận nghiên cứu có cấu trúc và thực thi ngăn chặn phạm vi.
+    Xác thực nghiêm ngặt: conclusion_scope ⊆ justified_scope (Nhắc 5 Phần 26).
     """
 
     def construct_inference(
@@ -31,17 +31,17 @@ class InferenceEngine:
         falsification_route: str = "Conduct out-of-distribution holdout evaluation.",
     ) -> Tuple[InferenceRecord, List[ReasoningIssue]]:
         """
-        Builds InferenceRecord and audits for scope expansion or causal inflation.
+        Xây dựng Bản ghi suy luận và kiểm tra để mở rộng phạm vi hoặc lạm phát nguyên nhân.
         """
         seq = abs(hash(candidate_conclusion + "".join(premises))) % 1000000
         inf_id = f"INF-{seq:06d}"
         scope = justified_scope or ClaimScope()
         issues: List[ReasoningIssue] = []
 
-        # Scope Containment Check (Section 26)
+        # Kiểm tra ngăn chặn phạm vi (Phần 26)
         c_lower = candidate_conclusion.lower()
         
-        # Check if narrow dataset premise attempts to generalize to 'all cyberattacks' or 'all logs'
+        # Kiểm tra xem tiền đề tập dữ liệu hẹp có cố gắng khái quát hóa thành 'tất cả các cuộc tấn công mạng' hay 'tất cả nhật ký' hay không
         is_narrow_dataset = any(
             (scope.dataset and ds in scope.dataset.lower()) or any(ds in p.lower() for ds in ["hdfs", "bgl", "thunderbird"])
             for p in premises
@@ -59,7 +59,7 @@ class InferenceEngine:
                     )
                 )
 
-        # Causal Inflation Check (Section 27)
+        # Kiểm tra lạm phát nhân quả (Mục 27)
         if any(w in c_lower for w in ["causes", "leads to", "proves", "eliminates"]):
             issues.append(
                 ReasoningIssue(
@@ -72,7 +72,7 @@ class InferenceEngine:
                 )
             )
 
-        # Missing Evidence Check
+        # Kiểm tra bằng chứng thiếu
         if not evidence_ids and strength in ["STRONG", "MODERATE"]:
             strength = "WEAK"
             issues.append(

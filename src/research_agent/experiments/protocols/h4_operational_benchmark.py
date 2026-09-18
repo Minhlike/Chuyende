@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 """
-H4 Operational Budget Benchmark Harness
-Implements Chapter 2 & Chapter 3 Frozen Operational Specification (Section 2.5 & Section 4):
-  - Conjunctive Service Level Objective (SLO) Contract:
-      1. p95 Latency <= 10.0 ms / sequence
-      2. Peak RAM <= 500.0 MB / host
-      3. Processing Throughput >= 10,000 telemetry events / sec
+Khai thác điểm chuẩn ngân sách hoạt động H4
+Triển khai Đặc tả hoạt động đông lạnh Chương 2 & Chương 3 (Phần 2.5 & Phần 4):
+  - Hợp đồng mục tiêu cấp độ dịch vụ kết hợp (SLO):
+      1. p95 Độ trễ <= 10,0 ms/chuỗi
+      2. Đỉnh RAM <= 500,0 MB/máy chủ
+      3. Thông lượng xử lý >= 10.000 sự kiện đo từ xa/giây
       (ALL 3 CONDITIONS MUST PASS FOR NOT_FALSIFIED)
-  - Real Hardware Resource Profiler:
-      * Continuous Peak RAM tracking during benchmark loop
-      * Peak VRAM tracking via CUDA memory counters
-      * Active entity state size bytes and peak state bytes measured during/after run
-      * Telemetry event count deduplicated from actual source observation units
-  - Distinct Execution Path Profiling:
-      * benchmark_end_to_end(...) (Full Tokenize + Sequence + Temporal Graph + Fusion)
-      * benchmark_incremental_fusion(...) (Isolated Fusion & Readout step)
+  - Trình phân tích tài nguyên phần cứng thực:
+      * Theo dõi RAM đỉnh liên tục trong vòng lặp điểm chuẩn
+      * Theo dõi đỉnh VRAM qua bộ đếm bộ nhớ CUDA
+      * Kích thước byte trạng thái thực thể hoạt động và byte trạng thái cao nhất được đo trong/sau khi chạy
+      * Số lượng sự kiện đo từ xa được loại bỏ khỏi các đơn vị quan sát nguồn thực tế
+  - Hồ sơ đường dẫn thực thi riêng biệt:
+      * benchmark_end_to_end(...) (token đầy đủ + Trình tự + Biểu đồ thời gian + Kết hợp)
+      * benchmark_incremental_fusion(...) (Bước kết hợp & đọc tách biệt)
 """
 
 import time
@@ -38,7 +38,7 @@ except ImportError:
 
 class MemoryPeakMonitor:
     """
-    Background daemon continuously sampling memory to capture true peak RAM.
+    Trình nền nền liên tục lấy mẫu bộ nhớ để ghi lại đỉnh RAM thực sự.
     """
     def __init__(self, interval_sec: float = 0.005):
         self.interval_sec = interval_sec
@@ -93,7 +93,7 @@ class MemoryPeakMonitor:
 
 class LiveOperationalBenchmarkHarness:
     """
-    Hardware measurement harness evaluating the full conjunctive SLO contract.
+    Khai thác đo lường phần cứng đánh giá hợp đồng SLO đầy đủ.
     """
     def __init__(self, device: str = "cpu"):
         if HAS_TORCH:
@@ -112,16 +112,16 @@ class LiveOperationalBenchmarkHarness:
         repeat_runs: int = 20
     ) -> Dict[str, Any]:
         """
-        Benchmarks full end-to-end extractor path.
-        Deduplicates source telemetry events: if sequence and graph views represent the same
-        underlying telemetry events, counts each source observation unit ONCE.
+        Điểm chuẩn đường dẫn trích xuất từ ​​đầu đến cuối đầy đủ.
+        Loại bỏ các sự kiện đo từ xa nguồn trùng lặp: nếu chế độ xem trình tự và biểu đồ thể hiện giống nhau
+        các sự kiện đo từ xa cơ bản, đếm từng đơn vị quan sát nguồn ONCE.
         """
         if source_event_ids is not None:
             telemetry_event_count = len(source_event_ids)
         else:
             num_seq = sum(len(lines) for lines in raw_log_lines_batch)
             num_graph = sum(len(events) for events in graph_events_batch)
-            # When corresponding multi-view representations reflect the same log session, count canonical events once
+            # Khi các biểu diễn nhiều chế độ xem tương ứng phản ánh cùng một phiên nhật ký, hãy đếm các sự kiện chuẩn một lần
             telemetry_event_count = max(num_seq, num_graph)
 
         def forward_e2e():
@@ -153,7 +153,7 @@ class LiveOperationalBenchmarkHarness:
             path_name="Full_End_to_End"
         )
 
-        # Measure state metrics during/after run from active memory bank
+        # Đo số liệu trạng thái trong/sau khi chạy từ ngân hàng bộ nhớ hoạt động
         if hasattr(extractor_model, "graph_extractor") and hasattr(extractor_model.graph_extractor, "memory_bank"):
             state_metrics = extractor_model.graph_extractor.memory_bank.get_state_metrics()
             res.update(state_metrics)

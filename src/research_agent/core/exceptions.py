@@ -1,46 +1,46 @@
 """
-System Exception Hierarchy for Research Engineering System
+Hệ thống phân cấp ngoại lệ cho hệ thống kỹ thuật nghiên cứu
 """
 
 
 class ResearchSystemError(Exception):
-    """Base exception for all research system operations."""
+    """Ngoại lệ cơ bản cho tất cả các hoạt động của hệ thống nghiên cứu."""
     pass
 
 
 class ConstitutionViolationError(ResearchSystemError):
-    """Raised when an action violates a fundamental Research Constitution invariant."""
+    """Xảy ra khi một hành động vi phạm bất biến Hiến pháp nghiên cứu cơ bản."""
     def __init__(self, rule_id: str, message: str):
         self.rule_id = rule_id
         super().__init__(f"[{rule_id}] Constitution Violation: {message}")
 
 
 class InvariantViolationError(ResearchSystemError):
-    """Raised when an internal data invariant or contract is breached."""
+    """Xảy ra khi hợp đồng hoặc bất biến dữ liệu nội bộ bị vi phạm."""
     pass
 
 
 class SecurityPathViolationError(ResearchSystemError):
-    """Raised when an I/O operation attempts to breach workspace boundaries."""
+    """Xảy ra khi một thao tác I/O cố gắng vi phạm ranh giới không gian làm việc."""
     pass
 
 
 class EntityNotFoundError(ResearchSystemError):
-    """Raised when a referenced entity ID does not exist."""
+    """Xảy ra khi ID thực thể được tham chiếu không tồn tại."""
     pass
 
 
 class DuplicateEntityError(ResearchSystemError):
-    """Raised when an entity with existing ID or unique constraint is added."""
+    """Xảy ra khi một thực thể có ID hiện tại hoặc ràng buộc duy nhất được thêm vào."""
     pass
 
 
 class EpistemicStateError(ResearchSystemError):
-    """Raised on invalid epistemic status transitions."""
+    """Tăng lên khi chuyển đổi trạng thái nhận thức không hợp lệ."""
     pass
 
 
 class ProvenanceError(ConstitutionViolationError):
-    """Raised when provenance requirement (RC-02, RC-08, RC-09, RC-10) is violated."""
+    """Tăng lên khi vi phạm yêu cầu về xuất xứ (RC-02, RC-08, RC-09, RC-10)."""
     def __init__(self, rule_id: str, message: str):
         super().__init__(rule_id=rule_id, message=message)

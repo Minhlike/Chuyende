@@ -1,5 +1,5 @@
 """
-Path Containment Guard and Untrusted Data Isolation (ADR-0005, RC-18)
+Bảo vệ ngăn chặn đường dẫn và cách ly dữ liệu không đáng tin cậy (ADR-0005, RC-18)
 """
 
 from pathlib import Path
@@ -9,18 +9,19 @@ from research_agent.config import WorkspaceConfig, get_default_config
 
 
 class PathGuard:
-    """Guards against arbitrary path traversal and out-of-workspace writes."""
+    """Bảo vệ chống lại việc truyền tải đường dẫn tùy ý và ghi ngoài không gian làm việc."""
 
     def __init__(self, config: WorkspaceConfig | None = None):
         self.config = config or get_default_config()
         self.root = self.config.workspace_root.resolve()
 
     def resolve_safe_path(self, target: str | Path, must_exist: bool = False) -> Path:
-        """Resolve a path safely, ensuring it is strictly inside the workspace root.
-        
-        Raises:
-            SecurityPathViolationError: If target path escapes workspace root.
-            FileNotFoundError: If must_exist is True and file/dir is missing.
+        """
+Giải quyết một đường dẫn một cách an toàn, đảm bảo nó nằm hoàn toàn bên trong thư mục gốc của không gian làm việc.
+
+        Tăng:
+            SecurityPathViolationError: Nếu đường dẫn đích thoát khỏi vùng làm việc gốc.
+            FileNotFoundError: Nếu must_exist là True và thiếu tệp/thư mục.
         """
         p = Path(target)
         if not p.is_absolute():
@@ -28,7 +29,7 @@ class PathGuard:
         else:
             resolved = p.resolve()
 
-        # Check containment
+        # Kiểm tra ngăn chặn
         try:
             resolved.relative_to(self.root)
         except ValueError:
@@ -42,12 +43,12 @@ class PathGuard:
         return resolved
 
     def assert_containment(self, target: str | Path) -> None:
-        """Assert that target path is within workspace root."""
+        """Xác nhận rằng đường dẫn đích nằm trong thư mục gốc của không gian làm việc."""
         self.resolve_safe_path(target, must_exist=False)
 
 
 class UntrustedDocumentPayload:
-    """Wraps raw text, PDF content, and log samples as non-executable data (ADR-0005)."""
+    """Bao bọc văn bản thô, nội dung PDF và mẫu nhật ký dưới dạng dữ liệu không thể thực thi (ADR-0005)."""
 
     def __init__(self, source_id: str, content: str, mime_type: str = "text/plain", metadata: Dict[str, Any] | None = None):
         self.source_id = source_id
@@ -57,7 +58,7 @@ class UntrustedDocumentPayload:
         self.is_sanitized = True
 
     def get_raw_text(self) -> str:
-        """Return the unexecuted plain data content."""
+        """Trả về nội dung dữ liệu đơn giản chưa được thực hiện."""
         return self.content
 
     def __repr__(self) -> str:

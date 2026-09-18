@@ -1,5 +1,5 @@
-# scripts/start_stage_a2_local_seed.ps1
-# Generic Canonical Stage A2 Launcher for Local Execution (Fresh Start without Checkpoint Resume)
+# tập lệnh/start_stage_a2_local_seed.ps1
+# Trình khởi chạy Canonical Stage A2 chung để thực thi cục bộ (Khởi động mới mà không cần tiếp tục checkpoint)
 
 param (
     [Parameter(Mandatory = $true)]

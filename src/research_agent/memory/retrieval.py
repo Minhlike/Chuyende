@@ -1,5 +1,5 @@
 """
-Hybrid Retrieval Engine & Context Bundle Assembler (Prompt 4, Sections 19..27, ADR-0008)
+Trình biên dịch gói ngữ cảnh và công cụ truy xuất kết hợp (Dấu nhắc 4, Phần 19..27, ADR-0008)
 """
 
 import re
@@ -21,13 +21,13 @@ from research_agent.memory.vector_index import DerivedVectorIndex
 
 class HybridRetrievalEngine:
     """
-    Multi-signal hybrid retrieval engine:
-    1. Exact ID Resolution (Top Priority)
-    2. Structured Filtering
-    3. Lexical FTS5 Full-Text Search
-    4. Semantic Cosine Vector Ranking
-    5. Graph Relation Traversal & Contradiction Extraction
-    6. Token Budgeting & Provenance Packaging
+    Cơ chế truy vấn lai đa tín hiệu:
+    1. Độ phân giải ID chính xác (Ưu tiên hàng đầu)
+    2. Lọc có cấu trúc
+    3. Tìm kiếm toàn văn bản FTS5 từ vựng
+    4. Xếp hạng vectơ cosine ngữ nghĩa
+    5. Trích xuất mâu thuẫn và truyền tải quan hệ đồ thị
+    6. Lập ngân sách token và đóng gói xuất xứ
     """
 
     def __init__(self, repository: ResearchRepository, vector_index: Optional[DerivedVectorIndex] = None):
@@ -35,7 +35,7 @@ class HybridRetrievalEngine:
         self.vector_index = vector_index or DerivedVectorIndex()
 
     def classify_intent(self, query: str) -> QueryIntentType:
-        """Classify research query into canonical intent (Section 21)."""
+        """Phân loại truy vấn nghiên cứu thành mục đích chính tắc (Phần 21)."""
         q_lower = query.lower()
         if re.search(r'\b(clm-\d+|claim)\b', q_lower):
             return QueryIntentType.CLAIM_LOOKUP
@@ -64,7 +64,7 @@ class HybridRetrievalEngine:
         return QueryIntentType.SEMANTIC_DISCOVERY
 
     def extract_stable_ids(self, query: str) -> List[str]:
-        """Extract exact stable entity IDs from query text (Section 22)."""
+        """Trích xuất ID thực thể ổn định chính xác từ văn bản truy vấn (Phần 22)."""
         patterns = [
             r'CLM-\d+',
             r'SRC-\d+',
@@ -82,7 +82,7 @@ class HybridRetrievalEngine:
             r'CTR-\d+',
             r'\bRQ[1-5]\b',
             r'\bH[1-5]\b',
-            r'\b\d+\.\d+(\.\d+)?\b',  # Roadmap node codes: 1.1, 1.1.1
+            r'\b\d+\.\d+(\.\d+)?\b',  # Mã nút lộ trình: 1.1, 1.1.1
         ]
         found = set()
         for p in patterns:
@@ -98,7 +98,7 @@ class HybridRetrievalEngine:
         token_budget: int = 4000,
     ) -> ContextBundle:
         """
-        Execute full hybrid retrieval pipeline and return a structured ContextBundle.
+        Thực hiện quy trình truy xuất kết hợp đầy đủ và trả về ContextBundle có cấu trúc.
         """
         intent = self.classify_intent(query)
         extracted_ids = self.extract_stable_ids(query)
@@ -150,67 +150,67 @@ class HybridRetrievalEngine:
                 canonical_entities.append(data)
 
         # -------------------------------------------------------------
-        # Step 1: Exact Stable ID Lookup (Top Priority)
+        # Bước 1: Tra cứu ID ổn định chính xác (Ưu tiên hàng đầu)
         # -------------------------------------------------------------
         for raw_id in extracted_ids:
-            # Check Claim
+            # Kiểm tra yêu cầu bồi thường
             claim = self.repo.get_claim(raw_id)
             if claim:
                 add_entity_to_bundle(claim.claim_id, "CLAIM", claim.model_dump(mode="json"), "EXACT_ID_MATCH")
-                # Expand Graph for Claim
+                # Mở rộng biểu đồ cho yêu cầu bồi thường
                 self._expand_claim_graph(claim.claim_id, add_entity_to_bundle, contradictory_evidence)
                 continue
 
-            # Check Source
+            # Kiểm tra nguồn
             src = self.repo.get_source(raw_id)
             if src:
                 add_entity_to_bundle(src.source_id, "SOURCE", src.model_dump(mode="json"), "EXACT_ID_MATCH")
                 continue
 
-            # Check Decision
+            # Kiểm tra quyết định
             dec = self.repo.get_decision(raw_id)
             if dec:
                 add_entity_to_bundle(dec.decision_id, "DECISION", dec.model_dump(mode="json"), "EXACT_ID_MATCH")
-                # Expand supersedes
+                # Mở rộng thay thế
                 if dec.supersedes_id:
                     old_dec = self.repo.get_decision(dec.supersedes_id)
                     if old_dec:
                         add_entity_to_bundle(old_dec.decision_id, "DECISION", old_dec.model_dump(mode="json"), "SUPERSEDES_CHAIN")
                 continue
 
-            # Check Open Question
+            # Kiểm tra câu hỏi mở
             oq = self.repo.get_open_question(raw_id)
             if oq:
                 add_entity_to_bundle(oq.question_id, "OPEN_QUESTION", oq.model_dump(mode="json"), "EXACT_ID_MATCH")
                 continue
 
-            # Check Lesson
+            # Kiểm tra bài học
             les = self.repo.get_lesson_learned(raw_id)
             if les:
                 add_entity_to_bundle(les.lesson_id, "LESSON", les.model_dump(mode="json"), "EXACT_ID_MATCH")
                 continue
 
-            # Check Episode
+            # Kiểm tra tập
             ep = self.repo.get_episode(raw_id)
             if ep:
                 add_entity_to_bundle(ep.episode_id, "EPISODE", ep.model_dump(mode="json"), "EXACT_ID_MATCH")
                 continue
 
-            # Check Roadmap Node Code
+            # Kiểm tra mã nút lộ trình
             node = self.repo.get_roadmap_node_by_code(raw_id)
             if node:
                 add_entity_to_bundle(node.node_id, "ROADMAP_NODE", node.model_dump(mode="json"), "EXACT_NODE_CODE")
                 self._expand_node_graph(node.code, add_entity_to_bundle, contradictory_evidence)
                 continue
 
-            # Check Research Question
+            # Kiểm tra câu hỏi nghiên cứu
             rq = self.repo.get_research_question(raw_id)
             if rq:
                 add_entity_to_bundle(rq.rq_id, "RESEARCH_QUESTION", rq.model_dump(mode="json"), "EXACT_RQ_CODE")
                 self._expand_rq_graph(rq.code, add_entity_to_bundle, open_questions)
                 continue
 
-            # Check Hypothesis
+            # Kiểm tra giả thuyết
             hyp = self.repo.get_hypothesis(raw_id)
             if hyp:
                 add_entity_to_bundle(hyp.hyp_id, "HYPOTHESIS", hyp.model_dump(mode="json"), "EXACT_HYP_CODE")
@@ -218,7 +218,7 @@ class HybridRetrievalEngine:
                 continue
 
         # -------------------------------------------------------------
-        # Step 2: Lexical Full-Text Search (FTS5)
+        # Bước 2: Tìm kiếm toàn văn từ vựng (FTS5)
         # -------------------------------------------------------------
         fts_hits = self.repo.search_fts(query, limit=10)
         for hit in fts_hits:
@@ -227,22 +227,22 @@ class HybridRetrievalEngine:
             self._load_and_add_entity(e_id, e_type, add_entity_to_bundle, "FTS_LEXICAL_MATCH")
 
         # -------------------------------------------------------------
-        # Step 3: Semantic Cosine Vector Search
+        # Bước 3: Tìm kiếm vectơ Cosine ngữ nghĩa
         # -------------------------------------------------------------
         vector_hits = self.vector_index.search(query, top_k=8)
         for e_id, e_type, score in vector_hits:
-            if score > 0.15:  # Relevance threshold
+            if score > 0.15:  # Ngưỡng liên quan
                 self._load_and_add_entity(e_id, e_type, add_entity_to_bundle, f"SEMANTIC_SIMILARITY_{score:.2f}")
 
         # -------------------------------------------------------------
-        # Step 4: Contradiction Sweep (Section 15)
+        # Bước 4: Quét mâu thuẫn (Phần 15)
         # -------------------------------------------------------------
-        # If contradiction lookup or contested intent, pull all active contradictions
+        # Nếu tra cứu mâu thuẫn hoặc tranh chấp ý định, hãy kéo tất cả mâu thuẫn đang hoạt động
         if intent == QueryIntentType.CONTRADICTION_LOOKUP:
             for ctr in self.repo.list_contradictions():
                 contradictory_evidence.append(ctr.model_dump(mode="json"))
 
-        # Calculate estimated tokens (approx 4 chars per token)
+        # Tính toán token ước tính (khoảng 4 ký tự cho mỗi token)
         total_text_len = (
             len(str(canonical_entities)) + len(str(verified_facts)) +
             len(str(supporting_evidence)) + len(str(contradictory_evidence)) +
@@ -299,11 +299,11 @@ class HybridRetrievalEngine:
                 add_fn(m.memory_id, "MEMORY", m.model_dump(mode="json"), reason)
 
     def _expand_claim_graph(self, claim_id: str, add_fn: Any, contradiction_bucket: List[Dict[str, Any]]):
-        """Expand Claim -> Evidence -> Source and fetch opposing claims."""
+        """Mở rộng Tuyên bố -> Bằng chứng -> Tìm nguồn và tìm nạp các tuyên bố đối lập."""
         claim = self.repo.get_claim(claim_id)
         if not claim:
             return
-        # Link Evidences
+        # Bằng chứng liên kết
         for evd_id in claim.evidence_ids:
             evd = self.repo.get_evidence(evd_id)
             if evd:
@@ -312,7 +312,7 @@ class HybridRetrievalEngine:
                 if src:
                     add_fn(src.source_id, "SOURCE", src.model_dump(mode="json"), f"SOURCE_FOR_{evd_id}")
 
-        # Check ClaimRelations for Contradictions
+        # Kiểm tra các mối quan hệ yêu cầu bồi thường cho những mâu thuẫn
         relations = self.repo.list_claim_relations(claim_id)
         for rel in relations:
             if rel.relation_type == ArgumentRelationType.CONTRADICTS:
@@ -327,7 +327,7 @@ class HybridRetrievalEngine:
                     })
 
     def _expand_node_graph(self, node_code: str, add_fn: Any, contradiction_bucket: List[Dict[str, Any]]):
-        """Expand Roadmap Node -> Ownership Mappings -> Sources -> Claims."""
+        """Mở rộng Nút lộ trình -> Ánh xạ quyền sở hữu -> Nguồn -> Xác nhận quyền sở hữu."""
         mappings = self.repo.list_ownership_mappings(node_code=node_code)
         for m in mappings:
             for s_id in m.primary_sources:
@@ -336,19 +336,19 @@ class HybridRetrievalEngine:
                     add_fn(src.source_id, "SOURCE", src.model_dump(mode="json"), f"NODE_{node_code}_SOURCE")
 
     def _expand_rq_graph(self, rq_code: str, add_fn: Any, oq_bucket: List[Dict[str, Any]]):
-        """Expand RQ -> Hypotheses -> Linked Open Questions."""
+        """Mở rộng RQ -> Giả thuyết -> Câu hỏi mở được liên kết."""
         hypotheses = self.repo.list_hypotheses()
         for h in hypotheses:
             if h.rq_id == rq_code or h.code.startswith(rq_code.replace("RQ", "H")):
                 add_fn(h.hyp_id, "HYPOTHESIS", h.model_dump(mode="json"), f"RQ_{rq_code}_HYPOTHESIS")
 
-        # Open questions linked to RQ
+        # Các câu hỏi mở được liên kết với RQ
         for oq in self.repo.list_open_questions():
             if oq.related_rq_id == rq_code:
                 oq_bucket.append(oq.model_dump(mode="json"))
 
     def _expand_hyp_graph(self, hyp_code: str, add_fn: Any):
-        """Expand Hypothesis -> Linked Episodes & Lessons."""
+        """Mở rộng Giả thuyết -> Các tập & Bài học được liên kết."""
         for ep in self.repo.list_episodes():
             if ep.related_hyp_id == hyp_code:
                 add_fn(ep.episode_id, "EPISODE", ep.model_dump(mode="json"), f"HYP_{hyp_code}_EPISODE")

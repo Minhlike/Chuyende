@@ -1,5 +1,5 @@
 """
-Deterministic Scientific Figure Builder & Plotting Engine (Prompt 6 Sections 57..69, RC-09)
+Công cụ vẽ và tạo hình khoa học xác định (Nhắc 6 phần 57..69, RC-09)
 """
 
 import hashlib
@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 import matplotlib
-matplotlib.use("Agg")  # Non-interactive backend for headless scientific verification
+matplotlib.use("Agg")  # Phần phụ trợ không tương tác để xác minh khoa học không cần đầu
 import matplotlib.pyplot as plt
 import pandas as pd
 from research_agent.core.enums import FigureType
@@ -17,8 +17,8 @@ from research_agent.schemas.verification import FigureSpecification
 
 class FigureBuilder:
     """
-    Renders publication-grade scientific figures and writes companion figure-data.csv.
-    Enforces that every plot point originates from raw structured arrays with recorded SHA-256.
+    Hiển thị các số liệu khoa học cấp xuất bản và viết số liệu đồng hành-data.csv.
+    Thực thi rằng mọi điểm cốt truyện đều bắt nguồn từ các mảng có cấu trúc thô có SHA-256 được ghi lại.
     """
 
     def __init__(self, output_dir: Path | str = "artifacts/figures"):
@@ -31,7 +31,7 @@ class FigureBuilder:
         figure_id: str,
         df_companion: pd.DataFrame,
     ) -> Tuple[str, str, str, str]:
-        """Saves SVG plot and companion CSV, returning relative paths and SHA-256 hashes."""
+        """Lưu biểu đồ SVG và đồng hành CSV, trả về các đường dẫn tương đối và hàm băm SHA-256."""
         img_filename = f"{figure_id.lower()}.png"
         csv_filename = f"{figure_id.lower()}-data.csv"
 
@@ -43,14 +43,14 @@ class FigureBuilder:
 
         df_companion.to_csv(csv_path, index=False)
 
-        # Hash image
+        # Hình ảnh băm
         hasher_img = hashlib.sha256()
         with open(img_path, "rb") as f:
             while chunk := f.read(65536):
                 hasher_img.update(chunk)
         img_sha = hasher_img.hexdigest()
 
-        # Hash companion CSV
+        # Băm đồng hành CSV
         hasher_csv = hashlib.sha256()
         with open(csv_path, "rb") as f:
             while chunk := f.read(65536):
@@ -68,8 +68,8 @@ class FigureBuilder:
         script_path: str = "src/research_agent/verification/figures/builder.py",
     ) -> FigureSpecification:
         """
-        Plots Precision-Recall curves for multiple methods.
-        curves_data: list of {name, recalls, precisions, pr_auc}
+        Vẽ các đường cong Precision-Recall cho nhiều phương pháp.
+        curves_data: danh sách {tên, thu hồi, chính xác, pr_auc}
         """
         fig, ax = plt.subplots(figsize=(6.5, 4.5))
         companion_rows = []
@@ -122,7 +122,7 @@ class FigureBuilder:
         y_label: str = "F1 Score (%)",
         script_path: str = "src/research_agent/verification/figures/builder.py",
     ) -> FigureSpecification:
-        """Plots bar chart with explicit 95% confidence intervals / error bars."""
+        """Vẽ biểu đồ thanh với khoảng tin cậy/thanh lỗi rõ ràng 95%."""
         fig, ax = plt.subplots(figsize=(7, 4.5))
 
         yerr_lower = [m - l for m, l in zip(means, ci_lows)]
@@ -168,7 +168,7 @@ class FigureBuilder:
         metric_name: str,
         script_path: str = "src/research_agent/verification/figures/builder.py",
     ) -> FigureSpecification:
-        """Plots ablation / hyperparameter sensitivity curve."""
+        """Vẽ sơ đồ đường cong độ nhạy cắt bỏ / siêu tham số."""
         fig, ax = plt.subplots(figsize=(6.5, 4.5))
         ax.plot(param_values, metric_values, marker="o", lw=2, color="#d62728")
 

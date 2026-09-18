@@ -1,5 +1,5 @@
 """
-Unit & Integration Tests for Academic Composition & Anti-Hallucination Compiler (Prompt 7)
+Bài kiểm tra Đơn vị & Tích hợp dành cho Trình biên dịch Thành phần Học thuật & Chống Ảo giác (Nhắc 7)
 """
 
 import pytest
@@ -49,11 +49,11 @@ def composer(repo):
 
 
 # ======================================================================
-# TEST-COMP-01..10: Anti-Hallucination & Writing Gate Test Cases
+# TEST-COMP-01..10: Các trường hợp kiểm tra cổng viết và chống ảo giác
 # ======================================================================
 
 def test_comp_01_external_claim_without_citation_flagged(compiler):
-    """External factual claim without citation must fail compilation with NEEDS_CITATION."""
+    """Tuyên bố thực tế bên ngoài không có trích dẫn phải không được biên dịch bằng NEEDS_CITATION."""
     sent = SentenceRecord(
         sentence_id="S-01",
         paragraph_id="P-01",
@@ -69,7 +69,7 @@ def test_comp_01_external_claim_without_citation_flagged(compiler):
 
 
 def test_comp_02_citation_with_nonexistent_source_rejected(compiler):
-    """Citation with nonexistent source ID must be REJECTED."""
+    """Trích dẫn không tồn tại ID nguồn phải là REJECTED."""
     sent = SentenceRecord(
         sentence_id="S-02",
         paragraph_id="P-01",
@@ -84,7 +84,7 @@ def test_comp_02_citation_with_nonexistent_source_rejected(compiler):
 
 
 def test_comp_03_ownership_theft_detected(compiler):
-    """Prior art claim labeled as OURS must be flagged as OWNERSHIP_CONFLICT."""
+    """Khiếu nại nghệ thuật trước được gắn nhãn là OURS phải được gắn cờ là OWNERSHIP_CONFLICT."""
     sent = SentenceRecord(
         sentence_id="S-03",
         paragraph_id="P-01",
@@ -98,7 +98,7 @@ def test_comp_03_ownership_theft_detected(compiler):
 
 
 def test_comp_04_unbacked_novelty_buzzwords_flagged(compiler):
-    """Unjustified buzzwords (first-ever, state-of-the-art) must be flagged OVERGENERALIZED."""
+    """Những từ thông dụng không hợp lý (lần đầu tiên, hiện đại nhất) phải được gắn cờ OVERGENERALIZED."""
     sent = SentenceRecord(
         sentence_id="S-04",
         paragraph_id="P-01",
@@ -112,7 +112,7 @@ def test_comp_04_unbacked_novelty_buzzwords_flagged(compiler):
 
 
 def test_comp_05_causal_inflation_flagged(compiler):
-    """Causal assertions on correlational evidence must be flagged OVERGENERALIZED."""
+    """Các khẳng định nhân quả về bằng chứng tương quan phải được gắn cờ OVERGENERALIZED."""
     from research_agent.schemas.verification import VerifiedClaimBundle
     from research_agent.core.enums import AllowedWordingStrength
 
@@ -134,7 +134,7 @@ def test_comp_05_causal_inflation_flagged(compiler):
 
 
 def test_comp_06_unverified_numerical_claim_flagged(compiler):
-    """Sentence referencing unverified numerical claim ID must be flagged NUMERICALLY_UNVERIFIED."""
+    """Câu tham chiếu ID khiếu nại bằng số chưa được xác minh phải được gắn cờ NUMERICALLY_UNVERIFIED."""
     sent = SentenceRecord(
         sentence_id="S-06",
         paragraph_id="P-01",
@@ -149,7 +149,7 @@ def test_comp_06_unverified_numerical_claim_flagged(compiler):
 
 
 def test_comp_07_verified_numerical_claim_passes(compiler, repo):
-    """Sentence referencing verified numerical claim must PASS compilation."""
+    """Câu tham chiếu khẳng định bằng số đã được xác minh phải được biên soạn PASS."""
     num_c = NumericalClaim(
         numerical_claim_id="NUM-TEST-01",
         statement="Inference latency is 1.2ms",
@@ -176,7 +176,7 @@ def test_comp_07_verified_numerical_claim_passes(compiler, repo):
 
 
 def test_comp_08_anomaly_attack_conflation_flagged(compiler):
-    """Conflating HDFS log anomalies with cyberattack detection must be flagged SCOPE_MISMATCH."""
+    """Việc kết hợp các điểm bất thường trong nhật ký HDFS với khả năng phát hiện cuộc tấn công mạng phải được gắn cờ SCOPE_MISMATCH."""
     sent = SentenceRecord(
         sentence_id="S-08",
         paragraph_id="P-01",
@@ -190,14 +190,14 @@ def test_comp_08_anomaly_attack_conflation_flagged(compiler):
 
 
 def test_comp_09_writing_gate_unknown_node_not_ready(gate):
-    """Unknown roadmap node code must evaluate to NOT_READY and is_blocked=True."""
+    """Mã nút lộ trình không xác định phải có giá trị là NOT_READY và is_blocked=True."""
     st = gate.evaluate_node_readiness("9.9.9")
     assert st.readiness == WritingReadiness.NOT_READY
     assert st.is_blocked is True
 
 
 def test_comp_10_academic_composer_builds_abstract_and_conclusion(composer):
-    """Composer must build valid abstract and conclusion strings."""
+    """Trình soạn thảo phải xây dựng các chuỗi kết luận và tóm tắt hợp lệ."""
     abstract = composer.build_abstract()
     assert len(abstract) > 50
     assert "nhật ký" in abstract.lower() or "biểu diễn" in abstract.lower()

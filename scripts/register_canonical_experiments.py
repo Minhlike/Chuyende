@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Canonical Experiment Registration Script for Chapter 3 Pre-Registration
-Registers EXP-01 through EXP-06 in research.db with PENDING status and zero hallucinated results.
+Tập lệnh đăng ký thử nghiệm Canonical cho đăng ký trước Chương 3
+Đăng ký EXP-01 đến EXP-06 trong research.db với trạng thái PENDING và không có kết quả ảo giác.
 """
 
 import sys
 from pathlib import Path
 
-# Add src to sys.path
+# Thêm src vào sys.path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from research_agent.storage.db import DatabaseManager

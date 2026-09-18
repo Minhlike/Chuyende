@@ -111,9 +111,9 @@ def test_predict_before_update_order():
     h_a_prior = model._get_h_prev("nodeA", torch.device("cpu")).clone()
     assert torch.all(h_a_prior == 0.0)
     
-    # Run forward on event
+    # Chạy tiếp theo sự kiện
     res = model.forward_event_window([ev1], is_training=True)
-    # Memory must be updated after event
+    # Bộ nhớ phải được cập nhật sau sự kiện
     h_a_after = model.node_memory["nodeA"]
     assert not torch.all(h_a_after == 0.0)
 
@@ -132,7 +132,7 @@ def test_type_embedding_receives_gradient():
     model.train()
     ev1 = create_synthetic_event("nodeA", "nodeB", 1, 0, 1, 100.0)
     ev2 = create_synthetic_event("nodeA", "nodeC", 1, 2, 2, 101.0)
-    # Using generator with high mask or test fixture
+    # Sử dụng máy phát điện có mặt nạ cao hoặc thiết bị kiểm tra
     res = model.forward_event_window([ev1, ev2], is_training=True)
     res["loss"].backward()
     assert model.type_embedding.weight.grad is not None
@@ -146,7 +146,7 @@ def test_validation_does_not_mask_all_targets():
     events = [create_synthetic_event(f"node_{i}", f"node_{i+1}", 1, 0, 1, 100.0 + i) for i in range(100)]
     gen = torch.Generator().manual_seed(42)
     res = model.forward_event_window(events, mask_generator=gen, is_training=False)
-    # In 100 events with p=0.15, masked count is ~15, strictly < 100
+    # Trong 100 sự kiện có p=0,15, số lượng mặt nạ là ~15, đúng < 100
     assert 5 <= res["masked_rel_count"] < 35, f"Expected ~15 masked relations, got {res['masked_rel_count']}"
     assert res["masked_rel_count"] < len(events), "Validation must NOT mask 100% of targets"
 
@@ -165,7 +165,7 @@ def test_validation_node_mask_contract_015():
     events = [create_synthetic_event(f"node_{i}", f"node_{i+1}", 1, 0, 1, 100.0 + i) for i in range(1000)]
     gen = torch.Generator().manual_seed(123)
     res = model.forward_event_window(events, mask_generator=gen, is_training=False)
-    # Each event has 2 nodes (src, dst) -> 2000 opportunities
+    # Mỗi sự kiện có 2 nút (src, dst) -> 2000 cơ hội
     empirical_rate = res["masked_node_count"] / 2000.0
     assert abs(empirical_rate - 0.15) < 0.04, f"Empirical node rate {empirical_rate} deviated from 0.15"
 
@@ -174,9 +174,9 @@ def test_validation_mask_fixed_across_epochs():
     trainer = StageA2Trainer(model=model, execution_device="cpu", execution_mode="FIXTURE_TEST")
     events = [create_synthetic_event(f"node_{i}", f"node_{i+1}", 1, 0, 1, 100.0 + i) for i in range(50)]
     
-    # Epoch 1 validation
+    # Xác thực epoch 1
     val1 = trainer.validate_one_epoch([events])
-    # Epoch 2 validation (after simulated training)
+    # Xác thực Epoch 2 (sau khi đào tạo mô phỏng)
     val2 = trainer.validate_one_epoch([events])
     
     assert val1["rel_target_count"] == val2["rel_target_count"]
@@ -189,14 +189,14 @@ def test_validation_mask_independent_from_training_rng():
     trainer = StageA2Trainer(model=model, seed=42, execution_device="cpu", execution_mode="FIXTURE_TEST")
     val_stream = [[create_synthetic_event(f"node_{i}", f"node_{i+1}", 1, 0, 1, 100.0 + i) for i in range(30)]]
     
-    # Initial validation
+    # Xác thực ban đầu
     v0 = trainer.validate_one_epoch(val_stream)
     
-    # Run some arbitrary training steps to advance training RNG
+    # Chạy một số bước đào tạo tùy ý để nâng cao đào tạo RNG
     train_stream = [[create_synthetic_event("A", "B", 1, 0, 1, 50.0)] for _ in range(20)]
     trainer.train_one_epoch(train_stream)
     
-    # Subsequent validation must produce exact identical target counts and metrics
+    # Xác thực tiếp theo phải tạo ra số lượng và số liệu mục tiêu giống hệt nhau
     v1 = trainer.validate_one_epoch(val_stream)
     assert v0["rel_target_count"] == v1["rel_target_count"]
     assert v0["node_target_count"] == v1["node_target_count"]
@@ -272,7 +272,7 @@ def test_final_train_window_not_dropped():
     optimizer_steps = num_windows // accum_steps
     assert optimizer_steps == 573
     assert num_windows % accum_steps == 0
-    # Final step contains 3 * 256 + 1 * 81 = 849 real events
+    # Bước cuối cùng chứa 3 * 256 + 1 * 81 = 849 sự kiện có thật
     final_step_events = 3 * 256 + 81
     assert final_step_events == 849
 
@@ -280,7 +280,7 @@ def test_train_one_epoch_final_accumulation_uses_actual_group_denominators():
     model = TemporalGraphViewEncoder()
     trainer = StageA2Trainer(model=model, gradient_accumulation_steps=4, execution_device="cpu", execution_mode="FIXTURE_TEST", total_steps_override=1)
     
-    # 4 windows: 256, 256, 256, 81 events
+    # 4 cửa sổ: 256, 256, 256, 81 sự kiện
     w1 = [create_synthetic_event("A", "B", 1, 0, 1, 100.0 + i) for i in range(256)]
     w2 = [create_synthetic_event("B", "C", 0, 2, 2, 200.0 + i) for i in range(256)]
     w3 = [create_synthetic_event("C", "D", 2, 3, 3, 300.0 + i) for i in range(256)]
@@ -292,7 +292,7 @@ def test_train_one_epoch_final_accumulation_uses_actual_group_denominators():
     assert stats["optimizer_steps"] == 1
 
 def test_group_objective_relation_denominator_exact():
-    """Proves that group relation loss uses sum(CE)/sum(N_rel) rather than mean of window means."""
+    """Chứng minh rằng sự mất mát quan hệ nhóm sử dụng tổng(CE)/tổng(N_rel) thay vì trung bình của phương tiện cửa sổ."""
     model = TemporalGraphViewEncoder()
     trainer = StageA2Trainer(model=model, gradient_accumulation_steps=2, execution_device="cpu", execution_mode="FIXTURE_TEST", total_steps_override=1)
     
@@ -305,7 +305,7 @@ def test_group_objective_relation_denominator_exact():
     assert abs(stats["loss_rel"] - expected_rel) < 1e-6
 
 def test_group_objective_node_denominator_exact():
-    """Proves that group node loss uses sum(sq_err)/(6 * sum(N_node))."""
+    """Chứng minh rằng việc mất nút nhóm sử dụng tổng(sq_err)/(6 * sum(N_node))."""
     model = TemporalGraphViewEncoder()
     trainer = StageA2Trainer(model=model, gradient_accumulation_steps=2, execution_device="cpu", execution_mode="FIXTURE_TEST", total_steps_override=1)
     
@@ -319,7 +319,7 @@ def test_group_objective_node_denominator_exact():
     assert abs(stats["loss_node"] - expected_node) < 1e-6
 
 def test_group_objective_time_denominator_exact():
-    """Proves that group time loss uses sum(time_loss)/sum(N_events)."""
+    """Chứng minh rằng việc mất thời gian của nhóm sử dụng tổng(time_loss)/tổng(N_events)."""
     model = TemporalGraphViewEncoder()
     trainer = StageA2Trainer(model=model, gradient_accumulation_steps=2, execution_device="cpu", execution_mode="FIXTURE_TEST", total_steps_override=1)
     
@@ -333,7 +333,7 @@ def test_group_objective_time_denominator_exact():
     assert abs(stats["loss_time"] - expected_time) < 1e-6
 
 def test_partial_group_gradient_matches_manual_reference():
-    """Verifies that process_group produces exact gradient matching manual group objective."""
+    """Xác minh rằng process_group tạo ra vật kính nhóm thủ công phù hợp với độ dốc chính xác."""
     torch.manual_seed(100)
     model1 = TemporalGraphViewEncoder()
     model2 = TemporalGraphViewEncoder()
@@ -354,13 +354,13 @@ def test_partial_group_gradient_matches_manual_reference():
 
 def test_execution_device_is_explicit_cuda():
     model = TemporalGraphViewEncoder()
-    # When initialized with cpu, device is cpu
+    # Khi khởi tạo với cpu, thiết bị là cpu
     trainer_cpu = StageA2Trainer(model=model, execution_device="cpu", execution_mode="FIXTURE_TEST")
     assert trainer_cpu.device.type == "cpu"
 
 def test_device_mismatch_fails_before_optimizer():
     model = TemporalGraphViewEncoder()
-    # If CUDA is requested on a system without CUDA, it must raise ExecutionDeviceMismatchError
+    # Nếu CUDA được yêu cầu trên hệ thống không có CUDA, nó phải đưa ra ExecutionDeviceMismatchError
     if not torch.cuda.is_available():
         with pytest.raises(ExecutionDeviceMismatchError):
             StageA2Trainer(model=model, execution_device="cuda", execution_mode="FIXTURE_TEST")
@@ -382,7 +382,7 @@ def test_cuda_deterministic_resume(tmp_path):
     events = [create_synthetic_event("nodeA", "nodeB", 1, 0, 1, 100.0 + i) for i in range(4)]
     w1, w2, w3, w4 = [events[0]], [events[1]], [events[2]], [events[3]]
     
-    # Run A: Continuous
+    # Chạy A: Liên tục
     model_a = TemporalGraphViewEncoder()
     trainer_a = StageA2Trainer(model=model_a, gradient_accumulation_steps=2, execution_device="cuda", execution_mode="FIXTURE_TEST", total_steps_override=2)
     trainer_a.process_window(w1)
@@ -392,14 +392,14 @@ def test_cuda_deterministic_resume(tmp_path):
     trainer_a.process_window(w3)
     trainer_a.process_window(w4)
     
-    # Run B: Resumed
+    # Chạy B: Đã tiếp tục
     model_b = TemporalGraphViewEncoder()
     trainer_b = StageA2Trainer(model=model_b, gradient_accumulation_steps=2, execution_device="cuda", execution_mode="FIXTURE_TEST", total_steps_override=2)
     trainer_b.load_checkpoint(ckpt_path)
     trainer_b.process_window(w3)
     trainer_b.process_window(w4)
     
-    # Compare
+    # So sánh
     max_diff = 0.0
     for k in model_a.state_dict():
         diff = (model_a.state_dict()[k] - model_b.state_dict()[k]).abs().max().item()
@@ -560,7 +560,7 @@ def test_exact_573_steps_per_full_epoch_fixture_equivalent():
     assert accum_groups == 573
 
 def test_fixture_mode_cannot_write_real_seed_directory(tmp_path):
-    """Proves namespace isolation: fixture runs cannot write into experiments/runs/stage-a2/HDFS/seed-42."""
+    """Chứng minh sự cô lập của không gian tên: các lần chạy cố định không thể ghi vào các thử nghiệm/chạy/giai đoạn-a2/HDFS/seed-42."""
     if not torch.cuda.is_available():
         pytest.skip("CUDA not available")
     from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
@@ -583,12 +583,12 @@ def test_fixture_mode_cannot_write_real_seed_directory(tmp_path):
     )
     assert res["status"] == "COMPLETED"
     
-    # Real directories must remain absent or clean
+    # Thư mục thực phải vắng mặt hoặc sạch sẽ
     assert not real_run_dir.exists() or not any(real_run_dir.iterdir()), "Real run directory was contaminated by fixture run!"
     assert not real_art_dir.exists() or not any(real_art_dir.iterdir()), "Real artifact directory was contaminated by fixture run!"
 
 def test_mock_fixture_end_to_end_runner_pipeline(tmp_path):
-    """Executes the complete runner pipeline end-to-end using synthetic fixture events on CUDA."""
+    """Thực thi toàn bộ đường dẫn chạy từ đầu đến cuối bằng cách sử dụng các sự kiện cố định tổng hợp trên CUDA."""
     if not torch.cuda.is_available():
         pytest.skip("CUDA not available")
     from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
@@ -617,7 +617,7 @@ def test_mock_fixture_end_to_end_runner_pipeline(tmp_path):
     assert (run_dir / "TEST-FIREWALL.json").exists()
 
 def test_failure_manifest_written(tmp_path):
-    """Verifies that an unhandled anomaly in the pipeline causes FAILURE.json to be written."""
+    """Xác minh rằng sự bất thường chưa được xử lý trong đường dẫn khiến FAILURE.json được ghi."""
     from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
     
     with pytest.raises(KeyError):
@@ -638,8 +638,8 @@ def test_failure_manifest_written(tmp_path):
 
 def test_resume_exact_three_epoch_trajectory(tmp_path):
     """
-    Verifies that a resumed 3-epoch run produces zero parameter divergence,
-    zero step skip/replay, and identical early stopping state compared to a continuous 3-epoch run.
+    Xác minh rằng lần chạy 3 epoch được tiếp tục tạo ra sự phân kỳ tham số bằng 0,
+    bỏ qua/phát lại bước 0 và trạng thái dừng sớm (early stopping) giống hệt so với chạy 3 epoch liên tục.
     """
     if not torch.cuda.is_available():
         pytest.skip("CUDA not available")
@@ -651,10 +651,10 @@ def test_resume_exact_three_epoch_trajectory(tmp_path):
     fix_train = [create_synthetic_event(f"A_{i}", f"B_{i}", 1, 0, 1, 100.0 + i) for i in range(1024)]
     fix_val = [create_synthetic_event(f"C_{i}", f"D_{i}", 2, 3, 2, 200.0 + i) for i in range(256)]
     
-    train_windows = chunk_into_windows(fix_train, 256) # 4 windows -> 1 step/epoch
-    val_windows = chunk_into_windows(fix_val, 256)     # 1 window
+    train_windows = chunk_into_windows(fix_train, 256) # 4 cửa sổ -> 1 bước/epoch
+    val_windows = chunk_into_windows(fix_val, 256)     # 1 cửa sổ
     
-    # Run 1: Continuous 3 Epochs
+    # Lần 1: 3 epoch liên tục
     model_cont = TemporalGraphViewEncoder()
     trainer_cont = StageA2Trainer(
         model=model_cont,
@@ -676,7 +676,7 @@ def test_resume_exact_three_epoch_trajectory(tmp_path):
         if ep == 0:
             trainer_cont.save_checkpoint(ckpt_epoch1)
             
-    # Run 2: Resumed from Epoch 1 (Runs Epochs 2 and 3)
+    # Lần chạy 2: Tiếp tục từ epoch 1 (Chạy epoch 2 và 3)
     model_res = TemporalGraphViewEncoder()
     trainer_res = StageA2Trainer(
         model=model_res,
@@ -696,7 +696,7 @@ def test_resume_exact_three_epoch_trajectory(tmp_path):
         trainer_res.completed_epoch = ep + 1
         trainer_res.next_epoch_to_run = ep + 1
         
-    # Compare continuous vs resumed parameters
+    # So sánh các tham số liên tục và tiếp tục
     max_diff = 0.0
     for k in model_cont.state_dict():
         diff = (model_cont.state_dict()[k] - model_res.state_dict()[k]).abs().max().item()
@@ -708,7 +708,7 @@ def test_resume_exact_three_epoch_trajectory(tmp_path):
 
 def test_frozen_execution_tree_matches_authorized_commit(monkeypatch):
     from scripts.run_stage_a2_five_seed_empirical import verify_frozen_execution_source
-    # Verify function executes without raising when diff is empty
+    # Xác minh chức năng thực thi mà không tăng khi khác biệt trống
     monkeypatch.setattr("subprocess.check_output", lambda *args, **kwargs: "")
     verify_frozen_execution_source(REPO_ROOT, "mock_commit_sha")
 
@@ -885,7 +885,7 @@ def test_resume_without_new_best_preserves_best_metrics(tmp_path):
     fix_train = [create_synthetic_event(f"A_{i}", f"B_{i}", 1, 0, 1, 100.0 + i) for i in range(512)]
     fix_val = [create_synthetic_event(f"C_{i}", f"D_{i}", 2, 3, 2, 200.0 + i) for i in range(256)]
     
-    # Run 1
+    # Chạy 1
     res1 = run_single_seed_pipeline(
         seed=42,
         base_dir=REPO_ROOT,
@@ -899,13 +899,13 @@ def test_resume_without_new_best_preserves_best_metrics(tmp_path):
     )
     last_ckpt = tmp_path / "artifacts" / "last_checkpoint.pt"
     
-    # Reset status to RUNNING to simulate interrupted state
+    # Đặt lại trạng thái về RUNNING để mô phỏng trạng thái bị gián đoạn
     run_state_p = tmp_path / "evidence" / "RUN-STATE.json"
     st = json.loads(run_state_p.read_text(encoding="utf-8"))
     st["status"] = "RUNNING"
     run_state_p.write_text(json.dumps(st, indent=2), encoding="utf-8")
     
-    # Resume run from checkpoint with more epochs
+    # Tiếp tục chạy từ checkpoint với nhiều epoch hơn
     res2 = run_single_seed_pipeline(
         seed=42,
         base_dir=REPO_ROOT,
@@ -1001,7 +1001,7 @@ def test_resume_preserves_cumulative_runtime(tmp_path):
 def test_dry_run_checks_real_directory_cleanliness(tmp_path, monkeypatch):
     from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
     monkeypatch.setattr("scripts.run_stage_a2_five_seed_empirical.verify_frozen_execution_source", lambda b, c: None)
-    # Real directories must be clean
+    # Thư mục thực sự phải sạch sẽ
     real_run_dir = Path("D:/Research/experiments/runs/stage-a2/HDFS/seed-42")
     assert not real_run_dir.exists() or not any(real_run_dir.iterdir())
     
@@ -1160,20 +1160,20 @@ def test_local_evidence_status_requires_local_file_and_hash():
 # ---------------------------------------------------------------------------
 
 def test_runner_has_no_required_windows_drive_path():
-    """Verify runner resolves repository root dynamically and has no mandatory Windows drive hardcodes."""
+    """Xác minh người chạy giải quyết gốc kho lưu trữ một cách linh hoạt và không có mã cứng ổ đĩa Windows bắt buộc."""
     from scripts.run_stage_a2_five_seed_empirical import DEFAULT_BASE_DIR
     assert isinstance(DEFAULT_BASE_DIR, Path)
     assert DEFAULT_BASE_DIR.exists()
     assert (DEFAULT_BASE_DIR / "src").exists()
 
 def test_runner_accepts_linux_base_dir():
-    """Verify runner preflight and pipeline accept Linux path representations."""
+    """Xác minh ánh sáng trước của Á hậu và đường dẫn chấp nhận các biểu diễn đường dẫn Linux."""
     linux_path = Path("/content/Research")
     assert not str(linux_path).startswith("C:")
     assert not str(linux_path).startswith("D:")
 
 def test_colab_durable_root_is_external_to_ephemeral_workspace():
-    """Verify V1.5 execution plan decouples ephemeral workspace from durable Google Drive storage."""
+    """Xác minh kế hoạch thực thi V1.5 tách không gian làm việc tạm thời khỏi bộ nhớ Google Drive lâu bền."""
     plan_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
     assert plan_p.exists()
     plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
@@ -1184,7 +1184,7 @@ def test_colab_durable_root_is_external_to_ephemeral_workspace():
     assert "/content/Research" == ephemeral
 
 def test_drive_checkpoint_copy_hash_matches(tmp_path):
-    """Verify sync_to_durable_storage mirrors files with strict SHA-256 validation."""
+    """Xác minh các tệp phản chiếu sync_to_durable_storage bằng xác thực SHA-256 nghiêm ngặt."""
     from scripts.run_stage_a2_five_seed_empirical import sync_to_durable_storage, compute_sha256
     
     src_dir = tmp_path / "local"
@@ -1209,7 +1209,7 @@ def test_drive_checkpoint_copy_hash_matches(tmp_path):
     assert (dst_dir / "RUN-STATE.json").exists()
 
 def test_incomplete_epoch_resumes_from_last_completed_boundary(tmp_path):
-    """Verify INCOMPLETE_EPOCH_REPLAY_FROM_LAST_DURABLE_BOUNDARY policy restores from completed boundary."""
+    """Xác minh khôi phục chính sách INCOMPLETE_EPOCH_REPLAY_FROM_LAST_DURABLE_BOUNDARY từ ranh giới đã hoàn thành."""
     from research_agent.experiments.models.temporal_graph_view_encoder import TemporalGraphViewEncoder
     from research_agent.experiments.training.stage_a2_trainer import StageA2Trainer
     
@@ -1245,7 +1245,7 @@ def test_incomplete_epoch_resumes_from_last_completed_boundary(tmp_path):
     assert new_trainer.global_step == 573
 
 def test_colab_runtime_environment_lock_generation(tmp_path):
-    """Verify bootstrap script generates valid candidate lock schema."""
+    """Xác minh tập lệnh bootstrap tạo lược đồ khóa ứng viên hợp lệ."""
     from scripts.bootstrap_stage_a2_colab import run_bootstrap
     
     out_env_p = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
@@ -1263,14 +1263,14 @@ def test_colab_runtime_environment_lock_generation(tmp_path):
     assert out_env_p.exists()
 
 def test_gpu_uuid_is_descriptive_not_strict():
-    """Verify GPU UUID is treated as descriptive and not strictly checked for equality."""
+    """Xác minh GPU UUID được coi là mang tính mô tả và không được kiểm tra sự bằng nhau một cách nghiêm ngặt."""
     plan_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
     plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
     assert "gpu_uuid" not in plan_data["environment_assignment"]["strict_environment_fields"]
     assert "gpu_uuid_descriptive" in plan_data["environment_assignment"]["descriptive_environment_fields"]
 
 def test_strict_environment_mismatch_blocks_resume(tmp_path):
-    """Verify preflight rejects mismatched strict PyTorch environment properties."""
+    """Xác minh preflight từ chối các thuộc tính môi trường PyTorch nghiêm ngặt không khớp."""
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight
     
     if not torch.cuda.is_available():
@@ -1299,13 +1299,13 @@ def test_strict_environment_mismatch_blocks_resume(tmp_path):
     assert "PyTorch version mismatch" in str(exc.value)
 
 def test_dynamic_gpu_discovery_no_hardcoded_gpu_model():
-    """Verify plan and bootstrap use DYNAMIC_DISCOVER_THEN_LOCK without prior GPU model pinning."""
+    """Xác minh kế hoạch và bootstrap sử dụng DYNAMIC_DISCOVER_THEN_LOCK mà không cần ghim mô hình GPU trước đó."""
     plan_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
     plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
     assert plan_data["environment_assignment"]["hardware_assignment_policy"] == "DYNAMIC_DISCOVER_THEN_LOCK"
 
 def test_v15_plan_preserves_all_scientific_hyperparameters():
-    """Verify V1.5 plan maintains 100% exact parity with V1.4 scientific hyperparameters."""
+    """Xác minh gói V1.5 duy trì sự tương đương chính xác 100% với siêu tham số khoa học V1.4."""
     v14_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN.json"
     v15_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
     
@@ -1319,7 +1319,7 @@ def test_v15_plan_preserves_all_scientific_hyperparameters():
     assert v14["partial_window_contract"] == v15["partial_window_contract"]
 
 def test_windows_interrupted_attempt_not_counted_as_result():
-    """Verify interrupted Windows attempt is forensically recorded as unresumable with 0 completed epochs."""
+    """Xác minh nỗ lực Windows bị gián đoạn được ghi lại một cách pháp y là không thể tiếp tục với 0 epoch đã hoàn thành."""
     interrupted_p = REPO_ROOT / "experiments" / "evidence" / "stage-a2" / "interrupted" / "SEED42-WINDOWS-INTERRUPTED-ATTEMPT.json"
     assert interrupted_p.exists()
     data = json.loads(interrupted_p.read_text(encoding="utf-8"))
@@ -1330,7 +1330,7 @@ def test_windows_interrupted_attempt_not_counted_as_result():
     assert data["status"] == "INTERRUPTED_BEFORE_FIRST_COMPLETED_EPOCH"
 
 def test_windows_interrupted_optimizer_steps_marked_unknown_if_unrecoverable():
-    """Verify unrecoverable optimizer step count from interrupted Windows attempt is marked UNKNOWN."""
+    """Xác minh số bước tối ưu hóa không thể phục hồi từ nỗ lực Windows bị gián đoạn được đánh dấu UNKNOWN."""
     interrupted_p = REPO_ROOT / "experiments" / "evidence" / "stage-a2" / "interrupted" / "SEED42-WINDOWS-INTERRUPTED-ATTEMPT.json"
     data = json.loads(interrupted_p.read_text(encoding="utf-8"))
     assert data["prior_attempt_optimizer_steps_executed"] == "UNKNOWN"
@@ -1342,7 +1342,7 @@ def test_windows_interrupted_optimizer_steps_marked_unknown_if_unrecoverable():
 # ---------------------------------------------------------------------------
 
 def test_requirements_txt_not_referenced_by_colab_notebook():
-    """Verify STAGE-A2-COLAB-V1.5.ipynb does not reference requirements.txt or || true."""
+    """Xác minh STAGE-A2-COLAB-V1.5.ipynb không tham chiếu requirements.txt hoặc || ĐÚNG VẬY."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     assert nb_p.exists()
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
@@ -1353,14 +1353,14 @@ def test_requirements_txt_not_referenced_by_colab_notebook():
     assert "install" in all_source and "-e" in all_source and "." in all_source
 
 def test_dependency_install_is_fail_closed():
-    """Verify notebook uses check=True for pip install -e . without silent fallback."""
+    """Xác minh sổ ghi chép sử dụng check=True cho pip install -e . không có dự phòng im lặng."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell4_src = "".join(nb_data["cells"][4]["source"])
     assert "check=True" in cell4_src
 
 def test_approved_commit_must_be_exact_sha():
-    """Verify notebook enforces exact 40-character hex commit check."""
+    """Xác minh sổ ghi chép thực thi kiểm tra cam kết hex 40 ký tự chính xác."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell3_src = "".join(nb_data["cells"][3]["source"])
@@ -1368,13 +1368,13 @@ def test_approved_commit_must_be_exact_sha():
     assert "re.match" in cell3_src
 
 def test_placeholder_commit_aborts():
-    """Verify placeholder commit causes validation to abort."""
+    """Xác minh cam kết giữ chỗ khiến quá trình xác thực bị hủy bỏ."""
     placeholder = "<supplied-after-independent-review>"
     is_invalid = (not placeholder or "<" in placeholder or len(placeholder.strip()) != 40)
     assert is_invalid is True
 
 def test_wrong_pytorch_version_aborts(monkeypatch):
-    """Verify bootstrap aborts if PyTorch version does not match 2.6.0 series."""
+    """Xác minh việc hủy bỏ quá trình khởi động nếu phiên bản PyTorch không khớp với dòng 2.6.0."""
     from scripts.bootstrap_stage_a2_colab import run_bootstrap
     if not torch.cuda.is_available():
         pytest.skip("CUDA GPU required for bootstrap test")
@@ -1384,7 +1384,7 @@ def test_wrong_pytorch_version_aborts(monkeypatch):
     assert "PyTorch version mismatch" in str(exc.value)
 
 def test_wrong_cuda_runtime_aborts(monkeypatch):
-    """Verify bootstrap aborts if CUDA runtime is not 12.4."""
+    """Xác minh việc hủy bỏ quá trình khởi động nếu thời gian chạy CUDA không phải là 12.4."""
     from scripts.bootstrap_stage_a2_colab import run_bootstrap
     if not torch.cuda.is_available():
         pytest.skip("CUDA GPU required for bootstrap test")
@@ -1394,7 +1394,7 @@ def test_wrong_cuda_runtime_aborts(monkeypatch):
     assert "CUDA runtime mismatch" in str(exc.value)
 
 def test_no_cuda_aborts(monkeypatch):
-    """Verify bootstrap aborts immediately if CUDA is not available."""
+    """Xác minh quá trình khởi động bị hủy ngay lập tức nếu CUDA không khả dụng."""
     from scripts.bootstrap_stage_a2_colab import run_bootstrap
     monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
     with pytest.raises(RuntimeError) as exc:
@@ -1402,7 +1402,7 @@ def test_no_cuda_aborts(monkeypatch):
     assert "CUDA is not available" in str(exc.value)
 
 def test_determinism_values_are_measured(tmp_path):
-    """Verify bootstrap machine-collects actual runtime determinism booleans."""
+    """Xác minh máy khởi động-thu thập các boolean xác định thời gian chạy thực tế."""
     from scripts.bootstrap_stage_a2_colab import run_bootstrap
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
@@ -1414,7 +1414,7 @@ def test_determinism_values_are_measured(tmp_path):
     assert env_cand["cublas_workspace_config"] == ":4096:8"
 
 def test_python_major_minor_mismatch_blocks_later_execution(tmp_path):
-    """Verify preflight rejects Python major.minor mismatch for V1.5 plan."""
+    """Xác minh preflight từ chối Python major.minor không khớp với gói V1.5."""
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
@@ -1446,7 +1446,7 @@ def test_python_major_minor_mismatch_blocks_later_execution(tmp_path):
     assert "Python major.minor mismatch" in str(exc.value)
 
 def test_gpu_model_mismatch_blocks_later_execution(tmp_path):
-    """Verify preflight rejects GPU device name mismatch for V1.5 plan."""
+    """Xác minh preflight từ chối tên thiết bị GPU không khớp với gói V1.5."""
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
@@ -1478,7 +1478,7 @@ def test_gpu_model_mismatch_blocks_later_execution(tmp_path):
     assert "GPU device name mismatch" in str(exc.value)
 
 def test_compute_capability_mismatch_blocks_later_execution(tmp_path):
-    """Verify preflight rejects compute capability mismatch for V1.5 plan."""
+    """Xác minh rằng preflight từ chối khả năng tính toán không khớp với gói V1.5."""
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
@@ -1511,7 +1511,7 @@ def test_compute_capability_mismatch_blocks_later_execution(tmp_path):
     assert "GPU compute capability mismatch" in str(exc.value)
 
 def test_cublas_mismatch_blocks_later_execution(tmp_path):
-    """Verify preflight rejects CUBLAS workspace config mismatch."""
+    """Xác minh preflight từ chối cấu hình không gian làm việc CUBLAS không khớp."""
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
@@ -1543,7 +1543,7 @@ def test_cublas_mismatch_blocks_later_execution(tmp_path):
     assert "cublas_workspace_config" in str(exc.value).lower()
 
 def test_determinism_mismatch_blocks_later_execution(tmp_path):
-    """Verify preflight rejects disabled deterministic algorithms."""
+    """Xác minh preflight từ chối các thuật toán xác định bị vô hiệu hóa."""
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
@@ -1575,7 +1575,7 @@ def test_determinism_mismatch_blocks_later_execution(tmp_path):
     assert "deterministic_algorithms_enabled" in str(exc.value)
 
 def test_gpu_uuid_mismatch_does_not_block(tmp_path):
-    """Verify different GPU UUID is treated as descriptive and does NOT block preflight."""
+    """Xác minh GPU UUID khác nhau được coi là mô tả và NOT chặn ánh sáng trước."""
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
@@ -1614,7 +1614,7 @@ def test_gpu_uuid_mismatch_does_not_block(tmp_path):
     assert res["gpu_name"] == torch.cuda.get_device_name(0)
 
 def test_streaming_hdfs_hash_works(tmp_path):
-    """Verify streaming SHA-256 produces exact match with standard hash."""
+    """Xác minh việc phát trực tuyến SHA-256 tạo ra kết quả khớp chính xác với hàm băm tiêu chuẩn."""
     import hashlib
     from scripts.bootstrap_stage_a2_colab import compute_sha256
     test_f = tmp_path / "dummy_archive.tar.gz"
@@ -1626,10 +1626,10 @@ def test_streaming_hdfs_hash_works(tmp_path):
     assert streaming_sha == expected_sha
 
 def test_qualification_artifacts_mirrored_to_drive_with_sha_equality(tmp_path):
-    """Verify mirror_qualification_artifacts mirrors files and checks SHA-256 equality."""
+    """Xác minh các tệp phản chiếu mirror_qualification_artifacts và kiểm tra sự bằng nhau của SHA-256."""
     from scripts.bootstrap_stage_a2_colab import mirror_qualification_artifacts, compute_sha256
     
-    # Create fake repo structure
+    # Tạo cấu trúc repo giả
     mock_repo = tmp_path / "repo"
     mock_drive = tmp_path / "drive"
     mock_repo.mkdir()
@@ -1657,7 +1657,7 @@ def test_qualification_artifacts_mirrored_to_drive_with_sha_equality(tmp_path):
     assert manifest_data["artifacts_count"] == 7
 
 def test_colab_notebook_has_no_real_training_cell():
-    """Verify STAGE-A2-COLAB-V1.5.ipynb does NOT contain real training authorization cell."""
+    """Xác minh STAGE-A2-COLAB-V1.5.ipynb xem NOT có chứa ô ủy quyền đào tạo thực hay không."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     all_code = " ".join([" ".join(c.get("source", [])) for c in nb_data.get("cells", []) if c.get("cell_type") == "code"])
@@ -1669,7 +1669,7 @@ def test_colab_notebook_has_no_real_training_cell():
 # ---------------------------------------------------------------------------
 
 def test_v15_plan_lists_all_strict_environment_fields():
-    """Verify STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json explicitly enumerates all 12 strict fields."""
+    """Xác minh STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json liệt kê rõ ràng tất cả 12 trường nghiêm ngặt."""
     from scripts.bootstrap_stage_a2_colab import V15_STRICT_ENVIRONMENT_FIELDS
     plan_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
     plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
@@ -1679,7 +1679,7 @@ def test_v15_plan_lists_all_strict_environment_fields():
     assert set(plan_strict) == set(V15_STRICT_ENVIRONMENT_FIELDS)
 
 def test_v15_plan_descriptive_fields_are_nonblocking():
-    """Verify STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json lists descriptive non-blocking fields."""
+    """Xác minh STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json liệt kê các trường không chặn mang tính mô tả."""
     from scripts.bootstrap_stage_a2_colab import V15_DESCRIPTIVE_ENVIRONMENT_FIELDS
     plan_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
     plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
@@ -1689,7 +1689,7 @@ def test_v15_plan_descriptive_fields_are_nonblocking():
     assert set(plan_desc) == set(V15_DESCRIPTIVE_ENVIRONMENT_FIELDS)
 
 def test_runtime_driver_match_passes(tmp_path):
-    """Verify preflight passes when live NVIDIA driver matches environment lock."""
+    """Xác minh lượt vượt qua trước khi trình điều khiển NVIDIA trực tiếp khớp với khóa môi trường."""
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
@@ -1729,7 +1729,7 @@ def test_runtime_driver_match_passes(tmp_path):
     assert res["gpu_name"] == torch.cuda.get_device_name(0)
 
 def test_runtime_driver_mismatch_fails(tmp_path):
-    """Verify preflight fails if live NVIDIA driver does not match lock."""
+    """Xác minh preflight không thành công nếu trình điều khiển NVIDIA trực tiếp không khớp với khóa."""
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
@@ -1765,7 +1765,7 @@ def test_runtime_driver_mismatch_fails(tmp_path):
     assert "NVIDIA driver version mismatch" in str(exc.value)
 
 def test_runtime_driver_unavailable_fails(tmp_path, monkeypatch):
-    """Verify preflight fails if nvidia-smi cannot query host driver."""
+    """Xác minh preflight không thành công nếu nvidia-smi không thể truy vấn trình điều khiển máy chủ."""
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
@@ -1806,7 +1806,7 @@ def test_runtime_driver_unavailable_fails(tmp_path, monkeypatch):
     assert "NVIDIA driver version unavailable" in str(exc.value)
 
 def test_live_cublas_mismatch_fails(tmp_path, monkeypatch):
-    """Verify preflight rejects live CUBLAS workspace config mismatch against lock."""
+    """Xác minh preflight từ chối cấu hình không gian làm việc CUBLAS trực tiếp không khớp với khóa."""
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
@@ -1844,7 +1844,7 @@ def test_live_cublas_mismatch_fails(tmp_path, monkeypatch):
     assert "Live CUBLAS_WORKSPACE_CONFIG" in str(exc.value)
 
 def test_live_deterministic_algorithms_false_fails(tmp_path, monkeypatch):
-    """Verify preflight rejects live process with disabled deterministic algorithms."""
+    """Xác minh preflight từ chối quy trình trực tiếp bằng thuật toán xác định bị vô hiệu hóa."""
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
@@ -1882,7 +1882,7 @@ def test_live_deterministic_algorithms_false_fails(tmp_path, monkeypatch):
     assert "Live torch.are_deterministic_algorithms_enabled()" in str(exc.value)
 
 def test_live_cudnn_deterministic_false_fails(tmp_path, monkeypatch):
-    """Verify preflight rejects live process with cudnn.deterministic = False."""
+    """Xác minh quá trình preflight từ chối trực tiếp với cudnn.deterministic = Sai."""
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
@@ -1922,7 +1922,7 @@ def test_live_cudnn_deterministic_false_fails(tmp_path, monkeypatch):
     assert "Live torch.backends.cudnn.deterministic" in str(exc.value)
 
 def test_live_cudnn_benchmark_true_fails(tmp_path, monkeypatch):
-    """Verify preflight rejects live process with cudnn.benchmark = True."""
+    """Xác minh quy trình trực tiếp từ chối preflight với cudnn.benchmark = True."""
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
@@ -1962,7 +1962,7 @@ def test_live_cudnn_benchmark_true_fails(tmp_path, monkeypatch):
     assert "Live torch.backends.cudnn.benchmark" in str(exc.value)
 
 def test_gpu_uuid_change_remains_nonblocking(tmp_path):
-    """Verify changing gpu_uuid_descriptive does NOT block preflight."""
+    """Xác minh việc thay đổi gpu_uuid_descriptive có chặn NOT trước ánh sáng không."""
     from scripts.run_stage_a2_five_seed_empirical import verify_preflight, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
@@ -2003,7 +2003,7 @@ def test_gpu_uuid_change_remains_nonblocking(tmp_path):
     assert res["gpu_name"] == torch.cuda.get_device_name(0)
 
 def test_bootstrap_runner_plan_strict_fields_identical():
-    """Verify bootstrap, runner, and execution plan define the exact same 12 strict fields."""
+    """Xác minh bootstrap, Á hậu và kế hoạch thực thi xác định chính xác 12 trường nghiêm ngặt giống nhau."""
     from scripts.bootstrap_stage_a2_colab import V15_STRICT_ENVIRONMENT_FIELDS, V15_DESCRIPTIVE_ENVIRONMENT_FIELDS
     plan_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
     plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
@@ -2021,7 +2021,7 @@ def test_bootstrap_runner_plan_strict_fields_identical():
 # ---------------------------------------------------------------------------
 
 def test_qualification_process_enforces_live_determinism(monkeypatch):
-    """Verify qualification fails closed if live determinism is not established."""
+    """Xác minh trình độ chuyên môn không thành công nếu tính xác định trực tiếp không được thiết lập."""
     from scripts.run_stage_a2_deterministic_qualification import enforce_live_determinism
     monkeypatch.setattr(torch, "are_deterministic_algorithms_enabled", lambda: False)
     with pytest.raises(RuntimeError) as exc:
@@ -2029,7 +2029,7 @@ def test_qualification_process_enforces_live_determinism(monkeypatch):
     assert "Determinism state failed verification" in str(exc.value)
 
 def test_qualification_validates_all_12_strict_fields(tmp_path):
-    """Verify verify_against_environment_lock validates all 12 strict fields fail-closed."""
+    """Xác minh verify_against_environment_lock xác thực tất cả 12 trường nghiêm ngặt được đóng không thành công."""
     from scripts.run_stage_a2_deterministic_qualification import verify_against_environment_lock, get_nvidia_driver_version
     from research_agent.experiments.training.stage_a2_trainer import ExecutionDeviceMismatchError
     if not torch.cuda.is_available():
@@ -2037,7 +2037,7 @@ def test_qualification_validates_all_12_strict_fields(tmp_path):
     live_driver = get_nvidia_driver_version()
     props = torch.cuda.get_device_properties(0)
     
-    # 1. Valid lock
+    # 1. Khóa hợp lệ
     env_valid = {
         "environment_id": "ENV-STAGE-A2-COLAB-V1.5",
         "python_major_minor": f"{sys.version_info.major}.{sys.version_info.minor}",
@@ -2057,7 +2057,7 @@ def test_qualification_validates_all_12_strict_fields(tmp_path):
     p_valid.write_text(json.dumps(env_valid), encoding="utf-8")
     verify_against_environment_lock(p_valid, "cuda")
     
-    # 2. Invalid field (e.g. driver)
+    # 2. Trường không hợp lệ (trình điều khiển e.g.)
     env_invalid = dict(env_valid)
     env_invalid["nvidia_driver_version"] = "111.11"
     p_invalid = tmp_path / "invalid.json"
@@ -2067,11 +2067,11 @@ def test_qualification_validates_all_12_strict_fields(tmp_path):
     assert "NVIDIA driver version mismatch" in str(exc.value)
 
 def test_qualification_uses_fresh_process_subprocess(tmp_path):
-    """Verify run_qualification executes child worker in an isolated Python interpreter."""
+    """Xác minh run_qualification thực thi chương trình con trong trình thông dịch Python bị cô lập."""
     from scripts.run_stage_a2_deterministic_qualification import run_qualification
     run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path)
     
-    # Verify generated manifest and resume evidence
+    # Xác minh bảng kê khai được tạo và tiếp tục bằng chứng
     manifest_p = tmp_path / "EVIDENCE-MANIFEST.json"
     resume_p = tmp_path / "DETERMINISTIC-RESUME-EVIDENCE.json"
     assert manifest_p.exists()
@@ -2083,7 +2083,7 @@ def test_qualification_uses_fresh_process_subprocess(tmp_path):
     assert resume_data["max_parameter_divergence"] < 1e-6
 
 def test_qualification_evidence_no_committed_git_labels(tmp_path):
-    """Verify evidence manifest does NOT contain false COMMITTED_GIT labels for uncommitted files."""
+    """Xác minh bảng kê khai bằng chứng cho thấy NOT có chứa nhãn COMMITTED_GIT sai cho các tệp không được cam kết hay không."""
     from scripts.run_stage_a2_deterministic_qualification import run_qualification
     run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path)
     
@@ -2095,7 +2095,7 @@ def test_qualification_evidence_no_committed_git_labels(tmp_path):
         assert "COLAB_" in art["storage_status"]
 
 def test_qualification_evidence_no_d_drive_labels(tmp_path):
-    """Verify evidence manifest does NOT contain Windows-specific D_DRIVE labels."""
+    """Xác minh bản kê (manifest) bằng chứng cho thấy NOT có chứa nhãn D_DRIVE dành riêng cho Windows hay không."""
     from scripts.run_stage_a2_deterministic_qualification import run_qualification
     run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path)
     
@@ -2106,7 +2106,7 @@ def test_qualification_evidence_no_d_drive_labels(tmp_path):
         assert "LOCAL_D_DRIVE" not in art["storage_status"]
 
 def test_qualification_checkpoint_hashed_and_mirrored(tmp_path):
-    """Verify qualification checkpoint hash is recorded and included in mirror list."""
+    """Xác minh hàm băm checkpoint trình độ chuyên môn được ghi lại và đưa vào danh sách nhân bản."""
     from scripts.run_stage_a2_deterministic_qualification import run_qualification
     from scripts.bootstrap_stage_a2_colab import mirror_qualification_artifacts
     
@@ -2121,7 +2121,7 @@ def test_qualification_checkpoint_hashed_and_mirrored(tmp_path):
     assert len(ckpt_entries[0]["sha256"]) == 64
 
 def test_qualification_evidence_class_is_non_empirical(tmp_path):
-    """Verify qualification artifacts are strictly labeled NON_EMPIRICAL_TEST_FIXTURE."""
+    """Xác minh các tạo phẩm đủ điều kiện được dán nhãn nghiêm ngặt là NON_EMPIRICAL_TEST_FIXTURE."""
     from scripts.run_stage_a2_deterministic_qualification import run_qualification
     run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path)
     
@@ -2135,7 +2135,7 @@ def test_qualification_evidence_class_is_non_empirical(tmp_path):
     assert exp_data["evidence_class"] == "NON_EMPIRICAL_TEST_FIXTURE"
 
 def test_qualification_test_firewall_stays_sealed(tmp_path):
-    """Verify test firewall state remains sealed during deterministic qualification."""
+    """Xác minh trạng thái tường lửa kiểm tra vẫn được niêm phong trong quá trình đánh giá xác định."""
     from scripts.run_stage_a2_deterministic_qualification import run_qualification
     run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path)
     
@@ -2152,7 +2152,7 @@ def test_qualification_test_firewall_stays_sealed(tmp_path):
 # ---------------------------------------------------------------------------
 
 def test_cuda_qualification_requires_environment_lock(tmp_path):
-    """Verify CUDA qualification fails closed if environment lock candidate is missing."""
+    """Xác minh rằng trình độ CUDA không đóng được nếu thiếu ứng viên khóa môi trường."""
     from scripts.run_stage_a2_deterministic_qualification import run_qualification
     from research_agent.experiments.training.stage_a2_trainer import ExecutionDeviceMismatchError
     if not torch.cuda.is_available():
@@ -2163,7 +2163,7 @@ def test_cuda_qualification_requires_environment_lock(tmp_path):
     assert "Environment lock candidate is mandatory for CUDA qualification" in str(exc.value)
 
 def test_cuda_worker_requires_environment_lock(tmp_path):
-    """Verify CUDA worker resume fails closed if environment lock is None or missing."""
+    """Xác minh sơ yếu lý lịch nhân viên CUDA không đóng được nếu khóa môi trường là Không có hoặc bị thiếu."""
     from scripts.run_stage_a2_deterministic_qualification import run_worker_resume
     from research_agent.experiments.training.stage_a2_trainer import ExecutionDeviceMismatchError
     if not torch.cuda.is_available():
@@ -2175,7 +2175,7 @@ def test_cuda_worker_requires_environment_lock(tmp_path):
     assert "Environment lock is mandatory for CUDA worker resume" in str(exc.value)
 
 def test_missing_default_colab_lock_fails(tmp_path):
-    """Verify CUDA qualification fails closed if default lock does not exist and none provided."""
+    """Xác minh rằng trình độ CUDA không đóng được nếu khóa mặc định không tồn tại và không được cung cấp."""
     from scripts.run_stage_a2_deterministic_qualification import run_qualification
     from research_agent.experiments.training.stage_a2_trainer import ExecutionDeviceMismatchError
     if not torch.cuda.is_available():
@@ -2185,14 +2185,14 @@ def test_missing_default_colab_lock_fails(tmp_path):
     assert "Environment lock candidate is mandatory for CUDA qualification" in str(exc.value)
 
 def test_cpu_fixture_can_run_without_colab_lock(tmp_path):
-    """Verify CPU synthetic fixture qualification can run without a Colab environment lock."""
+    """Xác minh rằng trình độ chuyên môn của thiết bị tổng hợp CPU có thể chạy mà không cần khóa môi trường Colab."""
     from scripts.run_stage_a2_deterministic_qualification import run_qualification
     run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path, env_lock_path=None)
     manifest_p = tmp_path / "EVIDENCE-MANIFEST.json"
     assert manifest_p.exists()
 
 def test_parent_and_child_bind_same_environment_lock_sha(tmp_path):
-    """Verify parent and child process bind to the exact same environment lock file & SHA."""
+    """Xác minh quy trình cha và con liên kết với cùng một tệp khóa môi trường & SHA."""
     from scripts.run_stage_a2_deterministic_qualification import run_qualification, get_nvidia_driver_version
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
@@ -2226,7 +2226,7 @@ def test_parent_and_child_bind_same_environment_lock_sha(tmp_path):
     assert resume_data["qualification_status"] == "PASS"
 
 def test_notebook_has_exactly_ten_executable_numbered_cells():
-    """Verify notebook contains exactly ten executable code cells numbered CELL 1 through CELL 10."""
+    """Xác minh sổ ghi chép chứa chính xác mười ô mã thực thi được đánh số CELL 1 đến CELL 10."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     code_cells = [c for c in nb_data["cells"] if c.get("cell_type") == "code"]
@@ -2237,7 +2237,7 @@ def test_notebook_has_exactly_ten_executable_numbered_cells():
         assert f"# CELL {i}" in first_line, f"Code cell {i} does not start with '# CELL {i}': {first_line}"
 
 def test_cell1_runtime_gpu_discovery_exists():
-    """Verify Cell 1 performs GPU and hosted environment discovery via subprocess."""
+    """Xác minh Ô 1 thực hiện GPU và khám phá môi trường được lưu trữ thông qua quy trình con."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell1_src = "".join(nb_data["cells"][1]["source"])
@@ -2246,7 +2246,7 @@ def test_cell1_runtime_gpu_discovery_exists():
     assert "subprocess" in cell1_src
 
 def test_notebook_has_no_hardcoded_gpu_type():
-    """Verify notebook metadata contains no hardcoded gpuType (e.g. T4, L4, A100)."""
+    """Xác minh siêu dữ liệu sổ tay không chứa gpuType được mã hóa cứng (e.g. T4, L4, A100)."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     metadata_str = json.dumps(nb_data.get("metadata", {}))
@@ -2256,7 +2256,7 @@ def test_notebook_has_no_hardcoded_gpu_type():
     assert "A100" not in metadata_str
 
 def test_cell3_commit_is_40_hex():
-    """Verify Cell 3 requires APPROVED_PREPARATION_COMMIT to match exact 40-character hex regex."""
+    """Xác minh Ô 3 yêu cầu APPROVED_PREPARATION_COMMIT phải khớp chính xác với biểu thức chính quy hex 40 ký tự."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell3_src = "".join(nb_data["cells"][3]["source"])
@@ -2264,7 +2264,7 @@ def test_cell3_commit_is_40_hex():
     assert "re.match(r'^[0-9a-fA-F]{40}$'" in cell3_src or 're.match(r"^[0-9a-fA-F]{40}$"' in cell3_src
 
 def test_cell3_uses_clean_fresh_clone():
-    """Verify Cell 3 cleans any existing /content/Research directory before fresh cloning."""
+    """Xác minh Ô 3 dọn sạch mọi thư mục /content/Research hiện có trước khi nhân bản mới."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell3_src = "".join(nb_data["cells"][3]["source"])
@@ -2272,7 +2272,7 @@ def test_cell3_uses_clean_fresh_clone():
     assert "'git', 'clone'" in cell3_src or '"git", "clone"' in cell3_src
 
 def test_cell9_nvidia_smi_failure_is_fatal():
-    """Verify Cell 9 executes nvidia-smi with fail-closed check semantics without error swallowing."""
+    """Xác minh Ô 9 thực thi nvidia-smi với ngữ nghĩa kiểm tra đóng lỗi mà không gặp lỗi nuốt."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell9_src = "".join(nb_data["cells"][9]["source"])
@@ -2280,7 +2280,7 @@ def test_cell9_nvidia_smi_failure_is_fatal():
     assert "nvidia-smi unavailable:" not in cell9_src
 
 def test_cell9_exports_current_qualification_run_identity():
-    """Verify Cell 9 exports QUALIFICATION_RUN_ID, QUALIFICATION_DIR, and FINAL_MANIFEST_PATH."""
+    """Xác minh Ô 9 xuất QUALIFICATION_RUN_ID, QUALIFICATION_DIR và FINAL_MANIFEST_PATH."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell9_src = "".join(nb_data["cells"][9]["source"])
@@ -2289,7 +2289,7 @@ def test_cell9_exports_current_qualification_run_identity():
     assert "FINAL_MANIFEST_PATH = " in cell9_src
 
 def test_cell10_does_not_glob_latest_qualification():
-    """Verify Cell 10 does not use glob or sorted[-1] to infer qualification directory."""
+    """Xác minh Ô 10 không sử dụng glob hoặc được sắp xếp [-1] để suy ra thư mục đủ tiêu chuẩn."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell10_src = "".join(nb_data["cells"][10]["source"])
@@ -2298,7 +2298,7 @@ def test_cell10_does_not_glob_latest_qualification():
     assert "[-1]" not in cell10_src
 
 def test_cell10_requires_cell9_runtime_binding():
-    """Verify Cell 10 fails closed if Cell 9 qualification variables are not in globals()."""
+    """Xác minh rằng Ô 10 không đóng được nếu các biến định tính của Ô 9 không có trong toàn cầu()."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell10_src = "".join(nb_data["cells"][10]["source"])
@@ -2306,7 +2306,7 @@ def test_cell10_requires_cell9_runtime_binding():
     assert "'QUALIFICATION_RUN_ID' not in globals()" in cell10_src or '"QUALIFICATION_RUN_ID" not in globals()' in cell10_src
 
 def test_cell10_replays_all_drive_artifact_hashes():
-    """Verify Cell 10 recomputes and checks SHA-256 for all mirrored Drive artifacts."""
+    """Xác minh Ô 10 tính toán lại và kiểm tra SHA-256 để tìm tất cả các tạo phẩm Drive được phản chiếu."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell10_src = "".join(nb_data["cells"][10]["source"])
@@ -2314,7 +2314,7 @@ def test_cell10_replays_all_drive_artifact_hashes():
     assert "actual_sha == art['sha256']" in cell10_src or 'actual_sha == art["sha256"]' in cell10_src
 
 def test_cell10_requires_exact_artifact_set():
-    """Verify Cell 10 checks the exact 10 required qualification artifacts by name."""
+    """Xác minh Ô 10 kiểm tra chính xác 10 hiện vật đủ tiêu chuẩn bắt buộc theo tên."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell10_src = "".join(nb_data["cells"][10]["source"])
@@ -2334,7 +2334,7 @@ def test_cell10_requires_exact_artifact_set():
         assert art in cell10_src, f"Expected artifact {art} missing from Cell 10 verification set!"
 
 def test_cell10_uses_canonical_authorization_path():
-    """Verify Cell 10 checks for unauthorized launch file in canonical preexecution directory."""
+    """Xác minh Ô 10 kiểm tra tệp khởi chạy trái phép trong thư mục thực thi chuẩn."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell10_src = "".join(nb_data["cells"][10]["source"])
@@ -2343,7 +2343,7 @@ def test_cell10_uses_canonical_authorization_path():
     assert "experiments/plans" not in cell10_src
 
 def test_cell10_authorization_path_matches_runner():
-    """Verify Cell 10 authorization check path exactly matches run_stage_a2_five_seed_empirical.py resolver."""
+    """Xác minh đường dẫn kiểm tra ủy quyền Ô 10 khớp chính xác với trình phân giải run_stage_a2_five_seed_empirical.py."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell10_src = "".join(nb_data["cells"][10]["source"])
@@ -2356,7 +2356,7 @@ def test_old_drive_qualification_cannot_satisfy_current_failed_run(tmp_path):
     old_qual_dir = durable_root / "qualification" / "QUAL-COLAB-20260101T000000Z"
     old_qual_dir.mkdir(parents=True, exist_ok=True)
     
-    # Old successful manifest
+    # bản kê (manifest) thành công cũ
     old_manifest = {
         "qualification_run_id": "QUAL-COLAB-20260101T000000Z",
         "storage": "GOOGLE_DRIVE_DURABLE",
@@ -2366,11 +2366,11 @@ def test_old_drive_qualification_cannot_satisfy_current_failed_run(tmp_path):
     }
     (old_qual_dir / "FINAL-QUALIFICATION-MANIFEST.json").write_text(json.dumps(old_manifest), encoding="utf-8")
     
-    # Current runtime variables point to a different run ID
+    # Các biến thời gian chạy hiện tại trỏ đến một ID chạy khác
     current_run_id = "QUAL-COLAB-20260828T120000Z"
     current_qual_dir = durable_root / "qualification" / current_run_id
     
-    # Simulated Cell 10 check: manifest must match current_run_id
+    # Kiểm tra ô mô phỏng 10: bảng kê khai phải khớp với current_run_id
     manifest_data = json.loads((old_qual_dir / "FINAL-QUALIFICATION-MANIFEST.json").read_text(encoding="utf-8"))
     with pytest.raises(AssertionError):
         assert manifest_data["qualification_run_id"] == current_run_id
@@ -2381,9 +2381,9 @@ def test_old_drive_qualification_cannot_satisfy_current_failed_run(tmp_path):
 # ---------------------------------------------------------------------------
 
 def test_deterministic_framework_state_established_before_verify_preflight(monkeypatch):
-    """Verify enforce_framework_determinism establishes all 3 deterministic flags and cublas config."""
+    """Xác minh enforce_framework_determinism thiết lập tất cả 3 cờ xác định và cấu hình cublas."""
     from scripts.run_stage_a2_five_seed_empirical import enforce_framework_determinism
-    # Reset states
+    # Đặt lại trạng thái
     torch.use_deterministic_algorithms(False)
     if torch.cuda.is_available():
         torch.backends.cudnn.deterministic = False
@@ -2398,7 +2398,7 @@ def test_deterministic_framework_state_established_before_verify_preflight(monke
         assert torch.backends.cudnn.benchmark is False
 
 def test_fresh_process_does_not_require_external_wrapper():
-    """Verify scripts/run_stage_a2_five_seed_empirical.py executes dry-run directly in fresh subprocess."""
+    """Xác minh tập lệnh/run_stage_a2_five_seed_empirical.py thực thi chạy khô trực tiếp trong quy trình con mới."""
     cmd = [
         sys.executable,
         str(REPO_ROOT / "scripts" / "run_stage_a2_five_seed_empirical.py"),
@@ -2411,9 +2411,9 @@ def test_fresh_process_does_not_require_external_wrapper():
     assert "Optimizer Steps Executed: 0" in proc.stdout or "OptimizerStepsExecuted=0" in proc.stdout
 
 def test_deterministic_algorithms_enabled_before_env_lock_comparison():
-    """Verify run_single_seed_pipeline enables deterministic algorithms before checking env lock."""
+    """Xác minh run_single_seed_pipeline bật thuật toán xác định trước khi kiểm tra khóa env."""
     from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
-    # Reset to False
+    # Đặt lại thành sai
     torch.use_deterministic_algorithms(False)
     plan_p = REPO_ROOT / "experiments" / "plans" / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json"
     res = run_single_seed_pipeline(seed=42, base_dir=REPO_ROOT, is_dry_run=True, plan_path=plan_p)
@@ -2421,7 +2421,7 @@ def test_deterministic_algorithms_enabled_before_env_lock_comparison():
     assert torch.are_deterministic_algorithms_enabled() is True
 
 def test_cudnn_deterministic_before_comparison():
-    """Verify cuDNN deterministic flag is set to True before preflight lock check."""
+    """Xác minh cờ xác định cuDNN được đặt thành True trước khi kiểm tra khóa trước."""
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
     from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
@@ -2432,7 +2432,7 @@ def test_cudnn_deterministic_before_comparison():
     assert torch.backends.cudnn.deterministic is True
 
 def test_cudnn_benchmark_false_before_comparison():
-    """Verify cuDNN benchmark flag is set to False before preflight lock check."""
+    """Xác minh cờ điểm chuẩn cuDNN được đặt thành Sai trước khi kiểm tra khóa trước khi bay."""
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")
     from scripts.run_stage_a2_five_seed_empirical import run_single_seed_pipeline
@@ -2443,7 +2443,7 @@ def test_cudnn_benchmark_false_before_comparison():
     assert torch.backends.cudnn.benchmark is False
 
 def test_scientific_rng_seeding_semantics_unchanged():
-    """Verify canonical RNG seed sequence produces deterministic and expected outputs."""
+    """Xác minh chuỗi hạt giống RNG chuẩn tạo ra kết quả đầu ra xác định và dự kiến."""
     import random
     import numpy as np
     seed = 42
@@ -2454,7 +2454,7 @@ def test_scientific_rng_seeding_semantics_unchanged():
     torch.manual_seed(seed)
     t1 = torch.rand(5)
     
-    # Re-seed
+    # Hạt giống lại
     random.seed(seed)
     r2 = random.random()
     np.random.seed(seed)
@@ -2467,7 +2467,7 @@ def test_scientific_rng_seeding_semantics_unchanged():
     assert torch.equal(t1, t2)
 
 def test_qualification_evidence_manifest_has_no_nonexistent_artifact(tmp_path):
-    """Verify qualification EVIDENCE-MANIFEST.json references only artifacts that actually exist."""
+    """Xác minh tiêu chuẩn EVIDENCE-MANIFEST.json chỉ tham chiếu các tạo phẩm thực sự tồn tại."""
     from scripts.run_stage_a2_deterministic_qualification import run_qualification
     run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path, env_lock_path=None)
     manifest_p = tmp_path / "EVIDENCE-MANIFEST.json"
@@ -2480,7 +2480,7 @@ def test_qualification_evidence_manifest_has_no_nonexistent_artifact(tmp_path):
         assert "pytest_implementation.log" not in art["path"]
 
 def test_protocol_sha256_is_actual_64_hex(tmp_path):
-    """Verify qualification EXPERIMENTAL-SOURCE.json contains real 64-hex protocol SHA-256."""
+    """Xác minh tiêu chuẩn EXPERIMENTAL-SOURCE.json chứa giao thức 64-hex thực SHA-256."""
     import re
     from scripts.run_stage_a2_deterministic_qualification import run_qualification
     run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path, env_lock_path=None)
@@ -2491,7 +2491,7 @@ def test_protocol_sha256_is_actual_64_hex(tmp_path):
     assert re.match(r"^[0-9a-fA-F]{64}$", proto_sha), f"Protocol SHA is not 64-hex: {proto_sha}"
 
 def test_every_notebook_code_cell_compiles():
-    """Verify every Python code cell in STAGE-A2-COLAB-V1.5.ipynb compiles cleanly via ast.parse."""
+    """Xác minh mọi ô mã Python trong STAGE-A2-COLAB-V1.5.ipynb biên dịch rõ ràng thông qua ast.parse."""
     import ast
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
@@ -2504,7 +2504,7 @@ def test_every_notebook_code_cell_compiles():
                 pytest.fail(f"Notebook code cell {idx} failed to compile: {e}")
 
 def test_cell8_invokes_empirical_runner_directly():
-    """Verify Cell 8 invokes scripts/run_stage_a2_five_seed_empirical.py directly without wrappers."""
+    """Xác minh Ô 8 gọi trực tiếp tập lệnh/run_stage_a2_five_seed_empirical.py mà không cần trình bao bọc."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell8_src = "".join(nb_data["cells"][8]["source"])
@@ -2512,7 +2512,7 @@ def test_cell8_invokes_empirical_runner_directly():
     assert "wrapper" not in cell8_src.lower() or "without external wrappers" in cell8_src.lower()
 
 def test_notebook_contains_zero_real_training_authorization_flags():
-    """Verify notebook contains zero occurrences of real training execution authorization flag."""
+    """Xác minh sổ ghi chép không chứa cờ ủy quyền thực thi đào tạo thực sự."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_text = nb_p.read_text(encoding="utf-8")
     assert "--authorize-real-empirical-execution" not in nb_text

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Weak Evidence Attribution Evaluator (RQ4)
-Evaluates Multiple Instance Learning (MIL) attention attribution without fabricated event labels.
-Rules:
-  - Strict prohibition of synthetic heuristic labels (e.g., assuming last 3 events are anomalies).
-  - On HDFS: Explicitly returns NOT_EVALUABLE_ON_HDFS when only coarse block-level labels exist.
-  - On Provenance / DARPA: Requires exact IOC / event-level match from verified ground truth map.
+Công cụ đánh giá thuộc tính bằng chứng yếu (RQ4)
+Đánh giá phân bổ sự chú ý của Học tập nhiều phiên bản (MIL) mà không có nhãn sự kiện giả tạo.
+Quy tắc:
+  - Nghiêm cấm các nhãn heuristic tổng hợp (e.g., giả sử 3 sự kiện cuối cùng là bất thường).
+  - Trên HDFS: Trả về rõ ràng NOT_EVALUABLE_ON_HDFS khi chỉ tồn tại các nhãn cấp khối thô.
+  - Trên Provenance / DARPA: Yêu cầu đối sánh chính xác IOC / cấp độ sự kiện từ bản đồ sự thật trên mặt đất đã được xác minh.
 """
 
 from typing import Dict, Any, List, Optional, Set
@@ -17,10 +17,10 @@ def evaluate_weak_attribution_accuracy(
     dataset_name: str
 ) -> Dict[str, Any]:
     """
-    Evaluates Top-1, Top-3, Top-5 root-cause event hit rate on verified ground truth only.
+    Chỉ đánh giá tỷ lệ trúng sự kiện nguyên nhân gốc Top-1, Top-3, Top-5 dựa trên sự thật thực tế đã được xác minh.
     """
     if dataset_name.upper() == "HDFS":
-        # HDFS provides only block-level anomaly labels, not per-log root cause labels
+        # HDFS chỉ cung cấp nhãn bất thường ở cấp độ khối, không cung cấp nhãn nguyên nhân gốc trên mỗi nhật ký
         has_real_event_annotations = any(gt is not None for gt in ground_truth_event_indices)
         if not has_real_event_annotations:
             return {
@@ -49,14 +49,14 @@ def evaluate_weak_attribution_accuracy(
         # Top-1
         if top_k_indices[0] in gt_indices:
             top1_hits += 1
-        # Top-3
+        # Top 3
         if any(idx in gt_indices for idx in top_k_indices[:min(3, seq_len)]):
             top3_hits += 1
-        # Top-5
+        # Top 5
         if any(idx in gt_indices for idx in top_k_indices[:min(5, seq_len)]):
             top5_hits += 1
 
-        # Attention Entropy
+        # Entropy chú ý
         p = np.clip(weights, 1e-12, 1.0)
         p = p / np.sum(p)
         entropy = -float(np.sum(p * np.log(p)))

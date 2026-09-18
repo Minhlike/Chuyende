@@ -1,5 +1,5 @@
 """
-Multi-Tier Scientific Reproduction Runner (Prompt 6 Sections 80..82)
+Á hậu tái tạo khoa học nhiều tầng (Nhắc 6 phần 80..82)
 """
 
 import hashlib
@@ -11,12 +11,12 @@ from research_agent.core.enums import ReproducibilityLevel
 
 class ReproductionRunner:
     """
-    Executes reproduction workflows across the 5 standard tiers:
-    - Level 1: Hash integrity of existing artifacts.
-    - Level 2: Metric recomputation from saved prediction files.
-    - Level 3: Statistical analysis & table/figure regeneration from metric logs.
-    - Level 4: Rerun model inference on test split with locked checkpoints.
-    - Level 5: End-to-end retraining and evaluation from raw logs.
+    Thực hiện quy trình sao chép trên 5 tầng tiêu chuẩn:
+    - Cấp độ 1: Tính toàn vẹn băm của các tạo phẩm hiện có.
+    - Cấp độ 2: Tính toán lại số liệu từ các tệp dự đoán đã lưu.
+    - Cấp độ 3: Phân tích thống kê & tái tạo bảng/hình từ nhật ký số liệu.
+    - Cấp độ 4: Chạy lại suy luận mô hình trên test Split với checkpoint bị khóa.
+    - Cấp độ 5: Đào tạo lại và đánh giá từ đầu đến cuối từ nhật ký thô.
     """
 
     def verify_level_1_integrity(
@@ -24,7 +24,7 @@ class ReproductionRunner:
         artifact_path: Path | str,
         expected_sha256: str,
     ) -> Tuple[bool, str]:
-        """Level 1: Cryptographic hash check on file artifact."""
+        """Cấp độ 1: Kiểm tra hàm băm mật mã trên tạo phẩm tệp."""
         p = Path(artifact_path)
         if not p.exists():
             return False, f"Artifact not found: {artifact_path}"
@@ -45,7 +45,7 @@ class ReproductionRunner:
         original_metrics: Dict[str, float],
         tolerance: float = 1e-5,
     ) -> Tuple[bool, Dict[str, Any]]:
-        """Level 2: Numerical equality check between original and recomputed metrics."""
+        """Cấp độ 2: Kiểm tra tính bằng số giữa số liệu gốc và số liệu được tính toán lại."""
         divergences = {}
         passed = True
 

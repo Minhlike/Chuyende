@@ -1,5 +1,5 @@
 """
-Research Memory Hierarchy & Typed Entities (Prompt 4, Tiers M0..M5, ADR-0004, ADR-0008)
+Nghiên cứu hệ thống phân cấp bộ nhớ & các thực thể được gõ (Dấu nhắc 4, Cấp M0..M5, ADR-0004, ADR-0008)
 """
 
 from datetime import datetime, timezone
@@ -20,7 +20,7 @@ from research_agent.core.enums import (
 
 
 class EpisodeRecord(BaseModel):
-    """M3 Episodic Research Memory: What happened in research execution (Section 5)."""
+    """Trí nhớ nghiên cứu theo từng giai đoạn M3: Điều gì đã xảy ra trong quá trình thực hiện nghiên cứu (Phần 5)."""
     episode_id: str = Field(description="Stable ID: EP-000001")
     session_id: Optional[str] = None
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
@@ -41,7 +41,7 @@ class EpisodeRecord(BaseModel):
 
 
 class OpenQuestion(BaseModel):
-    """Persistent Open Research Question (Section 32)."""
+    """Câu hỏi nghiên cứu mở liên tục (Phần 32)."""
     question_id: str = Field(description="Stable ID: OQ-000001")
     question: str = Field(min_length=5)
     related_rq_id: Optional[str] = None
@@ -59,7 +59,7 @@ class OpenQuestion(BaseModel):
 
 
 class LessonLearned(BaseModel):
-    """Actionable scientific insight derived from experiment failures / attempts (Section 33)."""
+    """Cái nhìn sâu sắc khoa học có thể hành động bắt nguồn từ những thất bại/ nỗ lực thử nghiệm (Phần 33)."""
     lesson_id: str = Field(description="Stable ID: LES-000001")
     title: str = Field(min_length=5)
     statement: str = Field(min_length=10)
@@ -72,7 +72,7 @@ class LessonLearned(BaseModel):
 
 
 class SessionRecord(BaseModel):
-    """Persistent Research Session Journal and Handoff State (Section 29, 30)."""
+    """Nhật ký phiên nghiên cứu liên tục và trạng thái bàn giao (Phần 29, 30)."""
     session_id: str = Field(description="Stable ID: SES-000001")
     start_time: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     end_time: Optional[datetime] = None
@@ -92,7 +92,7 @@ class SessionRecord(BaseModel):
 
 
 class SkillRecord(BaseModel):
-    """M5 Procedural Memory Skill / Protocol / Rubric (Section 35)."""
+    """M5 Kỹ năng ghi nhớ thủ tục / Giao thức / Phiếu tự đánh giá (Phần 35)."""
     skill_id: str = Field(description="Stable ID: SKL-000001")
     name: str = Field(min_length=3)
     version: str = "1.0"
@@ -112,7 +112,7 @@ class SkillRecord(BaseModel):
 
 
 class StatusTransitionRecord(BaseModel):
-    """Historical Status Transition Event preserving non-rewritable timeline (Section 8, Section 9)."""
+    """Sự kiện chuyển đổi trạng thái lịch sử duy trì dòng thời gian không thể ghi lại (Phần 8, Phần 9)."""
     transition_id: str = Field(description="Stable ID: STR-000001")
     entity_type: str = Field(description="CLAIM, HYPOTHESIS, DECISION, QUESTION, CONTRIBUTION")
     entity_id: str
@@ -126,7 +126,7 @@ class StatusTransitionRecord(BaseModel):
 
 
 class MemoryRecord(BaseModel):
-    """Canonical Persistent Research Memory Record (Tiers M0..M5)."""
+    """Bản ghi bộ nhớ nghiên cứu liên tục của Canonical (Tầng M0..M5)."""
     memory_id: str = Field(description="Stable ID: MEM-000001")
     tier: MemoryTier = Field(description="M0_WORKING, M1_SOURCE, M2_SEMANTIC, M3_EPISODIC, M4_ARGUMENT, M5_PROCEDURAL")
     record_type: MemoryRecordType = Field(default=MemoryRecordType.OBSERVATION)
@@ -158,7 +158,7 @@ class MemoryRecord(BaseModel):
 
 
 class ContextBundle(BaseModel):
-    """Structured Context Bundle packaging hybrid retrieval results with provenance (Section 26)."""
+    """Kết quả truy xuất kết hợp gói ngữ cảnh có cấu trúc có xuất xứ (Phần 26)."""
     query: str
     resolved_intent: QueryIntentType
     canonical_entities: List[Dict[str, Any]] = Field(default_factory=list)
@@ -178,7 +178,7 @@ class ContextBundle(BaseModel):
 
 
 class MemoryHealthReport(BaseModel):
-    """Audit metric summary for research memory health (Section 54)."""
+    """Tóm tắt số liệu kiểm tra về tình trạng bộ nhớ nghiên cứu (Phần 54)."""
     total_memory_records: int
     total_episodes: int
     total_decisions: int

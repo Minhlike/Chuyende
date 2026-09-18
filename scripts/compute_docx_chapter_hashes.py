@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-Chapter Hash Provenance and Diff Ledger Auditor
+Chương Hash Chứng minh nguồn gốc và Kiểm toán viên sổ cái khác biệt
 
-Audits Chapter 1 and Chapter 2 text transformation against the immutable
-historical baseline from authority commit a99d5dc0e1499f8454293a2931a4962ad214d4af.
-Guarantees non-circular hash validation:
-- baseline is immutable and external from git object store;
-- modifications are strictly governed by APPROVED-SCIENTIFIC-EDIT-LEDGER.json;
-- verifies 100% of diff hunks match approved ledger entries;
-- outputs CHAPTER-DIFF-LEDGER-VERIFICATION.json.
+Kiểm tra chuyển đổi văn bản Chương 1 và Chương 2 chống lại sự bất biến
+baseline lịch sử từ thẩm quyền cam kết a99d5dc0e1499f8454293a2931a4962ad214d4af.
+Đảm bảo xác thực hàm băm không tròn:
+- baseline là bất biến và nằm ngoài kho đối tượng git;
+- các sửa đổi được quản lý chặt chẽ bởi APPROVED-SCIENTIFIC-EDIT-LEDGER.json;
+- xác minh 100% các phần khác nhau khớp với các mục sổ cái đã được phê duyệt;
+- xuất ra CHAPTER-DIFF-LEDGER-VERIFICATION.json.
 """
 
 import sys
@@ -52,7 +52,7 @@ def extract_chapter_paragraphs(doc, require_ch3=True):
     paragraphs = doc.paragraphs
     c1_matches = []
     c2_matches = []
-    c3_matches = []  # CH3 start = CH2 termination (unique)
+    c3_matches = []  # Bắt đầu CH3 = kết thúc CH2 (duy nhất)
 
     for idx, p in enumerate(paragraphs):
         txt = p.text.strip()
@@ -76,13 +76,13 @@ def extract_chapter_paragraphs(doc, require_ch3=True):
             f'AMBIGUOUS_CHAPTER_TERMINATION: Expected exactly 1 CH3 start '
             f'(THUC NGHIEM Heading 1), got {c3_matches}'
         )
-        c2_end = c3_matches[0]  # CH3 heading is exclusive upper bound for CH2
+        c2_end = c3_matches[0]  # Tiêu đề CH3 là giới hạn trên dành riêng cho CH2
         assert c1_start < c2_start < c2_end, (
             f'AMBIGUOUS_CHAPTER_TERMINATION: Ordering violated: '
             f'CH1={c1_start}, CH2={c2_start}, CH3={c2_end}'
         )
     else:
-        # Immutable historical baseline doc (covers CH1 and CH2 only, terminating before Conclusion)
+        # Tài liệu cơ sở lịch sử bất biến (chỉ bao gồm CH1 và CH2, chấm dứt trước Kết luận)
         kl_matches = [idx for idx, p in enumerate(paragraphs) if p.text.strip() in ['Kết luận', 'KẾT LUẬN']]
         assert len(kl_matches) == 1, f'Expected exactly 1 baseline termination heading, got {kl_matches}'
         c2_end = kl_matches[0]
@@ -128,7 +128,7 @@ def audit_and_verify():
     current_doc_bytes = docx_path.read_bytes()
     current_docx_sha256 = hashlib.sha256(current_doc_bytes).hexdigest()
 
-    # Dynamic git rev-parse verification against baseline commit
+    # Xác minh phân tích cú pháp git động dựa trên cam kết cơ bản
     rev_cmd = ['git', 'rev-parse', f'{BASELINE_SOURCE_COMMIT}:Chuyên đề chuyên sâu.docx']
     rev_res = subprocess.run(rev_cmd, capture_output=True, text=True, cwd=str(repo_root))
     if rev_res.returncode != 0:
@@ -138,7 +138,7 @@ def audit_and_verify():
         f'Baseline blob SHA mismatch! Expected {BASELINE_DOCX_BLOB_SHA}, got {actual_baseline_blob_sha}'
     )
 
-    # Extract historical baseline DOCX directly from git object store
+    # Trích xuất baseline lịch sử DOCX trực tiếp từ kho đối tượng git
     cmd = ['git', 'show', f'{BASELINE_SOURCE_COMMIT}:Chuyên đề chuyên sâu.docx']
     res = subprocess.run(cmd, capture_output=True, cwd=str(repo_root))
     if res.returncode != 0:
@@ -154,13 +154,13 @@ def audit_and_verify():
     ch2_hunks = compute_hunks(b_ch2, c_ch2, 2)
     total_computed_hunks = ch1_hunks + ch2_hunks
 
-    # Load approved edit ledger
+    # Tải sổ cái chỉnh sửa đã được phê duyệt
     ledger_path = repo_root / 'experiments/evidence/citation-audit/APPROVED-SCIENTIFIC-EDIT-LEDGER.json'
     assert ledger_path.exists(), f'Ledger missing at {ledger_path}'
     with open(ledger_path, 'r', encoding='utf-8') as lf:
         ledger_items = json.load(lf)
 
-    # Verification checks: Strict bijective 1-to-1 matching
+    # Kiểm tra xác minh: Đối chiếu chính xác 1-1
     matched_hunks = 0
     unmatched_hunks = 0
     non_bijective_ledger_matches = 0
@@ -169,7 +169,7 @@ def audit_and_verify():
 
     for h_idx, hunk in enumerate(total_computed_hunks):
         for l_idx, item in enumerate(ledger_items):
-            # Check dual-naming keys
+            # Kiểm tra các phím đặt tên kép
             b_indices = item.get('base_indices') or item.get('base_paragraph_indices')
             c_indices = item.get('current_indices') or item.get('current_paragraph_indices') or item.get('curr_indices')
             reason = item.get('scientific_justification') or item.get('reason')
@@ -202,7 +202,7 @@ def audit_and_verify():
 
     unused_ledger = len(ledger_items) - len(ledger_to_hunk)
 
-    # Verification status computed dynamically without relying on self-attestation
+    # Trạng thái xác minh được tính toán linh hoạt mà không cần dựa vào tự chứng thực
     verification_status = 'PASS' if (
         unmatched_hunks == 0 and 
         unused_ledger == 0 and 
@@ -240,8 +240,8 @@ def audit_and_verify():
 
     # ---------------------------------------------------------------
     # FAIL-BEFORE-MUTATION (AUTHORITATIVE_OUTPUT_MUTATION_BEFORE_PASS=0)
-    # All computation is complete in memory. Assert PASS FIRST.
-    # Only write authoritative files after confirming PASS.
+    # Tất cả tính toán được hoàn thành trong bộ nhớ. Khẳng định PASS FIRST.
+    # Chỉ ghi các tệp có thẩm quyền sau khi xác nhận PASS.
     # ---------------------------------------------------------------
     assert verification_status == 'PASS', (
         f'[FAIL-BEFORE-MUTATION] Verification FAILED: '
@@ -250,14 +250,14 @@ def audit_and_verify():
         f'Authoritative output files are NOT modified.'
     )
 
-    # Atomic write for verification output (only reached on PASS)
+    # Ghi nguyên tử cho đầu ra xác minh (chỉ đạt được trên PASS)
     out_verification_path = repo_root / 'experiments/evidence/citation-audit/CHAPTER-DIFF-LEDGER-VERIFICATION.json'
     tmp_verification_path = out_verification_path.with_suffix('.tmp')
     with open(tmp_verification_path, 'w', encoding='utf-8') as vf:
         json.dump(verification_result, vf, indent=2, ensure_ascii=False)
     tmp_verification_path.replace(out_verification_path)
 
-    # Dynamically produce provenance record without self-attested circular fields
+    # Tự động tạo bản ghi xuất xứ mà không cần các trường tròn tự chứng thực
     prov_record = {
         'expected_hash_commit': BASELINE_SOURCE_COMMIT,
         'expected_docx_blob_sha': BASELINE_DOCX_BLOB_SHA,
@@ -280,7 +280,7 @@ def audit_and_verify():
         json.dump(prov_record, pf, indent=2, ensure_ascii=False)
     tmp_prov_path.replace(prov_path)
 
-    # Also sync root CHAPTER_HASH_PROVENANCE.json if it exists
+    # Đồng thời đồng bộ hóa root CHAPTER_HASH_PROVENANCE.json nếu nó tồn tại
     root_prov = repo_root / 'CHAPTER_HASH_PROVENANCE.json'
     if root_prov.exists():
         tmp_root_prov = root_prov.with_suffix('.tmp')
@@ -288,7 +288,7 @@ def audit_and_verify():
             json.dump(prov_record, rpf, indent=2, ensure_ascii=False)
         tmp_root_prov.replace(root_prov)
 
-    # Item 7: Reporting language
+    # Mục 7: Ngôn ngữ báo cáo
     print('\n==================================================')
     print('CHAPTER DIFF LEDGER VERIFICATION SUMMARY')
     print('==================================================')

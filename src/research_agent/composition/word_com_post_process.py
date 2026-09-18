@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Dedicated Word COM Automation Post-Processor.
-Executes in an isolated STA Python process to render Native Word Drawing Canvases,
-update all dynamic fields (TOC, LOF, LOT, BIBLIOGRAPHY), and export publication-ready PDF.
+Bộ xử lý hậu kỳ tự động hóa Word COM chuyên dụng.
+Thực thi trong quy trình Python STA bị cô lập để hiển thị Canvas vẽ từ gốc,
+cập nhật tất cả các trường động (TOC, LOF, LOT, BIBLIOGRAPHY) và xuất PDF sẵn sàng xuất bản.
 """
 
 import os
@@ -12,7 +12,7 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)
 sys.stderr.reconfigure(encoding="utf-8", line_buffering=True)
 
-# Ensure D:\Research\src is in sys.path
+# Đảm bảo D:\Research\src nằm trong sys.path
 src_dir = Path(r"D:\Research\src")
 if str(src_dir) not in sys.path:
     sys.path.insert(0, str(src_dir))
@@ -92,19 +92,19 @@ def run_post_process(docx_file: str, pdf_file: str = None):
         doc_com = word.Documents.Open(abs_target)
         print("[6/6.2] Document successfully opened in Word COM!", flush=True)
 
-        # Render Drawing Canvases for Figures 1.1 - 1.4, 2.1
+        # Kết xuất bản vẽ Canvas cho Hình 1.1 - 1.4, 2.1
         replace_raster_with_canvas(doc_com, "BK_FIG_1_001", draw_fig_1_1, "Figure 1.1")
         replace_raster_with_canvas(doc_com, "BK_FIG_1_002", draw_fig_1_2, "Figure 1.2")
         replace_raster_with_canvas(doc_com, "BK_FIG_1_003", draw_fig_1_3, "Figure 1.3")
         replace_raster_with_canvas(doc_com, "BK_FIG_1_004", draw_fig_1_4, "Figure 1.4")
         replace_raster_with_canvas(doc_com, "BK_FIG_2_001", draw_fig_2_1, "Figure 2.1")
 
-        # Render Drawing Canvases for Figures 2.2 - 2.4
+        # Kết xuất Canvas vẽ cho Hình 2.2 - 2.4
         render_canvas_at_bookmark(doc_com, "BK_FIG_2_002_CANVAS", draw_fig_2_2, "Figure 2.2")
         render_canvas_at_bookmark(doc_com, "BK_FIG_2_003_CANVAS", draw_fig_2_3, "Figure 2.3")
         render_canvas_at_bookmark(doc_com, "BK_FIG_2_004_CANVAS", draw_fig_2_4, "Figure 2.4")
 
-        # Update TOC, TOF, Fields
+        # Cập nhật TOC, TOF, Trường
         print("[6/6.4] Updating TOC, TOF, and dynamic fields...", flush=True)
         for toc in doc_com.TablesOfContents:
             try: toc.Update()
@@ -117,12 +117,12 @@ def run_post_process(docx_file: str, pdf_file: str = None):
         except Exception:
             pass
 
-        # Save docx
+        # Lưu docx
         print(f"[6/6.5] Saving document: {abs_target}", flush=True)
         doc_com.Save()
         print(f"[SUCCESS] Microsoft Word updated and saved: {abs_target}", flush=True)
 
-        # Export PDF
+        # Xuất PDF
         print(f"[6/6.6] Exporting PDF: {abs_pdf}", flush=True)
         doc_com.ExportAsFixedFormat(abs_pdf, 17)
         print(f"[SUCCESS] Exported PDF: {abs_pdf}", flush=True)

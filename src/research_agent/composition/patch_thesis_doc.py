@@ -35,25 +35,25 @@ def patch_document(target_file: str = r"D:\Research\Chuyên đề chuyên sâu -
     if not target_path.exists():
         raise FileNotFoundError(f"Target file not found: {target_file}")
 
-    # 1. Create safe backup
+    # 1. Tạo bản sao lưu an toàn
     backup_path = target_path.parent / (target_path.stem + ".backup.docx")
     shutil.copyfile(target_path, backup_path)
     print(f"[1/4] Created safe backup at: {backup_path}")
 
-    # 2. Open original document
+    # 2. Mở tài liệu gốc
     doc = docx.Document(str(target_path))
 
-    # Identify boundary paragraphs
-    # Paragraph 0..23: Front matter (Title, TOC, Intro)
+    # Xác định các đoạn ranh giới
+    # Đoạn 0..23: Nội dung đầu (Tiêu đề, TOC, Phần giới thiệu)
     # Paragraph 24: Heading 1 (TỔNG QUAN VỀ PHƯƠNG PHÁP...)
     # Paragraph 73: Conclusion (KẾT LUẬN)
     
-    # We will build a clean new document that copies the Front matter, appends rebuilt 1.1 -> 1.2.1, and appends Conclusion & References
+    # Chúng tôi sẽ xây dựng một tài liệu mới sạch sẽ sao chép nội dung Mặt trận, nối thêm 1.1 -> 1.2.1 được xây dựng lại và nối thêm Kết luận & Tài liệu tham khảo
     new_doc = docx.Document(str(backup_path))
     
-    # Let's inspect paragraphs in new_doc
+    # Hãy kiểm tra các đoạn văn trong new_doc
     # We want to replace paragraphs from index 24 to the paragraph before 'Kết luận'
-    # Find exact indices
+    # Tìm chỉ số chính xác
     p_h1_idx = None
     p_conclusion_idx = None
     
@@ -66,21 +66,21 @@ def patch_document(target_file: str = r"D:\Research\Chuyên đề chuyên sâu -
 
     print(f"[2/4] Identified boundaries: Heading 1 at [{p_h1_idx}], Conclusion at [{p_conclusion_idx}]")
 
-    # Let's create a fresh document using the original document's styles and sections
-    # To avoid XML corruption, we will construct a clean output document based on backup_path
+    # Hãy tạo một tài liệu mới bằng cách sử dụng các kiểu và phần của tài liệu gốc
+    # Để tránh hỏng XML, chúng tôi sẽ xây dựng một tài liệu đầu ra rõ ràng dựa trên backup_path
     clean_doc = docx.Document(str(backup_path))
     
-    # Remove old paragraphs from p_h1_idx to p_conclusion_idx - 1
-    # Also remove the 2 old content tables (Table 1 and Table 2 in doc.tables)
-    # Table 0 is the Title page box (preserve it!)
-    # Let's safely remove old tables (Table 1 and Table 2)
+    # Xóa đoạn văn cũ từ p_h1_idx sang p_conclusion_idx - 1
+    # Đồng thời loại bỏ 2 bảng nội dung cũ (Bảng 1 và Bảng 2 trong doc.tables)
+    # Bảng 0 là hộp trang Tiêu đề (giữ nguyên nó!)
+    # Hãy loại bỏ các bảng cũ một cách an toàn (Bảng 1 và Bảng 2)
     while len(clean_doc.tables) > 1:
         tbl_to_remove = clean_doc.tables[1]
         tbl_to_remove._tbl.getparent().remove(tbl_to_remove._tbl)
     print(f"[3/4] Preserved Title Page Table. Cleaned up old content tables.")
 
-    # Remove the old paragraphs from index 24 to the conclusion
-    # In python-docx, deleting paragraphs from bottom to top prevents index shifting:
+    # Bỏ đoạn văn cũ từ mục 24 đến phần kết luận
+    # Trong python-docx, việc xóa các đoạn văn từ dưới lên trên sẽ ngăn việc dịch chuyển chỉ mục:
     paragraphs_to_remove = []
     found_h1 = False
     for p in clean_doc.paragraphs:
@@ -96,7 +96,7 @@ def patch_document(target_file: str = r"D:\Research\Chuyên đề chuyên sâu -
         p._p.getparent().remove(p._p)
 
     # Now let's locate the paragraph right before 'Kết luận' to insert our clean sections
-    # Find insertion point
+    # Tìm điểm chèn
     target_p = None
     for p in clean_doc.paragraphs:
         if "kết luận" in p.text.strip().lower():
@@ -158,11 +158,11 @@ def patch_document(target_file: str = r"D:\Research\Chuyên đề chuyên sâu -
     def insert_table(ref_p, headers, rows_data):
         tbl = clean_doc.add_table(rows=len(rows_data) + 1, cols=len(headers))
         tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
-        # Move table before ref_p in XML
+        # Di chuyển bảng trước ref_p trong XML
         if ref_p is not None:
             ref_p._p.addprevious(tbl._tbl)
 
-        # Headers
+        # Tiêu đề
         for c_idx, h in enumerate(headers):
             cell = tbl.cell(0, c_idx)
             cell.text = h
@@ -177,7 +177,7 @@ def patch_document(target_file: str = r"D:\Research\Chuyên đề chuyên sâu -
                 r.font.size = Pt(11)
                 r.bold = True
 
-        # Rows
+        # Hàng
         for r_idx, row in enumerate(rows_data):
             for c_idx, val in enumerate(row):
                 cell = tbl.cell(r_idx + 1, c_idx)
@@ -192,10 +192,10 @@ def patch_document(target_file: str = r"D:\Research\Chuyên đề chuyên sâu -
                     r.font.name = "Times New Roman"
                     r.font.size = Pt(11)
 
-        # Space after table
+        # Khoảng trống sau bàn
         insert_para_before(ref_p, "", first_line_indent=False)
 
-    # NOW INSERT ALL AUDITED SECTIONS FROM 1.1 TO 1.2.1
+    # NOW INSERT ALL AUDITED SECTIONS FROM 1.1 ĐẾN 1.2.1
     print("[4/4] Writing audited Sections 1.1 -> 1.2.1 into Document...")
 
     insert_heading_1(target_p, "CHƯƠNG 1: TỔNG QUAN VỀ PHƯƠNG PHÁP TRÍCH XUẤT ĐẶC TRƯNG DỮ LIỆU LOG VÀ THÁCH THỨC BẢO TOÀN NGỮ CẢNH AN TOÀN")
@@ -323,7 +323,7 @@ def patch_document(target_file: str = r"D:\Research\Chuyên đề chuyên sâu -
         "Mặc dù sở hữu ưu điểm vượt trội về hiệu năng tính toán (độ phức tạp O(N), độ trễ thấp), nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn nghiêm trọng không thể khắc phục: (1) Mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số (Dynamic Parameter Loss): các bộ log parser bắt buộc phải sử dụng biểu thức chính quy (Regex) để loại bỏ toàn bộ các tham số biến động (địa chỉ IP, đường dẫn tệp tin, tham số dòng lệnh) thay thế bằng ký tự đại diện <*> khiến thông tin an ninh bị triệt tiêu; (2) Lan truyền và khuếch đại lỗi (Parser Error Propagation): khi gặp các định dạng log mới chưa từng xuất hiện (unseen logs), parser thường phân tách sai, dẫn đến hiện tượng bùng nổ số lượng mẫu sự kiện giả lập hoặc gộp nhầm các sự kiện khác biệt, phá vỡ hoàn toàn cấu trúc không gian vector x."
     )
 
-    # 4. Save and Validate
+    # 4. Lưu và xác thực
     updated_file = str(target_path.parent / (target_path.stem + ".updated.docx"))
     clean_doc.save(updated_file)
     print(f"[SUCCESS] Safely generated updated document at: {updated_file}")
@@ -334,7 +334,7 @@ def patch_document(target_file: str = r"D:\Research\Chuyên đề chuyên sâu -
     except PermissionError:
         print(f"[NOTE] File {target_file} is currently open in Microsoft Word. Content is saved in {updated_file}.")
 
-    # Reload to verify zero corruption
+    # Tải lại để xác minh không có tham nhũng
     verified_doc = docx.Document(updated_file)
     print(f"[VERIFY] Document reloaded cleanly! Total paragraphs: {len(verified_doc.paragraphs)}, Total tables: {len(verified_doc.tables)}")
 

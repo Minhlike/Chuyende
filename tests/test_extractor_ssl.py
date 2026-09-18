@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Sequence SSL and Privacy-Safe Target Tests
-Verifies:
-  1. Sequence View SSL Heads (L_MEP, L_MPP, L_time) compute finite losses over explicit mask domains.
-  2. L_time operates on adjacent contextual pairs [h_i ; h_i+1] targeting log(1 + delta_t) with Smooth L1.
-  3. Gradients propagate to all 3 sequence heads and Transformer backbone.
-  4. Zero orphan auxiliary parameters.
+Trình tự SSL và các thử nghiệm mục tiêu đảm bảo quyền riêng tư
+Xác minh:
+  1. Các đầu SSL của Chế độ xem trình tự (L_MEP, L_MPP, L_time) tính toán mất mát (loss) hữu hạn trên các miền mặt nạ rõ ràng.
+  2. L_time hoạt động trên các cặp ngữ cảnh liền kề [h_i ; Nhật ký nhắm mục tiêu h_i+1](1 + delta_t) với Smooth L1.
+  3. Độ dốc truyền đến cả 3 đầu trình tự và đường trục của Máy biến áp.
+  4. Không có tham số phụ trợ mồ côi.
 """
 
 import pytest
@@ -51,7 +51,7 @@ def test_01_sequence_ssl_three_heads_finite_and_gradients():
 
     total_loss.backward()
 
-    # Verify gradients on all parameters
+    # Xác minh độ dốc trên tất cả các tham số
     for name, p in extractor.mep_head.named_parameters():
         assert p.grad is not None and torch.isfinite(p.grad).all(), f"mep_head {name} missing grad"
     for name, p in extractor.mpp_head.named_parameters():
@@ -64,7 +64,7 @@ def test_01_sequence_ssl_three_heads_finite_and_gradients():
 def test_02_zero_orphan_auxiliary_parameters():
     extractor = SequenceViewExtractor(event_vocab_size=30, param_vocab_size=10, d_model=16, projection_dim=16)
     
-    # Check all named parameters are registered in submodules
+    # Kiểm tra tất cả các tham số được đặt tên đã được đăng ký trong mô-đun con
     all_param_names = [n for n, _ in extractor.named_parameters()]
     assert any("mep_head" in n for n in all_param_names)
     assert any("mpp_head" in n for n in all_param_names)

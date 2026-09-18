@@ -1,5 +1,5 @@
 """
-Research Project Schema
+Sơ đồ dự án nghiên cứu
 """
 
 from datetime import datetime, timezone
@@ -9,7 +9,7 @@ from research_agent.core.identifiers import EntityPrefix, format_stable_id
 
 
 class ResearchProject(BaseModel):
-    """Canonical Root Research Project Model."""
+    """Mô hình dự án nghiên cứu gốc Canonical."""
     project_id: str = Field(default_factory=lambda: format_stable_id(EntityPrefix.PROJECT, 1))
     title: str = "Nghiên cứu phương pháp trích xuất đặc trưng đối với dữ liệu log trong phát hiện tấn công"
     central_object: str = "feature representation z"

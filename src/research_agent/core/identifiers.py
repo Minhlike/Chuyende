@@ -1,5 +1,5 @@
 """
-Stable Identifier Strategy and Sequence Generator (ADR-0002)
+Chiến lược nhận dạng ổn định và trình tạo trình tự (ADR-0002)
 """
 
 import re
@@ -8,7 +8,7 @@ from typing import Optional
 
 
 class EntityPrefix(str, Enum):
-    """Canonical Entity ID Prefixes."""
+    """Tiền tố ID thực thể chuẩn."""
     PROJECT = "PRJ-"
     ROADMAP = "ROD-"
     NODE = "NOD-"
@@ -40,7 +40,7 @@ _ID_REGEX = re.compile(r"^([A-Z]+-)(\d{6})$")
 
 
 def format_stable_id(prefix: EntityPrefix | str, sequence_number: int) -> str:
-    """Format a prefix and sequence integer into a standard 6-digit stable ID."""
+    """Định dạng tiền tố và số nguyên thứ tự thành ID ổn định gồm 6 chữ số tiêu chuẩn."""
     p_str = prefix.value if isinstance(prefix, EntityPrefix) else prefix
     if not p_str.endswith("-"):
         p_str = f"{p_str}-"
@@ -48,7 +48,7 @@ def format_stable_id(prefix: EntityPrefix | str, sequence_number: int) -> str:
 
 
 def validate_stable_id(entity_id: str, expected_prefix: Optional[EntityPrefix | str] = None) -> bool:
-    """Validate that an ID conforms to the standard pattern and optionally expected prefix."""
+    """Xác thực rằng ID tuân theo mẫu tiêu chuẩn và tiền tố dự kiến ​​tùy chọn."""
     if not entity_id or not isinstance(entity_id, str):
         return False
     match = _ID_REGEX.match(entity_id)

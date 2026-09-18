@@ -1,5 +1,5 @@
-# scripts/watchdog_training_guard.ps1
-# Continuous Hardware Thermal Guard & Training Progress Monitor for Stage A2
+# tập lệnh/watchdog_training_guard.ps1
+# Giám sát tiến độ luyện tập và bảo vệ nhiệt phần cứng liên tục cho Giai đoạn A2
 
 param (
     [int]$TargetEpoch = 12,
@@ -20,7 +20,7 @@ if (-not (Test-Path $logDir)) {
     New-Item -ItemType Directory -Path $logDir -Force | Out-Null
 }
 
-# Ensure Win32PowerGuard type definition for EcoQoS suppression
+# Đảm bảo định nghĩa loại Win32PowerGuard để ngăn chặn EcoQoS
 try {
     $code = @"
 using System;
@@ -96,7 +96,7 @@ while ($true) {
         break
     }
 
-    # Continuous enforcement of process locks
+    # Thực thi liên tục các khóa quy trình
     try {
         $targetPriority = [System.Diagnostics.ProcessPriorityClass]::$PriorityClass
         if ($pythonProc.PriorityClass -ne $targetPriority) {
@@ -123,7 +123,7 @@ while ($true) {
         }
     } catch {}
 
-    # Thermal guard with hysteresis
+    # Bảo vệ nhiệt có độ trễ
     if ($gpuTemp -ge $MaxGpuTemp -and -not $isThrottledForCooling) {
         $alertMsg = "[$now] THERMAL WARNING: GPU Temp reached ${gpuTemp}C >= ${MaxGpuTemp}C! Engaging cooldown (CPU max 80%)..."
         Write-Host $alertMsg -ForegroundColor Red
@@ -161,7 +161,7 @@ while ($true) {
         Add-Content -Path $watchdogLog -Value $finishMsg
         Start-Sleep -Seconds 25
 
-        # Verify Google Drive sync and state file
+        # Xác minh tệp trạng thái và đồng bộ hóa Google Drive
         if (Test-Path $stateFile) {
             try {
                 $st = Get-Content $stateFile -Raw | ConvertFrom-Json
@@ -176,7 +176,7 @@ while ($true) {
             } catch {}
         }
 
-        # If TargetEpoch < 12, stop process to rest. If 12, wait up to 30s for natural clean exit
+        # Nếu TargetEpoch < 12, hãy dừng quá trình để nghỉ ngơi. Nếu là 12 thì đợi tới 30s để thoát ra sạch tự nhiên
         if ($TargetEpoch -lt 12) {
             try {
                 $pToStop = Get-Process -Id $pythonProc.Id -ErrorAction SilentlyContinue
@@ -186,11 +186,11 @@ while ($true) {
                 }
             } catch {}
         } else {
-            # Wait for python process to cleanly exit after metrics write
+            # Đợi quá trình python thoát hoàn toàn sau khi ghi số liệu
             Start-Sleep -Seconds 15
         }
 
-        # Restore normal everyday resting power profile
+        # Khôi phục hồ sơ năng lượng nghỉ ngơi bình thường hàng ngày
         & "$baseDir\scripts\restore_normal_profile.ps1"
         Add-Content -Path $watchdogLog -Value "[$now] Normal resting profile restored. Screen timeout restored, CPU min 5%, fans silenced, machine at rest."
         break

@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-Canonical Stage A2 Pre-Execution Verification Gate (Amended V1.2).
-Performs evidence-based, fail-closed verification of:
-  1. Ancestry from Stage A1 frozen base
-  2. Cryptographic Checksums of Contracts & Pre-Execution Lock
-  3. Raw HDFS Tarball Integrity
-  4. Actual Split Artifact Hashes (SPL-HDFS-001)
-  5. Shared Canonical Split Authority & Disjointness
-  6. Timestamp Parity & Millisecond Resolution
-  7. Relation Grounding & Component Constraints
-  8. Graph Conservation on Full Train & Validation Partitions
-  9. Strict Test Firewall (TestSetSealedError)
-  10. Zero-Execution State (0 optimizer steps, 0 models trained)
-Outputs STAGE_A2_PREEXECUTION_READY=PASS or STAGE_A2_PREEXECUTION_READY=FAIL.
+Cổng xác minh trước khi thực hiện Canonical Giai đoạn A2 (Đã sửa đổi V1.2).
+Thực hiện xác minh dựa trên bằng chứng, không đóng:
+  1. Tổ tiên từ cơ sở đông lạnh Giai đoạn A1
+  2. Tổng kiểm tra mật mã của hợp đồng & Khóa trước khi thực hiện
+  3. Tính toàn vẹn của Tarball HDFS thô
+  4. Băm tạo phẩm (artifact) phân chia thực tế (SPL-HDFS-001)
+  5. Quyền phân chia kinh điển được chia sẻ và sự rời rạc
+  6. Tính chẵn lẻ của dấu thời gian và độ phân giải mili giây
+  7. Mối quan hệ nối đất và các ràng buộc thành phần
+  8. Bảo tồn đồ thị trên các phân vùng xác thực và đào tạo đầy đủ
+  9. Tường lửa kiểm tra nghiêm ngặt (TestSetSealedError)
+  10. Trạng thái không thực thi (0 bước tối ưu hóa, 0 mô hình được đào tạo)
+Đầu ra STAGE_A2_PREEXECUTION_READY=PASS hoặc STAGE_A2_PREEXECUTION_READY=FAIL.
 """
 
 import sys
@@ -39,7 +39,7 @@ def verify_stage_a2_preexecution():
     print("      STAGE A2 PRE-EXECUTION GATE VERIFICATION AUDIT (V1.2)      ")
     print("=================================================================")
 
-    # 1. Base Frozen Commit Check
+    # 1. Kiểm tra cam kết cố định cơ sở
     expected_base_commit = "9a707025ed5899c524962558732218ff48e8b212"
     lock_path = base_dir / "experiments" / "protocol" / "STAGE-A2-PREEXECUTION-LOCK.json"
     prereg_path = base_dir / "experiments" / "protocol" / "STAGE-A2-PREREGISTRATION.md"
@@ -56,7 +56,7 @@ def verify_stage_a2_preexecution():
         print("STAGE_A2_PREEXECUTION_READY=FAIL")
         sys.exit(1)
 
-    # 2. Cryptographic Checksums of Contracts & Preregistration
+    # 2. Tổng kiểm tra mật mã của hợp đồng & đăng ký trước
     prereg_bytes = prereg_path.read_bytes()
     prereg_sha256 = hashlib.sha256(prereg_bytes).hexdigest()
 
@@ -87,7 +87,7 @@ def verify_stage_a2_preexecution():
     print(f"[CHECK 1] Raw-to-Graph Mapping SHA-256:    {raw_mapping_sha256} (OK)")
     print(f"[CHECK 1] Pre-Execution Lock File SHA-256: {lock_file_sha256} (OK)")
 
-    # 3. Check Raw Tarball Hash
+    # 3. Kiểm tra hàm băm Tarball thô
     hdfs_raw = base_dir / "datasets" / "raw" / "hdfs" / "HDFS_1.tar.gz"
     if not hdfs_raw.exists():
         failures.append("RAW_HDFS_TARBALL_MISSING")
@@ -98,7 +98,7 @@ def verify_stage_a2_preexecution():
             failures.append(f"RAW_HDFS_HASH_MISMATCH: {actual_raw_h} != {expected_raw_h}")
         print(f"[CHECK 2] HDFS Raw Checksum: {actual_raw_h} (OK)")
 
-    # 4. Actual Split Artifact Hashes Reproduction
+    # 4. Tái tạo băm tạo phẩm (artifact) phân chia thực tế
     train_pt_path = base_dir / "experiments" / "runs" / "data" / "hdfs" / "hdfs_ssl_train.pt"
     val_pt_path = base_dir / "experiments" / "runs" / "data" / "hdfs" / "hdfs_ssl_val.pt"
 
@@ -119,7 +119,7 @@ def verify_stage_a2_preexecution():
         print(f"[CHECK 3] Train Split Hash: {actual_train_h} (OK)")
         print(f"[CHECK 3] Val Split Hash:   {actual_val_h} (OK)")
 
-    # 5. Shared Canonical Split Authority & Disjointness
+    # 5. Quyền phân chia kinh điển được chia sẻ và sự rời rạc
     split_auth = HDFSSplitAuthority(base_dir=base_dir)
     split_info = split_auth.get_split()
 
@@ -146,7 +146,7 @@ def verify_stage_a2_preexecution():
     print(f"[CHECK 4] Split Authority: Train ({len(train_ids)}), Val ({len(val_ids)}), Test ({len(test_ids)} sealed) (OK)")
     print(f"[CHECK 4] Boundary Purges: T->V ({len(purged_tv)}), V->T ({len(purged_vt)}) (OK)")
 
-    # 6. Timestamp Parity & Millisecond Resolution
+    # 6. Tính chẵn lẻ của dấu thời gian và độ phân giải mili giây
     adapter = HDFSRealDataAdapter(base_dir=base_dir)
     ts_adapter = adapter.parse_line_timestamp("081109", "203518", "143")
     ts_split_auth = parse_hdfs_line_timestamp("081109", "203518", "143")
@@ -158,7 +158,7 @@ def verify_stage_a2_preexecution():
 
     print(f"[CHECK 5] Timestamp Parity & Millisecond Fidelity: Verified (delta = 0.0) (OK)")
 
-    # 7. Check Full Graph Materialization & Conservation Audits
+    # 7. Kiểm tra kiểm tra bảo tồn và vật chất hóa đồ thị đầy đủ
     mat_audit_path = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / "HDFS-GRAPH-MATERIALIZATION-AUDIT.json"
     rel_audit_path = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / "RELATION-GROUNDING-AUDIT.json"
 
@@ -178,7 +178,7 @@ def verify_stage_a2_preexecution():
             failures.append("SOME_RELATIONS_LACK_RAW_TRAIN_EVIDENCE")
         print(f"[CHECK 7] Relation Raw Grounding: All {rel_data.get('total_relations')} relations empirically grounded (OK)")
 
-    # 8. Test Set Firewall (TestSetSealedError)
+    # 8. Tường lửa thiết lập kiểm tra (TestSetSealedError)
     builder = HDFSGraphBuilder(base_dir=base_dir, split_authority=split_auth)
     test_sealed_pass = False
     try:
@@ -193,7 +193,7 @@ def verify_stage_a2_preexecution():
 
     print(f"[CHECK 8] Test Set Firewall: TestSetSealedError strictly enforced (OK)")
 
-    # 9. Check Execution State (Zero Execution Firewall)
+    # 9. Kiểm tra trạng thái thực thi (Tường lửa thực thi không)
     exec_state = lock_data.get("execution_state", {})
     if exec_state.get("optimizer_steps", -1) != 0:
         failures.append(f"PRE_EXECUTION_VIOLATION_OPTIMIZER_STEPS: {exec_state.get('optimizer_steps')}")

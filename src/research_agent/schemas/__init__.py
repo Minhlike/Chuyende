@@ -1,5 +1,5 @@
 """
-Canonical Schemas Export Index
+Chỉ mục xuất lược đồ Canonical
 """
 
 from research_agent.schemas.project import ResearchProject

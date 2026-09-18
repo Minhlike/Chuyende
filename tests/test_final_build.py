@@ -1,5 +1,5 @@
 """
-Unit & Integration Tests for Final Thesis Compilation & Build Packaging (Prompt 7)
+Bài kiểm tra đơn vị & tích hợp để biên soạn luận văn cuối cùng và xây dựng bao bì (Nhắc 7)
 """
 
 import pytest
@@ -36,7 +36,7 @@ def packager(repo):
 
 
 def test_final_01_provisional_build_produces_artifacts(compiler):
-    """Provisional thesis build produces Document IR, markdown output, and build manifest."""
+    """Bản dựng luận án tạm thời tạo ra Tài liệu IR, đầu ra đánh dấu và bản kê (manifest) bản dựng."""
     doc, report, manifest = compiler.compile_thesis(mode=CompositionMode.PROVISIONAL)
     assert doc is not None
     assert manifest is not None
@@ -47,7 +47,7 @@ def test_final_01_provisional_build_produces_artifacts(compiler):
 
 
 def test_final_02_packager_generates_complete_manifest(packager):
-    """Artifact packager creates package manifest with SHA-256 integrity hash."""
+    """Trình đóng gói tạo phẩm (artifact) tạo tệp kê khai gói với hàm băm tính toàn vẹn SHA-256."""
     pkg = packager.build_package_manifest()
     assert pkg.package_id.startswith("PKG-")
     assert pkg.package_sha256 is not None

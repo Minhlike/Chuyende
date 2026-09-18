@@ -1,5 +1,5 @@
 """
-Dataset and DatasetVersion Schemas (Section 8, Section 15, RC-10, RC-16)
+Lược đồ tập dữ liệu và phiên bản dữ liệu (Phần 8, Phần 15, RC-10, RC-16)
 """
 
 from datetime import datetime, timezone
@@ -10,7 +10,7 @@ from research_agent.core.identifiers import EntityPrefix, format_stable_id
 
 
 class DatasetSplitManifest(BaseModel):
-    """Manifest describing train/val/test data split and indices/hashes."""
+    """Tệp kê khai mô tả việc phân chia dữ liệu đào tạo/val/kiểm tra và các chỉ số/băm."""
     split_id: str = Field(description="e.g. SPL-000001")
     train_hash: str
     val_hash: str
@@ -24,7 +24,7 @@ class DatasetSplitManifest(BaseModel):
 
 
 class DatasetVersion(BaseModel):
-    """Specific immutable version/snapshot of a log dataset (RC-16)."""
+    """Phiên bản/ảnh chụp nhanh cụ thể không thể thay đổi của tập dữ liệu nhật ký (RC-16)."""
     version_id: str = Field(description="Stable ID: DSV-000001")
     dataset_id: str = Field(description="Parent Dataset ID: DATA-000001")
     version_tag: str = "v1.0"
@@ -40,7 +40,7 @@ class DatasetVersion(BaseModel):
 
 
 class Dataset(BaseModel):
-    """Canonical Dataset Entity for Log Feature Extraction (RC-10, RC-16)."""
+    """Thực thể tập dữ liệu chuẩn để trích xuất tính năng nhật ký (RC-10, RC-16)."""
     dataset_id: str = Field(description="Stable ID: DATA-000001")
     name: str = Field(min_length=2, description="e.g. BGL, HDFS, Thunderbird, CIC-IDS2017")
     modality: str = Field(description="e.g. 'Unstructured syslog', 'Structured JSON audit', 'Flow logs'")

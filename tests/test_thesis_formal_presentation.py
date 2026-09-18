@@ -55,7 +55,7 @@ def source_metrics():
 # =============================================================================
 
 def test_all_sections_portrait(thesis_doc):
-    """Every section must be A4 PORTRAIT. LANDSCAPE_SECTION_COUNT == 0."""
+    """Mỗi phần phải là A4 PORTRAIT. LANDSCAPE_SECTION_COUNT == 0."""
     sections = thesis_doc.sections
     assert len(sections) >= 2, f"Expected at least 2 sections, found {len(sections)}"
 
@@ -68,7 +68,7 @@ def test_all_sections_portrait(thesis_doc):
 
 
 def test_section_page_numbering_continuity(thesis_doc):
-    """Verifies that subsequent sections do NOT restart page numbering."""
+    """Xác minh rằng các phần tiếp theo sẽ khởi động lại việc đánh số trang NOT."""
     body_sectPr = thesis_doc._element.body.find(qn("w:sectPr"))
     assert body_sectPr is not None
     for pgn in body_sectPr.findall(qn("w:pgNumType")):
@@ -89,7 +89,7 @@ def test_heading_hierarchy_and_keep_with_next(thesis_doc):
 
 
 def test_heading_case_normalization(thesis_doc):
-    """Subheadings in Chapter 3 must be in sentence case, preserving technical terms."""
+    """Các tiêu đề trong Chương 3 phải ở dạng câu, giữ nguyên thuật ngữ kỹ thuật."""
     ch3_found = False
     for p in thesis_doc.paragraphs:
         txt = p.text.strip()
@@ -138,7 +138,7 @@ def test_caption_syntax(thesis_doc):
 # =============================================================================
 
 def test_table33_portrait_fit(thesis_doc):
-    """Table 3.3 must fit portrait printable width (A4 width 11906 dxa, width <= 9600 dxa)."""
+    """Bảng 3.3 phải vừa với chiều rộng in dọc (chiều rộng A4 11906 dxa, chiều rộng <= 9600 dxa)."""
     t33 = None
     for t in thesis_doc.tables:
         if len(t.rows) == 7 and len(t.columns) == 10:
@@ -154,7 +154,7 @@ def test_table33_portrait_fit(thesis_doc):
 
 
 def test_table34_status_display_mapping(thesis_doc, source_metrics):
-    """Table 3.4 contains provenance status with human-readable labels."""
+    """Bảng 3.4 chứa tình trạng xuất xứ với nhãn mà con người có thể đọc được."""
     t34 = None
     for t in thesis_doc.tables:
         if len(t.rows) == 7 and len(t.columns) == 3:
@@ -183,7 +183,7 @@ def test_table34_status_display_mapping(thesis_doc, source_metrics):
 
 
 def test_table33_numeric_integrity_and_no_split(thesis_doc):
-    """Numbers in Table 3.3 must remain on a single line without newline or mid-token split."""
+    """Các số trong Bảng 3.3 phải nằm trên một dòng duy nhất mà không được phân chia dòng mới hoặc giữa token."""
     t33 = None
     for t in thesis_doc.tables:
         if len(t.rows) == 7 and len(t.columns) == 10:
@@ -202,7 +202,7 @@ def test_table33_numeric_integrity_and_no_split(thesis_doc):
 
 
 def test_table33_source_metrics_remain_raw(source_metrics):
-    """Confirms display mapping was presentation-only; underlying data retains raw enums."""
+    """Xác nhận ánh xạ hiển thị chỉ dành cho bản trình bày; dữ liệu cơ bản giữ lại enum thô."""
     st = source_metrics["seeds_table"]
     classifications = {s["classification"] for s in st}
     assert "PROTOCOL_DEVIATION" in classifications
@@ -217,7 +217,7 @@ def test_table33_source_metrics_remain_raw(source_metrics):
 # =============================================================================
 
 def test_chapter3_zero_plain_underscore_loss_notation(thesis_doc):
-    """In Chapter 3, literal 'L_graph', 'L_rel', 'L_node', 'L_time', 'l_graph' must be 0."""
+    """Trong Chương 3, chữ 'L_graph', 'L_rel', 'L_node', 'L_time', 'l_graph' phải bằng 0."""
     in_ch3 = False
     needles = ["L_graph", "L_rel", "L_node", "L_time", "l_graph", "l_rel", "l_node", "l_time"]
 
@@ -233,7 +233,7 @@ def test_chapter3_zero_plain_underscore_loss_notation(thesis_doc):
             for needle in needles:
                 assert needle not in p.text, f"Found literal '{needle}' in Chapter 3 paragraph: '{p.text[:60]}...'"
 
-    # Tables in Chapter 3 (Table 8, 9, 10, 11, 12)
+    # Các bảng trong Chương 3 (Bảng 8, 9, 10, 11, 12)
     for t_idx in [8, 9, 10, 11, 12]:
         if t_idx < len(thesis_doc.tables):
             tbl = thesis_doc.tables[t_idx]
@@ -244,7 +244,7 @@ def test_chapter3_zero_plain_underscore_loss_notation(thesis_doc):
 
 
 def test_uppercase_l_omml_true_subscript_present(thesis_doc):
-    """OMML elements in Chapter 3 must use uppercase italic L with true subscripts."""
+    """Các phần tử OMML trong Chương 3 phải sử dụng chữ L in nghiêng với các chỉ số đúng."""
     omml_subscripts = thesis_doc._element.xpath(".//m:sSub")
     found_l_subscripts = set()
     for ssub in omml_subscripts:
@@ -263,7 +263,7 @@ def test_uppercase_l_omml_true_subscript_present(thesis_doc):
 
 
 def test_no_programming_multiplication_in_loss_equation(thesis_doc):
-    """Loss equation OMML must not use programming-style '*' symbol."""
+    """Phương trình tổn hao OMML không được sử dụng ký hiệu '*' kiểu lập trình."""
     omaths = thesis_doc._element.xpath(".//m:oMath")
     for om in omaths:
         txt = "".join(om.itertext())

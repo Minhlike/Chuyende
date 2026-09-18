@@ -1,5 +1,5 @@
 """
-Standardized Effect Size Metrics (Prompt 6 Section 37)
+Số liệu kích thước hiệu ứng được tiêu chuẩn hóa (Nhắc 6 Phần 37)
 """
 
 from typing import Any, Dict, List, Tuple, Union
@@ -8,9 +8,9 @@ import numpy as np
 
 class EffectSizeEngine:
     """
-    Computes standardized statistical effect sizes:
-    Cohen's d, Hedges' g (small sample correction), Rank-biserial correlation,
-    and absolute/relative percentage changes.
+    Tính toán kích thước hiệu ứng thống kê được tiêu chuẩn hóa:
+    Cohen's d, Hedges' g (hiệu chỉnh mẫu nhỏ), tương quan cấp bậc-lưỡng chuỗi,
+    và thay đổi phần trăm tuyệt đối/tương đối.
     """
 
     def compute_cohens_d(
@@ -19,7 +19,7 @@ class EffectSizeEngine:
         group2: Union[List[float], np.ndarray],
     ) -> float:
         """
-        Calculates Cohen's d:
+        Tính Cohen's d:
         d = (mean1 - mean2) / s_pooled
         """
         a = np.array(group1, dtype=float)
@@ -42,7 +42,7 @@ class EffectSizeEngine:
         group2: Union[List[float], np.ndarray],
     ) -> float:
         """
-        Calculates Hedges' g with exact small-sample correction factor:
+        Tính g Hedges' với hệ số hiệu chỉnh mẫu nhỏ chính xác:
         g = d * (1 - 3 / (4 * (n1 + n2) - 9))
         """
         n1, n2 = len(group1), len(group2)
@@ -57,7 +57,7 @@ class EffectSizeEngine:
         baseline_mean: float,
         proposed_mean: float,
     ) -> Dict[str, float]:
-        """Calculates absolute difference (delta) and relative change percentage."""
+        """Tính toán sự khác biệt tuyệt đối (delta) và tỷ lệ phần trăm thay đổi tương đối."""
         abs_diff = proposed_mean - baseline_mean
         rel_diff_pct = (abs_diff / baseline_mean * 100.0) if baseline_mean != 0 else 0.0
         return {

@@ -1,7 +1,7 @@
 """
-Word Native Diagram Engine (Rule 1 & Rule 2A)
-Builds crisp, minimal, monochrome scientific diagrams directly using Microsoft Word 2016 Object Model (COM).
-Enforces: Rectangle/Rounded Rectangle, Black connector arrows, White fill, Black 1pt outline, Times New Roman, No shadows/3D.
+Công cụ sơ đồ gốc của Word (Quy tắc 1 & Quy tắc 2A)
+Trực tiếp xây dựng các sơ đồ khoa học đơn sắc, tối giản, sắc nét bằng cách sử dụng Mô hình đối tượng Microsoft Word 2016 (COM).
+Thực thi: Hình chữ nhật/Hình chữ nhật tròn, Mũi tên nối màu đen, Nền màu trắng, Đường viền 1pt màu đen, Times New Roman, Không có bóng/3D.
 """
 
 import os
@@ -25,7 +25,7 @@ from research_agent.visuals.schemas import (
 
 class WordDiagramBuilder:
     """
-    Renders native Word Diagrams using Shapes, Drawing Canvas, and Connectors via Word COM.
+    Hiển thị Sơ đồ Word gốc bằng cách sử dụng Hình dạng, Canvas vẽ và Trình kết nối thông qua Word COM.
     """
 
     MSO_SHAPE_RECTANGLE = 1
@@ -56,14 +56,14 @@ class WordDiagramBuilder:
         chapter_num: int = 1,
     ) -> Dict[str, Any]:
         """
-        Inserts a native Drawing Canvas containing nodes and connectors at the target range in Word COM.
+        Chèn Canvas vẽ gốc chứa các nút và trình kết nối ở phạm vi mục tiêu trong Word COM.
         """
         shapes_dict: Dict[str, Any] = {}
         nodes_dict: Dict[str, ShapeNodeSpec] = {n.shape_id: n for n in spec.nodes}
 
-        # If use_canvas is enabled, create a drawing canvas
+        # Nếu use_canvas được bật, hãy tạo khung vẽ
         if spec.use_canvas:
-            # Add Canvas to document
+            # Thêm Canvas vào tài liệu
             canvas = doc_com.Shapes.AddCanvas(
                 Left=10,
                 Top=10,
@@ -72,10 +72,10 @@ class WordDiagramBuilder:
                 Anchor=target_range
             )
             canvas.WrapFormat.Type = self.WD_WRAP_TOP_BOTTOM
-            canvas.Line.Visible = False  # Invisible canvas boundary
+            canvas.Line.Visible = False  # Ranh giới canvas vô hình
             canvas.Fill.Visible = False
 
-            # Add Shape Nodes into Canvas
+            # Thêm các nút hình dạng vào Canvas
             for node in spec.nodes:
                 shape_type = self._resolve_shape_type(node.shape_type)
                 s = canvas.CanvasItems.AddShape(
@@ -88,7 +88,7 @@ class WordDiagramBuilder:
                 self._apply_minimal_shape_style(s, node)
                 shapes_dict[node.shape_id] = s
 
-            # Add Connectors into Canvas
+            # Thêm trình kết nối vào Canvas
             for conn in spec.connectors:
                 c_type = self.MSO_CONNECTOR_ELBOW if conn.connector_type == "ELBOW" else self.MSO_CONNECTOR_STRAIGHT
                 
@@ -112,7 +112,7 @@ class WordDiagramBuilder:
                 )
                 self._apply_minimal_connector_style(c, conn)
 
-                # Attempt dynamic anchor connection
+                # Thử kết nối neo động
                 src_shape = shapes_dict.get(conn.source_shape_id)
                 tgt_shape = shapes_dict.get(conn.target_shape_id)
                 if src_shape and tgt_shape:
@@ -123,7 +123,7 @@ class WordDiagramBuilder:
                     except Exception:
                         pass
 
-            # Optional grouping
+            # Nhóm tùy chọn
             if spec.group_shapes and len(shapes_dict) > 1:
                 try:
                     shape_names = [s.Name for s in shapes_dict.values()]
@@ -134,7 +134,7 @@ class WordDiagramBuilder:
             return {"canvas": canvas, "shapes": shapes_dict, "success": True}
 
         else:
-            # Direct shapes on document
+            # Hình dạng trực tiếp trên tài liệu
             for node in spec.nodes:
                 shape_type = self._resolve_shape_type(node.shape_type)
                 s = doc_com.Shapes.AddShape(
@@ -161,18 +161,18 @@ class WordDiagramBuilder:
         return self.MSO_SHAPE_RECTANGLE
 
     def _apply_minimal_shape_style(self, shape: Any, node: ShapeNodeSpec):
-        """Applies strict monochrome academic style (no gradient, shadow, 3D)."""
-        # Fill: White
+        """Áp dụng phong cách học thuật đơn sắc nghiêm ngặt (không có độ dốc, bóng, 3D)."""
+        # Điền: Trắng
         shape.Fill.Solid()
-        shape.Fill.ForeColor.RGB = 0xFFFFFF  # White
+        shape.Fill.ForeColor.RGB = 0xFFFFFF  # trắng
         shape.Fill.Transparency = 0.0
 
-        # Line: Black 1pt
+        # Dòng: Đen 1pt
         shape.Line.Visible = True
-        shape.Line.ForeColor.RGB = 0x000000  # Black
+        shape.Line.ForeColor.RGB = 0x000000  # Đen
         shape.Line.Weight = node.line_weight_pt
 
-        # Disable Shadows and 3D
+        # Tắt bóng và 3D
         try:
             shape.Shadow.Visible = False
         except Exception:
@@ -182,7 +182,7 @@ class WordDiagramBuilder:
         except Exception:
             pass
 
-        # Text
+        # văn bản
         tf = shape.TextFrame
         tf.WordWrap = True
         tf.MarginLeft = 4.0
@@ -199,17 +199,17 @@ class WordDiagramBuilder:
         tr.Font.Name = "Times New Roman"
         tr.Font.Size = node.font_size_pt
         try:
-            tr.Font.ColorIndex = 1  # wdBlack
+            tr.Font.ColorIndex = 1  # wdĐen
         except Exception:
             pass
         tr.Font.Bold = node.is_bold
         tr.ParagraphFormat.Alignment = self.WD_ALIGN_PARAGRAPH_CENTER
         tr.ParagraphFormat.SpaceBefore = 0
         tr.ParagraphFormat.SpaceAfter = 0
-        tr.ParagraphFormat.LineSpacingRule = 0  # Single
+        tr.ParagraphFormat.LineSpacingRule = 0  # Độc thân
 
     def _apply_minimal_connector_style(self, connector: Any, conn_spec: ConnectorSpec):
-        """Applies crisp black arrow style to connector."""
+        """Áp dụng kiểu mũi tên màu đen rõ nét cho đầu nối."""
         connector.Line.Visible = True
         connector.Line.ForeColor.RGB = 0x000000
         connector.Line.Weight = conn_spec.line_weight_pt

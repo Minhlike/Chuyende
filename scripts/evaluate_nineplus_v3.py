@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Nineplus Campaign V3 Downstream Evaluation Pipeline
-Protocol: TRAIN_FIT_FULL_FIXED_VALIDATION_EVALUATE
+Quy trình đánh giá hạ nguồn (downstream) của Chiến dịch Nineplus V3
+Giao thức: TRAIN_FIT_FULL_FIXED_VALIDATION_EVALUATE
 
-Authoritative Specification:
-- Train representation extraction: ALL 35,000 Train sessions
-- Validation representation extraction: ALL 7,500 Validation sessions
-- Probe fitting: Exclusively on Train representations (50 epochs, AdamW lr=1e-2, wd=1e-4, batch_size=256)
-- Probe RNG seed: Locked to 10007 (decoupled from backbone model seed)
-- Evaluation: 100% of Validation split (7,500 sessions)
-- Membership invariant verification:
-    Train SHA: 65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc
-    Val SHA:   14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407b0609a
-    Ordered Train SHA: 35396a595ded6ab643c07ce03528da4b91c1d270979b2c52e3e11f0cebcc7e60
-    Ordered Val SHA:   4f474991f03aab4856c2666a671bee3fc69d8e893e22e9c2d9ca1269b8bd68ae
-- Test Firewall: TEST_OPENED=false, TEST_READ_COUNT=0
+Đặc điểm kỹ thuật có thẩm quyền:
+- Trích xuất đại diện tàu: ALL 35.000 phiên tàu
+- Trích xuất biểu diễn xác thực: ALL 7.500 phiên xác thực
+- Lắp bộ dò (probe): Độc quyền trên các biểu diễn Train (50 epoch, AdamW lr=1e-2, wd=1e-4, batch_size=256)
+- bộ dò (probe) hạt giống RNG: Khóa tới 10007 (tách khỏi hạt giống mô hình xương sống)
+- Đánh giá: 100% phân chia xác thực (7.500 phiên)
+- Xác minh bất biến thành viên:
+    Tàu SHA: 65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc
+    Giá trị SHA: 14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407b0609a
+    Tàu đã đặt hàng SHA: 35396a595ded6ab643c07ce03528da4b91c1d270979b2c52e3e11f0cebcc7e60
+    Đã đặt hàng Val SHA: 4f474991f03aab4856c2666a671bee3fc69d8e893e22e9c2d9ca1269b8bd68ae
+- Kiểm tra tường lửa: TEST_OPENED=false, TEST_READ_COUNT=0
 """
 
 import os
@@ -35,7 +35,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 
-# Ensure project root is in sys.path
+# Đảm bảo gốc dự án nằm ở sys.path
 BASE_DIR = Path(__file__).resolve().parent.parent
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
@@ -56,15 +56,15 @@ MAX_PARAM_SLOTS = 4
 
 def compute_ap_and_roc_auc(scores: np.ndarray, y_true: np.ndarray) -> Tuple[float, float]:
     """
-    Computes Average Precision (AP) via step integration
-    and ROC-AUC via Mann-Whitney U / rank sum.
+    Tính toán độ chính xác trung bình (AP) thông qua tích hợp bước
+    và ROC-AUC thông qua Mann-Whitney U/tổng xếp hạng.
     """
     n_pos = int(np.sum(y_true == 1))
     n_neg = int(np.sum(y_true == 0))
     if n_pos == 0 or n_neg == 0:
         raise ValueError("Cannot compute AP/ROC-AUC with single-class ground truth.")
 
-    # AP computation
+    # tính toán AP
     order = np.argsort(-scores)
     sorted_labels = y_true[order]
     tp = np.cumsum(sorted_labels == 1)
@@ -73,7 +73,7 @@ def compute_ap_and_roc_auc(scores: np.ndarray, y_true: np.ndarray) -> Tuple[floa
     precisions = np.concatenate(([1.0], tp / (tp + fp)))
     ap = float(np.sum((recalls[1:] - recalls[:-1]) * precisions[1:]))
 
-    # ROC-AUC computation
+    # Tính toán ROC-AUC
     ranks = np.argsort(np.argsort(scores)) + 1
     pos_rank_sum = np.sum(ranks[y_true == 1])
     u = pos_rank_sum - n_pos * (n_pos + 1) / 2
@@ -97,13 +97,13 @@ class V3Evaluator:
 
     def _verify_invariants(self):
         print("[V3Evaluator] Verifying membership invariants and Test firewall...", flush=True)
-        # 1. Test Firewall Invariant
+        # 1. Kiểm tra tính bất biến (invariance) của tường lửa
         test_opened = False
         test_read_count = 0
         assert not test_opened, "TEST_FIREWALL_BREACH: test_opened must be False"
         assert test_read_count == 0, "TEST_FIREWALL_BREACH: test_read_count must be 0"
 
-        # 2. Membership verification via SplitAuthority
+        # 2. Xác minh tư cách thành viên qua SplitAuthority
         split_auth = HDFSSplitAuthority(base_dir=self.base_dir)
         split_info = split_auth.get_split()
         recomputed_train_sha = hashlib.sha256("\n".join(split_info["selected_train_block_ids"]).encode()).hexdigest()
@@ -127,7 +127,7 @@ class V3Evaluator:
         
         self.vocab = json.loads((self.data_dir / "hdfs_vocab.json").read_text(encoding="utf-8"))
         
-        # Verify Session ID counts and ordering
+        # Xác minh số lượng ID phiên và thứ tự
         assert len(self.train_ssl["session_ids"]) == 35000, "Train session count must be 35,000"
         assert len(self.val_ssl["session_ids"]) == 7500, "Val session count must be 7,500"
         assert self.train_ssl["session_ids"] == self.vault_train["session_ids"], "Train session IDs mismatch between SSL and Vault"
@@ -146,7 +146,7 @@ class V3Evaluator:
         print("  - Ordered Train Session-ID SHA: PASS (35396a595ded...)")
         print("  - Ordered Val Session-ID SHA:   PASS (4f474991f03a...)")
 
-        # Lazy load graph cache when needed
+        # Bộ đệm đồ thị tải lười biếng khi cần
         self.graph_cache = None
         self.train_block_events = None
         self.val_block_events = None
@@ -283,12 +283,12 @@ class V3Evaluator:
         val_rep: torch.Tensor
     ) -> Dict[str, Any]:
         """
-        Fits linear probe on Train representations exclusively,
-        then evaluates on all 7,500 Validation representations.
-        RNG fixed strictly to PROBE_FIXED_SEED = 10007.
+        Chỉ phù hợp với bộ dò (probe) tuyến tính trên các biểu diễn Train,
+        sau đó đánh giá trên tất cả 7.500 biểu diễn Xác thực.
+        RNG được cố định nghiêm ngặt thành PROBE_FIXED_SEED = 10007.
         """
         print(f"[V3Evaluator] Fitting linear probe (Seed: {PROBE_FIXED_SEED}, 50 epochs, batch=256)...", flush=True)
-        # Lock probe RNG
+        # Khóa bộ dò (probe) RNG
         torch.manual_seed(PROBE_FIXED_SEED)
         np.random.seed(PROBE_FIXED_SEED)
         random.seed(PROBE_FIXED_SEED)
@@ -311,9 +311,9 @@ class V3Evaluator:
         n_train = len(y_train)
         optimizer_steps = 0
 
-        # Epoch loop
+        # Vòng lặp epoch
         for epoch in range(50):
-            # Deterministic permutation for this epoch
+            # Hoán vị xác định cho epoch này
             g = torch.Generator().manual_seed(PROBE_FIXED_SEED + epoch)
             perm = torch.randperm(n_train, generator=g)
             for b_start in range(0, n_train, batch_size):
@@ -325,7 +325,7 @@ class V3Evaluator:
                 optimizer.step()
                 optimizer_steps += 1
 
-        # Evaluation on 100% Validation split
+        # Đánh giá dựa trên tỷ lệ xác thực 100%
         probe.eval()
         with torch.no_grad():
             val_logits = probe(z_va).squeeze(-1)

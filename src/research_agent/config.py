@@ -1,5 +1,5 @@
 """
-Workspace Configuration and Path Resolution
+Cấu hình không gian làm việc và độ phân giải đường dẫn
 """
 
 from dataclasses import dataclass, field
@@ -10,10 +10,11 @@ from typing import Optional
 
 @dataclass(frozen=True)
 class WorkspaceConfig:
-    """Canonical Workspace Configuration for the Research Engineering System.
-    
-    Default root is 'D:\\Research', which can be overridden via RESEARCH_WORKSPACE_ROOT.
-    Centralizes all directory resolution and prevents hardcoding across the codebase.
+    r"""
+Cấu hình không gian làm việc chuẩn cho hệ thống kỹ thuật nghiên cứu.
+
+    Gốc mặc định là 'D:\Research', có thể được ghi đè thông qua RESEARCH_WORKSPACE_ROOT.
+    Tập trung tất cả độ phân giải thư mục và ngăn chặn mã hóa cứng trên cơ sở mã.
     """
     workspace_root: Path = field(
         default_factory=lambda: Path(os.environ.get("RESEARCH_WORKSPACE_ROOT", r"D:\Research")).resolve()
@@ -87,14 +88,14 @@ class WorkspaceConfig:
         return (self.workspace_root / self.docs_rel_dir).resolve()
 
     def resolve_path(self, relative_or_absolute: str | Path) -> Path:
-        """Resolve a path relative to workspace root if relative."""
+        """Giải quyết đường dẫn liên quan đến thư mục gốc của không gian làm việc nếu có liên quan."""
         p = Path(relative_or_absolute)
         if p.is_absolute():
             return p.resolve()
         return (self.workspace_root / p).resolve()
 
     def ensure_directories(self) -> None:
-        """Ensure all canonical workspace directories exist."""
+        """Đảm bảo tất cả các thư mục không gian làm việc chuẩn đều tồn tại."""
         dirs = [
             self.workspace_root,
             self.roadmap_specs_dir,

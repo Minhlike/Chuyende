@@ -1,5 +1,5 @@
 """
-Base Framework for Procedural Research Skills (Prompt 5 Sections 75..92)
+Khung cơ bản cho các kỹ năng nghiên cứu quy trình (Nhắc 5 phần 75..92)
 """
 
 from abc import ABC, abstractmethod
@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field
 
 
 class SkillMetadata(BaseModel):
-    """Metadata describing a procedural research skill."""
+    """Siêu dữ liệu mô tả kỹ năng nghiên cứu quy trình."""
     skill_id: str
     name: str
     version: str = "1.0.0"
@@ -22,7 +22,7 @@ class SkillMetadata(BaseModel):
 
 
 class SkillResult(BaseModel):
-    """Execution outcome of a research skill."""
+    """Kết quả thực hiện của một kỹ năng nghiên cứu."""
     skill_id: str
     success: bool
     data: Dict[str, Any] = Field(default_factory=dict)
@@ -32,12 +32,12 @@ class SkillResult(BaseModel):
 
 
 class BaseResearchSkill(ABC):
-    """Abstract base class for all canonical research skills."""
+    """Lớp cơ sở trừu tượng cho tất cả các kỹ năng nghiên cứu kinh điển."""
 
     def __init__(self, metadata: SkillMetadata):
         self.metadata = metadata
 
     @abstractmethod
     def execute(self, payload: Dict[str, Any], engine: Any) -> SkillResult:
-        """Executes the skill against the provided payload using ScientificReasoningEngine."""
+        """Thực thi kỹ năng dựa trên tải trọng được cung cấp bằng ScientificReasoningEngine."""
         pass

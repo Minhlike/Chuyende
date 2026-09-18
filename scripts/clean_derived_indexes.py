@@ -1,11 +1,11 @@
 """
-Purge Disposable Derived Indexes and Runtime Cache (ADR-0004, RC-17)
+Lọc các chỉ mục phái sinh dùng một lần và bộ đệm thời gian chạy (ADR-0004, RC-17)
 """
 
 import sys
 from pathlib import Path
 
-# Add src to sys.path
+# Thêm src vào sys.path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from research_agent.config import get_default_config

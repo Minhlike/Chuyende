@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-CH3 Train/Validation Smoke Test Runner
-Executes end-to-end verification of Chapter 2 architecture on small deterministic subsets
-of TRAIN and VALIDATION splits.
+Người chạy thử nghiệm khói xác thực/đào tạo CH3
+Thực hiện xác minh từ đầu đến cuối của kiến trúc Chương 2 trên các tập hợp con xác định nhỏ
+của sự phân chia TRAIN và VALIDATION.
 
 STRICT INVARIANTS:
-  - TEST SET FIREWALL: Test split is strictly sealed and raising TestSetSealedError on access.
-  - IMMUTABLE RUN ARTIFACTS: Every run writes to its own isolated experiments/smoke/runs/<SMOKE_RUN_ID>/ directory.
-  - DATA CLASSIFICATION: Explicitly tagged HYBRID_SMOKE_FIXTURE (Real HDFS Sequences + Synthetic Proxies).
+  - TEST SET FIREWALL: Việc phân chia thử nghiệm được niêm phong nghiêm ngặt và đưa ra TestSetSealedError khi truy cập.
+  - IMMUTABLE RUN ARTIFACTS: Mỗi lần chạy sẽ ghi vào thư mục thí nghiệm/khói/chạy/<SMOKE_RUN_ID>/ riêng biệt của nó.
+  - DATA CLASSIFICATION: Được gắn thẻ rõ ràng HYBRID_SMOKE_FIXTURE (Trình tự HDFS thực + Proxy tổng hợp).
   - EXACT CHAPTER 2 STAGE A OBJECTIVE: L_StageA = L_seq_self + L_graph_self + lambda_align * L_align + lambda_fuse * L_fuse_rec.
-  - REAL ZERO-GRAD AUDIT: Asserts grad exists, is finite, and norm > 1e-7 on all expected active parameters.
-  - TRUE CHECKPOINT RESUME: Compares uninterrupted Step N+1 training against Checkpoint Reload Step N+1.
+  - REAL ZERO-GRAD AUDIT: Khẳng định cấp độ tồn tại, hữu hạn và định mức > 1e-7 trên tất cả các tham số hoạt động dự kiến.
+  - TRUE CHECKPOINT RESUME: So sánh quá trình đào tạo Bước N+1 không bị gián đoạn với Bước tải lại checkpoint N+1.
 """
 
 import os
@@ -38,11 +38,11 @@ from research_agent.experiments.extractor.multi_view import (
 from research_agent.experiments.protocols.h4_operational_benchmark import MemoryPeakMonitor
 
 class TestSetSealedError(Exception):
-    """Raised when any code attempts to access the sealed Test split."""
+    """Xảy ra khi bất kỳ mã nào cố gắng truy cập vào phần tách Kiểm thử đã được niêm phong."""
     __test__ = False
 
 def enforce_test_firewall(split_name: str):
-    """Runtime guard preventing any access to Test split."""
+    """Bảo vệ thời gian chạy ngăn chặn mọi quyền truy cập vào phần Kiểm thử."""
     if "TEST" in split_name.upper():
         raise TestSetSealedError(
             f"TestSetSealedError: Split '{split_name}' is SEALED. Access during smoke tests is strictly prohibited."
@@ -63,7 +63,7 @@ def compute_dict_hash(d: Dict[str, Any]) -> str:
 
 class SmokeTestRunner:
     """
-    Orchestrates the deterministic train/validation smoke test pipeline with immutable run isolation.
+    Sắp xếp quy trình kiểm tra khói xác thực/xác thực xác định với khả năng cách ly hoạt động bất biến.
     """
     def __init__(
         self,
@@ -86,7 +86,7 @@ class SmokeTestRunner:
         
         self.smoke_run_id = custom_run_id or f"SMOKE-{int(time.time())}"
         
-        # Dedicated immutable run directory
+        # Thư mục chạy chuyên dụng bất biến
         self.smoke_root = self.base_dir / "experiments" / "smoke"
         self.run_dir = self.smoke_root / "runs" / self.smoke_run_id
         self.artifacts_smoke_dir = self.base_dir / "artifacts" / "smoke" / self.smoke_run_id
@@ -111,7 +111,7 @@ class SmokeTestRunner:
 
     def load_and_subset_data(self) -> Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any]]:
         """
-        Loads HDFS train and validation splits deterministically with strict Test firewall.
+        Tải chương trình đào tạo HDFS và phân tách xác thực một cách xác định bằng tường lửa Kiểm tra nghiêm ngặt.
         """
         hdfs_dir = self.base_dir / "experiments" / "runs" / "data" / "hdfs"
         train_path = hdfs_dir / "hdfs_train.pt"
@@ -123,13 +123,13 @@ class SmokeTestRunner:
         enforce_test_firewall("TRAIN")
         enforce_test_firewall("VAL")
 
-        # Load raw train/val
+        # Tải tàu/val thô
         train_raw = torch.load(train_path, map_location="cpu", weights_only=False)
         val_raw = torch.load(val_path, map_location="cpu", weights_only=False)
 
         rng = np.random.default_rng(self.seed)
 
-        # Deterministic Train Subset
+        # Tập hợp con tàu xác định
         n_train_total = len(train_raw["sequences"])
         train_indices = rng.choice(n_train_total, size=min(self.max_train_samples, n_train_total), replace=False)
         train_subset = {
@@ -138,7 +138,7 @@ class SmokeTestRunner:
             "session_ids": [train_raw["session_ids"][i] for i in train_indices]
         }
 
-        # Deterministic Validation Subset
+        # Tập hợp con xác thực xác định
         n_val_total = len(val_raw["sequences"])
         val_indices = rng.choice(n_val_total, size=min(self.max_val_samples, n_val_total), replace=False)
         val_subset = {
@@ -179,7 +179,7 @@ class SmokeTestRunner:
         device: torch.device
     ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, List[List[Dict[str, Any]]], List[Set[int]], List[Set[int]]]:
         """
-        Builds synchronized batch tensors and corresponding graph event streams with explicit masking sets.
+        Xây dựng các tensor hàng loạt được đồng bộ hóa và các luồng sự kiện đồ thị tương ứng với các bộ mặt nạ rõ ràng.
         """
         batch_size = len(seq_list)
         max_len = max(t.size(0) for t in seq_list)
@@ -200,12 +200,12 @@ class SmokeTestRunner:
             padded_seqs[b_idx, :length] = seq.to(device)
             true_targets[b_idx, :length] = seq.to(device)
             
-            # 15% random MEP mask
+            # Mặt nạ MEP ngẫu nhiên 15%
             mask_positions = torch.rand(length, device=device) < 0.15
             if not mask_positions.any() and length > 0:
                 mask_positions[0] = True
             mep_mask[b_idx, :length] = mask_positions
-            padded_seqs[b_idx, :length][mask_positions] = 2  # <MASK> token
+            padded_seqs[b_idx, :length][mask_positions] = 2  # token <MASK>
 
             param_targets[b_idx, :length] = (seq % 30).to(device)
             mpp_positions = (torch.rand(length, device=device) < 0.2)
@@ -293,7 +293,7 @@ class SmokeTestRunner:
                     graph_events, mask_e, mask_n
                 ) = self._prepare_batch_tensors(batch_seqs, device)
 
-                # 1. Forward Pass
+                # 1. Chuyển tiếp
                 optimizer.zero_grad()
                 loss, metrics = model.compute_stage_a_loss(
                     seq_inputs=seq_in,
@@ -316,11 +316,11 @@ class SmokeTestRunner:
                     inf_loss_count += 1
                     all_losses_finite = False
 
-                # 2. Backward Pass
+                # 2. Đèo ngược
                 loss.backward()
 
-                # 3. Real Zero-Grad & Finite Audit Across Modules
-                # Expected inactive: unaligned_proj, missing_graph_token
+                # 3. Kiểm tra hữu hạn và không cấp độ thực trên các mô-đun
+                # Dự kiến không hoạt động: unaligned_proj, missing_graph_token
                 for name, p in model.named_parameters():
                     if "unaligned_proj" in name or "missing_graph_token" in name:
                         continue
@@ -337,7 +337,7 @@ class SmokeTestRunner:
 
                 p_norm_before = sum(p.data.norm().item() for p in model.parameters() if p.requires_grad)
 
-                # 4. Optimizer Step
+                # 4. Bước tối ưu hóa
                 optimizer.step()
 
                 p_norm_after = sum(p.data.norm().item() for p in model.parameters() if p.requires_grad)
@@ -375,7 +375,7 @@ class SmokeTestRunner:
         if torch.cuda.is_available():
             peak_vram_mb = torch.cuda.max_memory_allocated() / (1024 * 1024)
 
-        # Write Train Logs to run_dir
+        # Viết nhật ký tàu vào run_dir
         train_log_path = self.run_dir / "train-log.jsonl"
         with open(train_log_path, "w", encoding="utf-8") as f:
             for rec in train_logs:
@@ -404,8 +404,8 @@ class SmokeTestRunner:
         checkpoint_saved = checkpoint_path.exists() and (checkpoint_path.stat().st_size > 0)
         checkpoint_sha256 = compute_sha256(checkpoint_path)
 
-        # 1. Control Step N+1:
-        # Clone RNG states before step N+1
+        # 1. Bước kiểm soát N+1:
+        # Sao chép trạng thái RNG trước bước N+1
         pre_n1_py_rng = random.getstate()
         pre_n1_np_rng = np.random.get_state()
         pre_n1_cpu_rng = torch.get_rng_state()
@@ -426,7 +426,7 @@ class SmokeTestRunner:
         optimizer.step()
         theta_ctrl = torch.cat([p.data.view(-1) for p in model.parameters() if p.requires_grad])
 
-        # 2. Resumed Step N+1:
+        # 2. Tiếp tục Bước N+1:
         model_resumed = MultiViewRepresentationModel(**model_config).to(device)
         optimizer_resumed = torch.optim.AdamW(model_resumed.parameters(), lr=self.lr, weight_decay=1e-4)
 
@@ -434,7 +434,7 @@ class SmokeTestRunner:
         model_resumed.load_state_dict(loaded_ckpt["model_state_dict"])
         optimizer_resumed.load_state_dict(loaded_ckpt["optimizer_state_dict"])
         
-        # Restore RNG states
+        # Khôi phục trạng thái RNG
         random.setstate(pre_n1_py_rng)
         np.random.set_state(pre_n1_np_rng)
         torch.set_rng_state(pre_n1_cpu_rng)
@@ -460,7 +460,7 @@ class SmokeTestRunner:
         resume_loss_match = bool(loss_diff < 1e-5)
         resume_param_match = bool(param_diff < 1e-5)
 
-        # Validation Forward Pass
+        # Thẻ chuyển tiếp xác thực
         model.eval()
         val_seqs_all = val_subset["sequences"]
         (
@@ -492,7 +492,7 @@ class SmokeTestRunner:
         state_metrics = model.graph_extractor.memory_bank.get_state_metrics()
         end_utc = datetime.now(timezone.utc).isoformat()
 
-        # Build Report Markdown
+        # Xây dựng báo cáo đánh dấu
         last_log = train_logs[-1]
         report_md = f"""# CH3 Implementation Smoke Test Report
 
@@ -627,7 +627,7 @@ class SmokeTestRunner:
         manifest_full_path = self.run_dir / "manifest.json"
         manifest_full_path.write_text(json.dumps(manifest_full, indent=2), encoding="utf-8")
 
-        # Update LATEST.json pointer
+        # Cập nhật con trỏ LATEST.json
         latest_ptr = {
             "latest_smoke_run_id": self.smoke_run_id,
             "timestamp": time.time(),

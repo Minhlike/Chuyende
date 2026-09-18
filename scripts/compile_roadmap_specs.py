@@ -1,6 +1,6 @@
 """
-Deterministic Roadmap Specification Compiler and Ingester
-Compiles canonical research roadmap data structures into versioned YAML files and ingests into SQLite.
+Trình biên dịch và nhập thông số kỹ thuật lộ trình xác định
+Biên dịch cấu trúc dữ liệu lộ trình nghiên cứu chuẩn thành các tệp YAML đã được phiên bản và nhập vào SQLite.
 """
 
 import json
@@ -33,7 +33,7 @@ from research_agent.interfaces.roadmap_ingestion import RoadmapIngestionService
 
 
 def build_canonical_roadmap_data() -> dict:
-    """Build the complete canonical roadmap data structure."""
+    """Xây dựng cấu trúc dữ liệu lộ trình chuẩn hoàn chỉnh."""
     
     questions = [
         {
@@ -376,7 +376,7 @@ def build_canonical_roadmap_data() -> dict:
         },
     ]
 
-    # Build All Hierarchical Roadmap Nodes
+    # Xây dựng tất cả các nút lộ trình phân cấp
     nodes = [
         # --- CHAPTER 1 ---
         {"node_id": "NOD-000001", "parent_node_id": None, "level": 1, "order_index": 1, "code": "1.0", "title": "CHAPTER 1. TỔNG QUAN VỀ PHƯƠNG PHÁP TRÍCH XUẤT ĐẶC TRƯNG DỮ LIỆU LOG VÀ THÁCH THỨC BẢO TOÀN NGỮ CẢNH AN TOÀN", "expected_role": "BACKGROUND", "expected_outputs": ["Định nghĩa bài toán biểu diễn log và bộ tiêu chí đặc trưng"]},
@@ -571,7 +571,7 @@ def compile_and_ingest_roadmap():
     
     roadmap_data = build_canonical_roadmap_data()
     
-    # 1. Write structured YAML files
+    # 1. Viết file YAML có cấu trúc
     roadmap_yaml_path = spec_dir / "roadmap.yaml"
     traceability_yaml_path = spec_dir / "traceability.yaml"
     rq_hyp_yaml_path = spec_dir / "rq-hypothesis.yaml"
@@ -580,7 +580,7 @@ def compile_and_ingest_roadmap():
     boundaries_yaml_path = spec_dir / "boundaries.yaml"
     version_file_path = spec_dir / "VERSION"
 
-    # YAML serialization
+    # Tuần tự hóa YAML
     with open(roadmap_yaml_path, "w", encoding="utf-8") as f:
         yaml.dump(roadmap_data, f, sort_keys=False, allow_unicode=True, indent=2)
 
@@ -599,7 +599,7 @@ def compile_and_ingest_roadmap():
     with open(boundaries_yaml_path, "w", encoding="utf-8") as f:
         yaml.dump({"boundaries": roadmap_data["boundaries"]}, f, sort_keys=False, allow_unicode=True, indent=2)
 
-    # Compute hash of roadmap.yaml
+    # Tính hàm băm của roadmap.yaml
     with open(roadmap_yaml_path, "r", encoding="utf-8") as f:
         raw_text = f.read()
     sha256 = compute_string_sha256(raw_text)
@@ -607,7 +607,7 @@ def compile_and_ingest_roadmap():
     with open(version_file_path, "w", encoding="utf-8") as f:
         f.write(f"VERSION=1.0.0\nSHA256={sha256}\nSTATUS=CANONICAL_SPECIFIED\n")
 
-    # 2. Ingest into Database idempotently
+    # 2. Nhập vào cơ sở dữ liệu một cách bình thường
     db_manager = DatabaseManager(config=config)
     repo = ResearchRepository(db_manager)
     ingestion_service = RoadmapIngestionService(repo)

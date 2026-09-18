@@ -1,5 +1,5 @@
 """
-Tests for Persistence Layer and Disposable Derived Indexes (TEST 9, ADR-0001, ADR-0004)
+Kiểm tra lớp bền vững và các chỉ mục phái sinh dùng một lần (TEST 9, ADR-0001, ADR-0004)
 """
 
 from pathlib import Path
@@ -13,8 +13,8 @@ from research_agent.interfaces.roadmap_ingestion import RoadmapIngestionService
 
 
 def test_invariant_9_derived_indexes_disposable(temp_workspace: WorkspaceConfig, repository: ResearchRepository, file_store: CanonicalFileStore):
-    """TEST 9: Derived indexes and caches can be deleted while canonical database/artifacts remain intact (RC-17)."""
-    # 1. Store canonical claim in DB
+    """TEST 9: Các chỉ mục và bộ đệm có nguồn gốc có thể bị xóa trong khi cơ sở dữ liệu/tạo phẩm chuẩn vẫn còn nguyên (RC-17)."""
+    # 1. Lưu trữ yêu cầu chính tắc trong DB
     claim = Claim(
         claim_id="CLM-000001",
         statement="Log sequences have non-stationary transition dynamics.",
@@ -24,26 +24,26 @@ def test_invariant_9_derived_indexes_disposable(temp_workspace: WorkspaceConfig,
     )
     repository.save_claim(claim)
 
-    # 2. Write a canonical document
+    # 2. Viết tài liệu chuẩn
     _, doc_hash = file_store.write_text("sources/manifests/test_manifest.yaml", "sources: []")
 
-    # 3. Simulate derived cache and vector index files
+    # 3. Mô phỏng các tệp chỉ mục vectơ và bộ nhớ đệm dẫn xuất
     cache_file, _ = file_store.write_text("runtime/cache/query_cache_001.json", '{"cached": true}')
     index_file, _ = file_store.write_text("runtime/indexes/bm25_chunk_index.bin", "BINARY_VECTOR_BLOB")
 
     assert cache_file.exists()
     assert index_file.exists()
 
-    # 4. Purge all derived indexes and caches
+    # 4. Lọc tất cả các chỉ mục và bộ đệm dẫn xuất
     cache_purged, index_purged = file_store.purge_derived_indexes()
     assert cache_purged >= 1
     assert index_purged >= 1
 
-    # 5. Verify derived files are gone
+    # 5. Xác minh các tập tin dẫn xuất đã biến mất
     assert not cache_file.exists()
     assert not index_file.exists()
 
-    # 6. Verify CANONICAL DATA is 100% intact
+    # 6. Xác minh CANONICAL DATA còn nguyên vẹn 100%
     reloaded_claim = repository.get_claim("CLM-000001")
     assert reloaded_claim is not None
     assert reloaded_claim.statement == claim.statement
@@ -53,7 +53,7 @@ def test_invariant_9_derived_indexes_disposable(temp_workspace: WorkspaceConfig,
 
 
 def test_stable_id_sequential_allocation(repository: ResearchRepository):
-    """Verify that stable IDs are generated monotonically with standard formatting."""
+    """Xác minh rằng ID ổn định được tạo đơn điệu với định dạng chuẩn."""
     src1 = repository.next_id(EntityPrefix.SOURCE)
     src2 = repository.next_id(EntityPrefix.SOURCE)
     clm1 = repository.next_id(EntityPrefix.CLAIM)
@@ -66,7 +66,7 @@ def test_stable_id_sequential_allocation(repository: ResearchRepository):
 
 
 def test_roadmap_ingestion_preserves_hierarchy(repository: ResearchRepository):
-    """Verify that Roadmap ingestion preserves hierarchy, RQ, and Hypotheses."""
+    """Xác minh rằng việc nhập Lộ trình sẽ duy trì thứ bậc, RQ và Giả thuyết."""
     service = RoadmapIngestionService(repository)
     sample_roadmap = {
         "roadmap_id": "ROD-000001",

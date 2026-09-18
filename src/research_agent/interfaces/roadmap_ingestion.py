@@ -1,5 +1,5 @@
 """
-Roadmap Ingestion Interface and Specification Contract (Section 21, Prompt 2 Target)
+Hợp đồng đặc tả và giao diện nhập lộ trình (Phần 21, Mục tiêu nhắc 2)
 """
 
 import json
@@ -23,20 +23,20 @@ from research_agent.storage.repository import ResearchRepository
 
 
 class RoadmapIngestionService:
-    """Ingests and validates formal 3-chapter Research Roadmap specifications without text mutation (RC-15)."""
+    """Nhập và xác thực các thông số kỹ thuật của Lộ trình nghiên cứu chính thức gồm 3 chương mà không bị đột biến văn bản (RC-15)."""
 
     def __init__(self, repository: ResearchRepository):
         self.repo = repository
 
     def validate_roadmap_structure(self, roadmap: ResearchRoadmap, strict_canonical: bool = False) -> None:
-        """Perform comprehensive structural and semantic validation (TEST-RM-01..16)."""
+        """Thực hiện xác thực toàn diện về cấu trúc và ngữ nghĩa (TEST-RM-01..16)."""
         if not roadmap.title or not roadmap.title.strip():
             raise InvariantViolationError("Roadmap must possess a non-empty canonical title.")
 
         if not roadmap.nodes:
             raise InvariantViolationError("Roadmap must contain hierarchical research nodes.")
 
-        # 1. Unique IDs & Canonical Codes
+        # 1. ID duy nhất & Mã Canonical
         node_ids: Set[str] = set()
         node_codes: Set[str] = set()
         for node in roadmap.nodes:
@@ -47,7 +47,7 @@ class RoadmapIngestionService:
             node_ids.add(node.node_id)
             node_codes.add(node.code)
 
-        # 2. Hierarchy validation: parent must exist if specified
+        # 2. Xác thực hệ thống phân cấp: cha mẹ phải tồn tại nếu được chỉ định
         for node in roadmap.nodes:
             if node.parent_node_id:
                 if node.parent_node_id not in node_ids:
@@ -55,7 +55,7 @@ class RoadmapIngestionService:
                         f"Node '{node.code}' ({node.node_id}) references non-existent parent_node_id '{node.parent_node_id}' (TEST-RM-01)."
                     )
 
-        # 3. Unique RQs & Hypotheses
+        # 3. RQ & giả thuyết độc đáo
         rq_codes = [q.code for q in roadmap.questions]
         if len(rq_codes) != len(set(rq_codes)):
             raise InvariantViolationError(f"Duplicate Research Question code detected (TEST-RM-03).")
@@ -64,7 +64,7 @@ class RoadmapIngestionService:
         if len(h_codes) != len(set(h_codes)):
             raise InvariantViolationError(f"Duplicate Hypothesis code detected (TEST-RM-04).")
 
-        # 4. Strict Canonical Check (Full Roadmap 1.0.0 Specification)
+        # 4. Kiểm tra Canonical nghiêm ngặt (Thông số kỹ thuật đầy đủ của Lộ trình 1.0.0)
         if strict_canonical or len(roadmap.nodes) > 10:
             expected_rqs = {"RQ1", "RQ2", "RQ3", "RQ4", "RQ5"}
             if len(roadmap.questions) != 5 or set(rq_codes) != expected_rqs:
@@ -78,7 +78,7 @@ class RoadmapIngestionService:
                     f"Canonical roadmap must contain exactly H1..H5. Found: {h_codes} (TEST-RM-04)."
                 )
 
-        # 5. Representation Contract Validation
+        # 5. Xác nhận hợp đồng đại diện
         if roadmap.representation_contract:
             rc = roadmap.representation_contract
             if not rc.preserve or not rc.invariant or not rc.exclude:
@@ -86,15 +86,15 @@ class RoadmapIngestionService:
                     "Representation Contract must specify all three categories: PRESERVE, INVARIANT, EXCLUDE (TEST-RM-07)."
                 )
 
-        # 6. Central Object Validation
+        # 6. Xác thực đối tượng trung tâm
         if "feature representation z" not in (roadmap.central_object or ""):
             raise InvariantViolationError(
                 "Central object must explicitly declare 'feature representation z' (TEST-RM-08)."
             )
 
     def ingest_roadmap_dict(self, data: Dict[str, Any], raw_text: Optional[str] = None) -> ResearchRoadmap:
-        """Parse, validate, hash, and persist a Research Roadmap specification idempotently."""
-        # Compute deterministic checksum
+        """Phân tích cú pháp, xác thực, băm và duy trì thông số kỹ thuật của Lộ trình nghiên cứu một cách bình thường."""
+        # Tính toán tổng kiểm tra xác định
         sha256 = compute_string_sha256(raw_text or json.dumps(data, sort_keys=True))
 
         nodes = [ResearchNode(**n) for n in data.get("nodes", [])]
@@ -125,9 +125,9 @@ class RoadmapIngestionService:
             traceability_matrix=traceability,
         )
 
-        # Validate
+        # Xác thực
         self.validate_roadmap_structure(roadmap)
 
-        # Persist idempotently
+        # Kiên trì một cách bình thường
         self.repo.save_roadmap(roadmap)
         return roadmap

@@ -1,5 +1,5 @@
 """
-Dataset Integrity & Quality Validator (Prompt 6 Section 22)
+Trình xác thực chất lượng và tính toàn vẹn của tập dữ liệu (Lời nhắc 6 Phần 22)
 """
 
 import hashlib
@@ -10,12 +10,12 @@ import pandas as pd
 
 class DataValidator:
     """
-    Validates dataset files, schemas, timestamp parsing, and record integrity.
-    Never silently mutates or auto-deletes records; creates explicit data quality reports.
+    Xác thực các tệp dữ liệu, lược đồ, phân tích cú pháp dấu thời gian và tính toàn vẹn của bản ghi.
+    Không bao giờ âm thầm thay đổi hoặc tự động xóa bản ghi; tạo báo cáo chất lượng dữ liệu rõ ràng.
     """
 
     def calculate_file_sha256(self, file_path: Path | str) -> str:
-        """Computes SHA-256 hash of a file on disk."""
+        """Tính hàm băm SHA-256 của một tệp trên đĩa."""
         p = Path(file_path)
         if not p.exists():
             raise FileNotFoundError(f"Dataset file '{file_path}' does not exist.")
@@ -26,7 +26,7 @@ class DataValidator:
         return hasher.hexdigest()
 
     def validate_file_hash(self, file_path: Path | str, expected_sha256: str) -> Tuple[bool, str]:
-        """Compares actual file SHA256 against expected manifest hash."""
+        """So sánh tệp thực tế SHA256 với hàm băm của tệp kê khai dự kiến."""
         actual_hash = self.calculate_file_sha256(file_path)
         if actual_hash.lower() == expected_sha256.lower():
             return True, f"SHA-256 matches: {actual_hash}"
@@ -39,20 +39,20 @@ class DataValidator:
         timestamp_col: Optional[str] = None,
         label_col: Optional[str] = None,
     ) -> Tuple[bool, List[str]]:
-        """Validates dataframe schema, missing columns, duplicates, and timestamp sanity."""
+        """Xác thực lược đồ khung dữ liệu, cột bị thiếu, trùng lặp và độ chính xác của dấu thời gian."""
         issues: List[str] = []
 
-        # Check missing columns
+        # Kiểm tra các cột bị thiếu
         missing = [col for col in required_columns if col not in df.columns]
         if missing:
             issues.append(f"Missing required columns: {missing}")
 
-        # Check duplicates
+        # Kiểm tra trùng lặp
         duplicate_count = df.duplicated().sum()
         if duplicate_count > 0:
             issues.append(f"Dataset contains {duplicate_count} duplicate rows ({duplicate_count / len(df):.2%}).")
 
-        # Check timestamp parsing and sanity
+        # Kiểm tra phân tích cú pháp dấu thời gian và độ tỉnh táo
         if timestamp_col and timestamp_col in df.columns:
             try:
                 ts = pd.to_datetime(df[timestamp_col], errors="coerce")
@@ -67,7 +67,7 @@ class DataValidator:
             except Exception as e:
                 issues.append(f"Timestamp parsing failed for column '{timestamp_col}': {str(e)}")
 
-        # Check label column
+        # Kiểm tra cột nhãn
         if label_col and label_col in df.columns:
             missing_labels = df[label_col].isna().sum()
             if missing_labels > 0:

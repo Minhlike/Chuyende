@@ -1,7 +1,7 @@
 """
-Master Academic Word Document Builder - Chapter 1 & Chapter 2 Section 2.1
-Compiles pristine scientific thesis document directly into Microsoft Word 2016 (.docx)
-with Native Word Citations, OMML Equations, Vector Visuals, Captions, and COM Automation.
+Bậc thầy xây dựng tài liệu Word học thuật - Chương 1 & Chương 2 Phần 2.1
+Biên soạn tài liệu luận án khoa học nguyên sơ trực tiếp vào Microsoft Word 2016 (.docx)
+với Trích dẫn Từ gốc, Phương trình OMML, Hình ảnh Vector, Chú thích và Tự động hóa COM.
 """
 
 import os
@@ -25,7 +25,7 @@ from docx.oxml.ns import nsdecls, qn
 
 
 def latex_to_clean_omml(latex_code: str) -> OxmlElement:
-    """Converts a LaTeX expression to a clean Office Math (w:oMath) element."""
+    """Chuyển đổi biểu thức LaTeX thành phần tử Office Math (w:oMath) sạch."""
     clean_code = (
         latex_code.replace(r"\mathbf", "")
         .replace(r"\mathcal", "")
@@ -54,7 +54,7 @@ def latex_to_clean_omml(latex_code: str) -> OxmlElement:
 
 
 def make_citation_element(items):
-    """Creates native Word Citation field elements for one or more source keys/indices."""
+    """Tạo các thành phần trường Trích dẫn Word gốc cho một hoặc nhiều khóa/chỉ mục nguồn."""
     if isinstance(items, (int, str)):
         items = [items]
 
@@ -95,7 +95,7 @@ def make_citation_element(items):
 
 
 def make_ref_element(bookmark_name: str, fallback_text: str, font_size_pt: float = 14.0):
-    """Creates a native Word REF dynamic cross-reference field element."""
+    """Tạo phần tử trường tham chiếu chéo động Word REF gốc."""
     sz_val = int(font_size_pt * 2)
     ref_xml = (
         f'<w:fldSimple {nsdecls("w")} w:instr="REF {bookmark_name} \\h ">\n'
@@ -243,7 +243,7 @@ def add_figure_caption(doc, target_p, seq_label: str, title_content, bookmark_na
 
 
 def format_table_cell(cell, width_dxa: int, align=WD_ALIGN_PARAGRAPH.LEFT, bold=False, font_size_pt=14):
-    """Sets standard cell properties: exact width, vertical centering, border, padding, and compact line spacing."""
+    """Đặt các thuộc tính ô tiêu chuẩn: chiều rộng chính xác, căn giữa theo chiều dọc, đường viền, phần đệm và khoảng cách dòng nhỏ gọn."""
     tcPr = cell._tc.get_or_add_tcPr()
     tc_xml = (
         f'<w:tcPr {nsdecls("w")}>\n'
@@ -280,7 +280,7 @@ def format_table_cell(cell, width_dxa: int, align=WD_ALIGN_PARAGRAPH.LEFT, bold=
 
 
 def insert_clean_table(doc, target_p, headers, rows_data, col_widths, font_size_pt=13):
-    """Creates a cleanly bordered table inserted before target_p."""
+    """Tạo một bảng có đường viền rõ ràng được chèn trước target_p."""
     tbl = doc.add_table(rows=len(rows_data) + 1, cols=len(headers)) if target_p is None else target_p.insert_paragraph_before()._p.addprevious(parse_xml(f'<w:tbl {nsdecls("w")}/>'))
     if target_p is not None:
         tbl = docx.table.Table(tbl, doc)
@@ -313,7 +313,7 @@ def insert_clean_table(doc, target_p, headers, rows_data, col_widths, font_size_
 
 
 def generate_perfect_sources_xml(sources):
-    """Generates valid Microsoft Word Bibliography Sources CustomXML with Corporate Authors & IEEE style."""
+    """Tạo các Nguồn thư mục Microsoft Word hợp lệ CustomXML với kiểu Tác giả doanh nghiệp & IEEE."""
     lines = ['<?xml version="1.0" encoding="UTF-8" standalone="no"?>']
     lines.append('<b:Sources SelectedStyle="\\IEEE.XSL" StyleName="IEEE" xmlns:b="http://schemas.openxmlformats.org/officeDocument/2006/bibliography" xmlns="http://schemas.openxmlformats.org/officeDocument/2006/bibliography">')
 

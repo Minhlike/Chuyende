@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Generates the Stage A1 Provenance Audit Document and defines the future-proof
-experiment provenance schema for Chapter 3.
+Tạo Tài liệu Kiểm tra Xuất xứ Giai đoạn A1 và xác định bằng chứng trong tương lai
+lược đồ xuất xứ thí nghiệm cho Chương 3.
 """
 
 import json
@@ -17,7 +17,7 @@ def generate_provenance_audit():
     lock_data = json.loads(lock_bytes.decode("utf-8"))
     contract_sha256 = lock_data.get("contract_sha256", "")
 
-    # Define schema definition
+    # Xác định định nghĩa lược đồ
     schema_spec = {
         "schema_version": "1.0.0",
         "description": "Standardized Provenance Schema for Chapter 3 Empirical Executions",
@@ -44,7 +44,7 @@ def generate_provenance_audit():
         ]
     }
 
-    # Audit historical 10 runs
+    # Kiểm tra lịch sử 10 lần chạy
     datasets = ["HDFS", "BGL"]
     seeds = [42, 1337, 2024, 7, 999]
     historical_attestations = []
@@ -57,16 +57,16 @@ def generate_provenance_audit():
             manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
             
             run_id = manifest["run_id"]
-            # Extract timestamp from run_id e.g. STAGE_A1_HDFS_SEED_42_1787349673
+            # Trích xuất dấu thời gian từ run_id e.g. STAGE_A1_HDFS_SEED_42_1787349673
             parts = run_id.split("_")
             ts_start = float(parts[-1]) if parts[-1].isdigit() else manifest.get("timestamp_start", "NOT_ATTESTED")
             duration = manifest.get("total_duration_sec", 0.0)
             ts_end = (ts_start + duration) if isinstance(ts_start, (int, float)) else "NOT_ATTESTED"
 
-            # Derive git commit context accurately from timeline
-            # Runs 42, 1337 on HDFS executed under commit 929c481
-            # Runs 2024, 7 on HDFS executed under 70b6810
-            # Run 999 HDFS & all BGL runs executed under 70b6810 / active execution branch
+            # Lấy bối cảnh cam kết git chính xác từ dòng thời gian
+            # Chạy 42, 1337 trên HDFS được thực thi theo cam kết 929c481
+            # Chạy 2024, 7 trên HDFS được thực thi dưới 70b6810
+            # Chạy 999 HDFS & tất cả các lần chạy BGL được thực thi trong 70b6810/nhánh thực thi đang hoạt động
             if ds == "HDFS" and seed in [42, 1337]:
                 impl_commit = "929c4818081edb2b067b2fca86c599b67b21606c"
                 commit_attestation = "DERIVED_FROM_INTERMEDIATE_COMMIT_LOG"

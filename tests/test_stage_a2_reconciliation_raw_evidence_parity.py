@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Automated Acceptance Test: Stage A2 Raw Evidence Parity Check
-Verifies 100% exact parity between raw snapshot evidence files
+Kiểm tra chấp nhận tự động: Kiểm tra tính chẵn lẻ bằng chứng thô giai đoạn A2
+Xác minh tính chẵn lẻ chính xác 100% giữa các tệp bằng chứng ảnh chụp nhanh thô
 (METRICS.json, RUN-STATE.json, CHECKPOINT-INVENTORY.json, TRAIN-LOG.jsonl)
-and derived reconciliation artifacts (STAGE-A2-FIVE-SEED-RECONCILIATION.json).
+và các tạo phẩm đối chiếu dẫn xuất (STAGE-A2-FIVE-SEED-RECONCILIATION.json).
 """
 
 import json
@@ -61,7 +61,7 @@ def test_seed_raw_evidence_exact_parity(reconciliation_data, seed):
         log_lines = [json.loads(line) for line in log_path.read_text(encoding="utf-8").splitlines() if line.strip()]
     last_train_line = log_lines[-1] if log_lines else {}
 
-    # Expected exact values from raw evidence
+    # Giá trị chính xác mong đợi từ bằng chứng thô
     raw_epochs_completed = metrics.get("epochs_completed", state.get("completed_epoch"))
     raw_optimizer_steps = metrics.get("optimizer_steps_completed", state.get("global_step"))
     raw_best_epoch = metrics.get("best_epoch", state.get("best_epoch"))
@@ -81,24 +81,24 @@ def test_seed_raw_evidence_exact_parity(reconciliation_data, seed):
     raw_best_checkpoint_sha256 = best_c.get("sha256", state.get("best_checkpoint_sha256"))
     raw_last_checkpoint_sha256 = last_c.get("sha256", state.get("last_checkpoint_sha256"))
 
-    # Assert exact integer / hash parity
+    # Khẳng định số nguyên/băm chẵn lẻ chính xác
     assert r["epochs_completed"] == raw_epochs_completed, f"Seed {seed}: epochs_completed mismatch"
     assert r["optimizer_steps"] == raw_optimizer_steps, f"Seed {seed}: optimizer_steps mismatch"
     assert r["best_epoch"] == raw_best_epoch, f"Seed {seed}: best_epoch mismatch"
     assert r["best_checkpoint_sha256"] == raw_best_checkpoint_sha256, f"Seed {seed}: best_checkpoint_sha256 mismatch"
     assert r["last_checkpoint_sha256"] == raw_last_checkpoint_sha256, f"Seed {seed}: last_checkpoint_sha256 mismatch"
 
-    # Assert exact floating point equality (zero tolerance)
+    # Khẳng định đẳng thức dấu phẩy động chính xác (không dung sai)
     assert r["best_val_L_graph"] == raw_best_val_L_graph, f"Seed {seed}: best_val_L_graph mismatch ({r['best_val_L_graph']} != {raw_best_val_L_graph})"
     assert r["final_train_L_graph"] == raw_final_train_L_graph, f"Seed {seed}: final_train_L_graph mismatch ({r['final_train_L_graph']} != {raw_final_train_L_graph})"
     assert r["final_val_L_graph"] == raw_final_val_L_graph, f"Seed {seed}: final_val_L_graph mismatch ({r['final_val_L_graph']} != {raw_final_val_L_graph})"
 
-    # Assert component parity where available
+    # Khẳng định tính chẵn lẻ của thành phần nếu có
     if raw_final_val_L_rel is not None:
         assert r["final_val_L_rel"] == raw_final_val_L_rel, f"Seed {seed}: final_val_L_rel mismatch"
         assert r["final_val_L_node"] == raw_final_val_L_node, f"Seed {seed}: final_val_L_node mismatch"
         assert r["final_val_L_time"] == raw_final_val_L_time, f"Seed {seed}: final_val_L_time mismatch"
-        # Decomposition identity assertion
+        # Xác nhận danh tính phân rã
         recalc_final = r["final_val_L_rel"] + r["final_val_L_node"] + 0.1 * r["final_val_L_time"]
         assert abs(r["final_val_L_graph"] - recalc_final) < 1e-5, f"Seed {seed}: final decomposition identity failure"
 
@@ -106,11 +106,11 @@ def test_seed_raw_evidence_exact_parity(reconciliation_data, seed):
         assert r["best_val_L_rel"] == raw_best_val_L_rel, f"Seed {seed}: best_val_L_rel mismatch"
         assert r["best_val_L_node"] == raw_best_val_L_node, f"Seed {seed}: best_val_L_node mismatch"
         assert r["best_val_L_time"] == raw_best_val_L_time, f"Seed {seed}: best_val_L_time mismatch"
-        # Decomposition identity assertion
+        # Xác nhận danh tính phân rã
         recalc_best = r["best_val_L_rel"] + r["best_val_L_node"] + 0.1 * r["best_val_L_time"]
         assert abs(r["best_val_L_graph"] - recalc_best) < 1e-5, f"Seed {seed}: best decomposition identity failure"
 
-    # Verify snapshot file hashes match actual disk contents
+    # Xác minh băm tệp ảnh chụp khớp với nội dung đĩa thực tế
     r_hashes = r.get("evidence_hashes", {})
     for fpath in s_dir.glob("*"):
         actual_hash = hashlib.sha256(fpath.read_bytes()).hexdigest()
@@ -149,18 +149,18 @@ def test_seed999_authorization_provenance_precedes_run(reconciliation_data):
     recon_seeds = {s["seed"]: s for s in reconciliation_data["seeds"]}
     s999 = recon_seeds[999]
 
-    # Required exact commit hash
+    # Hàm băm cam kết chính xác được yêu cầu
     expected_commit = "244e81a576bf49d7a58c7f2c69bbb16fc8e304fe"
     assert s999["authorization_commit"] == expected_commit
 
-    # Authorization timestamp vs run launch timestamp
+    # Dấu thời gian ủy quyền so với dấu thời gian khởi chạy
     auth_time = s999["authorization_committed_at"]
     run_start = s999["execution_started_at"]
     assert auth_time == "2026-09-08T16:11:15Z"
     assert run_start.startswith("2026-09-08T16:12:43")
     assert auth_time < run_start, f"Authorization ({auth_time}) must precede run start ({run_start})"
 
-    # Seed 999 classification and prospective contract deviation check
+    # Phân loại hạt giống 999 và kiểm tra độ lệch hợp đồng tiềm năng
     assert s999["classification"] == "PROTOCOL_DEVIATION"
     assert any("warmup_steps=573" in issue for issue in s999["provenance_issues"])
 

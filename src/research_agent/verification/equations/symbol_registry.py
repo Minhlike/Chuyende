@@ -1,5 +1,5 @@
 """
-Symbol Registry & Mathematical Scope Auditor (Prompt 6 Section 10)
+Người kiểm tra phạm vi toán học và đăng ký ký hiệu (Lời nhắc 6 Phần 10)
 """
 
 from typing import Dict, List, Optional, Tuple
@@ -8,15 +8,15 @@ from research_agent.schemas.verification import ScopedSymbol
 
 class SymbolRegistry:
     """
-    Manages mathematical symbols across equations and namespaces.
-    Guarantees no false semantic equivalence assumptions between identical symbol letters.
+    Quản lý các ký hiệu toán học trên các phương trình và không gian tên.
+    Đảm bảo không có giả định sai về ngữ nghĩa tương đương giữa các chữ cái ký hiệu giống hệt nhau.
     """
 
     def __init__(self):
         self._symbols: Dict[str, ScopedSymbol] = {}
 
     def register_symbol(self, symbol: ScopedSymbol) -> ScopedSymbol:
-        """Registers a scoped mathematical symbol definition."""
+        """Đăng ký một định nghĩa ký hiệu toán học có phạm vi."""
         self._symbols[symbol.symbol_id] = symbol
         return symbol
 
@@ -32,9 +32,9 @@ class SymbolRegistry:
         self,
         symbol_latex: str,
     ) -> List[Tuple[ScopedSymbol, ScopedSymbol, str]]:
-        """
-        Detects if the same symbol string (e.g. '\\lambda') has conflicting meanings
-        across different equations without explicit namespaces.
+        r"""
+        Phát hiện xem chuỗi ký hiệu giống nhau (e.g. '\lambda') có ý nghĩa xung đột hay không
+        trên các phương trình khác nhau mà không có không gian tên rõ ràng.
         """
         matching = [s for s in self._symbols.values() if s.symbol_latex == symbol_latex]
         ambiguities = []
@@ -50,7 +50,7 @@ class SymbolRegistry:
         return ambiguities
 
     def audit_symbol_completeness(self, symbol: ScopedSymbol) -> List[str]:
-        """Checks if a registered symbol has sufficient physical and mathematical context."""
+        """Kiểm tra xem biểu tượng đã đăng ký có đủ ngữ cảnh vật lý và toán học hay không."""
         issues = []
         if not symbol.name or len(symbol.name.strip()) < 2:
             issues.append(f"Symbol '{symbol.symbol_latex}' has empty or trivial name.")

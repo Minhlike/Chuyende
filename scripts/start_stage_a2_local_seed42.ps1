@@ -1,4 +1,4 @@
-﻿# scripts/start_stage_a2_local_seed42.ps1
+﻿# tập lệnh/start_stage_a2_local_seed42.ps1
 $ErrorActionPreference = "Stop"
 
 $baseDir = "D:\Research"
@@ -13,7 +13,7 @@ $stdoutLog = "$logDir\seed42.stdout.log"
 $stderrLog = "$logDir\seed42.stderr.log"
 $pidFile = "$logDir\seed42.pid"
 
-# Set deterministic environment variables
+# Đặt các biến môi trường xác định
 $env:CUBLAS_WORKSPACE_CONFIG = ":4096:8"
 $env:PYTHONUNBUFFERED = "1"
 

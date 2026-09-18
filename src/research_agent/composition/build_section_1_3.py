@@ -18,14 +18,14 @@ from docx.oxml.ns import nsdecls
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-# Initialize official Microsoft Office MathML to OMML XSLT transformer
+# Khởi tạo biến áp Microsoft Office MathML chính thức thành biến áp OMML XSLT
 XSLT_PATH = r"C:\Program Files\Microsoft Office\Office16\MML2OMML.XSL"
 xslt_tree = etree.parse(XSLT_PATH)
 transform_omml = etree.XSLT(xslt_tree)
 
 
 def latex_to_clean_omml(latex_code: str):
-    """Converts a LaTeX formula into a native Word OMML element, cleaning any empty <m:e/> placeholders."""
+    """Chuyển đổi công thức LaTeX thành phần tử Word OMML gốc, xóa mọi phần giữ chỗ <m:e/> trống."""
     try:
         mathml = latex2mathml.converter.convert(latex_code)
         tree = etree.fromstring(mathml)
@@ -254,7 +254,7 @@ def append_section_1_3(target_file: str = r"D:\Research\Chuyên đề chuyên s�
         bold_prefix="• Câu hỏi nghiên cứu 5 (RQ5 — Privacy-Security Trade-Off): "
     )
 
-    # Save
+    # Lưu
     updated_file = str(target_path.parent / (target_path.stem + ".updated.docx"))
     doc.save(updated_file)
     print(f"[3/3] Saved updated file with Section 1.3 to: {updated_file}")

@@ -1,5 +1,5 @@
 """
-Deterministic Descriptive Statistics (Prompt 6 Section 35)
+Thống kê mô tả xác định (Nhắc 6 Phần 35)
 """
 
 from typing import Any, Dict, List, Union
@@ -9,12 +9,12 @@ import scipy.stats as stats
 
 class DescriptiveStatisticsEngine:
     """
-    Computes deterministic descriptive statistics:
-    mean, median, sample standard deviation (ddof=1), IQR, min, max, quantiles.
+    Tính toán thống kê mô tả xác định:
+    giá trị trung bình, trung vị, độ lệch chuẩn mẫu (ddof=1), IQR, min, max, lượng tử.
     """
 
     def compute_summary(self, values: Union[List[float], np.ndarray]) -> Dict[str, float]:
-        """Calculates full descriptive summary of a sample array."""
+        """Tính toán tóm tắt mô tả đầy đủ của một mảng mẫu."""
         arr = np.array(values, dtype=float)
         arr = arr[~np.isnan(arr)]
         n = len(arr)

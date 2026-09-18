@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
 """
-Canonical HDFS Causal Event-Entity Graph Builder & Materialization Engine (Contract V1.2).
-Strictly bound to SPL-HDFS-001 Canonical Split Authority and Millisecond-Accurate Temporal Semantics:
-  - Single Source of Truth Split Authority: HDFSSplitAuthority
-  - Millisecond Preservation: parse_hdfs_line_timestamp (UTC epoch + ms / 1000.0)
-  - Canonical Sort Key: (event_timestamp_utc_exact, raw_line_index)
-  - Extractable Entities: DATA_BLOCK (0), STORAGE_NODE (1), MANAGEMENT_SYSTEM (2), EXECUTION_THREAD (3)
-  - Grounded Relations:
+Công cụ tạo & tạo biểu đồ thực thể sự kiện nhân quả Canonical HDFS (Hợp đồng V1.2).
+Bị ràng buộc chặt chẽ với Cơ quan phân chia kinh điển SPL-HDFS-001 và Ngữ nghĩa tạm thời chính xác đến một phần nghìn giây:
+  - Nguồn duy nhất của Cơ quan phân chia sự thật: HDFSplitAuthority
+  - Bảo toàn mili giây: parse_hdfs_line_timestamp (UTC epoch + ms / 1000.0)
+  - Khóa sắp xếp chuẩn: (event_timestamp_utc_exact, raw_line_index)
+  - Các thực thể có thể trích xuất: DATA_BLOCK (0), STORAGE_NODE (1), MANAGEMENT_SYSTEM (2), EXECUTION_THREAD (3)
+  - Mối quan hệ có căn cứ:
       1. RECEIVES_BLOCK (dfs.DataNode$DataXceiver)
-      2. TRANSMITS_BLOCK (dfs.DataNode$PacketResponder)
+      2. TRANSMITS_BLOCK (dfs.DataNode$Phản hồi gói)
       3. ALLOCATES_BLOCK (dfs.FSNamesystem)
-      4. MONITORS_BLOCK (dfs.DataNode$PacketResponder)
+      4. MONITORS_BLOCK (dfs.DataNode$Phản hồi gói)
       5. SERVES_BLOCK (dfs.DataNode$DataXceiver)
       6. UPDATES_BLOCK_MAP (dfs.FSNamesystem)
       7. COMMANDS_REPLICATION (dfs.FSNamesystem)
       8. DELETES_BLOCK (dfs.FSNamesystem / dfs.FSDataset)
-  - Fixed Node Target: x_v_fixed_priv in R^6 (4-dim one-hot type + 2-dim log1p causal in/out degrees)
-  - Strict Test Firewall: TestSetSealedError raised on any Test materialization or feature extraction.
-  - Conservation Law: eligible_split_records = materialized_graph_records + explicitly_rejected_records
+  - Mục tiêu nút cố định: x_v_fixed_priv ở R^6 (loại 4 điểm nóng một điểm + 2 độ mờ log1p nhân quả)
+  - Tường lửa kiểm tra nghiêm ngặt: TestSetSealedError xuất hiện trên bất kỳ quá trình cụ thể hóa hoặc trích xuất tính năng thử nghiệm nào.
+  - Định luật bảo toàn: eligible_split_records = materialized_graph_records + explicitly_rejected_records
 """
 
 import os
@@ -35,13 +35,13 @@ from research_agent.experiments.data.hdfs_split_authority import (
 
 
 class TestSetSealedError(Exception):
-    """Raised when any code attempts to access the sealed Test split or test labels."""
+    """Xảy ra khi bất kỳ mã nào cố gắng truy cập vào phần phân chia Kiểm tra hoặc nhãn kiểm tra đã được niêm phong."""
     __test__ = False
 
 
-# Canonical Component-Constrained Extraction Rules for HDFS
+# Quy tắc trích xuất ràng buộc thành phần chính tắc cho HDFS
 HDFS_RELATION_RULES = [
-    # 1. RECEIVES_BLOCK: StorageNode (dest) -> DataBlock
+    # 1. RECEIVES_BLOCK: StorageNode (đích) -> DataBlock
     {
         "relation_id": 1,
         "relation_name": "RECEIVES_BLOCK",
@@ -49,7 +49,7 @@ HDFS_RELATION_RULES = [
         "message_regex": re.compile(r"Receiving block (blk_[-0-9]+) src: (/?[0-9\.:]+) dest: (/?[0-9\.:]+)"),
         "rule_type": "RECEIVES"
     },
-    # 2. TRANSMITS_BLOCK: StorageNode (src) -> DataBlock (with block size)
+    # 2. TRANSMITS_BLOCK: StorageNode (src) -> DataBlock (có kích thước khối)
     {
         "relation_id": 2,
         "relation_name": "TRANSMITS_BLOCK",
@@ -65,7 +65,7 @@ HDFS_RELATION_RULES = [
         "message_regex": re.compile(r"BLOCK\* NameSystem\.allocateBlock: (.*)\. (blk_[-0-9]+)"),
         "rule_type": "ALLOCATES"
     },
-    # 4. MONITORS_BLOCK: PacketResponder -> DataBlock
+    # 4. MONITORS_BLOCK: Phản hồi gói -> DataBlock
     {
         "relation_id": 4,
         "relation_name": "MONITORS_BLOCK",
@@ -73,7 +73,7 @@ HDFS_RELATION_RULES = [
         "message_regex": re.compile(r"PacketResponder (\d+) for block (blk_[-0-9]+) terminating"),
         "rule_type": "MONITORS"
     },
-    # 5. SERVES_BLOCK: StorageNode (server) -> DataBlock
+    # 5. SERVES_BLOCK: StorageNode (máy chủ) -> DataBlock
     {
         "relation_id": 5,
         "relation_name": "SERVES_BLOCK",
@@ -81,7 +81,7 @@ HDFS_RELATION_RULES = [
         "message_regex": re.compile(r"(?:([0-9\.:]+) )?Served block (blk_[-0-9]+) to (/?[0-9\.:]+)"),
         "rule_type": "SERVES"
     },
-    # 6. UPDATES_BLOCK_MAP: StorageNode -> DataBlock (with block size)
+    # 6. UPDATES_BLOCK_MAP: StorageNode -> DataBlock (có kích thước khối)
     {
         "relation_id": 6,
         "relation_name": "UPDATES_BLOCK_MAP",
@@ -127,9 +127,9 @@ class HDFSGraphBuilder:
 
     def parse_raw_line(self, line_str: str, line_idx: int) -> Tuple[Optional[Dict[str, Any]], Optional[str], Optional[str]]:
         """
-        Parses a single raw HDFS log line into a typed graph event using millisecond-accurate timestamps
-        and component-constrained relation extraction.
-        Returns (event_dict, reject_reason, block_id).
+        Phân tích một dòng nhật ký HDFS thô thành một sự kiện biểu đồ được nhập bằng cách sử dụng dấu thời gian chính xác đến mili giây
+        và trích xuất quan hệ ràng buộc thành phần.
+        Trả về (event_dict, reject_reason, block_id).
         """
         parts = line_str.strip().split(" ", 5)
         if len(parts) < 6:
@@ -140,13 +140,13 @@ class HDFSGraphBuilder:
         if ts_epoch is None:
             return None, "TIMESTAMP_PARSE_ERROR", None
 
-        # Extract block_id
+        # Trích xuất block_id
         blk_m = re.search(r"(blk_[-0-9]+)", msg)
         if not blk_m:
             return None, "NO_BLOCK_ID_IN_MESSAGE", None
         blk_id = blk_m.group(1)
 
-        # Match against component-constrained relation rules
+        # So khớp với các quy tắc quan hệ bị ràng buộc bởi thành phần
         for rule in HDFS_RELATION_RULES:
             if not rule["component_regex"].search(comp):
                 continue
@@ -161,7 +161,7 @@ class HDFSGraphBuilder:
             size_bytes = 0.0
 
             if rule_type == "RECEIVES":
-                # StorageNode (dest) -> DataBlock
+                # StorageNode (đích) -> DataBlock
                 dest_storage = m.group(3).lstrip("/")
                 src_node = dest_storage
                 src_type = 1  # STORAGE_NODE
@@ -176,7 +176,7 @@ class HDFSGraphBuilder:
                 dest_node = blk_id
                 dest_type = 0  # DATA_BLOCK
             elif rule_type == "ALLOCATES":
-                # FSNamesystem -> DataBlock
+                # Hệ thống tên FS -> DataBlock
                 src_node = "FSNamesystem"
                 src_type = 2  # MANAGEMENT_SYSTEM
                 dest_node = blk_id
@@ -189,14 +189,14 @@ class HDFSGraphBuilder:
                 dest_node = blk_id
                 dest_type = 0  # DATA_BLOCK
             elif rule_type == "SERVES":
-                # Server StorageNode -> DataBlock
+                # Nút lưu trữ máy chủ -> DataBlock
                 server_ip = m.group(1)
                 src_node = server_ip.lstrip("/") if server_ip else "10.250.0.1:50010"
                 src_type = 1  # STORAGE_NODE
                 dest_node = blk_id
                 dest_type = 0  # DATA_BLOCK
             elif rule_type == "UPDATES_MAP":
-                # StorageNode -> DataBlock
+                # Nút lưu trữ -> DataBlock
                 storage_ip = m.group(1).lstrip("/")
                 size_bytes = float(m.group(3))
                 src_node = storage_ip
@@ -204,13 +204,13 @@ class HDFSGraphBuilder:
                 dest_node = blk_id
                 dest_type = 0  # DATA_BLOCK
             elif rule_type == "REPLICATES":
-                # FSNamesystem -> DataBlock
+                # Hệ thống tên FS -> DataBlock
                 src_node = "FSNamesystem"
                 src_type = 2  # MANAGEMENT_SYSTEM
                 dest_node = blk_id
                 dest_type = 0  # DATA_BLOCK
             elif rule_type == "DELETES":
-                # FSNamesystem -> DataBlock
+                # Hệ thống tên FS -> DataBlock
                 src_node = "FSNamesystem"
                 src_type = 2  # MANAGEMENT_SYSTEM
                 dest_node = blk_id
@@ -236,8 +236,8 @@ class HDFSGraphBuilder:
 
     def materialize_split(self, split_name: str, use_execution_subset: bool = True) -> Dict[str, Any]:
         """
-        Materializes graph events strictly bound to SPL-HDFS-001 split authority.
-        Raises TestSetSealedError if split_name == 'TEST'.
+        Cụ thể hóa các sự kiện biểu đồ được ràng buộc chặt chẽ với quyền phân chia SPL-HDFS-001.
+        Tăng TestSetSealedError nếu split_name == 'TEST'.
         """
         if split_name.upper() == "TEST":
             raise TestSetSealedError("Attempted to access or materialize sealed Test graph split!")
@@ -282,7 +282,7 @@ class HDFSGraphBuilder:
                 event, reject_reason, blk_id = self.parse_raw_line(line_str, line_idx)
 
                 if blk_id is None or blk_id not in authorized_block_ids:
-                    # Line does not belong to authorized block session partition
+                    # Dòng không thuộc phân vùng phiên khối được ủy quyền
                     continue
 
                 eligible_records_count += 1
@@ -295,10 +295,10 @@ class HDFSGraphBuilder:
                 else:
                     rejection_counts[reject_reason] = rejection_counts.get(reject_reason, 0) + 1
 
-        # Causal temporal sorting
+        # Phân loại thời gian nhân quả
         events.sort(key=lambda e: (e["event_timestamp_utc_exact"], e["raw_line_index"]))
 
-        # Build vocabulary strictly on Train
+        # Xây dựng vốn từ vựng nghiêm ngặt trên Train
         if split_name.upper() == "TRAIN":
             for e in events:
                 src, s_type = e["source_node"], e["source_type"]

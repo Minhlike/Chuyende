@@ -1,7 +1,7 @@
 """
-Academic Diagram Renderer for Chapter 1 Visuals
-Generates pristine monochrome vector-quality figures using Matplotlib with Times New Roman typography.
-Enforces: White background, 1pt crisp black outlines, black connector arrows, Times New Roman font, no gradients/shadows/3D.
+Trình kết xuất sơ đồ học thuật cho hình ảnh Chương 1
+Tạo các số liệu có chất lượng vector đơn sắc nguyên sơ bằng cách sử dụng Matplotlib với kiểu chữ Times New Roman.
+Thực thi: Nền trắng, đường viền đen rõ nét 1pt, mũi tên nối màu đen, phông chữ Times New Roman, không có chuyển màu/bóng/3D.
 """
 
 import os
@@ -11,7 +11,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
-# Set global matplotlib typography to match thesis style
+# Đặt kiểu chữ matplotlib toàn cầu để phù hợp với phong cách luận án
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.serif'] = ['Times New Roman', 'DejaVu Serif', 'Times']
 plt.rcParams['font.size'] = 10
@@ -23,17 +23,17 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def generate_fig_1_1() -> str:
-    """FIG 1.1: Hierarchy of Log Observation Units and Dimensional Trade-offs."""
+    """FIG 1.1: Hệ thống phân cấp của các đơn vị quan sát nhật ký và sự đánh đổi theo chiều."""
     fig, ax = plt.subplots(figsize=(7.2, 3.4), dpi=600)
     ax.set_xlim(0, 100)
     ax.set_ylim(0, 100)
     ax.axis('off')
 
-    # Background
+    # Nền
     fig.patch.set_facecolor('white')
     ax.set_facecolor('white')
 
-    # 6 Stacked levels (from bottom to top)
+    # 6 cấp độ xếp chồng lên nhau (từ dưới lên trên)
     levels = [
         ("[1] Luồng nhật ký thô (Raw Telemetry Streams)", "Nhật ký kiểm toán Linux Auditd, Windows Sysmon, Zeek, eBPF", 7),
         ("[2] Mức Từ tố (Token Level)", "Chuỗi con, từ khóa tĩnh, tham số rời rạc, mã lỗi hex", 22.5),
@@ -53,7 +53,7 @@ def generate_fig_1_1() -> str:
         ax.text(50, y + 7.2, label, ha="center", va="center", fontsize=10.0, fontweight="bold", color="black")
         ax.text(50, y + 2.5, sub, ha="center", va="center", fontsize=8.5, fontstyle="italic", color="#222222")
 
-    # Left upward arrow (Context Richness)
+    # Mũi tên hướng lên trái (Độ phong phú ngữ cảnh)
     ax.annotate(
         "", xy=(10, 95), xytext=(10, 7),
         arrowprops=dict(facecolor="black", edgecolor="black", arrowstyle="-|>", lw=1.3, mutation_scale=14)
@@ -61,7 +61,7 @@ def generate_fig_1_1() -> str:
     ax.text(7, 51, "Bảo toàn ngữ cảnh & Quan hệ an ninh (Context Richness) ↑",
             ha="center", va="center", rotation=90, fontsize=9.0, fontweight="bold", color="black")
 
-    # Right upward arrow (Resource Cost)
+    # Mũi tên hướng lên phải (Chi phí tài nguyên)
     ax.annotate(
         "", xy=(90, 95), xytext=(90, 7),
         arrowprops=dict(facecolor="black", edgecolor="black", arrowstyle="-|>", lw=1.3, mutation_scale=14)
@@ -77,7 +77,7 @@ def generate_fig_1_1() -> str:
 
 
 def generate_fig_1_2() -> str:
-    """FIG 1.2: Multi-label Non-linear MITRE ATT&CK Behavioral Evidence Space."""
+    """FIG 1.2: Không gian bằng chứng hành vi MITRE ATT&CK phi tuyến tính đa nhãn."""
     fig, ax = plt.subplots(figsize=(7.2, 3.4), dpi=600)
     ax.set_xlim(0, 100)
     ax.set_ylim(0, 100)
@@ -85,7 +85,7 @@ def generate_fig_1_2() -> str:
     fig.patch.set_facecolor('white')
     ax.set_facecolor('white')
 
-    # Container A (Left)
+    # Thùng A (Trái)
     box_a = patches.Rectangle((2, 4), 45, 92, facecolor="white", edgecolor="black", linewidth=1.0)
     ax.add_patch(box_a)
     ax.text(24.5, 91, "(A) Giả định chuỗi tuyến tính (Kill Chain)", ha="center", va="center", fontsize=10.0, fontweight="bold")
@@ -102,14 +102,14 @@ def generate_fig_1_2() -> str:
         ax.add_patch(rect)
         ax.text(24.5, y + 7.5, lbl, ha="center", va="center", fontsize=8.5, fontweight="bold")
 
-    # Downward connectors in A
+    # Đầu nối hướng xuống ở A
     ax.annotate("", xy=(24.5, 55), xytext=(24.5, 63), arrowprops=dict(arrowstyle="-|>", facecolor="black", lw=1.0, mutation_scale=10))
     ax.annotate("", xy=(24.5, 32), xytext=(24.5, 40), arrowprops=dict(arrowstyle="-|>", facecolor="black", lw=1.0, mutation_scale=10))
 
-    # Limitation note
+    # Ghi chú giới hạn
     ax.text(24.5, 8, "Hạn chế: Bỏ sót các kỹ thuật APT phi tuyến", ha="center", va="center", fontsize=8.0, fontstyle="italic", color="#333333")
 
-    # Container B (Right)
+    # Thùng B (Phải)
     box_b = patches.Rectangle((53, 4), 45, 92, facecolor="white", edgecolor="black", linewidth=1.0)
     ax.add_patch(box_b)
     ax.text(75.5, 91, "(B) Không gian Bằng chứng ATT&CK", ha="center", va="center", fontsize=10.0, fontweight="bold")
@@ -126,7 +126,7 @@ def generate_fig_1_2() -> str:
         ax.add_patch(rect)
         ax.text(75.5, y + 7.5, lbl, ha="center", va="center", fontsize=8.5)
 
-    # Invariant statement in B
+    # Tuyên bố bất biến trong B
     ax.text(75.5, 8, "Bất biến: ATT&CK ≠ Chuỗi Markov đơn tuyến", ha="center", va="center", fontsize=8.5, fontweight="bold")
 
     plt.tight_layout(pad=0.2)
@@ -137,7 +137,7 @@ def generate_fig_1_2() -> str:
 
 
 def generate_fig_1_3() -> str:
-    """FIG 1.3: Three-Tier Research Architecture and Central Role of Representation z."""
+    """FIG 1.3: Kiến trúc nghiên cứu ba tầng và vai trò trung tâm của việc biểu diễn z."""
     fig, ax = plt.subplots(figsize=(7.2, 4.6), dpi=600)
     ax.set_xlim(0, 100)
     ax.set_ylim(0, 100)
@@ -163,7 +163,7 @@ def generate_fig_1_3() -> str:
         ax.text(50, y + h * 0.65, title, ha="center", va="center", fontsize=10.5, fontweight="bold", color="black")
         ax.text(50, y + h * 0.25, sub, ha="center", va="center", fontsize=9.0, fontstyle="italic", color="#222222")
 
-    # Downward connectors between boxes
+    # Đầu nối hướng xuống giữa các hộp
     connectors = [
         (84, 78, ""),
         (65, 59, r"$f_\theta(X)$"),
@@ -187,7 +187,7 @@ def generate_fig_1_3() -> str:
 
 
 def generate_fig_1_4() -> str:
-    """FIG 1.4: Map of Three Log Representation Families to Five Research Gaps."""
+    """FIG 1.4: Bản đồ ba nhóm biểu diễn nhật ký cho năm khoảng trống nghiên cứu."""
     fig, ax = plt.subplots(figsize=(7.2, 3.5), dpi=600)
     ax.set_xlim(0, 100)
     ax.set_ylim(0, 100)
@@ -195,7 +195,7 @@ def generate_fig_1_4() -> str:
     fig.patch.set_facecolor('white')
     ax.set_facecolor('white')
 
-    # Left Column: 3 Methodological Families
+    # Cột bên trái: 3 họ phương pháp luận
     fam1 = patches.Rectangle((2, 68), 44, 27, facecolor="white", edgecolor="black", linewidth=1.0)
     ax.add_patch(fam1)
     ax.text(24, 89, "1. Nhóm Thống kê / Cú pháp (Drain, PCA)", ha="center", va="center", fontsize=9.0, fontweight="bold")
@@ -211,12 +211,12 @@ def generate_fig_1_4() -> str:
     ax.text(24, 29, "3. Nhóm Đồ thị Nguồn gốc (UNICORN, MAGIC)", ha="center", va="center", fontsize=9.0, fontweight="bold")
     ax.text(4, 16.5, "• Ưu: Mô hình hóa toàn diện quan hệ đa thực thể\n• Giới hạn: Bùng nổ phụ thuộc, Over-smoothing/squashing", ha="left", va="center", fontsize=8.0)
 
-    # Converging Connectors
+    # Kết nối hội tụ
     ax.annotate("", xy=(51, 51.5), xytext=(46, 81.5), arrowprops=dict(arrowstyle="-|>", facecolor="black", lw=1.0, mutation_scale=10))
     ax.annotate("", xy=(51, 51.5), xytext=(46, 51.5), arrowprops=dict(arrowstyle="-|>", facecolor="black", lw=1.0, mutation_scale=10))
     ax.annotate("", xy=(51, 51.5), xytext=(46, 21.5), arrowprops=dict(arrowstyle="-|>", facecolor="black", lw=1.0, mutation_scale=10))
 
-    # Right Column: 5 Research Gaps & Questions
+    # Cột bên phải: 5 khoảng trống nghiên cứu và câu hỏi
     gaps_box = patches.Rectangle((51, 8), 47, 87, facecolor="white", edgecolor="black", linewidth=1.2)
     ax.add_patch(gaps_box)
     ax.text(74.5, 89, "5 KHOẢNG TRỐNG CỐT LÕI (RQ1–RQ5)", ha="center", va="center", fontsize=9.5, fontweight="bold")
@@ -239,7 +239,7 @@ def generate_fig_1_4() -> str:
 
 
 def generate_fig_2_1() -> str:
-    """FIG 2.1: Dual-Plane Architecture: Offline Training Plane vs Online Streaming Inference Plane."""
+    """FIG 2.1: Kiến trúc mặt phẳng kép: Mặt phẳng đào tạo ngoại tuyến và Mặt phẳng suy luận truyền phát trực tuyến."""
     fig, ax = plt.subplots(figsize=(7.2, 5.0), dpi=600)
     ax.set_xlim(0, 100)
     ax.set_ylim(0, 100)
@@ -247,13 +247,13 @@ def generate_fig_2_1() -> str:
     fig.patch.set_facecolor('white')
     ax.set_facecolor('white')
 
-    # Top Frame: Training Plane
+    # Khung trên cùng: Máy bay huấn luyện
     train_frame = patches.Rectangle((2, 52), 96, 45, facecolor="white", edgecolor="black", linewidth=1.2)
     ax.add_patch(train_frame)
     ax.text(50, 93.5, "MẶT PHẲNG HUẤN LUYỆN (TRAINING PLANE — OFFLINE SELF-SUPERVISED)", ha="center", va="center", fontsize=9.5, fontweight="bold")
     ax.text(50, 89.0, r"Tối ưu hóa tham số mạng $f_\theta$ trên dữ liệu nền tảng lịch sử (Không nhãn APT)", ha="center", va="center", fontsize=8.0, fontstyle="italic")
 
-    # Training Plane Sub-boxes
+    # Hộp phụ máy bay huấn luyện
     t_boxes = [
         (r"Dữ liệu telemetry lịch sử" + "\n" + r"$\mathcal{D}_{\mathrm{train}}$ (Auditd/Sysmon)", 5, 56, 26, 28),
         ("Trích xuất Đa góc nhìn\n(Sequential + Graph)", 37, 56, 26, 28),
@@ -265,21 +265,21 @@ def generate_fig_2_1() -> str:
         ax.add_patch(rect)
         ax.text(x + w / 2, y + h / 2, lbl, ha="center", va="center", fontsize=8.0, fontweight="bold")
 
-    # Connectors in Training Plane
+    # Các đầu nối trong máy bay huấn luyện
     ax.annotate("", xy=(37, 70), xytext=(31, 70), arrowprops=dict(arrowstyle="-|>", facecolor="black", lw=1.0, mutation_scale=10))
     ax.annotate("", xy=(69, 70), xytext=(63, 70), arrowprops=dict(arrowstyle="-|>", facecolor="black", lw=1.0, mutation_scale=10))
 
-    # Transfer Arrow (Trained Weights theta*)
+    # Mũi tên chuyển (trọng số đã được huấn luyện theta*)
     ax.annotate("", xy=(50, 48), xytext=(50, 52), arrowprops=dict(arrowstyle="-|>", facecolor="black", lw=1.4, mutation_scale=14))
     ax.text(50, 50, r"Tham số tối ưu hóa $\theta^*$ (Đóng băng / Frozen)", ha="center", va="center", fontsize=8.0, fontweight="bold", backgroundcolor="white")
 
-    # Bottom Frame: Streaming Inference Plane
+    # Khung dưới cùng: Mặt phẳng suy luận trực tuyến
     inf_frame = patches.Rectangle((2, 3), 96, 45, facecolor="white", edgecolor="black", linewidth=1.2)
     ax.add_patch(inf_frame)
     ax.text(50, 44.5, "MẶT PHẲNG SUY LUẬN DÒNG (STREAMING INFERENCE PLANE — ONLINE CAUSAL)", ha="center", va="center", fontsize=9.5, fontweight="bold")
     ax.text(50, 40.0, r"Cập nhật trạng thái hữu hạn $\mathcal{S}_t$ và trích xuất vector $\mathbf{z}_t$ đơn lượt (Zero Lookahead)", ha="center", va="center", fontsize=8.0, fontstyle="italic")
 
-    # Inference Plane Sub-boxes
+    # Các hộp con của mặt phẳng suy luận
     i_boxes = [
         ("Luồng log trực tuyến\n" + r"$e_t \in \mathcal{L}_{1:t}$", 4, 7, 20, 28),
         ("Cập nhật trạng thái\n" + r"$\mathcal{S}_t = \mathrm{Upd}(\mathcal{S}_{t-1}, e_t)$" + "\n(TTL, Evict, Decay)", 27, 7, 22, 28),
@@ -292,7 +292,7 @@ def generate_fig_2_1() -> str:
         ax.add_patch(rect)
         ax.text(x + w / 2, y + h / 2, lbl, ha="center", va="center", fontsize=7.5, fontweight="bold")
 
-    # Connectors in Inference Plane
+    # Các đầu nối trong mặt phẳng suy luận
     ax.annotate("", xy=(27, 21), xytext=(24, 21), arrowprops=dict(arrowstyle="-|>", facecolor="black", lw=1.0, mutation_scale=10))
     ax.annotate("", xy=(52, 21), xytext=(49, 21), arrowprops=dict(arrowstyle="-|>", facecolor="black", lw=1.0, mutation_scale=10))
     ax.annotate("", xy=(76, 21), xytext=(73, 21), arrowprops=dict(arrowstyle="-|>", facecolor="black", lw=1.0, mutation_scale=10))

@@ -1,5 +1,5 @@
 """
-Hypothesis & Research Question Evaluation Engine (Prompt 5 Sections 36, 37, 46, 69)
+Công cụ đánh giá câu hỏi nghiên cứu và giả thuyết (Nhắc 5 phần 36, 37, 46, 69)
 """
 
 from typing import List, Dict, Any, Optional, Tuple
@@ -15,7 +15,7 @@ from research_agent.core.enums import ReasoningIssueType
 
 
 class HypothesisEvaluationResult:
-    """Outcome report for a hypothesis evaluation."""
+    """Báo cáo kết quả đánh giá giả thuyết."""
 
     def __init__(
         self,
@@ -40,8 +40,8 @@ class HypothesisEvaluationResult:
 
 class HypothesisEvaluator:
     """
-    Evaluates scientific hypotheses against empirical evidence and negative results.
-    Enforces anti-HARKing and anti-hypothesis rescue rules (Sections 46, 69).
+    Đánh giá các giả thuyết khoa học dựa trên bằng chứng thực nghiệm và kết quả tiêu cực.
+    Thực thi các quy tắc giải cứu chống HARKing và chống giả thuyết (Phần 46, 69).
     """
 
     def evaluate_hypothesis(
@@ -52,7 +52,7 @@ class HypothesisEvaluator:
         contradiction_ids: List[str],
     ) -> HypothesisEvaluationResult:
         """
-        Calculates grounded EpistemicStatus for a hypothesis.
+        Tính toán EpistemiaStatus có căn cứ cho một giả thuyết.
         """
         failures = [ep for ep in episodes if ep.is_failure]
         neg_types = []
@@ -67,7 +67,7 @@ class HypothesisEvaluator:
             else:
                 neg_types.append(NegativeResultType.NEGATIVE_RESULT)
 
-        # Falsification check
+        # Kiểm tra giả mạo
         if NegativeResultType.HYPOTHESIS_FALSIFICATION in neg_types:
             return HypothesisEvaluationResult(
                 hyp_id=hypothesis.code,
@@ -80,7 +80,7 @@ class HypothesisEvaluator:
                 rationale=f"Hypothesis falsified by experimental failure run: {[f.episode_id for f in failures]}",
             )
 
-        # Contested check
+        # Séc tranh chấp
         if contradiction_ids:
             return HypothesisEvaluationResult(
                 hyp_id=hypothesis.code,
@@ -93,7 +93,7 @@ class HypothesisEvaluator:
                 rationale=f"Hypothesis contested by active contradiction units: {contradiction_ids}",
             )
 
-        # Partially Supported check
+        # Kiểm tra được hỗ trợ một phần
         if linked_evidence_ids and failures:
             return HypothesisEvaluationResult(
                 hyp_id=hypothesis.code,
@@ -106,7 +106,7 @@ class HypothesisEvaluator:
                 rationale="Positive evidence present but bounded by negative experimental episodes.",
             )
 
-        # Supported check
+        # Kiểm tra được hỗ trợ
         if linked_evidence_ids and not failures:
             return HypothesisEvaluationResult(
                 hyp_id=hypothesis.code,
@@ -119,7 +119,7 @@ class HypothesisEvaluator:
                 rationale=f"Empirically supported by verified evidence units: {linked_evidence_ids}",
             )
 
-        # Default Unverified
+        # Mặc định Chưa được xác minh
         return HypothesisEvaluationResult(
             hyp_id=hypothesis.code,
             status=EpistemicStatus.UNVERIFIED,
@@ -138,7 +138,7 @@ class HypothesisEvaluator:
         open_gap_count: int = 0,
     ) -> Tuple[RQStatus, str]:
         """
-        Determines RQ status (OPEN, PARTIALLY_ANSWERED, ANSWERED_WITH_LIMITATIONS, CONTESTED, BLOCKED).
+        Xác định trạng thái RQ (OPEN, PARTIALLY_ANSWERED, ANSWERED_WITH_LIMITATIONS, CONTESTED, BLOCKED).
         """
         if all(s == EpistemicStatus.UNVERIFIED for s in hypothesis_statuses):
             return RQStatus.OPEN, "No empirical tests completed for linked hypotheses."

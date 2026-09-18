@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Acceptance test ensuring current active configuration maintains 12-epoch authority.
-Prevents regression to stale legacy epoch ceilings.
+Kiểm tra chấp nhận đảm bảo cấu hình hoạt động hiện tại duy trì quyền hạn 12 epoch.
+Ngăn chặn sự hồi quy về mức trần cũ của thời đại cũ.
 """
 
 import json
@@ -28,7 +28,7 @@ def test_source_metrics_12epoch_authority():
     assert arch['max_optimizer_steps'] == 6876
     assert arch['warmup_steps'] == 343
     
-    # Check table rows: no '/ 20' or '/ 12' in epochs_completed
+    # Kiểm tra các hàng trong bảng: không có '/ 20' hoặc '/ 12' trong epochs_completed
     for s in data['seeds_table']:
         assert isinstance(s['epochs_completed'], int)
         assert 'stop_reason' in s
@@ -43,9 +43,9 @@ def test_execution_plan_v15_12epoch_authority():
     
     hp = data['training_hyperparameters']
     assert hp['max_epochs'] == 12
-    # Historical plan bound by pre-execution authorization retains warmup_steps=573
+    # Kế hoạch lịch sử bị ràng buộc bởi ủy quyền trước khi thực hiện giữ lại warmup_steps=573
     assert hp['warmup_steps'] == 573
-    # Verify exact bound plan SHA-256
+    # Xác minh kế hoạch ràng buộc chính xác SHA-256
     assert hashlib.sha256(p.read_bytes()).hexdigest() == 'ba79bc71ebef02a8f28dca6ff69bf492d88cb6d98ccd104346425daee39046ee'
 
 def test_reconciliation_12epoch_authority():

@@ -1,5 +1,5 @@
 """
-Deterministic Confidence Intervals & Bootstrap Engine (Prompt 6 Section 36)
+Khoảng tin cậy xác định & Công cụ khởi động (Nhắc 6 Phần 36)
 """
 
 from typing import Dict, List, Optional, Tuple, Union
@@ -9,8 +9,8 @@ import scipy.stats as stats
 
 class ConfidenceIntervalEngine:
     """
-    Computes parametric Student's t confidence intervals and non-parametric
-    empirical bootstrap confidence intervals with reproducible random seeds.
+    Tính toán khoảng tin cậy tham số và phi tham số của Học sinh
+    Khoảng tin cậy của bootstrap theo kinh nghiệm với các hạt giống ngẫu nhiên có thể tái sản xuất.
     """
 
     def compute_parametric_ci(
@@ -19,9 +19,9 @@ class ConfidenceIntervalEngine:
         confidence_level: float = 0.95,
     ) -> Tuple[float, float, float]:
         """
-        Computes parametric Student-t confidence interval:
+        Tính toán khoảng tin cậy tham số của Sinh viên-t:
         CI = mean ± t_{alpha/2, n-1} * (s / sqrt(n))
-        Returns (mean, lower_bound, upper_bound).
+        Trả về (có nghĩa là lower_bound, upper_bound).
         """
         arr = np.array(values, dtype=float)
         arr = arr[~np.isnan(arr)]
@@ -47,8 +47,8 @@ class ConfidenceIntervalEngine:
         random_seed: int = 42,
     ) -> Tuple[float, float, float]:
         """
-        Computes deterministic empirical bootstrap percentile confidence interval.
-        Returns (mean, lower_bound, upper_bound).
+        Tính toán khoảng tin cậy phần trăm bootstrap theo kinh nghiệm xác định.
+        Trả về (có nghĩa là lower_bound, upper_bound).
         """
         arr = np.array(values, dtype=float)
         arr = arr[~np.isnan(arr)]

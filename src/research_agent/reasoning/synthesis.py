@@ -1,5 +1,5 @@
 """
-Structured Literature Synthesis & Agreement Clustering Engine (Prompt 5 Sections 12, 13, 14)
+Công cụ phân cụm và tổng hợp tài liệu có cấu trúc (Nhắc 5 Phần 12, 13, 14)
 """
 
 from typing import List, Dict, Any, Optional
@@ -10,8 +10,8 @@ from research_agent.schemas.reasoning import StructuredSynthesis
 
 class LiteratureSynthesisEngine:
     """
-    Synthesizes multiple sources and claims across a research issue or roadmap node.
-    Enforces issue-and-mechanism organization instead of paper-by-paper enumeration.
+    Tổng hợp nhiều nguồn và tuyên bố về một vấn đề nghiên cứu hoặc nút lộ trình.
+    Thực thi việc tổ chức theo cơ chế và vấn đề thay vì liệt kê từng tờ giấy.
     """
 
     def synthesize(
@@ -22,14 +22,14 @@ class LiteratureSynthesisEngine:
         roadmap_node: Optional[str] = None,
     ) -> StructuredSynthesis:
         """
-        Produces structured synthesis grouping:
-        - Consensus points
-        - Agreement clusters
-        - Disagreements / Contradictions
-        - Scope & Methodological qualifications
-        - Dataset differences
-        - Unresolved questions
-        - Research implications for our architecture
+        Tạo nhóm tổng hợp có cấu trúc:
+        - Điểm đồng thuận
+        - Cụm thỏa thuận
+        - Bất đồng/Mâu thuẫn
+        - Phạm vi và trình độ phương pháp luận
+        - Sự khác biệt về tập dữ liệu
+        - Câu hỏi chưa được giải quyết
+        - Ý nghĩa nghiên cứu đối với kiến trúc của chúng ta
         """
         seq = abs(hash(topic + (roadmap_node or ""))) % 1000000
         synth_id = f"SYN-{seq:06d}"
@@ -46,10 +46,10 @@ class LiteratureSynthesisEngine:
         source_map = {s.source_id: s for s in sources}
         source_ids = [s.source_id for s in sources]
 
-        # 1. Analyze semantic clusters and agreement
+        # 1. Phân tích các cụm ngữ nghĩa và sự thống nhất
         propositions = [c.statement for c in claims]
         
-        # Check for parser-related consensus
+        # Kiểm tra sự đồng thuận liên quan đến trình phân tích cú pháp
         parser_claims = [c for c in claims if "parser" in c.statement.lower() or "template" in c.statement.lower()]
         if parser_claims:
             consensus_points.append(
@@ -62,7 +62,7 @@ class LiteratureSynthesisEngine:
                 "Our Representation Contract must formally bound parameter preservation without relying on static templates."
             )
 
-        # Check for shortcut / baseline disagreements
+        # Kiểm tra những bất đồng về lối tắt/cơ sở
         shortcut_claims = [c for c in claims if "shortcut" in c.statement.lower() or "baseline" in c.statement.lower() or "simpler" in c.statement.lower()]
         if shortcut_claims:
             disagreements.append({
@@ -81,7 +81,7 @@ class LiteratureSynthesisEngine:
                 "RQ3 and H3 must mandate negative controls with identifier masking to verify genuine semantic generalization."
             )
 
-        # Check for privacy trade-offs
+        # Kiểm tra sự đánh đổi quyền riêng tư
         privacy_claims = [c for c in claims if "privacy" in c.statement.lower() or "leakage" in c.statement.lower() or "membership" in c.statement.lower()]
         if privacy_claims:
             disagreements.append({
@@ -97,7 +97,7 @@ class LiteratureSynthesisEngine:
                 "RQ5 and H5 must evaluate Differential Privacy / representation perturbation against membership inference probes."
             )
 
-        # Fallback cluster if no specific keyword matched
+        # Cụm dự phòng nếu không có từ khóa cụ thể nào phù hợp
         if not agreement_clusters and claims:
             agreement_clusters.append({
                 "theme": f"Empirical findings regarding {topic}",

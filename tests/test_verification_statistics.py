@@ -1,5 +1,5 @@
 """
-Unit Tests for Statistical Verification Engine (Prompt 6, TEST-STAT-01..10)
+Kiểm thử đơn vị cho Công cụ xác minh thống kê (Dấu nhắc 6, TEST-STAT-01..10)
 """
 
 import pytest
@@ -23,7 +23,7 @@ class TestStatisticalVerification:
         self.misuse_auditor = StatisticalMisuseAuditor()
 
     def test_stat_01_descriptive_summary(self):
-        """TEST-STAT-01: Verifies mean, sample standard deviation, median, IQR."""
+        """TEST-STAT-01: Xác minh giá trị trung bình, độ lệch chuẩn mẫu, trung vị, IQR."""
         values = [10.0, 12.0, 14.0, 16.0, 18.0]
         res = self.desc_engine.compute_summary(values)
         assert res["n"] == 5
@@ -33,7 +33,7 @@ class TestStatisticalVerification:
         assert res["iqr"] == 4.0
 
     def test_stat_02_parametric_confidence_interval(self):
-        """TEST-STAT-02: Verifies Student's t 95% confidence interval."""
+        """TEST-STAT-02: Xác minh khoảng tin cậy 95% của Học sinh."""
         values = [10.0, 12.0, 14.0, 16.0, 18.0]
         mean, low, high = self.ci_engine.compute_parametric_ci(values, confidence_level=0.95)
         assert mean == 14.0
@@ -42,7 +42,7 @@ class TestStatisticalVerification:
         assert round(high, 2) == 17.93
 
     def test_stat_03_deterministic_bootstrap_ci(self):
-        """TEST-STAT-03: Bootstrap CI with fixed seed returns identical bounds."""
+        """TEST-STAT-03: Bootstrap CI với hạt giống cố định trả về các giới hạn giống hệt nhau."""
         values = [10.0, 12.0, 14.0, 16.0, 18.0]
         m1, low1, high1 = self.ci_engine.compute_bootstrap_ci(values, confidence_level=0.95, random_seed=42)
         m2, low2, high2 = self.ci_engine.compute_bootstrap_ci(values, confidence_level=0.95, random_seed=42)
@@ -51,17 +51,17 @@ class TestStatisticalVerification:
         assert high1 == high2
 
     def test_stat_04_cohens_d_and_hedges_g(self):
-        """TEST-STAT-04: Computes standardized effect sizes."""
+        """TEST-STAT-04: Tính toán kích thước hiệu ứng được tiêu chuẩn hóa."""
         g1 = [95.0, 96.0, 97.0, 95.5, 96.5]
         g2 = [85.0, 86.0, 84.5, 85.5, 86.5]
         d = self.effect_engine.compute_cohens_d(g1, g2)
         g = self.effect_engine.compute_hedges_g(g1, g2)
         assert d > 0.0
         assert g > 0.0
-        assert g < d  # Hedges' g is slightly smaller due to small sample correction factor
+        assert g < d  # Hedges' g nhỏ hơn một chút do hệ số hiệu chỉnh mẫu nhỏ
 
     def test_stat_05_paired_hypothesis_test(self):
-        """TEST-STAT-05: Paired test correctly detects significant improvement."""
+        """TEST-STAT-05: Thử nghiệm ghép đôi phát hiện chính xác sự cải thiện đáng kể."""
         ours = [0.95, 0.96, 0.94, 0.97, 0.95]
         base = [0.85, 0.86, 0.84, 0.85, 0.83]
         res = self.hyp_engine.run_paired_test(ours, base, question="Test paired superiority")
@@ -71,7 +71,7 @@ class TestStatisticalVerification:
         assert res.effect_size_value > 3.0
 
     def test_stat_06_two_sample_unpaired_test(self):
-        """TEST-STAT-06: Independent Mann-Whitney U test."""
+        """TEST-STAT-06: Thử nghiệm Mann-Whitney U độc lập."""
         g1 = [10, 12, 14, 15, 16]
         g2 = [2, 4, 5, 6, 7]
         res = self.hyp_engine.run_two_sample_test(g1, g2, question="Test two sample comparison")
@@ -79,7 +79,7 @@ class TestStatisticalVerification:
         assert res.is_significant is True
 
     def test_stat_07_multi_seed_aggregation(self):
-        """TEST-STAT-07: Aggregates across multiple random seeds."""
+        """TEST-STAT-07: Tổng hợp trên nhiều hạt giống ngẫu nhiên."""
         runs = [
             {"f1": 0.92, "seed": 1},
             {"f1": 0.94, "seed": 2},
@@ -94,14 +94,14 @@ class TestStatisticalVerification:
         assert summary["max_run"] == 0.95
 
     def test_stat_08_cherry_picking_guard(self):
-        """TEST-STAT-08: BestRunCherryPickingGuard flags reporting only single best seed."""
+        """TEST-STAT-08: Cờ BestRunCherryPickingGuard chỉ báo cáo một hạt giống tốt nhất."""
         seed_vals = [0.91, 0.92, 0.93, 0.94, 0.98]  # max = 0.98, mean = 0.936
         valid, warning = self.aggregator.audit_cherry_picking(0.98, seed_vals)
         assert valid is False
         assert "CHERRY_PICKING_DETECTED" in warning
 
     def test_stat_09_statistical_misuse_p_without_effect_size(self):
-        """TEST-STAT-09: Flags p-value reported without effect size."""
+        """TEST-STAT-09: Cờ giá trị p được báo cáo không có kích thước hiệu ứng."""
         res = StatisticalResult(
             stat_id="STAT-TEST-01",
             question="Question",
@@ -109,7 +109,7 @@ class TestStatisticalVerification:
             sample_unit="Seed",
             sample_size_n=10,
             p_value=0.01,
-            effect_size_name=None,  # Missing effect size
+            effect_size_name=None,  # Thiếu kích thước hiệu ứng
             effect_size_value=None,
         )
         valid, issues = self.misuse_auditor.audit_statistical_result(res)
@@ -117,7 +117,7 @@ class TestStatisticalVerification:
         assert any("without standardized effect size" in i for i in issues)
 
     def test_stat_10_statistical_misuse_absence_of_evidence_claim(self):
-        """TEST-STAT-10: Flags interpreting p >= 0.05 as proof of equivalence."""
+        """TEST-STAT-10: Cờ diễn giải p >= 0,05 là bằng chứng về sự tương đương."""
         res = StatisticalResult(
             stat_id="STAT-TEST-02",
             question="Question",

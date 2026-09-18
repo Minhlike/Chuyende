@@ -31,7 +31,7 @@ if ($TargetPid -eq 0) {
 
 Log-Message "Watcher started. Passively waiting for PID $TargetPid to finish naturally..."
 
-# Wait for target process to exit
+# Đợi quá trình đích thoát ra
 try {
     Wait-Process -Id $TargetPid -ErrorAction Stop
 } catch {
@@ -41,14 +41,14 @@ try {
 Log-Message "Process $TargetPid has exited naturally. Waiting 15 seconds for disk sync..."
 Start-Sleep -Seconds 15
 
-# Check files
+# Kiểm tra tập tin
 $manifests = Get-ChildItem -Path $RunDir -Recurse -Filter "RUN-MANIFEST.json"
 Log-Message "VERIFIED: Found $($manifests.Count) RUN-MANIFEST.json files across confirmatory runs."
 foreach ($m in $manifests) {
     Log-Message "  - $($m.FullName)"
 }
 
-# Restore Sweet Spot power profile
+# Khôi phục hồ sơ sức mạnh Sweet Spot
 Log-Message "Restoring Sweet Spot power profile..."
 try {
     & "D:\Research\scripts\set_training_sweetspot.ps1"
@@ -60,6 +60,6 @@ try {
 Log-Message "Preparing to suspend machine in 15 seconds. Training complete!"
 Start-Sleep -Seconds 15
 
-# Put PC to sleep cleanly
+# Đặt PC vào chế độ ngủ sạch sẽ
 Add-Type -AssemblyName System.Windows.Forms
 [System.Windows.Forms.Application]::SetSuspendState([System.Windows.Forms.PowerState]::Suspend, $false, $false)

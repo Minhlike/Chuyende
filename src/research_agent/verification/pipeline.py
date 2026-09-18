@@ -1,5 +1,5 @@
 """
-Scientific Verification Pipeline Coordinator (Prompt 6 Section 5, 99)
+Điều phối viên quy trình xác minh khoa học (Nhắc 6 Phần 5, 99)
 """
 
 import json
@@ -38,8 +38,8 @@ from research_agent.verification.auditors import NumericalHallucinationAuditor, 
 
 class ScientificVerificationPipeline:
     """
-    Central coordinator for deterministic scientific computation and verification.
-    Executes VerificationRequest tickets dispatched by the Reasoning Engine (Prompt 5).
+    Điều phối viên trung tâm về tính toán và xác minh khoa học xác định.
+    Thực thi các phiếu Yêu cầu Xác minh do Công cụ Lý luận gửi đi (Lời nhắc 5).
     """
 
     def __init__(self, repository: Optional[ResearchRepository] = None):
@@ -66,7 +66,7 @@ class ScientificVerificationPipeline:
         self.writing_gate = VerificationGateForWriting()
 
     def execute_request(self, request: VerificationRequest) -> VerificationResult:
-        """Dispatches and executes a VerificationRequest deterministically."""
+        """Gửi và thực hiện Yêu cầu xác minh một cách xác định."""
         req_type = request.request_type
         payload = request.input_payload or {}
         result_id = f"VRS-{abs(hash(request.request_id + str(datetime.now(timezone.utc)))) % 1000000:06d}"
@@ -172,7 +172,7 @@ class ScientificVerificationPipeline:
             completed_at=datetime.now(timezone.utc),
         )
 
-        # Update database record
+        # Cập nhật bản ghi cơ sở dữ liệu
         request.status = status
         request.verification_result = computed_result
         request.completed_at = datetime.now(timezone.utc)

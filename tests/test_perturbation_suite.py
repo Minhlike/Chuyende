@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Perturbation Suite (P01..P12) Semantic & No-Op Detection Tests
-Verifies that all 12 perturbation operators execute deterministically,
-detect changes (changed_count > 0), preserve critical invariants,
-guarantee injective mapping (P05), concurrency safety (P04), and schema awareness (P11).
+Bộ kiểm tra nhiễu loạn (P01..P12) Kiểm tra phát hiện ngữ nghĩa và không hoạt động
+Xác minh rằng tất cả 12 toán tử nhiễu loạn đều thực thi một cách xác định,
+phát hiện các thay đổi (changed_count > 0), bảo toàn các bất biến quan trọng,
+đảm bảo ánh xạ tiêm truyền (P05), an toàn tương tranh (P04) và nhận thức về lược đồ (P11).
 """
 
 import re
@@ -46,11 +46,11 @@ def test_02_p05_strictly_injective_ip_mapping():
     assert changed > 0
     unique_out_ips = set(ip_pattern.findall("\n".join(out)))
 
-    # Injective property: exactly same number of distinct IPs
+    # Thuộc tính nội xạ: chính xác cùng số lượng IP riêng biệt
     assert len(unique_in_ips) == len(unique_out_ips), f"P05 must be strictly injective: in={len(unique_in_ips)}, out={len(unique_out_ips)}"
 
 def test_03_p04_concurrency_safe_jitter():
-    # Only events at 203518 should be reordered; event at 203521 must stay at end
+    # Chỉ các sự kiện tại 203518 mới được sắp xếp lại; sự kiện lúc 203521 phải kết thúc
     out, changed = apply_p04_event_order_jitter(SAMPLE_LOG_SESSION, seed=42)
     assert changed > 0
     assert "203521" in out[-1], "P04 must preserve chronological ordering of non-concurrent events"
@@ -58,7 +58,7 @@ def test_03_p04_concurrency_safe_jitter():
 def test_04_p11_schema_aware_timestamp_skew():
     out, changed = apply_p11_timestamp_skew(SAMPLE_LOG_SESSION, seed=42, jitter_sec=5.0)
     assert changed > 0
-    # Must preserve valid 6-digit timestamp format
+    # Phải giữ nguyên định dạng dấu thời gian 6 chữ số hợp lệ
     assert re.search(r"\b\d{6}\s+\d{6}\b", out[0]) is not None
 
 def test_05_shortcut_removal_experiment():

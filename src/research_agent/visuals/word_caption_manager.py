@@ -51,7 +51,7 @@ class WordCaptionManager:
         cap_p._p.remove(cap_p._p.pPr)
         cap_p._p.append(parse_xml(cap_xml))
 
-        # Optional bookmark start
+        # Bắt đầu đánh dấu tùy chọn
         if bookmark_name:
             bm_start_xml = f'<w:bookmarkStart {nsdecls("w")} w:id="101" w:name="{bookmark_name}"/>'
             cap_p._p.append(parse_xml(bm_start_xml))
@@ -115,7 +115,7 @@ class WordCaptionManager:
         cap_p._p.remove(cap_p._p.pPr)
         cap_p._p.append(parse_xml(cap_xml))
 
-        # Optional bookmark start
+        # Bắt đầu đánh dấu tùy chọn
         if bookmark_name:
             bm_start_xml = f'<w:bookmarkStart {nsdecls("w")} w:id="102" w:name="{bookmark_name}"/>'
             cap_p._p.append(parse_xml(bm_start_xml))

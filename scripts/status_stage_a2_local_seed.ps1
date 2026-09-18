@@ -1,5 +1,5 @@
-# scripts/status_stage_a2_local_seed.ps1
-# Status checker for Local Stage A2 Seed Execution
+# tập lệnh/status_stage_a2_local_seed.ps1
+# Trình kiểm tra trạng thái cho Thực thi hạt giống A2 ở giai đoạn cục bộ
 
 param (
     [Parameter(Mandatory = $true)]
@@ -18,7 +18,7 @@ Write-Host "==========================================================" -Foregro
 Write-Host "   STATUS CHECK: CANONICAL SEED $Seed                     " -ForegroundColor Yellow
 Write-Host "==========================================================" -ForegroundColor Cyan
 
-# 1. Process Check
+# 1. Kiểm tra quy trình
 $proc = Get-CimInstance Win32_Process -Filter "CommandLine LIKE '%--seed $Seed%'" | 
         Where-Object { $_.ProcessId -ne $PID -and $_.Name -like "*python*" } | 
         Select-Object -Last 1
@@ -35,7 +35,7 @@ if ($proc) {
     Write-Host "Process Status:    NOT RUNNING (Last PID: $recPid)" -ForegroundColor Gray
 }
 
-# 2. GPU Telemetry
+# 2. Đo từ xa GPU
 try {
     $smiOut = & nvidia-smi --query-gpu=utilization.gpu,memory.used,memory.total,temperature.gpu --format=csv,noheader,nounits 2>$null
     if ($smiOut) {
@@ -46,7 +46,7 @@ try {
     }
 } catch {}
 
-# 3. RUN-STATE Data
+# 3. Dữ liệu RUN-STATE
 if (Test-Path $stateFile) {
     try {
         $state = Get-Content $stateFile -Raw | ConvertFrom-Json
@@ -61,7 +61,7 @@ if (Test-Path $stateFile) {
     Write-Host "Run State:         (Not started yet / RUN-STATE.json not present)"
 }
 
-# 4. Checkpoints
+# 4. checkpoint
 if (Test-Path $ckptBest) {
     $bInfo = Get-Item $ckptBest
     Write-Host "Best Checkpoint:   Ready ($([math]::Round($bInfo.Length / 1MB, 2)) MB)"
@@ -71,7 +71,7 @@ if (Test-Path $ckptLast) {
     Write-Host "Last Checkpoint:   Ready ($([math]::Round($lInfo.Length / 1MB, 2)) MB)"
 }
 
-# 5. Recent Logs
+# 5. Nhật ký gần đây
 if (Test-Path $stdoutLog) {
     Write-Host "`n--- Recent Stdout (Last 10 lines) ---" -ForegroundColor Cyan
     Get-Content $stdoutLog -Tail 10 | ForEach-Object { Write-Host "  $_" }

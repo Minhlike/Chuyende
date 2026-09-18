@@ -1,5 +1,5 @@
 """
-Reference Map Query and Audit Service (Section 33, Section 52)
+Dịch vụ Kiểm tra và Truy vấn Bản đồ Tham khảo (Mục 33, Mục 52)
 """
 
 from typing import Any, Dict, List, Optional
@@ -19,31 +19,31 @@ from research_agent.storage.repository import ResearchRepository
 
 
 class ReferenceMapQueryService:
-    """Provides high-level programmatic and CLI queries against the Reference & Ownership Map."""
+    """Cung cấp các truy vấn có lập trình cấp cao và CLI dựa trên Bản đồ tham chiếu và quyền sở hữu."""
 
     def __init__(self, repository: ResearchRepository):
         self.repo = repository
 
     def get_reference_map(self) -> Optional[ReferenceMapSpecification]:
-        """Retrieve full reference map specification."""
+        """Truy xuất thông số kỹ thuật bản đồ tham chiếu đầy đủ."""
         return self.repo.get_reference_map()
 
     def get_source(self, source_id_or_key: str) -> Optional[Source]:
-        """Look up Source by SRC-ID or citation_key."""
+        """Tra cứu Nguồn theo SRC-ID hoặc citation_key."""
         src = self.repo.get_source(source_id_or_key)
         if not src:
             src = self.repo.get_source_by_citation_key(source_id_or_key)
         return src
 
     def get_sources_for_node(self, node_code: str) -> List[Source]:
-        """Retrieve all sources linked directly or via ownership to a roadmap node code."""
+        """Truy xuất tất cả các nguồn được liên kết trực tiếp hoặc thông qua quyền sở hữu đối với mã nút lộ trình."""
         mappings = self.repo.list_ownership_mappings(node_code=node_code)
         source_ids: Set[str] = set()
         for m in mappings:
             source_ids.update(m.source_ids)
             source_ids.update(m.motivation_source_ids)
 
-        # Also search direct relevant_roadmap_nodes in Source
+        # Đồng thời tìm kiếm trực tiếp relevant_roadmap_nodes trong Nguồn
         all_sources = self.repo.list_sources()
         for s in all_sources:
             if node_code in s.relevant_roadmap_nodes or any(n.startswith(f"{node_code}.") for n in s.relevant_roadmap_nodes):
@@ -56,22 +56,22 @@ class ReferenceMapQueryService:
         node_code: Optional[str] = None,
         ownership: Optional[IntellectualOwnership] = None,
     ) -> List[OwnershipMapping]:
-        """Query fine-grained ownership mappings."""
+        """Truy vấn ánh xạ quyền sở hữu chi tiết."""
         return self.repo.list_ownership_mappings(node_code=node_code, ownership=ownership)
 
     def get_contributions(self, novelty_status: Optional[NoveltyStatus] = None) -> List[CandidateContribution]:
-        """Query candidate contributions."""
+        """Truy vấn đóng góp của ứng viên."""
         all_contribs = self.repo.list_candidate_contributions()
         if novelty_status:
             return [c for c in all_contribs if c.novelty_status == novelty_status]
         return all_contribs
 
     def get_citation_firewall_rules(self, status: Optional[CitationFirewallStatus] = None) -> List[CitationFirewallRule]:
-        """Query Citation Firewall rules."""
+        """Quy tắc tường lửa trích dẫn truy vấn."""
         return self.repo.list_citation_firewall_rules(status=status)
 
     def get_contradictory_claims(self) -> List[Dict[str, Any]]:
-        """Retrieve all pairs of claims with CONTRADICTS relation."""
+        """Truy xuất tất cả các cặp xác nhận quyền sở hữu có quan hệ CONTRADICTS."""
         relations = self.repo.list_claim_relations()
         contradict_rels = [r for r in relations if r.relation_type == ArgumentRelationType.CONTRADICTS]
         results = []
@@ -87,7 +87,7 @@ class ReferenceMapQueryService:
         return results
 
     def get_coverage_summary(self) -> Dict[str, Any]:
-        """Calculate comprehensive reference, ownership, and citation coverage metrics."""
+        """Tính toán các số liệu tham khảo, quyền sở hữu và phạm vi trích dẫn toàn diện."""
         nodes = self.repo.list_roadmap_nodes()
         sources = self.repo.list_sources()
         claims = self.repo.list_claims()

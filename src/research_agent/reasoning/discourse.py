@@ -1,5 +1,5 @@
 """
-Rhetorical Discourse Planner & Template Attractor Auditor (Prompt 5 Sections 53..55, 62)
+Người lập kế hoạch diễn ngôn tu từ & Người kiểm tra thu hút mẫu (Nhắc 5 Phần 53..55, 62)
 """
 
 from typing import List, Dict, Any, Optional
@@ -17,11 +17,11 @@ from research_agent.schemas.reasoning import (
 
 class DiscoursePlanner:
     """
-    Constructs varied, non-rigid rhetorical discourse plans.
-    Audits for repetitive template-attractor structures across arguments.
+    Xây dựng kế hoạch diễn ngôn tu từ đa dạng, không cứng nhắc.
+    Kiểm tra các cấu trúc thu hút mẫu lặp đi lặp lại trên các đối số.
     """
 
-    # 10 Reusable Argument Patterns (Section 55)
+    # 10 mẫu đối số có thể tái sử dụng (Phần 55)
     PATTERN_DEFINITIONS = {
         ArgumentPatternType.PROBLEM_MECHANISM_CONSEQUENCE: [
             DiscourseFunction.DEFINE,
@@ -83,9 +83,9 @@ class DiscoursePlanner:
         subject_entity_ids: Optional[List[str]] = None,
     ) -> DiscoursePlan:
         """
-        Generates a DiscoursePlan dynamically selected to avoid rigid uniform styling.
+        Tạo DiscoursePlan được chọn động để tránh kiểu dáng thống nhất cứng nhắc.
         """
-        # Pick pattern deterministically based on roadmap node hash if not specified
+        # Chọn mẫu một cách xác định dựa trên hàm băm nút lộ trình nếu không được chỉ định
         if not preferred_pattern:
             patterns = list(self.PATTERN_DEFINITIONS.keys())
             idx = abs(hash(roadmap_node)) % len(patterns)
@@ -118,13 +118,13 @@ class DiscoursePlanner:
 
     def audit_template_attractors(self, plans: List[DiscoursePlan]) -> List[ReasoningIssue]:
         """
-        Detects repetitive structural patterns across multiple argument plans (Section 62).
+        Phát hiện các mẫu cấu trúc lặp đi lặp lại trên nhiều phương án đối số (Phần 62).
         """
         issues: List[ReasoningIssue] = []
         if len(plans) < 3:
             return issues
 
-        # Check if 3 consecutive plans use identical pattern
+        # Kiểm tra xem 3 kế hoạch liên tiếp có sử dụng mẫu giống nhau không
         for i in range(len(plans) - 2):
             p1, p2, p3 = plans[i], plans[i + 1], plans[i + 2]
             if p1.argument_pattern_name == p2.argument_pattern_name == p3.argument_pattern_name:

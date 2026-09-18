@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Word COM Native Drawing Functions for Chapter 2 Visuals (Figures 2.1, 2.2, 2.3, 2.4)
-Implements publication-grade vector architectural diagrams with Drawing Canvas, Shapes, and Connectors.
-Directly editable in Microsoft Word 2016+.
+Các hàm vẽ gốc của Word COM cho hình ảnh Chương 2 (Hình 2.1, 2.2, 2.3, 2.4)
+Triển khai các sơ đồ kiến trúc vectơ cấp xuất bản với Vẽ Canvas, Hình dạng và Đường kết nối.
+Có thể chỉnh sửa trực tiếp trong Microsoft Word 2016+.
 """
 from typing import Any
 import win32com.client.dynamic as dynamic
@@ -10,8 +10,8 @@ import win32com.client.dynamic as dynamic
 
 def set_shape_text_formatted(tf: Any, lines_spec: list, default_font_size: float = 6.6, default_align: int = 0):
     """
-    Sets text on a shape's TextFrame with native Word bullet formatting (ListFormat.ApplyBulletDefault)
-    and removes all literal unicode bullet characters.
+    Đặt văn bản trên TextFrame của hình dạng với định dạng dấu đầu dòng Word gốc (ListFormat.ApplyBulletDefault)
+    và loại bỏ tất cả các ký tự dấu đầu dòng unicode theo nghĩa đen.
     """
     tr = tf.TextRange
     raw_text = "\n".join([t for _, t in lines_spec])
@@ -19,7 +19,7 @@ def set_shape_text_formatted(tf: Any, lines_spec: list, default_font_size: float
     tr.Font.Name = "Times New Roman"
     tr.Font.Size = default_font_size
     try:
-        tr.Font.ColorIndex = 1  # wdBlack
+        tr.Font.ColorIndex = 1  # wdĐen
     except Exception:
         pass
     tr.ParagraphFormat.Alignment = default_align
@@ -57,8 +57,8 @@ def set_shape_text_formatted(tf: Any, lines_spec: list, default_font_size: float
 
 def draw_fig_2_1(canvas_raw: Any):
     """
-    Draws FIG 2.1: Dual-Plane Architecture (Training Plane & Streaming Inference Plane)
-    Editable Word Shapes Drawing Canvas.
+    Vẽ FIG 2.1: Kiến trúc mặt phẳng kép (Mặt phẳng huấn luyện & Mặt phẳng suy luận truyền phát)
+    Có thể chỉnh sửa Word Shapes Vẽ Canvas.
     """
     canvas = canvas_raw
     items = canvas.CanvasItems
@@ -69,7 +69,7 @@ def draw_fig_2_1(canvas_raw: Any):
     frame.Line.ForeColor.RGB = 0x334155
     frame.Line.Weight = 1.0
 
-    # Top Plane: Training Plane
+    # Máy bay trên cùng: Máy bay huấn luyện
     p_top = items.AddTextbox(1, 8.0, 8.0, 426.0, 62.0)
     p_top.Fill.Solid()
     p_top.Fill.ForeColor.RGB = 0xFFFFFF
@@ -80,7 +80,7 @@ def draw_fig_2_1(canvas_raw: Any):
         ('sub', "Tối ưu hóa tham số mạng trên dữ liệu lịch sử (Không nhãn APT)"),
     ], default_font_size=7.2)
 
-    # Boxes inside Top Plane
+    # Hộp bên trong Top Plane
     b_t1 = items.AddTextbox(1, 14.0, 28.0, 126.0, 36.0)
     b_t1.Fill.Solid()
     b_t1.Fill.ForeColor.RGB = 0xF0F9FF
@@ -122,7 +122,7 @@ def draw_fig_2_1(canvas_raw: Any):
         ('b', "Attention-MIL trên nhãn túi thô"),
     ], default_font_size=6.2)
 
-    # Downward transfer connector
+    # Đầu nối chuyển hướng xuống
     c_trans = items.AddConnector(1, 221.0, 70.0, 221.0, 84.0)
     c_trans.Line.ForeColor.RGB = 0x7C3AED
     c_trans.Line.Weight = 1.4
@@ -140,7 +140,7 @@ def draw_fig_2_1(canvas_raw: Any):
     tr_tr.Font.Bold = True
     tr_tr.ParagraphFormat.Alignment = 1
 
-    # Bottom Plane: Streaming Inference Plane
+    # Mặt phẳng dưới cùng: Mặt phẳng suy luận trực tuyến
     p_bot = items.AddTextbox(1, 8.0, 85.0, 426.0, 63.0)
     p_bot.Fill.Solid()
     p_bot.Fill.ForeColor.RGB = 0xFFFFFF
@@ -151,7 +151,7 @@ def draw_fig_2_1(canvas_raw: Any):
         ('sub', "Cập nhật trạng thái hữu hạn và trích xuất vector đơn lượt"),
     ], default_font_size=7.2)
 
-    # Boxes inside Bottom Plane
+    # Hộp bên trong mặt phẳng đáy
     b_b1 = items.AddTextbox(1, 14.0, 105.0, 96.0, 38.0)
     b_b1.Fill.Solid()
     b_b1.Fill.ForeColor.RGB = 0xF0F9FF
@@ -211,8 +211,8 @@ def draw_fig_2_1(canvas_raw: Any):
 
 def draw_fig_2_2(canvas_raw: Any):
     """
-    Draws FIG 2.2: Transformer Semantic-Sequential Extractor Architecture
-    Editable Word Shapes Drawing Canvas.
+    Vẽ FIG 2.2: Kiến trúc trích xuất tuần tự ngữ nghĩa biến áp
+    Có thể chỉnh sửa Word Shapes Vẽ Canvas.
     """
     canvas = canvas_raw
     items = canvas.CanvasItems
@@ -247,7 +247,7 @@ def draw_fig_2_2(canvas_raw: Any):
         ('f', "(Cửa sổ L sự kiện)"),
     ], default_font_size=6.6)
 
-    # Connector 1 -> 2
+    # Đầu nối 1 -> 2
     c1 = items.AddConnector(1, 108.0, 80.0, 114.0, 80.0)
     c1.Line.ForeColor.RGB = 0x334155
     c1.Line.Weight = 1.2
@@ -278,13 +278,13 @@ def draw_fig_2_2(canvas_raw: Any):
         ('f', "Không gian vector biểu diễn"),
     ], default_font_size=6.6)
 
-    # Connector 2 -> 3
+    # Đầu nối 2 -> 3
     c2 = items.AddConnector(1, 224.0, 80.0, 230.0, 80.0)
     c2.Line.ForeColor.RGB = 0x334155
     c2.Line.Weight = 1.2
     c2.Line.EndArrowheadStyle = 2
 
-    # 3. Box 3: Transformer Encoder (Center-Right)
+    # 3. Ô 3: Bộ mã hóa máy biến áp (Giữa bên phải)
     b3 = items.AddTextbox(1, 230.0, 8.0, 116.0, 144.0)
     b3.Fill.Solid()
     b3.Fill.ForeColor.RGB = 0xFFFFFF
@@ -308,13 +308,13 @@ def draw_fig_2_2(canvas_raw: Any):
         ('f', "Trạng thái biểu diễn ẩn"),
     ], default_font_size=6.6)
 
-    # Connector 3 -> 4 (Top)
+    # Đầu nối 3 -> 4 (Trên cùng)
     c3 = items.AddConnector(1, 346.0, 40.0, 352.0, 40.0)
     c3.Line.ForeColor.RGB = 0x334155
     c3.Line.Weight = 1.2
     c3.Line.EndArrowheadStyle = 2
 
-    # 4. Box 4: Output Readout (Right-Top)
+    # 4. Ô 4: Kết quả đầu ra (Trên cùng bên phải)
     b4 = items.AddShape(5, 352.0, 8.0, 90.0, 64.0)
     b4.Fill.Solid()
     b4.Fill.ForeColor.RGB = 0xE0F2FE
@@ -334,13 +334,13 @@ def draw_fig_2_2(canvas_raw: Any):
         ('f', "[Siêu dữ liệu & mặt nạ]"),
     ], default_font_size=6.5, default_align=1)
 
-    # Connector 3 -> 5 (Bottom)
+    # Đầu nối 3 -> 5 (Dưới cùng)
     c4 = items.AddConnector(1, 346.0, 114.0, 352.0, 114.0)
     c4.Line.ForeColor.RGB = 0xCA8A04
     c4.Line.Weight = 1.0
     c4.Line.EndArrowheadStyle = 2
 
-    # 5. Box 5: Self-Supervised Objectives (Right-Bottom)
+    # 5. Hộp 5: Mục tiêu tự giám sát (Phía dưới bên phải)
     b5 = items.AddTextbox(1, 352.0, 76.0, 90.0, 76.0)
     b5.Fill.Solid()
     b5.Fill.ForeColor.RGB = 0xFEF9C3
@@ -365,8 +365,8 @@ def draw_fig_2_2(canvas_raw: Any):
 
 def draw_fig_2_3(canvas_raw: Any):
     """
-    Draws FIG 2.3: Dependency-Temporal Provenance Graph Construction & Temporal GNN Extractor
-    Editable Word Shapes Drawing Canvas.
+    Vẽ FIG 2.3: Xây dựng biểu đồ xuất xứ phụ thuộc-thời gian & Trình trích xuất GNN tạm thời
+    Có thể chỉnh sửa Word Shapes Vẽ Canvas.
     """
     canvas = canvas_raw
     items = canvas.CanvasItems
@@ -377,7 +377,7 @@ def draw_fig_2_3(canvas_raw: Any):
     frame.Line.ForeColor.RGB = 0x334155
     frame.Line.Weight = 1.0
 
-    # 1. Box 1: Provenance Graph Construction (Left)
+    # 1. Hộp 1: Xây dựng biểu đồ xuất xứ (Trái)
     b1 = items.AddTextbox(1, 8.0, 8.0, 102.0, 144.0)
     b1.Fill.Solid()
     b1.Fill.ForeColor.RGB = 0xFFFFFF
@@ -400,13 +400,13 @@ def draw_fig_2_3(canvas_raw: Any):
         ('f', "Bất biến: Phụ thuộc ≠ Nhân quả"),
     ], default_font_size=6.6)
 
-    # Connector 1 -> 2
+    # Đầu nối 1 -> 2
     c1 = items.AddConnector(1, 110.0, 80.0, 116.0, 80.0)
     c1.Line.ForeColor.RGB = 0x334155
     c1.Line.Weight = 1.2
     c1.Line.EndArrowheadStyle = 2
 
-    # 2. Box 2: Proposed Graph-Fidelity Candidates (Center-Left)
+    # 2. Hộp 2: Đề xuất về độ trung thực của đồ thị (Giữa bên trái)
     b2 = items.AddTextbox(1, 116.0, 8.0, 110.0, 144.0)
     b2.Fill.Solid()
     b2.Fill.ForeColor.RGB = 0xFFFFFF
@@ -428,13 +428,13 @@ def draw_fig_2_3(canvas_raw: Any):
         ('b', "Khởi tạo đặc trưng đỉnh"),
     ], default_font_size=6.6)
 
-    # Connector 2 -> 3
+    # Đầu nối 2 -> 3
     c2 = items.AddConnector(1, 226.0, 80.0, 232.0, 80.0)
     c2.Line.ForeColor.RGB = 0x334155
     c2.Line.Weight = 1.2
     c2.Line.EndArrowheadStyle = 2
 
-    # 3. Box 3: Temporal GNN Message Passing (Center-Right)
+    # 3. Hộp 3: Truyền thông báo GNN tạm thời (Giữa bên phải)
     b3 = items.AddTextbox(1, 232.0, 8.0, 116.0, 144.0)
     b3.Fill.Solid()
     b3.Fill.ForeColor.RGB = 0xFFFFFF
@@ -458,13 +458,13 @@ def draw_fig_2_3(canvas_raw: Any):
         ('b', "Self-loop chỉ trong đồ thị tính toán"),
     ], default_font_size=6.5)
 
-    # Connector 3 -> 4
+    # Đầu nối 3 -> 4
     c3 = items.AddConnector(1, 348.0, 80.0, 354.0, 80.0)
     c3.Line.ForeColor.RGB = 0x334155
     c3.Line.Weight = 1.2
     c3.Line.EndArrowheadStyle = 2
 
-    # 4. Box 4: Output Graph Readout (Right)
+    # 4. Ô 4: Đọc biểu đồ đầu ra (Phải)
     b4 = items.AddShape(5, 354.0, 8.0, 88.0, 144.0)
     b4.Fill.Solid()
     b4.Fill.ForeColor.RGB = 0xECFDF5
@@ -490,14 +490,14 @@ def draw_fig_2_3(canvas_raw: Any):
 
 def draw_fig_2_4(canvas_raw: Any):
     """
-    Draws FIG 2.4: Multi-View Alignment, Anti-Collapse Regularization & Unified Representation Learning
-    Editable Word Shapes Drawing Canvas.
+    Vẽ FIG 2.4: Căn chỉnh nhiều chế độ xem, Chính quy hóa chống thu gọn & Học cách biểu diễn thống nhất
+    Có thể chỉnh sửa Word Shapes Vẽ Canvas.
     """
     canvas = canvas_raw
     items = canvas.CanvasItems
 
-    # Four equal stages: their exact positions are normalized again with
-    # ShapeRange.Align/Distribute below, rather than relying on visual placement.
+    # Bốn giai đoạn bằng nhau: khe chính xác của chúng được chuẩn hóa lại bằng
+    # ShapeRange.Align/Phân phối bên dưới, thay vì dựa vào khe trực quan.
     stage_x = [8.0, 116.0, 224.0, 332.0]
     stage_width = 100.0
     stage_top = 10.0
@@ -575,9 +575,9 @@ def draw_fig_2_4(canvas_raw: Any):
         connector.Line.EndArrowheadStyle = 2
         all_names.append(connector.Name)
 
-    # Canvas items do not expose a reliable ShapeRange.Distribute API.  The
-    # production replacement script builds this figure at document level,
-    # where Word's ShapeRange grid and grouping APIs are available.
+    # Các mục canvas không hiển thị ShapeRange.Distribute API đáng tin cậy.  các
+    # tập lệnh thay thế sản xuất xây dựng con số này ở cấp độ tài liệu,
+    # nơi có sẵn các API nhóm và lưới ShapeRange của Word.
 
 
 

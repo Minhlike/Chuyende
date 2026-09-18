@@ -1,9 +1,9 @@
 ﻿# -*- coding: utf-8 -*-
 """
-Stage A2 Local Windows CUDA Environment Bootstrap and Hardware Lock Generator (Protocol V1.5 / Amendment 13).
-Executes hardware discovery, fail-closed prerequisite verification, dataset validation,
-machine-collected determinism measurement, and generates the Local Windows execution environment lock.
-ZERO HDFS optimizer steps.
+Giai đoạn A2 Windows cục bộ CUDA Trình tạo khóa phần cứng và khởi động môi trường (Giao thức V1.5 / Bản sửa đổi 13).
+Thực hiện khám phá phần cứng, xác minh điều kiện tiên quyết không đóng được, xác thực dữ liệu,
+phép đo xác định do máy thu thập và tạo khóa môi trường thực thi Windows cục bộ.
+Các bước tối ưu hóa ZERO HDFS.
 """
 
 import os
@@ -77,7 +77,7 @@ def run_bootstrap(
     print(f"Durable Root:   {durable_root}")
     print(f"Lock Output:    {env_lock_p}\n")
 
-    # 1. Hardware and CUDA discovery
+    # 1. Khám phá phần cứng và CUDA
     if not torch.cuda.is_available():
         raise RuntimeError("FATAL: torch.cuda.is_available() is False. CUDA GPU is required!")
 
@@ -97,7 +97,7 @@ def run_bootstrap(
     print(f"[HW 5] NVIDIA Driver:        {driver_version}")
     print(f"[HW 6] GPU UUID:             {gpu_uuid}")
 
-    # 2. System and Python Environment
+    # 2. Môi trường hệ thống và Python
     py_ver = platform.python_version()
     py_major_minor = f"{sys.version_info.major}.{sys.version_info.minor}"
     torch_ver = torch.__version__
@@ -115,7 +115,7 @@ def run_bootstrap(
     print(f"[ENV 6] Hostname:            {hostname}")
     print(f"[ENV 7] OS:                  {os_platform}")
 
-    # 3. Deterministic flags
+    # 3. Cờ xác định
     os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
     torch.use_deterministic_algorithms(True)
     torch.backends.cudnn.deterministic = True
@@ -135,7 +135,7 @@ def run_bootstrap(
     assert cudnn_det is True
     assert cudnn_bm is False
 
-    # 4. Dataset Validation
+    # 4. Xác thực tập dữ liệu
     print(f"\n[DATA 1] Verifying HDFS Dataset at {raw_data_p}...")
     if not raw_data_p.exists():
         raise FileNotFoundError(f"Raw HDFS dataset missing at {raw_data_p}")
@@ -145,7 +145,7 @@ def run_bootstrap(
         raise ValueError(f"HDFS SHA mismatch: {actual_sha} != {EXPECTED_HDFS_SHA}")
     print("[DATA 3] HDFS Dataset Cryptographic Match: PASS")
 
-    # 5. Build Dual-Compatible Environment Lock Document
+    # 5. Xây dựng tài liệu khóa môi trường tương thích kép
     env_lock = {
         "environment_lock_id": "STAGE-A2-LOCAL-EXECUTION-ENVIRONMENT-V1.5",
         "created_at_utc": datetime.now(timezone.utc).isoformat(),

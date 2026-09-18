@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Temporal GNN Semantic Invariant Tests
-Verifies:
-  1. Real continuous x_v^priv node attribute masking: Mask token replaces attribute before message computation.
-  2. Anti-leakage: Masked input identical, changing hidden target does NOT alter message/representation.
-  3. Strict global temporal monotonicity: Out-of-order event sequence (e.g. t=20 entity A, t=10 entity B) raises ValueError.
-  4. Same-time message aggregation: Messages at same timestamp to same destination aggregated before single update.
-  5. LRU-bounded state capacity and peak state tracking.
+Kiểm tra bất biến ngữ nghĩa GNN tạm thời
+Xác minh:
+  1. Mặt nạ thuộc tính nút riêng tư x_v^ thực sự liên tục: token mặt nạ thay thế thuộc tính trước khi tính toán thông báo.
+  2. Chống rò rỉ: Đầu vào được che đậy giống hệt nhau, việc thay đổi mục tiêu ẩn sẽ làm thay đổi thông báo/trình bày của NOT.
+  3. Tính đơn điệu theo thời gian toàn cầu nghiêm ngặt: Chuỗi sự kiện không theo thứ tự (e.g. t=20 thực thể A, t=10 thực thể B) làm tăng ValueError.
+  4. Tổng hợp tin nhắn cùng thời gian: Các tin nhắn có cùng dấu thời gian đến cùng một đích được tổng hợp trước khi cập nhật một lần.
+  5. Dung lượng trạng thái giới hạn LRU và theo dõi trạng thái cao nhất.
 """
 
 import pytest
@@ -24,11 +24,11 @@ def test_01_real_continuous_node_masking_and_target_anti_leakage():
     device = torch.device("cpu")
     model = TemporalGraphViewExtractor(node_attr_dim=8, memory_dim=16, out_dim=16)
 
-    # Event 0 has target attr A, Event 1 has target attr B
+    # Sự kiện 0 có mục tiêu A, Sự kiện 1 có mục tiêu B
     ev_a = [{"timestamp": 1.0, "src": 1, "dst": 2, "relation_type": 1, "src_node_attr": [1.0]*8, "dst_node_attr": [0.0]*8}]
     ev_b = [{"timestamp": 1.0, "src": 1, "dst": 2, "relation_type": 1, "src_node_attr": [9.0]*8, "dst_node_attr": [0.0]*8}]
 
-    # When masked at index 0, both must compute IDENTICAL masked message and graph representations (Zero Leakage)
+    # Khi bị che ở chỉ mục 0, cả hai phải tính toán biểu diễn biểu đồ và thông báo được che dấu IDENTICAL (Zero Leakage)
     model.memory_bank.reset_memory()
     z_a, ssl_a = model.process_causal_events(ev_a, device, mask_node_indices={0})
 

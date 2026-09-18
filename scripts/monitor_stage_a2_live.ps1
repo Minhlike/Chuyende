@@ -1,5 +1,5 @@
-# scripts/monitor_stage_a2_live.ps1
-# Universal Realtime Live Monitor for Stage A2 Canonical Five-Seed Execution (Honest, Real-Time Hardware & State Telemetry)
+# tập lệnh/monitor_stage_a2_live.ps1
+# Màn hình trực tiếp thời gian thực phổ quát cho việc thực thi năm hạt giống chuẩn ở giai đoạn A2 (Trung thực, phần cứng thời gian thực & đo từ xa trạng thái)
 
 $baseDir = "D:\Research"
 $stateFile = "$baseDir\experiments\runs\stage-a2\HDFS\seed-42\RUN-STATE.json"
@@ -17,7 +17,7 @@ Clear-Host
 
 try {
     while ($true) {
-        # 1. Discover Active Process
+        # 1. Khám phá quy trình hoạt động
         $proc = Get-CimInstance Win32_Process -Filter "CommandLine LIKE '%run_stage_a2_five_seed_empirical.py%'" | 
                 Where-Object { $_.ProcessId -ne $PID } | 
                 Sort-Object -Property UserModeTime -Descending | 
@@ -25,7 +25,7 @@ try {
 
         $isAlive = ($proc -ne $null)
 
-        # 2. Read State & Logs
+        # 2. Đọc trạng thái và nhật ký
         $stateData = $null
         if (Test-Path $stateFile) {
             try {
@@ -45,7 +45,7 @@ try {
             } catch {}
         }
 
-        # 3. Determine Console Width (Split Screen Friendly)
+        # 3. Xác định độ rộng của bảng điều khiển (Thân thiện với màn hình chia nhỏ)
         $rawWidth = 80
         try {
             $rawWidth = $host.UI.RawUI.WindowSize.Width
@@ -63,7 +63,7 @@ try {
             $completedEpochs = [int]$stateData.completed_epoch
         }
 
-        # 4. Hardware Metrics
+        # 4. Số liệu phần cứng
         $gpuUtil = "0%"
         $gpuMem = "0 / 4096 MB"
         $gpuTemp = "N/A"
@@ -115,7 +115,7 @@ try {
             $lines.Add("")
         }
 
-        # 5. Completed Epochs History Table
+        # 5. Bảng lịch sử epoch đã hoàn thành
         $lines.Add(" [CHECKPOINT & EPOCH HISTORY]")
         if ($logRecords.Count -gt 0) {
             foreach ($rec in $logRecords) {
@@ -134,7 +134,7 @@ try {
         }
         $lines.Add("")
 
-        # 6. Best Checkpoint State
+        # 6. Trạng thái checkpoint tốt nhất
         if ($stateData -ne $null -and $stateData.best_val_loss -ne $null -and $stateData.best_val_loss -ne [double]::PositiveInfinity) {
             $bestLossStr = [math]::Round([double]$stateData.best_val_loss, 4)
             $lines.Add(" [BEST CHECKPOINT SAVED]")
@@ -149,7 +149,7 @@ try {
         $lines.Add($sep)
         $lines.Add(" Live telemetry refresh (every 1s). Press Ctrl+C to exit.")
 
-        # 7. Render Frame Safely
+        # 7. Kết xuất khung hình một cách an toàn
         $formattedLines = $lines | ForEach-Object {
             $line = $_
             if ($line.Length -gt $width) {

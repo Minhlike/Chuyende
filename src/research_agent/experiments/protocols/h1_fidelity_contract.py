@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-H1 Canonical Test Contract: Parameter Semantic Fidelity
-Evaluates whether security-aware dynamic parameter representation preserves mutual information
-I(z; Y_sec) compared to template-only abstraction under identical architecture, split, probe, and budget.
+Hợp đồng thử nghiệm Canonical H1: Độ trung thực ngữ nghĩa của tham số
+Đánh giá xem liệu biểu diễn tham số động nhận biết bảo mật có bảo toàn thông tin lẫn nhau hay không
+I(z; Y_sec) so với tính trừu tượng chỉ có mẫu trong kiến trúc, phân tách, thăm dò và ngân sách giống hệt nhau.
 """
 
 from typing import Dict, Any, Optional
@@ -17,7 +17,7 @@ def evaluate_h1_parameter_fidelity_contract(
     seed: int = 10007
 ) -> Dict[str, Any]:
     """
-    Executes pre-registered H1 hypothesis testing using Average Precision (AP).
+    Thực hiện kiểm tra giả thuyết H1 đã đăng ký trước bằng cách sử dụng Độ chính xác trung bình (AP).
     """
     from research_agent.experiments.protocols.paired_cluster_bootstrap import (
         paired_cluster_bootstrap_recompute,

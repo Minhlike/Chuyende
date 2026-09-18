@@ -1,11 +1,11 @@
 """
-Roadmap Integrity Validation Script (Section 25)
+Tập lệnh xác thực tính toàn vẹn của lộ trình (Phần 25)
 """
 
 import sys
 from pathlib import Path
 
-# Add src to sys.path
+# Thêm src vào sys.path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from research_agent.config import get_default_config

@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 """
-Canonical Google Colab Fresh Launch Script for Stage A2 Seed 42.
-Executes fresh canonical Seed 42 training with exact RNG ordering without resuming legacy checkpoints.
-Archives old noncanonical Seed 42 run to a forensic namespace on Google Drive without deleting anything.
+Tập lệnh khởi chạy mới của Canonical Google Colab cho Giai đoạn A2 Seed 42.
+Thực hiện đào tạo Seed 42 chuẩn mới với thứ tự RNG chính xác mà không cần tiếp tục các checkpoint cũ.
+Lưu trữ Seed 42 không chuẩn cũ chạy đến một không gian tên pháp y trên Google Drive mà không xóa bất kỳ thứ gì.
 
-Usage:
-  # Dry-run validation (0 optimizer steps executed):
-  python scripts/colab_stage_a2_fresh_seed42.py --dry-run --commit <40-hex SHA>
+Cách sử dụng:
+  # Xác thực chạy thử (thực hiện 0 bước tối ưu hóa):
+  tập lệnh python/colab_stage_a2_fresh_seed42.py --dry-run --commit <40-hex SHA>
 
-  # Real empirical training:
-  python scripts/colab_stage_a2_fresh_seed42.py --execute --commit <40-hex SHA>
+  #Đào tạo thực nghiệm thực tế:
+  tập lệnh python/colab_stage_a2_fresh_seed42.py --execute --commit <40-hex SHA>
 """
 
 import os
-# Enforce deterministic CUBLAS configuration before any CUDA context is initialized
+# Thực thi cấu hình CUBLAS xác định trước khi bất kỳ bối cảnh CUDA nào được khởi tạo
 os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
 os.environ["PYTHONUNBUFFERED"] = "1"
 
@@ -35,7 +35,7 @@ TARGET_SEED = 42
 EXPECTED_RAW_HDFS_SHA = "6ca6c5bc2671c66afecee9369a2fdac606bf33997a2494ac66aa411fe3e95169"
 
 def compute_sha256_streaming(path: Path, chunk_size: int = 8 * 1024 * 1024) -> str:
-    """Computes streaming SHA-256 hash to prevent memory spikes."""
+    """Tính toán hàm băm SHA-256 phát trực tiếp để tránh tăng đột biến bộ nhớ."""
     hasher = hashlib.sha256()
     with open(path, "rb") as f:
         while chunk := f.read(chunk_size):
@@ -43,7 +43,7 @@ def compute_sha256_streaming(path: Path, chunk_size: int = 8 * 1024 * 1024) -> s
     return hasher.hexdigest()
 
 def get_nvidia_driver_version() -> str:
-    """Queries NVIDIA driver version fail-closed via nvidia-smi."""
+    """Truy vấn phiên bản trình điều khiển NVIDIA không đóng được thông qua nvidia-smi."""
     try:
         out = subprocess.check_output([
             "nvidia-smi", "--query-gpu=driver_version", "--format=csv,noheader"
@@ -56,7 +56,7 @@ def get_nvidia_driver_version() -> str:
         return f"UNAVAILABLE ({e})"
 
 def detect_colab_paths(base_dir_arg: Optional[Path] = None, durable_root_arg: Optional[Path] = None) -> Dict[str, Path]:
-    """Resolves standard Colab or local filesystem paths."""
+    """Giải quyết các đường dẫn hệ thống tệp cục bộ hoặc Colab tiêu chuẩn."""
     is_colab = Path("/content").exists()
     
     if base_dir_arg:
@@ -87,8 +87,8 @@ def detect_colab_paths(base_dir_arg: Optional[Path] = None, durable_root_arg: Op
 
 def archive_old_durable_seed42_directory(durable_seed_dir: Path) -> Optional[Path]:
     """
-    Safely archives any pre-existing noncanonical Seed 42 run directory on Drive
-    to a forensic namespace without deleting anything.
+    Lưu trữ an toàn mọi thư mục chạy Seed 42 không chuẩn có sẵn trên Drive
+    vào một không gian tên pháp y mà không xóa bất cứ thứ gì.
     """
     if not durable_seed_dir.exists():
         return None
@@ -99,7 +99,7 @@ def archive_old_durable_seed42_directory(durable_seed_dir: Path) -> Optional[Pat
     print(f"[FORENSIC ARCHIVE] Preserving existing Seed 42 directory to: {forensic_dest}")
     durable_seed_dir.rename(forensic_dest)
     
-    # Write explicit forensic classification note
+    # Viết ghi chú phân loại pháp y rõ ràng
     note_p = forensic_dest / "RUN-CLASSIFICATION.json"
     note_data = {
         "seed": 42,
@@ -116,7 +116,7 @@ def run_fresh_seed42_launch(
     base_dir_arg: Optional[Path] = None,
     durable_root_arg: Optional[Path] = None
 ) -> int:
-    """Prepares environment and launches fresh canonical Seed 42 execution."""
+    """Chuẩn bị môi trường và triển khai thực thi Seed 42 chuẩn mới."""
     paths = detect_colab_paths(base_dir_arg, durable_root_arg)
     base_dir = paths["base_dir"]
     durable_root = paths["durable_root"]
@@ -125,7 +125,7 @@ def run_fresh_seed42_launch(
     print(f"   STAGE A2 FRESH CANONICAL SEED-42 LAUNCHER (Mode: {mode.upper()}) ")
     print("=================================================================")
 
-    # 1. Verify GPU
+    # 1. Xác minh GPU
     if not torch.cuda.is_available():
         print("FATAL: CUDA GPU is not available in current environment!")
         return 1
@@ -136,12 +136,12 @@ def run_fresh_seed42_launch(
     vram_gb = props.total_memory / (1024**3)
     driver_ver = get_nvidia_driver_version()
 
-    # 2. Verify PyTorch & CUDA version
+    # 2. Xác minh phiên bản PyTorch & CUDA
     if torch.__version__ != "2.6.0+cu124" or torch.version.cuda != "12.4":
         print(f"FATAL: Exact PyTorch runtime mismatch: {torch.__version__} (CUDA {torch.version.cuda}) != 2.6.0+cu124 (CUDA 12.4)")
         return 1
 
-    # 3. Verify Approved Commit
+    # 3. Xác minh cam kết đã được phê duyệt
     try:
         head_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=str(base_dir), text=True).strip()
         status_out = subprocess.check_output(["git", "status", "--porcelain", "src", "scripts", "experiments"], cwd=str(base_dir), text=True).strip()
@@ -158,7 +158,7 @@ def run_fresh_seed42_launch(
         print("FATAL: Git working directory has uncommitted changes in execution source!")
         return 1
 
-    # 4. Verify Dataset
+    # 4. Xác minh bộ dữ liệu
     raw_tar = paths["raw_tarball_path"]
     if not raw_tar.exists():
         if paths["drive_canonical_dataset"].exists():
@@ -182,7 +182,7 @@ def run_fresh_seed42_launch(
         print(f"FATAL: HDFS raw dataset SHA mismatch: {dataset_sha} != {EXPECTED_RAW_HDFS_SHA}")
         return 1
 
-    # 5. Environment Lock & Qualification
+    # 5. Khóa môi trường & Đánh giá chất lượng
     env_lock_path = base_dir / "experiments" / "evidence" / "stage-a2" / "preexecution" / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
     if not env_lock_path.exists():
         print(f"FATAL: Environment lock missing at {env_lock_path}!")
@@ -194,7 +194,7 @@ def run_fresh_seed42_launch(
         print(f"FATAL: Launch authorization artifact missing at {auth_path}!")
         return 1
 
-    # 6. Verify Local Cleanliness
+    # 6. Xác minh sự sạch sẽ của địa phương
     local_run_dir = base_dir / "experiments" / "runs" / "stage-a2" / "HDFS" / "seed-42"
     local_art_dir = base_dir / ".artifacts" / "stage-a2" / "HDFS" / "seed-42"
     if local_run_dir.exists() and any(local_run_dir.iterdir()):
@@ -204,13 +204,13 @@ def run_fresh_seed42_launch(
         print(f"FATAL: Local artifact directory is not clean: {local_art_dir}")
         return 1
 
-    # 7. Archive Old Durable Directory on Drive (if in real execution mode)
+    # 7. Lưu trữ Old Bền Directory trên Drive (nếu ở chế độ thực thi thực)
     durable_seed_dir = durable_root / "seed-42"
     if mode == "execute" and durable_seed_dir.exists():
         archive_old_durable_seed42_directory(durable_seed_dir)
         durable_seed_dir.mkdir(parents=True, exist_ok=True)
 
-    # 8. Print Summary
+    # 8. In Tóm tắt
     print("=================================================================")
     print("   STAGE A2 SEED-42 FRESH LAUNCH SUMMARY                         ")
     print("=================================================================")

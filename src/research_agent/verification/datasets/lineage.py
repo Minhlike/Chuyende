@@ -1,5 +1,5 @@
 """
-Dataset Lineage & Provenance Graph (Prompt 6 Section 27)
+Biểu đồ nguồn gốc và dòng dữ liệu (Nhắc 6 Phần 27)
 """
 
 from typing import Dict, List, Optional
@@ -8,8 +8,8 @@ from research_agent.schemas.verification import PreprocessingTransformation
 
 class DatasetLineageTracker:
     """
-    Constructs and queries the lineage graph from raw datasets to feature inputs.
-    Ensures every derived dataset has an explicit, reproducible transformation.
+    Xây dựng và truy vấn biểu đồ dòng từ các tập dữ liệu thô đến các đầu vào đặc trưng.
+    Đảm bảo mọi tập dữ liệu dẫn xuất đều có một phép chuyển đổi rõ ràng, có thể lặp lại.
     """
 
     def __init__(self):
@@ -19,7 +19,7 @@ class DatasetLineageTracker:
         self._transformations[trf.transformation_id] = trf
 
     def get_ancestors(self, dataset_version_id: str) -> List[str]:
-        """Traces all parent dataset versions leading to dataset_version_id."""
+        """Theo dõi tất cả các phiên bản tập dữ liệu gốc dẫn đến dataset_version_id."""
         ancestors = []
         current = dataset_version_id
         while True:
@@ -36,7 +36,7 @@ class DatasetLineageTracker:
         return ancestors
 
     def get_lineage_trail(self, dataset_version_id: str) -> List[PreprocessingTransformation]:
-        """Returns the ordered list of transformations applied to produce dataset_version_id."""
+        """Trả về danh sách các phép biến đổi có thứ tự được áp dụng để tạo ra dataset_version_id."""
         trail = []
         current = dataset_version_id
         while True:

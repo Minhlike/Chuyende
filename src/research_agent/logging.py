@@ -1,5 +1,5 @@
 """
-Structured Logging Subsystem (ADR-0001, RC-18)
+Hệ thống con ghi nhật ký có cấu trúc (ADR-0001, RC-18)
 """
 
 import json
@@ -12,7 +12,7 @@ from research_agent.config import WorkspaceConfig, get_default_config
 
 
 class JsonFormatter(logging.Formatter):
-    """Formats log records as structured JSON lines."""
+    """Định dạng bản ghi nhật ký dưới dạng dòng JSON có cấu trúc."""
 
     def format(self, record: logging.LogRecord) -> str:
         log_data: Dict[str, Any] = {
@@ -35,13 +35,13 @@ def configure_logging(
     log_level: int = logging.INFO,
     log_to_file: bool = True
 ) -> logging.Logger:
-    """Initialize structured logger for research system."""
+    """Khởi tạo logger có cấu trúc cho hệ thống nghiên cứu."""
     cfg = config or get_default_config()
     logger = logging.getLogger("research_agent")
     logger.setLevel(log_level)
     logger.handlers.clear()
 
-    # Console Handler (Human-readable with UTF-8 support)
+    # Trình xử lý bảng điều khiển (Con người có thể đọc được với sự hỗ trợ UTF-8)
     if hasattr(sys.stdout, "reconfigure"):
         try:
             sys.stdout.reconfigure(encoding="utf-8", errors="backslashreplace")
@@ -55,7 +55,7 @@ def configure_logging(
     console_handler.setFormatter(console_fmt)
     logger.addHandler(console_handler)
 
-    # File Handler (Structured JSON lines)
+    # Trình xử lý tệp (Dòng JSON có cấu trúc)
     if log_to_file:
         cfg.ensure_directories()
         log_file = cfg.logs_dir / "research_system.jsonl"
@@ -67,5 +67,5 @@ def configure_logging(
 
 
 def get_logger(name: str = "research_agent") -> logging.Logger:
-    """Retrieve logger instance."""
+    """Truy xuất phiên bản logger."""
     return logging.getLogger(name)

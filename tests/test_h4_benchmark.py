@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-H4 Conjunctive SLO Benchmark Harness Tests
-Verifies:
-  1. State size footprint (state_size_bytes, peak_state_bytes, active_entities) measured during/after run.
-  2. Telemetry event deduplication: Same source events in both views are counted ONCE.
-  3. benchmark_end_to_end profiles full path with deduplicated event count.
-  4. benchmark_incremental_fusion isolates fusion step.
+Thử nghiệm khai thác điểm chuẩn SLO liên hợp H4
+Xác minh:
+  1. Dấu chân kích thước trạng thái (state_size_bytes, peak_state_bytes, active_entities) được đo trong/sau khi chạy.
+  2. Loại bỏ trùng lặp sự kiện từ xa: Các sự kiện nguồn giống nhau ở cả hai chế độ xem đều được tính ONCE.
+  3. benchmark_end_to_end lập hồ sơ đường dẫn đầy đủ với số lượng sự kiện được loại bỏ.
+  4. benchmark_incremental_fusion cô lập bước tổng hợp.
 """
 
 import time
@@ -26,7 +26,7 @@ def test_01_end_to_end_benchmark_with_state_and_deduplication():
     tokenizer = PrivacyAwareLogTokenizer(mode="PRIVACY_AWARE_PARAMETERIZED")
     model = MultiViewRepresentationModel(seq_vocab_size=50, graph_node_attr_dim=8, embed_dim=16, mode="aligned")
 
-    # 2 sequence lines, 2 corresponding graph events representing same 2 source events
+    # 2 dòng trình tự, 2 sự kiện biểu đồ tương ứng biểu thị 2 sự kiện nguồn giống nhau
     raw_lines_batch = [
         ["2026-08-21 10.0.0.1 open /etc/shadow", "2026-08-21 10.0.0.1 read /etc/shadow"]
     ]
@@ -34,7 +34,7 @@ def test_01_end_to_end_benchmark_with_state_and_deduplication():
         [{"timestamp": 1.0, "src": 1, "dst": 2, "relation_type": 1},
          {"timestamp": 2.0, "src": 2, "dst": 3, "relation_type": 2}]
     ]
-    source_event_ids = {"EVT-001", "EVT-002"}  # Exact 2 source events
+    source_event_ids = {"EVT-001", "EVT-002"}  # Chính xác 2 sự kiện nguồn
 
     res = harness.benchmark_end_to_end(
         extractor_model=model,
@@ -46,7 +46,7 @@ def test_01_end_to_end_benchmark_with_state_and_deduplication():
         repeat_runs=5
     )
 
-    # Must count source events once (2), NOT 2 + 2 = 4
+    # Phải đếm sự kiện nguồn một lần (2), NOT 2 + 2 = 4
     assert res["telemetry_events_per_iter"] == 2, f"Expected 2 deduplicated events, got {res['telemetry_events_per_iter']}"
     assert "latency_p95_ms" in res
     assert "throughput_events_per_sec" in res
@@ -60,7 +60,7 @@ def test_02_source_event_deduplication_without_explicit_ids():
     tokenizer = PrivacyAwareLogTokenizer(mode="PRIVACY_AWARE_PARAMETERIZED")
     model = MultiViewRepresentationModel(seq_vocab_size=50, graph_node_attr_dim=8, embed_dim=16, mode="aligned")
 
-    # 100 sequence lines, 100 graph events
+    # 100 dòng trình tự, 100 sự kiện đồ thị
     raw_lines = [f"line {i}" for i in range(100)]
     graph_events = [{"timestamp": float(i), "src": 1, "dst": 2, "relation_type": 0} for i in range(100)]
 
@@ -73,7 +73,7 @@ def test_02_source_event_deduplication_without_explicit_ids():
         repeat_runs=2
     )
 
-    # Deduped count must be 100, not 200
+    # Số bị trừ phải là 100 chứ không phải 200
     assert res["telemetry_events_per_iter"] == 100
 
 def test_03_incremental_fusion_benchmark():

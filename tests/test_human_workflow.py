@@ -1,5 +1,5 @@
 """
-Unit & Integration Tests for Human-in-the-Loop & Invalidation Management (Prompt 7)
+Kiểm thử đơn vị & tích hợp để quản lý con người trong vòng lặp và tính hợp lệ (Nhắc 7)
 """
 
 import pytest
@@ -35,7 +35,7 @@ def workflow(repo):
 
 
 def test_hum_01_manual_edit_preservation(workflow, repo):
-    """Manual human revision sets is_human_edited=True, bumps version, and preserves text."""
+    """Bộ sửa đổi thủ công của con người is_human_edited=Đúng, phiên bản va chạm và giữ nguyên văn bản."""
     p = ParagraphRecord(
         paragraph_id="P-HUM-01",
         node_code="1.3.3",
@@ -60,14 +60,14 @@ def test_hum_01_manual_edit_preservation(workflow, repo):
     assert updated_p.review_status == ParagraphReviewStatus.HUMAN_ACCEPTED
     assert "tiếng Việt" in updated_p.human_edit_notes
 
-    # Verify query from database returns human edited flags
+    # Xác minh truy vấn từ cơ sở dữ liệu trả về các cờ do con người chỉnh sửa
     fetched = repo.get_paragraph("P-HUM-01")
     assert fetched.is_human_edited is True
     assert fetched.audited_text == edited_text
 
 
 def test_hum_02_upstream_invalidation_cascades_to_stale(workflow, repo):
-    """Invalidation of upstream source/claim marks referencing paragraphs STALE and logs audit issues."""
+    """Vô hiệu hóa nguồn/nhãn xác nhận quyền sở hữu thượng nguồn (upstream) tham chiếu các đoạn STALE và ghi lại các vấn đề kiểm tra."""
     p = ParagraphRecord(
         paragraph_id="P-INV-01",
         node_code="1.3.3",
@@ -98,6 +98,6 @@ def test_hum_02_upstream_invalidation_cascades_to_stale(workflow, repo):
     p_updated = repo.get_paragraph("P-INV-01")
     assert p_updated.review_status == ParagraphReviewStatus.STALE
 
-    # Verify audit issue created
+    # Xác minh vấn đề kiểm tra được tạo
     issues = repo.list_audit_issues()
     assert any(i.affected_entity_id == "SRC-DEP-01" for i in issues)

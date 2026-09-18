@@ -1,11 +1,11 @@
 """
-Database Initialization Script
+Tập lệnh khởi tạo cơ sở dữ liệu
 """
 
 import sys
 from pathlib import Path
 
-# Add src to sys.path
+# Thêm src vào sys.path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from research_agent.config import get_default_config
@@ -24,7 +24,7 @@ def main():
     db_manager = DatabaseManager(config=config)
     repo = ResearchRepository(db_manager)
 
-    # Bootstrap default project metadata
+    # Siêu dữ liệu dự án mặc định của Bootstrap
     project = ResearchProject()
     repo.save_project(project)
     logger.info(f"Initialized project record: {project.project_id} - '{project.title}'")

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Automated Secret and Privacy Auditor
-Scans the repository for credentials, private keys, authentication tokens, and oversized binaries.
+Kiểm tra bí mật và quyền riêng tư tự động
+Quét kho lưu trữ để tìm thông tin xác thực, khóa riêng, token xác thực và tệp nhị phân quá khổ.
 """
 
 import os
@@ -33,7 +33,7 @@ def scan_repository():
         if any(part in ignored_dirs for part in path.parts):
             continue
 
-        # File size check (warn on files > 10MB)
+        # Kiểm tra kích thước tệp (cảnh báo trên tệp > 10MB)
         try:
             sz = path.stat().st_size
             if sz > 10 * 1024 * 1024:
@@ -41,7 +41,7 @@ def scan_repository():
         except Exception:
             pass
 
-        # Text secret scanning
+        # Quét bí mật văn bản
         if path.suffix in [".py", ".md", ".json", ".yaml", ".yml", ".toml", ".txt", ".sh", ".ps1", ".env", ".example"]:
             try:
                 content = path.read_text(encoding="utf-8", errors="ignore")

@@ -1,5 +1,5 @@
 """
-Evidence Alignment Engine & Evidence Gap Detector (Prompt 5 Sections 10, 11)
+Công cụ căn chỉnh bằng chứng & Trình phát hiện khoảng cách bằng chứng (Nhắc 5 Phần 10, 11)
 """
 
 import re
@@ -13,35 +13,35 @@ from research_agent.schemas.reasoning import EvidenceGap
 
 class EvidenceAlignmentEngine:
     """
-    Evaluates empirical alignment between Evidence units and Claims.
-    Checks:
-    - Semantic entailment / direction
-    - Scope compatibility (dataset, domain, metric)
-    - Methodological compatibility
-    - Generates EvidenceGap records when empirical support is missing or partial.
+    Đánh giá sự liên kết thực nghiệm giữa các đơn vị Bằng chứng và Tuyên bố.
+    Kiểm tra:
+    - Sự kéo theo/hướng ngữ nghĩa
+    - Khả năng tương thích phạm vi (tập dữ liệu, tên miền, số liệu)
+    - Sự tương thích về phương pháp
+    - Tạo bản ghi bằng chứng khi thiếu hoặc một phần hỗ trợ theo kinh nghiệm.
     """
 
     def align(self, evidence: Evidence, claim: Claim) -> Tuple[EvidenceAlignmentStatus, str]:
         """
-        Determine if Evidence supports, contradicts, qualifies, or is insufficient for Claim.
+        Xác định xem Bằng chứng có hỗ trợ, mâu thuẫn, đủ điều kiện hoặc không đủ để yêu cầu bồi thường hay không.
         """
         e_text = (evidence.exact_quote or evidence.paraphrase or "").lower()
         c_text = claim.statement.lower()
 
-        # Check for direct contradictions
+        # Kiểm tra mâu thuẫn trực tiếp
         negation_in_e = any(w in e_text for w in ["not", "fails to", "cannot", "degrades", "outperformed by baseline", "simpler is better"])
         negation_in_c = any(w in c_text for w in ["not", "fails to", "cannot", "degrades", "outperformed by baseline"])
 
         if negation_in_e != negation_in_c and any(term in e_text for term in ["baseline", "gnn", "accuracy", "outperform", "shortcut"]):
-            # Potential contradiction
+            # Mâu thuẫn tiềm tàng
             return EvidenceAlignmentStatus.CONTRADICTION, "Evidence asserts contrary empirical outcome or baseline superiority."
 
-        # Check for qualification
+        # Kiểm tra trình độ chuyên môn
         if any(w in e_text for w in ["only when", "provided that", "limited to", "except", "sensitive to"]):
             return EvidenceAlignmentStatus.QUALIFICATION, "Evidence bounds claim with specific preconditions or sensitivity."
 
-        # Check for direct support
-        # Word overlap of key terms
+        # Kiểm tra hỗ trợ trực tiếp
+        # Sự chồng chéo từ của các thuật ngữ chính
         c_words = set(re.findall(r'\b[a-z]{4,}\b', c_text))
         e_words = set(re.findall(r'\b[a-z]{4,}\b', e_text))
         overlap = c_words.intersection(e_words)
@@ -61,7 +61,7 @@ class EvidenceAlignmentEngine:
         node_code: Optional[str] = None,
     ) -> Optional[EvidenceGap]:
         """
-        Generates an EvidenceGap if Claim lacks direct or robust empirical evidence.
+        Tạo Khoảng trống bằng chứng nếu Tuyên bố thiếu bằng chứng thực nghiệm trực tiếp hoặc chắc chắn.
         """
         if not evidences:
             seq = int(claim.claim_id.replace("CLM-", "") or "1") if "CLM-" in claim.claim_id else 1
@@ -77,7 +77,7 @@ class EvidenceAlignmentEngine:
                 status="OPEN",
             )
 
-        # Check if all evidences are only partial or qualifications
+        # Kiểm tra xem tất cả các bằng chứng chỉ là một phần hoặc trình độ
         alignments = [self.align(e, claim)[0] for e in evidences]
         if EvidenceAlignmentStatus.DIRECT_SUPPORT not in alignments:
             seq = int(claim.claim_id.replace("CLM-", "") or "1") if "CLM-" in claim.claim_id else 1

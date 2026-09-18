@@ -30,14 +30,14 @@ from research_agent.storage.repository import ResearchRepository
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-# Initialize official Microsoft Office MathML to OMML XSLT transformer
+# Khởi tạo biến áp Microsoft Office MathML chính thức thành biến áp OMML XSLT
 XSLT_PATH = r"C:\Program Files\Microsoft Office\Office16\MML2OMML.XSL"
 xslt_tree = etree.parse(XSLT_PATH)
 transform_omml = etree.XSLT(xslt_tree)
 
 
 def latex_to_clean_omml(latex_code: str):
-    """Converts a LaTeX formula into a native Word OMML element, cleaning any empty <m:e/> placeholders."""
+    """Chuyển đổi công thức LaTeX thành phần tử Word OMML gốc, xóa mọi phần giữ chỗ <m:e/> trống."""
     try:
         mathml = latex2mathml.converter.convert(latex_code)
         tree = etree.fromstring(mathml)
@@ -96,7 +96,7 @@ def latex_to_clean_omml(latex_code: str):
 
 
 def make_citation_element(tag_or_num_list):
-    """Creates native Word CITATION field elements for a list of source IDs."""
+    """Tạo các thành phần trường Word CITATION gốc cho danh sách ID nguồn."""
     if isinstance(tag_or_num_list, (int, str)):
         tag_or_num_list = [tag_or_num_list]
 
@@ -137,7 +137,7 @@ def make_citation_element(tag_or_num_list):
 
 
 def format_table_cell(cell, width_dxa: int, align=WD_ALIGN_PARAGRAPH.LEFT, bold=False, font_size_pt=14):
-    """Sets standard cell properties: exact width, vertical centering, border, padding, and compact line spacing."""
+    """Đặt các thuộc tính ô tiêu chuẩn: chiều rộng chính xác, căn giữa theo chiều dọc, đường viền, phần đệm và khoảng cách dòng nhỏ gọn."""
     tcPr = cell._tc.get_or_add_tcPr()
     tc_xml = (
         f'<w:tcPr {nsdecls("w")}>\n'
@@ -174,7 +174,7 @@ def format_table_cell(cell, width_dxa: int, align=WD_ALIGN_PARAGRAPH.LEFT, bold=
 
 
 def insert_thesis_table(doc, ref_p, headers, col_widths, rows_data, font_size_pt=14):
-    """Creates an elegant, professional thesis table matching original template layout."""
+    """Tạo một bảng luận văn trang nhã, chuyên nghiệp phù hợp với bố cục mẫu ban đầu."""
     tbl = doc.add_table(rows=len(rows_data) + 1, cols=len(headers))
     tbl.style = "Table Grid"
     tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
@@ -208,7 +208,7 @@ def insert_thesis_table(doc, ref_p, headers, col_widths, rows_data, font_size_pt
 
 
 def generate_sources_xml(sources):
-    """Generates valid Microsoft Word Bibliography Sources CustomXML with IEEE style."""
+    """Tạo các Nguồn thư mục Microsoft Word hợp lệ CustomXML với kiểu IEEE."""
     lines = ['<?xml version="1.0" encoding="UTF-8" standalone="no"?>']
     lines.append('<b:Sources SelectedStyle="\\IEEE.XSL" StyleName="IEEE" xmlns:b="http://schemas.openxmlformats.org/officeDocument/2006/bibliography" xmlns="http://schemas.openxmlformats.org/officeDocument/2006/bibliography">')
 
@@ -276,13 +276,13 @@ def build_full_chapter_1(target_file: str = r"D:\Research\Chuyên đề chuyên 
 
     doc = docx.Document(str(backup_path))
 
-    # Keep only Table 0 (Cover page frame)
+    # Chỉ giữ lại Bảng 0 (Khung trang bìa)
     while len(doc.tables) > 1:
         tbl_to_remove = doc.tables[1]
         tbl_to_remove._tbl.getparent().remove(tbl_to_remove._tbl)
     print("[2/5] Preserved Cover Frame Table 0.")
 
-    # Fix cover table year: 2024 -> 2026
+    # Sửa bảng bìa năm: 2024 -> 2026
     for r in doc.tables[0].rows:
         for c in r.cells:
             for p in c.paragraphs:
@@ -319,7 +319,7 @@ def build_full_chapter_1(target_file: str = r"D:\Research\Chuyên đề chuyên 
         elif "Chương 4 mô tả thiết kế" in txt or "Chương 5 thảo luận" in txt:
             p.text = ""
 
-    # Remove old body paragraphs from Heading 1 to Conclusion
+    # Loại bỏ các đoạn nội dung cũ từ Tiêu đề 1 đến Kết luận
     paragraphs_to_remove = []
     found_h1 = False
     for p in doc.paragraphs:
@@ -445,7 +445,7 @@ def build_full_chapter_1(target_file: str = r"D:\Research\Chuyên đề chuyên 
         "Tính dị thể sâu sắc của dữ liệu đặt ra bài toán khoa học về việc lựa chọn đơn vị quan sát (Unit of Observation) phù hợp cho mô hình học biểu diễn. Việc phân cấp đơn vị quan sát quyết định trực tiếp đến mức độ bảo toàn thông tin và độ phức tạp tính toán:"
     )
 
-    # TABLE 1 (Exact widths: 1551, 2028, 1791, 1806, 2429 dxa, sum = 9605 dxa)
+    # TABLE 1 (Độ rộng chính xác: 1551, 2028, 1791, 1806, 2429 dxa, sum = 9605 dxa)
     tbl1_headers = ["Mức độ hạt", "Đơn vị quan sát", "Dữ liệu đại diện", "Ưu điểm cốt lõi", "Thách thức và Mất mát ngữ nghĩa"]
     tbl1_widths = [1551, 2028, 1791, 1806, 2429]
     tbl1_rows = [
@@ -547,7 +547,7 @@ def build_full_chapter_1(target_file: str = r"D:\Research\Chuyên đề chuyên 
         ":"
     ])
 
-    # TABLE 2 (Exact widths: 2458, 3933, 3214 dxa, sum = 9605 dxa)
+    # TABLE 2 (Chiều rộng chính xác: 2458, 3933, 3214 dxa, sum = 9605 dxa)
     tbl2_headers = ["Nhóm quy tắc", "Mô tả hình thức", "Danh mục thuộc tính Telemetry áp dụng"]
     tbl2_widths = [2458, 3933, 3214]
     tbl2_rows = [
@@ -738,7 +738,7 @@ def build_full_chapter_1(target_file: str = r"D:\Research\Chuyên đề chuyên 
         " nén ép lượng thông tin cấu trúc tăng theo hàm mũ vào vector kích thước cố định, ảnh hưởng đến khả năng phân tách các hành vi tấn công tinh vi."
     ])
 
-    # TABLE 3: Summary Table (Exact widths: 2200, 2450, 2450, 2505 dxa, sum = 9605 dxa)
+    # TABLE 3: Bảng tóm tắt (Độ rộng chính xác: 2200, 2450, 2450, 2505 dxa, sum = 9605 dxa)
     tbl3_headers = ["Tiêu chí đánh giá", "Nhóm Thống kê / Cú pháp\n(Drain, PCA)", "Nhóm Chuỗi Semantic\n(DeepLog, LogBERT)", "Nhóm Đồ thị Nguồn gốc\n(UNICORN, MAGIC)"]
     tbl3_widths = [2200, 2450, 2450, 2505]
     tbl3_rows = [
@@ -903,12 +903,12 @@ def build_full_chapter_1(target_file: str = r"D:\Research\Chuyên đề chuyên 
             break
 
     if bib_idx is not None:
-        # Remove old reference paragraphs after bib_idx
+        # Xóa các đoạn tham chiếu cũ sau bib_idx
         paras_to_del = [p for p in doc.paragraphs[bib_idx + 1:]]
         for p in paras_to_del:
             p._p.getparent().remove(p._p)
 
-        # Bibliography entries formatted in IEEE standard
+        # Các mục thư mục được định dạng theo tiêu chuẩn IEEE
         bib_entries = [
             "[1] MITRE Corporation, \"MITRE ATT&CK: Enterprise Tactics and Techniques Matrix,\" 2024.",
             "[2] D. Arp, E. Quiring, F. Pendlebury, A. Warnecke, F. Pierazzi, C. Wressnegger, L. Cavallaro, and K. Rieck, \"Dos and Don'ts of Machine Learning in Computer Security,\" in Proceedings of the USENIX Security Symposium, 2022.",
@@ -942,7 +942,7 @@ def build_full_chapter_1(target_file: str = r"D:\Research\Chuyên đề chuyên 
             "[30] Evaluation Protocol Working Group, \"How Benchmarks and Evaluation Protocols Shape Conclusions in Provenance-Based Intrusion Detection,\" arXiv preprint arXiv:2602.00001, 2026."
         ]
 
-        # Insert Native Word BIBLIOGRAPHY field
+        # Chèn trường BIBLIOGRAPHY của Từ gốc
         bib_p = doc.add_paragraph(style="Normal")
         bib_p.alignment = WD_ALIGN_PARAGRAPH.LEFT
         bib_p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
@@ -950,7 +950,7 @@ def build_full_chapter_1(target_file: str = r"D:\Research\Chuyên đề chuyên 
         bib_p.paragraph_format.space_after = Pt(4)
         bib_p.paragraph_format.first_line_indent = Cm(0)
 
-        # Build BIBLIOGRAPHY field XML containing rendered entries
+        # Xây dựng trường BIBLIOGRAPHY XML chứa các mục được hiển thị
         fld_xml_parts = [f'<w:fldSimple {nsdecls("w")} w:instr="BIBLIOGRAPHY \\l 1033 ">']
         for b_text in bib_entries:
             fld_xml_parts.append(
@@ -972,11 +972,11 @@ def build_full_chapter_1(target_file: str = r"D:\Research\Chuyên đề chuyên 
         fld_xml_parts.append('</w:fldSimple>')
         bib_p._p.append(parse_xml('\n'.join(fld_xml_parts)))
 
-    # Save to temp docx
+    # Lưu vào tạm thời docx
     temp_file = target_path.parent / (target_path.stem + ".temp.docx")
     doc.save(str(temp_file))
 
-    # Inject customXml/item1.xml into zip package
+    # Tiêm customXml/item1.xml vào gói zip
     sources_xml_data = generate_sources_xml(sources).encode("utf-8")
     
     updated_file = target_path.parent / (target_path.stem + ".updated.docx")
@@ -1000,7 +1000,7 @@ def build_full_chapter_1(target_file: str = r"D:\Research\Chuyên đề chuyên 
     except PermissionError:
         print(f"[NOTE] Active file {target_path} is currently open in Word. Please close Word to allow overwrite.")
 
-    # Audit the final output
+    # Kiểm tra đầu ra cuối cùng
     v_doc = docx.Document(str(updated_file))
     omml_count = sum(len(p._p.xpath('.//m:oMath')) for p in v_doc.paragraphs)
     print(f"[FINAL AUDIT] Total Paragraphs: {len(v_doc.paragraphs)}, Total Tables: {len(v_doc.tables)}, OMML Equations: {omml_count}")

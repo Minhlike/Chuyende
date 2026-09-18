@@ -1,5 +1,5 @@
 """
-Scientific Verification Schemas & Contracts (Prompt 6, RC-08, RC-09, RC-10, RC-14, RC-16, RC-18)
+Lược đồ và hợp đồng xác minh khoa học (Nhắc 6, RC-08, RC-09, RC-10, RC-14, RC-16, RC-18)
 """
 
 from datetime import datetime, timezone
@@ -26,7 +26,7 @@ from research_agent.core.enums import (
 
 
 class Equation(BaseModel):
-    """Canonical mathematical equation definition (Prompt 6, Prompt 7, RC-08, RC-09)."""
+    """Định nghĩa phương trình toán học chuẩn (Dấu nhắc 6, Dấu nhắc 7, RC-08, RC-09)."""
     equation_id: str = Field(description="Stable ID: EQ-000001")
     latex: str = Field(description="LaTeX string, e.g. '\\mathbf{z}_t = f(\\mathbf{x}_t)'")
     description: str = Field(default="")
@@ -49,7 +49,7 @@ class Equation(BaseModel):
 
 
 class ScopedSymbol(BaseModel):
-    """Canonical mathematical symbol definition with explicit scope (Prompt 6 Section 10)."""
+    """Định nghĩa ký hiệu toán học chuẩn mực với phạm vi rõ ràng (Nhắc 6 Phần 10)."""
     symbol_id: str = Field(description="Stable ID: SYM-000001")
     symbol_latex: str = Field(description="LaTeX string, e.g. '\\mathbf{z}_t', '\\lambda_1'")
     equation_id: Optional[str] = Field(default=None, description="Associated Equation ID or namespace")
@@ -65,7 +65,7 @@ class ScopedSymbol(BaseModel):
 
 
 class TransformationStep(BaseModel):
-    """Single structured derivation operation step (Prompt 6 Section 11)."""
+    """Bước hoạt động phái sinh có cấu trúc đơn (Nhắc 6 Phần 11)."""
     step_index: int = Field(ge=1)
     operation: TransformationOp = Field(description="Structured algebraic operation")
     input_expression: str = Field(description="Starting expression in LaTeX / SymPy")
@@ -76,7 +76,7 @@ class TransformationStep(BaseModel):
 
 
 class NumericalClaim(BaseModel):
-    """Explicitly verified numerical claim (Prompt 6 Section 50)."""
+    """Yêu cầu bằng số đã được xác minh rõ ràng (Nhắc 6 Phần 50)."""
     numerical_claim_id: str = Field(description="Stable ID: NUM-000001")
     statement: str = Field(description="Factual claim containing the quantity")
     quantity_name: str = Field(description="e.g. 'Recall@0.1%FPR', 'Inference Latency'")
@@ -98,7 +98,7 @@ class NumericalClaim(BaseModel):
 
 
 class MetricDefinition(BaseModel):
-    """Standardized Metric Definition with explicit granularity (Prompt 6 Section 28, 29)."""
+    """Định nghĩa số liệu được tiêu chuẩn hóa với mức độ chi tiết rõ ràng (Nhắc 6 Mục 28, 29)."""
     metric_id: str = Field(description="Stable ID: MET-000001")
     name: str = Field(description="e.g. 'Recall@Fixed_FPR', 'P95_Latency'")
     formula_latex: str = Field(description="Mathematical formula")
@@ -113,7 +113,7 @@ class MetricDefinition(BaseModel):
 
 
 class ConfusionMatrixRecord(BaseModel):
-    """Deterministic confusion matrix metrics (Prompt 6 Section 31)."""
+    """Số liệu ma trận nhầm lẫn xác định (Nhắc 6 Phần 31)."""
     matrix_id: str = Field(description="Stable ID: CMX-000001")
     tp: int = Field(ge=0)
     fp: int = Field(ge=0)
@@ -130,7 +130,7 @@ class ConfusionMatrixRecord(BaseModel):
 
 
 class StatisticalResult(BaseModel):
-    """Computed statistical analysis result (Prompt 6 Section 34..43)."""
+    """Kết quả phân tích thống kê tính toán (Nhắc 6 mục 34..43)."""
     stat_id: str = Field(description="Stable ID: STAT-000001")
     question: str = Field(description="Empirical or comparative question tested")
     test_name: str = Field(description="e.g. 'Paired t-test', 'Wilcoxon signed-rank', 'Bootstrap CI'")
@@ -154,7 +154,7 @@ class StatisticalResult(BaseModel):
 
 
 class DatasetManifest(BaseModel):
-    """Cryptographic file manifest for a dataset version (Prompt 6 Section 21)."""
+    """bản kê (manifest) tệp mật mã cho một phiên bản tập dữ liệu (Nhắc 6 Phần 21)."""
     manifest_id: str = Field(description="Stable ID: MAN-000001")
     dataset_version_id: str
     files: List[Dict[str, Any]] = Field(default_factory=list, description="List of {rel_path, sha256, size_bytes}")
@@ -171,7 +171,7 @@ class DatasetManifest(BaseModel):
 
 
 class DataProfile(BaseModel):
-    """Deterministic profile summary computed on dataset (Prompt 6 Section 23)."""
+    """Tóm tắt hồ sơ xác định được tính toán trên tập dữ liệu (Nhắc 6 Phần 23)."""
     profile_id: str = Field(description="Stable ID: DPF-000001")
     dataset_version_id: str
     total_events: int = Field(ge=0)
@@ -189,7 +189,7 @@ class DataProfile(BaseModel):
 
 
 class PreprocessingTransformation(BaseModel):
-    """Lineage tracking of data transformations (Prompt 6 Section 26)."""
+    """Theo dõi dòng dõi của các chuyển đổi dữ liệu (Lời nhắc 6 Phần 26)."""
     transformation_id: str = Field(description="Stable ID: TRF-000001")
     input_dataset_version_id: str
     output_dataset_version_id: str
@@ -204,7 +204,7 @@ class PreprocessingTransformation(BaseModel):
 
 
 class ProtocolDeviationRecord(BaseModel):
-    """Formal audit record of post-registration protocol changes (Prompt 6 Section 84)."""
+    """Hồ sơ kiểm tra chính thức về những thay đổi trong giao thức sau đăng ký (Lời nhắc 6 Mục 84)."""
     deviation_id: str = Field(description="Stable ID: DEV-000001")
     experiment_id: str
     original_protocol: str
@@ -217,7 +217,7 @@ class ProtocolDeviationRecord(BaseModel):
 
 
 class TableSpecification(BaseModel):
-    """Deterministic scientific table specification and output (Prompt 6 Section 53..56)."""
+    """Đặc tả và đầu ra của bảng khoa học xác định (Dấu nhắc 6 Mục 53..56)."""
     table_id: str = Field(description="Stable ID: TBL-000001")
     table_type: TableType = TableType.COMPUTED_TABLE
     title: str = Field(min_length=3)
@@ -238,7 +238,7 @@ class TableSpecification(BaseModel):
 
 
 class FigureSpecification(BaseModel):
-    """Deterministic scientific figure specification and companion data (Prompt 6 Section 57..62)."""
+    """Đặc tả số liệu khoa học xác định và dữ liệu đồng hành (Dấu nhắc 6 Mục 57..62)."""
     figure_id: str = Field(description="Stable ID: FIG-000001")
     figure_type: FigureType = FigureType.LINE_PLOT
     title: str = Field(min_length=3)
@@ -257,7 +257,7 @@ class FigureSpecification(BaseModel):
 
 
 class VerificationResult(BaseModel):
-    """Full execution outcome returned to Prompt 5 Reasoning Engine (Prompt 6 Section 99)."""
+    """Kết quả thực hiện đầy đủ được trả về Công cụ lý luận Nhắc 5 (Nhắc 6 Phần 99)."""
     result_id: str = Field(description="Stable ID: VRS-000001")
     request_id: str = Field(description="Target VerificationRequest ID")
     status: VerificationRequestStatus = Field(description="PASS, FAIL, INCONCLUSIVE, BLOCKED")
@@ -273,7 +273,7 @@ class VerificationResult(BaseModel):
 
 
 class ResultBundle(BaseModel):
-    """Packaged verified experimental outcome for thesis composition (Prompt 6 Section 98)."""
+    """Đã đóng gói kết quả thử nghiệm đã được xác minh để làm luận văn (Lời nhắc 6 Phần 98)."""
     bundle_id: str = Field(description="Stable ID: RSB-000001")
     roadmap_node_code: str = Field(description="e.g. 'CH3.SEC2'")
     rq_id: str = Field(description="RQ1..RQ5")
@@ -292,7 +292,7 @@ class ResultBundle(BaseModel):
 
 
 class VerifiedClaimBundle(BaseModel):
-    """Guarded claim package for Prompt 7 Chapter Composer (Prompt 6 Section 138)."""
+    """Gói yêu cầu được bảo vệ dành cho Trình soạn thảo chương 7 của Lời nhắc (Lời nhắc 6 Phần 138)."""
     claim_id: str = Field(description="CLM-000001")
     statement: str = Field(description="Normalized claim statement")
     ownership: IntellectualOwnership = IntellectualOwnership.OURS
@@ -307,7 +307,7 @@ class VerifiedClaimBundle(BaseModel):
 
 
 class VerificationRecord(BaseModel):
-    """Audit record capturing the automated or manual invariant verification result."""
+    """Hồ sơ kiểm tra ghi lại kết quả xác minh bất biến tự động hoặc thủ công."""
     verification_id: str = Field(description="Stable ID: VRF-000001")
     target_entity_id: str = Field(description="ID of audited Claim, Equation, Run, Figure, Table")
     rule_code: str = Field(description="Constitution rule or invariant e.g. 'RC-01', 'RC-09'")

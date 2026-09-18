@@ -1,5 +1,5 @@
 """
-Memory Health Auditor (Prompt 4, Sections 54, 55, MQ-01..MQ-15)
+Trình kiểm tra sức khỏe bộ nhớ (Dấu nhắc 4, Phần 54, 55, MQ-01..MQ-15)
 """
 
 from typing import List, Dict, Any, Tuple, Optional
@@ -17,7 +17,7 @@ from research_agent.memory.vector_index import DerivedVectorIndex
 
 class MemoryHealthAuditor:
     """
-    Automated memory health audit enforcing MQ-01 through MQ-15.
+    Kiểm tra tình trạng bộ nhớ tự động thực thi MQ-01 đến MQ-15.
     """
 
     def __init__(self, repository: ResearchRepository, vector_index: Optional[DerivedVectorIndex] = None):
@@ -41,7 +41,7 @@ class MemoryHealthAuditor:
         claim_map = {c.claim_id: c for c in claims}
 
         # -------------------------------------------------------------
-        # MQ-01 & MQ-02: Broken canonical references
+        # MQ-01 & MQ-02: Tài liệu tham khảo chuẩn bị hỏng
         # -------------------------------------------------------------
         for m in memories:
             if m.reference_id:
@@ -70,15 +70,15 @@ class MemoryHealthAuditor:
                     broken_refs_count += 1
                     issues.append(f"MQ-01/MQ-02: Memory '{m.memory_id}' references missing entity '{ref_id}'")
 
-            # MQ-05: OUR_INFERENCE promoted as SOURCE_FACT
+            # MQ-05: OUR_INFERENCE được quảng bá là SOURCE_FACT
             if m.ownership == IntellectualOwnership.SOURCE and not m.reference_id and not m.associated_entity_ids:
                 issues.append(f"MQ-05: Memory '{m.memory_id}' claimed as SOURCE without verified external provenance.")
 
-            # MQ-06: Generated summary used without underlying links
+            # MQ-06: Bản tóm tắt được tạo được sử dụng mà không có liên kết cơ bản
             if m.is_generated_summary and not m.associated_entity_ids and not m.reference_id:
                 issues.append(f"MQ-06: Generated summary memory '{m.memory_id}' has no underlying canonical entity references.")
 
-            # MQ-12: Circular self support
+            # MQ-12: Tự hỗ trợ vòng tròn
             if m.memory_id in m.associated_entity_ids:
                 circular_support_count += 1
                 issues.append(f"MQ-12: Memory '{m.memory_id}' exhibits circular self-support.")
@@ -87,21 +87,21 @@ class MemoryHealthAuditor:
                 stale_count += 1
 
         # -------------------------------------------------------------
-        # MQ-03: Decision missing rationale
+        # MQ-03: Quyết định thiếu căn cứ
         # -------------------------------------------------------------
         for d in decisions:
             if not d.rationale or len(d.rationale.strip()) < 3:
                 issues.append(f"MQ-03: Decision '{d.decision_id}' lacks mandatory rationale.")
 
         # -------------------------------------------------------------
-        # MQ-04: Lesson missing originating episode or experiment
+        # MQ-04: Bài học thiếu tập hoặc thử nghiệm ban đầu
         # -------------------------------------------------------------
         for l in lessons:
             if not l.originating_episode_id and not l.experiment_run_id and not l.evidence_ids:
                 issues.append(f"MQ-04: Lesson '{l.lesson_id}' lacks originating episode, experiment run, or evidence link.")
 
         # -------------------------------------------------------------
-        # MQ-15: Open question marked resolved without notes
+        # MQ-15: Câu hỏi mở được đánh dấu đã giải quyết mà không cần ghi chú
         # -------------------------------------------------------------
         for o in questions:
             if o.status == OpenQuestionStatus.RESOLVED:
@@ -109,7 +109,7 @@ class MemoryHealthAuditor:
                     issues.append(f"MQ-15: Open Question '{o.question_id}' marked RESOLVED without resolution notes or resolver ID.")
 
         # -------------------------------------------------------------
-        # MQ-10: Embedding index compatibility check
+        # MQ-10: Kiểm tra tính tương thích của chỉ mục nhúng
         # -------------------------------------------------------------
         derived_status = "HEALTHY"
         if self.vector_index.vectors:

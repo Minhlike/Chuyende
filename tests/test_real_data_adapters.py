@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 """
-Automated Test Suite for Chapter 3 Real Data Adapters & Scientific Data Contracts
-Comprehensive verification of:
-  1. Label-Free Stage A1 SSL Pretraining Package:
-     - hdfs_ssl_train.pt, hdfs_ssl_val.pt, bgl_ssl_train.pt, bgl_ssl_val.pt contain 0 labels.
-     - LabelLeakageError raised if labels are injected into pretraining packages.
-  2. HDFS True Two-Pass Test Firewall:
-     - Pass 1: parses only (timestamp, block_id).
-     - Pass 2: Test feature parse count = 0, Test parameter extraction count = 0, Test vocab contribution = 0.
-     - Test labels exposed to trainer = 0.
-  3. Multi-Parameter Slot Representation:
-     - max_param_slots = 4 slots per event, priority ordering.
-     - 2+ parameter events survive materialization.
-     - PAD parameter slots ignored by loss.
-     - Canonical proposed mode: FULL_TYPED_PARAMETER_SET (not primary_param).
-  4. Exact RFC1918 Network Membership:
-     - 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 disjoint from Loopback, Link-Local, Shared, Special.
-  5. BGL Node Context Toggle & Reconciled Accounting:
+Bộ kiểm tra tự động cho Chương 3 Bộ điều hợp dữ liệu thực và hợp đồng dữ liệu khoa học
+Xác minh toàn diện về:
+  1. Gói đào tạo trước giai đoạn A1 SSL không có nhãn:
+     - hdfs_ssl_train.pt, hdfs_ssl_val.pt, bgl_ssl_train.pt, bgl_ssl_val.pt chứa 0 nhãn.
+     - LabelLeakageError tăng lên nếu nhãn được đưa vào các gói đào tạo trước.
+  2. Tường lửa kiểm tra hai lần thực sự HDFS:
+     - Pass 1: chỉ phân tích cú pháp (dấu thời gian, block_id).
+     - Đạt 2: Số lượng phân tích tính năng kiểm tra = 0, Số lượng trích xuất tham số kiểm tra = 0, Đóng góp từ vựng kiểm tra = 0.
+     - Nhãn kiểm tra tiếp xúc với trainer = 0.
+  3. Biểu diễn khe đa tham số:
+     - max_param_slots = 4 slot cho mỗi sự kiện, thứ tự ưu tiên.
+     - Hơn 2 sự kiện tham số tồn tại trong quá trình hiện thực hóa.
+     - Các khe tham số PAD bị bỏ qua do mất mát.
+     - Chế độ đề xuất Canonical: FULL_TYPED_PARAMETER_SET (không phải primary_param).
+  4. Tư cách thành viên mạng RFC1918 chính xác:
+     - 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 rời khỏi Loopback, Link-Local, Shared, Special.
+  5. Chuyển đổi bối cảnh nút BGL & Kế toán đối chiếu:
      - BGL_FULL_CONTEXT vs BGL_WITHOUT_NODE_CONTEXT.
      - pretest_scanned == pretest_valid + pretest_malformed.
 """
@@ -45,7 +45,7 @@ def test_01_label_leakage_error_and_label_free_ssl_packages():
     else:
         base_dir = Path(r"D:\Research")
 
-    # 1. Test Fail-Closed Label Leakage Guard
+    # 1. Kiểm tra bộ bảo vệ rò rỉ nhãn không đóng
     with pytest.raises(LabelLeakageError, match="prohibited label fields"):
         enforce_ssl_package_label_free({"sequences": [], "labels": [1, 0, 1]})
 
@@ -55,7 +55,7 @@ def test_01_label_leakage_error_and_label_free_ssl_packages():
     with pytest.raises(LabelLeakageError, match="prohibited label fields"):
         enforce_ssl_package_label_free({"sequences": [], "attack_class": ["ddos"]})
 
-    # 2. Assert Actual Materialized SSL Packages are Label-Free
+    # 2. Khẳng định các gói SSL được cụ thể hóa thực tế là không có nhãn
     hdfs_train = torch.load(base_dir / "experiments" / "runs" / "data" / "hdfs" / "hdfs_ssl_train.pt", weights_only=False)
     hdfs_val = torch.load(base_dir / "experiments" / "runs" / "data" / "hdfs" / "hdfs_ssl_val.pt", weights_only=False)
     bgl_train = torch.load(base_dir / "experiments" / "runs" / "data" / "bgl" / "bgl_ssl_train.pt", weights_only=False)
@@ -98,16 +98,16 @@ def test_03_multi_parameter_slot_representation():
     param_targets = hdfs_train["param_targets"]
     assert len(param_targets) > 0
     
-    # Check that param_targets has shape (L, max_param_slots)
+    # Kiểm tra xem param_targets có hình dạng không (L, max_param_slots)
     sample_param = param_targets[0]
     assert sample_param.dim() == 2
     assert sample_param.shape[1] == 4  # max_param_slots = 4
     
-    # Check that events with multiple parameters exist
+    # Kiểm tra xem các sự kiện có nhiều tham số có tồn tại không
     has_multi_param = False
     for p_seq in param_targets[:100]:
         for slot_row in p_seq:
-            # If slot 0 and slot 1 are both non-padding (not 1)
+            # Nếu khe 0 và khe 1 đều không có phần đệm (không phải 1)
             if slot_row[0] > 1 and slot_row[1] > 1:
                 has_multi_param = True
                 break
@@ -142,18 +142,18 @@ def test_05_bgl_node_context_toggle_and_accounting_conservation():
     else:
         base_dir = Path(r"D:\Research")
 
-    # Variant 1: FULL_CONTEXT
+    # Biến thể 1: FULL_CONTEXT
     adapter_full = BGLRealDataAdapter(base_dir=base_dir, include_node_context=True)
     line = "- 1117838570 2005.06.03 R02-M1-N0-C:J12-U11 2005-06-03-15.42.50.363779 R02-M1-N0-C:J12-U11 RAS KERNEL INFO instruction cache parity error corrected"
     p_full = adapter_full.parse_line(line)
     assert any("NODE_RACK_R02" in p for p in p_full["params"])
 
-    # Variant 2: WITHOUT_NODE_CONTEXT
+    # Biến thể 2: WITHOUT_NODE_CONTEXT
     adapter_no = BGLRealDataAdapter(base_dir=base_dir, include_node_context=False)
     p_no = adapter_no.parse_line(line)
     assert not any("NODE_RACK" in p for p in p_no["params"])
 
-    # Accounting conservation
+    # Kế toán bảo toàn
     subset_path = base_dir / "datasets" / "manifests" / "SUBSET-MANIFEST-BGL.json"
     subset = json.loads(subset_path.read_text(encoding="utf-8"))
     assert subset["raw_total_record_count"] == 4747963

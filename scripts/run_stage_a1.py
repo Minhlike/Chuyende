@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Execution Script: Real Stage A1 Multi-Task Self-Supervised Pretraining
-Executes canonical Stage A1 on HDFS and BGL datasets across 5 canonical seeds:
-  - Seeds: [42, 1337, 2024, 7, 999]
-  - Architecture: 4-layer Transformer Encoder, d_model=128, H=4, d_ffn=512, max_len=128
-  - Batching: micro_batch=16, grad_accum=4 (effective batch=64)
-  - Optimizer: AdamW (lr=5e-4, wd=0.01), Linear Warmup + Cosine Decay
-  - Validation: Once per completed epoch, early stopping patience=3 epochs
-  - Checkpoint Resume Verification: Included
+Tập lệnh thực thi: Huấn luyện trước tự giám sát đa tác vụ ở giai đoạn thực A1
+Thực thi Giai đoạn chuẩn A1 trên bộ dữ liệu HDFS và BGL trên 5 hạt giống chuẩn:
+  - Hạt giống: [42, 1337, 2024, 7, 999]
+  - Kiến trúc: Bộ mã hóa máy biến áp 4 lớp, d_model=128, H=4, d_ffn=512, max_len=128
+  - Lô: micro_batch=16, grad_accum=4 (lô hiệu quả=64)
+  - Trình tối ưu hóa: AdamW (lr=5e-4, wd=0,01), Khởi động tuyến tính + Phân rã Cosine
+  - Xác thực: Một lần cho mỗi epoch đã hoàn thành, kiên nhẫn dừng sớm (early stopping)=3 epoch
+  - Xác minh sơ yếu lý lịch checkpoint: Đã bao gồm
 """
 
 import sys
@@ -26,7 +26,7 @@ def verify_checkpoint_resumption(base_dir: Path, device: torch.device):
     dataset = "HDFS"
     seed = 42
     
-    # 1. Initialize trainer and run 1 epoch
+    # 1. Khởi tạo trainer và chạy 1 epoch
     trainer_init = StageA1Trainer(dataset_name=dataset, seed=seed, base_dir=base_dir, device=device)
     metrics_e1, step_e1 = trainer_init.train_epoch(1, 0)
     val_e1 = trainer_init.evaluate_validation()
@@ -34,7 +34,7 @@ def verify_checkpoint_resumption(base_dir: Path, device: torch.device):
     test_ckpt_path = trainer_init.output_dir / "resume_test_checkpoint.pt"
     trainer_init.save_checkpoint(test_ckpt_path, 1, step_e1, val_e1["val_loss_seq"], 0)
     
-    # 2. Get next step prediction on a probe batch
+    # 2. Nhận dự đoán bước tiếp theo trên lô thăm dò
     probe_batch = next(iter(trainer_init.train_loader))
     seqs = probe_batch["sequences"].to(device)
     params = probe_batch["param_targets"].to(device)
@@ -44,7 +44,7 @@ def verify_checkpoint_resumption(base_dir: Path, device: torch.device):
     with torch.no_grad():
         out_init = trainer_init.model.forward_features(seqs, param_slots=params)
     
-    # 3. Create brand new trainer instance and load checkpoint
+    # 3. Tạo phiên bản huấn luyện viên và checkpoint tải hoàn toàn mới
     trainer_resumed = StageA1Trainer(dataset_name=dataset, seed=seed, base_dir=base_dir, device=device)
     e_res, step_res, best_loss_res, pat_res = trainer_resumed.load_checkpoint(test_ckpt_path)
     
@@ -92,7 +92,7 @@ def run_dataset_pretraining(dataset: str, seeds: list, base_dir: Path, device: t
               f"Duration = {manifest['total_duration_sec']:.1f}s | "
               f"Peak VRAM = {manifest['peak_vram_mb']:.1f}MB")
 
-    # Aggregate Mean +- SD
+    # Giá trị trung bình tổng hợp +- SD
     val_losses = [r["best_val_loss"] for r in results]
     epochs = [r["stopped_epoch"] for r in results]
     steps = [r["total_optimizer_steps"] for r in results]
@@ -151,7 +151,7 @@ def main():
         verify_checkpoint_resumption(base_dir, device)
         return
 
-    # Verify checkpoint resume first
+    # Trước tiên hãy xác minh sơ yếu lý lịch checkpoint
     verify_checkpoint_resumption(base_dir, device)
 
     canonical_seeds = [42, 1337, 2024, 7, 999]

@@ -1,5 +1,5 @@
 """
-Research Agent Long-Term Memory & Hybrid Retrieval Package
+Tác nhân nghiên cứu Bộ nhớ dài hạn & Gói truy xuất kết hợp
 """
 
 from research_agent.memory.embeddings import (

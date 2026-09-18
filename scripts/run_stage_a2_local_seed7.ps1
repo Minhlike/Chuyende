@@ -1,5 +1,5 @@
-# scripts/run_stage_a2_local_seed7.ps1
-# Launch Canonical Seed 7 (Stage A2 HDFS Empirical)
+# tập lệnh/run_stage_a2_local_seed7.ps1
+# Khởi chạy Canonical Seed 7 (Giai đoạn A2 HDFS theo kinh nghiệm)
 
 $ErrorActionPreference = "Stop"
 

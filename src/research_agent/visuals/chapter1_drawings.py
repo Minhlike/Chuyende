@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-Word COM Native Drawing Functions for Chapter 1 Visuals (Figures 1.1, 1.2, 1.3, 1.4)
-Implements publication-grade vector architectural diagrams with Drawing Canvas, Shapes, and Connectors.
-Directly editable in Microsoft Word 2016+.
+Các hàm vẽ gốc của Word COM cho hình ảnh Chương 1 (Hình 1.1, 1.2, 1.3, 1.4)
+Triển khai các sơ đồ kiến trúc vectơ cấp xuất bản với Vẽ Canvas, Hình dạng và Đường kết nối.
+Có thể chỉnh sửa trực tiếp trong Microsoft Word 2016+.
 """
 from typing import Any
 import win32com.client.dynamic as dynamic
 
 
 def _force_canvas_text_black(items: Any) -> None:
-    """Make native canvas text visible regardless of the document theme."""
+    """Hiển thị văn bản canvas gốc bất kể chủ đề tài liệu."""
     for i in range(1, items.Count + 1):
         try:
             shape = items.Item(i)
@@ -20,8 +20,8 @@ def _force_canvas_text_black(items: Any) -> None:
 
 def set_shape_text_formatted(tf: Any, lines_spec: list, default_font_size: float = 6.6, default_align: int = 0):
     """
-    Sets text on a shape's TextFrame with native Word bullet formatting (ListFormat.ApplyBulletDefault)
-    and removes all literal unicode bullet characters.
+    Đặt văn bản trên TextFrame của hình dạng với định dạng dấu đầu dòng Word gốc (ListFormat.ApplyBulletDefault)
+    và loại bỏ tất cả các ký tự dấu đầu dòng unicode theo nghĩa đen.
     """
     tr = tf.TextRange
     raw_text = "\n".join([t for _, t in lines_spec])
@@ -29,7 +29,7 @@ def set_shape_text_formatted(tf: Any, lines_spec: list, default_font_size: float
     tr.Font.Name = "Times New Roman"
     tr.Font.Size = default_font_size
     try:
-        tr.Font.ColorIndex = 1  # wdBlack
+        tr.Font.ColorIndex = 1  # wdĐen
     except Exception:
         pass
     tr.ParagraphFormat.Alignment = default_align
@@ -67,13 +67,13 @@ def set_shape_text_formatted(tf: Any, lines_spec: list, default_font_size: float
 
 def draw_fig_1_1(canvas_raw: Any):
     """
-    Draws FIG 1.1: Hierarchy of Log Observation Units and Trade-offs
-    Editable Word Shapes Drawing Canvas.
+    Vẽ FIG 1.1: Hệ thống phân cấp của các đơn vị quan sát nhật ký và sự đánh đổi
+    Có thể chỉnh sửa Word Shapes Vẽ Canvas.
     """
     canvas = canvas_raw
     items = canvas.CanvasItems
 
-    # Outer container
+    # thùng chứa bên ngoài
     frame = items.AddTextbox(1, 4.0, 4.0, 442.0, 154.0)
     frame.Fill.Solid()
     frame.Fill.ForeColor.RGB = 0xF8FAFC
@@ -90,7 +90,7 @@ def draw_fig_1_1(canvas_raw: Any):
     ]
 
     for label, sub, y_pos in levels:
-        s = items.AddShape(5, 52.0, y_pos, 338.0, 20.0)  # Rounded rectangle
+        s = items.AddShape(5, 52.0, y_pos, 338.0, 20.0)  # Hình chữ nhật tròn
         s.Fill.Solid()
         s.Fill.ForeColor.RGB = 0xFFFFFF
         s.Line.ForeColor.RGB = 0x0284C7
@@ -107,7 +107,7 @@ def draw_fig_1_1(canvas_raw: Any):
         tr.Font.Size = 6.2
         tr.ParagraphFormat.Alignment = 1
 
-    # Left upward arrow (Context Richness)
+    # Mũi tên hướng lên trái (Độ phong phú ngữ cảnh)
     c_left = items.AddConnector(1, 38.0, 154.0, 38.0, 16.0)
     c_left.Line.ForeColor.RGB = 0x0369A1
     c_left.Line.Weight = 1.5
@@ -122,7 +122,7 @@ def draw_fig_1_1(canvas_raw: Any):
     tr_l.Font.Size = 5.5
     tr_l.Font.Bold = True
 
-    # Right upward arrow (Resource Cost)
+    # Mũi tên hướng lên phải (Chi phí tài nguyên)
     c_right = items.AddConnector(1, 404.0, 154.0, 404.0, 16.0)
     c_right.Line.ForeColor.RGB = 0xDC2626
     c_right.Line.Weight = 1.5
@@ -141,8 +141,8 @@ def draw_fig_1_1(canvas_raw: Any):
 
 def draw_fig_1_2(canvas_raw: Any):
     """
-    Draws FIG 1.2: Multi-label Non-linear MITRE ATT&CK Behavioral Evidence Space
-    Editable Word Shapes Drawing Canvas.
+    Vẽ FIG 1.2: Không gian bằng chứng hành vi phi tuyến tính MITRE ATT&CK đa nhãn
+    Có thể chỉnh sửa Word Shapes Vẽ Canvas.
     """
     canvas = canvas_raw
     items = canvas.CanvasItems
@@ -153,7 +153,7 @@ def draw_fig_1_2(canvas_raw: Any):
     frame.Line.ForeColor.RGB = 0x334155
     frame.Line.Weight = 1.0
 
-    # Paradigm A: Linear Kill Chain (Left Container)
+    # Mô hình A: Chuỗi tiêu diệt tuyến tính (Vùng chứa bên trái)
     box_a = items.AddTextbox(1, 10.0, 10.0, 205.0, 142.0)
     box_a.Fill.Solid()
     box_a.Fill.ForeColor.RGB = 0xFFFFFF
@@ -185,7 +185,7 @@ def draw_fig_1_2(canvas_raw: Any):
         tr.Font.Size = 7.0
         tr.ParagraphFormat.Alignment = 1
 
-    # Connectors between linear steps
+    # Kết nối giữa các bước tuyến tính
     c1 = items.AddConnector(1, 112.0, 62.0, 112.0, 70.0)
     c1.Line.ForeColor.RGB = 0x0369A1
     c1.Line.EndArrowheadStyle = 2
@@ -193,7 +193,7 @@ def draw_fig_1_2(canvas_raw: Any):
     c2.Line.ForeColor.RGB = 0x0369A1
     c2.Line.EndArrowheadStyle = 2
 
-    # Bottom limitation label for A
+    # Nhãn giới hạn đáy cho A
     tb_lim = items.AddTextbox(1, 15.0, 126.0, 195.0, 20.0)
     tb_lim.Fill.Visible = False
     tb_lim.Line.Visible = False
@@ -204,7 +204,7 @@ def draw_fig_1_2(canvas_raw: Any):
     tr_lim.Font.Italic = True
     tr_lim.ParagraphFormat.Alignment = 1
 
-    # Paradigm B: Multi-label Non-linear Space (Right Container)
+    # Mô hình B: Không gian phi tuyến tính đa nhãn (Vùng chứa bên phải)
     box_b = items.AddTextbox(1, 225.0, 10.0, 215.0, 142.0)
     box_b.Fill.Solid()
     box_b.Fill.ForeColor.RGB = 0xFFFFFF
@@ -236,7 +236,7 @@ def draw_fig_1_2(canvas_raw: Any):
         tr.Font.Size = 7.0
         tr.ParagraphFormat.Alignment = 1
 
-    # Boundary note for B
+    # Ghi chú ranh giới cho B
     tb_inv = items.AddTextbox(1, 230.0, 122.0, 205.0, 28.0)
     tb_inv.Fill.Visible = False
     tb_inv.Line.Visible = False
@@ -251,8 +251,8 @@ def draw_fig_1_2(canvas_raw: Any):
 
 def draw_fig_1_3(canvas_raw: Any):
     """
-    Draws FIG 1.3: Three-Tier Research Architecture (Rebuilt from Zero - Pure Semantic)
-    Editable Word Shapes Drawing Canvas.
+    Draws FIG 1.3: Kiến trúc nghiên cứu ba tầng (Được xây dựng lại từ số 0 - Ngữ nghĩa thuần túy)
+    Có thể chỉnh sửa Word Shapes Vẽ Canvas.
     """
     canvas = canvas_raw
     items = canvas.CanvasItems
@@ -263,7 +263,7 @@ def draw_fig_1_3(canvas_raw: Any):
     frame.Line.ForeColor.RGB = 0x334155
     frame.Line.Weight = 1.0
 
-    # A compact vertical semantic pipeline keeps labels readable at document width.
+    # Một đường dẫn ngữ nghĩa dọc nhỏ gọn giúp nhãn có thể đọc được ở độ rộng tài liệu.
     boxes = [
         ("Dữ liệu telemetry thô", "Raw telemetry", 0x64748B),
         ("Tầng 1: Tiền xử lý & trích xuất cơ sở", "Chuẩn hóa và trích xuất sự kiện", 0x0284C7),
@@ -287,7 +287,7 @@ def draw_fig_1_3(canvas_raw: Any):
             c.Line.EndArrowheadStyle = 2
         y += 22.0
 
-    # Bottom banner states the boundary without introducing source notation.
+    # Biểu ngữ phía dưới nêu rõ ranh giới mà không đưa ra ký hiệu nguồn.
     banner = items.AddShape(5, 8.0, 138.0, 430.0, 14.0)
     banner.Fill.Solid()
     banner.Fill.ForeColor.RGB = 0xF1F5F9
@@ -304,8 +304,8 @@ def draw_fig_1_3(canvas_raw: Any):
 
 def draw_fig_1_4(canvas_raw: Any):
     """
-    Draws FIG 1.4: Map of Three Log Representation Families to Five Research Gaps
-    Editable Word Shapes Drawing Canvas.
+    Vẽ FIG 1.4: Bản đồ ba họ biểu diễn nhật ký vào năm khoảng trống nghiên cứu
+    Có thể chỉnh sửa Word Shapes Vẽ Canvas.
     """
     canvas = canvas_raw
     items = canvas.CanvasItems
@@ -316,7 +316,7 @@ def draw_fig_1_4(canvas_raw: Any):
     frame.Line.ForeColor.RGB = 0x334155
     frame.Line.Weight = 1.0
 
-    # Left Column: 3 Methodological Families
+    # Cột bên trái: 3 họ phương pháp luận
     fam1 = items.AddTextbox(1, 8.0, 8.0, 192.0, 36.0)
     fam1.Fill.Solid()
     fam1.Fill.ForeColor.RGB = 0xFFFFFF
@@ -350,7 +350,7 @@ def draw_fig_1_4(canvas_raw: Any):
         ('b', "Giới hạn: Bùng nổ phụ thuộc, Over-smoothing/squashing"),
     ], default_font_size=6.2)
 
-    # Center Converging Arrows
+    # Mũi tên hội tụ trung tâm
     c_m1 = items.AddConnector(1, 200.0, 26.0, 214.0, 66.0)
     c_m1.Line.ForeColor.RGB = 0x334155
     c_m1.Line.Weight = 1.0
@@ -366,7 +366,7 @@ def draw_fig_1_4(canvas_raw: Any):
     c_m3.Line.Weight = 1.0
     c_m3.Line.EndArrowheadStyle = 2
 
-    # Right Column: 5 Research Gaps matching canonical RQ1–RQ5
+    # Cột bên phải: 5 Khoảng trống nghiên cứu phù hợp với RQ1–RQ5 chuẩn
     gaps_box = items.AddTextbox(1, 214.0, 8.0, 224.0, 116.0)
     gaps_box.Fill.Solid()
     gaps_box.Fill.ForeColor.RGB = 0xFFFFFF
@@ -382,7 +382,7 @@ def draw_fig_1_4(canvas_raw: Any):
         ('b', "Gap 5 (RQ5): Đánh đổi giữa Liên kết & Quyền riêng tư"),
     ], default_font_size=6.2)
 
-    # Bottom Banner
+    # Biểu ngữ dưới cùng
     banner = items.AddShape(5, 8.0, 128.0, 430.0, 20.0)
     banner.Fill.Solid()
     banner.Fill.ForeColor.RGB = 0xF1F5F9

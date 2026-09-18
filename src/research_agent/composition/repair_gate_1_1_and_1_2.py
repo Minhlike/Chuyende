@@ -23,20 +23,20 @@ from docx.oxml.ns import nsdecls
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-# Initialize official Microsoft Office MathML to OMML XSLT transformer
+# Khởi tạo biến áp Microsoft Office MathML chính thức thành biến áp OMML XSLT
 XSLT_PATH = r"C:\Program Files\Microsoft Office\Office16\MML2OMML.XSL"
 xslt_tree = etree.parse(XSLT_PATH)
 transform_omml = etree.XSLT(xslt_tree)
 
 
 def latex_to_clean_omml(latex_code: str):
-    """Converts a LaTeX formula into a native Word OMML element, cleaning any empty <m:e/> placeholders."""
+    """Chuyển đổi công thức LaTeX thành phần tử Word OMML gốc, xóa mọi phần giữ chỗ <m:e/> trống."""
     try:
         mathml = latex2mathml.converter.convert(latex_code)
         tree = etree.fromstring(mathml)
         omml_tree = transform_omml(tree)
 
-        # Fix empty <m:e/> in <m:nary> operators which produces dotted square placeholder boxes in Word
+        # Sửa các toán tử <m:e/> trống trong <m:nary> tạo ra các hộp giữ chỗ hình vuông có dấu chấm trong Word
         ns = {"m": "http://schemas.openxmlformats.org/officeDocument/2006/math"}
         for nary in omml_tree.xpath(".//m:nary", namespaces=ns):
             e_elem = nary.find("m:e", namespaces=ns)
@@ -90,7 +90,7 @@ def latex_to_clean_omml(latex_code: str):
 
 
 def format_table_cell(cell, width_dxa: int, align=WD_ALIGN_PARAGRAPH.LEFT, bold=False, font_size_pt=14):
-    """Sets standard cell properties: exact width, vertical centering, border, padding, and compact line spacing."""
+    """Đặt các thuộc tính ô tiêu chuẩn: chiều rộng chính xác, căn giữa theo chiều dọc, đường viền, phần đệm và khoảng cách dòng nhỏ gọn."""
     tcPr = cell._tc.get_or_add_tcPr()
     tc_xml = (
         f'<w:tcPr {nsdecls("w")}>\n'
@@ -116,7 +116,7 @@ def format_table_cell(cell, width_dxa: int, align=WD_ALIGN_PARAGRAPH.LEFT, bold=
     p = cell.paragraphs[0]
     p.alignment = align
     p.paragraph_format.first_line_indent = Cm(0)
-    p.paragraph_format.line_spacing = 1.0  # Compact line spacing for elegant tables
+    p.paragraph_format.line_spacing = 1.0  # Khoảng cách dòng nhỏ gọn cho các bảng thanh lịch
     p.paragraph_format.space_before = Pt(3)
     p.paragraph_format.space_after = Pt(3)
     for r in p.runs:
@@ -127,19 +127,19 @@ def format_table_cell(cell, width_dxa: int, align=WD_ALIGN_PARAGRAPH.LEFT, bold=
 
 
 def insert_thesis_table(doc, ref_p, headers, col_widths, rows_data, font_size_pt=14):
-    """Creates an elegant, professional thesis table matching original template layout."""
+    """Tạo một bảng luận văn trang nhã, chuyên nghiệp phù hợp với bố cục mẫu ban đầu."""
     tbl = doc.add_table(rows=len(rows_data) + 1, cols=len(headers))
     tbl.style = "Table Grid"
     tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
     if ref_p is not None:
         ref_p._p.addprevious(tbl._tbl)
 
-    # tblPr width
+    # chiều rộng tblPr
     tblPr = tbl._tbl.tblPr
     total_w = sum(col_widths)
     tblPr.append(parse_xml(f'<w:tblW {nsdecls("w")} w:w="{total_w}" w:type="dxa"/>'))
 
-    # Header Row
+    # Hàng tiêu đề
     hdr_row = tbl.rows[0]
     hdr_trPr = hdr_row._tr.get_or_add_trPr()
     hdr_trPr.append(parse_xml(f'<w:tblHeader {nsdecls("w")}/>'))
@@ -150,7 +150,7 @@ def insert_thesis_table(doc, ref_p, headers, col_widths, rows_data, font_size_pt
         cell.text = h
         format_table_cell(cell, col_widths[c_i], align=WD_ALIGN_PARAGRAPH.CENTER, bold=True, font_size_pt=font_size_pt)
 
-    # Body Rows
+    # Hàng cơ thể
     for r_i, row in enumerate(rows_data):
         b_row = tbl.rows[r_i + 1]
         b_trPr = b_row._tr.get_or_add_trPr()
@@ -173,13 +173,13 @@ def repair_and_build_document(target_file: str = r"D:\Research\Chuyên đề chu
 
     doc = docx.Document(str(backup_path))
 
-    # Keep only Table 0 (Cover page frame)
+    # Chỉ giữ lại Bảng 0 (Khung trang bìa)
     while len(doc.tables) > 1:
         tbl_to_remove = doc.tables[1]
         tbl_to_remove._tbl.getparent().remove(tbl_to_remove._tbl)
     print("[2/4] Preserved Cover Frame Table 0.")
 
-    # Remove old body paragraphs from Heading 1 to Conclusion
+    # Loại bỏ các đoạn nội dung cũ từ Tiêu đề 1 đến Kết luận
     paragraphs_to_remove = []
     found_h1 = False
     for p in doc.paragraphs:
@@ -290,7 +290,7 @@ def repair_and_build_document(target_file: str = r"D:\Research\Chuyên đề chu
         "Tính dị thể sâu sắc của dữ liệu đặt ra bài toán khoa học về việc lựa chọn đơn vị quan sát (Unit of Observation) phù hợp cho mô hình học biểu diễn. Việc phân cấp đơn vị quan sát quyết định trực tiếp đến mức độ bảo toàn thông tin và độ phức tạp tính toán:"
     )
 
-    # TABLE 1 (Exact widths: 1551, 2028, 1791, 1806, 2429 dxa, sum = 9605 dxa)
+    # TABLE 1 (Độ rộng chính xác: 1551, 2028, 1791, 1806, 2429 dxa, sum = 9605 dxa)
     tbl1_headers = ["Mức độ hạt", "Đơn vị quan sát", "Dữ liệu đại diện", "Ưu điểm cốt lõi", "Thách thức và Mất mát ngữ nghĩa"]
     tbl1_widths = [1551, 2028, 1791, 1806, 2429]
     tbl1_rows = [
@@ -360,7 +360,7 @@ def repair_and_build_document(target_file: str = r"D:\Research\Chuyên đề chu
         ":"
     ])
 
-    # TABLE 2 (Exact widths: 2458, 3933, 3214 dxa, sum = 9605 dxa)
+    # TABLE 2 (Chiều rộng chính xác: 2458, 3933, 3214 dxa, sum = 9605 dxa)
     tbl2_headers = ["Nhóm quy tắc", "Mô tả hình thức", "Danh mục thuộc tính Telemetry áp dụng"]
     tbl2_widths = [2458, 3933, 3214]
     tbl2_rows = [
@@ -481,7 +481,7 @@ def repair_and_build_document(target_file: str = r"D:\Research\Chuyên đề chu
         "Tuy nhiên, việc triển khai GNN trên đồ thị nguồn gốc quy mô thực tế đối mặt với ba rào cản lý thuyết và thực nghiệm [9, 16, 21]: (1) Hiện tượng bùng nổ phụ thuộc (Dependency Explosion): các tiến trình hệ thống chạy dài hạn (như daemon hệ thống hoặc trình duyệt) liên tục tương tác với nhiều tệp tin và socket, khiến đồ thị phát triển dày đặc và tạo ra nhiều liên kết phụ thuộc xa làm loãng tín hiệu bất thường [9, 20]; (2) Ranh giới giữa quan hệ phụ thuộc cấu trúc và tác động nhân quả (Dependency != Causal Effect): kết quả khảo sát thực nghiệm của Bilot et al. [16] trên các bộ dữ liệu PIDS chuẩn chỉ ra rằng nhiều mô hình GNN phức tạp có xu hướng khai thác các đặc trưng đường tắt thống kê (như phân bố bậc của nút); khi kiểm soát chặt chẽ các yếu tố gây nhiễu, các bộ phân loại tuyến tính đơn giản có thể đạt hiệu năng cạnh tranh; (3) Hiện tượng nghẽn cổ chai thông tin (Over-smoothing và Over-squashing): khi tăng số lớp truyền tin, Over-smoothing làm vector biểu diễn của các nút dần trở nên tương đồng, trong khi Over-squashing [21] nén ép lượng thông tin cấu trúc tăng theo hàm mũ vào vector kích thước cố định, ảnh hưởng đến khả năng phân tách các hành vi tấn công tinh vi."
     )
 
-    # TABLE 3: Summary Table (Exact widths allocated: 2200, 2450, 2450, 2505 dxa, sum = 9605 dxa)
+    # TABLE 3: Bảng tóm tắt (Độ rộng chính xác được phân bổ: 2200, 2450, 2450, 2505 dxa, sum = 9605 dxa)
     tbl3_headers = ["Tiêu chí đánh giá", "Nhóm Thống kê / Cú pháp\n(Drain, PCA)", "Nhóm Chuỗi Semantic\n(DeepLog, LogBERT)", "Nhóm Đồ thị Nguồn gốc\n(UNICORN, MAGIC)"]
     tbl3_widths = [2200, 2450, 2450, 2505]
     tbl3_rows = [
@@ -504,7 +504,7 @@ def repair_and_build_document(target_file: str = r"D:\Research\Chuyên đề chu
     # =========================================================================
     print("[5/5] Synchronizing Bibliography (Tài liệu tham khảo) with Source Registry...")
     
-    # Locate References section at the end
+    # Xác định khe phần Tài liệu tham khảo ở cuối
     bib_idx = None
     for idx, p in enumerate(doc.paragraphs):
         txt = p.text.strip().lower()
@@ -513,12 +513,12 @@ def repair_and_build_document(target_file: str = r"D:\Research\Chuyên đề chu
             break
 
     if bib_idx is not None:
-        # Remove old reference paragraphs after bib_idx
+        # Xóa các đoạn tham chiếu cũ sau bib_idx
         paras_to_del = [p for p in doc.paragraphs[bib_idx + 1:]]
         for p in paras_to_del:
             p._p.getparent().remove(p._p)
 
-        # Bibliography entries mapping to [1]..[30]
+        # Các mục thư mục ánh xạ tới [1]..[30]
         bib_entries = [
             "[1] MITRE Corporation, \"MITRE ATT&CK: Enterprise Tactics and Techniques Matrix,\" 2024.",
             "[2] D. Arp, E. Quiring, F. Pendlebury, A. Warnecke, F. Pierazzi, C. Wressnegger, L. Cavallaro, and K. Rieck, \"Dos and Don'ts of Machine Learning in Computer Security,\" in Proceedings of the USENIX Security Symposium, 2022.",
@@ -563,7 +563,7 @@ def repair_and_build_document(target_file: str = r"D:\Research\Chuyên đề chu
             r.font.name = "Times New Roman"
             r.font.size = Pt(14)
 
-    # Save
+    # Lưu
     updated_file = str(target_path.parent / (target_path.stem + ".updated.docx"))
     doc.save(updated_file)
     print(f"[SUCCESS] Saved to updated file: {updated_file}")

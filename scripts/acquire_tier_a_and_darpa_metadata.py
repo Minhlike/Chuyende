@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""
-Tier A (HDFS, BGL) and DARPA TC (E3, E5) Metadata Acquisition & Streaming Auditor
-Downloads datasets directly to D:\\Research\\datasets\\raw\\, hashes all artifacts,
-runs streaming integrity validation, and updates canonical acquisition ledgers and manifests.
+r"""
+Cấp A (HDFS, BGL) và DARPA TC (E3, E5) Kiểm tra viên truyền và thu thập siêu dữ liệu
+Tải bộ dữ liệu trực tiếp xuống D:\Research\datasets\raw\, băm tất cả các tạo phẩm,
+chạy xác thực tính toàn vẹn phát trực tuyến và cập nhật sổ cái và bảng kê khai thu thập chuẩn.
 """
 
 import os
@@ -13,7 +13,7 @@ import shutil
 import urllib.request
 from pathlib import Path
 
-# Add src to sys.path
+# Thêm src vào sys.path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from research_agent.verification.datasets.streaming_validator import (
@@ -25,7 +25,7 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="backslashreplace")
 
 def download_file(url: str, dest_path: Path, max_retries: int = 3):
-    """Downloads a file with progress reporting and retry logic."""
+    """Tải xuống một tệp có báo cáo tiến độ và logic thử lại."""
     print(f"[DOWNLOAD] Starting download from: {url}")
     print(f"[DOWNLOAD] Destination: {dest_path}")
     dest_path.parent.mkdir(parents=True, exist_ok=True)
@@ -38,7 +38,7 @@ def download_file(url: str, dest_path: Path, max_retries: int = 3):
             with urllib.request.urlopen(req, timeout=60) as response, open(dest_path, 'wb') as out_file:
                 total_size = int(response.info().get('Content-Length', 0))
                 bytes_downloaded = 0
-                chunk_size = 1024 * 1024  # 1 MB chunk
+                chunk_size = 1024 * 1024  # đoạn 1 MB
                 start_time = time.time()
                 
                 while True:
@@ -77,12 +77,12 @@ def main():
     validator = StreamingDatasetValidator(root)
     
     # -------------------------------------------------------------------------
-    # 1. HDFS_v1 Raw Log & Labels Acquisition (Tier A)
+    # 1. HDFS_v1 Thu thập nhật ký và nhãn thô (Cấp A)
     # -------------------------------------------------------------------------
     hdfs_dir = raw_root / "hdfs"
     hdfs_dir.mkdir(parents=True, exist_ok=True)
     
-    # Download HDFS raw log archive from Loghub / Zenodo mirror
+    # Tải xuống kho lưu trữ nhật ký thô HDFS từ máy nhân bản Loghub / Zenodo
     hdfs_url = "https://zenodo.org/records/3227177/files/HDFS_1.tar.gz"
     hdfs_labels_url = "https://raw.githubusercontent.com/logpai/loghub/master/HDFS/anomaly_label.csv"
     
@@ -107,7 +107,7 @@ def main():
     hdfs_val_res["label_bytes"] = hdfs_labels_bytes
     print(f"HDFS Validation Result: {json.dumps(hdfs_val_res, indent=2)}")
 
-    # Update SPL-HDFS-001.json
+    # Cập nhật SPL-HDFS-001.json
     spl_hdfs_path = manifests_dir / "SPL-HDFS-001.json"
     if spl_hdfs_path.exists():
         spl_hdfs = json.loads(spl_hdfs_path.read_text(encoding="utf-8"))
@@ -129,7 +129,7 @@ def main():
         spl_hdfs_path.write_text(json.dumps(spl_hdfs, indent=2, sort_keys=True), encoding="utf-8")
         print(f"[OK] Updated SPL-HDFS-001.json to state: VALIDATED")
 
-    # Record in ACQUISITION-LEDGER.jsonl
+    # Ghi vào ACQUISITION-LEDGER.jsonl
     validator.append_ledger_entry({
         "dataset": "HDFS_v1",
         "artifact_id": "ART-HDFS-RAW-001",
@@ -146,7 +146,7 @@ def main():
     })
 
     # -------------------------------------------------------------------------
-    # 2. BGL Supercomputer Raw Log Acquisition (Tier A)
+    # 2. Thu thập nhật ký thô siêu máy tính BGL (Cấp A)
     # -------------------------------------------------------------------------
     bgl_dir = raw_root / "bgl"
     bgl_dir.mkdir(parents=True, exist_ok=True)
@@ -163,7 +163,7 @@ def main():
     bgl_val_res = validator.validate_bgl(bgl_tar)
     print(f"BGL Validation Result: {json.dumps(bgl_val_res, indent=2)}")
 
-    # Update SPL-BGL-001.json
+    # Cập nhật SPL-BGL-001.json
     spl_bgl_path = manifests_dir / "SPL-BGL-001.json"
     if spl_bgl_path.exists():
         spl_bgl = json.loads(spl_bgl_path.read_text(encoding="utf-8"))
@@ -201,12 +201,12 @@ def main():
     })
 
     # -------------------------------------------------------------------------
-    # 3. DARPA TC Engagement 3 (E3) Metadata & Ground Truth Ingestion
+    # 3. DARPA TC Engagement 3 (E3) Nhập siêu dữ liệu và sự thật cơ bản
     # -------------------------------------------------------------------------
     e3_meta_dir = raw_root / "darpa" / "e3" / "metadata"
     e3_meta_dir.mkdir(parents=True, exist_ok=True)
     
-    # Official DARPA TC CDM18 Schema Content
+    # Nội dung lược đồ DARPA TC CDM18 chính thức
     cdm18_avdl_content = """/**
  * Common Data Model (CDM) Schema Version 18
  * Official Schema for DARPA Transparent Computing Engagement 3
@@ -289,7 +289,7 @@ protocol TCCDM {
     (e3_meta_dir / "README-E3.md").write_text(e3_readme, encoding="utf-8")
     e3_readme_sha256, e3_readme_bytes = compute_streaming_sha256(e3_meta_dir / "README-E3.md")
 
-    # Generate DARPA-E3-GROUND-TRUTH-MAP.json
+    # Tạo DARPA-E3-GROUND-TRUTH-MAP.json
     e3_ground_truth_map = {
         "schema_version": "CDM18",
         "engagement": "E3",
@@ -346,7 +346,7 @@ protocol TCCDM {
     )
     print(f"[OK] Generated DARPA-E3-GROUND-TRUTH-MAP.json")
 
-    # Generate DARPA-E3-BULK-PLAN.json
+    # Tạo DARPA-E3-BULK-PLAN.json
     e3_bulk_plan = {
         "engagement": "E3",
         "schema": "CDM18",
@@ -380,7 +380,7 @@ protocol TCCDM {
     print(f"[OK] Generated DARPA-E3-BULK-PLAN.json")
 
     # -------------------------------------------------------------------------
-    # 4. DARPA TC Engagement 5 (E5) Metadata Ingestion
+    # 4. Nhập siêu dữ liệu DARPA TC Engagement 5 (E5)
     # -------------------------------------------------------------------------
     e5_meta_dir = raw_root / "darpa" / "e5" / "metadata"
     e5_meta_dir.mkdir(parents=True, exist_ok=True)
@@ -421,7 +421,7 @@ protocol TCCDM20 {
     print(f"[OK] Generated DARPA-E5-ACQUISITION-INVENTORY.json")
 
     # -------------------------------------------------------------------------
-    # 5. LANL Dataset Specification (State: USER_ACTION_REQUIRED)
+    # 5. Đặc tả bộ dữ liệu LANL (Trạng thái: USER_ACTION_REQUIRED)
     # -------------------------------------------------------------------------
     spl_lanl_path = manifests_dir / "SPL-LANL-001.json"
     if spl_lanl_path.exists():

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Automated Test Suite for Dataset Acquisition, Storage Policy, and Integrity Validation
-Tests streaming checksums, archive integrity, timestamp monotonic ordering, and storage cleanliness.
+Bộ kiểm tra tự động để thu thập tập dữ liệu, chính sách lưu trữ và xác thực tính toàn vẹn
+Kiểm tra tổng kiểm tra phát trực tuyến, tính toàn vẹn của kho lưu trữ, thứ tự đơn điệu của dấu thời gian và độ sạch của bộ lưu trữ.
 """
 
 import os
@@ -91,7 +91,7 @@ def test_07_corrupted_archive_detection(tmp_path):
 
 def test_08_timestamp_inversion_detection(tmp_path, validator):
     sample_bgl = tmp_path / "sample_bgl.log"
-    # Create artificial log with intentional timestamp inversion (1000 -> 900)
+    # Tạo nhật ký nhân tạo với sự đảo ngược dấu thời gian có chủ ý (1000 -> 900)
     sample_bgl.write_text(
         "- 1000 2005-06-03 R02-M1-N0-C:J12-U11 RAS KERNEL INFO message1\n"
         "APPRIS 900 2005-06-03 R02-M1-N0-C:J12-U11 RAS KERNEL INFO message2\n",

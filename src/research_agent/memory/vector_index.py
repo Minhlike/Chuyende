@@ -1,5 +1,5 @@
 """
-Derived Vector Index Store & Rebuild Engine (Prompt 4, Section 23, Section 42, Invariant 9)
+Công cụ lưu trữ và xây dựng lại chỉ mục vectơ có nguồn gốc (Dấu nhắc 4, Phần 23, Phần 42, Bất biến 9)
 """
 
 import json
@@ -13,8 +13,8 @@ from research_agent.storage.repository import ResearchRepository
 
 class DerivedVectorIndex:
     """
-    Disposable, derived vector index for fast semantic cosine-similarity ranking.
-    Adheres strictly to Invariant 9: Derived Indexes are Disposable and Rebuildable.
+    Chỉ số vectơ dẫn xuất, dùng một lần để xếp hạng độ tương tự cosin ngữ nghĩa nhanh.
+    Tuân thủ nghiêm ngặt Bất biến 9: Chỉ mục phái sinh có thể dùng một lần và có thể xây dựng lại.
     """
 
     def __init__(
@@ -35,7 +35,7 @@ class DerivedVectorIndex:
                     data = json.load(f)
                     self.index_version = data.get("index_version", "1.0.0")
                     model_id = data.get("model_id", "")
-                    # Invalidate if model mismatch
+                    # Vô hiệu nếu mô hình không khớp
                     if model_id != self.provider.model_id:
                         self.vectors = {}
                         return
@@ -82,8 +82,8 @@ class DerivedVectorIndex:
 
     def search(self, query: str, top_k: int = 10, entity_type: Optional[str] = None) -> List[Tuple[str, str, float]]:
         """
-        Search vector index by cosine similarity.
-        Returns: List of (entity_id, entity_type, similarity_score).
+        Tìm kiếm chỉ mục vectơ theo độ tương tự cosin.
+        Trả về: Danh sách (entity_id, entity_type, similarity_score).
         """
         query_vec = self.provider.embed_text(query)
         q_norm = math.sqrt(sum(x * x for x in query_vec))
@@ -94,7 +94,7 @@ class DerivedVectorIndex:
         for v in self.vectors.values():
             if entity_type and v.entity_type != entity_type:
                 continue
-            # Cosine similarity between L2-normalized vectors is dot product
+            # Độ tương tự cosine giữa các vectơ chuẩn hóa L2 là tích số chấm
             dot = sum(a * b for a, b in zip(query_vec, v.vector))
             scored.append((v.entity_id, v.entity_type, dot))
 
@@ -102,29 +102,29 @@ class DerivedVectorIndex:
         return scored[:top_k]
 
     def rebuild_from_repository(self, repo: ResearchRepository) -> int:
-        """Completely rebuilds vector index from canonical repository entities."""
+        """Xây dựng lại hoàn toàn chỉ mục vectơ từ các thực thể kho lưu trữ chuẩn."""
         self.vectors.clear()
         count = 0
 
-        # Sources
+        # Nguồn
         for s in repo.list_sources():
             text = f"{s.title} {s.venue} {s.notes or ''} {' '.join(s.keywords)}"
             self.add_or_update(s.source_id, "SOURCE", text)
             count += 1
 
-        # Claims
+        # Khiếu nại
         for c in repo.list_claims():
             text = f"{c.statement} {c.scope or ''} {' '.join(c.assumptions)}"
             self.add_or_update(c.claim_id, "CLAIM", text)
             count += 1
 
-        # Roadmap Nodes
+        # Nút lộ trình
         for n in repo.list_roadmap_nodes():
             text = f"{n.code} {n.title} {n.canonical_text or ''}"
             self.add_or_update(n.node_id, "ROADMAP_NODE", text)
             count += 1
 
-        # Questions & Hypotheses
+        # Câu hỏi & Giả thuyết
         for q in repo.list_research_questions():
             text = f"{q.code} {q.title} {q.canonical_wording_en}"
             self.add_or_update(q.rq_id, "RESEARCH_QUESTION", text)
@@ -135,31 +135,31 @@ class DerivedVectorIndex:
             self.add_or_update(h.hyp_id, "HYPOTHESIS", text)
             count += 1
 
-        # Decisions
+        # Quyết định
         for d in repo.list_decisions():
             text = f"{d.title} {d.decision} {d.rationale} {d.context}"
             self.add_or_update(d.decision_id, "DECISION", text)
             count += 1
 
-        # Episodes
+        # tập phim
         for e in repo.list_episodes():
             text = f"{e.action} {e.outcome} {e.failure_reason or ''}"
             self.add_or_update(e.episode_id, "EPISODE", text)
             count += 1
 
-        # Lessons
+        # Bài học
         for l in repo.list_lessons_learned():
             text = f"{l.title} {l.statement} {' '.join(l.actionable_recommendations)}"
             self.add_or_update(l.lesson_id, "LESSON", text)
             count += 1
 
-        # Open Questions
+        # Câu hỏi mở
         for o in repo.list_open_questions():
             text = f"{o.question} {o.why_open} {o.required_evidence}"
             self.add_or_update(o.question_id, "OPEN_QUESTION", text)
             count += 1
 
-        # Memory Records
+        # Bản ghi bộ nhớ
         for m in repo.list_memories():
             text = f"{m.topic} {m.summary} {m.content or ''}"
             self.add_or_update(m.memory_id, "MEMORY", text)

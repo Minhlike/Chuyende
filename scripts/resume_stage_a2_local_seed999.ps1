@@ -1,5 +1,5 @@
-﻿# scripts/resume_stage_a2_local_seed999.ps1
-# Resume Canonical Seed 999 from Epoch 4 Checkpoint -> Execute Epochs 5 to 12
+﻿# tập lệnh/resume_stage_a2_local_seed999.ps1
+# Tiếp tục Canonical Seed 999 từ checkpoint Epoch 4 -> Thực thi epoch 5 đến 12
 
 $ErrorActionPreference = "Stop"
 
@@ -17,7 +17,7 @@ $stdoutLog = "$logDir\seed999.stdout.log"
 $stderrLog = "$logDir\seed999.stderr.log"
 $pidFile = "$logDir\seed999.pid"
 
-# 1. Apply Hardware Sweet Spot Profile
+# 1. Áp dụng hồ sơ điểm ngọt phần cứng
 & "$baseDir\scripts\set_training_sweetspot.ps1"
 
 $env:CUBLAS_WORKSPACE_CONFIG = ":4096:8"
@@ -53,7 +53,7 @@ $process = Start-Process -FilePath $pythonExe `
 
 Start-Sleep -Seconds 2
 
-# 2. Lock PriorityClass to AboveNormal and Affinity to P-cores
+# 2. Khóa PriorityClass thành AboveNormal và Affinity với P-cores
 try {
     $procObj = Get-Process -Id $process.Id -ErrorAction SilentlyContinue
     if ($procObj) {
@@ -66,7 +66,7 @@ try {
     Write-Warning "Could not adjust process priority/affinity: $_"
 }
 
-# 3. Disable Windows Power Throttling (EcoQoS) via Win32 API
+# 3. Vô hiệu hóa Windows Power Throttling (EcoQoS) qua Win32 API
 try {
     $code = @"
 using System;

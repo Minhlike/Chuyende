@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-"""
-Master Protocol Suite Builder for Chapter 3 Pre-Registration
-Generates all canonical protocol files in D:\Research\experiments\protocol\
+r"""
+Trình tạo bộ giao thức chính cho đăng ký trước Chương 3
+Tạo tất cả các tệp giao thức chuẩn trong D:\Research\experiments\protocol
 """
 
 import os

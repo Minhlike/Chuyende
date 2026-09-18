@@ -1,5 +1,5 @@
 """
-Academic Composition, Anti-Hallucination & Thesis Auditing Module (Prompt 7)
+Mô-đun kiểm tra luận văn, chống ảo giác và luận văn (Nhắc 7)
 """
 
 from research_agent.composition.gates import WritingGate

@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 """
-scripts/audit_claim_evidence_semantics.py
+tập lệnh/audit_claim_evidence_semantics.py
 
-Reproducible Semantic Verifier (Round 4).
-Audits content-level factuality, parent_text_hash binding, self-referential locators,
-cross-audit consistency, support semantics, and privacy execution guarantees.
+Trình xác minh ngữ nghĩa có thể tái tạo (Vòng 4).
+Kiểm tra tính xác thực ở cấp độ nội dung, ràng buộc parent_text_hash, bộ định vị tự tham chiếu,
+tính nhất quán trong kiểm tra chéo, ngữ nghĩa hỗ trợ và đảm bảo thực thi quyền riêng tư.
 
-Inputs:
-  - experiments/evidence/citation-audit/SCIENTIFIC-CLAIM-AUDIT.json
-  - experiments/evidence/citation-audit/SCIENTIFIC-CLAIM-DETECTION.json
-  - experiments/evidence/citation-audit/CLAIM-SOURCE-AUDIT.json
-  - experiments/evidence/citation-audit/EVIDENCE-LOCATOR-AUDIT.json
+Đầu vào:
+  - thí nghiệm/bằng chứng/trích dẫn-kiểm toán/SCIENTIFIC-CLAIM-AUDIT.json
+  - thí nghiệm/bằng chứng/trích dẫn-kiểm toán/SCIENTIFIC-CLAIM-DETECTION.json
+  - thí nghiệm/bằng chứng/trích dẫn-kiểm toán/CLAIM-SOURCE-AUDIT.json
+  - thí nghiệm/bằng chứng/trích dẫn-kiểm toán/EVIDENCE-LOCATOR-AUDIT.json
 
-Output:
-  - experiments/evidence/citation-audit/CLAIM-EVIDENCE-SEMANTIC-AUDIT.json
+Đầu ra:
+  - thí nghiệm/bằng chứng/trích dẫn-kiểm toán/CLAIM-EVIDENCE-SEMANTIC-AUDIT.json
 """
 
 import sys, json, re, hashlib
@@ -50,7 +50,7 @@ def run_semantic_audit():
 
     candidates = {c["detected_id"]: c for c in detection.get("detected_candidates", [])}
 
-    # Gate accumulators
+    # ắc quy cổng
     parent_text_hash_mismatches = 0
     privacy_contradictions = 0
     privacy_exp_without_artifact = 0
@@ -60,7 +60,7 @@ def run_semantic_audit():
     false_direct_support = 0
     cross_audit_mismatches = 0
 
-    # Factuality counts
+    # tính thực tế
     ext_tech_facts = 0
     ext_emp_facts = 0
     ext_facts_with_evidence = 0
@@ -88,7 +88,7 @@ def run_semantic_audit():
 
         violations = []
 
-        # 1. Verify parent_text_hash
+        # 1. Xác minh parent_text_hash
         cand = candidates.get(pid)
         exp_hash = cand.get("text_hash", "") if cand else ""
         obs_hash = a.get("parent_text_hash", "")
@@ -98,7 +98,7 @@ def run_semantic_audit():
             violations.append(f"parent_text_hash mismatch: expected {exp_hash}, observed {obs_hash}")
             parent_text_hash_mismatches += 1
 
-        # 2. Count factuality
+        # 2. Đếm tính thực tế
         if f_class == "EXTERNAL_TECHNICAL_FACT":
             ext_tech_facts += 1
         elif f_class == "EXTERNAL_EMPIRICAL_FACT":
@@ -116,7 +116,7 @@ def run_semantic_audit():
         else:
             violations.append(f"Unknown factuality_class: {f_class}")
 
-        # Check evidence for external facts
+        # Kiểm tra bằng chứng cho các sự kiện bên ngoài
         is_external_fact = f_class in ["EXTERNAL_TECHNICAL_FACT", "EXTERNAL_EMPIRICAL_FACT"]
         if is_external_fact:
             has_valid_evid = (
@@ -130,17 +130,17 @@ def run_semantic_audit():
                 violations.append(f"External fact without valid evidence: factuality={f_class}, evidence={e_class}")
                 factual_none_evidence += 1
 
-            # Check if disguised as author synthesis without evidence
+            # Kiểm tra nếu ngụy trang dưới dạng tác giả tổng hợp mà không có bằng chứng
             if c_class == "AUTHOR_SYNTHESIS" and not has_valid_evid:
                 violations.append(f"External fact disguised as AUTHOR_SYNTHESIS without valid evidence")
                 external_fact_disguised += 1
 
-        # 3. Disallow evidence_class == NONE for external facts
+        # 3. Không cho phép evidence_class == NONE đối với thông tin bên ngoài
         if e_class == "NONE":
             if is_external_fact:
                 violations.append(f"evidence_class=NONE not allowed for external fact ({f_class})")
 
-        # 4. Check self-referential source_locator
+        # 4. Kiểm tra source_locator tự tham chiếu
         p_matches = re.findall(r"P(\d+)", loc) + re.findall(r"P(\d+)", pid)
         p_nums = set(int(p) for p in p_matches)
         for p in p_nums:
@@ -152,7 +152,7 @@ def run_semantic_audit():
             violations.append(f"Self-referential source_locator: references own claim_id {cid}")
             self_referential_locators += 1
 
-        # 5. Check Privacy Execution Contradictions
+        # 5. Kiểm tra mâu thuẫn thực thi quyền riêng tư
         privacy_terms = ["mia", "membership inference", "model inversion", "tấn công nghịch đảo", "privacy attack"]
         if any(term in txt.lower() for term in privacy_terms):
             if any(term in txt.lower() for term in ["đã kiểm chứng", "đánh giá tại chương 3", "xây dựng đường biên"]) and "chưa thực thi" not in txt.lower() and "hạ nguồn" not in txt.lower():
@@ -161,7 +161,7 @@ def run_semantic_audit():
                     privacy_contradictions += 1
                     privacy_exp_without_artifact += 1
 
-        # 6. Support-status rule matrix
+        # 6. Ma trận quy tắc trạng thái hỗ trợ
         if c_class in ["AUTHOR_SYNTHESIS", "AUTHOR_SPECIFICATION", "AUTHOR_PROPOSAL", "AUTHOR_MATHEMATICAL_SPECIFICATION"]:
             if s_status == "DIRECT_SUPPORT":
                 violations.append(f"Contradiction: {c_class} cannot have support_status=DIRECT_SUPPORT")
@@ -181,7 +181,7 @@ def run_semantic_audit():
             if not art:
                 violations.append(f"EXPERIMENT_ARTIFACT_VERIFIED requires artifact_locator")
 
-        # 7. Cross-audit consistency
+        # 7. Tính nhất quán trong kiểm toán chéo
         if cid in src_claims:
             sc = src_claims[cid]
             fields_to_check = [
@@ -265,7 +265,7 @@ def run_semantic_audit():
         "per_claim_records": per_claim_records
     }
 
-    # Fail before mutation: Assert PASS before writing authoritative output
+    # Thất bại trước khi đột biến: Khẳng định PASS trước khi viết kết quả chính thức
     assert overall_status == "PASS", (
         f"[FAIL-BEFORE-MUTATION] Semantic verification FAILED with {total_violations} violations: "
         f"parent_hash_mismatch={parent_text_hash_mismatches}, "

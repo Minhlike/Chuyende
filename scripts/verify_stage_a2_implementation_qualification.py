@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Verification Script for Stage A2 Implementation & Empirical Execution Authorization (Contract V1.4 Locked).
-Audits all criteria required before real empirical execution authorization.
+Tập lệnh xác minh cho việc thực hiện giai đoạn A2 và ủy quyền thực hiện theo kinh nghiệm (Hợp đồng V1.4 đã bị khóa).
+Kiểm tra tất cả các tiêu chí cần thiết trước khi ủy quyền thực hiện theo kinh nghiệm thực tế.
 
-Output: STAGE_A2_REAL_EXECUTION_AUTHORIZED=PASS or FAIL.
+Đầu ra: STAGE_A2_REAL_EXECUTION_AUTHORIZED=PASS hoặc FAIL.
 """
 
 import sys
@@ -37,28 +37,28 @@ def verify_stage_a2_empirical_authorization():
 
     failed_checks = []
 
-    # 1. Architecture & Loss Invariants
+    # 1. Kiến trúc và bất biến mất mát
     model = TemporalGraphViewEncoder()
-    # 1a. Exactly 8 relation output classes
+    # 1a. Chính xác 8 lớp đầu ra quan hệ
     last_rel_linear = [m for m in model.rel_head.modules() if isinstance(m, nn.Linear)][-1]
     if last_rel_linear.out_features != 8:
         failed_checks.append(f"RELATION_CLASSES_MISMATCH: {last_rel_linear.out_features} != 8")
     else:
         print("[CHECK 1] PROTOCOL_RELATION_CLASSES_EXACT_8 = PASS")
 
-    # 1b. Node Loss is MSE
+    # 1b. Mất nút là MSE
     if not isinstance(model.loss_node_fn, nn.MSELoss):
         failed_checks.append("NODE_LOSS_NOT_MSE")
     else:
         print("[CHECK 2] NODE_LOSS_MSE = PASS")
 
-    # 1c. Node Type Embedding active in message generator
+    # 1c. Loại nút Nhúng hoạt động trong trình tạo tin nhắn
     if not hasattr(model, "type_embedding") or model.type_embedding.weight.shape != (4, 32):
         failed_checks.append("NODE_TYPE_EMBEDDING_INACTIVE")
     else:
         print("[CHECK 3] NODE_TYPE_EMBEDDING_ACTIVE = PASS")
 
-    # 2. Validation Mask Audit
+    # 2. Kiểm tra mặt nạ xác thực
     mask_audit_p = preexec_dir / "VALIDATION-MASK-AUDIT.json"
     if not mask_audit_p.exists():
         failed_checks.append("MISSING_VALIDATION_MASK_AUDIT")
@@ -81,7 +81,7 @@ def verify_stage_a2_empirical_authorization():
         else:
             print("[CHECK 7] VALIDATION_MASK_TRAIN_RNG_INDEPENDENT = PASS")
 
-    # 3. Global Loss Aggregation Audit
+    # 3. Kiểm toán tổng hợp mất mát (loss) toàn cầu
     loss_audit_p = preexec_dir / "GLOBAL-LOSS-AGGREGATION-AUDIT.json"
     if not loss_audit_p.exists():
         failed_checks.append("MISSING_GLOBAL_LOSS_AGGREGATION_AUDIT")
@@ -92,7 +92,7 @@ def verify_stage_a2_empirical_authorization():
         print("[CHECK 10] GLOBAL_VALIDATION_TIME_AGGREGATION = PASS")
         print("[CHECK 11] GLOBAL_VALIDATION_L_GRAPH = PASS")
 
-    # 4. Partial Window & Schedule Audit
+    # 4. Kiểm tra một phần và theo lịch trình
     partial_audit_p = preexec_dir / "PARTIAL-WINDOW-AUDIT.json"
     if not partial_audit_p.exists():
         failed_checks.append("MISSING_PARTIAL_WINDOW_AUDIT")
@@ -105,7 +105,7 @@ def verify_stage_a2_empirical_authorization():
             print("[CHECK 12] PARTIAL_WINDOW_81_INCLUDED = PASS")
             print("[CHECK 13] PARTIAL_WINDOW_WEIGHTING = PASS")
 
-    # 5. Execution Environment & Storage Check
+    # 5. Kiểm tra môi trường thực thi và lưu trữ
     env_p = impl_dir / "ENVIRONMENT.json"
     if not env_p.exists():
         failed_checks.append("MISSING_ENVIRONMENT_JSON")
@@ -115,7 +115,7 @@ def verify_stage_a2_empirical_authorization():
         print("[CHECK 15] QUALIFICATION_ENV_EQUALS_EXECUTION_ENV = PASS")
         print("[CHECK 16] NO_DEVICE_FALLBACK = PASS")
 
-    # 6. Trajectory Qualification Evidence Check
+    # 6. Kiểm tra bằng chứng về quỹ đạo
     resume_path = impl_dir / "DETERMINISTIC-RESUME-EVIDENCE.json"
     if not resume_path.exists():
         failed_checks.append("MISSING_DETERMINISTIC_RESUME_EVIDENCE")
@@ -130,7 +130,7 @@ def verify_stage_a2_empirical_authorization():
         else:
             print(f"[CHECK 17] DETERMINISTIC_RESUME = PASS (max_div={max_div:.10e})")
 
-    # 7. Evidence Manifest & Storage Revalidation
+    # 7. Xác nhận lại bản kê (manifest) và lưu trữ bằng chứng
     manifest_path = impl_dir / "EVIDENCE-MANIFEST.json"
     if not manifest_path.exists():
         failed_checks.append("MISSING_EVIDENCE_MANIFEST")
@@ -146,10 +146,10 @@ def verify_stage_a2_empirical_authorization():
                     failed_checks.append(f"MANIFEST_HASH_MISMATCH for {entry['path']}: {actual_sha} != {entry['sha256']}")
         print("[CHECK 18] EVIDENCE_HASH_REVALIDATION = PASS")
 
-    # 8. Test Firewall Check
+    # 8. Kiểm tra tường lửa Kiểm tra
     print("[CHECK 19] TEST_FIREWALL = PASS (TEST_OPENED=false, READ_COUNT=0)")
 
-    # 9. Real Empirical Zero-Execution Guard
+    # 9. Cơ quan bảo vệ không thực thi theo kinh nghiệm thực tế
     runs_dir = base_dir / "experiments" / "runs" / "stage-a2"
     empirical_runs_count = 0
     if runs_dir.exists():

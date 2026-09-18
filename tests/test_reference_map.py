@@ -1,5 +1,5 @@
 """
-Comprehensive Reference Map, Intellectual Ownership, and Citation Firewall Test Suite (TEST-REF-01..TEST-REF-18)
+Bản đồ tham chiếu toàn diện, quyền sở hữu trí tuệ và bộ kiểm tra tường lửa trích dẫn (TEST-REF-01..TEST-REF-18)
 """
 
 import pytest
@@ -42,7 +42,7 @@ def test_repo(tmp_path):
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-01: Malformed DOI rejection
+# TEST-REF-01: Từ chối DOI không đúng định dạng
 # ----------------------------------------------------------------------
 def test_ref_01_malformed_doi_rejection(test_repo):
     ingestion = ReferenceMapIngestionService(test_repo)
@@ -67,7 +67,7 @@ def test_ref_01_malformed_doi_rejection(test_repo):
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-02: Unsourced factual claims must fail validation
+# TEST-REF-02: Các tuyên bố thực tế không có nguồn gốc phải không được xác thực
 # ----------------------------------------------------------------------
 def test_ref_02_unsourced_factual_claims_rejected(test_repo):
     ingestion = ReferenceMapIngestionService(test_repo)
@@ -90,7 +90,7 @@ def test_ref_02_unsourced_factual_claims_rejected(test_repo):
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-03: OUR_DESIGN claim can exist without external source
+# TEST-REF-03: Xác nhận quyền sở hữu OUR_DESIGN có thể tồn tại mà không cần nguồn bên ngoài
 # ----------------------------------------------------------------------
 def test_ref_03_our_design_without_external_source(test_repo):
     claim = Claim(
@@ -105,10 +105,10 @@ def test_ref_03_our_design_without_external_source(test_repo):
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-04: MOTIVATED_BY relationship preserves OURS ownership
+# TEST-REF-04: Mối quan hệ MOTIVATED_BY duy trì quyền sở hữu OURS
 # ----------------------------------------------------------------------
 def test_ref_04_motivated_by_preserves_ours_ownership(test_repo):
-    # Save required source first for foreign key
+    # Lưu nguồn cần thiết trước cho khóa ngoại
     src = Source(
         source_id="SRC-000001",
         citation_key="Src1",
@@ -147,7 +147,7 @@ def test_ref_04_motivated_by_preserves_ours_ownership(test_repo):
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-05: Baseline method provenance check
+# TEST-REF-05: Kiểm tra xuất xứ phương pháp cơ bản
 # ----------------------------------------------------------------------
 def test_ref_05_baseline_method_provenance(test_repo):
     src = Source(
@@ -168,7 +168,7 @@ def test_ref_05_baseline_method_provenance(test_repo):
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-06: Deduplication by DOI and citation key
+# TEST-REF-06: Chống trùng lặp bằng DOI và khóa trích dẫn
 # ----------------------------------------------------------------------
 def test_ref_06_deduplication_by_doi_and_key(test_repo):
     ingestion = ReferenceMapIngestionService(test_repo)
@@ -192,7 +192,7 @@ def test_ref_06_deduplication_by_doi_and_key(test_repo):
                 authors=["Author B"],
                 year=2022,
                 venue="IEEE S&P",
-                doi="10.1109/SP.2022.0001",  # Duplicate DOI
+                doi="10.1109/SP.2022.0001",  # Nhân đôi DOI
             ),
         ]
     )
@@ -202,20 +202,20 @@ def test_ref_06_deduplication_by_doi_and_key(test_repo):
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-07: Exact locator validation
+# TEST-REF-07: Xác thực định vị chính xác
 # ----------------------------------------------------------------------
 def test_ref_07_exact_locator_validation():
     with pytest.raises(ValueError):
         Evidence(
             evidence_id="EVD-999",
             source_id="SRC-001",
-            locator="",  # Empty locator must fail min_length
+            locator="",  # Bộ định vị trống phải bị lỗi min_length
             exact_quote="Valid quote from the paper.",
         )
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-08: Contradiction record between competing empirical claims
+# TEST-REF-08: Bản ghi mâu thuẫn giữa các tuyên bố thực nghiệm cạnh tranh
 # ----------------------------------------------------------------------
 def test_ref_08_contradiction_record_preservation(test_repo):
     clm_a = Claim(
@@ -249,7 +249,7 @@ def test_ref_08_contradiction_record_preservation(test_repo):
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-09: Negative evidence preservation
+# TEST-REF-09: Bảo quản bằng chứng tiêu cực
 # ----------------------------------------------------------------------
 def test_ref_09_negative_evidence_preservation(test_repo):
     src = Source(
@@ -276,7 +276,7 @@ def test_ref_09_negative_evidence_preservation(test_repo):
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-10: Mapping to non-existent roadmap node is rejected
+# TEST-REF-10: Ánh xạ tới nút lộ trình không tồn tại bị từ chối
 # ----------------------------------------------------------------------
 def test_ref_10_invalid_roadmap_node_rejected(test_repo):
     ingestion = ReferenceMapIngestionService(test_repo)
@@ -286,7 +286,7 @@ def test_ref_10_invalid_roadmap_node_rejected(test_repo):
         ownership_mappings=[
             OwnershipMapping(
                 mapping_id="OWN-999001",
-                node_code="9.9.9",  # Non-existent node
+                node_code="9.9.9",  # Nút không tồn tại
                 component_name="Non-existent Component",
                 ownership=IntellectualOwnership.OURS,
             )
@@ -298,10 +298,10 @@ def test_ref_10_invalid_roadmap_node_rejected(test_repo):
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-11: Reference map version compatibility check
+# TEST-REF-11: Kiểm tra tính tương thích của phiên bản bản đồ tham chiếu
 # ----------------------------------------------------------------------
 def test_ref_11_version_compatibility_check(test_repo):
-    # Save a roadmap with version 1.0.0
+    # Lưu lộ trình với phiên bản 1.0.0
     rm = ResearchRoadmap(
         roadmap_id="ROD-000001",
         version="1.0.0",
@@ -313,7 +313,7 @@ def test_ref_11_version_compatibility_check(test_repo):
     ingestion = ReferenceMapIngestionService(test_repo)
     bad_spec = ReferenceMapSpecification(
         version="1.0.0",
-        compatible_roadmap_version="2.0.0",  # Incompatible version
+        compatible_roadmap_version="2.0.0",  # Phiên bản không tương thích
     )
     with pytest.raises(InvariantViolationError) as exc_info:
         ingestion.validate_reference_map_specification(bad_spec)
@@ -321,7 +321,7 @@ def test_ref_11_version_compatibility_check(test_repo):
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-12: Citation Firewall blocks citations without verified metadata or evidence
+# TEST-REF-12: Tường lửa trích dẫn chặn các trích dẫn mà không có siêu dữ liệu hoặc bằng chứng được xác minh
 # ----------------------------------------------------------------------
 def test_ref_12_citation_firewall_blocks_unverified():
     rule = CitationFirewallRule(
@@ -339,7 +339,7 @@ def test_ref_12_citation_firewall_blocks_unverified():
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-13: Citation Firewall authorizes ready citations
+# TEST-REF-13: Tường lửa trích dẫn cho phép các trích dẫn sẵn sàng
 # ----------------------------------------------------------------------
 def test_ref_13_citation_firewall_authorizes_ready():
     rule = CitationFirewallRule(
@@ -356,7 +356,7 @@ def test_ref_13_citation_firewall_authorizes_ready():
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-14: Claim ownership taxonomy constraint enforcement
+# TEST-REF-14: Thực thi ràng buộc phân loại quyền sở hữu
 # ----------------------------------------------------------------------
 def test_ref_14_claim_ownership_taxonomy_enforcement():
     with pytest.raises(ValueError):
@@ -369,10 +369,10 @@ def test_ref_14_claim_ownership_taxonomy_enforcement():
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-15: Candidate contribution novelty safety
+# TEST-REF-15: Sự an toàn mới lạ đóng góp của ứng viên
 # ----------------------------------------------------------------------
 def test_ref_15_candidate_contribution_novelty_safety(test_repo):
-    # Save a valid roadmap with node 1.1.1 first
+    # Trước tiên hãy lưu lộ trình hợp lệ với nút 1.1.1
     node = ResearchNode(
         node_id="NOD-000001",
         roadmap_id="ROD-000001",
@@ -402,7 +402,7 @@ def test_ref_15_candidate_contribution_novelty_safety(test_repo):
                 roadmap_nodes=["1.1.1"],
                 ownership=IntellectualOwnership.OURS,
                 novelty_status=NoveltyStatus.POTENTIALLY_NOVEL,
-                differentiation_notes="",  # Empty notes must fail validation
+                differentiation_notes="",  # Ghi chú trống phải xác thực không thành công
             )
         ]
     )
@@ -412,7 +412,7 @@ def test_ref_15_candidate_contribution_novelty_safety(test_repo):
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-16: Preprint vs peer-reviewed distinction enforcement
+# TEST-REF-16: Thực thi phân biệt bản in trước và được đánh giá ngang hàng
 # ----------------------------------------------------------------------
 def test_ref_16_preprint_distinction(test_repo):
     src = Source(
@@ -432,7 +432,7 @@ def test_ref_16_preprint_distinction(test_repo):
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-17: Official dataset provenance and tier separation
+# TEST-REF-17: Xuất xứ và phân chia cấp dữ liệu chính thức
 # ----------------------------------------------------------------------
 def test_ref_17_dataset_provenance(test_repo):
     src_darpa = Source(
@@ -451,7 +451,7 @@ def test_ref_17_dataset_provenance(test_repo):
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-18: ATT&CK taxonomy versioning and snapshot date requirement
+# TEST-REF-18: Yêu cầu về ngày chụp nhanh và phiên bản phân loại ATT&CK
 # ----------------------------------------------------------------------
 def test_ref_18_attack_metadata_requirement(test_repo):
     ingestion = ReferenceMapIngestionService(test_repo)
@@ -467,7 +467,7 @@ def test_ref_18_attack_metadata_requirement(test_repo):
                 year=2024,
                 venue="MITRE",
                 source_type=SourceQualityTier.PRIMARY_STANDARD,
-                access_date=None,  # Missing access date must fail
+                access_date=None,  # Thiếu ngày truy cập phải thất bại
             )
         ]
     )

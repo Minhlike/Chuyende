@@ -1,5 +1,5 @@
 """
-Filesystem Canonical Artifact Store and Disposable Index Manager (ADR-0001, ADR-0004, RC-16, RC-17)
+Hệ thống tệp Canonical Artifact Store và Trình quản lý chỉ mục dùng một lần (ADR-0001, ADR-0004, RC-16, RC-17)
 """
 
 import shutil
@@ -11,14 +11,14 @@ from research_agent.core.hash_utils import compute_file_sha256, compute_bytes_sh
 
 
 class CanonicalFileStore:
-    """Manages physical files within workspace root with PathGuard safety and SHA-256 hashing."""
+    """Quản lý các tệp vật lý trong thư mục gốc của không gian làm việc với tính năng bảo mật PathGuard và hàm băm SHA-256."""
 
     def __init__(self, config: Optional[WorkspaceConfig] = None):
         self.config = config or get_default_config()
         self.guard = PathGuard(self.config)
 
     def write_text(self, relative_path: str | Path, content: str, encoding: str = "utf-8") -> tuple[Path, str]:
-        """Safely write text to file and return (absolute_path, sha256_hash)."""
+        """Ghi văn bản vào tệp một cách an toàn và trả về (absolute_path, sha256_hash)."""
         safe_path = self.guard.resolve_safe_path(relative_path)
         safe_path.parent.mkdir(parents=True, exist_ok=True)
         safe_path.write_text(content, encoding=encoding)
@@ -26,7 +26,7 @@ class CanonicalFileStore:
         return safe_path, file_hash
 
     def write_bytes(self, relative_path: str | Path, data: bytes) -> tuple[Path, str]:
-        """Safely write raw bytes to file and return (absolute_path, sha256_hash)."""
+        """Ghi byte thô vào tệp một cách an toàn và trả về (absolute_path, sha256_hash)."""
         safe_path = self.guard.resolve_safe_path(relative_path)
         safe_path.parent.mkdir(parents=True, exist_ok=True)
         safe_path.write_bytes(data)
@@ -34,19 +34,20 @@ class CanonicalFileStore:
         return safe_path, file_hash
 
     def read_text(self, relative_path: str | Path, encoding: str = "utf-8") -> str:
-        """Safely read text from workspace file."""
+        """Đọc văn bản một cách an toàn từ tệp không gian làm việc."""
         safe_path = self.guard.resolve_safe_path(relative_path, must_exist=True)
         return safe_path.read_text(encoding=encoding)
 
     def read_bytes(self, relative_path: str | Path) -> bytes:
-        """Safely read binary bytes from workspace file."""
+        """Đọc an toàn các byte nhị phân từ tệp không gian làm việc."""
         safe_path = self.guard.resolve_safe_path(relative_path, must_exist=True)
         return safe_path.read_bytes()
 
     def purge_derived_indexes(self) -> tuple[int, int]:
-        """Purge disposable derived indexes and caches (RC-17, ADR-0004).
-        
-        Returns (purged_cache_files, purged_index_files).
+        """
+Lọc các chỉ mục và bộ đệm dẫn xuất dùng một lần (RC-17, ADR-0004).
+
+        Trả về (purged_cache_files, purged_index_files).
         """
         cache_dir = self.config.cache_dir
         index_dir = self.config.indexes_dir

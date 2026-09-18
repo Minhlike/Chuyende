@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Execution script to materialize real Label-Free Stage A1 SSL Pretraining inputs
+Tập lệnh thực thi để hiện thực hóa các đầu vào Huấn luyện trước giai đoạn không có nhãn A1 SSL thực sự
 for HDFS and BGL with true two-pass firewall, interval-causal partitioning,
-multi-parameter slots, and separate probe label vaults.
+khe cắm đa thông số và ngăn chứa nhãn thăm dò riêng biệt.
 """
 
 import sys

@@ -1,5 +1,5 @@
 """
-Word 2016 Scientific Visuals Package
+Gói hình ảnh khoa học Word 2016
 """
 
 from research_agent.visuals.schemas import (

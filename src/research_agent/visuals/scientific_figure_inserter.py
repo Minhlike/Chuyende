@@ -18,7 +18,7 @@ from research_agent.visuals.registry import VisualRegistry
 
 class ScientificFigureInserter:
     """
-    Inserts verified data figures with native Word captions and cross-reference bookmarks.
+    Chèn số liệu dữ liệu đã được xác minh với chú thích Word gốc và dấu trang tham chiếu chéo.
     """
 
     def __init__(self, visual_registry: Optional[VisualRegistry] = None):
@@ -36,9 +36,9 @@ class ScientificFigureInserter:
         purpose: str = "Performance comparison on benchmark dataset",
     ) -> VisualRecord:
         """
-        Inserts figure picture and its native caption into the Word document.
+        Chèn hình ảnh và chú thích gốc của nó vào tài liệu Word.
         """
-        # 1. Paragraph containing the image
+        # 1. Đoạn văn chứa hình ảnh
         img_p = doc.add_paragraph(style="Normal") if ref_paragraph is None else ref_paragraph.insert_paragraph_before(style="Normal")
         img_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         img_p.paragraph_format.first_line_indent = Cm(0)
@@ -47,7 +47,7 @@ class ScientificFigureInserter:
 
         img_path = Path(fig_spec.output_file_rel_path)
         if not img_path.is_absolute():
-            # Resolve relative to workspace
+            # Giải quyết liên quan đến không gian làm việc
             img_path = Path(r"D:\Research") / img_path
 
         if not img_path.exists():
@@ -58,7 +58,7 @@ class ScientificFigureInserter:
 
         bookmark_name = f"BK_FIG_{chapter_num}_{seq_num:03d}"
 
-        # 2. Add native caption below image
+        # 2. Thêm chú thích gốc bên dưới hình ảnh
         cap_p = WordCaptionManager.add_figure_caption(
             doc=doc,
             ref_paragraph=ref_paragraph,
@@ -68,7 +68,7 @@ class ScientificFigureInserter:
             bookmark_name=bookmark_name,
         )
 
-        # 3. Register in VisualRegistry
+        # 3. Đăng ký trong VisualRegistry
         record = VisualRecord(
             visual_id=fig_spec.figure_id,
             node_code=node_code,
