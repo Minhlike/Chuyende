@@ -47,7 +47,7 @@ def test_final_01_provisional_build_produces_artifacts(compiler):
 
 
 def test_final_02_packager_generates_complete_manifest(packager):
-    """Trình đóng gói tạo phẩm (artifact) tạo tệp kê khai gói với hàm băm tính toàn vẹn SHA-256."""
+    """Trình đóng gói artifact tạo tệp kê khai gói với hàm băm tính toàn vẹn SHA-256."""
     pkg = packager.build_package_manifest()
     assert pkg.package_id.startswith("PKG-")
     assert pkg.package_sha256 is not None

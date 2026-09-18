@@ -1,4 +1,4 @@
-# tập lệnh/resume_stage_a2_local_seed7_epoch9.ps1
+# scripts/resume_stage_a2_local_seed7_epoch9.ps1
 # Tiếp tục Canonical Seed 7 từ checkpoint Epoch 8 -> Thực thi Epoch 9
 
 $ErrorActionPreference = "Stop"

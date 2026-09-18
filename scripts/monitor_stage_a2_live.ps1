@@ -1,5 +1,5 @@
-# tập lệnh/monitor_stage_a2_live.ps1
-# Màn hình trực tiếp thời gian thực phổ quát cho việc thực thi năm hạt giống chuẩn ở giai đoạn A2 (Trung thực, phần cứng thời gian thực & đo từ xa trạng thái)
+# scripts/monitor_stage_a2_live.ps1
+# Công cụ giám sát trực tiếp thời gian thực cho việc thực thi 5 seed chuẩn ở giai đoạn A2 (Trung thực, phần cứng thời gian thực & đo từ xa trạng thái)
 
 $baseDir = "D:\Research"
 $stateFile = "$baseDir\experiments\runs\stage-a2\HDFS\seed-42\RUN-STATE.json"

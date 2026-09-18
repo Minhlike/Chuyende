@@ -2,16 +2,16 @@
 """
 Cổng xác minh trước khi thực hiện Canonical Giai đoạn A2 (Đã sửa đổi V1.2).
 Thực hiện xác minh dựa trên bằng chứng, không đóng:
-  1. Tổ tiên từ cơ sở đông lạnh Giai đoạn A1
+  1. Tổ tiên từ cơ sở đã đóng băng (frozen baseline) Giai đoạn A1
   2. Tổng kiểm tra mật mã của hợp đồng & Khóa trước khi thực hiện
   3. Tính toàn vẹn của Tarball HDFS thô
-  4. Băm tạo phẩm (artifact) phân chia thực tế (SPL-HDFS-001)
+  4. Băm artifact phân chia thực tế (SPL-HDFS-001)
   5. Quyền phân chia kinh điển được chia sẻ và sự rời rạc
   6. Tính chẵn lẻ của dấu thời gian và độ phân giải mili giây
   7. Mối quan hệ nối đất và các ràng buộc thành phần
-  8. Bảo tồn đồ thị trên các phân vùng xác thực và đào tạo đầy đủ
+  8. Bảo tồn đồ thị trên các phân vùng xác thực và huấn luyện đầy đủ
   9. Tường lửa kiểm tra nghiêm ngặt (TestSetSealedError)
-  10. Trạng thái không thực thi (0 bước tối ưu hóa, 0 mô hình được đào tạo)
+  10. Trạng thái không thực thi (0 bước tối ưu hóa, 0 mô hình được huấn luyện)
 Đầu ra STAGE_A2_PREEXECUTION_READY=PASS hoặc STAGE_A2_PREEXECUTION_READY=FAIL.
 """
 
@@ -39,7 +39,7 @@ def verify_stage_a2_preexecution():
     print("      STAGE A2 PRE-EXECUTION GATE VERIFICATION AUDIT (V1.2)      ")
     print("=================================================================")
 
-    # 1. Kiểm tra cam kết cố định cơ sở
+    # 1. Kiểm tra commit cố định cơ sở
     expected_base_commit = "9a707025ed5899c524962558732218ff48e8b212"
     lock_path = base_dir / "experiments" / "protocol" / "STAGE-A2-PREEXECUTION-LOCK.json"
     prereg_path = base_dir / "experiments" / "protocol" / "STAGE-A2-PREREGISTRATION.md"
@@ -98,7 +98,7 @@ def verify_stage_a2_preexecution():
             failures.append(f"RAW_HDFS_HASH_MISMATCH: {actual_raw_h} != {expected_raw_h}")
         print(f"[CHECK 2] HDFS Raw Checksum: {actual_raw_h} (OK)")
 
-    # 4. Tái tạo băm tạo phẩm (artifact) phân chia thực tế
+    # 4. Tái tạo băm artifact phân chia thực tế
     train_pt_path = base_dir / "experiments" / "runs" / "data" / "hdfs" / "hdfs_ssl_train.pt"
     val_pt_path = base_dir / "experiments" / "runs" / "data" / "hdfs" / "hdfs_ssl_val.pt"
 

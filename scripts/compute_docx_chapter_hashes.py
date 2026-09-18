@@ -3,8 +3,8 @@
 Chương Hash Chứng minh nguồn gốc và Kiểm toán viên sổ cái khác biệt
 
 Kiểm tra chuyển đổi văn bản Chương 1 và Chương 2 chống lại sự bất biến
-baseline lịch sử từ thẩm quyền cam kết a99d5dc0e1499f8454293a2931a4962ad214d4af.
-Đảm bảo xác thực hàm băm không tròn:
+baseline lịch sử từ authority commit a99d5dc0e1499f8454293a2931a4962ad214d4af.
+Đảm bảo xác thực mã băm phi chu trình (non-circular hash validation):
 - baseline là bất biến và nằm ngoài kho đối tượng git;
 - các sửa đổi được quản lý chặt chẽ bởi APPROVED-SCIENTIFIC-EDIT-LEDGER.json;
 - xác minh 100% các phần khác nhau khớp với các mục sổ cái đã được phê duyệt;
@@ -128,7 +128,7 @@ def audit_and_verify():
     current_doc_bytes = docx_path.read_bytes()
     current_docx_sha256 = hashlib.sha256(current_doc_bytes).hexdigest()
 
-    # Xác minh phân tích cú pháp git động dựa trên cam kết cơ bản
+    # Xác minh phân tích cú pháp git động dựa trên commit cơ bản
     rev_cmd = ['git', 'rev-parse', f'{BASELINE_SOURCE_COMMIT}:Chuyên đề chuyên sâu.docx']
     rev_res = subprocess.run(rev_cmd, capture_output=True, text=True, cwd=str(repo_root))
     if rev_res.returncode != 0:
@@ -169,7 +169,7 @@ def audit_and_verify():
 
     for h_idx, hunk in enumerate(total_computed_hunks):
         for l_idx, item in enumerate(ledger_items):
-            # Kiểm tra các phím đặt tên kép
+            # Kiểm tra các khóa đặt tên kép (dual-naming keys)
             b_indices = item.get('base_indices') or item.get('base_paragraph_indices')
             c_indices = item.get('current_indices') or item.get('current_paragraph_indices') or item.get('curr_indices')
             reason = item.get('scientific_justification') or item.get('reason')
@@ -257,7 +257,7 @@ def audit_and_verify():
         json.dump(verification_result, vf, indent=2, ensure_ascii=False)
     tmp_verification_path.replace(out_verification_path)
 
-    # Tự động tạo bản ghi xuất xứ mà không cần các trường tròn tự chứng thực
+    # Tự động tạo bản ghi xuất xứ mà không cần các trường tham chiếu vòng (circular fields) tự chứng thực
     prov_record = {
         'expected_hash_commit': BASELINE_SOURCE_COMMIT,
         'expected_docx_blob_sha': BASELINE_DOCX_BLOB_SHA,

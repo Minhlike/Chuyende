@@ -18,7 +18,7 @@ class EvidenceAlignmentEngine:
     - Sự kéo theo/hướng ngữ nghĩa
     - Khả năng tương thích phạm vi (tập dữ liệu, tên miền, số liệu)
     - Sự tương thích về phương pháp
-    - Tạo bản ghi bằng chứng khi thiếu hoặc một phần hỗ trợ theo kinh nghiệm.
+    - Tạo bản ghi bằng chứng khi thiếu hoặc một phần hỗ trợ thực nghiệm.
     """
 
     def align(self, evidence: Evidence, claim: Claim) -> Tuple[EvidenceAlignmentStatus, str]:

@@ -2,7 +2,7 @@
 """
 Công cụ vật chất hóa và bộ điều hợp dữ liệu thô BGL thực (Canonicalizer mẫu dựa trên quy tắc v1)
 Thực thi:
-  1. Gói đào tạo trước giai đoạn A1 SSL không có nhãn:
+  1. Gói tiền huấn luyện (pretraining) giai đoạn A1 SSL không có nhãn:
      - bgl_ssl_train.pt và bgl_ssl_val.pt chứa các nhãn hạ nguồn (downstream) ZERO (được bảo vệ bởi LabelLeakageError).
      - Nhãn cảnh báo hạ nguồn (downstream) được lưu trữ nghiêm ngặt trong kho thăm dò chỉ dành cho đánh giá (thử nghiệm/lần chạy/dữ liệu/vault/).
   2. Giao thức lối tắt và bối cảnh nút BGL:

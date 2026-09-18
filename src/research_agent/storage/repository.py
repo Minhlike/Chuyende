@@ -1156,7 +1156,7 @@ class ResearchRepository:
         return fig
 
     # -------------------------------------------------------------
-    # Quyết định & Mâu thuẫn (Nhắc 4, Mục 31)
+    # Quyết định & Mâu thuẫn (Prompt 4, Mục 31)
     # -------------------------------------------------------------
     def save_decision(self, dec: DecisionRecord) -> DecisionRecord:
         with self.db.session() as conn:
@@ -2100,7 +2100,7 @@ class ResearchRepository:
                 return [dict(r) for r in rows]
 
     def rebuild_fts_index(self) -> int:
-        """Xây dựng lại toàn bộ chỉ mục FTS5 từ các nguồn chính tắc, xác nhận quyền sở hữu, quyết định, tập, bài học và câu hỏi."""
+        """Xây dựng lại toàn bộ chỉ mục FTS5 từ các nguồn chính tắc, luận điểm (claim), quyết định, tập, bài học và câu hỏi."""
         count = 0
         with self.db.session() as conn:
             try:
@@ -2119,7 +2119,7 @@ class ResearchRepository:
             )
             count += 1
 
-        # Xác nhận quyền sở hữu chỉ mục
+        # luận điểm (claim) chỉ mục
         for c in self.list_claims():
             self.index_fts_entity(
                 entity_id=c.claim_id,

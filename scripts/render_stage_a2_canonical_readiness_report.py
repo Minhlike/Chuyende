@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Tập lệnh kết xuất cho Báo cáo ủy quyền ra mắt cuối cùng của Seed-42 Giai đoạn A2 (Phần 17).
+script kết xuất cho Báo cáo ủy quyền ra mắt cuối cùng của Seed-42 Giai đoạn A2 (Phần 17).
 """
 
 import json

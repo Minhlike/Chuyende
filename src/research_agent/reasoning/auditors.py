@@ -47,7 +47,7 @@ class LeakageAuditor:
 
 class ShortcutAuditor:
     """
-    Phím tắt tập dữ liệu & Kiểm toán viên Heuristic tầm thường (Phần 34).
+    shortcut tập dữ liệu & Kiểm toán viên Heuristic tầm thường (Phần 34).
     """
 
     CANDIDATE_SHORTCUTS = [

@@ -13,7 +13,7 @@ from research_agent.schemas.verification import DataProfile
 class DataProfiler:
     """
     Tính toán tóm tắt thống kê xác định của bộ dữ liệu nhật ký.
-    Liên kết phiên bản tập dữ liệu, tập lệnh điện toán và hàm băm hồ sơ SHA-256.
+    Liên kết phiên bản tập dữ liệu, script điện toán và hàm băm hồ sơ SHA-256.
     """
 
     def compute_profile(

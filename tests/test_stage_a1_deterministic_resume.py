@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Kiểm tra hồi quy để tiếp tục checkpoint xác định trong giai đoạn huấn luyện viên A1.
-Xác minh rằng việc tiếp tục đào tạo từ checkpoint đã lưu sẽ tạo ra EXACT giống hệt
-quỹ đạo huấn luyện (thứ tự lô dữ liệu, giá trị mất, độ dốc, trạng thái tối ưu hóa, trạng thái lập lịch,
+Kiểm tra hồi quy để tiếp tục checkpoint xác định trong giai đoạn bộ huấn luyện (trainer) A1.
+Xác minh rằng việc tiếp tục huấn luyện từ checkpoint đã lưu sẽ tạo ra EXACT giống hệt
+quỹ đạo huấn luyện (thứ tự lô dữ liệu, giá trị mất, gradient, trạng thái tối ưu hóa, trạng thái lập lịch,
 và trọng số mô hình) như một quá trình huấn luyện liên tục không bị gián đoạn.
 """
 
@@ -131,7 +131,7 @@ def test_stage_a1_exact_deterministic_resume():
     """
     Xác minh rằng:
     1. Chạy liên tục A (epoch 1 -> epoch 2)
-    2. Tiếp tục chạy B (epoch 1 -> Lưu checkpoint -> Quy trình mới/Huấn luyện viên -> Tải checkpoint -> epoch 2)
+    2. Tiếp tục chạy B (epoch 1 -> Lưu checkpoint -> Quy trình mới/bộ huấn luyện (trainer) -> Tải checkpoint -> epoch 2)
     Mang lại quỹ đạo lô tiếp theo giống hệt nhau, giá trị mất mát (loss) giống hệt nhau, trạng thái tối ưu hóa giống hệt nhau,
     tốc độ học giống hệt nhau và trọng số tham số mô hình giống hệt nhau (độ phân kỳ tham số tối đa < 1e-6).
     """
@@ -168,7 +168,7 @@ def test_stage_a1_exact_deterministic_resume():
         opt_state_a = trainer_a.optimizer.state_dict()
 
         # ==========================================
-        # 2. RESUMED RUN B: Huấn luyện viên mới -> checkpoint tải -> epoch 2
+        # 2. RESUMED RUN B: bộ huấn luyện (trainer) mới -> checkpoint tải -> epoch 2
         # ==========================================
         # Xóa trainer_a để đảm bảo phương tiện chặn sạch sẽ
         del trainer_a
@@ -249,7 +249,7 @@ def test_resume_fails_on_tampered_rng_or_dataloader():
         # Tải checkpoint nhưng giả mạo train_generator
         trainer_b = MockStageA1Trainer(seed=seed, base_dir=base_dir, device=device, lock_path=lock_path)
         trainer_b.load_checkpoint(ckpt_path)
-        # Thay đổi hạt giống máy phát điện theo cách thủ công
+        # Thay đổi seed máy phát điện theo cách thủ công
         trainer_b.train_generator.manual_seed(99999)
 
         # epoch tàu 2

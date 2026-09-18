@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Tập lệnh xác minh cho việc thực hiện giai đoạn A2 và ủy quyền thực hiện theo kinh nghiệm (Hợp đồng V1.4 đã bị khóa).
-Kiểm tra tất cả các tiêu chí cần thiết trước khi ủy quyền thực hiện theo kinh nghiệm thực tế.
+script xác minh cho việc thực hiện giai đoạn A2 và ủy quyền thực hiện thực nghiệm (Hợp đồng V1.4 đã bị khóa).
+Kiểm tra tất cả các tiêu chí cần thiết trước khi ủy quyền thực hiện thực nghiệm thực tế.
 
 Đầu ra: STAGE_A2_REAL_EXECUTION_AUTHORIZED=PASS hoặc FAIL.
 """
@@ -149,7 +149,7 @@ def verify_stage_a2_empirical_authorization():
     # 8. Kiểm tra tường lửa Kiểm tra
     print("[CHECK 19] TEST_FIREWALL = PASS (TEST_OPENED=false, READ_COUNT=0)")
 
-    # 9. Cơ quan bảo vệ không thực thi theo kinh nghiệm thực tế
+    # 9. Cơ quan bảo vệ không thực thi thực nghiệm thực tế
     runs_dir = base_dir / "experiments" / "runs" / "stage-a2"
     empirical_runs_count = 0
     if runs_dir.exists():

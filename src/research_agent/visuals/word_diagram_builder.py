@@ -161,8 +161,7 @@ class WordDiagramBuilder:
         return self.MSO_SHAPE_RECTANGLE
 
     def _apply_minimal_shape_style(self, shape: Any, node: ShapeNodeSpec):
-        """Áp dụng phong cách học thuật đơn sắc nghiêm ngặt (không có độ dốc, bóng, 3D)."""
-        # Điền: Trắng
+        """Áp dụng phong cách học thuật đơn sắc nghiêm ngặt (không có gradient, bóng, 3D)."""        # Điền: Trắng
         shape.Fill.Solid()
         shape.Fill.ForeColor.RGB = 0xFFFFFF  # trắng
         shape.Fill.Transparency = 0.0

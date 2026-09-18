@@ -1,5 +1,5 @@
 """
-Nghiên cứu hệ thống phân cấp bộ nhớ & các thực thể được gõ (Dấu nhắc 4, Cấp M0..M5, ADR-0004, ADR-0008)
+Nghiên cứu hệ thống phân cấp bộ nhớ & các thực thể được gõ (Dấu Prompt 4, Cấp M0..M5, ADR-0004, ADR-0008)
 """
 
 from datetime import datetime, timezone

@@ -67,7 +67,7 @@ def test_hum_01_manual_edit_preservation(workflow, repo):
 
 
 def test_hum_02_upstream_invalidation_cascades_to_stale(workflow, repo):
-    """Vô hiệu hóa nguồn/nhãn xác nhận quyền sở hữu thượng nguồn (upstream) tham chiếu các đoạn STALE và ghi lại các vấn đề kiểm tra."""
+    """Vô hiệu hóa nguồn/nhãn luận điểm (claim) thượng nguồn (upstream) tham chiếu các đoạn STALE và ghi lại các vấn đề kiểm tra."""
     p = ParagraphRecord(
         paragraph_id="P-INV-01",
         node_code="1.3.3",

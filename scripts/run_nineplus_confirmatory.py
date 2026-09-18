@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Chiến dịch thử nghiệm Nineplus - Người chạy xác nhận giai đoạn 2
+Chiến dịch thử nghiệm Nineplus - trình thực thi (runner) xác nhận giai đoạn 2
 Thực hiện các hoạt động xác nhận tiềm năng trên 3 kiến trúc cốt lõi:
   1. SEQUENCE_ONLY (Bộ mã hóa máy biến áp, MEP + MPP + thời gian SSL)
   2. GRAPH_ONLY (TemporalGraphViewEncoding, rel + nút + thời gian SSL)
@@ -12,7 +12,7 @@ Thực thi:
   - Cài đặt khung xác định (CUBLAS_WORKSPACE_CONFIG=:4096:8)
   - dừng sớm (early stopping) đã đăng ký trước: kiên nhẫn=3 khi mất xác thực hoặc trần 12 epoch
   - Hợp đồng checkpoint (checkpoint epoch + best_checkpoint.pt)
-  - Đánh giá thăm dò tuyến tính hạ nguồn (downstream) trên các biểu diễn xác thực cố định (AP, ROC-AUC)
+  - Đánh giá probe tuyến tính hạ nguồn (downstream) trên các biểu diễn xác thực cố định (AP, ROC-AUC)
   - Hợp đồng phương sai tiềm ẩn chống sụp đổ (Var(z) >= 0,01)
 """
 
@@ -221,8 +221,8 @@ def evaluate_downstream_linear_probe(
     device: str = "cuda"
 ) -> Dict[str, float]:
     """
-    Đánh giá bộ dò (probe) tuyến tính trên biểu diễn đông lạnh z (7.500 mẫu)
-    sử dụng phân chia đào tạo/kiểm tra 80/20 trong nhóm biểu diễn xác thực.
+    Đánh giá bộ dò (probe) tuyến tính trên biểu diễn đóng băng (frozen representation) z (7.500 mẫu)
+    sử dụng phân chia huấn luyện/kiểm tra 80/20 trong nhóm biểu diễn xác thực.
     """
     dev = torch.device(device if torch.cuda.is_available() and device == "cuda" else "cpu")
     y = torch.tensor(labels, dtype=torch.float32)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Chiến dịch thử nghiệm Nineplus - Trình hoàn thiện checkpoint nhiều chế độ xem
+Chiến dịch thử nghiệm Nineplus - Trình hoàn thiện checkpoint đa góc nhìn (multi-view)
 Tải best_checkpoint.pt một cách an toàn từ thư mục chạy Multi-View,
 trích xuất các biểu diễn trên bộ xác thực (7.500 phiên),
 đánh giá bộ dò (probe) tuyến tính hạ nguồn (downstream) (AP & ROC-AUC),

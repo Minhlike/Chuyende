@@ -3,7 +3,7 @@
 Kiểm tra chấp nhận tự động: Kiểm tra tính chẵn lẻ bằng chứng thô giai đoạn A2
 Xác minh tính chẵn lẻ chính xác 100% giữa các tệp bằng chứng ảnh chụp nhanh thô
 (METRICS.json, RUN-STATE.json, CHECKPOINT-INVENTORY.json, TRAIN-LOG.jsonl)
-và các tạo phẩm đối chiếu dẫn xuất (STAGE-A2-FIVE-SEED-RECONCILIATION.json).
+và các artifact đối chiếu dẫn xuất (STAGE-A2-FIVE-SEED-RECONCILIATION.json).
 """
 
 import json
@@ -149,7 +149,7 @@ def test_seed999_authorization_provenance_precedes_run(reconciliation_data):
     recon_seeds = {s["seed"]: s for s in reconciliation_data["seeds"]}
     s999 = recon_seeds[999]
 
-    # Hàm băm cam kết chính xác được yêu cầu
+    # Commit hash chính xác được yêu cầu
     expected_commit = "244e81a576bf49d7a58c7f2c69bbb16fc8e304fe"
     assert s999["authorization_commit"] == expected_commit
 
@@ -160,7 +160,7 @@ def test_seed999_authorization_provenance_precedes_run(reconciliation_data):
     assert run_start.startswith("2026-09-08T16:12:43")
     assert auth_time < run_start, f"Authorization ({auth_time}) must precede run start ({run_start})"
 
-    # Phân loại hạt giống 999 và kiểm tra độ lệch hợp đồng tiềm năng
+    # Phân loại seed 999 và kiểm tra độ lệch hợp đồng tiềm năng
     assert s999["classification"] == "PROTOCOL_DEVIATION"
     assert any("warmup_steps=573" in issue for issue in s999["provenance_issues"])
 

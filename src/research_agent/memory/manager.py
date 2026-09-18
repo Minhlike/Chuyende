@@ -1,5 +1,5 @@
 """
-Trình quản lý bộ nhớ cấp cao & Công cụ tiếp tục nghiên cứu (Dấu nhắc 4, Phần 36..38, 43, 73, 74, ADR-0008)
+Trình quản lý bộ nhớ cấp cao & Công cụ tiếp tục nghiên cứu (Dấu Prompt 4, Phần 36..38, 43, 73, 74, ADR-0008)
 """
 
 import json

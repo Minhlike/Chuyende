@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 """
-Trình phân tích baseline và khai thác điểm chuẩn giai đoạn A2.
+Trình phân tích baseline và bộ khung benchmark giai đoạn A2.
 Đo lường thông lượng triển khai tham chiếu, độ trễ, mức sử dụng GPU/CPU,
 và lập hồ sơ các đường dẫn nóng với trình lược tả cProfile và PyTorch.
 """
@@ -31,7 +31,7 @@ def run_benchmark(fixture_path: Path):
     print("   STAGE A2 BASELINE PERFORMANCE PROFILING & BENCHMARK    ")
     print("==========================================================")
 
-    # 1. Thực thi chủ nghĩa quyết định
+    # 1. Thực thi tính tất định (determinism)
     torch.use_deterministic_algorithms(True)
     if torch.cuda.is_available():
         torch.backends.cudnn.deterministic = True
@@ -40,7 +40,7 @@ def run_benchmark(fixture_path: Path):
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     print(f"Device: {device} ({torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU'})")
 
-    # 2. Vật cố định tải
+    # 2. nạp fixture (load fixture)
     raw_data = json.loads(fixture_path.read_text(encoding="utf-8"))
     print(f"Loaded {len(raw_data)} fixture events from {fixture_path.name}")
 
@@ -52,7 +52,7 @@ def run_benchmark(fixture_path: Path):
     timed_windows = chunk_windows(timed_events, 256)
     profile_windows = chunk_windows(profile_events, 256)
 
-    # 3. Thiết lập người mẫu & huấn luyện viên
+    # 3. Thiết lập Mô hình & bộ huấn luyện (Model & Trainer)
     torch.manual_seed(42)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(42)

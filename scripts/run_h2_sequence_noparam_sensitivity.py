@@ -5,11 +5,11 @@ Quy trình đánh giá độ nhạy không có thông số trình tự H2
 Giao diện: H2_SEQUENCE_NOPARAM_SENSITIVITY
 
 Kiểm tra xem lợi thế về hiệu suất của SEQUENCE_ONLY so với MULTI_VIEW
-là một tạo phẩm của các đầu vào tham số rõ ràng trong Trình tự so với tham số ẩn
+là một artifact của các đầu vào tham số rõ ràng trong Trình tự so với tham số ẩn
 xử lý trong MultiViewRepresentationModel.extract_representation().
 
 Giao thức:
-Đối với Hạt giống trình tự [42, 7, 999]:
+Đối với seed trình tự [42, 7, 999]:
 1. Trích xuất ALL 35.000 Huấn luyện biểu diễn với param_slots=None.
 2. Trích xuất ALL 7.500 biểu diễn xác thực với param_slots=None.
 3. Lắp bộ dò (probe) tuyến tính NEW trên biểu diễn MASKED TRAIN (Seed 10007, 50 epoch, AdamW lr=1e-2, wd=1e-4, batch 256).
@@ -113,7 +113,7 @@ def run_sequence_noparam_sensitivity():
         t_va = time.perf_counter() - t0
         print(f"  - Val extracted:   {val_rep.shape} in {t_va:.2f}s", flush=True)
 
-        # Huấn luyện thăm dò tuyến tính trên các biểu diễn Train đeo mặt nạ độc quyền
+        # Huấn luyện probe tuyến tính trên các biểu diễn Train đeo mặt nạ độc quyền
         print(f"[Seed {seed}] Fitting linear probe on MASKED Train representations (Seed 10007)...", flush=True)
         torch.manual_seed(10007)
         np.random.seed(10007)

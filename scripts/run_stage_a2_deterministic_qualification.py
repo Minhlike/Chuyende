@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Người chạy đủ tiêu chuẩn quỹ đạo xác định cho chặng A2 (Giao thức V1.5 / Bản sửa đổi 12).
+trình thực thi (runner) đủ tiêu chuẩn quỹ đạo xác định cho chặng A2 (Giao thức V1.5 / Bản sửa đổi 12).
 NON_EMPIRICAL_TEST_FIXTURE = true
 
-So sánh quỹ đạo đào tạo liên tục trong Quy trình A với quy trình mới độc lập
-quỹ đạo được nối lại checkpoint trong Quy trình B con qua tích lũy độ dốc nhiều bước trên CUDA/CPU,
+So sánh quỹ đạo huấn luyện liên tục trong Quy trình A với quy trình mới độc lập
+quỹ đạo được nối lại checkpoint trong Quy trình B con qua tích lũy gradient nhiều bước trên CUDA/CPU,
 xác minh chính xác danh tính số và cấu trúc:
   1. Tham số mô hình (độ phân kỳ tối đa < 1e-6)
   2. Trạng thái tối ưu hóa (nhận dạng exp_avg, exp_avg_sq)
@@ -60,7 +60,7 @@ def compute_sha256(path: Path, chunk_size: int = 8 * 1024 * 1024) -> str:
     return hasher.hexdigest()
 
 def get_git_commit_info(repo_dir: Optional[Path] = None) -> Tuple[str, str, bool]:
-    """Truy xuất cam kết git, nhánh hiện tại và trạng thái không chính xác của mã thực thi."""
+    """Truy xuất git commit, nhánh hiện tại và trạng thái không chính xác của mã thực thi."""
     cwd = str(repo_dir) if repo_dir else str(DEFAULT_BASE_DIR)
     try:
         commit_sha = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=cwd, text=True).strip()
@@ -229,7 +229,7 @@ def run_worker_resume(checkpoint_path: Path, output_state_path: Path, device: st
     synthetic_windows = generate_synthetic_fixture_stream(num_windows=8, events_per_window=32)
     grad_accum_steps = 2
 
-    # Khởi tạo RNG mới với hạt giống khác trước khi tải checkpoint
+    # Khởi tạo RNG mới với seed khác trước khi tải checkpoint
     random.seed(99999)
     np.random.seed(99999)
     torch.manual_seed(99999)
@@ -677,7 +677,7 @@ def run_qualification(
     qual_path = evidence_dir / "IMPLEMENTATION-QUALIFICATION.json"
     qual_path.write_text(json.dumps(qual_summary, indent=2) + "\n", encoding="utf-8")
 
-    # Tính toán lại giá trị băm của tất cả các tạo phẩm được tạo từ đĩa
+    # Tính toán lại giá trị băm của tất cả các artifact được tạo từ đĩa
     stdout_log_sha256 = compute_sha256(log_path)
     env_sha256 = compute_sha256(env_path)
     resume_sha256 = compute_sha256(resume_path)

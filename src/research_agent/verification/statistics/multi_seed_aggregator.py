@@ -1,5 +1,5 @@
 """
-Bộ tổng hợp nhiều hạt giống & Bộ bảo vệ hái anh đào (Nhắc 6 Phần 42)
+Bộ tổng hợp nhiều seed & Bộ bảo vệ hái anh đào (Nhắc 6 Phần 42)
 """
 
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -10,7 +10,7 @@ from research_agent.verification.statistics.confidence_intervals import Confiden
 
 class MultiSeedAggregator:
     """
-    Tổng hợp các số liệu thử nghiệm trên các hạt giống riêng biệt (K >= 5).
+    Tổng hợp các số liệu thử nghiệm trên các seed riêng biệt (K >= 5).
     Thực thi báo cáo trung bình ± SD hoặc trung vị [IQR] và phát hiện việc chọn anh đào trong các lần chạy đơn lẻ tốt nhất.
     """
 
@@ -53,7 +53,7 @@ class MultiSeedAggregator:
     ) -> Tuple[bool, Optional[str]]:
         """
         BestRunCherryPickingGuard:
-        Kiểm tra xem đại lượng vô hướng đơn được báo cáo có khớp với ONLY lần chạy hạt giống tối đa hay không
+        Kiểm tra xem đại lượng vô hướng đơn được báo cáo có khớp với ONLY lần chạy seed tối đa hay không
         thay vì tóm tắt giá trị trung bình/phân phối.
         """
         arr = np.array(seed_values, dtype=float)

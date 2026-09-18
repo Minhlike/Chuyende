@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Trình trích xuất dạng xem trình tự: Xương sống tuần tự ngữ nghĩa biến đổi
+Trình trích xuất dạng xem trình tự: backbone tuần tự ngữ nghĩa biến đổi
 Triển khai Đặc tả cố định Chương 2 (Phần 2.1 & Bang 2.1) & Hợp đồng Giai đoạn A1:
   - Đường trục biến áp theo ngữ cảnh để mã hóa nhật ký tuần tự (L=4, d=128, H=4, d_ffn=512)
   - Biểu diễn tham số: BOUNDED_MULTI_SLOT_TYPED_PARAMETER_SET_K4 (tối đa 4 vị trí cho mỗi sự kiện)
@@ -54,7 +54,7 @@ class SequenceViewExtractor(nn.Module):
         self.max_param_slots = max_param_slots
         self.max_len = max_len
 
-        # Nhúng Mã Thông Báo & Tham Số (<PAD> = 1, <UNK> = 0, <MASK> = 2)
+        # Nhúng token & Tham Số (<PAD> = 1, <UNK> = 0, <MASK> = 2)
         self.event_embedding = nn.Embedding(event_vocab_size, d_model, padding_idx=1)
         self.param_embedding = nn.Embedding(param_vocab_size, d_model, padding_idx=1)
         self.pos_encoder = PositionalEncoding(d_model, max_len=max_len)
@@ -161,7 +161,7 @@ class SequenceViewExtractor(nn.Module):
     ) -> Dict[str, torch.Tensor]:
         """
         Tính toán các mất mát (loss) SSL của chuỗi (sequence) 3 Chương 2:
-          1. L_MEP trên mep_mask (CrossEntropy trên mã thông báo sự kiện bị che)
+          1. L_MEP trên mep_mask (CrossEntropy trên token sự kiện bị che)
           2. L_MPP trên mpp_mask (CrossEntropy tính trung bình trên các khe tham số hoạt động bị che)
           3. L_time trên các cặp liền kề [h_i ; Nhật ký nhắm mục tiêu h_i+1](1 + delta_t_i,i+1) với Smooth L1
         """

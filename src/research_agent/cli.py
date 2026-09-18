@@ -182,7 +182,7 @@ def main(args: Optional[list] = None):
     refs_subparsers.add_parser("firewall", help="Audit Citation Firewall status across all sources")
     refs_subparsers.add_parser("coverage", help="Display overall reference, ownership, and citation coverage")
 
-    # 3. Trình phân tích bộ nhớ (Nhắc 4)
+    # 3. Trình phân tích bộ nhớ (Prompt 4)
     memory_parser = subparsers.add_parser("memory", help="Long-Term Research Memory operations")
     memory_subparsers = memory_parser.add_subparsers(dest="action", help="Memory actions")
     memory_subparsers.add_parser("status", help="Display memory health and metrics")
@@ -206,7 +206,7 @@ def main(args: Optional[list] = None):
     memory_subparsers.add_parser("validate", help="Validate memory invariants (MQ-01..MQ-15)")
     memory_subparsers.add_parser("state", help="Display canonical research state summary")
 
-    # 4. Trình phân tích cú pháp sơ yếu lý lịch (Nhắc 4 Phần 74)
+    # 4. Trình phân tích cú pháp resume (Prompt 4 Phần 74)
     subparsers.add_parser("resume", help="Continuation bootstrap ContextBundle")
 
     # 5. Trình phân tích cú pháp nghiên cứu
@@ -510,7 +510,7 @@ def main(args: Optional[list] = None):
             sys.exit(0)
 
     # -------------------------------------------------------------
-    # MEMORY SUBCOMMANDS (Dấu nhắc 4)
+    # MEMORY SUBCOMMANDS (Dấu Prompt 4)
     # -------------------------------------------------------------
     elif parsed_args.subcommand == "memory":
         from research_agent.memory.manager import MemoryManager
@@ -702,7 +702,7 @@ def main(args: Optional[list] = None):
             sys.exit(0)
 
     # -------------------------------------------------------------
-    # RESUME BOOTSTRAP COMMAND (Dấu nhắc 4, Mục 74)
+    # RESUME BOOTSTRAP COMMAND (Dấu Prompt 4, Mục 74)
     # -------------------------------------------------------------
     elif parsed_args.subcommand == "resume":
         from research_agent.memory.manager import MemoryManager
@@ -725,7 +725,7 @@ def main(args: Optional[list] = None):
         sys.exit(0)
 
     # -------------------------------------------------------------
-    # RESEARCH STATE COMMAND (Nhắc 4 Mục 73)
+    # RESEARCH STATE COMMAND (Prompt 4 Mục 73)
     # -------------------------------------------------------------
     elif parsed_args.subcommand == "research" and parsed_args.action == "state":
         from research_agent.memory.manager import MemoryManager

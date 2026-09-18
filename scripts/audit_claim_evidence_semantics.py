@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 """
-tập lệnh/audit_claim_evidence_semantics.py
+scripts/audit_claim_evidence_semantics.py
 
 Trình xác minh ngữ nghĩa có thể tái tạo (Vòng 4).
 Kiểm tra tính xác thực ở cấp độ nội dung, ràng buộc parent_text_hash, bộ định vị tự tham chiếu,
 tính nhất quán trong kiểm tra chéo, ngữ nghĩa hỗ trợ và đảm bảo thực thi quyền riêng tư.
 
 Đầu vào:
-  - thí nghiệm/bằng chứng/trích dẫn-kiểm toán/SCIENTIFIC-CLAIM-AUDIT.json
-  - thí nghiệm/bằng chứng/trích dẫn-kiểm toán/SCIENTIFIC-CLAIM-DETECTION.json
-  - thí nghiệm/bằng chứng/trích dẫn-kiểm toán/CLAIM-SOURCE-AUDIT.json
-  - thí nghiệm/bằng chứng/trích dẫn-kiểm toán/EVIDENCE-LOCATOR-AUDIT.json
+  - experiments/bằng chứng/trích dẫn-kiểm toán/SCIENTIFIC-CLAIM-AUDIT.json
+  - experiments/bằng chứng/trích dẫn-kiểm toán/SCIENTIFIC-CLAIM-DETECTION.json
+  - experiments/bằng chứng/trích dẫn-kiểm toán/CLAIM-SOURCE-AUDIT.json
+  - experiments/bằng chứng/trích dẫn-kiểm toán/EVIDENCE-LOCATOR-AUDIT.json
 
 Đầu ra:
-  - thí nghiệm/bằng chứng/trích dẫn-kiểm toán/CLAIM-EVIDENCE-SEMANTIC-AUDIT.json
+  - experiments/bằng chứng/trích dẫn-kiểm toán/CLAIM-EVIDENCE-SEMANTIC-AUDIT.json
 """
 
 import sys, json, re, hashlib

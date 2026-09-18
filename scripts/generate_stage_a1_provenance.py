@@ -63,8 +63,8 @@ def generate_provenance_audit():
             duration = manifest.get("total_duration_sec", 0.0)
             ts_end = (ts_start + duration) if isinstance(ts_start, (int, float)) else "NOT_ATTESTED"
 
-            # Lấy bối cảnh cam kết git chính xác từ dòng thời gian
-            # Chạy 42, 1337 trên HDFS được thực thi theo cam kết 929c481
+            # Lấy bối cảnh git commit chính xác từ dòng thời gian
+            # Chạy 42, 1337 trên HDFS được thực thi theo commit 929c481
             # Chạy 2024, 7 trên HDFS được thực thi dưới 70b6810
             # Chạy 999 HDFS & tất cả các lần chạy BGL được thực thi trong 70b6810/nhánh thực thi đang hoạt động
             if ds == "HDFS" and seed in [42, 1337]:

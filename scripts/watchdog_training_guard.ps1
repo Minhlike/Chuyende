@@ -1,4 +1,4 @@
-# tập lệnh/watchdog_training_guard.ps1
+# scripts/watchdog_training_guard.ps1
 # Giám sát tiến độ luyện tập và bảo vệ nhiệt phần cứng liên tục cho Giai đoạn A2
 
 param (

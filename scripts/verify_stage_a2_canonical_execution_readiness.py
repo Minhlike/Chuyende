@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Tập lệnh xác minh cho Giai đoạn A2 Seed-42 Cổng ủy quyền khởi chạy và sẵn sàng thực hiện theo kinh nghiệm thực tế (Hợp đồng V1.4.1 đã bị khóa).
+script xác minh cho Giai đoạn A2 Seed-42 Cổng ủy quyền khởi chạy và sẵn sàng thực hiện thực nghiệm thực tế (Hợp đồng V1.4.1 đã bị khóa).
 Thực hiện kiểm tra xác minh thực tế cho từng tiêu chí cổng duy nhất.
 
 Đầu ra: STAGE_A2_SEED42_LAUNCH_AUTHORIZED=PASS hoặc FAIL.
@@ -95,7 +95,7 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
     except Exception as e:
         failed_checks.append(f"AUTHORIZATION_GATE_UNEXPECTED_ERROR: {e}")
 
-    # 3. Kiểm tra chế độ thực --tất cả bị cấm
+    # 3. Kiểm tra chế độ thực --all bị cấm
     from scripts.run_stage_a2_five_seed_empirical import main as runner_main
     orig_argv = sys.argv
     sys.argv = ["run_stage_a2_five_seed_empirical.py", "--all", "--authorize-real-empirical-execution"]
@@ -120,7 +120,7 @@ def verify_canonical_readiness(base_dir: Optional[Path] = None):
     else:
         print("[CHECK 5] SEED42_REAL_DIRECTORY_CLEAN = PASS")
 
-    # 5. Đọc cam kết mã thực thi dự kiến từ tạo phẩm hoặc kế hoạch ủy quyền
+    # 5. Đọc commit mã thực thi dự kiến từ artifact hoặc kế hoạch ủy quyền
     auth_p = preexec_dir / "SEED42-LAUNCH-AUTHORIZATION.json"
     plan_p = plans_dir / "STAGE-A2-FIVE-SEED-EXECUTION-PLAN.json"
     expected_code_commit = None

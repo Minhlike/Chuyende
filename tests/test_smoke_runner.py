@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Thử nghiệm máy chạy khói kín CH3
+Thử nghiệm trình thực thi smoke test kín CH3
 Xác minh:
   1. Tường lửa của bộ kiểm tra sẽ tăng TestSetSealedError nếu có bất kỳ nỗ lực nào được thực hiện để truy cập vào phần phân tách TEST.
-  2. Thực hiện kiểm tra khói kín bằng tmp_path và các thiết bị tổng hợp nguyên chất.
+  2. Thực hiện smoke test kín bằng tmp_path và các thiết bị tổng hợp nguyên chất.
   3. Kiểm tra cấp độ 0 thực sự chuyển các tham số hoạt động và gắn cờ các số 0 không mong muốn.
   4. Kiểm tra tiếp tục checkpoint thực sự (Mất bước N+1 và khớp tham số).
-  5. Kiểm tra hồi quy: Chạy pytest có NOT sửa đổi các tạo phẩm khói chuẩn trong thí nghiệm/khói/chạy/.
+  5. Kiểm tra hồi quy: Chạy pytest có NOT sửa đổi các artifact của smoke test chuẩn trong experiments/khói/chạy/.
 """
 
 import os
@@ -36,7 +36,7 @@ def test_01_test_set_firewall_raises_on_test_access():
 
 def test_02_hermetic_synthetic_smoke_pipeline_and_true_resume(tmp_path):
     """
-    Thực hiện đường dẫn khói được cách ly hoàn toàn bên trong tmp_path bằng cách sử dụng các thiết bị dữ liệu tổng hợp.
+    Thực hiện đường dẫn smoke test được cách ly hoàn toàn bên trong tmp_path bằng cách sử dụng các thiết bị dữ liệu tổng hợp.
     Đảm bảo không sửa đổi các thư mục không gian làm việc chuẩn.
     """
     # Tạo thư mục dữ liệu mô phỏng riêng biệt bên trong tmp_path

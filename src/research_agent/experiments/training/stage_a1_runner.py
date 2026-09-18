@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Người chạy đào tạo tự giám sát giai đoạn A1 của Canonical
-Thực hiện đào tạo trước đa tác vụ chỉ theo trình tự trên bộ dữ liệu HDFS và BGL trên 5 hạt giống chính tắc:
+trình thực thi (runner) huấn luyện tự giám sát (self-supervised) giai đoạn A1 của Canonical
+Thực hiện tiền huấn luyện (pretraining) đa tác vụ chỉ theo trình tự trên bộ dữ liệu HDFS và BGL trên 5 seed chính tắc:
   - Kiến trúc: Bộ mã hóa máy biến áp 4 lớp (d_model=128, H=4, d_ffn=512, dropout=0,10, max_seq_len=128)
   - Biểu diễn tham số: BOUNDED_MULTI_SLOT_TYPED_PARAMETER_SET_K4
   - Mục tiêu: L_seq = 1,0 * L_MEP + 1,0 * L_MPP + 0,1 * L_time
@@ -326,7 +326,7 @@ class StageA1Trainer:
             l_time = losses["L_time"]
             total_loss = (self.lambda_MEP * l_mep) + (self.lambda_MPP * l_mpp) + (self.lambda_time * l_time)
             
-            # Mất quy mô để tích lũy độ dốc
+            # Mất quy mô để tích lũy gradient
             loss_accum = total_loss / self.gradient_accumulation_steps
             loss_accum.backward()
 
@@ -337,7 +337,7 @@ class StageA1Trainer:
             micro_step += 1
 
             if micro_step % self.gradient_accumulation_steps == 0 or (batch_idx + 1) == len(self.train_loader):
-                # Cắt bớt độ dốc
+                # Cắt bớt gradient
                 torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=self.clip_norm)
                 
                 # Kiểm tra cổng sức khỏe (NaN/Inf)

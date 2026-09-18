@@ -1,5 +1,5 @@
 """
-Giao diện xác minh và nhập bản đồ quyền sở hữu và tham chiếu (Mục tiêu nhắc 3)
+Giao diện xác minh và nhập bản đồ quyền sở hữu và tham chiếu (Mục tiêu Prompt 3)
 """
 
 import json

@@ -1,11 +1,11 @@
 ﻿# -*- coding: utf-8 -*-
 """
-Khai thác thử nghiệm tương đương số và tối ưu hóa toàn diện cho Giai đoạn A2.
+bộ khung kiểm thử (test harness) tương đương số và tối ưu hóa toàn diện cho Giai đoạn A2.
 So sánh Tham chiếu với forward_event_window và process_group được tối ưu hóa.
 Kiểm tra:
 - Tử số và mẫu số mất
 - L_rel, L_node, L_time, L_graph
-- Độ dốc tham số
+- gradient tham số
 - Giá trị tham số sau optimizer.step()
 - Trạng thái và lịch sử nút
 - Mặt nạ chuỗi RNG
@@ -380,7 +380,7 @@ def run_deep_equivalence_test():
     print(f"Node Out-Degree Match: {ref_states['node_causal_out_degrees'] == opt_states['node_causal_out_degrees']}")
     print(f"Node Timestamps Match: {ref_states['node_last_interaction_timestamps'] == opt_states['node_last_interaction_timestamps']}")
 
-    # 5. Kiểm tra tính tương đương của sơ yếu lý lịch
+    # 5. Kiểm tra tính tương đương khi resume checkpoint (checkpoint resume equivalence)
     print("\n--- RESUME EQUIVALENCE CHECK ---")
     ckpt_ref_p = Path("D:/Research/benchmarks/stage-a2/fixtures/ckpt_ref.pt")
     trainer_ref.save_checkpoint(ckpt_ref_p)

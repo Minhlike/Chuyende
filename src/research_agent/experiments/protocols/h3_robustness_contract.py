@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Hợp đồng thử nghiệm chuẩn H3 & Bộ nhiễu loạn có thể thực thi (P01..P12)
-Triển khai Giao thức về độ mạnh mẽ đông lạnh Chương 2 & Chương 3:
+Triển khai Giao thức về độ bền vững (robustness) đóng băng (frozen) Chương 2 & Chương 3:
   - Chỉ số xếp hạng chính: Độ chính xác trung bình (AP)
   - baseline cơ hội AP nghiêm ngặt: Được xác định bởi tỷ lệ lưu hành mẫu dương tính pi = N_pos / N_total
   - 12 Toán tử nhiễu loạn bảo toàn ngữ nghĩa có thể thực thi hoàn toàn với xác minh bất biến:

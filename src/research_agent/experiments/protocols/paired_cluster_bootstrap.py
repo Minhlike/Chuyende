@@ -2,7 +2,7 @@
 """
 Công cụ Bootstrap cụm được ghép nối với tính toán lại số liệu đầy đủ
 Triển khai Chương 3 Giao thức thống kê được đăng ký trước:
-  - Chính xác B = 2000 mẫu lại, hạt giống chính xác = 10007
+  - Chính xác B = 2000 mẫu lại, seed chính xác = 10007
   - Chỉ số chính: Độ chính xác trung bình (AP), khớp với sklearn.metrics.average_precision_score
   - Hệ mét phụ: Hình thang PR-AUC
   - Tái tạo lại toàn bộ nhóm quan sát mẫu trên mỗi mẫu lại cụm

@@ -13,8 +13,7 @@ from research_agent.interfaces.roadmap_ingestion import RoadmapIngestionService
 
 
 def test_invariant_9_derived_indexes_disposable(temp_workspace: WorkspaceConfig, repository: ResearchRepository, file_store: CanonicalFileStore):
-    """TEST 9: Các chỉ mục và bộ đệm có nguồn gốc có thể bị xóa trong khi cơ sở dữ liệu/tạo phẩm chuẩn vẫn còn nguyên (RC-17)."""
-    # 1. Lưu trữ yêu cầu chính tắc trong DB
+    """TEST 9: Các chỉ mục và bộ đệm có nguồn gốc có thể bị xóa trong khi cơ sở dữ liệu/artifact chuẩn vẫn còn nguyên (RC-17)."""    # 1. Lưu trữ yêu cầu chính tắc trong DB
     claim = Claim(
         claim_id="CLM-000001",
         statement="Log sequences have non-stationary transition dynamics.",

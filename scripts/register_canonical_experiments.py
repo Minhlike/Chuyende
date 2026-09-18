@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Tập lệnh đăng ký thử nghiệm Canonical cho đăng ký trước Chương 3
+script đăng ký thử nghiệm Canonical cho đăng ký trước Chương 3
 Đăng ký EXP-01 đến EXP-06 trong research.db với trạng thái PENDING và không có kết quả ảo giác.
 """
 

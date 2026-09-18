@@ -10,7 +10,7 @@ Mọi số thực nghiệm phải truy nguyên về:
   - git_commit
   - config_hash
   - environment_hash
-  - hạt giống
+  - seed
   - raw_predictions_path / raw_benchmark_log_path
   - computation_script
 Quét và từ chối mọi từ điển kết quả được mã hóa cứng/không có căn cứ.

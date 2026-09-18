@@ -239,7 +239,7 @@ def generate_fig_1_4() -> str:
 
 
 def generate_fig_2_1() -> str:
-    """FIG 2.1: Kiến trúc mặt phẳng kép: Mặt phẳng đào tạo ngoại tuyến và Mặt phẳng suy luận truyền phát trực tuyến."""
+    """FIG 2.1: Kiến trúc mặt phẳng kép: Mặt phẳng huấn luyện ngoại tuyến (Offline Training Plane) và Mặt phẳng suy luận luồng trực tuyến (Online Streaming Inference Plane)."""
     fig, ax = plt.subplots(figsize=(7.2, 5.0), dpi=600)
     ax.set_xlim(0, 100)
     ax.set_ylim(0, 100)

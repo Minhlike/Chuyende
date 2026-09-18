@@ -150,7 +150,7 @@ def test_writing_gate_01_unverified_claim_blocked(test_pipeline_env):
 
 
 def test_writing_gate_02_exaggerated_language_blocked(test_pipeline_env):
-    """TEST-GATE-02: Viết cổng chặn ngôn ngữ nhân quả/ưu việt cho các xác nhận quyền sở hữu DESCRIPTIVE_ONLY."""
+    """TEST-GATE-02: Viết cổng chặn ngôn ngữ nhân quả/ưu việt cho các luận điểm (claim) DESCRIPTIVE_ONLY."""
     claim_bundle_builder = test_pipeline_env["claim_bundle_builder"]
     writing_gate = test_pipeline_env["writing_gate"]
     verified_num = NumericalClaim(

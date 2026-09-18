@@ -2,11 +2,11 @@
 """
 Kiểm tra hồi quy chuẩn cho Giai đoạn A2 RNG Thứ tự khởi tạo và tiếp tục liên tục.
 Chứng minh:
-  1. Khởi tạo hạt giống mới -> các tham số mô hình giống hệt nhau.
-  2. Hạt giống chuẩn khác nhau -> khởi tạo khác nhau.
+  1. Khởi tạo seed mới -> các tham số mô hình giống hệt nhau.
+  2. canonical seed khác nhau -> khởi tạo khác nhau.
   3. Quỹ đạo 2 epoch liên tục khớp với epoch 1 + checkpoint + tiếp tục epoch thứ 2.
-  4. Tính ngẫu nhiên của việc bỏ học được duy trì trong suốt sơ yếu lý lịch mà không cần gieo hạt lại.
-  5. Trạng thái checkpoint RNG là có thẩm quyền; load_checkpoint không được theo sau bởi việc gieo hạt lại.
+  4. Tính ngẫu nhiên của dropout được duy trì xuyên suốt quá trình resume mà không cần reseed.
+  5. Trạng thái checkpoint RNG là có thẩm quyền; load_checkpoint không được theo sau bởi việc reseed.
 """
 
 import sys
@@ -47,7 +47,7 @@ def build_dummy_fixture_events(n_events: int = 16) -> list:
     return events
 
 def test_same_seed_fresh_init_identical_weights():
-    """Xác minh cùng một hạt giống tạo ra các tham số mô hình giống hệt nhau 100%."""
+    """Xác minh cùng một seed tạo ra các tham số mô hình giống hệt nhau 100%."""
     seed = 42
     
     # Bắt đầu 1
@@ -78,7 +78,7 @@ def test_same_seed_fresh_init_identical_weights():
         assert torch.equal(p1, p2), f"Parameter mismatch for {n1}"
 
 def test_different_seed_fresh_init_different_weights():
-    """Xác minh các hạt giống chuẩn khác nhau tạo ra các thông số mô hình khác nhau."""
+    """Xác minh các seed chuẩn khác nhau tạo ra các thông số mô hình khác nhau."""
     seeds = [42, 1337]
     models = []
     for s in seeds:
@@ -106,7 +106,7 @@ def test_after_load_checkpoint_no_reseed(tmp_path):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     seed = 42
     
-    # Người mẫu & huấn luyện viên ban đầu
+    # Mô hình & bộ huấn luyện (Model & Trainer) ban đầu
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -134,7 +134,7 @@ def test_after_load_checkpoint_no_reseed(tmp_path):
     # Nâng cao trạng thái RNG hơn nữa
     val_after_advance = torch.randn(5)
     
-    # Tải checkpoint trong huấn luyện viên mới
+    # Tải checkpoint trong bộ huấn luyện (trainer) mới
     model2 = TemporalGraphViewEncoder(
         d_node=128, d_edge=64, d_msg=128, n_heads=4,
         d_time_proj=32, d_rel_emb=32, d_type_emb=32,
@@ -148,7 +148,7 @@ def test_after_load_checkpoint_no_reseed(tmp_path):
     
     trainer2.load_checkpoint(ckpt_p)
     
-    # Lấy mẫu lại từ trainer2 mà không gieo hạt lại
+    # Lấy mẫu lại từ trainer2 mà không reseed
     val_from_restored = torch.randn(5)
     
     # Cả hai phải giống hệt nhau vì RNG đã được khôi phục chính xác
@@ -166,7 +166,7 @@ def test_runner_resume_trajectory_continuity(tmp_path):
     seed = 42
     events = build_dummy_fixture_events(16)
     
-    # 1. Chạy đào tạo 2 giai đoạn liên tục
+    # 1. Chạy huấn luyện 2 giai đoạn liên tục
     cont_root = tmp_path / "continuous"
     res_cont = run_single_seed_pipeline(
         seed=seed,
@@ -231,7 +231,7 @@ def test_runner_resume_trajectory_continuity(tmp_path):
 
 def test_dropout_covered_proves_no_post_resume_reseed():
     """
-    Kiểm tra rõ ràng quỹ đạo lấy mẫu Bỏ học (p=0,5) trong sơ yếu lý lịch
+    Kiểm tra rõ ràng quỹ đạo lấy mẫu Dropout (p=0,5) khi resume checkpoint
     không được thiết lập lại về trạng thái ban đầu.
     """
     dropout = torch.nn.Dropout(p=0.5)
@@ -248,8 +248,8 @@ def test_dropout_covered_proves_no_post_resume_reseed():
     out1_rep = dropout(x)
     saved_rng = torch.get_rng_state()
     
-    # Trong mã cũ xấu, ai đó có thể gieo hạt lại bằng torch.manual_seed(42)
-    # Nhưng với mã chính xác, chúng tôi khôi phục saved_rng mà không cần gieo hạt lại:
+    # Trong mã cũ xấu, ai đó có thể reseed bằng torch.manual_seed(42)
+    # Nhưng với mã chính xác, chúng tôi khôi phục saved_rng mà không cần reseed:
     torch.set_rng_state(saved_rng)
     out2_rep = dropout(x)
     

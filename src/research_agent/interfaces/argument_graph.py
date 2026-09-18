@@ -18,7 +18,7 @@ class ArgumentGraph:
         self.repo = repository
 
     def add_node(self, claim_id: str, role: str = "PREMISE", summary: str = "") -> ArgumentNode:
-        """Thêm nút đối số được liên kết với xác nhận quyền sở hữu chính tắc."""
+        """Thêm nút đối số được liên kết với luận điểm (claim) chính tắc."""
         claim = self.repo.get_claim(claim_id)
         if not claim:
             raise EntityNotFoundError(f"Claim '{claim_id}' does not exist.")

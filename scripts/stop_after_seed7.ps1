@@ -1,8 +1,8 @@
-# tập lệnh/stop_after_seed7.ps1
+# scripts/stop_after_seed7.ps1
 # Màn hình chạy Seed 7 Multi-View:
 # 1. Nếu RUN-MANIFEST.json xuất hiện một cách tự nhiên (dừng sớm (early stopping)), hãy dừng quá trình để Seed 999 bị bỏ qua.
 # 2. Nếu đồng hồ vượt qua 17:00:00, hãy đợi epoch đang diễn ra hiện tại kết thúc checkpoint của nó,
-# sau đó dừng đào tạo, chạy finalize_multiview_checkpoint.py và để PC ở trạng thái hoạt động.
+# sau đó dừng huấn luyện, chạy finalize_multiview_checkpoint.py và để PC ở trạng thái hoạt động.
 
 $targetDir = "D:\Research\experiments\nineplus\confirmatory\CONF_MULTI_VIEW_ALIGNED_seed7_1789452137"
 $manifest = "$targetDir\RUN-MANIFEST.json"

@@ -138,7 +138,7 @@ def test_mem_04_generated_summary_not_external_evidence(test_env):
         tier=MemoryTier.M2_SEMANTIC,
         topic="LogBERT superiority",
         summary="LogBERT outperforms all prior methods across all logs.",
-        ownership=IntellectualOwnership.SOURCE,  # Xác nhận quyền sở hữu SOURCE mà không cần tham khảo
+        ownership=IntellectualOwnership.SOURCE,  # luận điểm (claim) SOURCE mà không cần tham khảo
         is_generated_summary=True,
         associated_entity_ids=[],
     )
@@ -452,7 +452,7 @@ def test_mem_16_stale_record_audit(test_env):
 
 
 # ----------------------------------------------------------------------
-# TEST-MEM-17: Việc truyền tải tác động rút lại nguồn xác định các xác nhận quyền sở hữu bị ảnh hưởng
+# TEST-MEM-17: Việc truyền tải tác động rút lại nguồn xác định các luận điểm (claim) bị ảnh hưởng
 # ----------------------------------------------------------------------
 def test_mem_17_source_retraction_impact_traversal(test_env):
     mgr = test_env["mgr"]
@@ -522,7 +522,7 @@ def test_mem_19_retrieval_score_distinct_from_evidence_strength(test_env):
         source_id="SRC-000003",
         locator="Section 3.1",
         exact_quote="DeepLog utilizes LSTM.",
-        strength=EvidenceStrength.STRONG,  # Sức mạnh phân loại kinh điển
+        strength=EvidenceStrength.STRONG,  # Độ mạnh phân loại chuẩn (canonical categorical strength)
     )
     mgr.repo.save_source(src)
     mgr.repo.save_evidence(evd)

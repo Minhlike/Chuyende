@@ -46,7 +46,7 @@ class TimeProjection(nn.Module):
 
 class TemporalGraphViewEncoder(nn.Module):
     """
-    Bộ mã hóa chế độ xem biểu đồ tạm thời sử dụng bộ nhớ động GRUCell, Chú ý nhiều đầu theo thời gian,
+    Bộ mã hóa góc nhìn (view) biểu đồ tạm thời sử dụng bộ nhớ động GRUCell, Chú ý nhiều đầu theo thời gian,
     và các đầu phụ trợ tự giám sát đa nhiệm.
     """
     def __init__(

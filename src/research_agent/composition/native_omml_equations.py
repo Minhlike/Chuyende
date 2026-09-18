@@ -7,7 +7,7 @@ from docx.oxml import parse_xml
 from docx.oxml.ns import nsdecls
 
 def make_evidence_space_omml():
-    """OMML gốc cho tập hợp con Y {0, 1}^{|T|} sử dụng kiểu tập lệnh trên ASCII Y và T."""
+    """OMML gốc cho tập hợp con Y {0, 1}^{|T|} sử dụng kiểu script trên ASCII Y và T."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>Y</m:t></m:r>\n'

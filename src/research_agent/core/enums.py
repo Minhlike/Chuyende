@@ -6,7 +6,7 @@ from enum import Enum
 
 
 class ClaimType(str, Enum):
-    """Các loại xác nhận quyền sở hữu chuẩn (RC-05)."""
+    """Các loại luận điểm (claim) chuẩn (RC-05)."""
     SOURCE_FACT = "SOURCE_FACT"
     SOURCE_CLAIM = "SOURCE_CLAIM"
     SYNTHESIS = "SYNTHESIS"
@@ -88,7 +88,7 @@ class SupportType(str, Enum):
 
 
 class EvidenceStrength(str, Enum):
-    """Sức mạnh phân loại của ràng buộc bằng chứng (Phần 11)."""
+    """Độ mạnh phân loại của ràng buộc bằng chứng (Phần 11)."""
     STRONG = "STRONG"
     MODERATE = "MODERATE"
     WEAK = "WEAK"
@@ -144,7 +144,7 @@ class VerificationStatus(str, Enum):
 
 
 class MemoryTier(str, Enum):
-    """Kiến trúc bộ nhớ nghiên cứu 6 tầng Canonical (Lời nhắc 4 Phần 5)."""
+    """Kiến trúc bộ nhớ nghiên cứu 6 tầng Canonical (Lời Prompt 4 Phần 5)."""
     M0_WORKING = "M0_WORKING"
     M1_SOURCE = "M1_SOURCE"
     M2_SEMANTIC = "M2_SEMANTIC"
@@ -154,7 +154,7 @@ class MemoryTier(str, Enum):
 
 
 class MemoryRecordType(str, Enum):
-    """Đã đánh máy Danh mục bản ghi bộ nhớ nghiên cứu (Nhắc 4 Phần 6)."""
+    """Đã đánh máy Danh mục bản ghi bộ nhớ nghiên cứu (Prompt 4 Phần 6)."""
     FACT_REFERENCE = "FACT_REFERENCE"
     CLAIM_REFERENCE = "CLAIM_REFERENCE"
     EVIDENCE_REFERENCE = "EVIDENCE_REFERENCE"
@@ -175,7 +175,7 @@ class MemoryRecordType(str, Enum):
 
 
 class MemoryPromotionState(str, Enum):
-    """Các trạng thái vòng đời hợp nhất bộ nhớ (Lời nhắc 4 Phần 13)."""
+    """Các trạng thái vòng đời hợp nhất bộ nhớ (Lời Prompt 4 Phần 13)."""
     CAPTURED = "CAPTURED"
     CLASSIFIED = "CLASSIFIED"
     VALIDATED = "VALIDATED"
@@ -185,7 +185,7 @@ class MemoryPromotionState(str, Enum):
 
 
 class DecisionStatus(str, Enum):
-    """Trạng thái quyết định về kiến ​​trúc và nghiên cứu (Nhắc 4 Phần 31)."""
+    """Trạng thái quyết định về kiến ​​trúc và nghiên cứu (Prompt 4 Phần 31)."""
     ACTIVE = "ACTIVE"
     ACCEPTED = "ACCEPTED"
     SUPERSEDED = "SUPERSEDED"
@@ -196,7 +196,7 @@ class DecisionStatus(str, Enum):
 
 
 class OpenQuestionStatus(str, Enum):
-    """Các trạng thái vòng đời của câu hỏi nghiên cứu mở (Lời nhắc 4 Phần 32)."""
+    """Các trạng thái vòng đời của câu hỏi nghiên cứu mở (Lời Prompt 4 Phần 32)."""
     OPEN = "OPEN"
     INVESTIGATING = "INVESTIGATING"
     RESOLVED = "RESOLVED"
@@ -205,7 +205,7 @@ class OpenQuestionStatus(str, Enum):
 
 
 class EpisodeStatus(str, Enum):
-    """Trạng thái vòng đời sự kiện theo từng giai đoạn (Lời nhắc 4 Phần 5)."""
+    """Trạng thái vòng đời sự kiện theo từng giai đoạn (Lời Prompt 4 Phần 5)."""
     COMPLETED = "COMPLETED"
     FAILED = "FAILED"
     ABORTED = "ABORTED"
@@ -213,7 +213,7 @@ class EpisodeStatus(str, Enum):
 
 
 class SkillStatus(str, Enum):
-    """Trạng thái Vòng đời Kỹ năng Thủ tục (Nhắc 4 Phần 35)."""
+    """Trạng thái Vòng đời Kỹ năng Thủ tục (Prompt 4 Phần 35)."""
     DRAFT = "DRAFT"
     ACTIVE = "ACTIVE"
     DEPRECATED = "DEPRECATED"
@@ -221,7 +221,7 @@ class SkillStatus(str, Enum):
 
 
 class QueryIntentType(str, Enum):
-    """Phân loại mục đích truy xuất kết hợp (Nhắc 4 Phần 21)."""
+    """Phân loại mục đích truy xuất kết hợp (Prompt 4 Phần 21)."""
     SOURCE_LOOKUP = "SOURCE_LOOKUP"
     CLAIM_LOOKUP = "CLAIM_LOOKUP"
     EVIDENCE_LOOKUP = "EVIDENCE_LOOKUP"
@@ -239,7 +239,7 @@ class QueryIntentType(str, Enum):
 
 
 class PrivacyClassification(str, Enum):
-    """Nghiên cứu ranh giới quyền riêng tư và truy cập bộ nhớ (Lời nhắc 4 Phần 48)."""
+    """Nghiên cứu ranh giới quyền riêng tư và truy cập bộ nhớ (Lời Prompt 4 Phần 48)."""
     PUBLIC = "PUBLIC"
     INTERNAL = "INTERNAL"
     SENSITIVE = "SENSITIVE"
@@ -256,7 +256,7 @@ class ExperimentStatus(str, Enum):
 
 
 class ArtifactCategory(str, Enum):
-    """Danh mục tạo phẩm (artifact) kinh điển."""
+    """Danh mục artifact kinh điển."""
     EQUATION = "EQUATION"
     TABLE = "TABLE"
     FIGURE = "FIGURE"

@@ -1,25 +1,25 @@
 # -*- coding: utf-8 -*-
 """
-Người chạy thử nghiệm sơ bộ theo kinh nghiệm năm hạt giống Canonical cho Giai đoạn A2 (Hợp đồng V1.4.1 / V1.5 đã bị khóa).
+trình thực thi (runner) thử nghiệm sơ bộ thực nghiệm 5 seed Canonical cho Giai đoạn A2 (Hợp đồng V1.4.1 / V1.5 đã bị khóa).
 Bộ dữ liệu: HDFS (SPL-HDFS-001 Cơ quan phân chia Canonical)
-Phạm vi thực thi được ủy quyền: 35.000 phiên đào tạo (586.577 sự kiện) | 7.500 phiên Val (119.531 sự kiện)
-Hạt giống kinh điển: [42, 1337, 2024, 7, 999]
+Phạm vi thực thi được ủy quyền: 35.000 phiên huấn luyện (586.577 sự kiện) | 7.500 phiên Val (119.531 sự kiện)
+canonical seed: [42, 1337, 2024, 7, 999]
 
 Cách sử dụng:
-  # Xác thực chạy thử trên tất cả 5 hạt giống (thực hiện 0 bước tối ưu hóa):
-  tập lệnh python/run_stage_a2_five_seed_empirical.py --all --dry-run
+  # Xác thực chạy thử trên tất cả 5 seed (thực hiện 0 bước tối ưu hóa):
+  python scripts/run_stage_a2_five_seed_empirical.py --all --dry-run
 
-  # Chạy khô một hạt:
-  tập lệnh python/run_stage_a2_five_seed_empirical.py --seed 42 --dry-run
+  # dry-run cho một seed:
+  python scripts/run_stage_a2_five_seed_empirical.py --seed 42 --dry-run
 
   # Tiếp tục quá trình chạy bị gián đoạn từ checkpoint:
-  tập lệnh python/run_stage_a2_five_seed_empirical.py --seed 42 --resume .artifacts/stage-a2/HDFS/seed-42/last_checkpoint.pt --authorize-real-empirical-execution
+  python scripts/run_stage_a2_five_seed_empirical.py --seed 42 --resume .artifacts/stage-a2/HDFS/seed-42/last_checkpoint.pt --authorize-real-empirical-execution
 
-  # Đào tạo theo kinh nghiệm thực tế (Yêu cầu ủy quyền rõ ràng, được thực hiện tuần tự từng hạt giống một):
-  tập lệnh python/run_stage_a2_five_seed_empirical.py --seed 42 --authorize-real-theo kinh nghiệm-thực thi
+  # Huấn luyện thực nghiệm thực tế (Yêu cầu ủy quyền rõ ràng, được thực hiện tuần tự từng seed một):
+  python scripts/run_stage_a2_five_seed_empirical.py --seed 42 --authorize-real-empirical-execution
 
   # Google Colab/Đa nền tảng với root Google Drive bền bỉ:
-  tập lệnh python/run_stage_a2_five_seed_empirical.py --seed 42 --base-dir /content/Research --dataset-path /content/stage-a2-data/HDFS_1.tar.gz --durable-root /content/drive/MyDrive/Chuyende-stage-a2/runs --plan Experiment/plans/STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json --dry-run
+  python scripts/run_stage_a2_five_seed_empirical.py --seed 42 --base-dir /content/Research --dataset-path /content/stage-a2-data/HDFS_1.tar.gz --durable-root /content/drive/MyDrive/Chuyende-stage-a2/runs --plan experiments/plans/STAGE-A2-FIVE-SEED-EXECUTION-PLAN-V1.5.json --dry-run
 """
 
 import os
@@ -71,7 +71,7 @@ VAL_MEMBERSHIP_SHA = "14cf689f9682a354e104463b9f02806629a683dfdf36d72d88daf5b407
 DEFAULT_BASE_DIR = Path(__file__).resolve().parent.parent
 
 class LaunchAuthorizationMissingError(FileNotFoundError):
-    """Xảy ra khi thiếu cấu phần phần mềm ủy quyền khởi chạy bắt buộc để thực thi theo kinh nghiệm thực tế."""
+    """Xảy ra khi thiếu cấu phần phần mềm ủy quyền khởi chạy bắt buộc để thực thi thực nghiệm thực tế."""
     pass
 
 class ExistingRunArtifactError(RuntimeError):
@@ -79,7 +79,7 @@ class ExistingRunArtifactError(RuntimeError):
     pass
 
 class ResumeCheckpointNotFoundError(FileNotFoundError):
-    """Xảy ra khi tệp checkpoint sơ yếu lý lịch được chỉ định không tồn tại."""
+    """Xảy ra khi tệp checkpoint resume được chỉ định không tồn tại."""
     pass
 
 class CompletedRunResumeError(RuntimeError):
@@ -87,11 +87,11 @@ class CompletedRunResumeError(RuntimeError):
     pass
 
 class CheckpointIntegrityMismatchError(ValueError):
-    """Xảy ra khi checkpoint sơ yếu lý lịch không thực hiện được các bước kiểm tra ràng buộc về mật mã hoặc ngữ nghĩa."""
+    """Xảy ra khi checkpoint resume không thực hiện được các bước kiểm tra ràng buộc về mật mã hoặc ngữ nghĩa."""
     pass
 
 class FrozenSourceMismatchError(RuntimeError):
-    """Xảy ra khi các tệp nguồn thực thi khác với cam kết mã cố định được ủy quyền."""
+    """Xảy ra khi các tệp nguồn thực thi khác với commit mã cố định được ủy quyền."""
     pass
 
 class RuntimeTestFirewallGuard:
@@ -188,7 +188,7 @@ def get_nvidia_driver_version() -> str:
         raise ExecutionDeviceMismatchError(f"FATAL: NVIDIA driver version unavailable via nvidia-smi: {e}")
 
 def get_git_info() -> Tuple[str, str, bool]:
-    """Truy xuất trạng thái cam kết git, chi nhánh và sứ hiện tại."""
+    """Truy xuất git commit, nhánh hiện tại và trạng thái dirty."""
     try:
         commit_sha = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
         branch = subprocess.check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"], text=True).strip()
@@ -204,7 +204,7 @@ def get_git_info() -> Tuple[str, str, bool]:
 def verify_frozen_execution_source(base_dir: Path, expected_commit_sha: str) -> None:
     """
     Xác minh rằng tất cả các tệp mã nguồn liên quan đến việc thực thi đều giống nhau theo byte
-    đến cam kết mã thực thi bị đóng băng dự kiến.
+    đến commit mã thực thi bị đóng băng dự kiến.
     """
     source_paths = [
         "src/research_agent/experiments",
@@ -234,13 +234,13 @@ def verify_preflight(
 ) -> Dict[str, Any]:
     """
     Xác minh nghiêm ngặt trước khi đóng cửa chuyến bay:
-      1. Cây mã nguồn sạch Git và khớp cam kết thực thi bị đóng băng
+      1. Cây mã nguồn sạch Git và khớp commit thực thi bị đóng băng
       2. Khóa giao thức SHA-256 khớp
       3. Khóa môi trường SHA-256 khớp và so sánh thuộc tính thời gian chạy nghiêm ngặt chính xác
       4. Tệp dữ liệu thô SHA-256 khớp
       5. Tư cách thành viên thực thi được tính toán lại thông qua quyền phân chia chuẩn
       6. Xác minh thiết bị CUDA phần cứng
-      7. Xác thực hạt giống chuẩn
+      7. Xác thực canonical seed
       8. Xác thực tường lửa thử nghiệm được kết nối
     """
     print("=================================================================")
@@ -267,7 +267,7 @@ def verify_preflight(
     plan_data = json.loads(plan_p.read_text(encoding="utf-8"))
     is_v15_plan = (plan_data.get("protocol_version") == "1.5.0" or plan_data.get("execution_provider") == "GOOGLE_COLAB")
 
-    # 2. tạo phẩm (artifact) ủy quyền / Độ phân giải mẫu
+    # 2. artifact ủy quyền / Độ phân giải mẫu
     if auth_path:
         auth_p = Path(auth_path).resolve()
         auth_template_p = None
@@ -694,7 +694,7 @@ def run_single_seed_pipeline(
 
     is_resume = (resume_checkpoint is not None)
 
-    # Đối với các lần chạy mới, RNG của khung hạt giống nên trọng số và hoạt động của mô hình ban đầu được xác định bằng hạt giống chuẩn
+    # Đối với các lần chạy mới, RNG của khung seed nên trọng số và hoạt động của mô hình ban đầu được xác định bằng canonical seed
     if not is_resume:
         random.seed(seed)
         np.random.seed(seed)
@@ -702,7 +702,7 @@ def run_single_seed_pipeline(
         if torch.cuda.is_available():
             torch.cuda.manual_seed_all(seed)
 
-    # Khởi tạo kiến trúc mô hình & huấn luyện viên
+    # Khởi tạo kiến trúc mô hình & bộ huấn luyện (trainer)
     model = TemporalGraphViewEncoder(
         d_node=128,
         d_edge=64,
@@ -922,7 +922,7 @@ def run_single_seed_pipeline(
             trainer.stream_cursor = 0
             steps_before = trainer.global_step
 
-            # Đào tạo một epoch
+            # huấn luyện một epoch
             train_stats = trainer.train_one_epoch(train_windows)
             steps_after = trainer.global_step
             delta_steps = steps_after - steps_before
@@ -1259,7 +1259,7 @@ def main():
     auth_path = Path(args.authorization).resolve() if args.authorization else None
     env_lock_path = Path(args.environment_lock).resolve() if args.environment_lock else None
 
-    # Bảo vệ an toàn nghiêm ngặt: --tất cả đều bị nghiêm cấm thực hiện theo kinh nghiệm thực tế
+    # Bảo vệ an toàn nghiêm ngặt: --all đều bị nghiêm cấm thực hiện thực nghiệm thực tế
     if args.all and args.authorize_real_empirical_execution and not args.dry_run:
         raise ValueError("FATAL: --all is strictly prohibited for real empirical execution! Real runs must be executed sequentially one canonical seed at a time.")
 

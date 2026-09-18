@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Trình xác thực tự động cho thử nghiệm/experiment_index.csv
-Xác thực từng bản ghi CSV dựa trên các tạo phẩm JSON nguồn.
+Xác thực từng bản ghi CSV dựa trên các artifact JSON nguồn.
 Thoát với mã 1 nếu có bất kỳ sự khác biệt nào.
 """
 
@@ -104,7 +104,7 @@ def validate_experiment_index(csv_path: str = "experiments/experiment_index.csv"
         elif arch != "MULTI_VIEW_ALIGNED" and arch != m_arch:
             errors.append(f"{prefix} architecture mismatch: CSV={arch} vs JSON={m_arch}")
 
-        # 3. Kiểm tra hạt giống
+        # 3. Kiểm tra seed
         if int(seed_str) != int(m_data.get("seed", -1)):
             errors.append(f"{prefix} seed mismatch: CSV={seed_str} vs JSON={m_data.get('seed')}")
 

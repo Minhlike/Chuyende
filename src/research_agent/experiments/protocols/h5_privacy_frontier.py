@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Hợp đồng thử nghiệm Canonical H5: Khả năng liên kết có kiểm soát & Biên giới Pareto đa đối thủ
-Thực hiện Chương 2 & Chương 3 Giao thức đông lạnh & Bản sửa đổi 4:
+Thực hiện Chương 2 & Chương 3 giao thức đã đóng băng (frozen protocol) & Bản sửa đổi 4:
   - 4 Giao diện tấn công đối thủ có thể thực thi được với nguồn gốc phân chia tàu/Val/thử nghiệm kín:
       1. Xác định lại đối thủ (Huấn luyện tấn công-TRAIN, điều chỉnh tấn công-VAL, đánh giá về cuộc tấn công kín-TEST)
       2. LinkageAdversary (Liên kết AUC & Ưu điểm: 2 * |AUC - 0,5|)
@@ -95,7 +95,7 @@ class ReIdentificationAdversary:
         }
 
     def evaluate(self, embeddings: np.ndarray, entity_labels: np.ndarray) -> Dict[str, float]:
-        """Dự phòng thuận tiện cho các bài kiểm tra tổng hợp chia thành 50% đào tạo, 25% val, 25% kiểm tra."""
+        """Dự phòng thuận tiện cho các bài kiểm tra tổng hợp chia thành 50% huấn luyện, 25% val, 25% kiểm tra."""
         n = len(embeddings)
         n_train = n // 2
         n_val = n // 4

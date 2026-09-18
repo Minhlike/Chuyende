@@ -13,7 +13,7 @@ from research_agent.verification.statistics.confidence_intervals import Confiden
 class HypothesisTestingEngine:
     """
     Thực hiện kiểm tra giả thuyết chính thức với các đánh giá giả định:
-    - Xếp hạng t-test của Học sinh được ghép đôi / Xếp hạng có chữ ký của Wilcoxon (hạt giống/chủ nhà phù hợp)
+    - Xếp hạng kiểm định t của Student được ghép đôi / Xếp hạng có chữ ký của Wilcoxon (seed/chủ nhà phù hợp)
     - T-test hai mẫu độc lập / Mann-Whitney U (không khớp)
     - Kiểm tra hoán vị
     """
@@ -30,7 +30,7 @@ class HypothesisTestingEngine:
         sample_unit: str = "Seed Run",
         alpha: float = 0.05,
     ) -> StatisticalResult:
-        """Chạy thử nghiệm ghép đôi so sánh OURS với baseline trên các hạt giống phù hợp."""
+        """Chạy thử nghiệm ghép đôi so sánh OURS với baseline trên các seed phù hợp."""
         a = np.array(group_ours, dtype=float)
         b = np.array(group_baseline, dtype=float)
 

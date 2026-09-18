@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Tập lệnh kiểm tra giao thức cuối cùng và khóa baseline
+script kiểm tra giao thức cuối cùng và khóa baseline
 Áp dụng tất cả 10 bản sửa lỗi kiểm tra từ lần kiểm tra đăng ký trước cuối cùng.
 """
 

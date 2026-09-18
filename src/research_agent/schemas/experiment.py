@@ -10,7 +10,7 @@ from research_agent.core.identifiers import EntityPrefix, format_stable_id
 
 
 class ExperimentArtifact(BaseModel):
-    """tạo phẩm (artifact) đầu ra được tạo bởi ExperimentRun."""
+    """artifact đầu ra được tạo bởi ExperimentRun."""
     artifact_id: str = Field(description="Stable ID: e.g. SRA-000001 or ART-000001")
     run_id: str = Field(description="Parent Experiment Run ID: RUN-000001")
     file_path: str = Field(description="Relative path within experiments/runs/")

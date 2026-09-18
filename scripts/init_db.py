@@ -1,5 +1,5 @@
 """
-Tập lệnh khởi tạo cơ sở dữ liệu
+script khởi tạo cơ sở dữ liệu
 """
 
 import sys

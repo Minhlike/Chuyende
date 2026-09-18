@@ -1,5 +1,5 @@
-# tập lệnh/status_stage_a2_local_seed.ps1
-# Trình kiểm tra trạng thái cho Thực thi hạt giống A2 ở giai đoạn cục bộ
+# scripts/status_stage_a2_local_seed.ps1
+# Trình kiểm tra trạng thái cho Thực thi seed A2 ở giai đoạn cục bộ
 
 param (
     [Parameter(Mandatory = $true)]

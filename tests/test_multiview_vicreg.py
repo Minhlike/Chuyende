@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Các bài kiểm tra tương ứng nhiều chế độ xem VICReg và mỗi mẫu
+Các bài kiểm tra tương ứng đa góc nhìn (multi-view) VICReg và mỗi mẫu
 Xác minh:
-  1. Cách ly phạm vi bộ nhớ nhiều chế độ xem: Biểu diễn mẫu B là bất biến cho dù được đánh giá một mình hay sau mẫu A không liên quan.
+  1. Cách ly phạm vi bộ nhớ đa góc nhìn (multi-view): Biểu diễn mẫu B là bất biến cho dù được đánh giá một mình hay sau mẫu A không liên quan.
   2. Sự tương ứng trên mỗi mẫu: Hai mẫu biểu đồ riêng biệt trong cùng một lô tạo ra hai phần nhúng biểu đồ riêng biệt.
-  3. Tối ưu hóa mất mát (loss) VICreg hàng loạt thực với độ dốc khác 0.
+  3. Tối ưu hóa mất mát (loss) VICreg hàng loạt thực với gradient khác 0.
 """
 
 import pytest

@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Đường ống cắt bỏ mặt nạ đầu vào đông lạnh H1
+pipeline loại trừ mặt nạ (masking ablation) đầu vào đóng băng (frozen) H1
 Giao thức: FROZEN_INPUT_MASKING_ABLATION
 
-Đánh giá các xương sống SEQUENCE_ONLY được đông lạnh giống hệt nhau (Hạt 42, 7, 999)
+Đánh giá các backbone SEQUENCE_ONLY được đóng băng (frozen) giống hệt nhau (Seed 42, 7, 999)
 với thông số đầu vào PRESENT (param_slots=params) so với MASKED (param_slots=None).
 
 Suy luận được phép:
 Các khe tham số động đóng góp thông tin được sử dụng bởi biểu diễn cố định đã học.
 
 Cấm suy luận:
-Đào tạo nhận biết tham số được chứng minh là vượt trội so với mô hình chỉ có mẫu được đào tạo riêng biệt.
+Huấn luyện nhận biết tham số được chứng minh là vượt trội so với mô hình chỉ có mẫu được huấn luyện riêng biệt.
 """
 
 import json
@@ -101,7 +101,7 @@ def run_ablation():
         mean_l2_dist = float(l2_dist.mean().item())
 
         # 3. Đánh giá hạ nguồn (downstream) của thăm dò đã được huấn luyện trên các biểu diễn bị che
-        # bộ dò (probe) tải được đào tạo về biểu diễn Train với hạt giống 10007
+        # probe được nạp được huấn luyện về biểu diễn Train với seed 10007
         train_rep_p = BASE_DIR / "experiments" / "nineplus" / "evaluation_v3" / run_id / "train_rep.pt"
         train_rep = torch.load(train_rep_p, map_location=dev, weights_only=False)
         y_train = torch.tensor(torch.load(vault_dir / "hdfs_probe_labels_train.pt", weights_only=False)["labels"], dtype=torch.float32, device=dev)

@@ -88,7 +88,7 @@ class ClaimExtractor:
         return [c.strip() for c in clauses if c.strip()]
 
     def _extract_scope(self, text: str) -> ClaimScope:
-        """Trích xuất các tham số tập dữ liệu, tên miền, số liệu và thử nghiệm giới hạn xác nhận quyền sở hữu."""
+        """Trích xuất các tham số tập dữ liệu, tên miền, số liệu và thử nghiệm giới hạn luận điểm (claim)."""
         scope = ClaimScope()
         t_lower = text.lower()
 

@@ -490,7 +490,7 @@ def draw_fig_2_3(canvas_raw: Any):
 
 def draw_fig_2_4(canvas_raw: Any):
     """
-    Vẽ FIG 2.4: Căn chỉnh nhiều chế độ xem, Chính quy hóa chống thu gọn & Học cách biểu diễn thống nhất
+    Vẽ FIG 2.4: Căn chỉnh đa góc nhìn (multi-view), Chính quy hóa chống thu gọn & Học cách biểu diễn thống nhất
     Có thể chỉnh sửa Word Shapes Vẽ Canvas.
     """
     canvas = canvas_raw
@@ -576,7 +576,7 @@ def draw_fig_2_4(canvas_raw: Any):
         all_names.append(connector.Name)
 
     # Các mục canvas không hiển thị ShapeRange.Distribute API đáng tin cậy.  các
-    # tập lệnh thay thế sản xuất xây dựng con số này ở cấp độ tài liệu,
+    # script thay thế sản xuất xây dựng con số này ở cấp độ tài liệu,
     # nơi có sẵn các API nhóm và lưới ShapeRange của Word.
 
 

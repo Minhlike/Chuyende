@@ -176,7 +176,7 @@ def test_validation_mask_fixed_across_epochs():
     
     # Xác thực epoch 1
     val1 = trainer.validate_one_epoch([events])
-    # Xác thực Epoch 2 (sau khi đào tạo mô phỏng)
+    # Xác thực Epoch 2 (sau khi huấn luyện mô phỏng)
     val2 = trainer.validate_one_epoch([events])
     
     assert val1["rel_target_count"] == val2["rel_target_count"]
@@ -192,7 +192,7 @@ def test_validation_mask_independent_from_training_rng():
     # Xác thực ban đầu
     v0 = trainer.validate_one_epoch(val_stream)
     
-    # Chạy một số bước đào tạo tùy ý để nâng cao đào tạo RNG
+    # Chạy một số bước huấn luyện tùy ý để nâng cao huấn luyện RNG
     train_stream = [[create_synthetic_event("A", "B", 1, 0, 1, 50.0)] for _ in range(20)]
     trainer.train_one_epoch(train_stream)
     
@@ -333,7 +333,7 @@ def test_group_objective_time_denominator_exact():
     assert abs(stats["loss_time"] - expected_time) < 1e-6
 
 def test_partial_group_gradient_matches_manual_reference():
-    """Xác minh rằng process_group tạo ra vật kính nhóm thủ công phù hợp với độ dốc chính xác."""
+    """Xác minh rằng process_group tạo ra vật kính nhóm thủ công phù hợp với gradient chính xác."""
     torch.manual_seed(100)
     model1 = TemporalGraphViewEncoder()
     model2 = TemporalGraphViewEncoder()
@@ -1160,7 +1160,7 @@ def test_local_evidence_status_requires_local_file_and_hash():
 # ---------------------------------------------------------------------------
 
 def test_runner_has_no_required_windows_drive_path():
-    """Xác minh người chạy giải quyết gốc kho lưu trữ một cách linh hoạt và không có mã cứng ổ đĩa Windows bắt buộc."""
+    """Xác minh trình thực thi (runner) giải quyết gốc kho lưu trữ một cách linh hoạt và không hardcode ổ đĩa Windows bắt buộc."""
     from scripts.run_stage_a2_five_seed_empirical import DEFAULT_BASE_DIR
     assert isinstance(DEFAULT_BASE_DIR, Path)
     assert DEFAULT_BASE_DIR.exists()
@@ -1245,7 +1245,7 @@ def test_incomplete_epoch_resumes_from_last_completed_boundary(tmp_path):
     assert new_trainer.global_step == 573
 
 def test_colab_runtime_environment_lock_generation(tmp_path):
-    """Xác minh tập lệnh bootstrap tạo lược đồ khóa ứng viên hợp lệ."""
+    """Xác minh script bootstrap tạo lược đồ khóa ứng viên hợp lệ."""
     from scripts.bootstrap_stage_a2_colab import run_bootstrap
     
     out_env_p = tmp_path / "STAGE-A2-COLAB-EXECUTION-ENVIRONMENT-V1.5.json"
@@ -1353,14 +1353,14 @@ def test_requirements_txt_not_referenced_by_colab_notebook():
     assert "install" in all_source and "-e" in all_source and "." in all_source
 
 def test_dependency_install_is_fail_closed():
-    """Xác minh sổ ghi chép sử dụng check=True cho pip install -e . không có dự phòng im lặng."""
+    """Xác minh notebook sử dụng check=True cho pip install -e . không có dự phòng im lặng."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell4_src = "".join(nb_data["cells"][4]["source"])
     assert "check=True" in cell4_src
 
 def test_approved_commit_must_be_exact_sha():
-    """Xác minh sổ ghi chép thực thi kiểm tra cam kết hex 40 ký tự chính xác."""
+    """Xác minh notebook thực thi kiểm tra commit hex 40 ký tự chính xác."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell3_src = "".join(nb_data["cells"][3]["source"])
@@ -1368,7 +1368,7 @@ def test_approved_commit_must_be_exact_sha():
     assert "re.match" in cell3_src
 
 def test_placeholder_commit_aborts():
-    """Xác minh cam kết giữ chỗ khiến quá trình xác thực bị hủy bỏ."""
+    """Xác minh placeholder commit khiến quá trình xác thực bị hủy bỏ."""
     placeholder = "<supplied-after-independent-review>"
     is_invalid = (not placeholder or "<" in placeholder or len(placeholder.strip()) != 40)
     assert is_invalid is True
@@ -1657,7 +1657,7 @@ def test_qualification_artifacts_mirrored_to_drive_with_sha_equality(tmp_path):
     assert manifest_data["artifacts_count"] == 7
 
 def test_colab_notebook_has_no_real_training_cell():
-    """Xác minh STAGE-A2-COLAB-V1.5.ipynb xem NOT có chứa ô ủy quyền đào tạo thực hay không."""
+    """Xác minh STAGE-A2-COLAB-V1.5.ipynb xem NOT có chứa ô ủy quyền huấn luyện thực hay không."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     all_code = " ".join([" ".join(c.get("source", [])) for c in nb_data.get("cells", []) if c.get("cell_type") == "code"])
@@ -2083,7 +2083,7 @@ def test_qualification_uses_fresh_process_subprocess(tmp_path):
     assert resume_data["max_parameter_divergence"] < 1e-6
 
 def test_qualification_evidence_no_committed_git_labels(tmp_path):
-    """Xác minh bảng kê khai bằng chứng cho thấy NOT có chứa nhãn COMMITTED_GIT sai cho các tệp không được cam kết hay không."""
+    """Xác minh bảng kê khai bằng chứng cho thấy NOT có chứa nhãn COMMITTED_GIT sai cho các tệp chưa được commit hay không."""
     from scripts.run_stage_a2_deterministic_qualification import run_qualification
     run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path)
     
@@ -2121,7 +2121,7 @@ def test_qualification_checkpoint_hashed_and_mirrored(tmp_path):
     assert len(ckpt_entries[0]["sha256"]) == 64
 
 def test_qualification_evidence_class_is_non_empirical(tmp_path):
-    """Xác minh các tạo phẩm đủ điều kiện được dán nhãn nghiêm ngặt là NON_EMPIRICAL_TEST_FIXTURE."""
+    """Xác minh các artifact đủ điều kiện được dán nhãn nghiêm ngặt là NON_EMPIRICAL_TEST_FIXTURE."""
     from scripts.run_stage_a2_deterministic_qualification import run_qualification
     run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path)
     
@@ -2163,7 +2163,7 @@ def test_cuda_qualification_requires_environment_lock(tmp_path):
     assert "Environment lock candidate is mandatory for CUDA qualification" in str(exc.value)
 
 def test_cuda_worker_requires_environment_lock(tmp_path):
-    """Xác minh sơ yếu lý lịch nhân viên CUDA không đóng được nếu khóa môi trường là Không có hoặc bị thiếu."""
+    """Xác minh resume worker CUDA không đóng được nếu khóa môi trường là Không có hoặc bị thiếu."""
     from scripts.run_stage_a2_deterministic_qualification import run_worker_resume
     from research_agent.experiments.training.stage_a2_trainer import ExecutionDeviceMismatchError
     if not torch.cuda.is_available():
@@ -2226,7 +2226,7 @@ def test_parent_and_child_bind_same_environment_lock_sha(tmp_path):
     assert resume_data["qualification_status"] == "PASS"
 
 def test_notebook_has_exactly_ten_executable_numbered_cells():
-    """Xác minh sổ ghi chép chứa chính xác mười ô mã thực thi được đánh số CELL 1 đến CELL 10."""
+    """Xác minh notebook chứa chính xác 10 code cell thực thi được đánh số CELL 1 đến CELL 10."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     code_cells = [c for c in nb_data["cells"] if c.get("cell_type") == "code"]
@@ -2306,7 +2306,7 @@ def test_cell10_requires_cell9_runtime_binding():
     assert "'QUALIFICATION_RUN_ID' not in globals()" in cell10_src or '"QUALIFICATION_RUN_ID" not in globals()' in cell10_src
 
 def test_cell10_replays_all_drive_artifact_hashes():
-    """Xác minh Ô 10 tính toán lại và kiểm tra SHA-256 để tìm tất cả các tạo phẩm Drive được phản chiếu."""
+    """Xác minh Ô 10 tính toán lại và kiểm tra SHA-256 để tìm tất cả các artifact Drive được phản chiếu."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell10_src = "".join(nb_data["cells"][10]["source"])
@@ -2398,7 +2398,7 @@ def test_deterministic_framework_state_established_before_verify_preflight(monke
         assert torch.backends.cudnn.benchmark is False
 
 def test_fresh_process_does_not_require_external_wrapper():
-    """Xác minh tập lệnh/run_stage_a2_five_seed_empirical.py thực thi chạy khô trực tiếp trong quy trình con mới."""
+    """Xác minh scripts/run_stage_a2_five_seed_empirical.py thực thi dry-run trực tiếp trong quy trình con mới."""
     cmd = [
         sys.executable,
         str(REPO_ROOT / "scripts" / "run_stage_a2_five_seed_empirical.py"),
@@ -2443,7 +2443,7 @@ def test_cudnn_benchmark_false_before_comparison():
     assert torch.backends.cudnn.benchmark is False
 
 def test_scientific_rng_seeding_semantics_unchanged():
-    """Xác minh chuỗi hạt giống RNG chuẩn tạo ra kết quả đầu ra xác định và dự kiến."""
+    """Xác minh chuỗi RNG seed chuẩn tạo ra kết quả đầu ra xác định và dự kiến."""
     import random
     import numpy as np
     seed = 42
@@ -2454,7 +2454,7 @@ def test_scientific_rng_seeding_semantics_unchanged():
     torch.manual_seed(seed)
     t1 = torch.rand(5)
     
-    # Hạt giống lại
+    # Reseed
     random.seed(seed)
     r2 = random.random()
     np.random.seed(seed)
@@ -2467,7 +2467,7 @@ def test_scientific_rng_seeding_semantics_unchanged():
     assert torch.equal(t1, t2)
 
 def test_qualification_evidence_manifest_has_no_nonexistent_artifact(tmp_path):
-    """Xác minh tiêu chuẩn EVIDENCE-MANIFEST.json chỉ tham chiếu các tạo phẩm thực sự tồn tại."""
+    """Xác minh tiêu chuẩn EVIDENCE-MANIFEST.json chỉ tham chiếu các artifact thực sự tồn tại."""
     from scripts.run_stage_a2_deterministic_qualification import run_qualification
     run_qualification(device_arg="cpu", base_dir=REPO_ROOT, output_dir=tmp_path, env_lock_path=None)
     manifest_p = tmp_path / "EVIDENCE-MANIFEST.json"
@@ -2504,7 +2504,7 @@ def test_every_notebook_code_cell_compiles():
                 pytest.fail(f"Notebook code cell {idx} failed to compile: {e}")
 
 def test_cell8_invokes_empirical_runner_directly():
-    """Xác minh Ô 8 gọi trực tiếp tập lệnh/run_stage_a2_five_seed_empirical.py mà không cần trình bao bọc."""
+    """Xác minh Cell 8 gọi trực tiếp scripts/run_stage_a2_five_seed_empirical.py mà không cần wrapper."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_data = json.loads(nb_p.read_text(encoding="utf-8"))
     cell8_src = "".join(nb_data["cells"][8]["source"])
@@ -2512,7 +2512,7 @@ def test_cell8_invokes_empirical_runner_directly():
     assert "wrapper" not in cell8_src.lower() or "without external wrappers" in cell8_src.lower()
 
 def test_notebook_contains_zero_real_training_authorization_flags():
-    """Xác minh sổ ghi chép không chứa cờ ủy quyền thực thi đào tạo thực sự."""
+    """Xác minh notebook không chứa cờ ủy quyền thực thi huấn luyện thực sự."""
     nb_p = REPO_ROOT / "notebooks" / "STAGE-A2-COLAB-V1.5.ipynb"
     nb_text = nb_p.read_text(encoding="utf-8")
     assert "--authorize-real-empirical-execution" not in nb_text

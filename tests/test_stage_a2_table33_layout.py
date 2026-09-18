@@ -44,20 +44,20 @@ DISPLAY_STOP_REASON = {
 }
 
 EXPECTED_T33_BODY_ALIGNMENTS = [
-    WD_ALIGN_PARAGRAPH.CENTER,  # 0: Hạt giống
+    WD_ALIGN_PARAGRAPH.CENTER,  # 0: seed
     WD_ALIGN_PARAGRAPH.CENTER,  # 1: epoch
     WD_ALIGN_PARAGRAPH.RIGHT,   # 2: Số bước
-    WD_ALIGN_PARAGRAPH.RIGHT,   # 3: Mất tàu
+    WD_ALIGN_PARAGRAPH.RIGHT,   # 3: Train loss
     WD_ALIGN_PARAGRAPH.CENTER,  # 4: Thời đại tốt nhất
     WD_ALIGN_PARAGRAPH.RIGHT,   # 5: Mất giá trị tốt nhất
     WD_ALIGN_PARAGRAPH.RIGHT,   # 6: Val loss cuối
     WD_ALIGN_PARAGRAPH.RIGHT,   # 7: L_rel
     WD_ALIGN_PARAGRAPH.RIGHT,   # 8: L_node
-    WD_ALIGN_PARAGRAPH.RIGHT    # 9: L_thời gian
+    WD_ALIGN_PARAGRAPH.RIGHT    # 9: L_time
 ]
 
 EXPECTED_T34_BODY_ALIGNMENTS = [
-    WD_ALIGN_PARAGRAPH.CENTER,  # 0: Hạt giống
+    WD_ALIGN_PARAGRAPH.CENTER,  # 0: seed
     WD_ALIGN_PARAGRAPH.CENTER,  # 1: Trạng thái hồ sơ
     WD_ALIGN_PARAGRAPH.CENTER   # 2: Lý do kết thúc
 ]
@@ -205,7 +205,7 @@ def test_table33_source_metrics_parity(doc_and_metrics):
     st = source_metrics["seeds_table"]
     ag_dev = source_metrics["aggregates"]["protocol_deviation"]
 
-    # Kiểm tra 5 hạt (hàng 1..5)
+    # Kiểm tra 5 seed (hàng 1..5)
     for i, s in enumerate(st):
         row = table.rows[i + 1]
         cells = [c.text.strip() for c in row.cells]
@@ -247,7 +247,7 @@ def test_table34_source_metrics_parity(doc_and_metrics):
     assert "Trạng thái hồ sơ" in hdr_cells[1] or "Trạng thái" in hdr_cells[1]
     assert hdr_cells[2] == "Lý do kết thúc"
 
-    # Kiểm tra 5 hạt
+    # Kiểm tra 5 seed
     for i, s in enumerate(st):
         row = table.rows[i + 1]
         cells = [c.text.strip() for c in row.cells]

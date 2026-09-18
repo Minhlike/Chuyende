@@ -157,19 +157,19 @@ def soft_break(text: str, chunk_size: int = 8) -> str:
     import re
     # 1. Ngắt nhẹ sau / và \\ trong đường dẫn tệp
     text = text.replace("/", "/\u200b").replace("\\", "\\\u200b")
-    # 2. Chia các băm hex (hơn 32 ký tự hex liên tiếp) thành các khối chunk_size
+    # 2. chia chuỗi hash hex (hơn 32 ký tự hex liên tiếp) thành các khối chunk_size
     def wrap_hex(m):
         h = m.group(0)
         return "\u200b".join([h[i:i+chunk_size] for i in range(0, len(h), chunk_size)])
     text = re.sub(r"[0-9a-fA-F]{32,}", wrap_hex, text)
-    # 3. Nghỉ mềm sau _ trong token snake_case dài
+    # 3. Chèn soft break sau dấu _ trong token snake_case dài
     def wrap_identifier(m):
         tok = m.group(0)
         if len(tok) > 15 and "_" in tok:
             return tok.replace("_", "_\u200b")
         return tok
     text = re.sub(r"[A-Za-z0-9_]+", wrap_identifier, text)
-    # 4. Nghỉ giải lao nhẹ sau - trong token trường hợp kebab dài
+    # 4. Chèn soft break sau dấu - trong token kebab-case dài
     def wrap_kebab(m):
         tok = m.group(0)
         if len(tok) > 18 and "-" in tok:
@@ -584,7 +584,7 @@ def build_chapter_3():
 
     ag_dev = ag["protocol_deviation"]
 
-    # Hàng tổng hợp (3 hạt lệch giao thức)
+    # Hàng tổng hợp (3 seed lệch giao thức (protocol-deviation seeds))
     t3_rows.append([
         "TB lệch thủ tục (3 seed)",
         "-",
@@ -599,16 +599,16 @@ def build_chapter_3():
     ])
 
     t3_body_align = [
-        WD_ALIGN_PARAGRAPH.CENTER,  # Hạt giống
+        WD_ALIGN_PARAGRAPH.CENTER,  # seed
         WD_ALIGN_PARAGRAPH.CENTER,  # epoch
         WD_ALIGN_PARAGRAPH.RIGHT,   # Số bước
-        WD_ALIGN_PARAGRAPH.RIGHT,   # Mất tàu
+        WD_ALIGN_PARAGRAPH.RIGHT,   # Train loss
         WD_ALIGN_PARAGRAPH.CENTER,  # epoch tốt nhất
-        WD_ALIGN_PARAGRAPH.RIGHT,   # Mất val tốt nhất
+        WD_ALIGN_PARAGRAPH.RIGHT,   # Val loss tốt nhất
         WD_ALIGN_PARAGRAPH.RIGHT,   # Val loss cuối
         WD_ALIGN_PARAGRAPH.RIGHT,   # L_rel
         WD_ALIGN_PARAGRAPH.RIGHT,   # L_node
-        WD_ALIGN_PARAGRAPH.RIGHT,   # L_thời gian
+        WD_ALIGN_PARAGRAPH.RIGHT,   # L_time
     ]
 
     insert_thesis_table(

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Hợp đồng thử nghiệm Canonical H1: Độ trung thực ngữ nghĩa của tham số
+Hợp đồng thử nghiệm Canonical H1: Độ chuẩn xác ngữ nghĩa (semantic fidelity) của tham số
 Đánh giá xem liệu biểu diễn tham số động nhận biết bảo mật có bảo toàn thông tin lẫn nhau hay không
-I(z; Y_sec) so với tính trừu tượng chỉ có mẫu trong kiến trúc, phân tách, thăm dò và ngân sách giống hệt nhau.
+I(z; Y_sec) so với trừu tượng hóa chỉ dựa trên mẫu (template-only abstraction) trong kiến trúc, phân tách, thăm dò và ngân sách giống hệt nhau.
 """
 
 from typing import Dict, Any, Optional

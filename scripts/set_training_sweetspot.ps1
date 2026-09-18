@@ -1,6 +1,6 @@
-# tập lệnh/set_training_sweetspot.ps1
-# Định cấu hình phần cứng và sức mạnh của Windows để đào tạo Sweet Spot
-# Mục tiêu: Thời gian chạy Epoch <= 100 phút, không bị đói GPU, quạt im lặng (52C), màn hình tắt sau 20 giây.
+# scripts/set_training_sweetspot.ps1
+# Định cấu hình phần cứng và nguồn điện Windows cho Sweet Spot huấn luyện
+# Mục tiêu: Thời gian chạy Epoch <= 100 phút, GPU không bị thiếu dữ liệu đầu vào (zero GPU starvation), quạt im lặng (52C), màn hình tắt sau 20 giây.
 
 $ErrorActionPreference = "Stop"
 
@@ -35,7 +35,7 @@ powercfg /setdcvalueindex $schemeGuid SUB_PROCESSOR PROCTHROTTLEMIN 60
 powercfg /setacvalueindex $schemeGuid SUB_PROCESSOR PROCTHROTTLEMAX 99
 powercfg /setdcvalueindex $schemeGuid SUB_PROCESSOR PROCTHROTTLEMAX 99
 
-# 7. Chính sách về giấc ngủ và giấc ngủ
+# 7. Chính sách ngủ và đóng nắp máy (sleep and lid policy)
 powercfg /setacvalueindex $schemeGuid SUB_SLEEP STANDBYIDLE 0
 powercfg /setdcvalueindex $schemeGuid SUB_SLEEP STANDBYIDLE 0
 powercfg /setacvalueindex $schemeGuid SUB_BUTTONS LIDACTION 0

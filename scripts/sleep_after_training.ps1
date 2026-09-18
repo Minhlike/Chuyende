@@ -48,7 +48,7 @@ foreach ($m in $manifests) {
     Log-Message "  - $($m.FullName)"
 }
 
-# Khôi phục hồ sơ sức mạnh Sweet Spot
+# Khôi phục cấu hình nguồn điện Sweet Spot
 Log-Message "Restoring Sweet Spot power profile..."
 try {
     & "D:\Research\scripts\set_training_sweetspot.ps1"

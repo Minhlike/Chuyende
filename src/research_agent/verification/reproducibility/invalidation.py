@@ -1,5 +1,5 @@
 """
-Cascader vô hiệu hóa và tính toán lại tạo phẩm (artifact) (Nhắc 6 Mục 88)
+Cascader vô hiệu hóa và tính toán lại artifact (Nhắc 6 Mục 88)
 """
 
 from typing import Dict, List, Set, Tuple

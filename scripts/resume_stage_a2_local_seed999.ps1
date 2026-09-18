@@ -1,4 +1,4 @@
-﻿# tập lệnh/resume_stage_a2_local_seed999.ps1
+﻿# scripts/resume_stage_a2_local_seed999.ps1
 # Tiếp tục Canonical Seed 999 từ checkpoint Epoch 4 -> Thực thi epoch 5 đến 12
 
 $ErrorActionPreference = "Stop"
@@ -17,7 +17,7 @@ $stdoutLog = "$logDir\seed999.stdout.log"
 $stderrLog = "$logDir\seed999.stderr.log"
 $pidFile = "$logDir\seed999.pid"
 
-# 1. Áp dụng hồ sơ điểm ngọt phần cứng
+# 1. Áp dụng cấu hình phần cứng tối ưu (Sweet Spot)
 & "$baseDir\scripts\set_training_sweetspot.ps1"
 
 $env:CUBLAS_WORKSPACE_CONFIG = ":4096:8"

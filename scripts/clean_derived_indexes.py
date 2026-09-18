@@ -1,5 +1,5 @@
 """
-Lọc các chỉ mục phái sinh dùng một lần và bộ đệm thời gian chạy (ADR-0004, RC-17)
+Lọc các chỉ mục phái sinh dùng một lần và runtime cache (ADR-0004, RC-17)
 """
 
 import sys

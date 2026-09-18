@@ -1,4 +1,4 @@
-﻿# tập lệnh/start_stage_a2_local_seed42.ps1
+﻿# scripts/start_stage_a2_local_seed42.ps1
 $ErrorActionPreference = "Stop"
 
 $baseDir = "D:\Research"

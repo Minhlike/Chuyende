@@ -2,9 +2,9 @@
 """
 Trình tự SSL và các thử nghiệm mục tiêu đảm bảo quyền riêng tư
 Xác minh:
-  1. Các đầu SSL của Chế độ xem trình tự (L_MEP, L_MPP, L_time) tính toán mất mát (loss) hữu hạn trên các miền mặt nạ rõ ràng.
+  1. Các đầu SSL của góc nhìn (view) trình tự (L_MEP, L_MPP, L_time) tính toán mất mát (loss) hữu hạn trên các miền mặt nạ rõ ràng.
   2. L_time hoạt động trên các cặp ngữ cảnh liền kề [h_i ; Nhật ký nhắm mục tiêu h_i+1](1 + delta_t) với Smooth L1.
-  3. Độ dốc truyền đến cả 3 đầu trình tự và đường trục của Máy biến áp.
+  3. gradient truyền đến cả 3 đầu trình tự và đường trục của Máy biến áp.
   4. Không có tham số phụ trợ mồ côi.
 """
 
@@ -51,7 +51,7 @@ def test_01_sequence_ssl_three_heads_finite_and_gradients():
 
     total_loss.backward()
 
-    # Xác minh độ dốc trên tất cả các tham số
+    # Xác minh gradient trên tất cả các tham số
     for name, p in extractor.mep_head.named_parameters():
         assert p.grad is not None and torch.isfinite(p.grad).all(), f"mep_head {name} missing grad"
     for name, p in extractor.mpp_head.named_parameters():

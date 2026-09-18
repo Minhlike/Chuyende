@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-GPU và thử nghiệm khói trong thời gian chạy
+GPU và smoke test trong thời gian chạy
 Xác minh thời gian chạy PyTorch CUDA, Hình học PyTorch và các hoạt động tensor CPU/GPU nhỏ
-hoàn toàn chống lại các thí nghiệm/môi trường/ENVIRONMENT-LOCK.json.
+hoàn toàn chống lại các experiments/môi trường/ENVIRONMENT-LOCK.json.
 KHÔNG CÓ MODEL TRAINING, KHÔNG BENCHMARKS, KHÔNG DATASET ACCESS.
 STRICT PASS/FAIL GATING: Thoát với mã khác 0 nếu kiểm tra ANY không thành công.
 """
@@ -86,7 +86,7 @@ def run_smoke_test() -> bool:
     except Exception as e:
         checks.append(("PyG (torch_geometric)", expected_pyg, f"ERROR: {e}", "FAIL"))
 
-    # Kiểm tra 5: Sự phụ thuộc cốt lõi cho đào tạo thủ công
+    # Kiểm tra 5: Sự phụ thuộc cốt lõi cho huấn luyện thủ công
     hard_deps = [
         ("numpy", "numpy"),
         ("scipy", "scipy"),

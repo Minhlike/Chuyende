@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Tập lệnh cổng chấp nhận giai đoạn A1 của Canonical.
+script cổng chấp nhận giai đoạn A1 của Canonical.
 Thực hiện xác minh tự động, nghiêm ngặt tất cả các bất biến khoa học Giai đoạn A1,
-bản kê (manifest), tiếp tục xác định, kiểm tra việc niêm phong tường lửa và các tạo phẩm bằng chứng.
+bản kê (manifest), tiếp tục xác định, kiểm tra việc niêm phong tường lửa và các artifact bằng chứng.
 Đầu ra STAGE_A1_ACCEPTANCE=PASS hoặc STAGE_A1_ACCEPTANCE=FAIL.
 """
 
@@ -39,7 +39,7 @@ def verify_stage_a1():
         print(f"[CHECK 1] Protocol Lock File SHA256: {file_sha256} (OK)")
         print(f"[CHECK 1] Inside Contract SHA256:    {contract_sha256} (OK)")
 
-    # 2. Kiểm tra hàng tồn kho kê khai (5 hạt HDFS + 5 hạt BGL)
+    # 2. Kiểm tra danh mục bản kê (manifest inventory) (5 seed HDFS + 5 seed BGL)
     datasets = ["HDFS", "BGL"]
     canonical_seeds = [42, 1337, 2024, 7, 999]
     manifest_count = 0

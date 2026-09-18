@@ -12,7 +12,7 @@ class StatisticalMisuseAuditor:
     1. Báo cáo giá trị p không có mức độ ảnh hưởng đi kèm.
     2. Thiếu đơn vị mẫu phân tích rõ ràng.
     3. Giải thích p >= alpha là bằng chứng của sự tương đương ("không có bằng chứng != bằng chứng vắng mặt").
-    4. Sử dụng các bài kiểm tra không ghép đôi trong các lần chạy hạt giống theo cặp.
+    4. Sử dụng các bài kiểm tra không ghép đôi trong các lần chạy seed theo cặp.
     5. Bỏ qua việc hiệu chỉnh nhiều phép so sánh khi tiến hành nhiều phép thử đồng thời.
     """
 

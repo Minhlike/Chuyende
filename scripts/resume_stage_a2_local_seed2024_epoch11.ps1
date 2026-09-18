@@ -1,4 +1,4 @@
-# tập lệnh/resume_stage_a2_local_seed2024_epoch11.ps1
+# scripts/resume_stage_a2_local_seed2024_epoch11.ps1
 # Tiếp tục Canonical Seed 2024 từ checkpoint Epoch 10 -> Thực thi Epoch 11
 
 $ErrorActionPreference = "Stop"

@@ -1,4 +1,4 @@
-# tập lệnh/restore_normal_profile.ps1
+# scripts/restore_normal_profile.ps1
 # Khôi phục phần cứng và nguồn Windows về cấu hình sử dụng bình thường hàng ngày
 
 $ErrorActionPreference = "Stop"

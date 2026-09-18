@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Tập lệnh thực thi: Huấn luyện trước tự giám sát đa tác vụ ở giai đoạn thực A1
-Thực thi Giai đoạn chuẩn A1 trên bộ dữ liệu HDFS và BGL trên 5 hạt giống chuẩn:
-  - Hạt giống: [42, 1337, 2024, 7, 999]
+script thực thi: Huấn luyện trước tự giám sát đa tác vụ ở giai đoạn thực A1
+Thực thi Giai đoạn chuẩn A1 trên bộ dữ liệu HDFS và BGL trên 5 seed chuẩn:
+  - Seed: [42, 1337, 2024, 7, 999]
   - Kiến trúc: Bộ mã hóa máy biến áp 4 lớp, d_model=128, H=4, d_ffn=512, max_len=128
   - Lô: micro_batch=16, grad_accum=4 (lô hiệu quả=64)
   - Trình tối ưu hóa: AdamW (lr=5e-4, wd=0,01), Khởi động tuyến tính + Phân rã Cosine
   - Xác thực: Một lần cho mỗi epoch đã hoàn thành, kiên nhẫn dừng sớm (early stopping)=3 epoch
-  - Xác minh sơ yếu lý lịch checkpoint: Đã bao gồm
+  - Xác minh checkpoint resume: Đã bao gồm
 """
 
 import sys
@@ -44,7 +44,7 @@ def verify_checkpoint_resumption(base_dir: Path, device: torch.device):
     with torch.no_grad():
         out_init = trainer_init.model.forward_features(seqs, param_slots=params)
     
-    # 3. Tạo phiên bản huấn luyện viên và checkpoint tải hoàn toàn mới
+    # 3. Tạo phiên bản bộ huấn luyện (trainer) và checkpoint tải hoàn toàn mới
     trainer_resumed = StageA1Trainer(dataset_name=dataset, seed=seed, base_dir=base_dir, device=device)
     e_res, step_res, best_loss_res, pat_res = trainer_resumed.load_checkpoint(test_ckpt_path)
     
@@ -151,7 +151,7 @@ def main():
         verify_checkpoint_resumption(base_dir, device)
         return
 
-    # Trước tiên hãy xác minh sơ yếu lý lịch checkpoint
+    # Trước tiên hãy xác minh checkpoint resume
     verify_checkpoint_resumption(base_dir, device)
 
     canonical_seeds = [42, 1337, 2024, 7, 999]

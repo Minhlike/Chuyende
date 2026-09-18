@@ -53,7 +53,7 @@ class AntiLeakageSplitValidator:
         entity_col: str,
     ) -> Tuple[bool, List[str]]:
         """
-        Kiểm tra nếu đào tạo và kiểm tra chia sẻ các thực thể giống hệt nhau (máy chủ, người dùng, địa chỉ IP).
+        Kiểm tra nếu huấn luyện và kiểm tra chia sẻ các thực thể giống hệt nhau (máy chủ, người dùng, địa chỉ IP).
         Thực thi mức giữ lại cấp thực thể nghiêm ngặt để đánh giá ngoài phân phối.
         """
         issues = []

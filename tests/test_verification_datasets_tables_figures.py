@@ -54,7 +54,7 @@ class TestDatasetsTablesFigures:
         assert len(issues) == 0
 
     def test_data_02_temporal_leakage_detection(self):
-        """TEST-DATA-02: Cờ rò rỉ thời gian (dấu thời gian tàu > dấu thời gian kiểm tra)."""
+        """TEST-DATA-02: Cờ rò rỉ thời gian (train timestamp > dấu thời gian kiểm tra)."""
         train_df = pd.DataFrame({"timestamp": ["2026-01-05 12:00:00", "2026-01-06 12:00:00"]})
         test_df = pd.DataFrame({"timestamp": ["2026-01-02 12:00:00", "2026-01-03 12:00:00"]})
         valid, issues = self.split_val.audit_temporal_order(train_df, None, test_df, "timestamp")
@@ -62,7 +62,7 @@ class TestDatasetsTablesFigures:
         assert any("TEMPORAL_LEAKAGE" in i for i in issues)
 
     def test_data_03_entity_holdout_leakage(self):
-        """TEST-DATA-03: Đánh dấu sự rò rỉ của máy chủ/thực thể trong quá trình đào tạo và kiểm tra."""
+        """TEST-DATA-03: Đánh dấu sự rò rỉ của máy chủ/thực thể trong quá trình huấn luyện và kiểm tra."""
         train_df = pd.DataFrame({"host": ["host-01", "host-02", "host-03"]})
         test_df = pd.DataFrame({"host": ["host-03", "host-04"]})  # rò rỉ máy chủ-03
         valid, issues = self.split_val.audit_entity_holdout(train_df, test_df, "host")

@@ -13,7 +13,7 @@ from research_agent.core.enums import (
 
 
 class OwnershipMapping(BaseModel):
-    """Ánh xạ quyền sở hữu chi tiết rõ ràng cho nút, thành phần hoặc xác nhận quyền sở hữu lộ trình."""
+    """Ánh xạ quyền sở hữu chi tiết rõ ràng cho nút, thành phần hoặc luận điểm (claim) lộ trình."""
     mapping_id: str = Field(description="Stable ID e.g. 'OWN-000001'")
     node_code: str = Field(description="Roadmap canonical code e.g. '1.1.1', '2.4.3'")
     node_id: Optional[str] = None

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
 Trình token khả năng liên kết nhận biết quyền riêng tư, được tham số hóa và được kiểm soát
-Triển khai Đặc tả đông lạnh Chương 2 (Phần 2.1 & Bang 2.1):
+Triển khai đặc tả đã đóng băng (frozen specification) Chương 2 (Phần 2.1 & Bang 2.1):
   - 4 chế độ token hóa:
       1. RAW_IDENTIFIERS
       2. EXTREME_ANONYMIZATION
-      3. CONTROLLED_LINKABILITY (Có khóa HMAC với các phím tạm thời/xoay)
+      3. CONTROLLED_LINKABILITY (Có khóa HMAC với các khóa tạm thời / xoay vòng (ephemeral/rotating keys))
       4. PRIVACY_AWARE_PARAMETERIZED (Đề xuất đại diện nhiều tầng)
   - Quản trị chủ chốt:
       * Không có khóa mã hóa cứng trong kho lưu trữ.
@@ -56,7 +56,7 @@ class PrivacyAwareLogTokenizer:
             if env_key:
                 self._key = env_key.encode("utf-8")
             else:
-                # Khóa thời gian chạy tạm thời (không bao giờ được mã hóa cứng, không bao giờ được cam kết)
+                # Khóa thời gian chạy tạm thời (không bao giờ được mã hóa cứng, không bao giờ được commit)
                 self._key = secrets.token_bytes(32)
 
         # Dấu vân tay của khóa mật mã cho bảng kê khai kiểm tra

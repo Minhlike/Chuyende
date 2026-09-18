@@ -1,5 +1,5 @@
 """
-Trình kiểm tra sức khỏe bộ nhớ (Dấu nhắc 4, Phần 54, 55, MQ-01..MQ-15)
+Trình kiểm tra sức khỏe bộ nhớ (Dấu Prompt 4, Phần 54, 55, MQ-01..MQ-15)
 """
 
 from typing import List, Dict, Any, Tuple, Optional

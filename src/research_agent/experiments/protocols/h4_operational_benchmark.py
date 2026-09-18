@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Khai thác điểm chuẩn ngân sách hoạt động H4
-Triển khai Đặc tả hoạt động đông lạnh Chương 2 & Chương 3 (Phần 2.5 & Phần 4):
+bộ khung benchmark ngân sách hoạt động H4
+Triển khai Đặc tả hoạt động đóng băng (frozen) Chương 2 & Chương 3 (Phần 2.5 & Phần 4):
   - Hợp đồng mục tiêu cấp độ dịch vụ kết hợp (SLO):
       1. p95 Độ trễ <= 10,0 ms/chuỗi
       2. Đỉnh RAM <= 500,0 MB/máy chủ
@@ -113,7 +113,7 @@ class LiveOperationalBenchmarkHarness:
     ) -> Dict[str, Any]:
         """
         Điểm chuẩn đường dẫn trích xuất từ ​​đầu đến cuối đầy đủ.
-        Loại bỏ các sự kiện đo từ xa nguồn trùng lặp: nếu chế độ xem trình tự và biểu đồ thể hiện giống nhau
+        Loại bỏ các sự kiện đo từ xa nguồn trùng lặp: nếu góc nhìn (view) trình tự và biểu đồ thể hiện giống nhau
         các sự kiện đo từ xa cơ bản, đếm từng đơn vị quan sát nguồn ONCE.
         """
         if source_event_ids is not None:
@@ -121,7 +121,7 @@ class LiveOperationalBenchmarkHarness:
         else:
             num_seq = sum(len(lines) for lines in raw_log_lines_batch)
             num_graph = sum(len(events) for events in graph_events_batch)
-            # Khi các biểu diễn nhiều chế độ xem tương ứng phản ánh cùng một phiên nhật ký, hãy đếm các sự kiện chuẩn một lần
+            # Khi các biểu diễn đa góc nhìn (multi-view) tương ứng phản ánh cùng một phiên nhật ký, hãy đếm các sự kiện chuẩn một lần
             telemetry_event_count = max(num_seq, num_graph)
 
         def forward_e2e():

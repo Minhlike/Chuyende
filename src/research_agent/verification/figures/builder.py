@@ -168,7 +168,7 @@ class FigureBuilder:
         metric_name: str,
         script_path: str = "src/research_agent/verification/figures/builder.py",
     ) -> FigureSpecification:
-        """Vẽ sơ đồ đường cong độ nhạy cắt bỏ / siêu tham số."""
+        """Vẽ sơ đồ đường cong độ nhạy thử nghiệm loại trừ (ablation) / siêu tham số."""
         fig, ax = plt.subplots(figsize=(6.5, 4.5))
         ax.plot(param_values, metric_values, marker="o", lw=2, color="#d62728")
 

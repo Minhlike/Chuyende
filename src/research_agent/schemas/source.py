@@ -1,5 +1,5 @@
 """
-Lược đồ nguồn, SourceVersion và SourceArtifact (RC-01, RC-16, Nhắc 3)
+Lược đồ nguồn, SourceVersion và SourceArtifact (RC-01, RC-16, Prompt 3)
 """
 
 from datetime import datetime, timezone

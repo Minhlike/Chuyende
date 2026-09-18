@@ -33,7 +33,7 @@ class TestStatisticalVerification:
         assert res["iqr"] == 4.0
 
     def test_stat_02_parametric_confidence_interval(self):
-        """TEST-STAT-02: Xác minh khoảng tin cậy 95% của Học sinh."""
+        """TEST-STAT-02: Xác minh khoảng tin cậy 95% của Student."""
         values = [10.0, 12.0, 14.0, 16.0, 18.0]
         mean, low, high = self.ci_engine.compute_parametric_ci(values, confidence_level=0.95)
         assert mean == 14.0
@@ -42,7 +42,7 @@ class TestStatisticalVerification:
         assert round(high, 2) == 17.93
 
     def test_stat_03_deterministic_bootstrap_ci(self):
-        """TEST-STAT-03: Bootstrap CI với hạt giống cố định trả về các giới hạn giống hệt nhau."""
+        """TEST-STAT-03: Bootstrap CI với seed cố định trả về các giới hạn giống hệt nhau."""
         values = [10.0, 12.0, 14.0, 16.0, 18.0]
         m1, low1, high1 = self.ci_engine.compute_bootstrap_ci(values, confidence_level=0.95, random_seed=42)
         m2, low2, high2 = self.ci_engine.compute_bootstrap_ci(values, confidence_level=0.95, random_seed=42)
@@ -79,7 +79,7 @@ class TestStatisticalVerification:
         assert res.is_significant is True
 
     def test_stat_07_multi_seed_aggregation(self):
-        """TEST-STAT-07: Tổng hợp trên nhiều hạt giống ngẫu nhiên."""
+        """TEST-STAT-07: Tổng hợp trên nhiều seed ngẫu nhiên."""
         runs = [
             {"f1": 0.92, "seed": 1},
             {"f1": 0.94, "seed": 2},
@@ -94,7 +94,7 @@ class TestStatisticalVerification:
         assert summary["max_run"] == 0.95
 
     def test_stat_08_cherry_picking_guard(self):
-        """TEST-STAT-08: Cờ BestRunCherryPickingGuard chỉ báo cáo một hạt giống tốt nhất."""
+        """TEST-STAT-08: Cờ BestRunCherryPickingGuard chỉ báo cáo một seed tốt nhất."""
         seed_vals = [0.91, 0.92, 0.93, 0.94, 0.98]  # max = 0.98, mean = 0.936
         valid, warning = self.aggregator.audit_cherry_picking(0.98, seed_vals)
         assert valid is False

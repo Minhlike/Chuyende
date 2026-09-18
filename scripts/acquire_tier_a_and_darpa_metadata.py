@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 r"""
 Cấp A (HDFS, BGL) và DARPA TC (E3, E5) Kiểm tra viên truyền và thu thập siêu dữ liệu
-Tải bộ dữ liệu trực tiếp xuống D:\Research\datasets\raw\, băm tất cả các tạo phẩm,
+Tải bộ dữ liệu trực tiếp xuống D:\Research\datasets\raw\, băm tất cả các artifact,
 chạy xác thực tính toàn vẹn phát trực tuyến và cập nhật sổ cái và bảng kê khai thu thập chuẩn.
 """
 

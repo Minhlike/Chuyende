@@ -12,11 +12,11 @@ from research_agent.core.enums import ReproducibilityLevel
 class ReproductionRunner:
     """
     Thực hiện quy trình sao chép trên 5 tầng tiêu chuẩn:
-    - Cấp độ 1: Tính toàn vẹn băm của các tạo phẩm hiện có.
+    - Cấp độ 1: Tính toàn vẹn băm của các artifact hiện có.
     - Cấp độ 2: Tính toán lại số liệu từ các tệp dự đoán đã lưu.
     - Cấp độ 3: Phân tích thống kê & tái tạo bảng/hình từ nhật ký số liệu.
     - Cấp độ 4: Chạy lại suy luận mô hình trên test Split với checkpoint bị khóa.
-    - Cấp độ 5: Đào tạo lại và đánh giá từ đầu đến cuối từ nhật ký thô.
+    - Cấp độ 5: huấn luyện lại (retraining) và đánh giá từ đầu đến cuối từ nhật ký thô.
     """
 
     def verify_level_1_integrity(
@@ -24,7 +24,7 @@ class ReproductionRunner:
         artifact_path: Path | str,
         expected_sha256: str,
     ) -> Tuple[bool, str]:
-        """Cấp độ 1: Kiểm tra hàm băm mật mã trên tạo phẩm tệp."""
+        """Cấp độ 1: Kiểm tra hàm băm mật mã trên artifact tệp."""
         p = Path(artifact_path)
         if not p.exists():
             return False, f"Artifact not found: {artifact_path}"

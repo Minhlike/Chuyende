@@ -49,7 +49,7 @@ class NumericalHallucinationAuditor:
 class VerificationGateForWriting:
     """
     Cổng tường lửa cho Trình soạn thảo chương 7 (Nhắc 6 Mục 95, 139).
-    Chặn các xác nhận quyền sở hữu chưa được xác minh, gói kết quả bị thiếu hoặc ngôn ngữ xác nhận phóng đại.
+    Chặn các luận điểm (claim) chưa được xác minh, gói kết quả bị thiếu hoặc ngôn ngữ xác nhận phóng đại.
     """
 
     def audit_claim_for_thesis_composition(

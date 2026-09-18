@@ -90,7 +90,7 @@ def test_ref_02_unsourced_factual_claims_rejected(test_repo):
 
 
 # ----------------------------------------------------------------------
-# TEST-REF-03: Xác nhận quyền sở hữu OUR_DESIGN có thể tồn tại mà không cần nguồn bên ngoài
+# TEST-REF-03: luận điểm (claim) OUR_DESIGN có thể tồn tại mà không cần nguồn bên ngoài
 # ----------------------------------------------------------------------
 def test_ref_03_our_design_without_external_source(test_repo):
     claim = Claim(

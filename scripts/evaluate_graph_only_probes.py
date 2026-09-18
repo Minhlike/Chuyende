@@ -33,9 +33,9 @@ def evaluate_downstream_linear_probe(
     device: str = "cuda"
 ) -> Dict[str, float]:
     """
-    bộ dò (probe) tuyến tính được kiểm soát công suất trên các biểu diễn tiềm ẩn đông lạnh.
+    bộ dò (probe) tuyến tính được kiểm soát công suất trên các biểu diễn ẩn được đóng băng (frozen latent).
     Tàu W trong R^{128 x 1} (mất bce, lr=1e-2, 50 epoch)
-    sử dụng phân chia đào tạo/kiểm tra 80/20 trong nhóm biểu diễn xác thực.
+    sử dụng phân chia huấn luyện/kiểm tra 80/20 trong nhóm biểu diễn xác thực.
     """
     dev = torch.device(device if torch.cuda.is_available() else "cpu")
     y = torch.tensor(labels, dtype=torch.float32)

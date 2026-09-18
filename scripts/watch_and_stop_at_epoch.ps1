@@ -1,4 +1,4 @@
-# tập lệnh/watch_and_stop_at_epoch.ps1
+# scripts/watch_and_stop_at_epoch.ps1
 param (
     [int]$TargetEpoch = 5,
     [int]$Seed = 1337,
@@ -34,7 +34,7 @@ while ($true) {
             # Chờ 5 giây để hoàn tất quá trình xóa checkpoint cuối cùng và đồng bộ hóa lâu bền
             Start-Sleep -Seconds 5
             
-            # Tìm và dừng tất cả các tiến trình python và powershell cho hạt giống này
+            # Tìm và dừng tất cả các tiến trình python và powershell cho seed này
             $processes = Get-CimInstance Win32_Process -Filter "CommandLine LIKE '%--seed $Seed%'"
             foreach ($p in $processes) {
                 Stop-Process -Id $p.ProcessId -Force -ErrorAction SilentlyContinue

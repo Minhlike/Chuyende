@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-Công cụ tối ưu hóa và trích xuất nhiều chế độ xem
-Triển khai Hợp đồng đại diện nhiều chế độ xem cố định theo Chương 2 (Phần 2.4 & Bang 2.4):
+Công cụ tối ưu hóa và trích xuất đa góc nhìn (multi-view)
+Triển khai Hợp đồng đại diện đa góc nhìn (multi-view) cố định theo Chương 2 (Phần 2.4 & Bang 2.4):
   - Tương ứng đúng trên mỗi mẫu: Mỗi mẫu i có danh sách sự kiện đồ thị và đầu vào trình tự riêng
-  - Phạm vi bộ nhớ nhiều chế độ xem rõ ràng:
+  - Phạm vi bộ nhớ đa góc nhìn (multi-view) rõ ràng:
       * "độc lập" (Mặc định để phát hiện dị thường theo cửa sổ): Mỗi mẫu tôi có ngân hàng bộ nhớ bị cô lập/đặt lại.
       * "continuous_streaming": Trạng thái bộ nhớ liên tục được duy trì trên luồng nhân quả nghiêm ngặt.
   - Tối ưu hóa chống thu gọn VICReg hàng loạt thực tế trên các biểu diễn được ghép nối [z_seq, z_graph]
-  - Kết hợp nhiều chế độ xem với mất mát (loss) tái tạo:
+  - Kết hợp đa góc nhìn (multi-view) với mất mát (loss) tái tạo:
       L_fuse_rec = 0.5 * ||z_mv - stopgrad(z_seq)||^2 + 0.5 * ||z_mv - stopgrad(z_graph)||^2
-      Đào tạo cơ chế kiểm soát W_gate mà không xung đột độ dốc của bộ trích xuất.
-  - Hoàn thành Giai đoạn A Mục tiêu đa nhiệm vụ:
+      Huấn luyện cơ chế kiểm soát W_gate mà không xung đột gradient của bộ trích xuất.
+  - Hoàn thành Giai đoạn A Mục tiêu đa tác vụ (multi-task):
       L_StageA = L_seq_self + L_graph_self + lambda_align * L_align + lambda_fuse * L_fuse_rec
 """
 
@@ -26,7 +26,7 @@ from research_agent.experiments.extractor.graph_view import TemporalGraphViewExt
 @dataclass
 class MultiViewCorrespondence:
     """
-    Hợp đồng siêu dữ liệu tương ứng rõ ràng liên kết phép đo từ xa ở chế độ xem Trình tự và Biểu đồ trên mỗi mẫu.
+    Hợp đồng siêu dữ liệu tương ứng rõ ràng liên kết phép đo từ xa ở góc nhìn (view) Trình tự và Biểu đồ trên mỗi mẫu.
     """
     correspondence_id: str
     time_interval: Tuple[float, float]
@@ -42,7 +42,7 @@ class MultiViewCorrespondence:
 
 class VICRegLoss(nn.Module):
     """
-    Mất chính quy phương sai-bất biến-hiệp phương sai cho việc căn chỉnh tiềm ẩn nhiều chế độ xem.
+    Mất chính quy phương sai-bất biến-hiệp phương sai cho việc căn chỉnh tiềm ẩn đa góc nhìn (multi-view).
     """
     def __init__(self, sim_coeff: float = 25.0, var_coeff: float = 25.0, cov_coeff: float = 1.0, gamma: float = 1.0):
         super().__init__()
@@ -121,7 +121,7 @@ class GatedMultiViewFusion(nn.Module):
 
 class MultiViewRepresentationModel(nn.Module):
     """
-    Kiến trúc nhiều chế độ xem hoàn chỉnh kết nối Chế độ xem trình tự, Chế độ xem biểu đồ tạm thời,
+    Kiến trúc đa góc nhìn (multi-view) hoàn chỉnh kết nối góc nhìn (view) trình tự, góc nhìn (view) biểu đồ tạm thời,
     Căn chỉnh VICReg và Gated Fusion.
     """
     def __init__(
@@ -158,7 +158,7 @@ class MultiViewRepresentationModel(nn.Module):
             num_relations=num_relations
         )
 
-        # Căn chỉnh và dự đoán tiềm ẩn trong chế độ xem chéo
+        # Căn chỉnh và dự đoán tiềm ẩn trong góc nhìn (view) chéo
         self.seq_proj_align = nn.Sequential(
             nn.Linear(embed_dim, embed_dim),
             nn.GELU(),
@@ -173,7 +173,7 @@ class MultiViewRepresentationModel(nn.Module):
         self.vicreg = VICRegLoss()
         self.fusion = GatedMultiViewFusion(embed_dim=embed_dim)
         
-        # Thiếu token dự phòng đã học của chế độ xem
+        # Thiếu token dự phòng đã học của góc nhìn (view)
         self.missing_graph_token = nn.Parameter(torch.zeros(1, embed_dim))
         nn.init.normal_(self.missing_graph_token, std=0.02)
         
@@ -331,7 +331,7 @@ class MultiViewRepresentationModel(nn.Module):
 
         l_vicreg, vicreg_metrics = self.vicreg(p_seq, p_graph, valid_mask=valid_mask)
 
-        # 4. Mất khả năng tái tạo kết hợp cổng đa chế độ xem
+        # 4. Mất khả năng tái tạo kết hợp cổng đa góc nhìn (view)
         # L_fuse_rec = 0.5 * ||z_mv - stopgrad(z_seq)||^2 + 0.5 * ||z_mv - stopgrad(z_graph)||^2
         z_mv, alpha_gate = self.fusion(z_seq_pool, z_graph_batch)
         l_fuse_rec = 0.5 * F.mse_loss(z_mv, z_seq_pool.detach()) + 0.5 * F.mse_loss(z_mv, z_graph_batch.detach())

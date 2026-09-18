@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Gói đào tạo cho mô hình tự giám sát Chương 3."""
+"""Package huấn luyện cho mô hình tự giám sát (self-supervised model) (self-supervised model) (self-supervised model) Chương 3."""
 
 from .stage_a1_runner import StageA1Trainer
 from .stage_a2_trainer import (

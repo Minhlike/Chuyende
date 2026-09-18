@@ -1,5 +1,5 @@
 """
-Đường ống hợp nhất bộ nhớ được kiểm soát & Công cụ chuyển giao phiên (Nhắc 4, Phần 11..14, 38, ADR-0008)
+pipeline hợp nhất bộ nhớ được kiểm soát & Công cụ chuyển giao phiên (Prompt 4, Phần 11..14, 38, ADR-0008)
 """
 
 import re

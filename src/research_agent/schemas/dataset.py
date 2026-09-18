@@ -10,7 +10,7 @@ from research_agent.core.identifiers import EntityPrefix, format_stable_id
 
 
 class DatasetSplitManifest(BaseModel):
-    """Tệp kê khai mô tả việc phân chia dữ liệu đào tạo/val/kiểm tra và các chỉ số/băm."""
+    """Tệp kê khai mô tả việc phân chia dữ liệu huấn luyện/val/kiểm tra và các chỉ số/băm."""
     split_id: str = Field(description="e.g. SPL-000001")
     train_hash: str
     val_hash: str

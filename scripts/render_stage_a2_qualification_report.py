@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Kết xuất tập lệnh cho Giai đoạn A2 CUDA V1.4 Báo cáo ủy quyền cuối cùng.
-Đọc các tạo phẩm đĩa đã được xác minh, mục nhập tệp kê khai và trạng thái git để tạo ra kết quả chính xác 100%,
+Kết xuất script cho Giai đoạn A2 CUDA V1.4 Báo cáo ủy quyền cuối cùng.
+Đọc các artifact đĩa đã được xác minh, mục nhập tệp kê khai và trạng thái git để tạo ra kết quả chính xác 100%,
 Báo cáo Markdown dựa trên mật mã phù hợp với thông số kỹ thuật của Giao thức V1.4.
 """
 

@@ -9,8 +9,7 @@ from research_agent.config import WorkspaceConfig, get_default_config
 
 
 class PathGuard:
-    """Bảo vệ chống lại việc truyền tải đường dẫn tùy ý và ghi ngoài không gian làm việc."""
-
+    """Bảo vệ chống lại việc tấn công duyệt thư mục (path traversal) tùy ý và ghi ngoài không gian làm việc."""
     def __init__(self, config: WorkspaceConfig | None = None):
         self.config = config or get_default_config()
         self.root = self.config.workspace_root.resolve()

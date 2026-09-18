@@ -154,7 +154,7 @@ def run_bootstrap(
             f"cudnn_det={cudnn_det}, cudnn_bench={cudnn_bench}, cublas_cfg={cublas_cfg})"
         )
 
-    # 4. Xác minh cam kết kho lưu trữ
+    # 4. Xác minh commit kho lưu trữ
     commit_sha = get_git_commit_sha(repo_dir)
     print(f"[BOOTSTRAP 4] Repository HEAD: {commit_sha}")
 
@@ -241,7 +241,7 @@ def mirror_qualification_artifacts(
     qual_run_id: Optional[str] = None
 ) -> Path:
     """
-    Phản ánh tất cả các tạo phẩm bằng chứng đủ tiêu chuẩn vào bộ lưu trữ Google Drive lâu bền
+    Phản ánh tất cả các artifact bằng chứng đủ tiêu chuẩn vào bộ lưu trữ Google Drive lâu bền
     và xác minh nguồn so với đích SHA-256 cho mỗi tệp được sao chép.
     """
     base_dir = Path(base_dir).resolve()

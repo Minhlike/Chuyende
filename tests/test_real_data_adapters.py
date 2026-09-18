@@ -2,9 +2,9 @@
 """
 Bộ kiểm tra tự động cho Chương 3 Bộ điều hợp dữ liệu thực và hợp đồng dữ liệu khoa học
 Xác minh toàn diện về:
-  1. Gói đào tạo trước giai đoạn A1 SSL không có nhãn:
+  1. Gói tiền huấn luyện (pretraining) giai đoạn A1 SSL không có nhãn:
      - hdfs_ssl_train.pt, hdfs_ssl_val.pt, bgl_ssl_train.pt, bgl_ssl_val.pt chứa 0 nhãn.
-     - LabelLeakageError tăng lên nếu nhãn được đưa vào các gói đào tạo trước.
+     - LabelLeakageError tăng lên nếu nhãn được đưa vào các gói tiền huấn luyện (pretraining).
   2. Tường lửa kiểm tra hai lần thực sự HDFS:
      - Pass 1: chỉ phân tích cú pháp (dấu thời gian, block_id).
      - Đạt 2: Số lượng phân tích tính năng kiểm tra = 0, Số lượng trích xuất tham số kiểm tra = 0, Đóng góp từ vựng kiểm tra = 0.

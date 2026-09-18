@@ -24,7 +24,7 @@ class TestGpuSmokeTest(unittest.TestCase):
             self.assertFalse(passed, "Smoke test must return False when CUBLAS_WORKSPACE_CONFIG is not set.")
 
     def test_fail_path_no_cuda(self):
-        """Đường dẫn FAIL: Khi không có CUDA, kiểm tra khói phải trả về Sai."""
+        """Đường dẫn FAIL: Khi không có CUDA, smoke test phải trả về Sai."""
         with patch.dict(os.environ, {"CUBLAS_WORKSPACE_CONFIG": ":4096:8"}):
             with patch("torch.cuda.is_available", return_value=False):
                 passed = smoke_mod.run_smoke_test()

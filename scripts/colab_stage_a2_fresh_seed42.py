@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-Tập lệnh khởi chạy mới của Canonical Google Colab cho Giai đoạn A2 Seed 42.
-Thực hiện đào tạo Seed 42 chuẩn mới với thứ tự RNG chính xác mà không cần tiếp tục các checkpoint cũ.
+script khởi chạy mới của Canonical Google Colab cho Giai đoạn A2 Seed 42.
+Thực hiện huấn luyện Seed 42 chuẩn mới với thứ tự RNG chính xác mà không cần tiếp tục các checkpoint cũ.
 Lưu trữ Seed 42 không chuẩn cũ chạy đến một không gian tên pháp y trên Google Drive mà không xóa bất kỳ thứ gì.
 
 Cách sử dụng:
   # Xác thực chạy thử (thực hiện 0 bước tối ưu hóa):
-  tập lệnh python/colab_stage_a2_fresh_seed42.py --dry-run --commit <40-hex SHA>
+  python scripts/colab_stage_a2_fresh_seed42.py --dry-run --commit <40-hex SHA>
 
-  #Đào tạo thực nghiệm thực tế:
-  tập lệnh python/colab_stage_a2_fresh_seed42.py --execute --commit <40-hex SHA>
+  #Huấn luyện thực nghiệm thực tế:
+  python scripts/colab_stage_a2_fresh_seed42.py --execute --commit <40-hex SHA>
 """
 
 import os
@@ -141,7 +141,7 @@ def run_fresh_seed42_launch(
         print(f"FATAL: Exact PyTorch runtime mismatch: {torch.__version__} (CUDA {torch.version.cuda}) != 2.6.0+cu124 (CUDA 12.4)")
         return 1
 
-    # 3. Xác minh cam kết đã được phê duyệt
+    # 3. Xác minh commit đã được phê duyệt
     try:
         head_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=str(base_dir), text=True).strip()
         status_out = subprocess.check_output(["git", "status", "--porcelain", "src", "scripts", "experiments"], cwd=str(base_dir), text=True).strip()

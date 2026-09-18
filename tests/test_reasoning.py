@@ -194,7 +194,7 @@ def test_leakage_auditor_12pt_checklist(test_env):
 
 
 def test_shortcut_auditor(test_env):
-    """Xác minh việc phát hiện các phím tắt của tập dữ liệu ứng viên."""
+    """Xác minh việc phát hiện đặc trưng tắt (shortcuts) của tập dữ liệu ứng viên."""
     engine = test_env["engine"]
     feature_desc = "Features include raw executable paths, fixed hostnames, and static template ids."
     issues = engine.shortcut_auditor.audit_shortcuts("FEAT-01", feature_desc)

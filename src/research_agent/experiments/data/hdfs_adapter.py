@@ -7,7 +7,7 @@ Thực thi:
        Trích xuất mẫu/tham số ZERO được thực hiện trên các sự kiện Thử nghiệm tiềm năng.
      - Pass 2 (Feature Materialization): Trích xuất đặc trưng cho phân vùng Train và Val.
        Số lần gọi trình phân tích cú pháp đại diện kiểm tra = 0, Số lần trích xuất tham số kiểm tra = 0, Đóng góp từ vựng kiểm tra = 0.
-  2. Gói đào tạo trước giai đoạn A1 SSL không có nhãn:
+  2. Gói tiền huấn luyện (pretraining) giai đoạn A1 SSL không có nhãn:
      - hdfs_ssl_train.pt và hdfs_ssl_val.pt chứa các nhãn hạ nguồn (downstream) ZERO (được bảo vệ bởi LabelLeakageError).
      - Các nhãn hạ nguồn (downstream) được lưu trữ nghiêm ngặt trong kho thăm dò chỉ dành cho đánh giá (thử nghiệm/lần chạy/dữ liệu/vault/).
   3. Biểu diễn khe đa tham số:
@@ -150,7 +150,7 @@ class HDFSRealDataAdapter:
                 extracted_params = []
                 for g in m.groups():
                     if g.startswith("blk_"):
-                        # ID khối được loại trừ khỏi biểu diễn tính năng để tránh rò rỉ phím tắt
+                        # ID khối được loại trừ khỏi biểu diễn tính năng để tránh rò rỉ shortcut
                         continue
                     elif "/" in g and any(c.isdigit() for c in g):
                         extracted_params.append(self.classify_ip(g))

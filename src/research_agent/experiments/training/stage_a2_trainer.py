@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-StageA2Trainer: Người chạy trước khi đào tạo bằng đồ thị thời gian xác định nguyên nhân (Hợp đồng V1.4.1 đã bị khóa).
+StageA2Trainer: Trình thực thi tiền huấn luyện (pretraining runner) bằng đồ thị thời gian quan hệ nhân quả tất định (deterministic causal temporal graph) (Hợp đồng V1.4.1 đã bị khóa).
 
 Tính năng:
   1. Bảo vệ thiết bị thực thi: Thiết bị thực thi bị khóa rõ ràng ('cuda' hoặc 'cpu').
      Thất bại ngay trước bất kỳ bước tối ưu hóa nào nếu CUDA được yêu cầu nhưng không có sẵn,
-     với dự phòng CPU tự động ZERO.
-  2. Mục tiêu chính xác của nhóm đa nhiệm vụ: Trong đào tạo, các cửa sổ được sắp xếp theo trình tự thời gian
+     với tuyệt đối không tự động fallback về CPU (zero automatic CPU fallback).
+  2. Mục tiêu chính xác của nhóm đa tác vụ (multi-task group): Trong huấn luyện, các cửa sổ được sắp xếp theo trình tự thời gian
      nhóm tích lũy (tối đa gradient_accumulation_steps = 4 cửa sổ).
-     Mục tiêu chính xác của nhóm đa nhiệm được tính toán trên tất cả các mục tiêu được che giấu trong nhóm:
+     Mục tiêu chính xác của nhóm đa tác vụ được tính toán trên tất cả các mục tiêu được che giấu trong nhóm:
        L_rel_group  = sum(rel_loss_sum_k) / max(1, sum(rel_target_count_k))
        L_node_group = sum(node_sq_err_sum_k) / max(1, sum(node_element_count_k))
        L_time_group = sum(time_loss_sum_k) / max(1, sum(time_target_count_k))
@@ -16,13 +16,13 @@ Tính năng:
      Truyền ngược mục tiêu nhóm chính xác trong một lần truyền ngược cho mỗi bước tối ưu hóa.
   3. Mặt nạ xác thực xác định đã sửa lỗi: Sử dụng trình tạo RNG xác thực chuyên dụng được đặt lại thành
      VALIDATION_MASK_SEED = 20260823 on each validation epoch (Bernoulli p=0.15 for relations and nodes).
-     Độc lập với quỹ đạo đào tạo RNG.
+     Độc lập với quỹ đạo huấn luyện RNG.
   4. Tổng hợp mất mát (loss) epoch toàn cầu: Tổng hợp chính xác các tử số mất mát (loss) và số lượng mục tiêu trên tất cả
      cửa sổ trong một epoch (không có nghĩa là cửa sổ).
   5. Cửa sổ cuối cùng một phần & Trọng số nhóm: 2.291 cửa sổ đầy đủ (256 sự kiện) + 1 cửa sổ một phần (81 sự kiện)
      được nhóm thành 572 nhóm gồm 1024 sự kiện + 1 nhóm 849 sự kiện (256 + 256 + 256 + 81).
   6. Con trỏ luồng hoạt động: stream_cursor tiến lên trên mọi cửa sổ; tuần tự hóa các checkpoint
-     khe chính xác của cửa sổ tiếp theo; sơ yếu lý lịch sử dụng stream_cursor trực tiếp.
+     khe chính xác của cửa sổ tiếp theo; quá trình resume sử dụng stream_cursor trực tiếp.
   7. Bộ lập lịch giới hạn phạm vi động: Tính toán chính xác từ tập hợp con thực thi được ủy quyền (586.577 sự kiện).
   8. Đặt lại ranh giới phân chia quy nạp: Xóa bộ nhớ nút động khi chuyển đổi xác thực.
   9. NaN/Inf Fail-Closed Protection: Phát hiện các điểm bất thường của dấu phẩy động và hủy bỏ ngay lập tức.
@@ -48,15 +48,15 @@ from research_agent.experiments.models.temporal_graph_view_encoder import Tempor
 VALIDATION_MASK_SEED = 20260823
 
 class EmpiricalExecutionNotAuthorizedError(RuntimeError):
-    """Xảy ra khi cố gắng thực hiện theo kinh nghiệm thực tế mà không được phép."""
+    """Xảy ra khi cố gắng thực hiện thực nghiệm thực tế mà không được phép."""
     pass
 
 class CheckpointBoundaryViolationError(RuntimeError):
-    """Tăng lên khi cố gắng lưu checkpoint khi cố gắng tích lũy giữa độ dốc."""
+    """Tăng lên khi cố gắng lưu checkpoint khi cố gắng tích lũy giữa gradient."""
     pass
 
 class FloatingPointAnomalyError(FloatingPointError):
-    """Tăng lên khi gặp NaN hoặc Inf trong tình trạng mất mát hoặc độ dốc (Đóng không thành công)."""
+    """Tăng lên khi gặp NaN hoặc Inf trong tình trạng mất mát hoặc gradient (Đóng không thành công)."""
     pass
 
 class ExecutionDeviceMismatchError(RuntimeError):
@@ -154,11 +154,11 @@ class StageA2Trainer:
             min_lr_ratio=min_ratio
         )
 
-        # Trình tạo mặt nạ đào tạo RNG cho trình tự đào tạo xác định
+        # Trình tạo mặt nạ huấn luyện RNG cho trình tự huấn luyện xác định
         self.mask_generator = torch.Generator(device="cpu")
         self.mask_generator.manual_seed(seed)
 
-        # Trình tạo mặt nạ xác thực RNG cho mặt nạ xác thực cố định trên các epoch/hạt giống
+        # Trình tạo mặt nạ xác thực RNG cho mặt nạ xác thực cố định trên các epoch/seed
         self.val_mask_generator = torch.Generator(device="cpu")
         self.val_mask_generator.manual_seed(VALIDATION_MASK_SEED)
 
@@ -211,7 +211,7 @@ class StageA2Trainer:
           1. Chuyển tiếp tuần tự qua các cửa sổ theo thứ tự thời gian với các cập nhật bộ nhớ động.
           2. Giữ nguyên BPTT bị cắt bớt bằng cách tách bộ nhớ ở mỗi ranh giới cửa sổ.
           3. Thu thập các tensor tử số mất mát (loss) chính xác và che số mục tiêu trên tất cả các cửa sổ trong nhóm.
-          4. Tính toán chính xác mục tiêu nhóm đa nhiệm:
+          4. Tính toán chính xác mục tiêu nhóm đa tác vụ:
                L_rel_group  = sum(rel_loss_sum_k) / max(1, sum(rel_target_count_k))
                L_node_group = sum(node_sq_err_sum_k) / max(1, sum(node_element_count_k))
                L_time_group = sum(time_loss_sum_k) / max(1, sum(time_target_count_k))
@@ -257,7 +257,7 @@ class StageA2Trainer:
         sum_node_tensor = torch.stack(group_node_losses).sum() if group_node_losses else torch.tensor(0.0, device=self.device)
         sum_time_tensor = torch.stack(group_time_losses).sum() if group_time_losses else torch.tensor(0.0, device=self.device)
 
-        # Mẫu số nhóm đa nhiệm chính xác
+        # Mẫu số nhóm đa tác vụ chính xác
         L_rel_group = sum_rel_tensor / max(1, total_rel_targets) if total_rel_targets > 0 else torch.tensor(0.0, device=self.device)
         L_node_group = sum_node_tensor / max(1, total_node_elements) if total_node_elements > 0 else torch.tensor(0.0, device=self.device)
         L_time_group = sum_time_tensor / max(1, total_time_targets) if total_time_targets > 0 else torch.tensor(0.0, device=self.device)
@@ -273,7 +273,7 @@ class StageA2Trainer:
         if is_training:
             L_graph_group.backward()
 
-            # Kiểm tra NaN / Inf trên Độ dốc tham số
+            # Kiểm tra NaN / Inf trên gradient tham số
             for name, param in self.model.named_parameters():
                 if param.grad is not None:
                     if torch.isnan(param.grad).any() or torch.isinf(param.grad).any():
@@ -322,7 +322,7 @@ class StageA2Trainer:
     def train_one_epoch(self, window_stream: Iterable[List[Dict[str, Any]]]) -> Dict[str, Any]:
         """
         Thực hiện một epoch huấn luyện đầy đủ trên các cửa sổ theo trình tự thời gian bằng cách gộp vào
-        nhóm tích lũy và tính toán chính xác các mục tiêu của nhóm đa nhiệm vụ.
+        nhóm tích lũy và tính toán chính xác các mục tiêu của nhóm đa tác vụ (multi-task group).
         """
         self.current_split = "TRAIN"
         self.model.train()
@@ -400,7 +400,7 @@ class StageA2Trainer:
           - Áp dụng INDUCTIVE_SPLIT_RESET_ZERO_MEMORY trước khi xác thực
           - Đặt lại trình tạo mặt nạ xác thực thành VALIDATION_MASK_SEED cố định = 20260823
           - Tính toán tổng hợp số liệu toàn cầu chính xác (tử số / mẫu số)
-          - Không có độ dốc, không có cập nhật trình tối ưu hóa/lập lịch
+          - Không có gradient, không có cập nhật trình tối ưu hóa/lập lịch
           - Áp dụng INDUCTIVE_SPLIT_RESET_ZERO_MEMORY sau khi xác thực trước khi quay lại huấn luyện
         """
         self.current_split = "VAL"
@@ -409,7 +409,7 @@ class StageA2Trainer:
         # Thiết lập lại ranh giới phân chia: Đánh giá quy nạp không yêu cầu bộ nhớ ban đầu
         self.model.reset_node_states()
 
-        # Đặt lại trình tạo mặt nạ xác thực cố định để đảm bảo mặt nạ giống hệt nhau trên các epoch và hạt giống
+        # Đặt lại trình tạo mặt nạ xác thực cố định để đảm bảo mặt nạ giống hệt nhau trên các epoch và seed
         self.val_mask_generator.manual_seed(VALIDATION_MASK_SEED)
 
         total_rel_loss_sum = 0.0
@@ -439,7 +439,7 @@ class StageA2Trainer:
                 windows_count += 1
                 self.stream_cursor += 1
 
-        # Đặt lại ranh giới phân chia sau xác thực: Không thực hiện các tương tác xác thực vào epoch đào tạo tiếp theo
+        # Đặt lại ranh giới phân chia sau xác thực: Không thực hiện các tương tác xác thực vào epoch huấn luyện tiếp theo
         self.model.reset_node_states()
 
         epoch_runtime = time.time() - t0

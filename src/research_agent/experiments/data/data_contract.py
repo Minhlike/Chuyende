@@ -2,7 +2,7 @@
 """
 Mô-đun xác thực tính toàn vẹn và hợp đồng dữ liệu
 Thực thi các bất biến khoa học nghiêm ngặt đối với việc hiện thực hóa dữ liệu thực của Chương 3:
-  - Bảo vệ chống lại các proxy tổng hợp trong quy trình đào tạo thực tế (RealTrainingDataViolation).
+  - Bảo vệ chống lại các proxy tổng hợp trong quy trình huấn luyện thực tế (RealTrainingDataViolation).
   - Bảo vệ không đóng chống rò rỉ nhãn hạ nguồn (downstream) trong quá trình huấn luyện trước tự giám sát (LabelLeakageError).
   - Theo dõi rõ ràng việc phân loại dữ liệu, xuất xứ nguồn, phù hợp từ vựng và Con dấu kiểm tra.
   - Xây dựng các bảng kê khai REAL-DATA-CONTRACT chuẩn cho bộ dữ liệu HDFS và BGL.
@@ -15,16 +15,16 @@ from dataclasses import dataclass, asdict
 from typing import Dict, Any, List, Optional, Set
 
 class RealTrainingDataViolation(Exception):
-    """Xảy ra khi quy trình đào tạo thực gặp phải proxy khói tổng hợp hoặc dữ liệu phân tách không hợp lệ."""
+    """Xảy ra khi quy trình huấn luyện thực gặp phải proxy khói tổng hợp hoặc dữ liệu phân tách không hợp lệ."""
     __test__ = False
 
 class LabelLeakageError(Exception):
-    """Xảy ra khi gói đào tạo trước Giai đoạn A1 tự giám sát có chứa nhãn giám sát hạ nguồn (downstream)."""
+    """Xảy ra khi gói tiền huấn luyện (pretraining) Giai đoạn A1 tự giám sát có chứa nhãn giám sát hạ nguồn (downstream)."""
     __test__ = False
 
 def enforce_real_training_data_purity(dataset_classification: str, record_metadata: Optional[Dict[str, Any]] = None):
     """
-    Đảm bảo rằng các đường ống đào tạo thực sự không thể đóng lại nếu được cung cấp proxy khói hoặc thiết bị kết hợp.
+    Đảm bảo rằng các pipeline huấn luyện thực sự không thể đóng lại nếu được cung cấp proxy khói hoặc thiết bị kết hợp.
     """
     forbidden_classes = ["SYNTHETIC_PROXY", "SYNTHETIC_SMOKE_ONLY", "HYBRID_SMOKE_FIXTURE"]
     if dataset_classification.upper() in forbidden_classes:
@@ -42,7 +42,7 @@ def enforce_real_training_data_purity(dataset_classification: str, record_metada
 
 def enforce_ssl_package_label_free(package_dict: Dict[str, Any]):
     """
-    Đảm bảo rằng các gói đào tạo trước tự giám sát Giai đoạn A1 hoàn toàn không có nhãn phía sau.
+    Đảm bảo rằng các gói tiền huấn luyện (pretraining) tự giám sát Giai đoạn A1 hoàn toàn không có nhãn phía sau.
     """
     forbidden_label_keys = [
         "labels", "label", "anomaly", "anomalies", "alert", "alerts",

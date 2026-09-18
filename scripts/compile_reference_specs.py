@@ -1,5 +1,5 @@
 """
-Trình biên dịch và nhập dữ liệu tham khảo, quyền sở hữu và chứng cứ chuẩn mực (Nhắc 3)
+Trình biên dịch và nhập dữ liệu tham khảo, quyền sở hữu và chứng cứ chuẩn mực (Prompt 3)
 """
 
 import json
@@ -803,7 +803,7 @@ def build_canonical_reference_map_data() -> dict:
         },
     ]
 
-    # Ánh xạ quyền sở hữu hợp quy giữa các chương (Phần 15.1, 15.2, 15.3)
+    # Ánh xạ quyền sở hữu trí tuệ hợp chuẩn giữa các chương (Phần 15.1, 15.2, 15.3)
     ownership_mappings = [
         # Chương 1
         {"mapping_id": "OWN-000001", "node_code": "1.1.1", "component_name": "Log Space Characteristics & Drift Taxonomy", "ownership": IntellectualOwnership.ADAPTED.value, "source_ids": ["SRC-000002", "SRC-000018"], "motivation_source_ids": [], "notes": "Operational taxonomy (Concept/Template/Population/Representation Drift) is OURS/ADAPTED framing."},
@@ -1106,7 +1106,7 @@ def compile_and_ingest_reference_map():
 
     data = build_canonical_reference_map_data()
 
-    # 1. Viết các tạo phẩm YAML & BibTeX
+    # 1. Viết các artifact YAML & BibTeX
     manifest_path = ref_dir / "SOURCE-MANIFEST.yaml"
     ownership_path = ref_dir / "OWNERSHIP-MAP.yaml"
     contribution_path = ref_dir / "CONTRIBUTION-REGISTRY.yaml"

@@ -1,4 +1,4 @@
-﻿# tập lệnh/resume_stage_a2_local_seed999_epoch12.ps1
+﻿# scripts/resume_stage_a2_local_seed999_epoch12.ps1
 # Tiếp tục Canonical Seed 999 từ checkpoint epoch 11 -> Thực thi epoch cuối cùng 12
 # Được định cấu hình cho Chế độ bình thường ban ngày (Ưu tiên: Bình thường, Mối quan hệ: Lõi P 0-7, Quạt im lặng <= 54C, Hoàn thành <= 3 giờ)
 

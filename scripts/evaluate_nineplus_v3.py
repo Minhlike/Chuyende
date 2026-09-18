@@ -8,7 +8,7 @@ Giao thức: TRAIN_FIT_FULL_FIXED_VALIDATION_EVALUATE
 - Trích xuất đại diện tàu: ALL 35.000 phiên tàu
 - Trích xuất biểu diễn xác thực: ALL 7.500 phiên xác thực
 - Lắp bộ dò (probe): Độc quyền trên các biểu diễn Train (50 epoch, AdamW lr=1e-2, wd=1e-4, batch_size=256)
-- bộ dò (probe) hạt giống RNG: Khóa tới 10007 (tách khỏi hạt giống mô hình xương sống)
+- bộ dò (probe) RNG seed: Khóa tới 10007 (tách khỏi seed của mô hình backbone)
 - Đánh giá: 100% phân chia xác thực (7.500 phiên)
 - Xác minh bất biến thành viên:
     Tàu SHA: 65b76694b0a3cf5c6d684a26899b1e5dca634cfd0985560149feddc12ca8ccfc

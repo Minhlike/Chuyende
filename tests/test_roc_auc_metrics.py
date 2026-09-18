@@ -10,7 +10,7 @@ import unittest
 import numpy as np
 from sklearn.metrics import average_precision_score, roc_auc_score
 
-# Đảm bảo thư mục tập lệnh có trên sys.path
+# Đảm bảo thư mục scripts có trên sys.path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from scripts.run_nineplus_confirmatory import compute_ap_and_roc_auc
 

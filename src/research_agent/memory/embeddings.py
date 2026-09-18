@@ -1,5 +1,5 @@
 """
-Nhúng tính trừu tượng của nhà cung cấp và công cụ vectơ cục bộ nhẹ (Dấu nhắc 4, Phần 23, Phần 46, ADR-0008)
+Nhúng tính trừu tượng của nhà cung cấp và công cụ vectơ cục bộ nhẹ (Dấu Prompt 4, Phần 23, Phần 46, ADR-0008)
 """
 
 import re

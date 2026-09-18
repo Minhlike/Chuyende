@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Kiểm tra tích hợp cho evaluate_downstream_linear_probe trong tập lệnh/run_nineplus_confirmatory.py.
+Kiểm tra tích hợp cho evaluate_downstream_linear_probe trong scripts/run_nineplus_confirmatory.py.
 Xác minh rằng việc đánh giá thăm dò trả về một từ điển hợp lệ với probe_ap và probe_roc_auc hữu hạn trong [0, 1].
 Cụ thể nắm bắt hồi quy trong đó evaluate_downstream_linear_probe kết thúc mà không trả về từ điển (trả về Không).
 """
@@ -13,7 +13,7 @@ from scripts.run_nineplus_confirmatory import evaluate_downstream_linear_probe
 
 class TestLinearProbeIntegration(unittest.TestCase):
     def test_evaluate_downstream_linear_probe_returns_valid_metrics(self):
-        # Tạo một tập dữ liệu tổng hợp nhỏ trên CPU: 100 mẫu, mờ 128
+        # Tạo một tập dữ liệu tổng hợp nhỏ trên CPU: 100 mẫu, dim 128
         torch.manual_seed(42)
         n_samples = 100
         z_dim = 128

@@ -1,5 +1,5 @@
 """
-Công cụ lưu trữ và xây dựng lại chỉ mục vectơ có nguồn gốc (Dấu nhắc 4, Phần 23, Phần 42, Bất biến 9)
+Công cụ lưu trữ và xây dựng lại chỉ mục vectơ có nguồn gốc (Dấu Prompt 4, Phần 23, Phần 42, Bất biến 9)
 """
 
 import json

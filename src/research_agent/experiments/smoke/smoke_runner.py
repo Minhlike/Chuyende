@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-Người chạy thử nghiệm khói xác thực/đào tạo CH3
+trình thực thi (runner) smoke test xác thực/huấn luyện CH3
 Thực hiện xác minh từ đầu đến cuối của kiến trúc Chương 2 trên các tập hợp con xác định nhỏ
 của sự phân chia TRAIN và VALIDATION.
 
 STRICT INVARIANTS:
   - TEST SET FIREWALL: Việc phân chia thử nghiệm được niêm phong nghiêm ngặt và đưa ra TestSetSealedError khi truy cập.
-  - IMMUTABLE RUN ARTIFACTS: Mỗi lần chạy sẽ ghi vào thư mục thí nghiệm/khói/chạy/<SMOKE_RUN_ID>/ riêng biệt của nó.
+  - IMMUTABLE RUN ARTIFACTS: Mỗi lần chạy sẽ ghi vào thư mục experiments/khói/chạy/<SMOKE_RUN_ID>/ riêng biệt của nó.
   - DATA CLASSIFICATION: Được gắn thẻ rõ ràng HYBRID_SMOKE_FIXTURE (Trình tự HDFS thực + Proxy tổng hợp).
   - EXACT CHAPTER 2 STAGE A OBJECTIVE: L_StageA = L_seq_self + L_graph_self + lambda_align * L_align + lambda_fuse * L_fuse_rec.
   - REAL ZERO-GRAD AUDIT: Khẳng định cấp độ tồn tại, hữu hạn và định mức > 1e-7 trên tất cả các tham số hoạt động dự kiến.
-  - TRUE CHECKPOINT RESUME: So sánh quá trình đào tạo Bước N+1 không bị gián đoạn với Bước tải lại checkpoint N+1.
+  - TRUE CHECKPOINT RESUME: So sánh quá trình huấn luyện Bước N+1 không bị gián đoạn với Bước tải lại checkpoint N+1.
 """
 
 import os
@@ -63,7 +63,7 @@ def compute_dict_hash(d: Dict[str, Any]) -> str:
 
 class SmokeTestRunner:
     """
-    Sắp xếp quy trình kiểm tra khói xác thực/xác thực xác định với khả năng cách ly hoạt động bất biến.
+    Sắp xếp quy trình smoke test xác thực/xác thực xác định với khả năng cách ly hoạt động bất biến.
     """
     def __init__(
         self,
@@ -111,7 +111,7 @@ class SmokeTestRunner:
 
     def load_and_subset_data(self) -> Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any]]:
         """
-        Tải chương trình đào tạo HDFS và phân tách xác thực một cách xác định bằng tường lửa Kiểm tra nghiêm ngặt.
+        Tải chương trình huấn luyện HDFS và phân tách xác thực một cách xác định bằng tường lửa Kiểm tra nghiêm ngặt.
         """
         hdfs_dir = self.base_dir / "experiments" / "runs" / "data" / "hdfs"
         train_path = hdfs_dir / "hdfs_train.pt"

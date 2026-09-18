@@ -6,12 +6,12 @@ Thực thi:
   2. Bộ dữ liệu có raw_dataset_acquired=false không thể trở thành SEALED.
   3. Không thể xác định lại danh tính Canonical H1–H5.
   4. Giao thức Bootstrap yêu cầu chính xác B=2000, Seed=10007.
-  5. Mảng hạt giống không thể giả dạng thành các đơn vị cụm.
+  5. Mảng seed không thể giả dạng thành các đơn vị cụm.
   6. Các số thực nghiệm được mã hóa cứng không thể vượt qua cơ chế bảo vệ xuất xứ.
   7. Đánh giá phân bổ trên HDFS trả về NOT_EVALUABLE_ON_HDFS không có GT thực.
-  8. Các nhánh biểu đồ và trình tự cần thiết cho nhiều chế độ xem H2.
+  8. Các nhánh biểu đồ và trình tự cần thiết cho đa góc nhìn (multi-view) H2.
   9. 4 Chế độ token quyền riêng tư cần thiết cho H5.
-  10. Đối thủ ReID yêu cầu phân chia đoàn tàu/val/kiểm tra rời rạc (0 trùng lặp).
+  10. mô hình đối nghịch ReID (ReID adversary) yêu cầu phân chia Train/Validation/Test rời rạc (0 trùng lặp).
   11. Cụm khởi động được ghép nối không chứa các nhánh holm alpha/2 cũ.
 """
 
@@ -91,7 +91,7 @@ def test_04_bootstrap_parameters_match_protocol():
     scores_a = np.random.uniform(0, 1, 140)
     scores_b = np.random.uniform(0, 1, 140)
 
-    # Phải chấp nhận B=2000, hạt giống=10007
+    # Phải chấp nhận B=2000, seed=10007
     res = paired_cluster_bootstrap_recompute(cluster_ids, y_t, scores_a, scores_b, b_resamples=2000, random_seed=10007)
     assert res["b_resamples"] == 2000
     assert res["seed"] == 10007
@@ -100,7 +100,7 @@ def test_04_bootstrap_parameters_match_protocol():
     with pytest.raises(ValueError, match="B=2000"):
         paired_cluster_bootstrap_recompute(cluster_ids, y_t, scores_a, scores_b, b_resamples=1000, random_seed=10007)
 
-    # Từ chối hạt giống không hợp lệ
+    # Từ chối seed không hợp lệ
     with pytest.raises(ValueError, match="seed=10007"):
         paired_cluster_bootstrap_recompute(cluster_ids, y_t, scores_a, scores_b, b_resamples=2000, random_seed=42)
 

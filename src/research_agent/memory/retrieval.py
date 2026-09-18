@@ -1,5 +1,5 @@
 """
-Trình biên dịch gói ngữ cảnh và công cụ truy xuất kết hợp (Dấu nhắc 4, Phần 19..27, ADR-0008)
+Trình biên dịch gói ngữ cảnh và công cụ truy xuất kết hợp (Dấu Prompt 4, Phần 19..27, ADR-0008)
 """
 
 import re
@@ -327,7 +327,7 @@ class HybridRetrievalEngine:
                     })
 
     def _expand_node_graph(self, node_code: str, add_fn: Any, contradiction_bucket: List[Dict[str, Any]]):
-        """Mở rộng Nút lộ trình -> Ánh xạ quyền sở hữu -> Nguồn -> Xác nhận quyền sở hữu."""
+        """Mở rộng Nút lộ trình -> Ánh xạ quyền sở hữu -> Nguồn -> luận điểm (claim)."""
         mappings = self.repo.list_ownership_mappings(node_code=node_code)
         for m in mappings:
             for s_id in m.primary_sources:

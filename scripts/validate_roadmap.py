@@ -1,5 +1,5 @@
 """
-Tập lệnh xác thực tính toàn vẹn của lộ trình (Phần 25)
+script xác thực tính toàn vẹn của lộ trình (Phần 25)
 """
 
 import sys

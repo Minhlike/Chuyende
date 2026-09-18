@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Trình trích xuất biểu đồ xuất xứ theo thời gian và quan hệ
-Triển khai Đặc tả đông lạnh Chương 2 (Phần 2.2 & Bang 2.2):
+Triển khai đặc tả đã đóng băng (frozen specification) Chương 2 (Phần 2.2 & Bang 2.2):
   - Sự kiện tương tác chứng minh nguồn động: e_i = (t_i, relation_type, src, dst, edge_features, src_node_attr, dst_node_attr)
   - Mã hóa thời gian tương đối hình sin: Phi(delta_t)
   - Ngân hàng bộ nhớ thực thể thời gian liên tục với bản cập nhật GRU, giới hạn dung lượng LRU và tính toán trạng thái

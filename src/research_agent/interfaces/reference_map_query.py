@@ -71,7 +71,7 @@ class ReferenceMapQueryService:
         return self.repo.list_citation_firewall_rules(status=status)
 
     def get_contradictory_claims(self) -> List[Dict[str, Any]]:
-        """Truy xuất tất cả các cặp xác nhận quyền sở hữu có quan hệ CONTRADICTS."""
+        """Truy xuất tất cả các cặp luận điểm (claim) có quan hệ CONTRADICTS."""
         relations = self.repo.list_claim_relations()
         contradict_rels = [r for r in relations if r.relation_type == ArgumentRelationType.CONTRADICTS]
         results = []

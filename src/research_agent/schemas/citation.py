@@ -1,5 +1,5 @@
 """
-Quy tắc tường lửa trích dẫn và sơ đồ xác minh (Phần 10, Phần 34, Lời nhắc 3)
+Quy tắc tường lửa trích dẫn và sơ đồ xác minh (Phần 10, Phần 34, Lời Prompt 3)
 """
 
 from datetime import datetime, timezone

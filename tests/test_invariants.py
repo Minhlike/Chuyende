@@ -61,7 +61,7 @@ def test_invariant_3_source_equation_without_provenance_rejected():
 
 
 def test_invariant_4_experiment_result_without_run_id_rejected():
-    """TEST 4: Xác nhận quyền sở hữu EXPERIMENT_RESULT không có ID ExperimentRun bị từ chối nghiêm ngặt (RC-02)."""
+    """TEST 4: luận điểm (claim) EXPERIMENT_RESULT không có ID ExperimentRun bị từ chối nghiêm ngặt (RC-02)."""
     with pytest.raises((ProvenanceError, ValidationError)):
         Claim(
             claim_id="CLM-000003",
@@ -144,7 +144,7 @@ def test_invariant_7_contradictory_evidence_preserved_concurrently(repository: R
     )
 
     assert ctr.contradiction_id.startswith("CTR-")
-    # Xác minh cả hai xác nhận quyền sở hữu vẫn tồn tại và trạng thái của chúng được chuyển sang CONTESTED
+    # Xác minh cả hai luận điểm (claim) vẫn tồn tại và trạng thái của chúng được chuyển sang CONTESTED
     reloaded_a = repository.get_claim(claim_a.claim_id)
     reloaded_b = repository.get_claim(claim_b.claim_id)
     assert reloaded_a is not None and reloaded_b is not None

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Kiểm tra tập lệnh/validate_experiment_index.py
+Kiểm tra scripts/validate_experiment_index.py
 Bao gồm xác minh tích cực và kiểm tra tiêu cực xác minh rằng việc giả mạo hàm băm CSV hoặc tính khả dụng không thành công.
 """
 

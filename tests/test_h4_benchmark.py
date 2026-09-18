@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Thử nghiệm khai thác điểm chuẩn SLO liên hợp H4
+Thử nghiệm bộ khung benchmark SLO liên hợp H4
 Xác minh:
   1. Dấu chân kích thước trạng thái (state_size_bytes, peak_state_bytes, active_entities) được đo trong/sau khi chạy.
-  2. Loại bỏ trùng lặp sự kiện từ xa: Các sự kiện nguồn giống nhau ở cả hai chế độ xem đều được tính ONCE.
+  2. Loại bỏ trùng lặp sự kiện từ xa: Các sự kiện nguồn giống nhau ở cả hai góc nhìn (view) đều được tính ONCE.
   3. benchmark_end_to_end lập hồ sơ đường dẫn đầy đủ với số lượng sự kiện được loại bỏ.
   4. benchmark_incremental_fusion cô lập bước tổng hợp.
 """

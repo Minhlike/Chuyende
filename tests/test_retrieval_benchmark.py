@@ -1,5 +1,5 @@
 """
-Kiểm tra điểm chuẩn xác định truy xuất kết hợp (Dấu nhắc 4, Mục 58)
+Kiểm tra điểm chuẩn xác định truy xuất kết hợp (Dấu Prompt 4, Mục 58)
 """
 
 import pytest
@@ -22,7 +22,7 @@ def prod_memory_mgr():
 
 
 # ----------------------------------------------------------------------
-# BENCHMARK-01: Truy vấn "học phím tắt"
+# BENCHMARK-01: Truy vấn "học shortcut"
 # ----------------------------------------------------------------------
 def test_retrieval_benchmark_shortcut_learning(prod_memory_mgr):
     bundle = prod_memory_mgr.retrieve("shortcut learning in evaluation baselines")

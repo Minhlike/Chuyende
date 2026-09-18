@@ -9,8 +9,8 @@ import scipy.stats as stats
 
 class ConfidenceIntervalEngine:
     """
-    Tính toán khoảng tin cậy tham số và phi tham số của Học sinh
-    Khoảng tin cậy của bootstrap theo kinh nghiệm với các hạt giống ngẫu nhiên có thể tái sản xuất.
+    Tính toán khoảng tin cậy tham số và phi tham số của Student
+    Khoảng tin cậy của bootstrap thực nghiệm với các seed ngẫu nhiên có thể tái sản xuất.
     """
 
     def compute_parametric_ci(
@@ -47,7 +47,7 @@ class ConfidenceIntervalEngine:
         random_seed: int = 42,
     ) -> Tuple[float, float, float]:
         """
-        Tính toán khoảng tin cậy phần trăm bootstrap theo kinh nghiệm xác định.
+        Tính toán khoảng tin cậy phần trăm bootstrap thực nghiệm xác định.
         Trả về (có nghĩa là lower_bound, upper_bound).
         """
         arr = np.array(values, dtype=float)

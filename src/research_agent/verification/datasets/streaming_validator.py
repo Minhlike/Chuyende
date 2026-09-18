@@ -180,7 +180,7 @@ class StreamingDatasetValidator:
         return res
 
     def audit_storage_cleanliness(self) -> Dict[str, Any]:
-        """Kiểm tra C: thúc đẩy các tạo phẩm nghiên cứu lớn ngẫu nhiên (>=256 MiB)."""
+        """Kiểm tra C: thúc đẩy các artifact nghiên cứu lớn ngẫu nhiên (>=256 MiB)."""
         c_root = Path("C:\\")
         large_violations = []
         

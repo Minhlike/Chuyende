@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Chiến dịch thử nghiệm Nineplus - Người chạy thử nghiệm kỹ thuật thống nhất giai đoạn 1
+Chiến dịch thử nghiệm Nineplus - trình thực thi (runner) thử nghiệm kỹ thuật thống nhất giai đoạn 1
 Thực hiện 3 lần chạy thử nghiệm liên tiếp với Seed 42 với đúng 2 epoch cho mỗi lần:
   1. SEQUENCE_ONLY (Bộ mã hóa máy biến áp, MEP + MPP + thời gian SSL)
   2. GRAPH_ONLY (TemporalGraphViewEncoding, rel + nút + thời gian SSL)
@@ -248,7 +248,7 @@ def run_pilot_sequence_only(
     inf_count = 0
     global_step = 0
 
-    # Vòng đào tạo với hợp đồng checkpoint
+    # Vòng lặp huấn luyện với hợp đồng checkpoint
     for epoch in range(1, epochs + 1):
         t_tr_start = time.perf_counter()
         model.train()
@@ -510,7 +510,7 @@ def run_pilot_graph_only(
         t_tr_start = time.perf_counter()
         print(f"[{run_id}] Starting Epoch {epoch}/{epochs} ({len(train_windows)} windows, {steps_per_epoch} steps)...")
 
-        # Quy trình đào tạo cửa sổ trong các nhóm tích lũy
+        # quy trình huấn luyện cửa sổ trong các nhóm tích lũy
         trainer.model.train()
         for g_idx in range(0, len(train_windows), grad_accum):
             group = train_windows[g_idx:g_idx + grad_accum]

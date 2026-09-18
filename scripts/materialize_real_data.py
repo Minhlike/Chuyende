@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Tập lệnh thực thi để hiện thực hóa các đầu vào Huấn luyện trước giai đoạn không có nhãn A1 SSL thực sự
+script thực thi để hiện thực hóa các đầu vào Huấn luyện trước giai đoạn không có nhãn A1 SSL thực sự
 for HDFS and BGL with true two-pass firewall, interval-causal partitioning,
 khe cắm đa thông số và ngăn chứa nhãn thăm dò riêng biệt.
 """

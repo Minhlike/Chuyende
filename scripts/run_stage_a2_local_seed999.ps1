@@ -1,4 +1,4 @@
-﻿# tập lệnh/run_stage_a2_local_seed999.ps1
+﻿# scripts/run_stage_a2_local_seed999.ps1
 # Ra mắt Canonical Seed 999 (Giai đoạn A2 HDFS Thực nghiệm - FINAL SEED)
 
 $ErrorActionPreference = "Stop"
@@ -15,7 +15,7 @@ $stdoutLog = "$logDir\seed999.stdout.log"
 $stderrLog = "$logDir\seed999.stderr.log"
 $pidFile = "$logDir\seed999.pid"
 
-# 1. Áp dụng hồ sơ điểm ngọt phần cứng
+# 1. Áp dụng cấu hình phần cứng tối ưu (Sweet Spot)
 & "$baseDir\scripts\set_training_sweetspot.ps1"
 
 $env:CUBLAS_WORKSPACE_CONFIG = ":4096:8"

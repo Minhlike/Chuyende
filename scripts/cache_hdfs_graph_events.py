@@ -3,7 +3,7 @@
 Công cụ vật chất hóa một lần cho các Sự kiện đồ thị HDFS.
 Truyền phát HDFS_1.tar.gz một lần và tách các sự kiện thành các phần tách TRAIN và VAL
 bị ràng buộc chặt chẽ với quyền phân chia SPL-HDFS-001.
-Bộ nhớ đệm dẫn đến tập dữ liệu/bộ đệm/hdfs_graph_events.pt.
+Bộ nhớ đệm dẫn đến datasets/bộ đệm/hdfs_graph_events.pt.
 """
 
 import time

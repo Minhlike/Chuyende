@@ -25,7 +25,7 @@ def test_invariant_10_path_guard_blocks_outside_writes(tmp_path: Path):
     with pytest.raises(SecurityPathViolationError):
         guard.resolve_safe_path(outside_dir / "secret.txt")
 
-    # 2. Truyền tải đường dẫn tương đối (../../outside)
+    # 2. tấn công duyệt thư mục (path traversal) tương đối (../../outside)
     with pytest.raises(SecurityPathViolationError):
         guard.resolve_safe_path("../DangerousOutside/escaped.txt")
 

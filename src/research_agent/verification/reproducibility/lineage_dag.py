@@ -26,7 +26,7 @@ class ScientificLineageDAG:
         self._backward_edges[child_id].add(parent_id)
 
     def get_downstream_dependents(self, entity_id: str) -> Set[str]:
-        """Trả về tất cả các tạo phẩm hạ nguồn (downstream) bắc cầu phụ thuộc vào entity_id."""
+        """Trả về tất cả các artifact hạ nguồn (downstream) bắc cầu phụ thuộc vào entity_id."""
         visited: Set[str] = set()
         queue = [entity_id]
 

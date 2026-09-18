@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Trình kiểm tra kiểu chữ kiểu chữ toán học trực quan tự động & Trình kiểm tra khóa kiểu chữ cứng
-Kiểm tra tất cả các định nghĩa hình, tập lệnh hiển thị và token trực quan được trích xuất.
+Kiểm tra tất cả các định nghĩa hình, script hiển thị và token trực quan được trích xuất.
 Thực thi không có mã định danh ASCII thô, không có toán giả và kiểu chữ khoa học nghiêm ngặt.
 """
 import re

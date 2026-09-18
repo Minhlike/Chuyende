@@ -8,7 +8,7 @@ from research_agent.schemas.reasoning import FalsificationPlan
 
 class FalsificationPlanner:
     """
-    Thiết kế các giao thức làm sai lệch theo kinh nghiệm và các biện pháp kiểm soát tiêu cực đối với các giả thuyết và tuyên bố.
+    Thiết kế các giao thức làm sai lệch thực nghiệm và các biện pháp kiểm soát tiêu cực đối với các giả thuyết và tuyên bố.
     Đảm bảo các thiết lập thử nghiệm có sức mạnh thực sự để bác bỏ các xác nhận sai.
     """
 
