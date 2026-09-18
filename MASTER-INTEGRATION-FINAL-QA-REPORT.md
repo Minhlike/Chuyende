@@ -11,10 +11,10 @@
 
 | Chỉ tiêu kỹ thuật | Trước khi chỉnh sửa (Baseline) | Sau khi chỉnh sửa (Post-Integration) | Trạng thái nghiệm thu |
 | :--- | :--- | :--- | :--- |
-| **DOCX File Size** | 2,377,692 bytes | 2,575,526 bytes | ĐẠT CHUẨN |
-| **DOCX SHA-256** | `2c8402fe7e908134d5638d44f7559b9f705c68606325238dc2111b6fb6110b40` | `12b401f4b31bbe5a47803de4c64bb196009bd1eaa645aea063830ef73283938f` | ĐÃ CẬP NHẬT |
-| **PDF File Size** | 2,419,057 bytes | 2,754,414 bytes | ĐẠT CHUẨN |
-| **PDF SHA-256** | `2db3ff17791f727aee75186c024521a5b47f7b5cefff42c2059428614bb2709d` | `5049551a6780bac49a838060d9d67ec1aca4898c0169089d4d009ffb4860a2dc` | ĐÃ CẬP NHẬT |
+| **DOCX File Size** | 2,377,692 bytes | 2,575,908 bytes | ĐẠT CHUẨN |
+| **DOCX SHA-256** | `2c8402fe7e908134d5638d44f7559b9f705c68606325238dc2111b6fb6110b40` | `b4cfc28f0b4a163061d4914a011d76b0afa077e70119fb4520415f5691d8b761` | ĐÃ CẬP NHẬT |
+| **PDF File Size** | 2,419,057 bytes | 2,755,875 bytes | ĐẠT CHUẨN |
+| **PDF SHA-256** | `2db3ff17791f727aee75186c024521a5b47f7b5cefff42c2059428614bb2709d` | `8e9a0cec75f8d25167f002d13786c1f6249ed7cdee6d51fc594288c609e10c83` | ĐÃ CẬP NHẬT |
 | **PDF Page Count** | 114 trang | **121 trang** | ĐO ĐẠC THỰC TẾ |
 | **Nút công thức OMML** | **606 nút** (`<m:oMath>`) | **606 nút** (`<m:oMath>`) | BẢO TOÀN TUYỆT ĐỐI (606 → 606) |
 | **Đoạn công thức OMML** | 98 đoạn (`<m:oMathPara>`) | 98 đoạn (`<m:oMathPara>`) | BẢO TOÀN TUYỆT ĐỐI (98 → 98) |
@@ -23,7 +23,7 @@
 
 ## 2. VỊ TRÍ 8 ĐOẠN TRÍCH MÃ NGUỒN CỐT LÕI (8 CODE EXCERPTS)
 
-Tất cả 8 đoạn trích mã nguồn được định dạng thống nhất: font Consolas 8.0 pt, khung viền mỏng màu xám `#D0D5DD`, nền xám nhạt `#F4F5F7`, có thuộc tính chống tách trang `cantSplit`, liên kết chặt chẽ với nhãn phụ đề (Caption) in nghiêng và đoạn giải thích phương pháp luận:
+Tất cả 8 đoạn trích mã nguồn được định dạng thống nhất: font Consolas 7.5 pt, khung viền mỏng màu xám `#D0D5DD`, nền xám nhạt `#F4F5F7`, căn lề trái tường minh (`w:jc w:val="left"`), thụt lề 0 pt, có thuộc tính chống tách trang `cantSplit`, liên kết chặt chẽ với nhãn phụ đề (Caption) in nghiêng và đoạn giải thích phương pháp luận:
 
 1. **Đoạn mã 2.1:** Logic phân loại và ẩn danh hóa tham số có nhận thức an ninh (`PrivacyAwareLogTokenizer.tokenize_line`).  
    - *Vị trí trong Master:* Mục 2.2.1 (ngay sau Bảng 2.1, Trang 53).
@@ -41,6 +41,7 @@ Tất cả 8 đoạn trích mã nguồn được định dạng thống nhất: 
    - *Vị trí trong Master:* Mục 3.1.3 (dưới phần Hệ thống thang đo đầu dò, Trang 96).
 8. **Đoạn mã 3.3:** Hàm tính toán AP và ROC-AUC xử lý đồng hạng (ties) chuẩn hóa qua scikit-learn (`compute_ap_and_roc_auc`).  
    - *Vị trí trong Master:* Mục 3.1.3 (liền kề sau Đoạn mã 3.2, Trang 96).
+   - *Đặc tả & Tính toàn vẹn:* Khối mã được ngắt kết thúc chuẩn xác tại câu lệnh `return ap, auc` của phần triển khai scikit-learn cốt lõi; loại bỏ hoàn toàn phần ngoại lệ fallback không cần thiết (`except ImportError: from scipy.stats import rankdata`). Khối mã nằm trọn vẹn trên Trang 96 mà không bị tràn 2 dòng mồ côi sang Trang 97. Tiêu đề phụ đề và văn bản thuyết minh hoàn toàn ăn khớp với nội dung mã nguồn được trình bày.
 
 ---
 
@@ -57,7 +58,9 @@ Tất cả 8 đoạn trích mã nguồn được định dạng thống nhất: 
 - **Tiến trình huấn luyện:** 6 epochs; kích hoạt Early Stopping tại Epoch 6 (patience = 3/3).
 - **Checkpoint tối ưu:** Epoch 3; Mất mát kiểm định tốt nhất (Val Loss) = `0.00921815038938671`; Phương sai ẩn = `0.09349559992551804`.
 - **Bộ nhớ GPU đỉnh:** `170.4453125 MB` VRAM (ghi nhận trong `RUN-MANIFEST.json`; RAM: 1.678,2 MB).
-- **Bộ dò trực tuyến nội bộ (TRAINING_INTERNAL_ONLINE_PROBE):** AP = `0.8993850472022873`, ROC-AUC = `0.9972634577897737` (phân định rõ ràng: đây là probe trực tuyến trên mini-batch, không nhầm lẫn với V3 frozen probe AP = 1.0000 / ROC-AUC = 1.0000 trên 100% Validation split).
+- **Bộ dò nội bộ sau huấn luyện (POST_TRAINING_INTERNAL_VAL_80_20_PROBE):** AP = `0.8993850472022873`, ROC-AUC = `0.9972634577897737`.
+  - *Phương pháp luận chuẩn hóa:* Phép đo được thực thi hoàn toàn độc lập sau khi quá trình huấn luyện backbone hoàn tất và checkpoint tốt nhất được nạp lại; toàn bộ trọng số biểu diễn được đóng băng. Biểu diễn của tập Validation 7.500 mẫu được chia tách phân tầng theo tỷ lệ 80/20 (tối ưu linear probe trên 80% và đo lường trên 20% holdout còn lại).
+  - *Phân biệt tuyệt đối với V3_FROZEN_PROBE:* Khác biệt hoàn toàn với giao thức đánh giá chuẩn hóa V3 (`V3_FROZEN_PROBE` nạp 35.000 mẫu Train để fit probe và đo trên 100% 7.500 mẫu Validation đạt AP = 1.0000 và ROC-AUC = 1.0000). Phép đo này cũng không phải là đánh giá trực tuyến theo từng mini-batch trong vòng lặp huấn luyện.
 - **Mã băm Checkpoint SHA-256:** `926b32512577ac66d8adc29bd145bf45868d176c440c733fb7e074c6470621cc`.
 
 ### 3.2. Ảnh minh chứng console thật (Hình 3.1)
@@ -93,6 +96,12 @@ Nhật ký thực thi `transcript.log` ghi nhận trạng thái `DIRTY (9 modifi
 4. **Trang trắng bất thường:** Không có bất kỳ trang trắng nào trong toàn bộ phần thân tài liệu (hai trang ngắt section chuẩn là Trang 3 và Trang 6 thuộc cấu trúc bìa/lời cảm ơn).
 5. **Tràn lề và ngắt dòng:** 100% các khối mã nguồn, bảng biểu và hình ảnh nằm gọn hoàn hảo trong biên độ lề in chuẩn (chiều rộng tối đa 6.5 inches), không có hiện tượng tràn lề hay đè chữ.
 6. **Bộ chữ tiếng Việt:** Toàn bộ văn bản mới chèn hiển thị chuẩn xác bảng mã Unicode tiếng Việt dựng sẵn, không xuất hiện lỗi font hay mất dấu diacritics.
+7. **Kiểm toán Typography, dãn cách chữ và dãn cách từ (Kerning & Word Spacing):**
+   - Đã rà soát trực quan toàn bộ 11 trang trọng yếu (Trang 53, 63, 67, 88, 92, 94, 96, 97, 105, 106, 107) qua các ảnh kết xuất độ phân giải cao (`scratch/prod_renders_final/`).
+   - 100% các đoạn văn duy trì dãn cách ký tự chuẩn tự nhiên (`w:spacing w:val="0"`), dãn đều hai bên (`w:jc w:val="both"`), hoàn toàn triệt tiêu hiện tượng dãn chữ ("N h ằ m", "G P U", "P R I V A C Y...").
+   - Toàn bộ 8 khối mã nguồn được thiết lập căn lề trái tường minh (`w:jc w:val="left"`), thụt lề 0 pt, font Consolas 7.5 pt, loại bỏ hoàn toàn hiện tượng dãn khoảng trắng giữa các token mã nguồn.
+   - Các chuỗi định danh dài và mã băm SHA-256 (như chuỗi 64 ký tự hex của checkpoint) được chèn ký tự ngắt mềm (zero-width space `\u200b`) theo chu kỳ 16 ký tự, cho phép Word tự động bẻ dòng mượt mà mà không kéo dãn các từ ngắn đứng trước ("SHA-256        đạt").
+   - Đoạn mã 3.3 kết thúc gọn gàng tại `return ap, auc`, cùng với Đoạn mã 3.2 nằm trọn vẹn trên Trang 96; Trang 97 bắt đầu mạch lạc với phần nội dung nghiên cứu Stage A2 mà không có dòng mã mồ côi.
 
 ---
 
