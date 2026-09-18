@@ -11,10 +11,10 @@
 
 | Chỉ tiêu kỹ thuật | Trước khi chỉnh sửa (Baseline) | Sau khi chỉnh sửa (Post-Integration) | Trạng thái nghiệm thu |
 | :--- | :--- | :--- | :--- |
-| **DOCX File Size** | 2,377,692 bytes | 2,575,908 bytes | ĐẠT CHUẨN |
-| **DOCX SHA-256** | `2c8402fe7e908134d5638d44f7559b9f705c68606325238dc2111b6fb6110b40` | `b4cfc28f0b4a163061d4914a011d76b0afa077e70119fb4520415f5691d8b761` | ĐÃ CẬP NHẬT |
-| **PDF File Size** | 2,419,057 bytes | 2,755,875 bytes | ĐẠT CHUẨN |
-| **PDF SHA-256** | `2db3ff17791f727aee75186c024521a5b47f7b5cefff42c2059428614bb2709d` | `8e9a0cec75f8d25167f002d13786c1f6249ed7cdee6d51fc594288c609e10c83` | ĐÃ CẬP NHẬT |
+| **DOCX File Size** | 2,377,692 bytes | 2,570,754 bytes | ĐẠT CHUẨN |
+| **DOCX SHA-256** | `2c8402fe7e908134d5638d44f7559b9f705c68606325238dc2111b6fb6110b40` | `1820f2b91ef0bb68b5d49b4cb5c043e7b0d4984c19ffaa58d267effffe95708c` | ĐÃ CẬP NHẬT |
+| **PDF File Size** | 2,419,057 bytes | 2,755,345 bytes | ĐẠT CHUẨN |
+| **PDF SHA-256** | `2db3ff17791f727aee75186c024521a5b47f7b5cefff42c2059428614bb2709d` | `72c389fe41d279919c4f758b9c5da138660ef7c09b185a805d573bb3f3a190ab` | ĐÃ CẬP NHẬT |
 | **PDF Page Count** | 114 trang | **121 trang** | ĐO ĐẠC THỰC TẾ |
 | **Nút công thức OMML** | **606 nút** (`<m:oMath>`) | **606 nút** (`<m:oMath>`) | BẢO TOÀN TUYỆT ĐỐI (606 → 606) |
 | **Đoạn công thức OMML** | 98 đoạn (`<m:oMathPara>`) | 98 đoạn (`<m:oMathPara>`) | BẢO TOÀN TUYỆT ĐỐI (98 → 98) |
@@ -96,12 +96,26 @@ Nhật ký thực thi `transcript.log` ghi nhận trạng thái `DIRTY (9 modifi
 4. **Trang trắng bất thường:** Không có bất kỳ trang trắng nào trong toàn bộ phần thân tài liệu (hai trang ngắt section chuẩn là Trang 3 và Trang 6 thuộc cấu trúc bìa/lời cảm ơn).
 5. **Tràn lề và ngắt dòng:** 100% các khối mã nguồn, bảng biểu và hình ảnh nằm gọn hoàn hảo trong biên độ lề in chuẩn (chiều rộng tối đa 6.5 inches), không có hiện tượng tràn lề hay đè chữ.
 6. **Bộ chữ tiếng Việt:** Toàn bộ văn bản mới chèn hiển thị chuẩn xác bảng mã Unicode tiếng Việt dựng sẵn, không xuất hiện lỗi font hay mất dấu diacritics.
-7. **Kiểm toán Typography, dãn cách chữ và dãn cách từ (Kerning & Word Spacing):**
-   - Đã rà soát trực quan toàn bộ 11 trang trọng yếu (Trang 53, 63, 67, 88, 92, 94, 96, 97, 105, 106, 107) qua các ảnh kết xuất độ phân giải cao (`scratch/prod_renders_final/`).
-   - 100% các đoạn văn duy trì dãn cách ký tự chuẩn tự nhiên (`w:spacing w:val="0"`), dãn đều hai bên (`w:jc w:val="both"`), hoàn toàn triệt tiêu hiện tượng dãn chữ ("N h ằ m", "G P U", "P R I V A C Y...").
-   - Toàn bộ 8 khối mã nguồn được thiết lập căn lề trái tường minh (`w:jc w:val="left"`), thụt lề 0 pt, font Consolas 7.5 pt, loại bỏ hoàn toàn hiện tượng dãn khoảng trắng giữa các token mã nguồn.
-   - Các chuỗi định danh dài và mã băm SHA-256 (như chuỗi 64 ký tự hex của checkpoint) được chèn ký tự ngắt mềm (zero-width space `\u200b`) theo chu kỳ 16 ký tự, cho phép Word tự động bẻ dòng mượt mà mà không kéo dãn các từ ngắn đứng trước ("SHA-256        đạt").
-   - Đoạn mã 3.3 kết thúc gọn gàng tại `return ap, auc`, cùng với Đoạn mã 3.2 nằm trọn vẹn trên Trang 96; Trang 97 bắt đầu mạch lạc với phần nội dung nghiên cứu Stage A2 mà không có dòng mã mồ côi.
+7. **Kiểm toán Typography, triệt tiêu phân mảnh OOXML Run và lỗi Kerning/Dãn chữ:**
+   - **Nguyên nhân gốc rễ (Root Cause):** Động cơ biên tập và bộ kiểm tra chính tả mặc định của MS Word tự động phân mảnh các từ tiếng Việt có dấu thành các phần tử `<w:r>` đơn ký tự độc lập (ví dụ từ "mất mát" bị chia thành `m`, `ấ`, `t`, ` `, `m`, `á`, `t` trong các run riêng biệt; `p[595]` bị xé thành 87 runs, `p[1548]` thành 215 runs). Khi bộ hiển thị Word kết xuất văn bản căn đều hai bên (`both`), mỗi `<w:r>` bị đối xử như một khối layout rời rạc, gây ra hiện tượng khoảng hở kerning nghiêm trọng (`PR I V A C Y`, `Q uy trình`, `m ất m át`, `A P`, `R O C-AUC`, `N hằm`, `m anual_reproduction`, `com m it`, `G itC om m it`, `M B V R A M`).
+   - **Giải pháp xử lý triệt để (Pipeline Implementation):**
+     * Ứng dụng thư viện `lxml.etree` bảo toàn 100% không gian tên chuẩn của OOXML (`w:`, `m:`, `wp:`), ngăn chặn hoàn toàn lỗi gán tiền tố `ns0:` dẫn tới cảnh báo hỏng tệp trong Word COM.
+     * Duyệt qua toàn bộ văn bản (body paragraphs, table cells, captions, footnotes), gộp liên tiếp các thẻ `<w:r>` có định dạng đồng nhất (font, cỡ chữ, in đậm, in nghiêng, màu sắc, vị trí) thành một run duy nhất; chuẩn hóa văn bản Unicode dạng NFC và gắn thuộc tính `xml:space="preserve"`.
+     * Làm sạch thuộc tính dãn cách: loại bỏ triệt để `w:spacing`, `w:w`, `w:position` và chèn thẻ `<w:noProof/>` vào `w:rPr` của tất cả các run chữ tiếng Việt, vô hiệu hóa động cơ spell-check của Word nhằm ngăn chặn Word tự động chia tách lại run khi lưu tệp. Xóa bỏ an toàn các thẻ đánh dấu lỗi `w:proofErr`.
+     * Giảm thiểu thành công **1.897 runs phân mảnh** (tổng số run giảm từ 6.544 xuống 4.864 sau khi cập nhật Word COM).
+     * Chèn điểm ngắt mềm (`\u200b`) tại ranh giới token ghép của dòng tiêu đề/thuật ngữ dài trên Trang 97 (`Temporal\u200bGraph\u200bView\u200bEncoder` và `Multi-\u200bHead`), giúp Word bẻ dòng tự nhiên sau chữ "View" và triệt tiêu hoàn toàn hiện tượng dãn chữ cực đoan tại dòng 1 và dòng 6.
+   - **Kết quả nghiệm thu trực quan chi tiết trên 11 trang trọng yếu (Visual Audit at 2.0x Scale):**
+     * **Trang 53:** Cụm từ `PRIVACY_AWARE_PARAMETERIZED` và đoạn văn giải thích `Phương thức tokenize_line ở chế độ` hiển thị liền mạch tuyệt đối, không còn khoảng cách chữ bất thường.
+     * **Trang 63:** Chú thích Đoạn mã 2.2 và đoạn văn thuyết minh $L_{MPP}$ liên tục, công thức OMML chuẩn xác.
+     * **Trang 67:** Chú thích Đoạn mã 2.3 và thuyết minh cơ chế `reset_node_states` hoàn toàn liền lạc.
+     * **Trang 88:** Đoạn mã 2.4, công thức hàm kết hợp $g_t$ và thuyết minh cân đối, không lệch lề.
+     * **Trang 92:** Bảng 3.1 và chú thích/thuyết minh Đoạn mã 3.4 (`compute_file_sha256`) sắc nét, chuẩn typography.
+     * **Trang 94:** Bảng 3.2 và chú thích/thuyết minh Đoạn mã 3.1 (`compute_and_cache_split`) phẳng đẹp, căn đều tự nhiên.
+     * **Trang 96:** Các cụm từ `Quy trình huấn luyện`, `mất mát`, `AP`, `ROC-AUC` kết xuất tự nhiên, không rách từ; Đoạn mã 3.2 và Đoạn mã 3.3 (kết thúc chuẩn xác tại `return ap, auc`) nằm gọn gàng trên Trang 96 mà không để lại dòng mồ côi nào.
+     * **Trang 97:** Đoạn văn mở đầu bẻ dòng hoàn hảo tại `TemporalGraphViewEncoder` (ngắt xuống sau chữ "View"), loại bỏ hoàn toàn hiện tượng kéo dãn dòng 1 và dòng 6; các ký hiệu bullet $L_{rel}$, $L_{node}$, $L_{time}$ hiển thị đều đặn, tự nhiên.
+     * **Trang 105:** Các cụm từ `Nhằm xác thực`, `manual_reproduction`, `commit`, `POST_TRAINING_INTERNAL_VAL_80_20_PROBE` liền lạc 100%, không bị tách rời ký tự.
+     * **Trang 106:** Tiêu đề cột và dữ liệu Bảng 3.7b (`Git Commit SHA thực thi`, `MB VRAM`, `patience`, `checkpoint`) hiển thị chữ tự nhiên, liền khối, bảng nằm trọn vẹn trong trang.
+     * **Trang 107:** Ảnh chụp PowerShell Hình 3.1 và đoạn văn phân tích 3.3 / 3.3.1 sắc nét, căn lề hai bên hoàn hảo, không có lỗi kerning.
 
 ---
 
