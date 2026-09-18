@@ -39,10 +39,13 @@ Chạy script kiểm tra để xác nhận GPU và cấu hình CUDA:
 $env:CUBLAS_WORKSPACE_CONFIG=":4096:8"
 python scripts/gpu_smoke_test.py
 ```
-Kỳ vọng in ra: `[PASS] GPU Smoke Test Passed 100% (Zero Model Training)`.
+Kỳ vọng in ra: `[PASS] GPU Smoke Test Passed 100% (Zero Model Training)` với mã thoát 0. Nếu thiếu bất kỳ gói phụ thuộc nào (như `torch-geometric==2.6.1`) hoặc GPU không khả dụng, script sẽ dừng ngay lập tức với mã thoát 1 (Fail-Fast).
 
-### 2.3. Dữ liệu thực nghiệm bắt buộc
-Các tệp dữ liệu sau đây không lưu trong Git (theo quy định `.gitignore`) và cần có sẵn tại đường dẫn cục bộ tương ứng (tra cứu SHA-256 đối soát tại `experiments/nineplus/ARTIFACT-MANIFEST.json`):
+### 2.3. Dữ liệu thực nghiệm bắt buộc (Lưu ý về Clean Clone)
+> [!CAUTION]
+> **Trạng thái kho ngoại vi:** `clean_clone_ready: false` (Kho lưu trữ ngoại vi Zenodo/OSF đang ở trạng thái `OPEN` chờ xuất xưởng). Bản clone Git sạch **chưa thể chạy ngay** nếu chưa có sẵn dữ liệu và checkpoint cục bộ.
+
+Các tệp dữ liệu sau đây không lưu trong Git (theo quy định `.gitignore`) và cần có sẵn tại đường dẫn cục bộ tương ứng (kích thước và mã băm SHA-256 được script đối soát động từ `experiments/nineplus/ARTIFACT-MANIFEST.json`):
 - `experiments/runs/data/hdfs/hdfs_ssl_train.pt` (64,300,470 bytes)
 - `experiments/runs/data/hdfs/hdfs_ssl_val.pt` (12,125,250 bytes)
 - `experiments/runs/data/hdfs/hdfs_vocab.json` (5,897 bytes)
@@ -63,15 +66,15 @@ powershell -ExecutionPolicy Bypass -File manual_reproduction\run_manual_sequence
 ## 4. QUY TRÌNH TỰ ĐỘNG CỦA SCRIPT
 
 Script PowerShell `run_manual_sequence42.ps1` thực hiện nghiêm ngặt 10 bước an toàn:
-1. **Tự động xác định thư mục gốc:** Không hard-code `D:\Research`, tự nhận diện thư mục cha của `manual_reproduction/`.
-2. **Kiểm tra Fail-Fast:** Xác thực Python, CUDA, dung lượng đĩa trống (tối thiểu 2GB) và sự tồn tại của 4 tệp dữ liệu.
-3. **Kiểm tra mã băm toàn vẹn (SHA-256 Check):** Đối soát mã băm của 4 tệp dữ liệu trước khi nạp vào PyTorch.
-4. **Khởi tạo thư mục phiên chạy:** Tạo `manual_reproduction/runs/<timestamp>/` riêng biệt, không ghi đè bất kỳ tệp lịch sử nào.
-5. **Ghi nhật ký đầy đủ (Audit Trail):** Tự động ghi lại transcript console, Git commit SHA, git status, thông số Python/CUDA và các mã băm đầu vào.
-6. **Chụp ảnh snapshot thư mục trước khi chạy:** Quét danh sách các thư mục confirmatory đã có để nhận diện chính xác thư mục vừa sinh ra.
-7. **Kích hoạt huấn luyện:** Gọi `scripts/run_nineplus_confirmatory.py --mode sequence_only --seed 42 --epochs 12 --patience 3 --device cuda`.
-8. **Nhận diện thư mục kết quả mới:** Phát hiện đúng thư mục `experiments/nineplus/confirmatory/CONF_SEQUENCE_ONLY_seed42_<timestamp>/` vừa được tạo.
-9. **Kiểm tra nghiệm thu đầu ra:** Xác nhận sự hiện diện của `RUN-MANIFEST.json`, `TRAIN-LOG.jsonl`, `best_checkpoint.pt`, và tính mã băm SHA-256 của checkpoint mới.
+1. **Thiết lập biến môi trường xác định:** Thiết lập `$env:CUBLAS_WORKSPACE_CONFIG = ":4096:8"`.
+2. **Khởi chạy Smoke Test & Fail-Fast:** Gọi `scripts/gpu_smoke_test.py`; nếu mã thoát khác 0, script dừng khẩn cấp và không tiến hành huấn luyện.
+3. **Tự động xác định thư mục gốc:** Không hard-code `D:\Research`, tự nhận diện thư mục cha của `manual_reproduction/`.
+4. **Kiểm tra mã băm động:** Đọc danh mục tệp và mã băm SHA-256 kỳ vọng trực tiếp từ `experiments/nineplus/ARTIFACT-MANIFEST.json` để đối soát toàn vẹn dữ liệu.
+5. **Khởi tạo thư mục phiên chạy:** Tạo `manual_reproduction/runs/<timestamp>/` riêng biệt, không ghi đè bất kỳ tệp lịch sử nào.
+6. **Ghi nhật ký đầy đủ (Audit Trail):** Ghi transcript console bằng `Start-Transcript` (đảm bảo dừng bằng `Stop-Transcript` trong khối `finally`), lưu Git commit SHA, git status và thông số môi trường.
+7. **Snapshot danh mục trước khi chạy:** Quét các thư mục hiện hữu trong `experiments/nineplus/confirmatory/`.
+8. **Kích hoạt huấn luyện:** Gọi `scripts/run_nineplus_confirmatory.py --mode sequence_only --seed 42 --epochs 12 --patience 3 --device cuda --base-dir <RepoRoot>`.
+9. **Nhận diện và thẩm định thư mục kết quả mới:** Phát hiện thư mục `CONF_SEQUENCE_ONLY_seed42_<timestamp>/` duy nhất vừa sinh ra, xác thực `RUN-MANIFEST.json`, `TRAIN-LOG.jsonl`, `best_checkpoint.pt`, kiểm tra không có NaN/Inf trong loss.
 10. **Xuất báo cáo tóm tắt:** Lưu báo cáo đối soát tại `manual_reproduction/runs/<timestamp>/MANUAL_RUN_SUMMARY.txt`.
 
 ---
@@ -79,7 +82,8 @@ Script PowerShell `run_manual_sequence42.ps1` thực hiện nghiêm ngặt 10 b�
 ## 5. ĐỐI SOÁT KẾT QUẢ VỚI BÁO CÁO CHUYÊN ĐỀ
 
 Sau khi chạy xong, sinh viên mở tệp `MANUAL_RUN_SUMMARY.txt` và đối chiếu:
-- **Best Epoch:** Phải là Epoch 3.
+- **Best Epoch:** Epoch 3.
 - **Early Stopping:** Dừng tại Epoch 6 với `patience=3`.
-- **Best Val Loss:** Hội tụ xấp xỉ `1.1577`.
-- **Probe AP / ROC-AUC:** Đạt xấp xỉ `AP = 1.0000`, `ROC-AUC = 1.0000`.
+- **Best Val Loss:** Hội tụ xấp xỉ `0.0092` (theo hàm mất mát tự giám sát đa nhiệm Sequence View).
+- **Internal Online Probe AP / ROC-AUC:** Đạt xấp xỉ `AP ~ 0.8994`, `ROC-AUC ~ 0.9973`.
+- **Frozen Linear Probe V3 Standardized:** Đạt `AP = 1.0000`, `ROC-AUC = 1.0000` (được thẩm định độc lập qua `scripts/evaluate_nineplus_v3.py --architecture SEQUENCE_ONLY --seed 42`).

@@ -1,7 +1,7 @@
 # KẾ HOẠCH TINH GỌN VÀ CHUẨN HÓA KHO LƯU TRỮ DÀNH CHO PHẢN BIỆN
 **Tài liệu:** `SIMPLE-REVIEW-REPO-PLAN.md`  
 **Dự án:** Chuyên đề chuyên sâu của Sinh viên  
-**Kho lưu trữ:** `Minhlike/Chuyende` | **Nhánh:** `fix/thesis-apply-edits`  
+**Kho lưu trữ làm việc:** `Minhlike/Chuyende` | **Nhánh:** `fix/thesis-apply-edits` | **Kho xuất xưởng mục tiêu:** `Minhlike/chuyen-de-chuyen-sau` (đang để trống hoàn toàn, không đẩy gì sang trong pha này)  
 **Mục tiêu:** Tinh giản cấu trúc kho mã nguồn, loại bỏ thủ tục hành chính phức tạp, xây dựng tài liệu hướng dẫn trực quan, thiết thực cho giảng viên phản biện và lộ trình thực nghiệm độc lập cho sinh viên.
 
 ---
@@ -162,7 +162,7 @@ Tệp `README.md` mới sẽ được viết lại hoàn toàn bằng tiếng Vi
     ```powershell
     pip install --extra-index-url https://download.pytorch.org/whl/cu124 -r requirements-lock.txt
     ```
-  - Tệp `requirements-lock.txt` bao hàm mọi gói được import trong smoke/manual path: `torch==2.6.0+cu124`, `torch-geometric==2.6.1`, `pandas==2.2.3`, `numpy==1.26.4`, `scipy==1.13.1`, `scikit-learn==1.5.0`, `python-docx==1.1.2`, `psutil==5.9.8`, `pypdfium2`.
+  - Tệp `requirements-lock.txt` bao hàm mọi gói được import trong smoke/manual path: `torch==2.6.0+cu124`, `torch-geometric==2.6.1`, `pandas==3.0.5`, `numpy==2.5.2`, `scipy==1.18.0`, `scikit-learn==1.9.1`, `python-docx==1.2.0`, `pypdfium2==5.13.0`, `psutil==7.2.2`, `pywin32==312`.
 
 - **Mục B: Kiểm tra cấu hình phần cứng và PyTorch:**
   - Lệnh thực thi: `python scripts/gpu_smoke_test.py`.
@@ -316,21 +316,15 @@ Tuyển chọn 8 đoạn trích mã nguồn then chốt (mỗi đoạn từ 8 đ
 - **NỘI DUNG SINH VIÊN CẦN NẮM VỮNG:** Giải thích nguyên lý đánh giá chất lượng biểu diễn tự giám sát: đóng băng 100% trọng số backbone, chỉ huấn luyện ma trận $W \in \mathbb{R}^{128 \times 1}$ với bộ tối ưu AdamW trong 50 epochs trên biểu diễn Train, cố định hạt giống 10007 để đảm bảo tính khách quan tuyệt đối.
 
 ### Đoạn trích 7: Tính toán các chỉ số an ninh Average Precision (AP) và ROC-AUC
-- **FILE:** `scripts/evaluate_nineplus_v3.py`
+- **FILE:** `scripts/run_nineplus_confirmatory.py` / `scripts/evaluate_nineplus_v3.py`
 - **FUNCTION:** `compute_ap_and_roc_auc`
-- **LINE_RANGE:** 57–82 (26 dòng)
+- **LINE_RANGE:** 55–85
 - **THESIS_SECTION:** Mục 3.1.3 (Hệ thống thang đo ba tầng và hàm mục tiêu)
-- **SHORT_CAPTION:** Thuật toán tính toán tích phân AP và thống kê xếp hạng ROC-AUC hoàn chỉnh
-- **NỘI DUNG SINH VIÊN CẦN NẮM VỮNG:** Giải thích trọn vẹn hàm toán học từ bước kiểm tra nhãn hai lớp, tính toán tích phân hình thang Precision-Recall cho AP trên tập mất cân bằng cực đoan, tính toán thống kê Mann-Whitney U cho ROC-AUC, tới lệnh hoàn trả giá trị `return ap, auc`.
-- **CẢNH BÁO KỸ THUẬT & RÀO CẢN KHÓA (BLOCKER CONFIRMED):**
-  > [!CAUTION]
-  > **Xác nhận rào cản kỹ thuật: Code excerpt 7 KHÔNG ĐƯỢC PHÉP chèn vào Word cho tới khi xử lý xong ties:**
-  > Đã thực hiện kiểm thử đối chứng thực nghiệm trực tiếp giữa `compute_ap_and_roc_auc` và `sklearn.metrics.roc_auc_score` / `average_precision_score`:
-  > 1. **Trường hợp điểm số liên tục không trùng lặp (No ties):** Thuật toán tự cài đặt cho kết quả khớp tuyệt đối với scikit-learn (Sai số $= 0.00\text{e}+00$: ROC-AUC `1.000000` vs `1.000000`; AP `1.000000` vs `1.000000`).
-  > 2. **Trường hợp xuất hiện điểm số trùng lặp (Tied / Discrete scores):** Do sử dụng `ranks = np.argsort(np.argsort(scores)) + 1` (gán thứ hạng nguyên tùy ý theo thứ tự xuất hiện thay vì tính thứ hạng phân số trung bình - fractional / average rank), kết quả bị sai lệch đáng kể so với scikit-learn:
-  >    - **ROC-AUC:** Tự cài đặt $= 0.958333$ vs Scikit-learn $= 0.937500$ (Độ lệch: $+0.020833$).
-  >    - **AP:** Tự cài đặt $= 0.916667$ vs Scikit-learn $= 0.892857$ (Độ lệch: $+0.023810$).
-  > **Rào cản bắt buộc:** Đoạn mã `compute_ap_and_roc_auc` (Excerpt 7) **bị khóa, tuyệt đối không chèn vào bản thảo Master Word** cho đến khi được bổ sung hàm xếp hạng trung bình (`scipy.stats.rankdata` hoặc thuật toán tương đương xử lý ties). Ghi nhận minh bạch đây là hạn chế thuật toán hiện hữu của script kiểm thử nội bộ.
+- **SHORT_CAPTION:** Thuật toán tính toán tích phân AP và thống kê xếp hạng ROC-AUC chuẩn xác
+- **NỘI DUNG SINH VIÊN CẦN NẮM VỮNG:** Giải thích trọn vẹn hàm toán học từ bước kiểm tra nhãn hai lớp, tính toán tích phân Precision-Recall cho AP trên tập mất cân bằng cực đoan, tính toán thống kê ROC-AUC qua tích phân diện tích đường cong theo chuẩn Scikit-learn, xử lý chính xác trường hợp điểm số trùng lặp (ties) bằng thứ hạng phân số trung bình (fractional rank).
+- **CẬP NHẬT KỸ THUẬT & KHẮC PHỤC RÀO CẢN TIES:**
+  > [!IMPORTANT]
+  > **Đã khắc phục hoàn toàn lỗi xử lý ties:** Thuật toán tự cài đặt trước đây dùng `ranks = np.argsort(np.argsort(scores)) + 1` gây sai lệch ~0.02 khi có điểm số trùng lặp. Trong đợt triển khai hạ tầng, hàm `compute_ap_and_roc_auc` trong `scripts/run_nineplus_confirmatory.py` đã được nâng cấp tích hợp trực tiếp `sklearn.metrics.average_precision_score` và `roc_auc_score` (kèm cơ chế xếp hạng phân số trung bình dự phòng), đạt độ chính xác tuyệt đối và đã vượt qua 100% bộ kiểm thử tự động `tests/test_roc_auc_metrics.py`. Đoạn trích khi chèn vào bản thảo Word Master sẽ sử dụng logic chuẩn hóa này.
 
 ### Đoạn trích 8: Hàm băm SHA-256 theo khối dữ liệu lớn (Chunk-based Hashing)
 - **FILE:** `src/research_agent/core/hash_utils.py`
@@ -359,28 +353,26 @@ Rà soát các tệp mã nguồn để chuẩn bị cho giai đoạn tinh gọn 
 
 ## 9. CHỈ MỤC BẰNG CHỨNG THỰC NGHIỆM (`experiments/experiment_index.csv`)
 
-Nhằm giúp Thầy/Cô phản biện tra cứu tức thì bất kỳ mô hình nào mà không cần duyệt cây thư mục phức tạp, đề xuất xây dựng duy nhất **MỘT** bảng chỉ mục `experiments/experiment_index.csv` với cấu trúc cột phân định rạch ròi giữa `run_source_commit` (mã commit khi chạy mô hình) và `evidence_commit` (mã commit khóa nghiệm thu bằng chứng), cập nhật chính xác `best_epoch`, `best_val_loss` và hiện trạng trong Git:
+Nhằm giúp Thầy/Cô phản biện tra cứu tức thì bất kỳ mô hình nào mà không cần duyệt cây thư mục phức tạp, bảng chỉ mục `experiments/experiment_index.csv` được chuẩn hóa thành cấu trúc **18 cột** phân định rạch ròi giữa giao thức đầu dò nội bộ khi huấn luyện (`TRAINING_INTERNAL_ONLINE_PROBE` / `HISTORICAL_STAGE_A2_INTERNAL_PROBE`) và giao thức đầu dò tuyến tính đóng băng chuẩn hóa V3 (`FROZEN_PROBE_V3_STANDARDIZED` / `NOT_EVALUATED_V3`), đồng thời phân tách `run_source_commit` và `evidence_commit` (`878a3db`), cập nhật chính xác `best_epoch`, `best_val_loss` và hiện trạng tệp trong Git:
 
-| run_id | architecture | seed | best_epoch | best_val_loss | checkpoint (ngoại vi) | log / manifest | validation_result | run_source_commit | evidence_commit | status |
-| :--- | :--- | :---: | :---: | :---: | :--- | :--- | :--- | :---: | :---: | :---: |
-| `CONF_SEQUENCE_ONLY_seed42_1789413645` | SEQUENCE_ONLY | 42 | **3** | 1.1577 | `.../best_checkpoint.pt` | `TRAIN-LOG.jsonl`<br>`RUN-MANIFEST.json` | `AP=1.0000, ROC=1.0000` | `47e4ad6` | `878a3db` | `COMPLETED` |
-| `CONF_SEQUENCE_ONLY_seed7_1789415728` | SEQUENCE_ONLY | 7 | **11** | 0.8912 | `.../best_checkpoint.pt` | `TRAIN-LOG.jsonl`<br>`RUN-MANIFEST.json` | `AP=1.0000, ROC=1.0000` | `47e4ad6` | `878a3db` | `COMPLETED` |
-| `CONF_SEQUENCE_ONLY_seed999_1789420295` | SEQUENCE_ONLY | 999 | **12** | 0.9423 | `.../best_checkpoint.pt` | `TRAIN-LOG.jsonl`<br>`RUN-MANIFEST.json` | `AP=1.0000, ROC=1.0000` | `47e4ad6` | `878a3db` | `COMPLETED` |
-| `CONF_MULTI_VIEW_ALIGNED_seed42_1789393292` | MULTI_VIEW_ALIGNED | 42 | **6** | 49.3361 | `.../best_checkpoint.pt` | `TRAIN-LOG.jsonl`<br>`RUN-MANIFEST.json` | `AP=0.7604, ROC=0.9946` | `7bdcade` | `878a3db` | `COMPLETED` |
-| `CONF_MULTI_VIEW_ALIGNED_seed7_1789452137` | MULTI_VIEW_ALIGNED | 7 | **3** | **49.0099** | `.../best_checkpoint.pt` | *(Chưa commit log/manifest)* | `AP=0.6309, ROC=0.8081` | `1dc6741` | `878a3db` | `RESULT_JSON_ONLY_IN_GIT` |
-| `CONF_MULTI_VIEW_ALIGNED_seed999_1789541331` | MULTI_VIEW_ALIGNED | 999 | **4** | **48.7659** | `.../best_checkpoint.pt` | *(Chưa commit log/manifest)* | `AP=0.5911, ROC=0.7693` | `0cc1752` | `878a3db` | `RESULT_JSON_ONLY_IN_GIT` |
-| `CONF_GRAPH_ONLY_seed42_1789448995` | GRAPH_ONLY | 42 | 1 | 6.0814 | *Historical Checkpoint* | `RUN-MANIFEST.json` | *Chưa chốt (Chờ artifact V3)* | `3e0bcef` | `878a3db` | `HISTORICAL_REF (PENDING_AUDIT)` |
-| `CONF_GRAPH_ONLY_seed7_1789449292` | GRAPH_ONLY | 7 | 12 | 5.8921 | *Historical Checkpoint* | `RUN-MANIFEST.json` | *Chưa chốt (Chờ artifact V3)* | `d6fb10b` | `878a3db` | `HISTORICAL_REF (PENDING_AUDIT)` |
-| `CONF_GRAPH_ONLY_seed999_1789449583` | GRAPH_ONLY | 999 | 12 | 5.7142 | *Historical Checkpoint* | `RUN-MANIFEST.json` | *Chưa chốt (Chờ artifact V3)* | `d6fb10b` | `878a3db` | `HISTORICAL_REF (PENDING_AUDIT)` |
+| run_id | architecture | seed | best_epoch | best_val_loss | internal_probe (ap/roc) | v3_frozen_probe (ap/roc) | manifest_status | status |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| `CONF_SEQUENCE_ONLY_seed42_1789413645` | SEQUENCE_ONLY | 42 | **3** | `0.009218` | `0.8994` / `0.9973` | `1.0000` / `1.0000` | AVAILABLE_IN_GIT | `COMPLETED` |
+| `CONF_SEQUENCE_ONLY_seed7_1789415728` | SEQUENCE_ONLY | 7 | **11** | `0.006330` | `0.9179` / `0.9984` | `1.0000` / `1.0000` | AVAILABLE_IN_GIT | `COMPLETED` |
+| `CONF_SEQUENCE_ONLY_seed999_1789420295` | SEQUENCE_ONLY | 999 | **12** | `0.007330` | `0.7887` / `0.9263` | `1.0000` / `1.0000` | AVAILABLE_IN_GIT | `COMPLETED` |
+| `CONF_MULTI_VIEW_ALIGNED_seed42_1789393292` | MULTI_VIEW_ALIGNED | 42 | **6** | `49.176773` | `0.5850` / `0.9413` | `0.7604` / `0.9946` | AVAILABLE_IN_GIT | `COMPLETED` |
+| `CONF_MULTI_VIEW_ALIGNED_seed7_1789452137` | MULTI_VIEW_ALIGNED | 7 | **3** | **49.009924** | *(Trong RUN-MANIFEST cục bộ)* | `0.6309` / `0.8081` | LOCAL_EVIDENCE_ONLY | `RESULT_JSON_ONLY_IN_GIT` |
+| `CONF_MULTI_VIEW_ALIGNED_seed999_1789541331` | MULTI_VIEW_ALIGNED | 999 | **4** | **48.765851** | *(Trong RUN-MANIFEST cục bộ)* | `0.5911` / `0.7693` | LOCAL_EVIDENCE_ONLY | `RESULT_JSON_ONLY_IN_GIT` |
+| `CONF_GRAPH_ONLY_seed42_1789448995` | GRAPH_ONLY | 42 | 1 | `6.081395` | `0.1610` / `0.6128` | *(Chưa đánh giá V3)* | AVAILABLE_IN_GIT | `HISTORICAL_REF_PENDING_AUDIT` |
+| `CONF_GRAPH_ONLY_seed7_1789449292` | GRAPH_ONLY | 7 | 12 | `5.892097` | `0.1643` / `0.6300` | *(Chưa đánh giá V3)* | AVAILABLE_IN_GIT | `HISTORICAL_REF_PENDING_AUDIT` |
+| `CONF_GRAPH_ONLY_seed999_1789449583` | GRAPH_ONLY | 999 | 12 | `5.714209` | `0.1601` / `0.5917` | *(Chưa đánh giá V3)* | AVAILABLE_IN_GIT | `HISTORICAL_REF_PENDING_AUDIT` |
 
-*Ghi chú quan trọng cho bảng chỉ mục:*
-1. **best_epoch và val loss chính xác:**
-   - Sequence seeds 42, 7, 999 lần lượt đạt val loss tốt nhất tại epoch 3, 11, 12.
-   - Multi-View seed 7 đạt val loss tốt nhất là **49.0099** tại **Epoch 3** (dừng sớm ở Epoch 6).
-   - Multi-View seed 999 đạt val loss tốt nhất là **48.7659** tại **Epoch 4** (dừng sớm ở Epoch 7).
-2. **run_source_commit vs evidence_commit:** `run_source_commit` là commit xác lập mã nguồn tại thời điểm huấn luyện backbone; `evidence_commit` (`878a3db`) là commit đóng gói và nghiệm thu toàn bộ báo cáo bằng chứng thực nghiệm của chiến dịch Nineplus V3.
-3. **Multi-View seed 7 & 999:** Hiện trong Git chỉ mới có tệp kết quả `V3-PROBE-RESULT.json`; thư mục huấn luyện cục bộ chứa manifest và log chưa được thêm vào Git.
-4. **Graph-Only:** Không chốt chỉ số đánh giá AP/ROC-AUC cho tới khi xác định được tệp artifact kết quả đo kiểm V3 tương ứng.
+*Ghi chú quan trọng và cơ chế thẩm định tự động:*
+1. **18 cột đầy đủ trong `experiments/experiment_index.csv`:** Bao gồm `run_id`, `architecture`, `seed`, `run_source_commit`, `evidence_commit`, `manifest_source_path`, `manifest_availability`, `manifest_sha256`, `best_epoch`, `best_val_loss`, `internal_probe_protocol`, `internal_probe_ap`, `internal_probe_roc_auc`, `v3_result_artifact`, `v3_probe_protocol`, `frozen_probe_v3_ap`, `frozen_probe_v3_roc_auc`, `status`.
+2. **Kịch bản kiểm định tự động `scripts/validate_experiment_index.py`:** Kiểm tra đối soát 100% từng dòng trong CSV với các tệp JSON nguồn (`RUN-MANIFEST.json`, `V3-PROBE-RESULT.json`), đối soát mã băm SHA-256 của manifest và bảo đảm không xảy ra hiện tượng trộn lẫn chỉ số giữa đầu dò nội bộ và đầu dò V3 chuẩn hóa. Kịch bản trả về mã thoát 0 khi hợp lệ và 1 khi có bất kỳ sai lệch nào.
+3. **Phân định ranh giới commit:** `run_source_commit` xác lập commit mã nguồn lúc huấn luyện; `evidence_commit` (`878a3db`) là commit khóa nghiệm thu toàn diện chiến dịch Nineplus V3.
+4. **Multi-View seed 7 & 999:** Được đánh dấu minh bạch `LOCAL_EVIDENCE_ONLY` và `RESULT_JSON_ONLY_IN_GIT` (kèm đường dẫn nguồn và mã băm SHA-256 của manifest cục bộ).
+5. **Graph-Only:** Cột `frozen_probe_v3_ap` và `roc_auc` để trống, giao thức ghi nhận `NOT_EVALUATED_V3`, trạng thái `HISTORICAL_REF_PENDING_AUDIT`.
 
 ---
 
@@ -450,33 +442,35 @@ Chi tiết từng bước trong backlog:
 2. **Khóa provenance experiment & Khắc phục đường dẫn cứng — [ĐÃ HOÀN THÀNH]:**  
    - Xác lập ranh giới rõ ràng giữa `run_source_commit` và `evidence_commit` (`878a3db`).
    - **Đã xóa bỏ hard-code đường dẫn:** Cập nhật `scripts/run_nineplus_confirmatory.py` hỗ trợ tham số `--base-dir` và tự động suy diễn thư mục gốc repository thông qua `Path(__file__).resolve().parent.parent`.
-   - Đã tạo `experiments/experiment_index.csv` (14 cột) phân định ranh giới commit và đánh dấu rõ hiện trạng Multi-View Seed 7/999 (`RESULT_JSON_ONLY_IN_GIT`) và Graph-Only (`HISTORICAL_REF_PENDING_AUDIT`).
+   - Đã tạo và xác thực `experiments/experiment_index.csv` (18 cột) phân định rạch ròi giữa đầu dò nội bộ và đầu dò V3, đánh dấu rõ hiện trạng Multi-View Seed 7/999 (`RESULT_JSON_ONLY_IN_GIT`) và Graph-Only (`HISTORICAL_REF_PENDING_AUDIT`), đi kèm kịch bản kiểm tra tự động `scripts/validate_experiment_index.py` (pass 100%).
 
 3. **Cơ chế artifact ngoại vi & Bảng kê Artifact Manifest riêng biệt — [ĐÃ HOÀN THÀNH]:**  
    - Đã khởi tạo tệp bảng kê máy học đọc được `experiments/nineplus/ARTIFACT-MANIFEST.json` ghi nhận đầy đủ 9 artifact nhị phân quan trọng (checkpoints `best_checkpoint.pt`, dữ liệu tiền xử lý `.pt`, nhãn đầu dò train/val), kích thước file, SHA-256 đã kiểm chứng và phân loại rõ `LOCAL_ONLY` vs `AVAILABLE_IN_GIT`.
+   - Khóa cờ trạng thái: `"clean_clone_ready": false`, `"external_artifact_retrieval_status": "OPEN (Zenodo/OSF external storage repository pending deployment; clean git clone cannot run without local artifact placement)"`.
 
 4. **Khóa phụ thuộc môi trường (Dependency Lock) — [ĐÃ HOÀN THÀNH]:**  
-   - Đã tạo tệp `requirements-lock.txt` chứa đầy đủ mọi gói import cho cả luồng smoke test và luồng chạy thủ công (`torch==2.6.0+cu124`, `torch-geometric==2.8.0.post1`, `pandas==3.0.5`, `numpy==2.5.2`, `scipy==1.18.0`, `scikit-learn==1.9.1`, `python-docx==1.2.0`, `pypdfium2==5.13.0`, `psutil==7.2.2`, `pywin32==312`).
+   - Đã cập nhật tệp `requirements-lock.txt` chứa đầy đủ mọi gói import cho cả luồng smoke test và luồng chạy thủ công (`torch==2.6.0+cu124`, `torch-geometric==2.6.1`, `pandas==3.0.5`, `numpy==2.5.2`, `scipy==1.18.0`, `scikit-learn==1.9.1`, `python-docx==1.2.0`, `pypdfium2==5.13.0`, `psutil==7.2.2`, `pywin32==312`).
    - Đã khai báo chỉ mục PyTorch CUDA chính thức: `--extra-index-url https://download.pytorch.org/whl/cu124`.
    - Giữ vững nguyên tắc: Không cam kết môi trường giống 100% trước khi thực sự tiến hành kiểm thử phòng sạch độc lập.
 
 5. **Thiết lập quy trình tái lập độc lập (Manual Reproduction Setup) — [ĐÃ HOÀN THÀNH]:**  
    - Đã biên soạn cẩm nang hướng dẫn `manual_reproduction/README.md`.
-   - Đã hoàn thiện kịch bản PowerShell chuẩn mực `manual_reproduction/run_manual_sequence42.ps1` (được lưu trữ với UTF-8 BOM, tương thích hoàn toàn với Windows PowerShell 5.1). Kịch bản tự động kích hoạt `scripts/run_nineplus_confirmatory.py` với `--base-dir`, nhận diện đúng thư mục sinh ra trong `experiments/nineplus/confirmatory/` và xuất báo cáo đối soát sang `manual_reproduction/MANUAL_RUN_SUMMARY.txt`.
+   - Đã hoàn thiện kịch bản PowerShell chuẩn mực `manual_reproduction/run_manual_sequence42.ps1` (được lưu trữ với UTF-8 BOM, tương thích hoàn toàn với Windows PowerShell 5.1). Kịch bản tự động gọi `scripts/gpu_smoke_test.py` đầu tiên và dừng ngay nếu có lỗi (Fail-Fast), đối soát động mã băm từ `ARTIFACT-MANIFEST.json`, kích hoạt `scripts/run_nineplus_confirmatory.py` với `--base-dir`, nhận diện đúng thư mục sinh ra trong `experiments/nineplus/confirmatory/` và xuất báo cáo đối soát sang `manual_reproduction/MANUAL_RUN_SUMMARY.txt`.
 
 6. **Chạy thực tế và chụp ảnh minh chứng (Execute & Capture Real Screenshots) — [ĐÃ SẴN SÀNG NỀN TẢNG]:**  
-   - Đã nâng cấp `scripts/gpu_smoke_test.py`: In đường dẫn thư mục gốc, trạng thái biến môi trường `CUBLAS_WORKSPACE_CONFIG`, tổng dung lượng VRAM thực tế (4095.5 MB / 4.00 GB trên RTX 3050 Ti Laptop), danh mục phiên bản các thư viện phụ thuộc và kết luận tổng thể PASS/FAIL.
+   - Đã nâng cấp `scripts/gpu_smoke_test.py`: In đường dẫn thư mục gốc, trạng thái biến môi trường `CUBLAS_WORKSPACE_CONFIG`, tổng dung lượng VRAM thực tế (4095.5 MB / 4.00 GB trên RTX 3050 Ti Laptop), bảng phiên bản thư viện đối soát chặt chẽ với `ENVIRONMENT-LOCK.json` và trả mã thoát 1 nếu bất kỳ điều kiện nào không thỏa mãn (Fail-Fast gating).
+   - Đã xây dựng bộ unit tests `tests/test_gpu_smoke_test.py` kiểm định cả nhánh PASS lẫn FAIL của smoke test.
    - Sẵn sàng để sinh viên tự mở PowerShell ngoài môi trường AI để chạy huấn luyện thực tế và chụp 7 ảnh màn hình theo đúng kế hoạch.
 
-7. **Chèn mã nguồn và ảnh minh họa vào Word (Insert Code & Visuals into Word) — [ĐÃ KHÓA RÀO CẢN TIES]:**  
-   - **Xác nhận rào cản kỹ thuật thuật toán ROC-AUC (Đoạn trích 7):** Đã kiểm thử đối chứng thực nghiệm với `sklearn.metrics`. Khi scores có ties, thuật toán nội bộ lệch ~0.02 do không tính thứ hạng phân số trung bình. **Khóa cứng:** Tuyệt đối không chèn Đoạn trích 7 vào bản thảo Word Master cho tới khi bổ sung logic xử lý ties.
-   - 8 đoạn trích mã nguồn chuẩn hóa (Đoạn trích 1: L177–197; Đoạn trích 5: L107–120) và 7 ảnh chụp sẽ được chèn vào `Chuyên đề chuyên sâu.docx` sau khi sinh viên hoàn tất lượt chạy thủ công. Bảo toàn tuyệt đối 606 nút OMML và xuất khẩu `Chuyên đề chuyên sâu.pdf` đồng bộ 114 trang.
+7. **Chèn mã nguồn và ảnh minh họa vào Word (Insert Code & Visuals into Word) — [ĐÃ KHẮC PHỤC RÀO CẢN TIES]:**  
+   - **Khắc phục triệt để thuật toán ROC-AUC (Đoạn trích 7):** Đã nâng cấp hàm `compute_ap_and_roc_auc` trong `scripts/run_nineplus_confirmatory.py` sang chuẩn Scikit-learn (`average_precision_score`, `roc_auc_score` với fallback fractional rank). Đã kiểm thử vượt qua 100% unit tests `tests/test_roc_auc_metrics.py`.
+   - 8 đoạn trích mã nguồn chuẩn hóa (Đoạn trích 1: L177–197; Đoạn trích 5: L107–120; Đoạn trích 7: L55–85) và 7 ảnh chụp sẽ được chèn vào `Chuyên đề chuyên sâu.docx` sau khi sinh viên hoàn tất lượt chạy thủ công. Bảo toàn tuyệt đối 606 nút OMML và xuất khẩu `Chuyên đề chuyên sâu.pdf` đồng bộ 114 trang.
 
 8. **Thử nghiệm môi trường sạch độc lập (Reviewer Clean-Room Test):**  
    Mô phỏng quy trình của một giảng viên phản biện trên máy sạch: Clone kho Git, tải artifact ngoại vi theo `ARTIFACT-MANIFEST.json`, cài môi trường ảo qua `requirements-lock.txt`, chạy lệnh kiểm tra GPU và chạy tái lập kết quả đánh giá AP=1.0000.
 
 9. **Xuất xưởng và nghiệm thu (Final Release & Clean Repository Packaging):**  
-   Di chuyển toàn bộ các script tạm thời dùng một lần vào thư mục lưu trữ nội bộ hoặc xóa bỏ; hoàn thiện `experiments/experiment_index.csv`; gắn thẻ Git Release cho kho lưu trữ `Minhlike/Chuyende`.
+   Di chuyển toàn bộ các script tạm thời dùng một lần vào thư mục lưu trữ nội bộ hoặc xóa bỏ; hoàn thiện `experiments/experiment_index.csv`; chuẩn bị kho xuất xưởng mục tiêu `Minhlike/chuyen-de-chuyen-sau` và gắn thẻ Git Release hoàn tất chuyên đề.
 
 ---
 
@@ -487,8 +481,9 @@ Nhằm đảm bảo tính trung thực học thuật tối đa, toàn bộ các 
 | Mâu thuẫn phát hiện | Hiện trạng kỹ thuật | Trạng thái xử lý đã xác lập |
 | :--- | :--- | :--- |
 | **Mâu thuẫn số trang Master (100 / 104 / 114 trang)** | PDF hiện hành ghi nhận sơ bộ ~114 trang; báo cáo cũ ghi 104 trang; yêu cầu khung là $\ge$ 100 trang. | **ĐÃ GIẢI QUYẾT TẠI BƯỚC 1:** Đo kiểm thực nghiệm trực tiếp: DOCX có SHA `2c8402fe...`, 606 nút OMML; PDF có SHA `2db3ff17...`, đúng **114 trang**. Chính thức chốt số trang Master là 114 trang. |
-| **Tính sẵn sàng của bản clone sạch (Clean Clone Readiness)** | Checkpoint `*.pt`, dữ liệu raw và cache nhị phân không có trong Git; người clone sạch chưa thể chạy ngay. | **ĐÃ GIẢI QUYẾT TẠI BƯỚC 3 & 4:** Đã tạo `ARTIFACT-MANIFEST.json` riêng (filename, size, SHA-256, provenance) và `requirements-lock.txt` để nạp artifact trước khi chạy. |
+| **Tính sẵn sàng của bản clone sạch (Clean Clone Readiness)** | Checkpoint `*.pt`, dữ liệu raw và cache nhị phân không có trong Git; người clone sạch chưa thể chạy ngay. | **ĐÃ KHÓA TRẠNG THÁI MINH BẠCH (OPEN):** `ARTIFACT-MANIFEST.json` đặt cờ `"clean_clone_ready": false`, `"external_artifact_retrieval_status": "OPEN (Zenodo/OSF pending)"`. Clone sạch chưa thể chạy nếu chưa nạp artifact. |
 | **Thiếu hụt tệp bằng chứng Multi-View Seed 7 & 999 trong Git** | Git chỉ có `V3-PROBE-RESULT.json`; chưa commit `RUN-MANIFEST.json` và `TRAIN-LOG.jsonl` tương ứng. | **ĐÃ KHÓA TRẠNG THÁI MINH BẠCH:** Ghi nhận rõ ràng trạng thái `RESULT_JSON_ONLY_IN_GIT` trong `experiment_index.csv` và `ARTIFACT-MANIFEST.json`. |
-| **Chỉ số đánh giá Graph-Only chưa được kiểm chứng V3** | Checkpoints Stage A2 là tham chiếu lịch sử; chưa chạy qua quy trình đầu dò V3 chuẩn hóa. | **ĐÃ KHÓA TRẠNG THÁI MINH BẠCH:** Giữ nguyên trạng thái `HISTORICAL_REF_PENDING_AUDIT` trong `experiment_index.csv`, không công bố số liệu chưa kiểm chứng. |
+| **Chỉ số đánh giá Graph-Only chưa được kiểm chứng V3** | Checkpoints Stage A2 là tham chiếu lịch sử; chưa chạy qua quy trình đầu dò V3 chuẩn hóa. | **ĐÃ KHÓA TRẠNG THÁI MINH BẠCH:** Giữ nguyên trạng thái `HISTORICAL_REF_PENDING_AUDIT` trong `experiment_index.csv`, protocol `NOT_EVALUATED_V3`, không công bố số liệu chưa kiểm chứng. |
 | **Hard-code đường dẫn `D:\Research` trong runner** | `run_nineplus_confirmatory.py` gán cứng `base_dir = Path(r"D:\Research")`, không chạy được trên thư mục/máy khác. | **ĐÃ KHẮC PHỤC TRIỆT ĐỂ:** Đã bổ sung tham số `--base-dir` và cơ chế fallback động `Path(__file__).resolve().parent.parent`. |
-| **Thuật toán ROC-AUC không xử lý ties trong Excerpt 7** | Hàm dùng `ranks = np.argsort(np.argsort(scores)) + 1` không xử lý xếp hạng trung bình cho ties. | **ĐÃ KIỂM CHỨNG & KHÓA RÀO CẢN:** Đã chứng minh thực nghiệm sai lệch ~0.02 với scikit-learn trên dữ liệu có ties. Khóa cứng không chèn Excerpt 7 vào Word cho tới khi sửa thuật toán. |
+| **Thuật toán ROC-AUC không xử lý ties trong Excerpt 7** | Hàm dùng `ranks = np.argsort(np.argsort(scores)) + 1` không xử lý xếp hạng trung bình cho ties. | **ĐÃ KHẮC PHỤC & KIỂM CHỨNG:** Đã tích hợp `sklearn.metrics.roc_auc_score` và kiểm thử tự động `tests/test_roc_auc_metrics.py` (pass 4/4 tests). |
+| **Phân biệt kho làm việc và kho xuất xưởng mục tiêu** | Dễ nhầm lẫn giữa kho phát triển và kho xuất bản chuyên đề sạch. | **ĐÃ KHÓA RÕ RÀNG:** `Minhlike/Chuyende` (nhánh `fix/thesis-apply-edits`) là kho làm việc; `Minhlike/chuyen-de-chuyen-sau` là kho xuất xưởng mục tiêu (hiện để trống hoàn toàn, không can thiệp). |

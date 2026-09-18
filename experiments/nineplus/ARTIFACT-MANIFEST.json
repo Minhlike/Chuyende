@@ -1,8 +1,10 @@
 {
-  "manifest_version": "1.0",
+  "manifest_version": "1.1",
   "project": "Chuyên đề chuyên sâu - Học biểu diễn log an ninh",
   "scope": "Sequence-Only Seed 42 & V3 Downstream Evaluation Artifacts",
   "total_artifacts_cataloged": 9,
+  "clean_clone_ready": false,
+  "external_artifact_retrieval_status": "OPEN (Zenodo/OSF external storage repository pending deployment; clean git clone cannot run without local artifact placement)",
   "artifacts": [
     {
       "relative_path": "experiments/runs/data/hdfs/hdfs_ssl_train.pt",
@@ -74,14 +76,14 @@
       "run_source_commit": "47e4ad6",
       "required_for_training": false,
       "required_for_v3_evaluation": true,
-      "description": "Optimal PyTorch model weights saved at Epoch 3 (val_loss=1.1577) before early stopping at Epoch 6"
+      "description": "Optimal PyTorch model weights saved at Epoch 3 (val_loss=0.009218) before early stopping at Epoch 6"
     },
     {
       "relative_path": "experiments/nineplus/confirmatory/CONF_SEQUENCE_ONLY_seed42_1789413645/RUN-MANIFEST.json",
       "artifact_role": "TRAINING_RUN_MANIFEST",
       "availability": "AVAILABLE_IN_GIT",
-      "size_bytes": 624,
-      "sha256": "1b7eea1cd7c72c9a343ea27c34704caf6cb626b19e8c8fc8e539244ee59496c9",
+      "size_bytes": 604,
+      "sha256": "d8f4265a34d2114a7eebdcd7f82c2a615b7573cc7ab08330ef9fee7a1bcb90b6",
       "producer_or_run_id": "CONF_SEQUENCE_ONLY_seed42_1789413645",
       "run_source_commit": "47e4ad6",
       "required_for_training": false,
@@ -92,8 +94,8 @@
       "relative_path": "experiments/nineplus/confirmatory/CONF_SEQUENCE_ONLY_seed42_1789413645/TRAIN-LOG.jsonl",
       "artifact_role": "TRAINING_STEP_LOG",
       "availability": "AVAILABLE_IN_GIT",
-      "size_bytes": 660487,
-      "sha256": "5dcd95eaa17e3f0cf443c44fb265de92a734aa8ab1b7af43d72b12abb8c43363",
+      "size_bytes": 657205,
+      "sha256": "adf20987d9adeb9ed1c2abb4da35e64cbd951006c9c2105ecde880b03a224f8e",
       "producer_or_run_id": "CONF_SEQUENCE_ONLY_seed42_1789413645",
       "run_source_commit": "47e4ad6",
       "required_for_training": false,
@@ -104,8 +106,8 @@
       "relative_path": "experiments/nineplus/evaluation_v3/CONF_SEQUENCE_ONLY_seed42_1789413645/V3-PROBE-RESULT.json",
       "artifact_role": "DOWNSTREAM_EVALUATION_RESULT",
       "availability": "AVAILABLE_IN_GIT",
-      "size_bytes": 816,
-      "sha256": "f9f2d5977a33a400bf25c44641a7e092acc4456cd5b76e3b38cd4e3ac4433859",
+      "size_bytes": 791,
+      "sha256": "f32970a265f7509344e134ace6a0ea65918856b9ce4a9526b15744abe4b01606",
       "producer_or_run_id": "V3_EVALUATION_HARNESS",
       "run_source_commit": "878a3db",
       "required_for_training": false,

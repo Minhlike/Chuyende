@@ -214,26 +214,93 @@ def evaluate_downstream_linear_probe(
             loss.backward()
             optimizer.step()
             
+def compute_ap_and_roc_auc(scores: np.ndarray, y_true: np.ndarray) -> Tuple[float, float]:
+    """
+    Computes Average Precision (AP) and ROC-AUC with standard tie handling.
+    Validates binary classes (must contain both 0 and 1).
+    Prioritizes sklearn.metrics with fallback to fractional rank-based Mann-Whitney U.
+    """
+    scores = np.asarray(scores, dtype=np.float64)
+    y_true = np.asarray(y_true, dtype=np.int64)
+
+    classes = np.unique(y_true)
+    if len(classes) != 2 or not np.array_equal(np.sort(classes), [0, 1]):
+        raise ValueError(
+            f"Binary classification requires exactly two classes [0, 1]. "
+            f"Found unique classes: {classes.tolist()}"
+        )
+
+    try:
+        from sklearn.metrics import average_precision_score, roc_auc_score
+        ap = float(average_precision_score(y_true, scores))
+        auc = float(roc_auc_score(y_true, scores))
+        return ap, auc
+    except ImportError:
+        from scipy.stats import rankdata
+        n_pos = int(np.sum(y_true == 1))
+        n_neg = int(np.sum(y_true == 0))
+
+        order = np.argsort(-scores, kind="mergesort")
+        sorted_scores = scores[order]
+        sorted_labels = y_true[order]
+
+        distinct_mask = np.diff(sorted_scores) != 0
+        threshold_idxs = np.where(distinct_mask)[0]
+        threshold_idxs = np.concatenate([threshold_idxs, [len(scores) - 1]])
+
+        tp = np.cumsum(sorted_labels == 1)[threshold_idxs]
+        fp = np.cumsum(sorted_labels == 0)[threshold_idxs]
+
+        recalls = tp / max(1, n_pos)
+        precisions = tp / np.maximum(tp + fp, 1)
+
+        recalls = np.concatenate(([0.0], recalls))
+        precisions = np.concatenate(([1.0], precisions))
+        ap = float(np.sum((recalls[1:] - recalls[:-1]) * precisions[1:]))
+
+        ranks = rankdata(scores, method="average")
+        pos_rank_sum = np.sum(ranks[y_true == 1])
+        u = pos_rank_sum - n_pos * (n_pos + 1) / 2.0
+        auc = float(u / max(1, n_pos * n_neg))
+
+        return ap, auc
+
+def evaluate_linear_probe(
+    z_train: torch.Tensor,
+    y_train: torch.Tensor,
+    z_test: torch.Tensor,
+    y_test: torch.Tensor,
+    seed: int = 10007,
+    epochs: int = 50,
+    lr: float = 0.001
+) -> Dict[str, float]:
+    set_all_seeds(seed)
+    dev = z_train.device
+    
+    probe = nn.Linear(128, 1).to(dev)
+    optimizer = torch.optim.AdamW(probe.parameters(), lr=lr, weight_decay=1e-4)
+    criterion = nn.BCEWithLogitsLoss()
+    
+    probe.train()
+    batch_size = 256
+    n_train = z_train.shape[0]
+    for ep in range(epochs):
+        perm = torch.randperm(n_train)
+        for b_start in range(0, n_train, batch_size):
+            b_ids = perm[b_start:b_start + batch_size]
+            optimizer.zero_grad()
+            logits = probe(z_train[b_ids]).squeeze(-1)
+            loss = criterion(logits, y_train[b_ids])
+            loss.backward()
+            optimizer.step()
+            
     probe.eval()
     with torch.no_grad():
         test_logits = probe(z_test).squeeze(-1)
         test_scores = torch.sigmoid(test_logits).cpu().numpy()
-        
-    order = np.argsort(-test_scores)
-    sorted_labels = y_test[order]
-    tp = np.cumsum(sorted_labels == 1)
-    fp = np.cumsum(sorted_labels == 0)
-    n_pos = np.sum(y_test == 1)
-    n_neg = np.sum(y_test == 0)
-    recalls = np.concatenate(([0.0], tp / max(1, n_pos)))
-    precisions = np.concatenate(([1.0], tp / (tp + fp)))
-    ap = float(np.sum((recalls[1:] - recalls[:-1]) * precisions[1:]))
-    
-    ranks = np.argsort(np.argsort(test_scores)) + 1
-    pos_rank_sum = np.sum(ranks[y_test == 1])
-    u = pos_rank_sum - n_pos * (n_pos + 1) / 2
-    auc = float(u / max(1, n_pos * n_neg))
-    
+        y_test_np = y_test.cpu().numpy() if isinstance(y_test, torch.Tensor) else np.asarray(y_test)
+
+    ap, auc = compute_ap_and_roc_auc(test_scores, y_test_np)
     return {"probe_ap": ap, "probe_roc_auc": auc}
 
 # =====================================================================
