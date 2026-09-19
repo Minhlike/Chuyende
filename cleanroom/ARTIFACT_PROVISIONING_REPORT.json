@@ -1,8 +1,8 @@
 {
-  "timestamp_utc": "2026-09-19T08:07:53.651110+00:00",
+  "timestamp_utc": "2026-09-19T12:05:40.710013+00:00",
   "cleanroom_root": "D:\\Research_Cleanroom_Test",
   "source_storage": "D:\\Research",
-  "total_provisioned": 6,
+  "total_provisioned": 7,
   "all_passed": true,
   "artifacts": [
     {
@@ -33,6 +33,16 @@
       "size_match": true,
       "expected_sha256": "7631ce3beb6861845a043c7e49e156fe79b011b6d85228a060708d03fecb0f73",
       "actual_sha256": "7631ce3beb6861845a043c7e49e156fe79b011b6d85228a060708d03fecb0f73",
+      "sha256_match": true
+    },
+    {
+      "relative_path": "experiments/runs/data/hdfs/hdfs_split_authority_cache.json",
+      "status": "VERIFIED_PASS",
+      "expected_size_bytes": 19997919,
+      "actual_size_bytes": 19997919,
+      "size_match": true,
+      "expected_sha256": "23f482bd3f8d7a3c09f2b586807e34e5c52843d82341a58b725f4ae84ec31d1f",
+      "actual_sha256": "23f482bd3f8d7a3c09f2b586807e34e5c52843d82341a58b725f4ae84ec31d1f",
       "sha256_match": true
     },
     {

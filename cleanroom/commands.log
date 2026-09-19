@@ -1,15 +1,16 @@
 ================================================================================
-REVIEWER CLEAN-ROOM VERIFICATION COMMAND LOG
-Timestamp (UTC): 2026-09-19T08:15:00Z
+REVIEWER CLEAN-ROOM VERIFICATION COMMAND LOG (FRESH RUN FROM HEAD)
+Timestamp (UTC): 2026-09-19T12:05:00Z - 2026-09-19T12:07:00Z
 Target Working Directory: D:\Research_Cleanroom_Test
 Branch: fix/thesis-apply-edits
+Verified Clone HEAD SHA: e2a4609b1e09cd5f1bbd1bb76b4e23b3277c81e9
 ================================================================================
 
-[COMMAND 1 - REPOSITORY CLONING]
+[COMMAND 1 - FRESH REPOSITORY CLONING]
 Command: git clone --branch fix/thesis-apply-edits https://github.com/Minhlike/Chuyende.git D:\Research_Cleanroom_Test
 Cwd: D:\
 Status: PASS (Exit Code 0)
-Commit SHA: a99a71cc1496e84848f491f3471dda9458ee622e
+Verified Commit SHA: e2a4609b1e09cd5f1bbd1bb76b4e23b3277c81e9
 Working Tree: Clean, 0 untracked files
 
 [COMMAND 2 - VIRTUAL ENVIRONMENT CREATION]
@@ -18,23 +19,15 @@ Cwd: D:\Research_Cleanroom_Test
 Status: PASS (Exit Code 0)
 Python Version: Python 3.12.8
 
-[COMMAND 3 - DEPENDENCY INSTALLATION]
-Command: .\.venv\Scripts\python.exe -m pip install --upgrade pip
+[COMMAND 3 - DEPENDENCY INSTALLATION & PACKAGE EDITABLE BINDING]
+Command: $env:PYTHONUTF8 = "1"; .\.venv\Scripts\python.exe -m pip install --upgrade pip
 Command: .\.venv\Scripts\python.exe -m pip install --extra-index-url https://download.pytorch.org/whl/cu124 -r requirements-lock.txt
 Command: .\.venv\Scripts\python.exe -m pip install -e .
 Cwd: D:\Research_Cleanroom_Test
 Status: PASS (Exit Code 0)
-Core Packages: torch==2.6.0+cu124, torch-geometric==2.6.1, numpy==2.5.2, scipy==1.18.0, pandas==3.0.5, scikit-learn==1.9.1, psutil==7.2.2
+Installed Packages: torch==2.6.0+cu124, torch-geometric==2.6.1, numpy==2.5.2, scipy==1.18.0, pandas==3.0.5, scikit-learn==1.9.1, psutil==7.2.2, python-docx==1.2.0, pypdfium2==5.13.0, pywin32==312, research-agent==0.1.0
 
-[COMMAND 4 - HARDWARE & DETERMINISTIC CUDA SMOKE TEST]
-Command: $env:CUBLAS_WORKSPACE_CONFIG = ":4096:8"; .\.venv\Scripts\python.exe scripts/gpu_smoke_test.py
-Cwd: D:\Research_Cleanroom_Test
-Status: PASS (Exit Code 0)
-Output: [PASS] GPU Smoke Test Passed 100% (Zero Model Training)
-Device: NVIDIA GeForce RTX 3050 Ti Laptop GPU (4096.0 MB VRAM)
-CUDA Capability: True, cuBLAS config verified
-
-[COMMAND 5 - ARTIFACT PROVISIONING & CRYPTOGRAPHIC VERIFICATION]
+[COMMAND 4 - ARTIFACT PROVISIONING & CRYPTOGRAPHIC VERIFICATION (7/7 ARTIFACTS)]
 Command: .\.venv\Scripts\python.exe scripts/provision_cleanroom_artifacts.py D:\Research
 Cwd: D:\Research_Cleanroom_Test
 Status: PASS (Exit Code 0)
@@ -46,6 +39,15 @@ Artifacts Provisioned: 7/7
 5. experiments/runs/data/vault/hdfs_probe_labels_train.pt (1,238,560 bytes, SHA: e6999838eb5b9dbf1aa8ff6f64e9a96d9e7ce3c0aede6feab2698223d78f3924) -> PASS
 6. experiments/runs/data/vault/hdfs_probe_labels_val.pt (265,624 bytes, SHA: 3364428ddbdf8d48744fc8a9492988a9467a88a4de3bf01ae8c9d106df460b1a) -> PASS
 7. experiments/nineplus/confirmatory/CONF_SEQUENCE_ONLY_seed42_1789413645/best_checkpoint.pt (10,922,752 bytes, SHA: 926b32512577ac66d8adc29bd145bf45868d176c440c733fb7e074c6470621cc) -> PASS
+Artifact Provisioning Report: cleanroom/ARTIFACT_PROVISIONING_REPORT.json (total_provisioned: 7, all_passed: true)
+
+[COMMAND 5 - HARDWARE & DETERMINISTIC CUDA SMOKE TEST]
+Command: $env:CUBLAS_WORKSPACE_CONFIG = ":4096:8"; .\.venv\Scripts\python.exe scripts/gpu_smoke_test.py
+Cwd: D:\Research_Cleanroom_Test
+Status: PASS (Exit Code 0)
+Output: [PASS] GPU Smoke Test Passed 100% (Zero Model Training)
+Device: NVIDIA GeForce RTX 3050 Ti Laptop GPU (4096.0 MB VRAM)
+CUDA Capability: True, cuBLAS config verified
 
 [COMMAND 6 - V3 DOWNSTREAM EVALUATION & INVARIANT VERIFICATION]
 Command: $env:CUBLAS_WORKSPACE_CONFIG = ":4096:8"; .\.venv\Scripts\python.exe scripts/evaluate_nineplus_v3.py --architecture SEQUENCE_ONLY --seed 42
@@ -57,8 +59,8 @@ Membership Invariants:
 - Ordered Train Session-ID SHA:   PASS (35396a595ded...)
 - Ordered Val Session-ID SHA:     PASS (4f474991f03a...)
 Representation Extraction:
-- Train: 35,000 sessions (12.97s)
-- Val: 7,500 sessions (3.24s)
+- Train: 35,000 sessions (3.63s)
+- Val: 7,500 sessions (0.71s)
 Probe Fitting:
 - Protocol: TRAIN_FIT_FULL_FIXED_VALIDATION_EVALUATE
 - Seed: 10007 (Fixed), 50 epochs, AdamW lr=1e-2, wd=1e-4, batch=256
@@ -70,8 +72,10 @@ Results:
 - NaN Count: 0 | Inf Count: 0
 - Output Artifact: experiments/nineplus/evaluation_v3/CONF_SEQUENCE_ONLY_seed42_1789413645/V3-PROBE-RESULT.json
 
-[COMMAND 7 - PATH CONTAMINATION AUDIT]
-Command: Scan all logs, transcripts, generated JSON and sys.path for "D:\Research\" (without _Cleanroom_Test)
-Status: PASS - Zero Contamination Confirmed
-All runtime paths resolve strictly within D:\Research_Cleanroom_Test.
+[COMMAND 7 - RUNTIME CONTAMINATION AUDIT]
+Command: .\.venv\Scripts\python.exe -c "import sys; [print(p) for p in sys.path]"
+Command: Scan all generated JSON files for "D:\Research\" (without _Cleanroom_Test)
+Status: PASS - ZERO CONTAMINATION CONFIRMED
+Source Checkpoint: D:\Research_Cleanroom_Test\experiments\nineplus\confirmatory\CONF_SEQUENCE_ONLY_seed42_1789413645\best_checkpoint.pt
+All imports and data lookups strictly resolved within D:\Research_Cleanroom_Test.
 ================================================================================

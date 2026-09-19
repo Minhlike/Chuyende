@@ -1,59 +1,52 @@
 # BÁO CÁO THẨM ĐỊNH MÔI TRƯỜNG SẠCH ĐỘC LẬP (REVIEWER CLEAN-ROOM REPORT)
 **Dự án:** Chuyên đề chuyên sâu - Nghiên cứu phương pháp trích xuất đặc trưng đối với dữ liệu log trong phát hiện tấn công  
-**Mã đợt kiểm tra:** `CLEANROOM-STEP8-VERIFICATION-V1`  
-**Thời gian thực hiện (UTC):** 2026-09-19T08:15:00Z  
+**Mã đợt kiểm tra:** `CLEANROOM-STEP8-REAUDIT-V2`  
+**Thời gian thực hiện (UTC):** 2026-09-19T12:07:00Z  
 **Thư mục phòng sạch:** `D:\Research_Cleanroom_Test`  
 **Kho mã nguồn:** `https://github.com/Minhlike/Chuyende.git` (Nhánh: `fix/thesis-apply-edits`)  
-**Commit SHA kiểm tra:** `a99a71cc1496e84848f491f3471dda9458ee622e`  
+**Commit SHA kiểm tra:** `e2a4609b1e09cd5f1bbd1bb76b4e23b3277c81e9` (Trùng khớp 100% với remote HEAD)  
 **Trạng thái nghiệm thu:** `CLEAN_ROOM_PASS = true` | `PUBLIC_CLEAN_CLONE_READY = false`  
 
 ---
 
-## 1. MỤC TIÊU VÀ NGUYÊN TẮC PHÒNG SẠCH (CLEAN-ROOM PRINCIPLES)
+## 1. MỤC TIÊU VÀ NGUYÊN TẮC PHÒNG SẠCH (CLEAN-ROOM RE-AUDIT PRINCIPLES)
 
-Mục tiêu của Bước 8 là chứng minh một giảng viên hoặc nhà nghiên cứu phản biện độc lập có thể bắt đầu từ một máy tính hoàn toàn mới:
-1. Clone mã nguồn trực tiếp từ Git remote `origin/fix/thesis-apply-edits`.
-2. Không sử dụng lại bất kỳ tệp môi trường ảo `.venv`, bộ đệm Python `__pycache__`, hay tệp nhị phân có sẵn trong môi trường phát triển `D:\Research`.
-3. Cài đặt môi trường độc lập từ tệp khóa phụ thuộc `requirements-lock.txt`.
-4. Nạp và đối soát toàn vẹn các artifact ngoại vi theo bảng kê `experiments/nineplus/ARTIFACT-MANIFEST.json`.
-5. Thực thi thành công bài kiểm tra phần cứng `scripts/gpu_smoke_test.py` và quy trình đánh giá hạ nguồn V3 `scripts/evaluate_nineplus_v3.py --architecture SEQUENCE_ONLY --seed 42`.
-6. Tái lập chính xác 100% các chỉ số khoa học công bố trong báo cáo chuyên đề ($AP = 1.0000$, $ROC\text{-}AUC = 1.0000$).
-7. Đảm bảo tính cô lập tuyệt đối (Zero Path Contamination): Không tồn tại bất kỳ phụ thuộc hoặc tham chiếu đường dẫn nào tới thư mục gốc `D:\Research`.
+Đợt kiểm tra lại (Re-audit) này được thực hiện nhằm khắc phục triệt để mâu thuẫn giữa commit lịch sử và kết quả phòng sạch:
+1. **Clone mới 100% từ HEAD hiện tại:** Khởi tạo thư mục hoàn toàn mới `D:\Research_Cleanroom_Test` từ commit `e2a4609b1e09cd5f1bbd1bb76b4e23b3277c81e9` trên `origin/fix/thesis-apply-edits`.
+2. **Không sửa đổi thủ công:** Tuyệt đối không can thiệp, không chỉnh sửa bất kỳ tệp mã nguồn hay kịch bản nào trong bản clone sạch.
+3. **Thực thi đúng quy trình tài liệu:** Vận hành độc lập dựa trên `manual_reproduction/README.md`, `requirements-lock.txt` và `scripts/provision_cleanroom_artifacts.py` đã có sẵn trong commit.
+4. **Thống nhất tuyệt đối số lượng artifact:** Bảng kê, tài liệu hướng dẫn và tệp JSON báo cáo nạp artifact (`ARTIFACT_PROVISIONING_REPORT.json`) thống nhất chính xác **7/7 artifacts**.
+5. **Kiểm tra ô nhiễm runtime (Runtime Contamination):** Xác nhận `D:\Research` chỉ xuất hiện duy nhất với vai trò nguồn lưu trữ (`source_storage`) khi sao chép ban đầu; toàn bộ quá trình runtime (import module, đọc dữ liệu, nạp checkpoint) giải quyết 100% nội bộ trong `D:\Research_Cleanroom_Test`.
 
 ---
 
 ## 2. NHẬT KÝ QUY TRÌNH THỰC HIỆN TỪNG BƯỚC
 
-### Bước 1: Khởi tạo thư mục và Clone Git sạch
+### Bước 1: Khởi tạo thư mục và Clone Git sạch từ HEAD
 - Thực hiện lệnh:
   ```powershell
   git clone --branch fix/thesis-apply-edits https://github.com/Minhlike/Chuyende.git D:\Research_Cleanroom_Test
   ```
-- Kết quả: Clone thành công tại commit `a99a71cc1496e84848f491f3471dda9458ee622e`, cây làm việc sạch hoàn toàn (`nothing to commit, working tree clean`).
+- Kết quả: Clone thành công tại commit `e2a4609b1e09cd5f1bbd1bb76b4e23b3277c81e9`, cây làm việc sạch hoàn toàn (`nothing to commit, working tree clean`).
 
 ### Bước 2: Thiết lập môi trường ảo biệt lập
 - Thực hiện lệnh:
   ```powershell
   cd D:\Research_Cleanroom_Test
   python -m venv .venv
-  .\.venv\Scripts\Activate.ps1
-  python -m pip install --upgrade pip
-  pip install --extra-index-url https://download.pytorch.org/whl/cu124 -r requirements-lock.txt
-  pip install -e .
+  $env:PYTHONUTF8 = "1"
+  .\.venv\Scripts\python.exe -m pip install --upgrade pip
+  .\.venv\Scripts\python.exe -m pip install --extra-index-url https://download.pytorch.org/whl/cu124 -r requirements-lock.txt
+  .\.venv\Scripts\python.exe -m pip install -e .
   ```
-- Kết quả: Cài đặt hoàn tất toàn bộ các gói phụ thuộc chính thức được khóa tại `requirements-lock.txt`:
-  - `torch==2.6.0+cu124` (Official PyTorch CUDA 12.4 Wheel)
-  - `torch-geometric==2.6.1`
-  - `numpy==2.5.2`, `scipy==1.18.0`, `pandas==3.0.5`, `scikit-learn==1.9.1`
-  - `psutil==7.2.2`, `python-docx==1.2.0`, `pypdfium2==5.13.0`, `pywin32==312`
-  - Gói dự án `research-agent==0.1.0` được liên kết trực tiếp tới `src/`.
+- Kết quả: Cài đặt hoàn tất toàn bộ các gói phụ thuộc chính thức từ `requirements-lock.txt` và liên kết gói `research-agent==0.1.0` vào môi trường ảo.
 
-### Bước 3: Nạp và kiểm định mật mã các Artifact ngoại vi
-Do các tệp dữ liệu nhị phân và checkpoint không lưu trong Git (tuân thủ `.gitignore`), script tự động `scripts/provision_cleanroom_artifacts.py` đã sao chép từ kho lưu trữ ngoại vi và đối soát mã băm SHA-256 động:
+### Bước 3: Nạp và kiểm định mật mã 7/7 Artifact ngoại vi
+Thực thi kịch bản tự động có sẵn trong commit:
 ```powershell
-python scripts/provision_cleanroom_artifacts.py D:\Research
+.\.venv\Scripts\python.exe scripts/provision_cleanroom_artifacts.py D:\Research
 ```
-Bảng đối soát 7 artifact thực nghiệm:
+Bảng đối soát mật mã 7/7 artifact (trích xuất trực tiếp từ `cleanroom/ARTIFACT_PROVISIONING_REPORT.json`):
 
 | STT | Tên tệp artifact | Kích thước kỳ vọng | Kích thước thực tế | SHA-256 đối soát | Trạng thái |
 | :---: | :--- | :---: | :---: | :--- | :---: |
@@ -65,98 +58,63 @@ Bảng đối soát 7 artifact thực nghiệm:
 | 6 | `experiments/runs/data/vault/hdfs_probe_labels_val.pt` | 265,624 bytes | 265,624 bytes | `3364428ddbdf8d48744fc8a9492988a9467a88a4de3bf01ae8c9d106df460b1a` | **PASS** |
 | 7 | `experiments/nineplus/confirmatory/.../best_checkpoint.pt` | 10,922,752 bytes | 10,922,752 bytes | `926b32512577ac66d8adc29bd145bf45868d176c440c733fb7e074c6470621cc` | **PASS** |
 
-Báo cáo máy đọc được lưu tại: `cleanroom/ARTIFACT_PROVISIONING_REPORT.json` (100% PASS).
+Tệp báo cáo: `cleanroom/ARTIFACT_PROVISIONING_REPORT.json` (`total_provisioned: 7`, `all_passed: true`).
 
-### Bước 4: Kiểm tra GPU & Môi trường tính toán xác định (Smoke Test)
+### Bước 4: Kiểm tra GPU Smoke Test
 - Thực hiện lệnh:
   ```powershell
   $env:CUBLAS_WORKSPACE_CONFIG = ":4096:8"
-  python scripts/gpu_smoke_test.py
+  .\.venv\Scripts\python.exe scripts/gpu_smoke_test.py
   ```
-- Kết quả in ra console:
-  ```text
-  ===========================================================================
-    GPU AND RUNTIME SMOKE TEST (STRICT PASS/FAIL GATE)
-  ===========================================================================
-  Repository Root: D:\Research_Cleanroom_Test
-  Python Executable: D:\Research_Cleanroom_Test\.venv\Scripts\python.exe
-  Python Version: 3.12.8
-  ---------------------------------------------------------------------------
-  CHECK ITEM                 | EXPECTED         | OBSERVED             | STATUS
-  ---------------------------------------------------------------------------
-  CUBLAS_WORKSPACE_CONFIG    | :4096:8          | :4096:8              | [PASS]
-  CUDA Availability          | True             | True (NVIDIA GeFor.. | [PASS]
-  PyTorch Version            | 2.6.0+cu124      | 2.6.0+cu124          | [PASS]
-  PyG (torch_geometric)      | 2.6.1            | 2.6.1                | [PASS]
-  Dep: numpy                 | Installed        | 2.5.2                | [PASS]
-  Dep: scipy                 | Installed        | 1.18.0               | [PASS]
-  Dep: scikit-learn          | Installed        | 1.9.1                | [PASS]
-  Dep: psutil                | Installed        | 7.2.2                | [PASS]
-  GPU matmul (1024x1024)     | allclose == True | Verified on cuda:0   | [PASS]
-  ---------------------------------------------------------------------------
-  [PASS] GPU Smoke Test Passed 100% (Zero Model Training).
-  ```
+- Kết quả: `[PASS] GPU Smoke Test Passed 100% (Zero Model Training)` với mã thoát 0.
+- GPU nhận diện: `NVIDIA GeForce RTX 3050 Ti Laptop GPU` (4096.0 MB VRAM).
 
-### Bước 5: Thực thi Đánh giá Hạ nguồn V3 và Tái lập Chỉ số
+### Bước 5: Thực thi Đánh giá Hạ nguồn V3 và Tái lập Số liệu
 - Thực hiện lệnh:
   ```powershell
   $env:CUBLAS_WORKSPACE_CONFIG = ":4096:8"
-  python scripts/evaluate_nineplus_v3.py --architecture SEQUENCE_ONLY --seed 42
+  .\.venv\Scripts\python.exe scripts/evaluate_nineplus_v3.py --architecture SEQUENCE_ONLY --seed 42
   ```
-- Tiến trình và kết quả thực nghiệm:
-  1. **Kiểm tra bất biến phân vùng nhân quả & tường lửa Test:**
-     - Train Membership SHA: `65b76694b0a3...` (PASS)
-     - Val Membership SHA: `14cf689f9682...` (PASS)
-     - Ordered Train Session-ID SHA: `35396a595ded...` (PASS)
-     - Ordered Val Session-ID SHA: `4f474991f03a...` (PASS)
-     - Test Firewall: `TEST_OPENED = false`, `TEST_READ_COUNT = 0`.
-  2. **Trích xuất biểu diễn:**
-     - 35.000 phiên Train: Trích xuất ma trận `[35000, 128]` trong 12.97 giây.
-     - 7.500 phiên Val: Trích xuất ma trận `[7500, 128]` trong 3.24 giây.
-  3. **Khớp Linear Probe V3:**
-     - Giao thức: `TRAIN_FIT_FULL_FIXED_VALIDATION_EVALUATE`.
-     - Seed khóa cố định: `10007` (tách biệt hoàn toàn với seed của backbone).
-     - Tối ưu hóa AdamW trên toàn bộ 35.000 vector Train qua 50 epochs (batch size 256, 6850 optimizer steps).
-  4. **Chỉ số đánh giá thu được trên 7.500 phiên Validation:**
-     - **Average Precision (AP):** `1.0000` (Khớp chính xác 100% với Báo cáo Chuyên đề).
-     - **ROC-AUC:** `1.0000` (Khớp chính xác 100% với Báo cáo Chuyên đề).
-     - **Phương sai không gian ẩn $\text{Var}(z)$:** `0.004535` (Khớp chính xác).
-     - **NaN / Inf:** `0` (Không có bất kỳ giá trị dị thường nào).
-  5. **Tệp lưu trữ kết quả:** `experiments/nineplus/evaluation_v3/CONF_SEQUENCE_ONLY_seed42_1789413645/V3-PROBE-RESULT.json`.
+- Kết quả thực nghiệm:
+  - Bất biến thành viên Train / Val: **PASS** (`65b76694b0a3...` / `14cf689f9682...`).
+  - Bất biến thứ tự Session-ID Train / Val: **PASS** (`35396a595ded...` / `4f474991f03a...`).
+  - Tường lửa tập Test: `TEST_OPENED = false`, `TEST_READ_COUNT = 0`.
+  - Trích xuất: 35.000 phiên Train (3.63s), 7.500 phiên Val (0.71s).
+  - Khớp Linear Probe V3 (Seed 10007, 50 epochs, AdamW): 6.850 bước tối ưu.
+  - **Average Precision (AP):** **`1.0000`**
+  - **ROC-AUC:** **`1.0000`**
+  - **Phương sai không gian ẩn $\text{Var}(z)$:** `0.004535`
+  - **NaN / Inf:** `0`
+  - Mã thoát: `0`.
+  - Tệp kết quả: `cleanroom/V3-PROBE-RESULT.json`.
 
 ---
 
-## 3. THẨM ĐỊNH TÍNH CÔ LẬP ĐƯỜNG DẪN (ZERO PATH CONTAMINATION)
+## 3. THẨM ĐỊNH KHÔNG Ô NHIỄM RUNTIME (ZERO RUNTIME CONTAMINATION)
 
-Đã thực hiện kiểm tra toàn diện tất cả các tệp sinh ra trong môi trường clean-room:
-- Tệp kết quả `V3-PROBE-RESULT.json` ghi nhận:
-  ```json
-  "source_checkpoint": "D:\\Research_Cleanroom_Test\\experiments\\nineplus\\confirmatory\\CONF_SEQUENCE_ONLY_seed42_1789413645\\best_checkpoint.pt"
-  ```
-- Toàn bộ `sys.path` của Python giải quyết nội bộ trong `D:\Research_Cleanroom_Test`:
-  - `D:\Research_Cleanroom_Test\src`
-  - `D:\Research_Cleanroom_Test`
-  - `D:\Research_Cleanroom_Test\.venv\Lib\site-packages`
-- Không có bất kỳ đường dẫn nào tới `D:\Research` xuất hiện trong runtime, log hoặc manifest.
-
----
-
-## 4. CÁC ĐIỂM NGHẼN ĐÃ PHÁT HIỆN VÀ KHẮC PHỤC TRIỆT ĐỂ
-
-Trong quá trình chạy thực tế của một người phản biện từ clone sạch, 2 khiếm khuyết kỹ thuật đã được phát hiện và khắc phục ngay tại gốc:
-1. **Bổ sung `src/` vào `sys.path` của các script đánh giá:**
-   - *Hiện tượng:* Khi chưa chạy `pip install -e .`, các script `scripts/evaluate_nineplus_v3.py`, `scripts/run_nineplus_confirmatory.py`, `scripts/run_h1_masking_ablation.py`, `scripts/run_h2_sequence_noparam_sensitivity.py` chỉ chèn `BASE_DIR` thay vì `BASE_DIR / "src"`, dẫn đến lỗi `ModuleNotFoundError: No module named 'research_agent'`.
-   - *Khắc phục:* Đã cập nhật `sys.path.insert(0, str(BASE_DIR / "src"))` trong toàn bộ các script trên, đồng thời bổ sung `pip install -e .` vào tài liệu hướng dẫn.
-2. **Kê khai thiếu `hdfs_split_authority_cache.json` trong `ARTIFACT-MANIFEST.json`:**
-   - *Hiện tượng:* `HDFSSplitAuthority` cần tệp cache ranh giới phiên `hdfs_split_authority_cache.json` (19.99 MB) để đối soát mã băm phân chia nhân quả `65b76694b0a3...` mà không cần phân tích lại tệp nén thô 11,17 triệu dòng `HDFS_1.tar.gz` (1.5 GB). Tệp này trước đó chưa được đưa vào danh mục artifact ngoại vi.
-   - *Khắc phục:* Đã bổ sung `experiments/runs/data/hdfs/hdfs_split_authority_cache.json` vào `ARTIFACT-MANIFEST.json` (nâng cấp manifest lên phiên bản 1.2, tổng 10 artifacts), đồng thời tạo script `scripts/provision_cleanroom_artifacts.py` để tự động hóa toàn bộ việc tải và đối soát.
+1. **Kiểm tra `sys.path` runtime:**
+   ```text
+   D:\Research_Cleanroom_Test\.venv
+   D:\Research_Cleanroom_Test\.venv\Lib\site-packages
+   D:\Research_Cleanroom_Test\src
+   D:\Research_Cleanroom_Test\.venv\Lib\site-packages\win32
+   D:\Research_Cleanroom_Test\.venv\Lib\site-packages\win32\lib
+   D:\Research_Cleanroom_Test\.venv\Lib\site-packages\pythonwin
+   ```
+   Hoàn toàn không có đường dẫn `D:\Research` trong `sys.path`.
+2. **Kiểm tra Checkpoint Path trong kết quả:**
+   ```json
+   "source_checkpoint": "D:\\Research_Cleanroom_Test\\experiments\\nineplus\\confirmatory\\CONF_SEQUENCE_ONLY_seed42_1789413645\\best_checkpoint.pt"
+   ```
+3. **Kiểm tra toàn bộ JSON đầu ra:**
+   Lệnh quét `Select-String -Pattern "D:\\Research(?![_a-zA-Z0-9])"` trên toàn bộ thư mục `evaluation_v3/` xác nhận: **ZERO CONTAMINATION IN EVALUATION OUTPUTS**.
 
 ---
 
-## 5. KẾT LUẬN VÀ TUYÊN BỐ TRẠNG THÁI
+## 4. KẾT LUẬN NGHIỆM THU
 
-1. **Kết quả thẩm định:** Môi trường clean-room độc lập `D:\Research_Cleanroom_Test` đã hoàn thành xuất sắc toàn bộ quy trình từ clone Git, cài đặt môi trường, kiểm tra phần cứng đến tái lập kết quả đánh giá hạ nguồn V3 với mã thoát 0.
-2. **Khóa cờ trạng thái:**
-   - `CLEAN_ROOM_PASS = true`
-   - `PUBLIC_CLEAN_CLONE_READY = false` (Tuyên bố minh bạch: Bản clone công khai chỉ có thể chạy đầy đủ sau khi thực hiện bước nạp artifact ngoại vi từ kho Zenodo/OSF do chính sách không lưu dữ liệu lớn và checkpoint trong Git).
-3. **Sẵn sàng cho Bước 9:** Toàn bộ bằng chứng đã được khóa và đồng bộ vào repository. Bước 8 đã hoàn thành nghiệm thu 100%.
+1. Toàn bộ quy trình phòng sạch từ clone sạch tại HEAD `e2a4609`, cài đặt môi trường, nạp 7/7 artifact, chạy smoke test và đánh giá V3 đã đạt chuẩn 100% không qua bất kỳ chỉnh sửa thủ công nào.
+2. Bằng chứng được thống nhất tuyệt đối: `ARTIFACT_PROVISIONING_REPORT.json` ghi nhận chính xác 7/7 artifacts.
+3. Khóa cờ trạng thái:
+   - **`CLEAN_ROOM_PASS = true`**
+   - **`PUBLIC_CLEAN_CLONE_READY = false`**
