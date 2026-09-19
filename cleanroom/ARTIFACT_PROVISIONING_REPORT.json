@@ -1,0 +1,69 @@
+{
+  "timestamp_utc": "2026-09-19T08:07:53.651110+00:00",
+  "cleanroom_root": "D:\\Research_Cleanroom_Test",
+  "source_storage": "D:\\Research",
+  "total_provisioned": 6,
+  "all_passed": true,
+  "artifacts": [
+    {
+      "relative_path": "experiments/runs/data/hdfs/hdfs_ssl_train.pt",
+      "status": "VERIFIED_PASS",
+      "expected_size_bytes": 64300470,
+      "actual_size_bytes": 64300470,
+      "size_match": true,
+      "expected_sha256": "0422677f5357494fbc587cac4b6de2004781e71d9b8087b4c8f9f0cd160f3363",
+      "actual_sha256": "0422677f5357494fbc587cac4b6de2004781e71d9b8087b4c8f9f0cd160f3363",
+      "sha256_match": true
+    },
+    {
+      "relative_path": "experiments/runs/data/hdfs/hdfs_ssl_val.pt",
+      "status": "VERIFIED_PASS",
+      "expected_size_bytes": 12125250,
+      "actual_size_bytes": 12125250,
+      "size_match": true,
+      "expected_sha256": "96bdab531c3545f4a0f0ed7f87e47cba985c2bc4cac7a3e6c04245b5c712fbe9",
+      "actual_sha256": "96bdab531c3545f4a0f0ed7f87e47cba985c2bc4cac7a3e6c04245b5c712fbe9",
+      "sha256_match": true
+    },
+    {
+      "relative_path": "experiments/runs/data/hdfs/hdfs_vocab.json",
+      "status": "VERIFIED_PASS",
+      "expected_size_bytes": 5897,
+      "actual_size_bytes": 5897,
+      "size_match": true,
+      "expected_sha256": "7631ce3beb6861845a043c7e49e156fe79b011b6d85228a060708d03fecb0f73",
+      "actual_sha256": "7631ce3beb6861845a043c7e49e156fe79b011b6d85228a060708d03fecb0f73",
+      "sha256_match": true
+    },
+    {
+      "relative_path": "experiments/runs/data/vault/hdfs_probe_labels_train.pt",
+      "status": "VERIFIED_PASS",
+      "expected_size_bytes": 1238560,
+      "actual_size_bytes": 1238560,
+      "size_match": true,
+      "expected_sha256": "e6999838eb5b9dbf1aa8ff6f64e9a96d9e7ce3c0aede6feab2698223d78f3924",
+      "actual_sha256": "e6999838eb5b9dbf1aa8ff6f64e9a96d9e7ce3c0aede6feab2698223d78f3924",
+      "sha256_match": true
+    },
+    {
+      "relative_path": "experiments/runs/data/vault/hdfs_probe_labels_val.pt",
+      "status": "VERIFIED_PASS",
+      "expected_size_bytes": 265624,
+      "actual_size_bytes": 265624,
+      "size_match": true,
+      "expected_sha256": "3364428ddbdf8d48744fc8a9492988a9467a88a4de3bf01ae8c9d106df460b1a",
+      "actual_sha256": "3364428ddbdf8d48744fc8a9492988a9467a88a4de3bf01ae8c9d106df460b1a",
+      "sha256_match": true
+    },
+    {
+      "relative_path": "experiments/nineplus/confirmatory/CONF_SEQUENCE_ONLY_seed42_1789413645/best_checkpoint.pt",
+      "status": "VERIFIED_PASS",
+      "expected_size_bytes": 10922752,
+      "actual_size_bytes": 10922752,
+      "size_match": true,
+      "expected_sha256": "926b32512577ac66d8adc29bd145bf45868d176c440c733fb7e074c6470621cc",
+      "actual_sha256": "926b32512577ac66d8adc29bd145bf45868d176c440c733fb7e074c6470621cc",
+      "sha256_match": true
+    }
+  ]
+}

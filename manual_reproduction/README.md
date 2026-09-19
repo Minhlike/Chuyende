@@ -25,12 +25,13 @@
 ### 2.1. Môi trường Python và Thư viện phụ thuộc
 Trước khi chạy, kích hoạt môi trường ảo chứa PyTorch có hỗ trợ CUDA 12.4:
 ```powershell
-# Từ thư mục gốc D:\Research (hoặc thư mục clone của dự án)
+# Từ thư mục gốc dự án (hoặc thư mục clone của dự án)
 .venv\Scripts\Activate.ps1
 ```
-Cài đặt thư viện theo tệp khóa phụ thuộc `requirements-lock.txt`:
+Cài đặt thư viện theo tệp khóa phụ thuộc `requirements-lock.txt` và cài đặt gói dự án ở chế độ phát triển:
 ```powershell
 pip install --extra-index-url https://download.pytorch.org/whl/cu124 -r requirements-lock.txt
+pip install -e .
 ```
 
 ### 2.2. Kiểm tra phần cứng và môi trường
@@ -45,11 +46,19 @@ Kỳ vọng in ra: `[PASS] GPU Smoke Test Passed 100% (Zero Model Training)` v�
 > [!CAUTION]
 > **Trạng thái kho ngoại vi:** `clean_clone_ready: false` (Kho lưu trữ ngoại vi Zenodo/OSF đang ở trạng thái `OPEN` chờ xuất xưởng). Bản clone Git sạch **chưa thể chạy ngay** nếu chưa có sẵn dữ liệu và checkpoint cục bộ.
 
-Các tệp dữ liệu sau đây không lưu trong Git (theo quy định `.gitignore`) và cần có sẵn tại đường dẫn cục bộ tương ứng (kích thước và mã băm SHA-256 được script đối soát động từ `experiments/nineplus/ARTIFACT-MANIFEST.json`):
+Các tệp dữ liệu sau đây không lưu trong Git (theo quy định `.gitignore`) và cần có sẵn tại đường dẫn cục bộ tương ứng (kích thước và mã băm SHA-256 được đối soát nghiêm ngặt từ `experiments/nineplus/ARTIFACT-MANIFEST.json`):
 - `experiments/runs/data/hdfs/hdfs_ssl_train.pt` (64,300,470 bytes)
 - `experiments/runs/data/hdfs/hdfs_ssl_val.pt` (12,125,250 bytes)
 - `experiments/runs/data/hdfs/hdfs_vocab.json` (5,897 bytes)
+- `experiments/runs/data/hdfs/hdfs_split_authority_cache.json` (19,997,919 bytes)
+- `experiments/runs/data/vault/hdfs_probe_labels_train.pt` (1,238,560 bytes)
 - `experiments/runs/data/vault/hdfs_probe_labels_val.pt` (265,624 bytes)
+- `experiments/nineplus/confirmatory/CONF_SEQUENCE_ONLY_seed42_1789413645/best_checkpoint.pt` (10,922,752 bytes)
+
+Người phản biện có thể sử dụng script tự động để nạp và đối soát toàn vẹn mã băm SHA-256 từ kho lưu trữ ngoại vi:
+```powershell
+python scripts/provision_cleanroom_artifacts.py <đường_dẫn_kho_lưu_trữ_ngoại_vi>
+```
 
 ---
 

@@ -35,8 +35,10 @@ import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 
-# Đảm bảo gốc dự án nằm ở sys.path
+# Đảm bảo gốc dự án và thư mục src nằm ở sys.path
 BASE_DIR = Path(__file__).resolve().parent.parent
+if str(BASE_DIR / "src") not in sys.path:
+    sys.path.insert(0, str(BASE_DIR / "src"))
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 

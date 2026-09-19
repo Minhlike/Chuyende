@@ -1,0 +1,77 @@
+================================================================================
+REVIEWER CLEAN-ROOM VERIFICATION COMMAND LOG
+Timestamp (UTC): 2026-09-19T08:15:00Z
+Target Working Directory: D:\Research_Cleanroom_Test
+Branch: fix/thesis-apply-edits
+================================================================================
+
+[COMMAND 1 - REPOSITORY CLONING]
+Command: git clone --branch fix/thesis-apply-edits https://github.com/Minhlike/Chuyende.git D:\Research_Cleanroom_Test
+Cwd: D:\
+Status: PASS (Exit Code 0)
+Commit SHA: a99a71cc1496e84848f491f3471dda9458ee622e
+Working Tree: Clean, 0 untracked files
+
+[COMMAND 2 - VIRTUAL ENVIRONMENT CREATION]
+Command: python -m venv .venv
+Cwd: D:\Research_Cleanroom_Test
+Status: PASS (Exit Code 0)
+Python Version: Python 3.12.8
+
+[COMMAND 3 - DEPENDENCY INSTALLATION]
+Command: .\.venv\Scripts\python.exe -m pip install --upgrade pip
+Command: .\.venv\Scripts\python.exe -m pip install --extra-index-url https://download.pytorch.org/whl/cu124 -r requirements-lock.txt
+Command: .\.venv\Scripts\python.exe -m pip install -e .
+Cwd: D:\Research_Cleanroom_Test
+Status: PASS (Exit Code 0)
+Core Packages: torch==2.6.0+cu124, torch-geometric==2.6.1, numpy==2.5.2, scipy==1.18.0, pandas==3.0.5, scikit-learn==1.9.1, psutil==7.2.2
+
+[COMMAND 4 - HARDWARE & DETERMINISTIC CUDA SMOKE TEST]
+Command: $env:CUBLAS_WORKSPACE_CONFIG = ":4096:8"; .\.venv\Scripts\python.exe scripts/gpu_smoke_test.py
+Cwd: D:\Research_Cleanroom_Test
+Status: PASS (Exit Code 0)
+Output: [PASS] GPU Smoke Test Passed 100% (Zero Model Training)
+Device: NVIDIA GeForce RTX 3050 Ti Laptop GPU (4096.0 MB VRAM)
+CUDA Capability: True, cuBLAS config verified
+
+[COMMAND 5 - ARTIFACT PROVISIONING & CRYPTOGRAPHIC VERIFICATION]
+Command: .\.venv\Scripts\python.exe scripts/provision_cleanroom_artifacts.py D:\Research
+Cwd: D:\Research_Cleanroom_Test
+Status: PASS (Exit Code 0)
+Artifacts Provisioned: 7/7
+1. experiments/runs/data/hdfs/hdfs_ssl_train.pt (64,300,470 bytes, SHA: 0422677f5357494fbc587cac4b6de2004781e71d9b8087b4c8f9f0cd160f3363) -> PASS
+2. experiments/runs/data/hdfs/hdfs_ssl_val.pt (12,125,250 bytes, SHA: 96bdab531c3545f4a0f0ed7f87e47cba985c2bc4cac7a3e6c04245b5c712fbe9) -> PASS
+3. experiments/runs/data/hdfs/hdfs_vocab.json (5,897 bytes, SHA: 7631ce3beb6861845a043c7e49e156fe79b011b6d85228a060708d03fecb0f73) -> PASS
+4. experiments/runs/data/hdfs/hdfs_split_authority_cache.json (19,997,919 bytes, SHA: 23f482bd3f8d7a3c09f2b586807e34e5c52843d82341a58b725f4ae84ec31d1f) -> PASS
+5. experiments/runs/data/vault/hdfs_probe_labels_train.pt (1,238,560 bytes, SHA: e6999838eb5b9dbf1aa8ff6f64e9a96d9e7ce3c0aede6feab2698223d78f3924) -> PASS
+6. experiments/runs/data/vault/hdfs_probe_labels_val.pt (265,624 bytes, SHA: 3364428ddbdf8d48744fc8a9492988a9467a88a4de3bf01ae8c9d106df460b1a) -> PASS
+7. experiments/nineplus/confirmatory/CONF_SEQUENCE_ONLY_seed42_1789413645/best_checkpoint.pt (10,922,752 bytes, SHA: 926b32512577ac66d8adc29bd145bf45868d176c440c733fb7e074c6470621cc) -> PASS
+
+[COMMAND 6 - V3 DOWNSTREAM EVALUATION & INVARIANT VERIFICATION]
+Command: $env:CUBLAS_WORKSPACE_CONFIG = ":4096:8"; .\.venv\Scripts\python.exe scripts/evaluate_nineplus_v3.py --architecture SEQUENCE_ONLY --seed 42
+Cwd: D:\Research_Cleanroom_Test
+Status: PASS (Exit Code 0)
+Membership Invariants:
+- Canonical Train Membership SHA: PASS (65b76694b0a3...)
+- Canonical Val Membership SHA:   PASS (14cf689f9682...)
+- Ordered Train Session-ID SHA:   PASS (35396a595ded...)
+- Ordered Val Session-ID SHA:     PASS (4f474991f03a...)
+Representation Extraction:
+- Train: 35,000 sessions (12.97s)
+- Val: 7,500 sessions (3.24s)
+Probe Fitting:
+- Protocol: TRAIN_FIT_FULL_FIXED_VALIDATION_EVALUATE
+- Seed: 10007 (Fixed), 50 epochs, AdamW lr=1e-2, wd=1e-4, batch=256
+Results:
+- Average Precision (AP): 1.0000
+- ROC-AUC: 1.0000
+- Latent Variance Var(z): 0.004535
+- Probe Optimizer Steps: 6850
+- NaN Count: 0 | Inf Count: 0
+- Output Artifact: experiments/nineplus/evaluation_v3/CONF_SEQUENCE_ONLY_seed42_1789413645/V3-PROBE-RESULT.json
+
+[COMMAND 7 - PATH CONTAMINATION AUDIT]
+Command: Scan all logs, transcripts, generated JSON and sys.path for "D:\Research\" (without _Cleanroom_Test)
+Status: PASS - Zero Contamination Confirmed
+All runtime paths resolve strictly within D:\Research_Cleanroom_Test.
+================================================================================

@@ -41,6 +41,12 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
+import sys
+BASE_DIR = Path(__file__).resolve().parent.parent
+if str(BASE_DIR / "src") not in sys.path:
+    sys.path.insert(0, str(BASE_DIR / "src"))
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
 
 from research_agent.experiments.models.temporal_graph_view_encoder import TemporalGraphViewEncoder
 from research_agent.experiments.training.stage_a2_trainer import (

@@ -467,8 +467,15 @@ Chi tiết từng bước trong backlog:
    - Bảo toàn tuyệt đối 606 nút OMML (`<m:oMath>`) và 98 đoạn `<m:oMathPara>`.
    - Đã xuất bản `Chuyên đề chuyên sâu.pdf` chính thức đạt **121 trang** đồng bộ 100%.
 
-8. **Thử nghiệm môi trường sạch độc lập (Reviewer Clean-Room Test):**  
-   Mô phỏng quy trình của một giảng viên phản biện trên máy sạch: Clone kho Git, tải artifact ngoại vi theo `ARTIFACT-MANIFEST.json`, cài môi trường ảo qua `requirements-lock.txt`, chạy lệnh kiểm tra GPU và chạy tái lập kết quả đánh giá AP=1.0000.
+8. **Thử nghiệm môi trường sạch độc lập (Reviewer Clean-Room Test) — [ĐÃ HOÀN THÀNH VÀ NGHIỆM THU - CLEAN_ROOM_PASS]:**  
+   - Đã tạo môi trường sạch biệt lập hoàn toàn tại `D:\Research_Cleanroom_Test` qua lệnh `git clone --branch fix/thesis-apply-edits https://github.com/Minhlike/Chuyende.git`.
+   - Tạo môi trường ảo mới `.venv` và cài đặt đầy đủ phụ thuộc thông qua `requirements-lock.txt` (`torch==2.6.0+cu124`, `torch-geometric==2.6.1`).
+   - Tự động nạp và đối soát 7/7 artifact ngoại vi (bao gồm dữ liệu đệm `.pt`, nhãn phân loại `.pt`, bộ từ vựng `hdfs_vocab.json`, bộ đệm ranh giới nhân quả `hdfs_split_authority_cache.json` và checkpoint `best_checkpoint.pt`) qua script tự động `scripts/provision_cleanroom_artifacts.py`, xác nhận trùng khớp 100% kích thước và mã băm SHA-256 đối chiếu với `ARTIFACT-MANIFEST.json` (ghi nhận tại `cleanroom/ARTIFACT_PROVISIONING_REPORT.json`).
+   - Kiểm định phần cứng `scripts/gpu_smoke_test.py`: Đạt `[PASS] GPU Smoke Test Passed 100% (Zero Model Training)`, nhận diện chính xác RTX 3050 Ti Laptop GPU, CUDA 12.4, và cờ xác định `CUBLAS_WORKSPACE_CONFIG=:4096:8`.
+   - Thực thi đánh giá hạ nguồn V3 độc lập: `python scripts/evaluate_nineplus_v3.py --architecture SEQUENCE_ONLY --seed 42`, trích xuất 35.000 biểu diễn Train và 7.500 biểu diễn Val, khớp frozen linear probe 50 epochs (Seed 10007), xác nhận kết quả tái lập tuyệt đối: `AP = 1.0000`, `ROC-AUC = 1.0000`, `Steps = 6850`.
+   - Thẩm định không ô nhiễm đường dẫn (Zero Path Contamination): Toàn bộ log, transcript, sys.path và JSON sinh ra chỉ tham chiếu tới `D:\Research_Cleanroom_Test`, tuyệt đối không phụ thuộc vào `D:\Research`.
+   - **Khóa cờ trạng thái:** `CLEAN_ROOM_PASS = true`, `PUBLIC_CLEAN_CLONE_READY = false` (Minh bạch: bản clone công khai cần bước nạp artifact ngoại vi do kho Zenodo/OSF đang ở trạng thái `OPEN`).
+   - **Bộ bằng chứng:** Lưu trữ tại `cleanroom/` (`CLEANROOM-REPORT.md`, `ARTIFACT_PROVISIONING_REPORT.json`, `environment.txt`, `pip-freeze.txt`, `commands.log`, `V3-PROBE-RESULT.json`).
 
 9. **Xuất xưởng và nghiệm thu (Final Release & Clean Repository Packaging):**  
    Di chuyển toàn bộ các script tạm thời dùng một lần vào thư mục lưu trữ nội bộ hoặc xóa bỏ; hoàn thiện `experiments/experiment_index.csv`; chuẩn bị kho xuất xưởng mục tiêu `Minhlike/chuyen-de-chuyen-sau` và gắn thẻ Git Release hoàn tất chuyên đề.

@@ -1,8 +1,8 @@
 {
-  "manifest_version": "1.1",
+  "manifest_version": "1.2",
   "project": "Chuyên đề chuyên sâu - Học biểu diễn log an ninh",
   "scope": "Sequence-Only Seed 42 & V3 Downstream Evaluation Artifacts",
-  "total_artifacts_cataloged": 9,
+  "total_artifacts_cataloged": 10,
   "clean_clone_ready": false,
   "external_artifact_retrieval_status": "OPEN (Zenodo/OSF external storage repository pending deployment; clean git clone cannot run without local artifact placement)",
   "artifacts": [
@@ -41,6 +41,18 @@
       "required_for_training": true,
       "required_for_v3_evaluation": true,
       "description": "Token vocabularies (event templates, parameter tokens, type dictionaries)"
+    },
+    {
+      "relative_path": "experiments/runs/data/hdfs/hdfs_split_authority_cache.json",
+      "artifact_role": "SPLIT_AUTHORITY_CACHE",
+      "availability": "LOCAL_ONLY",
+      "size_bytes": 19997919,
+      "sha256": "23f482bd3f8d7a3c09f2b586807e34e5c52843d82341a58b725f4ae84ec31d1f",
+      "producer_or_run_id": "HDFS_SPLIT_AUTHORITY",
+      "run_source_commit": "d6fb10b",
+      "required_for_training": true,
+      "required_for_v3_evaluation": true,
+      "description": "Precomputed causal split interval cache for 11.17M HDFS records (avoids re-parsing 1.5GB raw tarball)"
     },
     {
       "relative_path": "experiments/runs/data/vault/hdfs_probe_labels_train.pt",
