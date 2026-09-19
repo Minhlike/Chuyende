@@ -36,12 +36,12 @@
 > **Hệ quả trực tiếp:** Một bản sao chép mã nguồn sạch (`git clone`) **chưa thể chạy được ngay lập tức** nếu chưa có quy trình chuẩn bị dữ liệu và nạp checkpoint từ kho lưu trữ ngoại vi (Zenodo / Release asset). Tuyệt đối không đưa ra phát biểu sai lệch rằng kho Git sạch có thể bấm chạy huấn luyện hoặc đánh giá ngay.
 
 > [!WARNING]
-> **BLOCKER 2: Mâu thuẫn về số trang tài liệu Master — ĐÃ ĐO KIỂM THỰC NGHIỆM VÀ CHỐT CHÍNH THỨC 114 TRANG**
-> Trước đây tồn tại sự không nhất quán giữa các tài liệu mô tả về dung lượng trang của bản thuyết minh Master (Đề cương: $\ge$ 100 trang; Báo cáo nghiệm thu cũ: 104 trang; Quan sát sơ bộ PDF: ~114 trang).
-> **Kết quả đo kiểm thực nghiệm trực tiếp (Timestamp: `2026-09-17T20:28:56.417382+00:00`):**
-> - **Tệp Master DOCX (`Chuyên đề chuyên sâu.docx`):** Kích thước `2,377,692` bytes; SHA-256: `2c8402fe7e908134d5638d44f7559b9f705c68606325238dc2111b6fb6110b40`; Chứa chính xác **606 nút OMML** (đo kiểm qua thẻ `<m:oMath` trong XML).
-> - **Tệp Master PDF (`Chuyên đề chuyên sâu.pdf`):** Kích thước `2,419,057` bytes; SHA-256: `2db3ff17791f727aee75186c024521a5b47f7b5cefff42c2059428614bb2709d`; Số trang thực tế: **114 trang** (đo kiểm qua số lượng từ khóa `/Type /Page` trong cấu trúc PDF).
-> **Kết luận khóa chính thức:** Dung lượng trang chính thức của bản Master PDF xuất bản hiện hành là **114 trang**. Tiến trình mở rộng: 104 trang (nghiệm thu trước tích hợp V3) $\rightarrow$ 114 trang (sau khi tích hợp đầy đủ kết quả thực nghiệm xác nhận Nineplus V3, các phân tích độ nhạy H1/H2 và các biểu thức toán học OMML).
+> **BLOCKER 2: Mâu thuẫn về số trang tài liệu Master — ĐÃ ĐO KIỂM THỰC NGHIỆM VÀ CHỐT CHÍNH THỨC 121 TRANG**
+> Trước đây tồn tại sự không nhất quán giữa các tài liệu mô tả về dung lượng trang của bản thuyết minh Master (Đề cương: $\ge$ 100 trang; Báo cáo nghiệm thu cũ: 104 trang; Bản trước tích hợp code/ảnh: 114 trang).
+> **Kết quả đo kiểm thực nghiệm trực tiếp sau tích hợp 8 đoạn trích mã nguồn và bằng chứng thực nghiệm (Timestamp: `2026-09-19T07:41:09+00:00`):**
+> - **Tệp Master DOCX (`Chuyên đề chuyên sâu.docx`):** Kích thước `8,774,221` bytes; SHA-256: `3a6a2be313154654c4004e687d30357a4bb3c5e0e5d612083a93b46f21559704`; Chứa chính xác **606 nút OMML** (đo kiểm qua thẻ `<m:oMath` trong XML).
+> - **Tệp Master PDF (`Chuyên đề chuyên sâu.pdf`):** Kích thước `2,764,825` bytes; SHA-256: `a4a347ea159043e8ab0dd308f3ad9ccd5d06369062c58e6f4a23deaf1a6e5052`; Số trang thực tế: **121 trang** (đo kiểm qua số lượng từ khóa `/Type /Page` trong cấu trúc PDF).
+> **Kết luận khóa chính thức:** Dung lượng trang chính thức của bản Master PDF xuất bản hiện hành là **121 trang**. Tiến trình mở rộng: 104 trang (nghiệm thu trước tích hợp V3) $\rightarrow$ 114 trang (sau tích hợp kết quả V3, phân tích H1/H2 và biểu thức OMML) $\rightarrow$ **121 trang** (sau khi tích hợp đầy đủ 8 đoạn trích mã nguồn chuẩn hóa từ HEAD, bảng thông số 3.7b và ảnh chụp console thực nghiệm Hình 3.1).
 
 > [!IMPORTANT]
 > **BLOCKER 3: Multi-View Seed 7 và Seed 999 hiện mới chỉ có result JSON trong Git**
@@ -457,14 +457,15 @@ Chi tiết từng bước trong backlog:
    - Đã biên soạn cẩm nang hướng dẫn `manual_reproduction/README.md`.
    - Đã hoàn thiện kịch bản PowerShell chuẩn mực `manual_reproduction/run_manual_sequence42.ps1` (được lưu trữ với UTF-8 BOM, tương thích hoàn toàn với Windows PowerShell 5.1). Kịch bản tự động gọi `scripts/gpu_smoke_test.py` đầu tiên và dừng ngay nếu có lỗi (Fail-Fast), đối soát động mã băm từ `ARTIFACT-MANIFEST.json`, kích hoạt `scripts/run_nineplus_confirmatory.py` với `--base-dir`, nhận diện đúng thư mục sinh ra trong `experiments/nineplus/confirmatory/` và xuất báo cáo đối soát sang `manual_reproduction/MANUAL_RUN_SUMMARY.txt`.
 
-6. **Chạy thực tế và chụp ảnh minh chứng (Execute & Capture Real Screenshots) — [ĐÃ SẴN SÀNG NỀN TẢNG]:**  
-   - Đã nâng cấp `scripts/gpu_smoke_test.py`: In đường dẫn thư mục gốc, trạng thái biến môi trường `CUBLAS_WORKSPACE_CONFIG`, tổng dung lượng VRAM thực tế (4095.5 MB / 4.00 GB trên RTX 3050 Ti Laptop), bảng phiên bản thư viện đối soát chặt chẽ với `ENVIRONMENT-LOCK.json` và trả mã thoát 1 nếu bất kỳ điều kiện nào không thỏa mãn (Fail-Fast gating).
-   - Đã xây dựng bộ unit tests `tests/test_gpu_smoke_test.py` kiểm định cả nhánh PASS lẫn FAIL của smoke test.
-   - Sẵn sàng để sinh viên tự mở PowerShell ngoài môi trường AI để chạy huấn luyện thực tế và chụp 7 ảnh màn hình theo đúng kế hoạch.
+6. **Chạy thực tế và chụp ảnh minh chứng (Execute & Capture Real Screenshots) — [ĐÃ HOÀN THÀNH VÀ NGHIỆM THU]:**  
+   - Sinh viên đã trực tiếp thực thi kịch bản `manual_reproduction/run_manual_sequence42.ps1` ngoài môi trường AI trên máy trạm (Run ID `CONF_SEQUENCE_ONLY_seed42_1789724929`, architecture `SEQUENCE_ONLY`, seed 42), hoàn thành 6 epochs, kích hoạt dừng sớm (Early Stopping) tại Epoch 6, lưu checkpoint tối ưu tại Epoch 3 (`best_val_loss = 0.009218`).
+   - Đã thu thập và kiểm chứng ảnh chụp màn hình console thực tế `manual_reproduction/screenshots/03_training_epochs_loss.png` (185 KB), thể hiện trọn vẹn tiến trình tối ưu hóa, mất mát giảm dần, cơ chế dừng sớm và lưu vết thực nghiệm.
 
-7. **Chèn mã nguồn và ảnh minh họa vào Word (Insert Code & Visuals into Word) — [ĐÃ KHẮC PHỤC RÀO CẢN TIES]:**  
-   - **Khắc phục triệt để thuật toán ROC-AUC (Đoạn trích 7):** Đã nâng cấp hàm `compute_ap_and_roc_auc` trong `scripts/run_nineplus_confirmatory.py` sang chuẩn Scikit-learn (`average_precision_score`, `roc_auc_score` với fallback fractional rank). Đã kiểm thử vượt qua 100% unit tests `tests/test_roc_auc_metrics.py`.
-   - 8 đoạn trích mã nguồn chuẩn hóa (Đoạn trích 1: L177–197; Đoạn trích 5: L107–120; Đoạn trích 7: L55–85) và 7 ảnh chụp sẽ được chèn vào `Chuyên đề chuyên sâu.docx` sau khi sinh viên hoàn tất lượt chạy thủ công. Bảo toàn tuyệt đối 606 nút OMML và xuất khẩu `Chuyên đề chuyên sâu.pdf` đồng bộ 114 trang.
+7. **Chèn mã nguồn và ảnh minh họa vào Word (Insert Code & Visuals into Word) — [ĐÃ HOÀN THÀNH VÀ NGHIỆM THU]:**  
+   - Đã tích hợp 8 đoạn trích mã nguồn chuẩn hóa từ HEAD (với chú thích tiếng Việt kỹ thuật) vào đúng các mục học thuật tương ứng trong `Chuyên đề chuyên sâu.docx` (Đoạn mã 2.1, 2.2, 2.3, 2.4, 3.4, 3.1, 3.2, 3.3).
+   - Đã tích hợp Mục 3.2.4 "Kiểm chứng tái lập độc lập trên máy trạm" kèm Bảng 3.7b và Hình 3.1 (ảnh chụp console thực tế) cùng các đoạn dẫn giải học thuật ngắn gọn, súc tích.
+   - Bảo toàn tuyệt đối 606 nút OMML (`<m:oMath>`) và 98 đoạn `<m:oMathPara>`.
+   - Đã xuất bản `Chuyên đề chuyên sâu.pdf` chính thức đạt **121 trang** đồng bộ 100%.
 
 8. **Thử nghiệm môi trường sạch độc lập (Reviewer Clean-Room Test):**  
    Mô phỏng quy trình của một giảng viên phản biện trên máy sạch: Clone kho Git, tải artifact ngoại vi theo `ARTIFACT-MANIFEST.json`, cài môi trường ảo qua `requirements-lock.txt`, chạy lệnh kiểm tra GPU và chạy tái lập kết quả đánh giá AP=1.0000.
@@ -480,7 +481,7 @@ Nhằm đảm bảo tính trung thực học thuật tối đa, toàn bộ các 
 
 | Mâu thuẫn phát hiện | Hiện trạng kỹ thuật | Trạng thái xử lý đã xác lập |
 | :--- | :--- | :--- |
-| **Mâu thuẫn số trang Master (100 / 104 / 114 trang)** | PDF hiện hành ghi nhận sơ bộ ~114 trang; báo cáo cũ ghi 104 trang; yêu cầu khung là $\ge$ 100 trang. | **ĐÃ GIẢI QUYẾT TẠI BƯỚC 1:** Đo kiểm thực nghiệm trực tiếp: DOCX có SHA `2c8402fe...`, 606 nút OMML; PDF có SHA `2db3ff17...`, đúng **114 trang**. Chính thức chốt số trang Master là 114 trang. |
+| **Mâu thuẫn số trang Master (100 / 104 / 114 / 121 trang)** | PDF trước tích hợp ghi nhận 114 trang; báo cáo cũ ghi 104 trang; yêu cầu khung là $\ge$ 100 trang. | **ĐÃ GIẢI QUYẾT TẠI BƯỚC 7:** Đo kiểm thực nghiệm trực tiếp sau tích hợp 8 đoạn mã và Section 3.2.4: DOCX có SHA `3a6a2be3...`, 606 nút OMML; PDF có SHA `a4a347ea...`, đúng **121 trang**. Chính thức chốt số trang Master là 121 trang. |
 | **Tính sẵn sàng của bản clone sạch (Clean Clone Readiness)** | Checkpoint `*.pt`, dữ liệu raw và cache nhị phân không có trong Git; người clone sạch chưa thể chạy ngay. | **ĐÃ KHÓA TRẠNG THÁI MINH BẠCH (OPEN):** `ARTIFACT-MANIFEST.json` đặt cờ `"clean_clone_ready": false`, `"external_artifact_retrieval_status": "OPEN (Zenodo/OSF pending)"`. Clone sạch chưa thể chạy nếu chưa nạp artifact. |
 | **Thiếu hụt tệp bằng chứng Multi-View Seed 7 & 999 trong Git** | Git chỉ có `V3-PROBE-RESULT.json`; chưa commit `RUN-MANIFEST.json` và `TRAIN-LOG.jsonl` tương ứng. | **ĐÃ KHÓA TRẠNG THÁI MINH BẠCH:** Ghi nhận rõ ràng trạng thái `RESULT_JSON_ONLY_IN_GIT` trong `experiment_index.csv` và `ARTIFACT-MANIFEST.json`. |
 | **Chỉ số đánh giá Graph-Only chưa được kiểm chứng V3** | Checkpoints Stage A2 là tham chiếu lịch sử; chưa chạy qua quy trình đầu dò V3 chuẩn hóa. | **ĐÃ KHÓA TRẠNG THÁI MINH BẠCH:** Giữ nguyên trạng thái `HISTORICAL_REF_PENDING_AUDIT` trong `experiment_index.csv`, protocol `NOT_EVALUATED_V3`, không công bố số liệu chưa kiểm chứng. |
