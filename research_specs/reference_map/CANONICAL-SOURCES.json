@@ -1,10 +1,10 @@
 [
   {
     "source_key": "Inam2023ProvenanceSoK",
-    "canonical_title": "SoK: History is a Vast Early Warning System: Audit Logging & Provenance for Enterprise Cyber Defense",
+    "canonical_title": "SoK: History is a Vast Early Warning System: Auditing the Provenance of System Intrusions",
     "canonical_authors": [
       "Muhammad Adil Inam",
-      "Yushan Chen",
+      "Yinfang Chen",
       "Akul Goyal",
       "Jason Liu",
       "Jaron Mink",
@@ -16,8 +16,8 @@
     "year": 2023,
     "publication_type": "PEER_REVIEWED",
     "venue": "IEEE Symposium on Security and Privacy (S&P 2023)",
-    "doi": "10.1109/SP46215.2023.10179324",
-    "url": "https://doi.org/10.1109/SP46215.2023.10179324",
+    "doi": "10.1109/SP46215.2023.10179405",
+    "url": "https://doi.org/10.1109/SP46215.2023.10179405",
     "word_source_tag": "SRC000009",
     "aliases": ["Inam et al.", "Inam et al. (2023)", "Inam (2023)", "SoK: History is a Vast Early Warning System"]
   },
@@ -35,8 +35,8 @@
     "year": 2020,
     "publication_type": "PEER_REVIEWED",
     "venue": "Annual Computer Security Applications Conference (ACSAC 2020)",
-    "doi": "10.1145/3427228.3427254",
-    "url": "https://doi.org/10.1145/3427228.3427254",
+    "doi": "10.1145/3427228.3427272",
+    "url": "https://doi.org/10.1145/3427228.3427272",
     "word_source_tag": "SRC000008",
     "aliases": ["Michael et al.", "Michael et al. (2020)", "Michael (2020)", "Forensic Validity of Approximated Audit Logs"]
   },
@@ -77,16 +77,16 @@
     "source_key": "Zipperle2022PIDSSurvey",
     "canonical_title": "Provenance-based Intrusion Detection Systems: A Survey",
     "canonical_authors": [
-      "Marc Zipperle",
-      "Frank Gottwalt",
+      "Michael Zipperle",
+      "Florian Gottwalt",
       "Elizabeth Chang",
       "Tharam S. Dillon"
     ],
     "year": 2023,
     "publication_type": "PEER_REVIEWED",
     "venue": "ACM Computing Surveys (CSUR)",
-    "doi": "10.1145/3547332",
-    "url": "https://doi.org/10.1145/3547332",
+    "doi": "10.1145/3539605",
+    "url": "https://doi.org/10.1145/3539605",
     "word_source_tag": "SRC000010",
     "aliases": ["Zipperle et al.", "Zipperle et al. (2023)", "Zipperle (2023)", "Provenance-based Intrusion Detection Systems: A Survey"]
   },
@@ -118,8 +118,8 @@
     "year": 2023,
     "publication_type": "PEER_REVIEWED",
     "venue": "IEEE 34th International Symposium on Software Reliability Engineering (ISSRE 2023)",
-    "doi": "10.1109/ISSRE59848.2023.00062",
-    "url": "https://doi.org/10.1109/ISSRE59848.2023.00062",
+    "doi": "10.1109/ISSRE59848.2023.00071",
+    "url": "https://doi.org/10.1109/ISSRE59848.2023.00071",
     "word_source_tag": "SRC000044",
     "aliases": ["LogHub", "Loghub", "Zhu et al. (2023)", "kho LogHub", "BGL", "HDFS"]
   },
@@ -157,8 +157,8 @@
     "year": 2020,
     "publication_type": "PEER_REVIEWED",
     "venue": "Network and Distributed System Security Symposium (NDSS 2020)",
-    "doi": "10.14722/ndss.2020.24050",
-    "url": "https://doi.org/10.14722/ndss.2020.24050",
+    "doi": "10.14722/ndss.2020.24046",
+    "url": "https://doi.org/10.14722/ndss.2020.24046",
     "word_source_tag": "SRC000011",
     "aliases": ["UNICORN", "Han et al.", "Han et al. (2020)", "Han (2020)"]
   },
@@ -362,8 +362,8 @@
     "year": 2024,
     "publication_type": "PEER_REVIEWED",
     "venue": "ACM SIGSOFT International Symposium on Software Testing and Analysis (ISSTA 2024)",
-    "doi": "10.1145/3650212.3680384",
-    "url": "https://doi.org/10.1145/3650212.3680384",
+    "doi": "10.1145/3650212.3652123",
+    "url": "https://doi.org/10.1145/3650212.3652123",
     "word_source_tag": "SRC000007",
     "aliases": ["Jiang et al.", "Jiang et al. (2024)", "Jiang (2024)", "A Large-Scale Evaluation for Log Parsing Techniques"]
   },
@@ -372,10 +372,10 @@
     "canonical_title": "Mining Invariants from Console Logs for System Problem Detection",
     "canonical_authors": [
       "Jian-Guang Lou",
-      "Qingwei Fu",
-      "Shengqi Yang",
-      "Jiang Li",
-      "Bin Chen"
+      "Qiang Fu",
+      "Shenqi Yang",
+      "Ye Xu",
+      "Jiang Li"
     ],
     "year": 2010,
     "publication_type": "PEER_REVIEWED",
@@ -413,8 +413,8 @@
     "year": 2021,
     "publication_type": "PEER_REVIEWED",
     "venue": "International Joint Conference on Neural Networks (IJCNN 2021)",
-    "doi": "10.1109/IJCNN52111.2021.9534113",
-    "url": "https://doi.org/10.1109/IJCNN52111.2021.9534113",
+    "doi": "10.1109/IJCNN52387.2021.9534113",
+    "url": "https://doi.org/10.1109/IJCNN52387.2021.9534113",
     "word_source_tag": "SRC000004",
     "aliases": ["LogBERT", "Guo et al.", "Guo et al. (2021)", "Guo (2021)"]
   },
