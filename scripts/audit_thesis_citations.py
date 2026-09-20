@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-Thesis Citation Auditor based on Dynamic Canonical Source Identity
-Guarantees:
-1. ZERO hard-coded expected numeric IDs.
-2. Dynamic resolution of DOCX bibliography rows -> canonical source keys.
-3. Runtime map: citation_number -> actual_source_key.
-4. Named entity / alias in citation context -> expected_source_key.
-5. Verification: actual_source_key == expected_source_key.
-6. Semantic status is strictly MANUAL_REVIEW_REQUIRED (no auto-PASS).
-7. Outputs THESIS-CITATION-AUDIT.csv.
+Thesis Citation Auditor based on Dynamic Native Word CITATION Fields
+Architecture:
+1. Direct OOXML scanning of native Word CITATION fields (w:fldSimple and complex fields).
+2. Field instruction (CITATION <word_source_tag>) mapped to canonical source_key via CANONICAL-SOURCES.json.
+3. Runtime map: rendered citation number -> word_source_tag -> canonical source_key.
+4. ZERO hard-coded bibliography table indices (hard-coded bibliography table index = 0).
+5. Bracket citations not linked to a native CITATION field are classified as STATIC_CITATION / MANUAL_REVIEW_REQUIRED (no auto-PASS).
+6. Identity audit on native CITATION fields: named entity -> expected canonical source_key -> actual canonical source_key from native CITATION field.
+7. Semantic status is strictly MANUAL_REVIEW_REQUIRED (no auto semantic PASS).
+8. Outputs THESIS-CITATION-AUDIT.csv.
 """
 
 import sys
@@ -17,6 +18,7 @@ import csv
 import json
 from pathlib import Path
 import docx
+from docx.oxml.ns import qn
 
 sys.stdout.reconfigure(encoding='utf-8')
 
@@ -30,74 +32,101 @@ def load_canonical_registry():
         sources = json.load(f)
     return sources
 
-def resolve_bibliography_table(doc, canonical_sources):
+def is_bibliography_table(table):
     """
-    Parses Table 27 (the Bibliography) from the document and maps each row number [1..44]
-    to its canonical source_key.
-    Returns: dict[int, str] mapping citation_number -> source_key
+    Dynamically identifies the bibliography table without hard-coded table index.
+    Checks for a 2-column table where leading rows start with sequential [1], [2], ...
     """
-    t27 = doc.tables[27]
-    runtime_map = {}
-    
-    # Pre-index canonical sources by title words and author keywords
-    for idx, row in enumerate(t27.rows):
-        num_cell = row.cells[0].text.strip()
-        text_cell = row.cells[1].text.strip()
-        
-        m = re.search(r"\[(\d+)\]", num_cell)
-        if not m:
+    if len(table.columns) == 2 and len(table.rows) >= 10:
+        first_cells = [r.cells[0].text.strip() for r in table.rows[:5]]
+        if all(re.match(r"^\[\d+\]$", c) for c in first_cells):
+            return True
+    return False
+
+def parse_element_citation_items(p_el):
+    """
+    Parses a paragraph or cell element in OOXML document order, extracting:
+    - native CITATION fields (both w:fldSimple and complex fields using w:fldChar + w:instrText)
+    - plain text segments outside fields
+    Returns list of tuples:
+      ('native', tag, num, rendered_text, start_pos, end_pos)
+      ('text', None, None, text_content, start_pos, end_pos)
+      ('other_field', instr, None, rendered_text, start_pos, end_pos)
+    """
+    items = []
+    nodes = p_el.xpath('.//w:r[not(ancestor::w:fldSimple)] | .//w:fldSimple')
+    state = 'none'  # 'instr', 'result'
+    curr_instr = []
+    curr_result = []
+    current_char_pos = 0
+    field_start_pos = 0
+
+    for node in nodes:
+        tag_name = node.tag.split('}')[-1]
+        if tag_name == 'fldSimple':
+            instr = node.get(qn('w:instr')) or ''
+            result = ''.join(node.xpath('.//w:t/text()'))
+            m = re.search(r'CITATION\s+([A-Za-z0-9_-]+)', instr)
+            start_pos = current_char_pos
+            current_char_pos += len(result)
+            end_pos = current_char_pos
+            if m:
+                tag = m.group(1)
+                num_m = re.search(r'\[(\d+)\]', result)
+                num = int(num_m.group(1)) if num_m else None
+                items.append(('native', tag, num, result, start_pos, end_pos))
+            else:
+                items.append(('other_field', instr, None, result, start_pos, end_pos))
             continue
-        num = int(m.group(1))
-        
-        matched_key = None
-        best_score = 0
-        
-        for s in canonical_sources:
-            score = 0
-            title = s["canonical_title"].lower()
-            # Title overlap
-            title_words = [w for w in re.split(r"\W+", title) if len(w) > 3]
-            if title_words:
-                matches = sum(1 for w in title_words if w in text_cell.lower())
-                score = matches / len(title_words)
-            
-            # Key specific overrides
-            if s["source_key"] == "DARPA2018TCE3" and "Engagement 3" in text_cell:
-                score = 10.0
-            elif s["source_key"] == "DARPA2020TCE5" and "Engagement 5" in text_cell:
-                score = 10.0
-            elif s["source_key"] == "Russinovich2026Sysmon" and "Sysmon" in text_cell:
-                score = 10.0
-            elif s["source_key"] == "Zhu2023Loghub" and "Loghub: A Large Collection" in text_cell:
-                score = 10.0
-            elif s["source_key"] == "Zhu2019LogParsing" and "Tools and Benchmarks" in text_cell:
-                score = 10.0
-            elif s["source_key"] == "Kent2015LANL" and "Comprehensive, Multi-Source" in text_cell:
-                score = 10.0
-            elif s["source_key"] == "Ilse2018AttentionMIL" and "Attention-based Deep Multiple" in text_cell:
-                score = 10.0
-            elif s["source_key"] == "Guerra2026PIDSEvalProtocols" and "Guerra" in text_cell:
-                score = 10.0
-            elif s["source_key"] == "Nguyen2026APTGraphLearning" and "Nguyễn" in text_cell:
-                score = 10.0
-                
-            if score > best_score and score > 0.3:
-                best_score = score
-                matched_key = s["source_key"]
-                
-        if not matched_key:
-            raise RuntimeError(f"Could not uniquely map Bibliography row [{num}]: {text_cell[:60]}")
-        runtime_map[num] = matched_key
-        
-    return runtime_map
+
+        fld_chars = node.xpath('./w:fldChar')
+        if fld_chars:
+            for fc in fld_chars:
+                ftype = fc.get(qn('w:fldCharType'))
+                if ftype == 'begin':
+                    state = 'instr'
+                    curr_instr = []
+                    curr_result = []
+                    field_start_pos = current_char_pos
+                elif ftype == 'separate':
+                    state = 'result'
+                elif ftype == 'end':
+                    instr_str = ''.join(curr_instr).strip()
+                    res_str = ''.join(curr_result)
+                    m = re.search(r'CITATION\s+([A-Za-z0-9_-]+)', instr_str)
+                    if m:
+                        tag = m.group(1)
+                        num_m = re.search(r'\[(\d+)\]', res_str)
+                        num = int(num_m.group(1)) if num_m else None
+                        items.append(('native', tag, num, res_str, field_start_pos, current_char_pos))
+                    else:
+                        items.append(('other_field', instr_str, None, res_str, field_start_pos, current_char_pos))
+                    state = 'none'
+                    curr_instr = []
+                    curr_result = []
+            continue
+
+        instr_texts = node.xpath('./w:instrText')
+        if instr_texts and state == 'instr':
+            for it in instr_texts:
+                curr_instr.append(it.text or '')
+            continue
+
+        texts = node.xpath('./w:t/text()')
+        txt = ''.join(texts)
+        if state == 'result':
+            curr_result.append(txt)
+            current_char_pos += len(txt)
+        elif state == 'none':
+            if txt:
+                start_pos = current_char_pos
+                current_char_pos += len(txt)
+                end_pos = current_char_pos
+                items.append(('text', None, None, txt, start_pos, end_pos))
+
+    return items
 
 def build_alias_maps(canonical_sources):
-    """
-    Builds:
-    - unique_aliases: list of (norm_alias, original_alias, single_source_key)
-    - ambiguous_aliases: list of (norm_alias, original_alias, sorted_list_of_source_keys)
-    Both sorted by length of original_alias descending.
-    """
     alias_to_keys = {}
     alias_repr = {}
     for s in canonical_sources:
@@ -142,11 +171,6 @@ def find_sentence_boundary(text: str, start_pos: int) -> int:
     return max(candidates)
 
 def extract_bounded_prefix(text: str, start_pos: int) -> str:
-    """
-    Extracts the relevant prefix for a citation, bounded by prior citations
-    or punctuation to prevent entity leakage across independent clauses.
-    Handles 'et al.' abbreviations safely so the period is not treated as a sentence end.
-    """
     last_bracket = text.rfind(']', 0, start_pos)
     if last_bracket != -1:
         between = text[last_bracket+1:start_pos]
@@ -164,80 +188,97 @@ def audit_citations():
     canonical_sources = load_canonical_registry()
     print(f"[AUDIT] Loaded {len(canonical_sources)} canonical sources from registry.")
 
-    # Preflight checks
+    # Preflight checks on registry
     assert len(canonical_sources) == 44, f"Expected 44 canonical sources, got {len(canonical_sources)}"
     keys = [s["source_key"] for s in canonical_sources]
     assert len(keys) == len(set(keys)) == 44, f"source_key must be unique (44), found {len(set(keys))}"
     tags = [s["word_source_tag"] for s in canonical_sources]
     assert len(tags) == len(set(tags)) == 44, f"word_source_tag must be unique (44), found {len(set(tags))}"
 
-    # Check cross-source duplicate aliases in CANONICAL-SOURCES.json
-    json_alias_map = {}
-    for s in canonical_sources:
-        k = s["source_key"]
-        for a in s.get("aliases", []):
-            json_alias_map.setdefault(a.strip().lower(), set()).add(k)
-    dup_json = {a: sorted(ks) for a, ks in json_alias_map.items() if len(ks) > 1}
-    print(f"[PREFLIGHT] 44 source_key unique: OK")
-    print(f"[PREFLIGHT] 44 word_source_tag unique: OK")
-    print(f"[PREFLIGHT] Cross-source duplicate aliases in CANONICAL-SOURCES.json: {len(dup_json)}")
-    for a, ks in sorted(dup_json.items()):
-        print(f"  [DUP REGISTRY] '{a}' -> {ks}")
+    tag_to_source = {s["word_source_tag"]: s for s in canonical_sources}
 
     doc = docx.Document(str(docx_path))
-    runtime_bib_map = resolve_bibliography_table(doc, canonical_sources)
-    print(f"[AUDIT] Successfully resolved {len(runtime_bib_map)} DOCX bibliography entries to canonical source keys.")
-    for num in sorted(runtime_bib_map.keys()):
-        print(f"  [{num:2d}] -> {runtime_bib_map[num]}")
+
+    # --- STEP 1 & 2: SCAN ALL NATIVE CITATION FIELDS FROM DOCX OOXML ---
+    native_fields_all = []
+    # 1. Paragraphs (skipping frontmatter TOC / TOF / bibliography)
+    for p in doc.paragraphs:
+        p_style = p.style.name.lower() if p.style else ""
+        if "toc" in p_style or "table of figures" in p_style or "tài liệu tham khảo" in p.text.lower():
+            continue
+        items = parse_element_citation_items(p._element)
+        for it in items:
+            if it[0] == 'native':
+                native_fields_all.append(it)
+
+    # 2. Tables (dynamically skipping the bibliography table)
+    for t in doc.tables:
+        if is_bibliography_table(t):
+            continue
+        for r in t.rows:
+            for c in r.cells:
+                for p in c.paragraphs:
+                    items = parse_element_citation_items(p._element)
+                    for it in items:
+                        if it[0] == 'native':
+                            native_fields_all.append(it)
+
+    # --- STEP 3 & 5: MAP NATIVE FIELDS TO CANONICAL SOURCES AND BUILD RUNTIME MAP ---
+    num_to_tags = {}
+    num_to_keys = {}
+    unresolved_tags = []
+    invalid_num_fields = []
+
+    for it in native_fields_all:
+        ftype, tag, num, rendered_text, start_pos, end_pos = it
+        if not tag:
+            raise RuntimeError(f"HARD FAIL: Native citation field could not be resolved: {it}")
+        if tag not in tag_to_source:
+            unresolved_tags.append(tag)
+            raise RuntimeError(f"HARD FAIL: Source tag '{tag}' not found in canonical registry!")
+        if num is None or not (1 <= num <= 44):
+            invalid_num_fields.append((tag, rendered_text))
+            raise RuntimeError(f"HARD FAIL: Native citation field '{tag}' has invalid rendered number '{rendered_text}'!")
+
+        skey = tag_to_source[tag]["source_key"]
+        num_to_tags.setdefault(num, set()).add(tag)
+        num_to_keys.setdefault(num, set()).add(skey)
+
+    conflicts = {n: sorted(ks) for n, ks in num_to_keys.items() if len(ks) > 1}
+    if conflicts:
+        raise RuntimeError(f"HARD FAIL: Rendered citation numbers map to multiple canonical source keys: {conflicts}")
+
+    runtime_map = {n: list(ks)[0] for n, ks in num_to_keys.items()}
+
+    # --- STEP 6: PREFLIGHT REPORTING ---
+    unique_tags_cited = set(t for tags_set in num_to_tags.values() for t in tags_set)
+    print(f"[PREFLIGHT] Native CITATION field count: {len(native_fields_all)}")
+    print(f"[PREFLIGHT] Unique source tags cited: {len(unique_tags_cited)}")
+    print(f"[PREFLIGHT] Unresolved source tags: {len(unresolved_tags)} {unresolved_tags}")
+    print(f"[PREFLIGHT] Number/source conflicts: {len(conflicts)} {conflicts}")
+    print(f"[PREFLIGHT] Display-number -> source-key mappings ({len(runtime_map)} entries):")
+    for n in sorted(runtime_map.keys()):
+        print(f"  [{n:2d}] -> {list(num_to_tags[n])[0]} -> {runtime_map[n]}")
 
     unique_aliases, ambiguous_aliases = build_alias_maps(canonical_sources)
     print(f"[PREFLIGHT] Unique aliases: {len(unique_aliases)}, Ambiguous aliases across sources: {len(ambiguous_aliases)}")
-    for norm, orig, ks in ambiguous_aliases:
-        print(f"  [AMBIGUOUS ALIAS] '{orig}' -> {ks}")
 
+    # --- STEP 7 & 8: TRAVERSE ALL CITATIONS IN DOCUMENT ORDER ---
     occurrences = []
     occ_counter = 0
 
-    # Helper to check if text is a code snippet
-    def is_code_snippet(txt):
-        code_markers = ["def ", "class ", "return ", "import ", "lambda ", " = ", "self.", "torch.", "np.", "session_intervals[b][0]", "np.zeros", "nn.Module", "pytest."]
-        return any(m in txt for m in code_markers)
-
-    # 1. Audit paragraphs (skip Bibliography table / TOC / TOF)
-    for p_idx, p in enumerate(doc.paragraphs):
-        p_text = p.text
-        if not p_text.strip():
-            continue
-
-        p_style = p.style.name.lower() if p.style else ""
-        if "toc" in p_style or "table of figures" in p_style or "tài liệu tham khảo" in p_text.lower():
-            continue
-
-        if is_code_snippet(p_text):
-            continue
-
-        # Regex for [N] or [N, M] or [N]-[M]
-        for m in re.finditer(r"\[(\d+)(?:,\s*(\d+))*\]", p_text):
-            raw_match = m.group(0)
-            start_pos, end_pos = m.span()
-
-            # Context window around the citation (-120 to +120 chars)
-            ctx_start = max(0, start_pos - 120)
-            ctx_end = min(len(p_text), end_pos + 120)
-            context = p_text[ctx_start:ctx_end]
-
-            nums = [int(n) for n in re.findall(r"\d+", raw_match)]
-            sentence_prefix = extract_bounded_prefix(p_text, start_pos)
-
-            matched_u = [(orig, skey) for norm, orig, skey in unique_aliases if orig.lower() in sentence_prefix.lower()]
-            matched_a = [(orig, skeys) for norm, orig, skeys in ambiguous_aliases if orig.lower() in sentence_prefix.lower()]
-
-            for num in nums:
+    def process_element_occurrences(p_idx, t_idx, coord, p_el, full_text):
+        nonlocal occ_counter
+        items = parse_element_citation_items(p_el)
+        for it in items:
+            if it[0] == 'native':
                 occ_counter += 1
                 occ_id = f"OCC-{occ_counter:04d}"
-
-                syntax_status = "PASS" if 1 <= num <= 44 else "FAIL"
-                actual_skey = runtime_bib_map.get(num, f"UNRESOLVED_NUM_{num}")
+                tag, num, res, start_pos, end_pos = it[1], it[2], it[3], it[4], it[5]
+                actual_skey = tag_to_source[tag]["source_key"]
+                prefix = extract_bounded_prefix(full_text, start_pos)
+                matched_u = [(orig, skey) for norm, orig, skey in unique_aliases if orig.lower() in prefix.lower()]
+                matched_a = [(orig, skeys) for norm, orig, skeys in ambiguous_aliases if orig.lower() in prefix.lower()]
 
                 detected_entities = []
                 expected_keys = []
@@ -253,7 +294,7 @@ def audit_citations():
                         identity_comment = f"Context entity matches expected source {actual_skey}"
                     else:
                         identity_status = "FAIL"
-                        identity_comment = f"Context entities {detected_entities} expected {expected_keys}, but [{num}] resolved to {actual_skey}"
+                        identity_comment = f"Context entities {detected_entities} expected {expected_keys}, but native field [{num}] resolved to {actual_skey}"
                 elif matched_a:
                     cand_keys = []
                     for orig, skeys in matched_a:
@@ -262,14 +303,14 @@ def audit_citations():
                         for skey in skeys:
                             if skey not in cand_keys:
                                 cand_keys.append(skey)
-                    if "sosp 2009" in sentence_prefix.lower() and "Xu2009HDFS" in cand_keys:
+                    if "sosp 2009" in prefix.lower() and "Xu2009HDFS" in cand_keys:
                         expected_keys = ["Xu2009HDFS"]
                         if actual_skey == "Xu2009HDFS":
                             identity_status = "PASS"
                             identity_comment = "Context entity 'Xu et al., SOSP 2009' uniquely disambiguated to Xu2009HDFS"
                         else:
                             identity_status = "FAIL"
-                            identity_comment = f"Context entity 'Xu et al., SOSP 2009' expected Xu2009HDFS, but [{num}] resolved to {actual_skey}"
+                            identity_comment = f"Context entity 'Xu et al., SOSP 2009' expected Xu2009HDFS, but native field [{num}] resolved to {actual_skey}"
                     else:
                         expected_keys = cand_keys
                         if actual_skey in cand_keys:
@@ -277,16 +318,20 @@ def audit_citations():
                             identity_comment = f"Ambiguous alias {detected_entities} maps to multiple sources: {cand_keys}; duplicate alias not allowed for auto-PASS"
                         else:
                             identity_status = "FAIL"
-                            identity_comment = f"Context entity {detected_entities} maps to {cand_keys}, but [{num}] resolved to unrelated {actual_skey}"
+                            identity_comment = f"Context entity {detected_entities} maps to {cand_keys}, but native field [{num}] resolved to unrelated {actual_skey}"
                 else:
                     identity_status = "PASS"
-                    identity_comment = "General citation without named entity anchor"
+                    identity_comment = "Native citation field without named entity anchor"
+
+                ctx_start = max(0, start_pos - 120)
+                ctx_end = min(len(full_text), end_pos + 120)
+                context = full_text[ctx_start:ctx_end]
 
                 occurrences.append({
                     "occurrence_id": occ_id,
                     "paragraph_index": p_idx,
-                    "table_index": "",
-                    "cell_coordinates": "",
+                    "table_index": t_idx,
+                    "cell_coordinates": coord,
                     "raw_citation_text": f"[{num}]",
                     "resolved_number": num,
                     "actual_source_key": actual_skey,
@@ -298,92 +343,75 @@ def audit_citations():
                     "semantic_status": "MANUAL_REVIEW_REQUIRED"
                 })
 
-    # 2. Audit table cells (excluding Table 27)
-    for t_idx, table in enumerate(doc.tables):
-        if t_idx == 27:
-            continue
-        for r_idx, row in enumerate(table.rows):
-            for c_idx, cell in enumerate(row.cells):
-                c_text = cell.text
-                if not c_text.strip() or is_code_snippet(c_text):
-                    continue
-                for m in re.finditer(r"\[(\d+)(?:,\s*(\d+))*\]", c_text):
-                    raw_match = m.group(0)
-                    start_pos, end_pos = m.span()
-                    ctx_start = max(0, start_pos - 80)
-                    ctx_end = min(len(c_text), end_pos + 80)
-                    context = c_text[ctx_start:ctx_end]
+            elif it[0] == 'text':
+                txt = it[3]
+                start_offset = it[4]
+                for m in re.finditer(r"\[(\d+)\]", txt):
+                    occ_counter += 1
+                    occ_id = f"OCC-{occ_counter:04d}"
+                    num = int(m.group(1))
+                    m_start = start_offset + m.start()
+                    m_end = start_offset + m.end()
+                    actual_skey = runtime_map.get(num, f"UNRESOLVED_NUM_{num}")
+                    prefix = extract_bounded_prefix(full_text, m_start)
+                    matched_u = [(orig, skey) for norm, orig, skey in unique_aliases if orig.lower() in prefix.lower()]
+                    matched_a = [(orig, skeys) for norm, orig, skeys in ambiguous_aliases if orig.lower() in prefix.lower()]
 
-                    nums = [int(n) for n in re.findall(r"\d+", raw_match)]
-                    sentence_prefix = extract_bounded_prefix(c_text, start_pos)
-
-                    matched_u = [(orig, skey) for norm, orig, skey in unique_aliases if orig.lower() in sentence_prefix.lower()]
-                    matched_a = [(orig, skeys) for norm, orig, skeys in ambiguous_aliases if orig.lower() in sentence_prefix.lower()]
-
-                    for num in nums:
-                        occ_counter += 1
-                        occ_id = f"OCC-{occ_counter:04d}"
-                        syntax_status = "PASS" if 1 <= num <= 44 else "FAIL"
-                        actual_skey = runtime_bib_map.get(num, f"UNRESOLVED_NUM_{num}")
-
-                        detected_entities = []
-                        expected_keys = []
-
-                        if matched_u:
-                            for orig, skey in matched_u:
-                                if orig not in detected_entities:
-                                    detected_entities.append(orig)
+                    detected_entities = []
+                    expected_keys = []
+                    if matched_u:
+                        for orig, skey in matched_u:
+                            if orig not in detected_entities:
+                                detected_entities.append(orig)
+                            if skey not in expected_keys:
+                                expected_keys.append(skey)
+                    elif matched_a:
+                        for orig, skeys in matched_a:
+                            if orig not in detected_entities:
+                                detected_entities.append(orig)
+                            for skey in skeys:
                                 if skey not in expected_keys:
                                     expected_keys.append(skey)
-                            if actual_skey in expected_keys:
-                                identity_status = "PASS"
-                                identity_comment = f"Context entity matches expected source {actual_skey}"
-                            else:
-                                identity_status = "FAIL"
-                                identity_comment = f"Context entities {detected_entities} expected {expected_keys}, but [{num}] resolved to {actual_skey}"
-                        elif matched_a:
-                            cand_keys = []
-                            for orig, skeys in matched_a:
-                                if orig not in detected_entities:
-                                    detected_entities.append(orig)
-                                for skey in skeys:
-                                    if skey not in cand_keys:
-                                        cand_keys.append(skey)
-                            if "sosp 2009" in sentence_prefix.lower() and "Xu2009HDFS" in cand_keys:
-                                expected_keys = ["Xu2009HDFS"]
-                                if actual_skey == "Xu2009HDFS":
-                                    identity_status = "PASS"
-                                    identity_comment = "Context entity 'Xu et al., SOSP 2009' uniquely disambiguated to Xu2009HDFS"
-                                else:
-                                    identity_status = "FAIL"
-                                    identity_comment = f"Context entity 'Xu et al., SOSP 2009' expected Xu2009HDFS, but [{num}] resolved to {actual_skey}"
-                            else:
-                                expected_keys = cand_keys
-                                if actual_skey in cand_keys:
-                                    identity_status = "AMBIGUOUS"
-                                    identity_comment = f"Ambiguous alias {detected_entities} maps to multiple sources: {cand_keys}; duplicate alias not allowed for auto-PASS"
-                                else:
-                                    identity_status = "FAIL"
-                                    identity_comment = f"Context entity {detected_entities} maps to {cand_keys}, but [{num}] resolved to unrelated {actual_skey}"
-                        else:
-                            identity_status = "PASS"
-                            identity_comment = "General citation without named entity anchor"
 
-                        occurrences.append({
-                            "occurrence_id": occ_id,
-                            "paragraph_index": "",
-                            "table_index": t_idx,
-                            "cell_coordinates": f"({r_idx},{c_idx})",
-                            "raw_citation_text": f"[{num}]",
-                            "resolved_number": num,
-                            "actual_source_key": actual_skey,
-                            "context_snippet": context.replace("\n", " ").strip(),
-                            "detected_entities": "; ".join(detected_entities),
-                            "expected_source_key": "; ".join(expected_keys),
-                            "identity_status": identity_status,
-                            "identity_comment": identity_comment,
-                            "semantic_status": "MANUAL_REVIEW_REQUIRED"
-                        })
+                    identity_comment = "Static bracket citation not linked to a native Word CITATION field (no auto-PASS)"
+                    if detected_entities:
+                        identity_comment += f"; context entities {detected_entities} expected {expected_keys}"
+
+                    ctx_start = max(0, m_start - 120)
+                    ctx_end = min(len(full_text), m_end + 120)
+                    context = full_text[ctx_start:ctx_end]
+
+                    occurrences.append({
+                        "occurrence_id": occ_id,
+                        "paragraph_index": p_idx,
+                        "table_index": t_idx,
+                        "cell_coordinates": coord,
+                        "raw_citation_text": f"[{num}]",
+                        "resolved_number": num,
+                        "actual_source_key": actual_skey,
+                        "context_snippet": context.replace("\n", " ").strip(),
+                        "detected_entities": "; ".join(detected_entities),
+                        "expected_source_key": "; ".join(expected_keys),
+                        "identity_status": "STATIC_CITATION",
+                        "identity_comment": identity_comment,
+                        "semantic_status": "MANUAL_REVIEW_REQUIRED"
+                    })
+
+    # Traverse paragraphs
+    for p_idx, p in enumerate(doc.paragraphs):
+        p_style = p.style.name.lower() if p.style else ""
+        if "toc" in p_style or "table of figures" in p_style or "tài liệu tham khảo" in p.text.lower():
+            continue
+        process_element_occurrences(p_idx, "", "", p._element, p.text)
+
+    # Traverse tables
+    for t_idx, t in enumerate(doc.tables):
+        if is_bibliography_table(t):
+            continue
+        for r_idx, row in enumerate(t.rows):
+            for c_idx, cell in enumerate(row.cells):
+                for p in cell.paragraphs:
+                    process_element_occurrences("", t_idx, f"({r_idx},{c_idx})", p._element, p.text)
 
     # Write THESIS-CITATION-AUDIT.csv
     fieldnames = [
@@ -407,17 +435,23 @@ def audit_citations():
         writer.writeheader()
         writer.writerows(occurrences)
 
-    # Print summary
-    syntax_fails = sum(1 for o in occurrences if not (1 <= o["resolved_number"] <= 44))
-    identity_pass = sum(1 for o in occurrences if o["identity_status"] == "PASS")
-    identity_fails = [o for o in occurrences if o["identity_status"] == "FAIL"]
-    identity_ambig = [o for o in occurrences if o["identity_status"] == "AMBIGUOUS"]
+    # Summary statistics
+    total_bracket_occurrences = len(occurrences)
+    total_native_citations = sum(1 for o in occurrences if o["identity_status"] != "STATIC_CITATION")
+    static_only_citations = sum(1 for o in occurrences if o["identity_status"] == "STATIC_CITATION")
+
+    native_occs = [o for o in occurrences if o["identity_status"] != "STATIC_CITATION"]
+    identity_pass = sum(1 for o in native_occs if o["identity_status"] == "PASS")
+    identity_fails = [o for o in native_occs if o["identity_status"] == "FAIL"]
+    identity_ambig = [o for o in native_occs if o["identity_status"] == "AMBIGUOUS"]
     manual_review_count = sum(1 for o in occurrences if o["semantic_status"] == "MANUAL_REVIEW_REQUIRED")
 
-    print(f"\n[AUDIT-REPORT] Total citation occurrences: {len(occurrences)}")
-    print(f"  - Syntax PASS: {len(occurrences) - syntax_fails} / FAIL: {syntax_fails}")
-    print(f"  - Identity PASS: {identity_pass} / FAIL: {len(identity_fails)} / AMBIGUOUS: {len(identity_ambig)}")
+    print(f"\n[AUDIT-REPORT] Total bracket citation occurrences: {total_bracket_occurrences}")
+    print(f"  - Total native CITATION fields: {total_native_citations}")
+    print(f"  - Static-only citation occurrences: {static_only_citations}")
+    print(f"  - Native citation identity: PASS: {identity_pass} / FAIL: {len(identity_fails)} / AMBIGUOUS: {len(identity_ambig)}")
     print(f"  - Semantic status: {manual_review_count} MANUAL_REVIEW_REQUIRED (0 auto-PASS)")
+    print(f"  - Hard-coded bibliography table index = 0")
 
     if identity_ambig:
         print(f"\n[AUDIT-REPORT] Detected {len(identity_ambig)} Ambiguous Citations:")
@@ -431,7 +465,7 @@ def audit_citations():
             print(f"  {f_occ['occurrence_id']}: {f_occ['raw_citation_text']} in p[{f_occ['paragraph_index']}] / t[{f_occ['table_index']}] - {f_occ['identity_comment']}")
             print(f"     Snippet: {f_occ['context_snippet'][:100]}")
     else:
-        print("\n[AUDIT-REPORT] ALL citation identity checks PASSED (0 mismatches)!")
+        print("\n[AUDIT-REPORT] ALL native citation identity checks PASSED (0 mismatches)!")
 
 if __name__ == "__main__":
     audit_citations()
