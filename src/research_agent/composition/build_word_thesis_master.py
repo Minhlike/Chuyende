@@ -32,6 +32,71 @@ from research_agent.composition.academic_builder_base import (
 )
 
 
+def count_bibliography_fields(doc):
+    """Đếm tổng số trường BIBLIOGRAPHY (cả w:fldSimple và complex field) trong toàn bộ tài liệu."""
+    count = 0
+    for fs in doc._element.xpath('.//w:fldSimple'):
+        instr = fs.get(qn('w:instr')) or ''
+        if 'BIBLIOGRAPHY' in instr:
+            count += 1
+    for it in doc._element.xpath('.//w:instrText'):
+        txt = it.text or ''
+        if 'BIBLIOGRAPHY' in txt:
+            count += 1
+    return count
+
+
+def remove_existing_bibliography_fields(doc):
+    """
+    Quét toàn bộ tài liệu OOXML (body, tables, textboxes) và loại bỏ mọi trường
+    BIBLIOGRAPHY tồn dư từ template trước khi tạo bibliography mới.
+    Đảm bảo tuyệt đối không ảnh hưởng đến TOC, REF, PAGEREF, SEQ, CITATION.
+    """
+    removed_count = 0
+
+    # 1. Loại bỏ w:fldSimple có w:instr chứa BIBLIOGRAPHY
+    for fs in list(doc._element.xpath('.//w:fldSimple')):
+        instr = fs.get(qn('w:instr')) or ''
+        if 'BIBLIOGRAPHY' in instr:
+            parent = fs.getparent()
+            if parent is not None:
+                parent.remove(fs)
+                removed_count += 1
+
+    # 2. Loại bỏ complex field chứa BIBLIOGRAPHY
+    for it in list(doc._element.xpath('.//w:instrText')):
+        txt = it.text or ''
+        if 'BIBLIOGRAPHY' in txt:
+            p = it
+            while p is not None and not p.tag.endswith('p') and not p.tag.endswith('body'):
+                p = p.getparent()
+            if p is not None and p.tag.endswith('p'):
+                parent = p.getparent()
+                if parent is not None:
+                    parent.remove(p)
+                    removed_count += 1
+            else:
+                it_parent = it.getparent()
+                if it_parent is not None:
+                    it_parent.remove(it)
+                    removed_count += 1
+
+    # 3. Dọn dẹp các run w:fldChar[end] mồ côi nếu có
+    for fc in list(doc._element.xpath('.//w:fldChar[@w:fldCharType="end"]')):
+        p = fc
+        while p is not None and not p.tag.endswith('p') and not p.tag.endswith('body'):
+            p = p.getparent()
+        if p is not None and p.tag.endswith('p'):
+            p_text = ''.join(p.itertext()).strip()
+            other_fields = p.xpath('.//w:fldSimple | .//w:instrText')
+            if not p_text and len(other_fields) == 0:
+                parent = p.getparent()
+                if parent is not None:
+                    parent.remove(p)
+
+    return removed_count
+
+
 def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề chuyên sâu - Copy.docx"):
     sources = load_canonical_sources()
 
@@ -51,6 +116,10 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
 
     target_path = Path(target_file)
     template_path = Path(r"D:\Research\Chuyên đề chuyên sâu - Copy.backup.docx")
+    if not template_path.exists():
+        fallback_template = Path(r"D:\Research\Chuyên đề chuyên sâu.docx")
+        if fallback_template.exists():
+            shutil.copyfile(fallback_template, template_path)
 
     print(f"[1/6] Loading template from: {template_path}")
     doc = docx.Document(str(template_path))
@@ -68,15 +137,18 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     else:
         target_p = doc.paragraphs[insertion_p_idx]
 
-    # Làm sạch các đoạn nội dung cũ
+    # Làm sạch toàn bộ các phần tử body cũ sau frontmatter (đoạn văn, bảng biểu,...)
+    body_el = doc._element.body
+    children = list(body_el)
+    target_el = target_p._p
     cleaned_count = 0
-    p_curr = target_p
-    while p_curr is not None:
-        p_next = p_curr._p.getnext()
-        p_curr._p.getparent().remove(p_curr._p)
-        cleaned_count += 1
-        p_curr = docx.text.paragraph.Paragraph(p_next, doc) if p_next is not None and p_next.tag.endswith('p') else None
-    print(f"[2/6] Cleaned {cleaned_count} old body paragraphs. Insertion target ready.")
+    if target_el in children:
+        target_idx = children.index(target_el)
+        to_remove = [c for c in children[target_idx:] if not c.tag.endswith('sectPr')]
+        for c in to_remove:
+            body_el.remove(c)
+        cleaned_count = len(to_remove)
+    print(f"[2/6] Cleaned {cleaned_count} old body elements (paragraphs, tables). Insertion target ready.")
 
     target_p = None  # Nối vào cuối
 
@@ -206,14 +278,14 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         ": (1) Tốc độ sinh dữ liệu cao (High Velocity) đòi hỏi các thuật toán xử lý phải vận hành trực tuyến với độ trễ thấp và tài nguyên tính toán giới hạn; (2) Tỷ lệ mất cân bằng cực đoan (Extreme Imbalance) khi các sự kiện độc hại thực sự chỉ chiếm một phần rất nhỏ (thường dưới 0.01%) so với khối lượng khổng lồ các hoạt động quản trị và vận hành hợp lệ; (3) Tính biến đổi phân phối liên tục (Distribution Drift) xuất phát từ các bản cập nhật phần mềm, sự thay đổi chính sách người dùng và các kỹ thuật tấn công liên tục biến hóa."
     ])
     add_p([
-        "Không gian dữ liệu nhật ký trong môi trường mạng doanh nghiệp được tổng hợp từ ba nguồn telemetry chính ",
+        "Không gian dữ liệu nhật ký trong môi trường mạng doanh nghiệp được tổng hợp từ ba nhóm nguồn dữ liệu chính với cấu trúc và định dạng không đồng nhất ",
         make_citation_element(["Inam2023ProvenanceSoK", "Zipperle2022PIDSSurvey"]),
-        ": Nhóm thứ nhất là nhật ký kiểm toán hệ điều hành máy chủ và điểm cuối (Host & Endpoint Audit Logs) như Linux Auditd, Windows Event Logs / Sysmon và eBPF, cung cấp chi tiết ở mức hạt nhân về các lệnh gọi hệ thống (system calls), hành vi tạo tiến trình (Process Creation - Sysmon Event ID 1), nạp thư viện động (Image Load - Sysmon Event ID 7), truy vết thao tác tệp tin ",
-        make_citation_element(["Michael2020ForensicValidity", "Inam2023ProvenanceSoK"]),
-        ", sửa đổi cấu hình registry (RegSetValue - Sysmon Event ID 13), cùng các thao tác mở và kết nối socket mạng (connect, accept - Sysmon Event ID 3) ",
-        make_citation_element(["Zhu2019LogParsing", "Jiang2024LogParsingEval"]),
-        ". Nhóm thứ hai là nhật ký luồng mạng (Network Flow & Protocol Logs), được thu thập từ Zeek, Suricata hoặc NetFlow/IPFIX, cung cấp siêu dữ liệu kết nối giữa các nút mạng, giao dịch DNS, chứng chỉ TLS/SSL và thông lượng gói tin. Nhóm thứ ba là nhật ký ứng dụng và dịch vụ (Application & Service Logs), phát sinh từ máy chủ web (Nginx, Apache), cơ sở dữ liệu, dịch vụ phân tán (HDFS) cùng hệ thống điều phối container (Kubernetes Audit Logs) ",
-        make_citation_element(["Zhu2019LogParsing", "Jiang2024LogParsingEval"]),
+        ". Nhóm thứ nhất là nhật ký kiểm toán máy chủ và viễn trắc nguồn gốc. Trên các hệ thống Linux, các cơ chế thu thập viễn trắc nguồn gốc và kiểm toán mức nhân, như Linux Auditd hoặc eBPF, ghi nhận các sự kiện lời gọi hệ thống, tiêu biểu như khởi tạo tiến trình execve, thao tác tệp tin open, openat, unlink và kết nối mạng connect, accept, để phục vụ điều tra số và xây dựng đồ thị quan hệ nhân quả ",
+        make_citation_element(["Inam2023ProvenanceSoK", "Michael2020ForensicValidity"]),
+        ". Trong khi đó, trên môi trường Windows, Microsoft Sysinternals Sysmon cung cấp viễn trắc an ninh mức hệ điều hành thông qua các sự kiện định danh chuẩn hóa theo đặc tả kỹ thuật chính thức của Russinovich & Garnier ",
+        make_citation_element(["Russinovich2026Sysmon"]),
+        ", tiêu biểu gồm: khởi tạo tiến trình (ProcessCreate - Event ID 1), kết nối mạng (NetworkConnect - Event ID 3), nạp thư viện động (ImageLoaded - Event ID 7), tạo tệp tin (FileCreate - Event ID 11), và thao tác cấu hình registry (RegistryEvent - Event ID 13). Nhóm thứ hai là nhật ký luồng mạng, được thu thập từ Zeek, Suricata hoặc NetFlow/IPFIX, cung cấp siêu dữ liệu kết nối giữa các nút mạng, giao dịch DNS, chứng chỉ TLS/SSL và thông lượng gói tin. Nhóm thứ ba là nhật ký ứng dụng và dịch vụ phân tán, phát sinh từ máy chủ web Apache, hệ thống tệp phân tán HDFS cùng các dịch vụ tính toán cụm thuộc bộ benchmark LogHub ",
+        make_citation_element(["Zhu2023Loghub"]),
         "."
     ])
     add_p([
@@ -324,8 +396,10 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         make_citation_element(["DARPA2018TCE3"]),
         " cung cấp dữ liệu kiểm toán hệ thống mức hạt nhân chi tiết, trong đó các kịch bản tấn công của đội Red Team được ghi nhận qua các báo cáo kịch bản (ground-truth reports/annotations), cho phép ánh xạ và suy diễn nhãn ở mức tiến trình và luồng phụ thuộc liên quan đến đợt tấn công, thay vì toàn bộ dữ liệu viễn trắc nền đều có nhãn sẵn ở mức hạt nhân; (2) LANL Unified Host and Network Dataset ",
         make_citation_element(["Kent2015LANL"]),
-        " phản ánh môi trường doanh nghiệp quy mô lớn với hàng tỷ sự kiện xác thực và luồng mạng, gán nhãn theo sự kiện và cửa sổ thời gian; (3) HDFS và BGL Datasets ",
-        make_citation_element(["Du2017DeepLog", "Zhu2019LogParsing"]),
+        " phản ánh môi trường doanh nghiệp quy mô lớn với hàng tỷ sự kiện xác thực và luồng mạng, gán nhãn theo sự kiện và cửa sổ thời gian; (3) HDFS Dataset ",
+        make_citation_element(["Xu2009HDFS"]),
+        " và BGL Dataset ",
+        make_citation_element(["Zhu2023Loghub"]),
         " đại diện cho nhật ký hệ thống phân tán và siêu máy tính, được gán nhãn bất thường ở mức khối dữ liệu (Block-level) hoặc mức dòng log đơn lẻ."
     ])
     add_p([
@@ -654,7 +728,9 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         ". Tuy nhiên, việc lưu trữ và chia sẻ các biểu diễn vector chứa thông tin định danh trực tiếp vi phạm nghiêm trọng các quy định về bảo vệ dữ liệu và tiềm ẩn nguy cơ bị tấn công suy diễn thành viên (Membership Inference) ",
         make_citation_element(["Shokri2017MembershipInference"]),
         " hoặc tái cấu trúc thông tin nhạy cảm (Model Inversion) ",
-        make_citation_element(["Fredrikson2015ModelInversion", "NIST2025SP800226"]),
+        make_citation_element(["Fredrikson2015ModelInversion"]),
+        ", cũng như các rủi ro bảo mật theo hướng dẫn NIST SP 800-226 ",
+        make_citation_element(["NIST2025SP800226"]),
         "."
     ])
     add_p(
@@ -876,6 +952,11 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     add_h1("Tài liệu tham khảo")
     print("[5/6] Creating native Word BIBLIOGRAPHY field...")
 
+    # Quét toàn bộ OOXML và loại bỏ mọi trường BIBLIOGRAPHY tồn dư từ template trước khi tạo mới
+    removed_bib = remove_existing_bibliography_fields(doc)
+    if removed_bib > 0:
+        print(f"[5/6] Removed {removed_bib} leftover BIBLIOGRAPHY field(s) from template.")
+
     # Xây dựng đoạn Thư mục động
     bib_p = doc.add_paragraph(style="Normal")
     bib_p.alignment = WD_ALIGN_PARAGRAPH.LEFT
@@ -904,6 +985,14 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         )
     fld_xml_parts.append('</w:fldSimple>')
     bib_p._p.append(parse_xml('\n'.join(fld_xml_parts)))
+
+    # Xác thực sau khi tạo: HARD FAIL nếu BIBLIOGRAPHY field count != 1
+    bib_fields_count = count_bibliography_fields(doc)
+    print(f"[5/6] Verified BIBLIOGRAPHY fields count: {bib_fields_count}")
+    if bib_fields_count != 1:
+        raise RuntimeError(
+            f"HARD FAIL: Expected exactly 1 native Word BIBLIOGRAPHY field, found {bib_fields_count}!"
+        )
 
     # Lưu vào tạm thời docx
     temp_file = target_path.parent / (target_path.stem + ".temp.docx")
