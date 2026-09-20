@@ -497,7 +497,7 @@
   },
   {
     "source_key": "Cheng2024KAIROS",
-    "canonical_title": "KAIROS: Practical Intrusion Detection and Investigation using Whole-system Provenance Graphs",
+    "canonical_title": "KAIROS: Practical Intrusion Detection and Investigation using Whole-system Provenance",
     "canonical_authors": [
       "Zijun Cheng",
       "Qiujian Lv",
@@ -510,8 +510,8 @@
     "year": 2024,
     "publication_type": "PEER_REVIEWED",
     "venue": "IEEE Symposium on Security and Privacy (S&P 2024)",
-    "doi": "10.1109/SP54263.2024.00109",
-    "url": "https://doi.org/10.1109/SP54263.2024.00109",
+    "doi": "10.1109/SP54263.2024.00005",
+    "url": "https://doi.org/10.1109/SP54263.2024.00005",
     "word_source_tag": "SRC000012",
     "aliases": ["KAIROS", "Cheng et al.", "Cheng et al. (2024)", "Cheng (2024)"]
   },
@@ -532,8 +532,8 @@
     "year": 2024,
     "publication_type": "PEER_REVIEWED",
     "venue": "Network and Distributed System Security Symposium (NDSS 2024)",
-    "doi": "10.14722/ndss.2024.241098",
-    "url": "https://doi.org/10.14722/ndss.2024.241098",
+    "doi": "10.14722/ndss.2024.23204",
+    "url": "https://doi.org/10.14722/ndss.2024.23204",
     "word_source_tag": "SRC000013",
     "aliases": ["NODLINK", "Li et al.", "Li et al. (2024)", "Li (2024)"]
   },
