@@ -150,7 +150,14 @@ def build_alias_maps(canonical_sources):
                 alias_repr[norm] = alias
         if s.get("canonical_authors"):
             first_author = s["canonical_authors"][0].split()[-1]
-            for fa_alias in [f"{first_author} et al.", f"{first_author} et al"]:
+            year = s.get("year")
+            fa_list = [f"{first_author} et al.", f"{first_author} et al"]
+            if year:
+                fa_list.extend([
+                    f"{first_author} et al. ({year})",
+                    f"{first_author} ({year})",
+                ])
+            for fa_alias in fa_list:
                 norm = fa_alias.strip().lower()
                 alias_to_keys.setdefault(norm, set()).add(skey)
                 if norm not in alias_repr or len(fa_alias) > len(alias_repr[norm]):

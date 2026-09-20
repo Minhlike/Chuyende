@@ -107,9 +107,9 @@ def replace_in_paragraph_runs(p, old_text: str, new_text: str):
 
 segments_map = {
     96: [
-        ('text', "Trong xử lý và phân tích log tự động, các nghiên cứu đối chuẩn của Zhu et al.  "),
+        ('text', "Trong xử lý và phân tích log tự động, các nghiên cứu đối chuẩn của Zhu et al. (2019)  "),
         ('cite', "Zhu2019LogParsing"),
-        ('text', " và Jiang et al.  "),
+        ('text', " và Jiang et al. (2024)  "),
         ('cite', "Jiang2024LogParsingEval"),
         ('text', " chỉ ra rằng các bộ phân tích cú pháp (log parsers) có thể đạt độ chính xác (accuracy), độ bền vững (robustness) và hiệu quả tính toán (efficiency) cao trên các định dạng phổ biến, nhưng vẫn gặp nhiều thách thức khi xử lý các bản ghi phức tạp, mẫu log mới chưa từng thấy hoặc sự kiện hiếm gặp (complex, unseen, or rare logs). Các mô hình LSTM, GRU và Transformer được phát triển để học đặc trưng trình tự và ngữ nghĩa; mạng nơ-ron đồ thị giúp mô hình hóa quan hệ giữa nhiều thực thể; học tự giám sát hỗ trợ khai thác lượng lớn log chưa gán nhãn. Vì vậy, không có một kiến trúc duy nhất phù hợp với mọi nguồn log và mọi loại tấn công.")
     ],
@@ -120,13 +120,13 @@ segments_map = {
         ('cite', "Inam2023ProvenanceSoK")
     ],
     165: [
-        ('text', "Mặc dù sở hữu ưu thế về hiệu quả tính toán trong thực tiễn (Zhu et al.  "),
+        ('text', "Mặc dù sở hữu ưu thế về hiệu quả tính toán trong thực tiễn (Zhu et al. (2019)  "),
         ('cite', "Zhu2019LogParsing"),
-        ('text', "; Jiang et al.  "),
+        ('text', "; Jiang et al. (2024)  "),
         ('cite', "Jiang2024LogParsingEval"),
-        ('text', "), nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng: Một là, mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số (nhận định và động cơ thiết kế của chuyên đề, không phải kết luận của Michael et al.): các bộ log parser dựa trên biểu thức chính quy thường thay thế các tham số biến động như địa chỉ IP, đường dẫn tệp tin và tham số dòng lệnh bằng ký tự đại diện <*> khiến nhiều thông tin an ninh mang tính phân biệt cao bị lược bỏ; Hai là, lan truyền và khuếch đại sai số cú pháp (Parser Error Propagation) khi xử lý các định dạng phức tạp hoặc chưa từng xuất hiện (Zhu et al.  "),
+        ('text', "), nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng: Một là, mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số (nhận định và động cơ thiết kế của chuyên đề, không phải kết luận của Michael et al.): các bộ log parser dựa trên biểu thức chính quy thường thay thế các tham số biến động như địa chỉ IP, đường dẫn tệp tin và tham số dòng lệnh bằng ký tự đại diện <*> khiến nhiều thông tin an ninh mang tính phân biệt cao bị lược bỏ; Hai là, lan truyền và khuếch đại sai số cú pháp (Parser Error Propagation) khi xử lý các định dạng phức tạp hoặc chưa từng xuất hiện (Zhu et al. (2019)  "),
         ('cite', "Zhu2019LogParsing"),
-        ('text', "; Jiang et al.  "),
+        ('text', "; Jiang et al. (2024)  "),
         ('cite', "Jiang2024LogParsingEval"),
         ('text', "), dẫn đến hiện tượng sinh ra các mẫu sự kiện giả lập hoặc gộp nhầm các sự kiện khác biệt, làm xáo trộn cấu trúc không gian vector x.")
     ],
@@ -256,11 +256,12 @@ def restore_native_citations(doc, canonical_sources, key_to_num):
     for idx, exp_count in expected_cites.items():
         p = doc.paragraphs[idx]
         current_native = len(p._p.xpath('.//w:fldSimple[contains(@w:instr, "CITATION")] | .//w:instrText[contains(text(), "CITATION")]'))
-        if current_native == exp_count:
+        needs_year_update = (idx in (96, 165) and "(2019)" not in p.text)
+        if current_native == exp_count and not needs_year_update:
             print(f"[RESTORE] p[{idx}] already has {current_native} native CITATION fields. No-op.")
             continue
 
-        print(f"[RESTORE] p[{idx}] has {current_native} native CITATION fields (expected {exp_count}). Restoring...")
+        print(f"[RESTORE] p[{idx}] has {current_native} native CITATION fields (expected {exp_count}, needs_year_update={needs_year_update}). Restoring...")
         any_restored = True
 
         if idx == 235:
@@ -628,14 +629,14 @@ def run_corrections(docx_file: Path, pdf_file: Path):
             'desc': 'OCC-0001/OCC-0002 log parsing benchmark citation rewrite in Preface P96',
             'anchor_fn': lambda p: 'Các phương pháp truyền thống như Bag of Words' in p.text or 'Trong xử lý và phân tích log tự động' in p.text,
             'old_text': f'Các phương pháp truyền thống như Bag of Words, n-gram, TF-IDF và đặc trưng thống kê có ưu điểm về tốc độ, chi phí và khả năng giải thích, nhưng hạn chế trong việc xử lý biến thể cú pháp và quan hệ dài hạn  [{inam_num}],  [{michael_num}].',
-            'new_text': f'Trong xử lý và phân tích log tự động, các nghiên cứu đối chuẩn của Zhu et al.  [{zhu2019_num}] và Jiang et al.  [{jiang2024_num}] chỉ ra rằng các bộ phân tích cú pháp (log parsers) có thể đạt độ chính xác (accuracy), độ bền vững (robustness) và hiệu quả tính toán (efficiency) cao trên các định dạng phổ biến, nhưng vẫn gặp nhiều thách thức khi xử lý các bản ghi phức tạp, mẫu log mới chưa từng thấy hoặc sự kiện hiếm gặp (complex, unseen, or rare logs).'
+            'new_text': f'Trong xử lý và phân tích log tự động, các nghiên cứu đối chuẩn của Zhu et al. (2019)  [{zhu2019_num}] và Jiang et al. (2024)  [{jiang2024_num}] chỉ ra rằng các bộ phân tích cú pháp (log parsers) có thể đạt độ chính xác (accuracy), độ bền vững (robustness) và hiệu quả tính toán (efficiency) cao trên các định dạng phổ biến, nhưng vẫn gặp nhiều thách thức khi xử lý các bản ghi phức tạp, mẫu log mới chưa từng thấy hoặc sự kiện hiếm gặp (complex, unseen, or rare logs).'
         },
         {
             'id': 'occ_0063_p165',
             'desc': 'OCC-0063 remove Michael [2] and align log parser semantic claims in P165',
             'anchor_fn': lambda p: 'Mặc dù sở hữu ưu thế về tốc độ xử lý trong thực tiễn' in p.text or 'Mặc dù sở hữu ưu thế về hiệu quả tính toán trong thực tiễn (Zhu et al.' in p.text,
             'old_text': f'Mặc dù sở hữu ưu thế về tốc độ xử lý trong thực tiễn, nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng  [{zhu2019_num}],  [{michael_num}]: Một là, mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số: các bộ log parser dựa trên biểu thức chính quy thường thay thế các tham số biến động như địa chỉ IP, đường dẫn tệp tin và tham số dòng lệnh bằng ký tự đại diện <*> khiến nhiều thông tin an ninh mang tính phân biệt cao bị lược bỏ; Hai là, lan truyền và khuếch đại sai số cú pháp Parser Error Propagation: khi gặp các định dạng log mới chưa từng xuất hiện, parser có thể phân tách không chính xác, dẫn đến hiện tượng sinh ra các mẫu sự kiện giả lập hoặc gộp nhầm các sự kiện khác biệt, làm xáo trộn cấu trúc không gian vector x.',
-            'new_text': f'Mặc dù sở hữu ưu thế về hiệu quả tính toán trong thực tiễn (Zhu et al.  [{zhu2019_num}]; Jiang et al.  [{jiang2024_num}]), nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng: Một là, mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số (nhận định và động cơ thiết kế của chuyên đề, không phải kết luận của Michael et al.): các bộ log parser dựa trên biểu thức chính quy thường thay thế các tham số biến động như địa chỉ IP, đường dẫn tệp tin và tham số dòng lệnh bằng ký tự đại diện <*> khiến nhiều thông tin an ninh mang tính phân biệt cao bị lược bỏ; Hai là, lan truyền và khuếch đại sai số cú pháp (Parser Error Propagation) khi xử lý các định dạng phức tạp hoặc chưa từng xuất hiện (Zhu et al.  [{zhu2019_num}]; Jiang et al.  [{jiang2024_num}]), dẫn đến hiện tượng sinh ra các mẫu sự kiện giả lập hoặc gộp nhầm các sự kiện khác biệt, làm xáo trộn cấu trúc không gian vector x.'
+            'new_text': f'Mặc dù sở hữu ưu thế về hiệu quả tính toán trong thực tiễn (Zhu et al. (2019)  [{zhu2019_num}]; Jiang et al. (2024)  [{jiang2024_num}]), nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng: Một là, mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số (nhận định và động cơ thiết kế của chuyên đề, không phải kết luận của Michael et al.): các bộ log parser dựa trên biểu thức chính quy thường thay thế các tham số biến động như địa chỉ IP, đường dẫn tệp tin và tham số dòng lệnh bằng ký tự đại diện <*> khiến nhiều thông tin an ninh mang tính phân biệt cao bị lược bỏ; Hai là, lan truyền và khuếch đại sai số cú pháp (Parser Error Propagation) khi xử lý các định dạng phức tạp hoặc chưa từng xuất hiện (Zhu et al. (2019)  [{zhu2019_num}]; Jiang et al. (2024)  [{jiang2024_num}]), dẫn đến hiện tượng sinh ra các mẫu sự kiện giả lập hoặc gộp nhầm các sự kiện khác biệt, làm xáo trộn cấu trúc không gian vector x.'
         },
         {
             'id': 'occ_0092_orthrus_p177',

@@ -19,8 +19,6 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_LINE_SPACING
 from docx.oxml import parse_xml
 from docx.oxml.ns import nsdecls, qn
 
-from research_agent.storage.db import DatabaseManager
-from research_agent.storage.repository import ResearchRepository
 from research_agent.visuals.academic_diagram_renderer import generate_all_figures
 from research_agent.composition.academic_builder_base import (
     latex_to_clean_omml,
@@ -30,12 +28,12 @@ from research_agent.composition.academic_builder_base import (
     add_figure_caption,
     insert_clean_table,
     generate_perfect_sources_xml,
+    load_canonical_sources,
 )
 
 
 def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề chuyên sâu - Copy.docx"):
-    repo = ResearchRepository(DatabaseManager())
-    sources = repo.list_sources()
+    sources = load_canonical_sources()
 
     # Đồng bộ hóa Master Sources.xml trong AppData
     try:
@@ -202,20 +200,20 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     add_h3("Không gian dữ liệu log doanh nghiệp: tốc độ cao, mất cân bằng cực đoan và phân phối biến đổi")
     add_p([
         "Trong các Trung tâm Điều hành An ninh mạng (Security Operations Center - SOC) hiện đại, khối lượng dữ liệu nhật ký kiểm toán và sự kiện giám sát điểm cuối thu thập từ hạ tầng doanh nghiệp tăng trưởng theo cấp số nhân, đạt quy mô hàng chục triệu đến hàng tỷ bản ghi mỗi ngày ",
-        make_citation_element([9, 8]),
+        make_citation_element(["Inam2023ProvenanceSoK", "Michael2020ForensicValidity"]),
         ". Không gian dữ liệu này sở hữu ba đặc tính kỹ thuật khắc nghiệt ",
-        make_citation_element([18, 1]),
+        make_citation_element(["Liu2025DatasetQualityLogs", "MITRE2026ATTCK"]),
         ": (1) Tốc độ sinh dữ liệu cao (High Velocity) đòi hỏi các thuật toán xử lý phải vận hành trực tuyến với độ trễ thấp và tài nguyên tính toán giới hạn; (2) Tỷ lệ mất cân bằng cực đoan (Extreme Imbalance) khi các sự kiện độc hại thực sự chỉ chiếm một phần rất nhỏ (thường dưới 0.01%) so với khối lượng khổng lồ các hoạt động quản trị và vận hành hợp lệ; (3) Tính biến đổi phân phối liên tục (Distribution Drift) xuất phát từ các bản cập nhật phần mềm, sự thay đổi chính sách người dùng và các kỹ thuật tấn công liên tục biến hóa."
     ])
     add_p([
         "Không gian dữ liệu nhật ký trong môi trường mạng doanh nghiệp được tổng hợp từ ba nguồn telemetry chính ",
-        make_citation_element([9, 10]),
+        make_citation_element(["Inam2023ProvenanceSoK", "Zipperle2022PIDSSurvey"]),
         ": Nhóm thứ nhất là nhật ký kiểm toán hệ điều hành máy chủ và điểm cuối (Host & Endpoint Audit Logs) như Linux Auditd, Windows Event Logs / Sysmon và eBPF, cung cấp chi tiết ở mức hạt nhân về các lệnh gọi hệ thống (system calls), hành vi tạo tiến trình (Process Creation - Sysmon Event ID 1), nạp thư viện động (Image Load - Sysmon Event ID 7), truy vết thao tác tệp tin ",
-        make_citation_element([8, 9]),
+        make_citation_element(["Michael2020ForensicValidity", "Inam2023ProvenanceSoK"]),
         ", sửa đổi cấu hình registry (RegSetValue - Sysmon Event ID 13), cùng các thao tác mở và kết nối socket mạng (connect, accept - Sysmon Event ID 3) ",
-        make_citation_element([6, 7]),
+        make_citation_element(["Zhu2019LogParsing", "Jiang2024LogParsingEval"]),
         ". Nhóm thứ hai là nhật ký luồng mạng (Network Flow & Protocol Logs), được thu thập từ Zeek, Suricata hoặc NetFlow/IPFIX, cung cấp siêu dữ liệu kết nối giữa các nút mạng, giao dịch DNS, chứng chỉ TLS/SSL và thông lượng gói tin. Nhóm thứ ba là nhật ký ứng dụng và dịch vụ (Application & Service Logs), phát sinh từ máy chủ web (Nginx, Apache), cơ sở dữ liệu, dịch vụ phân tán (HDFS) cùng hệ thống điều phối container (Kubernetes Audit Logs) ",
-        make_citation_element([6, 7]),
+        make_citation_element(["Zhu2019LogParsing", "Jiang2024LogParsingEval"]),
         "."
     ])
     add_p([
@@ -245,16 +243,16 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
 
     add_p([
         "Sự phân cấp này thể hiện sự đánh đổi trực tiếp (Fundamental Trade-off): các đơn vị quan sát ở mức thấp (từ tố, sự kiện) có ưu thế về tốc độ xử lý nhưng đánh mất mối liên kết nhân quả dài hạn giữa các thực thể; ngược lại, mức đồ thị nguồn gốc phản ánh toàn diện quan hệ phụ thuộc nhân quả giữa tiến trình, tệp tin và luồng mạng nhưng đòi hỏi chi phí tính toán và bộ nhớ rất lớn để duy trì trạng thái đồ thị ",
-        make_citation_element([2, 18]),
+        make_citation_element(["Arp2022DosDonts", "Liu2025DatasetQualityLogs"]),
         ". Do đó, một mô hình biểu diễn đặc trưng tối ưu cần có khả năng nắm bắt được thông tin ngữ cảnh đa thực thể mà vẫn duy trì chi phí tính toán khả thi trong môi trường xử lý dòng (Streaming Environment) ",
-        make_citation_element([11]),
+        make_citation_element(["Han2020UNICORN"]),
         "."
     ], first_line_indent=False)
     add_p([
         "Bên cạnh tốc độ và tính dị thể, hiện tượng trôi dạt phân phối (Distribution Drift) là một trong những nguyên nhân hàng đầu khiến các mô hình học máy bị suy giảm hiệu năng nghiêm trọng sau khi triển khai thực tế ",
-        make_citation_element([2]),
+        make_citation_element(["Arp2022DosDonts"]),
         ". Về mặt toán học, trôi dạt trong biểu diễn log xuất hiện dưới bốn hình thái chủ đạo ",
-        make_citation_element([22, 23]),
+        make_citation_element(["Bardes2022VICReg", "Zbontar2021BarlowTwins"]),
         ":"
     ])
     add_p([
@@ -285,9 +283,9 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     )
     add_p([
         "Tuy nhiên, trên thực tế vận hành và theo khung phân loại chuẩn hóa của ma trận tri thức an ninh MITRE ATT&CK (Phiên bản Enterprise v19.1, 28/04/2026) ",
-        make_citation_element([1]),
+        make_citation_element(["MITRE2026ATTCK"]),
         ", các chiến dịch tấn công có chủ đích (APT) mang bản chất phi tuyến tính sâu sắc ",
-        make_citation_element([9]),
+        make_citation_element(["Inam2023ProvenanceSoK"]),
         ": (1) Nhảy cóc giai đoạn (Step Skipping): Kẻ tấn công có thể khai thác trực tiếp lỗ hổng thực thi mã từ xa để trích xuất dữ liệu ra ngoài mà không cần thiết lập cơ chế duy trì hay di chuyển ngang; (2) Lặp vòng kỹ thuật (Tactic Looping & Interleaving): Kỹ thuật thu thập thông tin nội bộ (Discovery) thường được lặp lại nhiều lần xen kẽ giữa các bước leo thang đặc quyền và chiếm đoạt thông tin xác thực; (3) Phân nhánh tiến trình song song (Parallel Branching): Kẻ tấn công có thể khởi tạo đồng thời nhiều luồng tiến trình con độc lập trên các tiến trình hợp lệ khác nhau nhằm phân tán sự theo dõi của hệ thống phòng thủ."
     ])
     add_p([
@@ -305,9 +303,9 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         "1.2",
         [
             "Mô hình Không gian Bằng chứng Hành vi Đa chiều MITRE ATT&CK và các đặc trưng phi tuyến tính trong tấn công APT (Nguồn: Tác giả tổng hợp dựa trên MITRE ATT&CK ",
-            make_citation_element([1]),
+            make_citation_element(["MITRE2026ATTCK"]),
             " và Inam et al. ",
-            make_citation_element([9]),
+            make_citation_element(["Inam2023ProvenanceSoK"]),
             ")"
         ],
         bookmark_name="BK_FIG_1_002",
@@ -316,25 +314,25 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
 
     add_p([
         "Trong đó mỗi chiến thuật (Tactic) đại diện cho mục tiêu chiến thuật của kẻ tấn công (trả lời câu hỏi 'Tại sao') và mỗi kỹ thuật (Technique) đại diện cho phương thức thực thi cụ thể (trả lời câu hỏi 'Làm thế nào'); một chuỗi sự kiện hoặc cây tiến trình có thể đồng thời kích hoạt nhiều nhãn chiến thuật và kỹ thuật tại cùng một thời điểm quan sát ",
-        make_citation_element([1]),
+        make_citation_element(["MITRE2026ATTCK"]),
         "."
     ], first_line_indent=False)
     add_p([
         "Về mặt dữ liệu thực nghiệm, việc mô hình hóa hành vi tấn công đòi hỏi phải phân định chính xác đặc tính gán nhãn và mức độ hạt (Label Granularity) của từng bộ dữ liệu chuẩn ",
-        make_citation_element([18]),
+        make_citation_element(["Liu2025DatasetQualityLogs"]),
         ": (1) DARPA Transparent Computing (TC E3/E5) ",
-        make_citation_element([28]),
+        make_citation_element(["DARPA2018TCE3"]),
         " cung cấp dữ liệu kiểm toán hệ thống mức hạt nhân chi tiết, trong đó các kịch bản tấn công của đội Red Team được ghi nhận qua các báo cáo kịch bản (ground-truth reports/annotations), cho phép ánh xạ và suy diễn nhãn ở mức tiến trình và luồng phụ thuộc liên quan đến đợt tấn công, thay vì toàn bộ dữ liệu viễn trắc nền đều có nhãn sẵn ở mức hạt nhân; (2) LANL Unified Host and Network Dataset ",
-        make_citation_element([29]),
+        make_citation_element(["Kent2015LANL"]),
         " phản ánh môi trường doanh nghiệp quy mô lớn với hàng tỷ sự kiện xác thực và luồng mạng, gán nhãn theo sự kiện và cửa sổ thời gian; (3) HDFS và BGL Datasets ",
-        make_citation_element([3, 6]),
+        make_citation_element(["Du2017DeepLog", "Zhu2019LogParsing"]),
         " đại diện cho nhật ký hệ thống phân tán và siêu máy tính, được gán nhãn bất thường ở mức khối dữ liệu (Block-level) hoặc mức dòng log đơn lẻ."
     ])
     add_p([
         "Đặc biệt, sự xuất hiện của nhiễu từ hành vi quản trị viên (Admin-Noise) là một thách thức then chốt ",
-        make_citation_element([9, 18]),
+        make_citation_element(["Inam2023ProvenanceSoK", "Liu2025DatasetQualityLogs"]),
         ". Các quản trị viên hệ thống thường xuyên sử dụng PowerShell, SSH, WMI và các công cụ dòng lệnh nội bộ tương tự như kẻ tấn công APT, tạo ra sự trùng lặp lớn trong không gian đặc trưng hành vi và gây ra nhiều cảnh báo giả nếu mô hình chỉ học các mẫu bề mặt mà không nắm bắt được ngữ cảnh nhân quả sâu ",
-        make_citation_element([24]),
+        make_citation_element(["Ilse2018AttentionMIL"]),
         "."
     ])
 
@@ -359,9 +357,9 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     )
     add_p([
         "Tập hợp các thông tin giả tạo và biến số ngoài miền bắt buộc phải bị triệt tiêu hoàn toàn khỏi không gian vector z nhằm ngăn ngừa rủi ro học đường tắt (Shortcut Learning) ",
-        make_citation_element([2]),
+        make_citation_element(["Arp2022DosDonts"]),
         ". Bao gồm: các mẫu định dạng đặc thù của môi trường thử nghiệm (Testbed-specific artifacts), các biến số gây rò rỉ phân vùng (Partition-leakage variables như dấu thời gian tuyệt đối của máy thí nghiệm, hostname cố định của môi trường lab) ",
-        make_citation_element([25, 27]),
+        make_citation_element(["Shokri2017MembershipInference", "NIST2025SP800226"]),
         ", và các đặc trưng tương quan giả (Spurious correlations) có thể khiến mô hình đạt độ chính xác ảo trên tập kiểm thử nhưng thất bại hoàn toàn khi triển khai thực tế."
     ], bold_prefix="3. Nhóm Điều kiện Triệt tiêu (EXCLUDE - E_exclude): ")
     add_p([
@@ -385,7 +383,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         "Đi đôi với Hợp đồng Biểu diễn được quy định trong ",
         make_ref_element("BK_TBL_1_002", "Bảng 1.2"),
         ", chuyên đề thiết lập nguyên tắc phân định ranh giới ba tầng phương pháp luận (Three-Tier Methodological Separation) ",
-        make_citation_element([2, 22]),
+        make_citation_element(["Arp2022DosDonts", "Bardes2022VICReg"]),
         ", như được minh họa tổng quát trong ",
         make_ref_element("BK_FIG_1_003", "Hình 1.3"),
         ":"
@@ -403,7 +401,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         "Thiết lập ánh xạ ",
         latex_to_clean_omml(r"f_\theta: X \to \mathbf{z} \in \mathbb{R}^d"),
         " từ cấu trúc chuỗi sự kiện và đồ thị nguồn gốc sang không gian vector tiềm ẩn. Toàn bộ năng lực bảo toàn ngữ nghĩa an ninh và tính bất biến được đóng gói trọn vẹn bên trong vector z ",
-        make_citation_element([2]),
+        make_citation_element(["Arp2022DosDonts"]),
         "."
     ], bold_prefix="2. Tầng 2 — Học không gian biểu diễn (Representation Learning — Trọng tâm Chuyên đề): ")
     add_p(
@@ -413,7 +411,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     add_display_equation(r"\hat{y} = \sigma(\mathbf{W}^\top \mathbf{z} + \mathbf{b})")
     add_p([
         "Trong đó ma trận trọng số W và vector bias b được huấn luyện trên không gian vector z cố định (frozen parameters θ), bảo đảm bộ phân loại hạ nguồn không làm thay nhiệm vụ trích xuất đặc trưng của Tầng 2 ",
-        make_citation_element([2]),
+        make_citation_element(["Arp2022DosDonts"]),
         "."
     ], first_line_indent=False)
 
@@ -421,7 +419,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     add_h2("1.2. Phân tích so sánh các nhóm phương pháp hiện đại")
     add_p([
         "Nhằm định vị chính xác các đóng góp kỹ thuật và cơ sở lý luận của chuyên đề, Mục này tiến hành khảo sát và đánh giá có hệ thống ba nhóm phương pháp trích xuất đặc trưng log hiện đại trong tài liệu khoa học ",
-        make_citation_element([6, 9, 10]),
+        make_citation_element(["Zhu2019LogParsing", "Inam2023ProvenanceSoK", "Zipperle2022PIDSSurvey"]),
         ": (1) Nhóm phương pháp thống kê và cú pháp; (2) Nhóm phương pháp ngữ nghĩa chuỗi (Semantic–Sequential); (3) Nhóm phương pháp học biểu diễn đồ thị nguồn gốc (Graph Representation Learning)."
     ])
 
@@ -429,11 +427,11 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     add_h3("Phương pháp thống kê và cú pháp: Event Count, Frequency, Entropy và Template Features")
     add_p([
         "Nhóm tiếp cận sớm nhất và phổ biến nhất trong thực tế công nghiệp dựa trên việc phân tích cấu trúc cú pháp của log thông qua các bộ log parser tự động (như Drain, Spell, LenMa, AEL) để tách biệt phần văn bản tĩnh (Log Template) và phần tham số biến động ",
-        make_citation_element([6, 7]),
+        make_citation_element(["Zhu2019LogParsing", "Jiang2024LogParsingEval"]),
         ". Sau khi chuyển đổi các thông điệp văn bản thô thành các mã sự kiện rời rạc ",
         latex_to_clean_omml(r"\mathcal{E} = \{e_1, e_2, \dots, e_M\}"),
         ", các phương pháp thống kê xây dựng vector đặc trưng cho mỗi cửa sổ quan sát thời gian W (Time-based Window) hoặc cửa sổ số lượng (Count-based Window) ",
-        make_citation_element([6]),
+        make_citation_element(["Zhu2019LogParsing"]),
         ":"
     ])
     add_display_equation(r"\mathbf{x} = [c(e_1), c(e_2), \dots, c(e_M)]^\top \in \mathbb{R}^M")
@@ -443,13 +441,13 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         " là số lần xuất hiện của sự kiện ",
         latex_to_clean_omml(r"e_i"),
         ". Bên cạnh đếm tần suất đơn thuần, các trọng số TF-IDF (Term Frequency - Inverse Document Frequency) hoặc độ hỗn loạn thông tin Shannon (Information Entropy) cũng được áp dụng nhằm nhấn mạnh các sự kiện hiếm gặp ",
-        make_citation_element([6]),
+        make_citation_element(["Zhu2019LogParsing"]),
         ":"
     ], first_line_indent=False)
     add_display_equation(r"H(W) = -\sum_{i=1}^M p(e_i) \log_2 p(e_i)")
     add_p([
         "Trên không gian vector tần suất này, các mô hình phát hiện bất thường kinh điển được triển khai rộng rãi: (1) Principal Component Analysis - PCA (Xu et al., SOSP 2009) ",
-        make_citation_element([31]),
+        make_citation_element(["Xu2009HDFS"]),
         " phân rã không gian vector ",
         latex_to_clean_omml(r"\mathbb{R}^M"),
         " thành không gian con chuẩn tắc ",
@@ -461,15 +459,15 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     add_display_equation(r"\mathbf{x}_a = (\mathbf{I} - \mathbf{P} \mathbf{P}^\top) \mathbf{x}, \quad \|\mathbf{x}_a\|^2 > \gamma_\alpha")
     add_p([
         "(2) Invariant Mining (Lou et al., USENIX ATC 2010) ",
-        make_citation_element([32]),
+        make_citation_element(["Lou2010MiningInvariants"]),
         " tự động khai phá các phương trình bất biến tuyến tính phản ánh mối quan hệ bảo toàn logic giữa các bước thực thi:"
     ])
     add_display_equation(r"\mathbf{A} \mathbf{x} = \mathbf{0}")
     add_p([
         "Mặc dù sở hữu ưu thế về hiệu quả tính toán trong thực tiễn (độ phức tạp tuyến tính O(N)) ",
-        make_citation_element([6, 7]),
+        make_citation_element(["Zhu2019LogParsing", "Jiang2024LogParsingEval"]),
         ", nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng: (1) Mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số (nhận định và động cơ thiết kế của chuyên đề, không phải kết luận của Michael et al.): các bộ log parser dựa trên biểu thức chính quy thường thay thế các tham số biến động như địa chỉ IP, đường dẫn tệp tin và tham số dòng lệnh bằng ký tự đại diện <*> khiến nhiều thông tin an ninh mang tính phân biệt cao bị lược bỏ; (2) Lan truyền và khuếch đại sai số cú pháp (Parser Error Propagation) khi xử lý các định dạng phức tạp hoặc chưa từng xuất hiện ",
-        make_citation_element([6, 7]),
+        make_citation_element(["Zhu2019LogParsing", "Jiang2024LogParsingEval"]),
         ", dẫn đến hiện tượng sinh ra các mẫu sự kiện giả lập hoặc gộp nhầm các sự kiện khác biệt, làm xáo trộn cấu trúc không gian vector x."
     ])
 
@@ -477,12 +475,12 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     add_h3("Phương pháp semantic–sequential: Embeddings, Self-Supervised Learning, Transformer và Parsing-Free")
     add_p([
         "Nhằm khắc phục sự cứng nhắc của các vector đếm tần suất và tận dụng trật tự xuất hiện của các sự kiện, nhóm phương pháp Semantic–Sequential mô hình hóa luồng log tương tự như các chuỗi ngôn ngữ tự nhiên, tích hợp các kỹ thuật nhúng từ (Word Embeddings) và học tự giám sát (Self-Supervised Learning) để nắm bắt phụ thuộc ngữ cảnh dài hạn ",
-        make_citation_element([3, 4, 5, 33, 34]),
+        make_citation_element(["Du2017DeepLog", "Guo2021LogBERT", "Le2021NeuralLog", "Meng2019LogAnomaly", "Nedelkoski2020SelfAttentive"]),
         "."
     ])
     add_p([
         "Khởi đầu cho hướng nghiên cứu này là mô hình DeepLog ",
-        make_citation_element([3]),
+        make_citation_element(["Du2017DeepLog"]),
         ". DeepLog sử dụng mạng bộ nhớ dài-ngắn hạn (LSTM) để mô hình hóa chuỗi Event ID như một bài toán dự báo phần tử tiếp theo (Next-Event Prediction). Tại mỗi bước thời gian t, mô hình ước lượng phân phối xác suất có điều kiện của sự kiện tiếp theo ",
         latex_to_clean_omml(r"P(e_t \mid e_{t-k}, \dots, e_{t-1})"),
         ". Nếu sự kiện thực tế không nằm trong tập g sự kiện có xác suất cao nhất được mô hình dự đoán, hệ thống sẽ phát tín hiệu cảnh báo bất thường:"
@@ -490,23 +488,23 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     add_display_equation(r"\hat{\mathcal{E}}_t = \operatorname{arg\,top-}g_{e \in \mathcal{E}} P(e \mid e_{t-k}, \dots, e_{t-1})")
     add_p([
         "Song song đó, DeepLog xây dựng mô hình LSTM thứ hai dựa trên phân phối chuẩn nhiều chiều để kiểm tra sự bất thường về giá trị tham số số học (Parameter Value Anomaly) ",
-        make_citation_element([3]),
+        make_citation_element(["Du2017DeepLog"]),
         "."
     ], first_line_indent=False)
     add_p([
         "Các công trình kế tiếp đã nâng cấp cơ chế biểu diễn ngữ nghĩa: (1) LogAnomaly (Meng et al., IJCAI 2019) ",
-        make_citation_element([33]),
+        make_citation_element(["Meng2019LogAnomaly"]),
         " đề xuất Template2Vec, trích xuất vector ngữ nghĩa cho từng mẫu log thông qua Word2Vec/FastText kết hợp trọng số d-IDF, giúp nhận biết sự tương đồng giữa các thông điệp có cấu trúc từ ngữ tương đương; (2) Logsy (Nedelkoski et al., ICDM 2020) ",
-        make_citation_element([34]),
+        make_citation_element(["Nedelkoski2020SelfAttentive"]),
         " sử dụng hàm mất mát phân loại ngoại lai (Outlier Classification Loss) trên dữ liệu log từ các hệ thống phụ trợ để định hình biên giới phân tách cho lớp bình thường; (3) LogBERT (Guo et al., IJCNN 2021) ",
-        make_citation_element([4]),
+        make_citation_element(["Guo2021LogBERT"]),
         " khai thác Transformer hai chiều với hai tác vụ học tự giám sát: Dự đoán sự kiện log bị che (Masked Log Event Prediction) và Dự đoán phân bố khối lượng log (Volume Anomaly Prediction); (4) Nhóm tiếp cận không dùng Parser (Parsing-Free - NeuralLog ",
-        make_citation_element([5]),
+        make_citation_element(["Le2021NeuralLog"]),
         ") bỏ qua bước phân tích cú pháp bằng cách sử dụng các mô hình ngôn ngữ tiền huấn luyện (BERT, RoBERTa) để trực tiếp mã hóa chuỗi văn bản log thô thành các vector nhúng ngữ nghĩa liên tục."
     ])
     add_p([
         "Mặc dù đạt kết quả tốt trên các tập dữ liệu phần mềm, nhóm phương pháp Semantic–Sequential đối mặt với ba rào cản khi áp dụng vào an ninh mạng ",
-        make_citation_element([2, 18]),
+        make_citation_element(["Arp2022DosDonts", "Liu2025DatasetQualityLogs"]),
         ": (1) Nguy cơ rò rỉ và thiên lệch từ dữ liệu tiền huấn luyện (Pretraining-Data Advantage): các mô hình sử dụng Transformer tiền huấn luyện trên kho văn bản tổng quát có nguy cơ tận dụng tri thức ngoài miền; khi đánh giá trong điều kiện phân vùng nghiêm ngặt, năng lực phân tách thực tế cần được kiểm chứng cẩn trọng; (2) Chi phí tài nguyên tính toán: độ phức tạp tính toán bậc hai của cơ chế Self-Attention O(L^2) theo độ dài cửa sổ L đòi hỏi tài nguyên tính toán đáng kể trong môi trường lưu lượng lớn; (3) Giới hạn phạm vi quan sát đơn luồng: mô hình chuỗi chủ yếu theo dõi các sự kiện trên một dòng thời gian cục bộ, gặp khó khăn khi mô hình hóa trực tiếp các mối liên hệ phụ thuộc đan xen đa tiến trình, đa thực thể và vượt ranh giới máy chủ."
     ])
 
@@ -514,7 +512,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     add_h3("Đồ thị nguồn gốc và Graph Representation Learning")
     add_p([
         "Để khắc phục hạn chế về phạm vi quan sát của mô hình chuỗi, hướng tiếp cận dựa trên đồ thị nguồn gốc hệ thống (System Provenance Graph) mô hình hóa toàn bộ lịch sử thực thi và tương tác trong hệ điều hành dưới dạng một đồ thị có hướng, không đồng nhất và gán nhãn thời gian ",
-        make_citation_element([9, 10]),
+        make_citation_element(["Inam2023ProvenanceSoK", "Zipperle2022PIDSSurvey"]),
         ":"
     ])
     add_display_equation(r"\mathcal{G} = (\mathcal{V}, \mathcal{E}, \mathcal{T}_v, \mathcal{T}_e, \phi, \psi, \tau)")
@@ -524,31 +522,31 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         "; E là tập các cạnh có hướng mô tả các tương tác luồng phụ thuộc thuộc tập kiểu ",
         latex_to_clean_omml(r"\mathcal{T}_e = \{\text{fork, execve, read, write, connect, bind, send, recv}\}"),
         "; và τ gán nhãn mốc thời gian xảy ra tương tác ",
-        make_citation_element([9]),
+        make_citation_element(["Inam2023ProvenanceSoK"]),
         "."
     ], first_line_indent=False)
     add_p([
         "Các hệ thống phát hiện xâm nhập dựa trên đồ thị nguồn gốc (PIDS) tiêu biểu bao gồm: UNICORN ",
-        make_citation_element([11]),
+        make_citation_element(["Han2020UNICORN"]),
         " phân tích cấu trúc đồ thị nguồn gốc thời gian thực bằng cách băm cây con Weisfeiler-Lehman (WL-subtree hashing) và mô hình hóa trạng thái hệ thống qua mô hình phân cụm đồ thị động; KAIROS ",
-        make_citation_element([12]),
+        make_citation_element(["Cheng2024KAIROS"]),
         " học biểu diễn đồ thị thời gian dựa trên mạng nơ-ron đồ thị (GNN) kết hợp cơ chế chú ý theo thời gian; NODLINK ",
-        make_citation_element([13]),
+        make_citation_element(["Li2024NODLINK"]),
         " mã hóa quan hệ tương tác trực tuyến giữa các nút; MAGIC ",
-        make_citation_element([14]),
+        make_citation_element(["Jia2024MAGIC"]),
         " áp dụng mô hình Masked Graph Autoencoder tự giám sát; và ORTHRUS ",
-        make_citation_element([15]),
+        make_citation_element(["Jiang2025ORTHRUS"]),
         " sử dụng mạng nơ-ron đồ thị không-thời gian (spatio-temporal GNN) phục vụ phát hiện xâm nhập ở mức đỉnh (node-level detection), phân tích phụ thuộc và tái dựng đường dẫn tấn công (attack-path reconstruction) với chất lượng quy kết cao (high Quality of Attribution)."
     ])
     add_p([
         "Tuy nhiên, việc triển khai GNN trên đồ thị nguồn gốc quy mô thực tế đối mặt với ba rào cản nền tảng ",
-        make_citation_element([9, 21]),
+        make_citation_element(["Inam2023ProvenanceSoK", "Alon2021OverSquashing"]),
         ": (1) Hiện tượng bùng nổ phụ thuộc (Dependency Explosion): qua thời gian vận hành, các tiến trình dịch vụ tồn tại lâu dài (như sshd, systemd, web server) liên kết với hàng triệu tệp tin và socket, khiến đồ thị phát triển dày đặc và làm mờ nhạt dấu vết tấn công; (2) Thách thức về tính phức tạp mô hình và giao thức đánh giá thực nghiệm: kết quả đối chuẩn của Bilot et al. ",
-        make_citation_element([16]),
+        make_citation_element(["Bilot2025SometimesSimpler"]),
         " chỉ ra rằng các hệ thống PIDS hiện hành thường mang độ phức tạp không cần thiết (unnecessary complexity), trong khi một mạng nơ-ron đơn giản (simple neural network) có thể đạt hiệu năng phát hiện tương đương hoặc vượt trội (state-of-the-art detection) trên 5/7 tập dữ liệu DARPA; đồng thời, nghiên cứu của Guerra et al. ",
-        make_citation_element([30]),
+        make_citation_element(["Guerra2026PIDSEvalProtocols"]),
         " nhấn mạnh giao thức đánh giá (evaluation protocol) ảnh hưởng sâu sắc đến kết luận thực nghiệm, trong đó một giải pháp danh sách cho phép đơn giản (simple allowlist) dựa trên tên và đường dẫn thực thi có thể khớp hoặc vượt qua các baseline học máy trên 3/4 tập dữ liệu chính, và nhiều kết quả phát hiện thực chất phản ánh tính mới về mặt từ vựng (lexical novelty); (3) Hiện tượng nghẽn cổ chai thông tin và suy giảm phân tách (Over-smoothing và Over-squashing) ",
-        make_citation_element([21]),
+        make_citation_element(["Alon2021OverSquashing"]),
         " khi truyền thông điệp qua nhiều lớp GNN trên đồ thị lớn."
     ])
     add_p([
@@ -586,7 +584,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     add_h2("1.3. Các khoảng trống nghiên cứu cốt lõi")
     add_p([
         "Từ kết quả khảo sát và phân tích đối chiếu ba nhóm phương pháp biểu diễn đặc trưng log tại Mục 1.2, có thể nhận thấy rằng mặc dù các kỹ thuật thống kê, mô hình chuỗi ngữ nghĩa và học biểu diễn đồ thị nguồn gốc đã đạt được nhiều bước tiến quan trọng, việc ứng dụng chúng vào môi trường phát hiện tấn công mạng doanh nghiệp thực tế vẫn đối mặt với những rào cản nền tảng chưa được giải quyết thấu đáo ",
-        make_citation_element([2, 6, 9, 18]),
+        make_citation_element(["Arp2022DosDonts", "Zhu2019LogParsing", "Inam2023ProvenanceSoK", "Liu2025DatasetQualityLogs"]),
         ". Nhằm thiết lập cơ sở khoa học vững chắc và định hình phạm vi nghiên cứu, chuyên đề tổng kết năm khoảng trống nghiên cứu cốt lõi (Research Gaps) tương ứng với năm câu hỏi nghiên cứu (Research Questions - RQ) định hướng cho toàn bộ các đề xuất phương pháp luận tiếp theo."
     ])
 
@@ -594,11 +592,11 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     add_h3("Khoảng trống 1: Mất mát ngữ nghĩa an ninh trong quá trình trừu tượng hóa tham số")
     add_p([
         "Dữ liệu thực nghiệm từ các nghiên cứu tiền nhiệm chỉ ra rằng các bộ phân tích cú pháp (Log Parsers) đóng vai trò then chốt trong việc giảm chiều không gian văn bản log thành các mẫu định dạng tĩnh ",
-        make_citation_element([6, 7]),
+        make_citation_element(["Zhu2019LogParsing", "Jiang2024LogParsingEval"]),
         ". Tuy nhiên, cơ chế trừu tượng hóa tham số phụ thuộc vào từng thuật toán phân tích cú pháp; nhiều pipeline tiền xử lý thay thế các tham số biến động như chuỗi dòng lệnh, đường dẫn tệp tin, địa chỉ IP hoặc mã lỗi hex bằng ký tự đại diện <*> ",
-        make_citation_element([8, 18]),
+        make_citation_element(["Michael2020ForensicValidity", "Liu2025DatasetQualityLogs"]),
         ". Quá trình này vô tình loại bỏ các tín hiệu phân biệt an ninh quan trọng nhất—nơi chứa đựng dấu vết của các kỹ thuật tấn công LotL hoặc các tham số thực thi độc hại ",
-        make_citation_element([6]),
+        make_citation_element(["Zhu2019LogParsing"]),
         "."
     ])
     add_p(
@@ -610,9 +608,9 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     add_h3("Khoảng trống 2: Bất đồng bộ và suy thoái trong gióng hàng biểu diễn đa góc nhìn")
     add_p([
         "Các công trình nghiên cứu hiện đại đã chỉ ra rằng dữ liệu log sở hữu tính đa góc nhìn tự nhiên: góc nhìn chuỗi phản ánh trật tự diễn tiến thời gian cục bộ ",
-        make_citation_element([3, 4]),
+        make_citation_element(["Du2017DeepLog", "Guo2021LogBERT"]),
         ", trong khi góc nhìn đồ thị nguồn gốc mô hình hóa cấu trúc tương tác nhân quả đa thực thể ",
-        make_citation_element([9, 10, 11]),
+        make_citation_element(["Inam2023ProvenanceSoK", "Zipperle2022PIDSSurvey", "Han2020UNICORN"]),
         ". Tuy nhiên, các giải pháp hiện nay thường chỉ khai thác đơn lẻ một góc nhìn hoặc kết hợp muộn (Late Fusion) ở tầng phân loại, dẫn đến tình trạng bất đồng bộ và suy giảm năng lực biểu diễn khi luồng sự kiện xảy ra đan xen song song trên nhiều tiến trình."
     ])
     add_p(
@@ -624,9 +622,9 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     add_h3("Khoảng trống 3: Rò rỉ thông tin quy trình, học đường tắt và trôi dạt biểu diễn")
     add_p([
         "Nhiều mô hình học máy hiện đại đạt kết quả thực nghiệm rất cao trên các tập dữ liệu công khai nhưng suy giảm nghiêm trọng khi thử nghiệm trong môi trường mới ",
-        make_citation_element([2]),
+        make_citation_element(["Arp2022DosDonts"]),
         ". Nguyên nhân cốt lõi là hiện tượng học đường tắt (Shortcut Learning) và rò rỉ phân vùng (Partition Leakage), khi mô hình học các mẫu tương quan giả tạo đặc thù của môi trường thử nghiệm (như dải địa chỉ IP cố định, định dạng dấu thời gian lab) thay vì học bản chất hành vi an ninh ",
-        make_citation_element([2, 18]),
+        make_citation_element(["Arp2022DosDonts", "Liu2025DatasetQualityLogs"]),
         ". Đồng thời, sự biến đổi tự nhiên của môi trường hệ thống theo thời gian dẫn đến hiện tượng trôi dạt biểu diễn (Representation Drift)."
     ])
     add_p(
@@ -638,9 +636,9 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     add_h3("Khoảng trống 4: Gán nhãn mức thô, phân bổ bằng chứng yếu và nhiễu quản trị viên")
     add_p([
         "Trong các bộ dữ liệu APT thực tế, việc gán nhãn chi tiết cho từng dòng log là cực kỳ tốn kém và không khả thi; hầu hết các tập dữ liệu chỉ cung cấp nhãn mức thô (Coarse-grained Labels) ở mức phiên làm việc, cửa sổ thời gian hoặc cây tiến trình ",
-        make_citation_element([18, 28, 29]),
+        make_citation_element(["Liu2025DatasetQualityLogs", "DARPA2018TCE3", "Kent2015LANL"]),
         ". Hơn nữa, dấu vết của các kỹ thuật tấn công thường xuất hiện rất thưa thớt (Weak Evidence) và bị chìm ngập hoàn toàn trong các luồng hoạt động quản trị viên hợp lệ (Admin-Noise) ",
-        make_citation_element([9, 18]),
+        make_citation_element(["Inam2023ProvenanceSoK", "Liu2025DatasetQualityLogs"]),
         "."
     ])
     add_p(
@@ -652,11 +650,11 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     add_h3("Khoảng trống 5: Đánh đổi giữa bảo toàn liên kết an ninh và rủi ro quyền riêng tư")
     add_p([
         "Để phát hiện và điều tra các cuộc tấn công APT kéo dài, mô hình học biểu diễn đòi hỏi phải bảo toàn các liên kết định danh thực thể (tài khoản người dùng, tên máy chủ, địa chỉ IP mạng nội bộ) ",
-        make_citation_element([9, 10]),
+        make_citation_element(["Inam2023ProvenanceSoK", "Zipperle2022PIDSSurvey"]),
         ". Tuy nhiên, việc lưu trữ và chia sẻ các biểu diễn vector chứa thông tin định danh trực tiếp vi phạm nghiêm trọng các quy định về bảo vệ dữ liệu và tiềm ẩn nguy cơ bị tấn công suy diễn thành viên (Membership Inference) ",
-        make_citation_element([25]),
+        make_citation_element(["Shokri2017MembershipInference"]),
         " hoặc tái cấu trúc thông tin nhạy cảm (Model Inversion) ",
-        make_citation_element([26, 27]),
+        make_citation_element(["Fredrikson2015ModelInversion", "NIST2025SP800226"]),
         "."
     ])
     add_p(
@@ -688,7 +686,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         " (như fork, execve, read, write, connect, registry_set), và tập hợp các tham số động có cấu trúc ",
         latex_to_clean_omml(r"\mathbf{p}_i = \{(k_j, v_j)\}_{j=1}^m"),
         " (đường dẫn tệp tin, tham số dòng lệnh thực thi, cổng mạng và địa chỉ IP kết nối) ",
-        make_citation_element([9]),
+        make_citation_element(["Inam2023ProvenanceSoK"]),
         "."
     ])
     add_p([
@@ -712,7 +710,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     ], first_line_indent=False)
     add_p([
         "Chuyên đề xác lập ranh giới nguyên tắc bất biến giữa Bộ trích xuất biểu diễn (Feature Extractor) và Bộ phát hiện hạ nguồn (Downstream Detector) ",
-        make_citation_element([2, 22]),
+        make_citation_element(["Arp2022DosDonts", "Bardes2022VICReg"]),
         ": (1) Bộ trích xuất ",
         latex_to_clean_omml(r"f_\theta"),
         " chỉ đảm nhiệm việc ánh xạ cấu trúc tương tác và ngữ cảnh chuỗi vào không gian vector hình học ",
@@ -722,7 +720,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         "; (2) Bộ phát hiện hạ nguồn ",
         latex_to_clean_omml(r"\hat{\mathbf{y}}_t = \sigma(\mathbf{W}^\top \mathbf{z}_t + \mathbf{b})"),
         " là một bộ dò tuyến tính độc lập được đánh giá theo giao thức đóng băng tham số (Frozen Linear Probe), đảm bảo mọi kết quả phát hiện và quy kết chiến thuật/kỹ thuật MITRE ATT&CK ",
-        make_citation_element([1]),
+        make_citation_element(["MITRE2026ATTCK"]),
         " phản ánh trung thực chất lượng thông tin nội tại của không gian vector z mà không phụ thuộc vào năng lực học bù của bộ phân loại."
     ])
     add_p(
@@ -748,7 +746,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     add_display_equation(r"\mathcal{L}_{\text{align}}(\mathbf{z}_t^{(\text{seq})}, \mathbf{z}_t^{(\text{graph})}) = -\log \frac{\exp(\text{sim}(\mathbf{z}_t^{(\text{seq})}, \mathbf{z}_t^{(\text{graph})})/\tau)}{\sum_k \exp(\text{sim}(\mathbf{z}_t^{(\text{seq})}, \mathbf{z}_k^{(\text{graph})})/\tau)}")
     add_p([
         "Không gian biểu diễn tuân thủ các ràng buộc bất biến (Invariance Constraints) ",
-        make_citation_element([22, 23]),
+        make_citation_element(["Bardes2022VICReg", "Zbontar2021BarlowTwins"]),
         " sẽ duy trì khoảng cách hình học ổn định trước các biến đổi cú pháp vô hại ",
         latex_to_clean_omml(r"T \in \mathcal{T}_{\text{benign}}"),
         ", đồng thời triệt tiêu thông tin tương hỗ đối với các đặc trưng đường tắt ",
@@ -758,7 +756,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     add_display_equation(r"\|\mathbf{z}(T(X)) - \mathbf{z}(X)\|_2 \le \epsilon_{\text{inv}}, \quad \mathcal{I}(\mathbf{z}; S) \le \epsilon_{\text{short}}")
     add_p([
         "Cơ chế tổng hợp đa thể hiện có trọng số chú ý (Attention-based Multiple Instance Learning) ",
-        make_citation_element([24]),
+        make_citation_element(["Ilse2018AttentionMIL"]),
         " tự động phân bổ trọng số chú ý ",
         latex_to_clean_omml(r"\alpha_k"),
         " tập trung vào các bằng chứng tấn công thưa thớt, phân tách hiệu quả dấu vết APT khỏi nhiễu nền quản trị viên (Admin-Noise) trên dữ liệu nhãn mức thô:"
@@ -768,11 +766,11 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         "Ánh xạ làm sạch định danh kết hợp cơ chế nhiễu vi phân ",
         latex_to_clean_omml(r"(\epsilon, \delta)"),
         "-Differential Privacy ",
-        make_citation_element([27]),
+        make_citation_element(["NIST2025SP800226"]),
         " triệt tiêu hoàn toàn nguy cơ suy diễn thành viên ",
-        make_citation_element([25]),
+        make_citation_element(["Shokri2017MembershipInference"]),
         " và tái cấu trúc thông tin định danh nhạy cảm ",
-        make_citation_element([26]),
+        make_citation_element(["Fredrikson2015ModelInversion"]),
         " mà vẫn bảo toàn độ chính xác quy kết chiến thuật/kỹ thuật MITRE ATT&CK trên vector z."
     ], bold_prefix="• Giả thuyết H5 (Privacy-Preserving Utility Trade-off — Đóng góp Độc lập): ")
 
@@ -799,9 +797,9 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     ], first_line_indent=False)
     add_p([
         "Đối với cấu trúc đồ thị nguồn gốc, để giải quyết hiện tượng bùng nổ cạnh (Edge Explosion) phát sinh từ các tiến trình dịch vụ tồn tại lâu dài ",
-        make_citation_element([9, 11]),
+        make_citation_element(["Inam2023ProvenanceSoK", "Han2020UNICORN"]),
         ", chuyên đề áp dụng quy luật suy giảm trọng số cạnh theo hàm mũ thời gian kết hợp cơ chế mốc ngắt thời gian sự kiện (Event-Time Watermark) ",
-        make_citation_element([13, 20]),
+        make_citation_element(["Li2024NODLINK", "Zeng2022PalanTir"]),
         ":"
     ])
     add_display_equation(r"\omega(e_{uv}, t) = \exp(-\lambda (t - t_{uv})), \quad t_{\text{wm}} = \max_{1 \le i \le t}(t_{\text{event}}(e_i)) - \delta_{\text{delay}}")

@@ -8,6 +8,10 @@ import os
 import shutil
 import zipfile
 import uuid
+import json
+import re
+from dataclasses import dataclass
+from typing import List, Optional, Dict, Iterable
 import win32com.client as win32
 import pythoncom
 from datetime import datetime, timezone
@@ -22,6 +26,119 @@ from docx.oxml import parse_xml, OxmlElement
 from docx.oxml.ns import nsdecls, qn
 
 
+CANONICAL_SOURCES_PATH = (
+    Path(__file__).resolve().parent.parent.parent.parent
+    / "research_specs"
+    / "reference_map"
+    / "CANONICAL-SOURCES.json"
+)
+
+
+@dataclass
+class CanonicalSource:
+    source_key: str
+    canonical_title: str
+    canonical_authors: List[str]
+    year: int
+    venue: Optional[str]
+    publication_type: str
+    doi: Optional[str]
+    url: Optional[str]
+    word_source_tag: str
+    aliases: Optional[List[str]] = None
+
+    # Properties for compatibility with legacy source consumers
+    @property
+    def source_id(self) -> str:
+        return self.word_source_tag
+
+    @property
+    def title(self) -> str:
+        return self.canonical_title
+
+    @property
+    def authors(self) -> List[str]:
+        return self.canonical_authors
+
+
+_CANONICAL_SOURCES: Optional[List[CanonicalSource]] = None
+_CANONICAL_SOURCE_MAP: Optional[Dict[str, CanonicalSource]] = None
+_CANONICAL_TAG_MAP: Optional[Dict[str, CanonicalSource]] = None
+
+
+def load_canonical_sources(json_path: Optional[Path] = None) -> List[CanonicalSource]:
+    """
+    Tải danh mục 44 nguồn chuẩn hóa từ CANONICAL-SOURCES.json.
+    HARD FAIL nếu:
+    - số lượng != 44
+    - thiếu source_key hoặc word_source_tag
+    - trùng lặp source_key hoặc word_source_tag
+    """
+    target_path = json_path if json_path is not None else CANONICAL_SOURCES_PATH
+    if not target_path.exists():
+        raise FileNotFoundError(f"HARD FAIL: Canonical sources file not found at: {target_path}")
+
+    with open(target_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    if len(data) != 44:
+        raise ValueError(f"HARD FAIL: Expected exactly 44 canonical sources, found {len(data)}")
+
+    sources: List[CanonicalSource] = []
+    seen_keys = set()
+    seen_tags = set()
+
+    for entry in data:
+        skey = entry.get("source_key")
+        stag = entry.get("word_source_tag")
+
+        if not skey:
+            raise ValueError(f"HARD FAIL: Entry missing 'source_key': {entry}")
+        if not stag:
+            raise ValueError(f"HARD FAIL: Entry missing 'word_source_tag': {entry}")
+
+        if skey in seen_keys:
+            raise ValueError(f"HARD FAIL: Duplicate source_key '{skey}' in canonical sources")
+        if stag in seen_tags:
+            raise ValueError(f"HARD FAIL: Duplicate word_source_tag '{stag}' in canonical sources")
+
+        seen_keys.add(skey)
+        seen_tags.add(stag)
+
+        sources.append(
+            CanonicalSource(
+                source_key=skey,
+                canonical_title=entry.get("canonical_title", ""),
+                canonical_authors=entry.get("canonical_authors", []),
+                year=int(entry.get("year", 0)),
+                venue=entry.get("venue"),
+                publication_type=entry.get("publication_type", ""),
+                doi=entry.get("doi"),
+                url=entry.get("url"),
+                word_source_tag=stag,
+                aliases=entry.get("aliases", []),
+            )
+        )
+
+    return sources
+
+
+def get_canonical_source_map() -> Dict[str, CanonicalSource]:
+    """Trả về từ điển tra cứu nhanh: source_key -> CanonicalSource."""
+    global _CANONICAL_SOURCE_MAP
+    if _CANONICAL_SOURCE_MAP is None:
+        sources = load_canonical_sources()
+        _CANONICAL_SOURCE_MAP = {s.source_key: s for s in sources}
+    return _CANONICAL_SOURCE_MAP
+
+
+def get_canonical_tag_map() -> Dict[str, CanonicalSource]:
+    """Trả về từ điển tra cứu nhanh: word_source_tag -> CanonicalSource."""
+    global _CANONICAL_TAG_MAP
+    if _CANONICAL_TAG_MAP is None:
+        sources = load_canonical_sources()
+        _CANONICAL_TAG_MAP = {s.word_source_tag: s for s in sources}
+    return _CANONICAL_TAG_MAP
 
 
 def latex_to_clean_omml(latex_code: str) -> OxmlElement:
@@ -54,18 +171,48 @@ def latex_to_clean_omml(latex_code: str) -> OxmlElement:
 
 
 def make_citation_element(items):
-    """Tạo các thành phần trường Trích dẫn Word gốc cho một hoặc nhiều khóa/chỉ mục nguồn."""
-    if isinstance(items, (int, str)):
-        items = [items]
+    """
+    Tạo các thành phần trường Trích dẫn Word gốc (native Word CITATION fields)
+    từ canonical source_key (string).
 
+    CẤM:
+    - số nguyên (int)
+    - word_source_tag (SRC0000xx) trực tiếp trong builder domain code
+    - source_key không tồn tại trong CANONICAL-SOURCES.json
+    """
+    if isinstance(items, str):
+        items = [items]
+    elif not isinstance(items, (list, tuple, set)):
+        raise TypeError(f"HARD FAIL: make_citation_element expected iterable of str, got {type(items)}")
+
+    s_map = get_canonical_source_map()
     elems = []
+
     for i, item in enumerate(items):
         if isinstance(item, int):
-            tag = f"SRC{item:06d}"
-            num_str = str(item)
-        else:
-            tag = item.replace("-", "")
-            num_str = str(int(item.split("-")[1])) if "-" in item else item
+            raise TypeError(
+                f"HARD FAIL: make_citation_element received integer '{item}'. "
+                f"Numeric indices are strictly forbidden. Only canonical source_key strings "
+                f"(e.g. 'Cheng2024KAIROS') are permitted."
+            )
+        if not isinstance(item, str):
+            raise TypeError(
+                f"HARD FAIL: make_citation_element expected str source_key, got {type(item)}: '{item}'"
+            )
+        if item.startswith("SRC") and re.match(r"^SRC\d+$", item):
+            raise ValueError(
+                f"HARD FAIL: make_citation_element received word_source_tag '{item}'. "
+                f"Direct use of word_source_tag in builder domain code is strictly forbidden. "
+                f"Use canonical source_key (e.g. 'Cheng2024KAIROS') instead."
+            )
+        if item not in s_map:
+            raise KeyError(
+                f"HARD FAIL: Unknown source_key '{item}' not found in canonical registry CANONICAL-SOURCES.json!"
+            )
+
+        src = s_map[item]
+        tag = src.word_source_tag
+        num_str = str(int(tag.replace("SRC", "")))
 
         if i > 0:
             sep_xml = (
@@ -312,20 +459,31 @@ def insert_clean_table(doc, target_p, headers, rows_data, col_widths, font_size_
             format_table_cell(cell, col_widths[c_i], align=cell_align, bold=(c_i == 0 and len(headers) == 3), font_size_pt=font_size_pt)
 
 
-def generate_perfect_sources_xml(sources):
+def generate_perfect_sources_xml(sources=None):
     """Tạo các Nguồn thư mục Microsoft Word hợp lệ CustomXML với kiểu Tác giả doanh nghiệp & IEEE."""
+    if sources is None:
+        sources = load_canonical_sources()
+
     lines = ['<?xml version="1.0" encoding="UTF-8" standalone="no"?>']
     lines.append('<b:Sources SelectedStyle="\\IEEE.XSL" StyleName="IEEE" xmlns:b="http://schemas.openxmlformats.org/officeDocument/2006/bibliography" xmlns="http://schemas.openxmlformats.org/officeDocument/2006/bibliography">')
 
     corporate_map = {
+        "SRC000001": "MITRE ATT&CK",
+        "SRC000027": "National Institute of Standards and Technology (NIST)",
+        "SRC000028": "Defense Advanced Research Projects Agency (DARPA)",
         "SRC-000001": "MITRE ATT&CK",
         "SRC-000027": "National Institute of Standards and Technology (NIST)",
-        "SRC-000028": "Defense Advanced Research Projects Agency (DARPA)"
+        "SRC-000028": "Defense Advanced Research Projects Agency (DARPA)",
     }
 
     for s in sources:
-        tag = s.source_id.replace("-", "")
-        venue = s.venue or ""
+        tag = getattr(s, "word_source_tag", None) or getattr(s, "source_id", "")
+        clean_tag = tag.replace("-", "")
+        venue = getattr(s, "venue", "") or ""
+        title = getattr(s, "canonical_title", None) or getattr(s, "title", "")
+        year = getattr(s, "year", "")
+        authors = getattr(s, "canonical_authors", None) or getattr(s, "authors", [])
+
         if any(w in venue for w in ["Proceedings", "Conference", "Symposium", "NDSS", "S&P", "CCS", "ICLR", "ICML", "ACSAC", "ISSTA", "ISSRE", "ASE", "IJCNN", "KDD", "IJCAI", "ICDM", "SOSP", "ATC", "USENIX"]):
             stype = "ConferenceProceedings"
         elif any(w in venue for w in ["Journal", "Surveys", "IEEE Transactions", "ACM"]):
@@ -337,14 +495,14 @@ def generate_perfect_sources_xml(sources):
         else:
             stype = "Report"
 
-        guid = str(uuid.uuid5(uuid.NAMESPACE_DNS, f"thesis.sources.{s.source_id}")).upper()
+        guid = str(uuid.uuid5(uuid.NAMESPACE_DNS, f"thesis.sources.{clean_tag}")).upper()
 
         lines.append("  <b:Source>")
-        lines.append(f"    <b:Tag>{tag}</b:Tag>")
+        lines.append(f"    <b:Tag>{clean_tag}</b:Tag>")
         lines.append(f"    <b:SourceType>{stype}</b:SourceType>")
         lines.append(f"    <b:Guid>{{{guid}}}</b:Guid>")
-        lines.append(f"    <b:Title>{escape(s.title)}</b:Title>")
-        lines.append(f"    <b:Year>{s.year}</b:Year>")
+        lines.append(f"    <b:Title>{escape(title)}</b:Title>")
+        lines.append(f"    <b:Year>{year}</b:Year>")
         if stype == "ConferenceProceedings":
             lines.append(f"    <b:ConferenceName>{escape(venue)}</b:ConferenceName>")
         elif stype == "ArticleInAPeriodical":
@@ -354,13 +512,14 @@ def generate_perfect_sources_xml(sources):
         else:
             lines.append(f"    <b:Institution>{escape(venue)}</b:Institution>")
 
-        if s.source_id in corporate_map:
+        if tag in corporate_map or clean_tag in corporate_map:
+            corp_name = corporate_map.get(tag) or corporate_map.get(clean_tag)
             lines.append("    <b:Author>")
             lines.append("      <b:Author>")
-            lines.append(f"        <b:Corporate>{escape(corporate_map[s.source_id])}</b:Corporate>")
+            lines.append(f"        <b:Corporate>{escape(corp_name)}</b:Corporate>")
             lines.append("      </b:Author>")
             lines.append("    </b:Author>")
-        elif s.source_id == "SRC-000029":
+        elif tag in ["SRC000029", "SRC-000029"] or clean_tag == "SRC000029":
             lines.append("    <b:Author>")
             lines.append("      <b:Author>")
             lines.append("        <b:NameList>")
@@ -373,7 +532,7 @@ def generate_perfect_sources_xml(sources):
             lines.append("    <b:Author>")
             lines.append("      <b:Author>")
             lines.append("        <b:NameList>")
-            for author_name in s.authors:
+            for author_name in authors:
                 parts = author_name.strip().split()
                 if len(parts) > 1:
                     first = " ".join(parts[:-1])
