@@ -170,20 +170,37 @@ def validate_experiment_index(csv_path: str = "experiments/experiment_index.csv"
     print("[VALIDATOR-PASS] 100% records in experiment_index.csv match source JSON artifacts!")
     return True
 
-def validate_artifact_manifest(manifest_path: str = "experiments/nineplus/ARTIFACT-MANIFEST.json") -> bool:
+def validate_artifact_manifest(
+    manifest_path: str = "experiments/nineplus/ARTIFACT-MANIFEST.json",
+    catalog_only: bool = False
+) -> bool:
     repo_root = Path(__file__).resolve().parent.parent
     full_manifest_path = repo_root / manifest_path
     if not full_manifest_path.exists():
         print(f"[VALIDATOR-FAIL] ARTIFACT-MANIFEST not found at: {full_manifest_path}")
         return False
 
-    with open(full_manifest_path, "r", encoding="utf-8") as f:
-        data = json.load(f)
+    try:
+        with open(full_manifest_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception as e:
+        print(f"[VALIDATOR-FAIL] Failed to parse JSON in {full_manifest_path}: {e}")
+        return False
 
-    clean_clone_ready = data.get("clean_clone_ready", False)
     artifacts = data.get("artifacts", [])
-    print(f"[VALIDATOR] Validating {len(artifacts)} cataloged artifacts in {manifest_path}...")
+    total_cataloged = data.get("total_artifacts_cataloged")
+    mode_str = "catalog-only" if catalog_only else "strict byte verification"
+    print(f"[VALIDATOR] Validating {len(artifacts)} cataloged artifacts in {manifest_path} (mode: {mode_str})...")
     errors = []
+
+    if total_cataloged is not None and total_cataloged != len(artifacts):
+        errors.append(f"total_artifacts_cataloged mismatch: metadata={total_cataloged} vs len(artifacts)={len(artifacts)}")
+
+    catalog_entries = len(artifacts)
+    git_verified = 0
+    local_present_verified = 0
+    local_absent = 0
+    unverified_skipped = 0
 
     for art in artifacts:
         rel_path = art.get("relative_path", "")
@@ -192,42 +209,71 @@ def validate_artifact_manifest(manifest_path: str = "experiments/nineplus/ARTIFA
         exp_sha = art.get("sha256")
         target_file = repo_root / rel_path
 
+        if not rel_path or not avail:
+            errors.append(f"Artifact entry missing relative_path or availability: {art}")
+            continue
+
         if avail == "AVAILABLE_IN_GIT":
-            try:
-                import subprocess, hashlib
-                git_bytes = subprocess.check_output(
-                    ["git", "show", f"HEAD:{rel_path}"],
-                    cwd=repo_root,
-                    stderr=subprocess.PIPE
-                )
-                actual_size = len(git_bytes)
-                actual_sha = hashlib.sha256(git_bytes).hexdigest()
-                if actual_size != exp_size:
-                    errors.append(f"{rel_path} git size mismatch: exp={exp_size} vs actual={actual_size}")
-                if actual_sha.lower() != str(exp_sha).lower():
-                    errors.append(f"{rel_path} git sha mismatch: exp={exp_sha} vs actual={actual_sha}")
-            except Exception as e:
-                errors.append(f"{rel_path} failed to read from git: {e}")
-        elif avail == "LOCAL_ONLY":
-            if not target_file.exists():
-                if not clean_clone_ready:
-                    print(f"[VALIDATOR-NOTICE] {rel_path} is LOCAL_ONLY and pending provisioning (clean_clone_ready=false)")
-                    continue
-                errors.append(f"{rel_path} marked LOCAL_ONLY but does not exist on disk (must be UNVERIFIED_LOCAL_ONLY)")
+            if exp_size is None or exp_sha is None:
+                errors.append(f"{rel_path} marked AVAILABLE_IN_GIT but size_bytes or sha256 is null")
+            if not catalog_only:
+                try:
+                    import subprocess, hashlib
+                    git_bytes = subprocess.check_output(
+                        ["git", "show", f"HEAD:{rel_path}"],
+                        cwd=repo_root,
+                        stderr=subprocess.PIPE
+                    )
+                    actual_size = len(git_bytes)
+                    actual_sha = hashlib.sha256(git_bytes).hexdigest()
+                    if actual_size != exp_size:
+                        errors.append(f"{rel_path} git size mismatch: exp={exp_size} vs actual={actual_size}")
+                    if actual_sha.lower() != str(exp_sha).lower():
+                        errors.append(f"{rel_path} git sha mismatch: exp={exp_sha} vs actual={actual_sha}")
+                    if actual_size == exp_size and actual_sha.lower() == str(exp_sha).lower():
+                        git_verified += 1
+                except Exception as e:
+                    errors.append(f"{rel_path} failed to read from git: {e}")
             else:
-                import hashlib
-                raw_bytes = target_file.read_bytes()
-                actual_size = len(raw_bytes)
-                actual_sha = hashlib.sha256(raw_bytes).hexdigest()
-                if actual_size != exp_size:
-                    errors.append(f"{rel_path} disk size mismatch: exp={exp_size} vs actual={actual_size}")
-                if actual_sha.lower() != str(exp_sha).lower():
-                    errors.append(f"{rel_path} disk sha mismatch: exp={exp_sha} vs actual={actual_sha}")
+                git_verified += 1
+
+        elif avail == "LOCAL_ONLY":
+            if exp_size is None or exp_sha is None:
+                errors.append(f"{rel_path} marked LOCAL_ONLY but size_bytes or sha256 is null")
+            if not catalog_only:
+                if not target_file.exists():
+                    local_absent += 1
+                    errors.append(f"{rel_path} marked LOCAL_ONLY but does not exist on disk")
+                else:
+                    import hashlib
+                    raw_bytes = target_file.read_bytes()
+                    actual_size = len(raw_bytes)
+                    actual_sha = hashlib.sha256(raw_bytes).hexdigest()
+                    if actual_size != exp_size:
+                        errors.append(f"{rel_path} disk size mismatch: exp={exp_size} vs actual={actual_size}")
+                    if actual_sha.lower() != str(exp_sha).lower():
+                        errors.append(f"{rel_path} disk sha mismatch: exp={exp_sha} vs actual={actual_sha}")
+                    if actual_size == exp_size and actual_sha.lower() == str(exp_sha).lower():
+                        local_present_verified += 1
+            else:
+                if target_file.exists():
+                    local_present_verified += 1
+                else:
+                    local_absent += 1
+
         elif avail == "UNVERIFIED_LOCAL_ONLY":
             if exp_size is not None or exp_sha is not None:
                 errors.append(f"{rel_path} marked UNVERIFIED_LOCAL_ONLY but size/sha are not null")
+            unverified_skipped += 1
         else:
             errors.append(f"{rel_path} unknown availability: {avail}")
+
+    print(f"[VALIDATOR-COUNTS] Summary:")
+    print(f"  - Catalog entries: {catalog_entries}")
+    print(f"  - AVAILABLE_IN_GIT verified: {git_verified}")
+    print(f"  - LOCAL_ONLY present and verified: {local_present_verified}")
+    print(f"  - LOCAL_ONLY absent: {local_absent}")
+    print(f"  - UNVERIFIED_LOCAL_ONLY skipped: {unverified_skipped}")
 
     if errors:
         print("[VALIDATOR-FAIL] ARTIFACT-MANIFEST discrepancies:")
@@ -235,12 +281,23 @@ def validate_artifact_manifest(manifest_path: str = "experiments/nineplus/ARTIFA
             print(f"  - {err}")
         return False
 
-    print("[VALIDATOR-PASS] 100% artifacts in ARTIFACT-MANIFEST.json verified!")
+    if catalog_only:
+        print("[VALIDATOR-PASS] ARTIFACT-MANIFEST catalog structure is valid (CATALOG_VALID)")
+        print("[VALIDATOR-NOTICE] Binary contents were NOT verified in catalog-only mode.")
+    else:
+        print("[VALIDATOR-PASS] 100% artifacts in ARTIFACT-MANIFEST.json verified!")
+
     return True
 
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description="Validate experiment index and artifact manifest")
+    parser.add_argument("--catalog-only", action="store_true", help="Validate manifest catalog structure only, without binary verification")
+    parser.add_argument("--verify-bytes", action="store_true", default=False, help="Explicitly enforce strict binary byte and hash verification (default)")
+    args = parser.parse_args()
+
     v1 = validate_experiment_index()
-    v2 = validate_artifact_manifest()
+    v2 = validate_artifact_manifest(catalog_only=args.catalog_only)
     if not (v1 and v2):
         sys.exit(1)
     sys.exit(0)
