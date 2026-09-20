@@ -513,7 +513,7 @@ def draw_fig_2_4(canvas_raw: Any):
             "Chiếu nhánh chuỗi", "Chiếu nhánh đồ thị", "Ngữ cảnh quản trị", "Kiểm soát shortcut",
         ], 0x7C3AED, 0xFFFFFF),
         ("ĐIỀU HÒA", "(VICReg & MIL)", [
-            "Bất biến hai góc nhìn", "Phương sai & hiệp phương sai", "PCGrad", "Attention-MIL nhãn thô",
+            "Bất biến hai góc nhìn", "Phương sai & hiệp phương sai", "PCGrad — Proposed / Not implemented", "Attention-MIL — Proposed / Not tested",
         ], 0xEA580C, 0xFFFFFF),
         ("BIỂU DIỄN THỐNG NHẤT", "(Canonical Representation)", [
             "Vector chuẩn hóa", "Gated fusion", "Siêu dữ liệu tương ứng", "Bàn giao Stage C",

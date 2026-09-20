@@ -324,7 +324,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         make_citation_element([18]),
         ": (1) DARPA Transparent Computing (TC E3/E5) ",
         make_citation_element([28]),
-        " cung cấp dữ liệu kiểm toán hệ thống mức hạt nhân chi tiết với các kịch bản APT thực tế được gán nhãn ở mức độ hạt tiến trình/luồng phụ thuộc (Fine-grained Ground Truth); (2) LANL Unified Host and Network Dataset ",
+        " cung cấp dữ liệu kiểm toán hệ thống mức hạt nhân chi tiết, trong đó các kịch bản tấn công của đội Red Team được ghi nhận qua các báo cáo kịch bản (ground-truth reports/annotations), cho phép ánh xạ và suy diễn nhãn ở mức tiến trình và luồng phụ thuộc liên quan đến đợt tấn công, thay vì toàn bộ dữ liệu viễn trắc nền đều có nhãn sẵn ở mức hạt nhân; (2) LANL Unified Host and Network Dataset ",
         make_citation_element([29]),
         " phản ánh môi trường doanh nghiệp quy mô lớn với hàng tỷ sự kiện xác thực và luồng mạng, gán nhãn theo sự kiện và cửa sổ thời gian; (3) HDFS và BGL Datasets ",
         make_citation_element([3, 6]),
@@ -817,7 +817,7 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         " được chuyển tiếp vào bộ đệm tái điều chỉnh (Reconciliation Buffer) mà không phá vỡ tính liên tục của luồng suy luận."
     ], first_line_indent=False)
     add_p([
-        "Khi hệ thống gặp hiện tượng đột biến lưu lượng (Traffic Spike), cơ chế kiểm soát áp lực ngược (Backpressure Control) dựa trên thuật toán Token-Bucket điều tiết tốc độ nạp dữ liệu, đồng thời kích hoạt chính sách loại bỏ ưu tiên (Priority Shedding) đối với các luồng nhật ký ứng dụng có điểm an ninh sơ cấp thấp, bảo đảm thông lượng xử lý dòng luôn nằm trong giới hạn năng lực tính toán của máy chủ giám sát."
+        "Đối với tình huống đột biến lưu lượng (Traffic Spike), kiến trúc đề xuất cơ chế kiểm soát áp lực ngược (Backpressure Control) dự kiến dựa trên thuật toán Token-Bucket để điều tiết tốc độ nạp dữ liệu. Trong thiết kế kiến trúc đề xuất này, chính sách loại bỏ gói tin hoặc phân luồng ưu tiên (Priority Shedding) được định vị cho kịch bản quá tải; tuy nhiên, cơ chế này chưa hiện thực trong Stage A2 và chưa được kiểm chứng thực nghiệm trong phạm vi chuyên đề hiện tại."
     ])
     add_p([
         "Phân tích độ phức tạp thuật toán xác lập rằng mô hình dòng đề xuất đạt độ phức tạp không gian ",

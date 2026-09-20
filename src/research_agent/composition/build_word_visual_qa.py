@@ -2981,8 +2981,10 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
 
     add_h4("Phân tích đối sánh các cơ chế tự giám sát đa góc nhìn")
     add_p([
-        "Trong học biểu diễn tự giám sát (Self-Supervised Learning), ba hướng tiếp cận tiêu biểu bao gồm: InfoNCE / Contrastive Learning ",
-        make_citation_element([38, 39]),
+        "Trong học biểu diễn tự giám sát (Self-Supervised Learning), các hướng tiếp cận tiêu biểu bao gồm: InfoNCE/CPC ",
+        make_citation_element([38]),
+        ", SimCLR ",
+        make_citation_element([39]),
         ", Barlow Twins ",
         make_citation_element([23]),
         ", và VICReg ",
@@ -3033,8 +3035,10 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
     add_p([
         "Từ phân tích phương pháp luận trên, chuyên đề lựa chọn VICReg (Variance-Invariance-Covariance Regularization) ",
         make_citation_element([22]),
-        " làm ứng viên gióng hàng cốt lõi (Primary Candidate). Ưu điểm lý thuyết của VICReg đối với bài toán telemetry log là loại bỏ nhu cầu lấy mẫu âm tường minh, từ đó giảm thiểu rủi ro False Negatives, hạn chế việc ép các phiên telemetry bình thường độc lập nhưng có hình thái hành vi tương đồng ra xa nhau một cách giả tạo. Lựa chọn này sẽ được kiểm chứng thực nghiệm chặt chẽ tại Chương 3 trong mối tương quan với hai phương pháp đối chứng (Ablation Baselines) là InfoNCE ",
-        make_citation_element([38, 39]),
+        " làm ứng viên gióng hàng cốt lõi (Primary Candidate). Ưu điểm lý thuyết của VICReg đối với bài toán telemetry log là loại bỏ nhu cầu lấy mẫu âm tường minh, từ đó giảm thiểu rủi ro False Negatives, hạn chế việc ép các phiên telemetry bình thường độc lập nhưng có hình thái hành vi tương đồng ra xa nhau một cách giả tạo. Lựa chọn này sẽ được kiểm chứng thực nghiệm chặt chẽ tại Chương 3 trong mối tương quan với các phương pháp đối chứng (Ablation Baselines) là InfoNCE/CPC ",
+        make_citation_element([38]),
+        ", SimCLR ",
+        make_citation_element([39]),
         " và Barlow Twins ",
         make_citation_element([23]),
         "."

@@ -27,6 +27,7 @@ import pythoncom
 sys.stdout.reconfigure(encoding='utf-8')
 
 repo_root = Path(r"D:\Research")
+sys.path.insert(0, str(repo_root / "src"))
 docx_path = repo_root / "Chuyên đề chuyên sâu.docx"
 pdf_path = repo_root / "Chuyên đề chuyên sâu.pdf"
 canonical_json_path = repo_root / "research_specs" / "reference_map" / "CANONICAL-SOURCES.json"
@@ -67,6 +68,13 @@ def replace_in_paragraph_runs(p, old_text: str, new_text: str):
                 r.text = r.text.replace(old_text, new_text)
                 return
         raise ValueError("Could not surgically replace text across OMML runs without risking formula damage.")
+
+def apply_occ_0136_p235(p, nist_num, shokri_num, fredrikson_num):
+    # p.runs[0] is before oMath (ϵ,δ) - leave untouched to preserve formula 100%!
+    # p.runs[1] is after oMath:
+    p.runs[1].text = f'dưới các giả định toán học xác định theo các hướng dẫn đánh giá của NIST SP 800-226 [{nist_num}], còn rủi ro thực tế được định vị là phép kiểm tra hạ nguồn cần đánh giá thực nghiệm độc lập thông qua các quy trình kiểm thử tấn công suy luận thành viên (MIA) [{shokri_num}] và tấn công nghịch đảo/tái định danh thực thể [{fredrikson_num}].'
+    for r in p.runs[2:]:
+        r.text = ""
 
 def resolve_canonical_citation_numbers(doc):
     with open(canonical_json_path, "r", encoding="utf-8") as f:
@@ -141,10 +149,15 @@ def run_corrections(docx_file: Path, pdf_file: Path):
     hdfs_num = key_to_num["Xu2009HDFS"]
     loghub_num = key_to_num["Zhu2023Loghub"]
 
+    shokri_num = key_to_num["Shokri2017MembershipInference"]
+    fredrikson_num = key_to_num["Fredrikson2015ModelInversion"]
+    nist_num = key_to_num["NIST2025SP800226"]
+
     print(f"[DYNAMIC-CITATION-MAP] Resolved from Table 27:")
     print(f"  MITRE -> [{mitre_num}], Inam -> [{inam_num}], VICReg -> [{vicreg_num}], Barlow -> [{barlow_num}]")
     print(f"  InfoNCE -> [{infonce_num}], SimCLR -> [{simclr_num}], Arp -> [{arp_num}], DARPA E3 -> [{darpa_num}]")
     print(f"  LANL -> [{lanl_num}], HDFS -> [{hdfs_num}], LogHub -> [{loghub_num}]")
+    print(f"  Shokri -> [{shokri_num}], Fredrikson -> [{fredrikson_num}], NIST -> [{nist_num}]")
 
     body_paragraphs = [p for p in doc.paragraphs if not is_toc_or_tof(p)]
 
@@ -180,9 +193,9 @@ def run_corrections(docx_file: Path, pdf_file: Path):
         {
             'id': 'token_bucket',
             'desc': 'Token-Bucket Backpressure marked design-only',
-            'anchor_fn': lambda p: 'Detector Leakage' in p.text,
-            'old_text': 'Khi hệ thống gặp hiện tượng đột biến lưu lượng Traffic Spike, cơ chế kiểm soát áp lực ngược Backpressure Control dựa trên thuật toán Token-Bucket điều tiết tốc độ nạp dữ liệu. Nếu lưu lượng vượt quá giới hạn chịu tải tối đa, việc loại bỏ gói tin (Shedding) được thực hiện hoàn toàn độc lập với kết quả phát hiện của mô hình (dựa trên hạn ngạch băng thông nguồn thu thập hoặc mức độ ưu tiên của phân vùng telemetry, tuyệt đối không dựa vào điểm số an ninh chưa kiểm chứng) nhằm tránh rủi ro rò rỉ vòng lặp Detector Leakage và loại bỏ nhầm các bằng chứng APT yếu thưa thớt.',
-            'new_text': 'Đối với tình huống đột biến lưu lượng (Traffic Spike), kiến trúc đề xuất cơ chế kiểm soát áp lực ngược (Backpressure Control) dự kiến dựa trên thuật toán Token-Bucket để điều tiết tốc độ nạp dữ liệu. Trong thiết kế này, nếu lưu lượng vượt quá giới hạn chịu tải tối đa, việc loại bỏ gói tin (Shedding) được đề xuất thực hiện độc lập với kết quả phát hiện của mô hình (dựa trên hạn ngạch băng thông nguồn thu thập hoặc mức độ ưu tiên của phân vùng telemetry, không dựa vào điểm số an ninh chưa kiểm chứng) nhằm tránh rủi ro rò rỉ vòng lặp Detector Leakage và loại bỏ nhầm các bằng chứng APT yếu thưa thớt (thành phần streaming này thuộc thiết kế kiến trúc mục tiêu, chưa triển khai trong thực nghiệm Stage A2).'
+            'anchor_fn': lambda p: 'áp lực ngược' in p.text and 'Token-Bucket' in p.text,
+            'old_text': 'Đối với tình huống đột biến lưu lượng (Traffic Spike), kiến trúc đề xuất cơ chế kiểm soát áp lực ngược (Backpressure Control) dự kiến dựa trên thuật toán Token-Bucket để điều tiết tốc độ nạp dữ liệu. Trong thiết kế này, nếu lưu lượng vượt quá giới hạn chịu tải tối đa, việc loại bỏ gói tin (Shedding) được đề xuất thực hiện độc lập với kết quả phát hiện của mô hình (dựa trên hạn ngạch băng thông nguồn thu thập hoặc mức độ ưu tiên của phân vùng telemetry, không dựa vào điểm số an ninh chưa kiểm chứng) nhằm tránh rủi ro rò rỉ vòng lặp Detector Leakage và loại bỏ nhầm các bằng chứng APT yếu thưa thớt (thành phần streaming này thuộc thiết kế kiến trúc mục tiêu, chưa triển khai trong thực nghiệm Stage A2).',
+            'new_text': 'Đối với tình huống đột biến lưu lượng (Traffic Spike), kiến trúc đề xuất cơ chế kiểm soát áp lực ngược (Backpressure Control) dự kiến dựa trên thuật toán Token-Bucket để điều tiết tốc độ nạp dữ liệu. Trong thiết kế kiến trúc đề xuất này, chính sách loại bỏ gói tin hoặc phân luồng ưu tiên (Priority Shedding) được định vị cho kịch bản quá tải; tuy nhiên, cơ chế này chưa hiện thực trong Stage A2 và chưa được kiểm chứng thực nghiệm trong phạm vi chuyên đề hiện tại.'
         },
         {
             'id': 'graph_fidelity',
@@ -197,6 +210,27 @@ def run_corrections(docx_file: Path, pdf_file: Path):
             'anchor_fn': lambda p: 'Top-k Temporal Attention Sampling' in p.text,
             'old_text': 'áp dụng cơ chế lấy mẫu lân cận có chọn lọc theo trọng số thời gian Top-k Temporal Attention Sampling, ưu tiên tổng hợp thông điệp từ các đỉnh lân cận có hoạt động gần nhất thay vì mở rộng toàn bộ cây phụ thuộc nhiều bước. Cơ chế này được thiết kế để đánh giá đối sánh với các chính sách lấy mẫu toàn bộ lân cận Full Neighborhood và lấy mẫu theo độ mới Recency Sampling tại Chương 3, nhằm kiểm tra thực nghiệm liệu chính sách sampling có gây mất mát các bằng chứng APT dài hạn hay không.',
             'new_text': 'chuyên đề đề xuất cơ chế ứng viên lấy mẫu lân cận có chọn lọc theo trọng số thời gian Top-k Temporal Attention Sampling, ưu tiên tổng hợp thông điệp từ các đỉnh lân cận có hoạt động gần nhất thay vì mở rộng toàn bộ cây phụ thuộc nhiều bước. Đây là thiết kế mở rộng dự kiến phục vụ đối sánh với các chính sách lấy mẫu toàn bộ lân cận (Full Neighborhood) và lấy mẫu theo độ mới (Recency Sampling) trong các nghiên cứu tương lai; thành phần này chưa được hiện thực và chưa kiểm chứng thực nghiệm trong chiến dịch Stage A2 hiện tại.'
+        },
+        {
+            'id': 'occ_0132_p208',
+            'desc': 'OCC-0132 NIST citation separation in P208',
+            'anchor_fn': lambda p: 'Một mô hình được thiết kế có nhận thức về quyền riêng tư' in p.text,
+            'old_text': f'Một mô hình được thiết kế có nhận thức về quyền riêng tư không tự động đồng nghĩa với việc đã đạt được khả năng bảo vệ quyền riêng tư ; các quy trình kiểm thử tấn công MIA và đảo ngược mô hình được định vị là phép kiểm tra hạ nguồn và chưa được thực thi trong phạm vi thực nghiệm hiện tại  [{nist_num}].',
+            'new_text': f'Một mô hình được thiết kế có nhận thức về quyền riêng tư không tự động đồng nghĩa với việc đã đạt được khả năng bảo vệ quyền riêng tư; các quy trình kiểm thử tấn công MIA [{shokri_num}] và đảo ngược mô hình [{fredrikson_num}], cũng như quy trình đánh giá quyền riêng tư vi sai theo hướng dẫn NIST SP 800-226 [{nist_num}], được định vị là phép kiểm tra hạ nguồn và chưa được thực thi trong phạm vi thực nghiệm hiện tại.'
+        },
+        {
+            'id': 'occ_0136_p235',
+            'desc': 'OCC-0136 NIST citation separation in P235',
+            'anchor_fn': lambda p: 'Trong đó lý thuyết Quyền riêng tư Vi sai (DP) đóng vai trò' in p.text,
+            'is_applied_fn': lambda p: f'NIST SP 800-226 [{nist_num}]' in p.text and f'[{shokri_num}],  [{nist_num}]' not in p.text and f'[{shokri_num}], [{nist_num}]' not in p.text,
+            'custom_apply_fn': lambda p: apply_occ_0136_p235(p, nist_num, shokri_num, fredrikson_num)
+        },
+        {
+            'id': 'p405_infonce_simclr',
+            'desc': 'InfoNCE/CPC and SimCLR citation in Section 2.4.1.3 P405',
+            'anchor_fn': lambda p: 'Trong học biểu diễn tự giám sát' in p.text and 'Barlow Twins' in p.text,
+            'old_text': f'Trong học biểu diễn tự giám sát, ba hướng tiếp cận tiêu biểu bao gồm: InfoNCE / Contrastive Learning  [{infonce_num}],  [{simclr_num}], Barlow Twins  [{barlow_num}], và VICReg  [{vicreg_num}].',
+            'new_text': f'Trong học biểu diễn tự giám sát, các hướng tiếp cận tiêu biểu bao gồm: InfoNCE/CPC [{infonce_num}], SimCLR [{simclr_num}], Barlow Twins [{barlow_num}], và VICReg [{vicreg_num}].'
         },
         {
             'id': 'vicreg_p407_1',
@@ -216,8 +250,8 @@ def run_corrections(docx_file: Path, pdf_file: Path):
             'id': 'infonce_barlow',
             'desc': 'InfoNCE and Barlow Twins citation correction in Section 2.4.1.3',
             'anchor_fn': lambda p: 'Từ phân tích phương pháp luận trên, chuyên đề lựa chọn VICReg' in p.text,
-            'old_text': 'trong khi việc đối sánh triệt tiêu định lượng với InfoNCE [41], [21] và Barlow Twins [13] được định vị cho các chiến dịch thực nghiệm hạ nguồn tiếp theo.',
-            'new_text': f'trong khi việc đối sánh triệt tiêu định lượng với InfoNCE [{infonce_num}], [{simclr_num}] và Barlow Twins [{barlow_num}] được định vị cho các chiến dịch thực nghiệm hạ nguồn tiếp theo.'
+            'old_text': f'trong khi việc đối sánh triệt tiêu định lượng với InfoNCE [{infonce_num}], [{simclr_num}] và Barlow Twins [{barlow_num}] được định vị cho các chiến dịch thực nghiệm hạ nguồn tiếp theo.',
+            'new_text': f'trong khi việc đối sánh triệt tiêu định lượng với InfoNCE/CPC [{infonce_num}], SimCLR [{simclr_num}] và Barlow Twins [{barlow_num}] được định vị cho các chiến dịch thực nghiệm hạ nguồn tiếp theo.'
         },
         {
             'id': 'mil_proposed',
@@ -250,9 +284,9 @@ def run_corrections(docx_file: Path, pdf_file: Path):
         {
             'id': 'split_arp_data',
             'desc': 'Arp and datasets citation correction in Section 3.1.2',
-            'anchor_fn': lambda p: 'temporal snooping' in p.text,
-            'old_text': 'tuân thủ khuyến nghị tránh rò rỉ thời gian (temporal snooping) của Arp et al. [10]. Khung đối chuẩn nghiên cứu bao quát 4 tập dữ liệu đại diện cho các miền viễn trắc an ninh khác nhau (DARPA TC E3 [14], LANL [16], HDFS [17], [9], BGL [9]);',
-            'new_text': f'tuân thủ khuyến nghị tránh rò rỉ thời gian (temporal snooping) của Arp et al. [{arp_num}]. Khung đối chuẩn nghiên cứu bao quát 4 tập dữ liệu đại diện cho các miền viễn trắc an ninh khác nhau (DARPA TC E3 [{darpa_num}], LANL [{lanl_num}], HDFS [{hdfs_num}], [{loghub_num}], BGL [{loghub_num}]);'
+            'anchor_fn': lambda p: 'Khung đối chuẩn nghiên cứu bao quát 4 tập dữ liệu' in p.text,
+            'old_text': f'Khung đối chuẩn nghiên cứu bao quát 4 tập dữ liệu đại diện cho các miền viễn trắc an ninh khác nhau (DARPA TC E3 [{darpa_num}], LANL [{lanl_num}], HDFS [{hdfs_num}], [{loghub_num}], BGL [{loghub_num}]);',
+            'new_text': f'Khung đối chuẩn nghiên cứu bao quát 4 tập dữ liệu đại diện cho các miền viễn trắc an ninh khác nhau (DARPA TC E3 [{darpa_num}], LANL [{lanl_num}], HDFS (Xu et al. [{hdfs_num}]; LogHub [{loghub_num}]) và BGL (LogHub [{loghub_num}]));'
         },
         {
             'id': 'frozen_probe_fairness',
@@ -264,9 +298,9 @@ def run_corrections(docx_file: Path, pdf_file: Path):
         {
             'id': 'ap_roc_ties',
             'desc': 'AP/ROC ties handling overclaim lowering',
-            'anchor_fn': lambda p: 'tiêu chuẩn đối chuẩn khách quan giữa các kiến trúc' in p.text,
-            'old_text': 'loại bỏ hoàn toàn các sai số do tính toán thứ hạng thô và thiết lập tiêu chuẩn đối chuẩn khách quan giữa các kiến trúc.',
-            'new_text': 'tránh sai lệch do triển khai thủ công không nhất quán trong xử lý thứ hạng/ties và thiết lập tiêu chuẩn đối chuẩn khách quan giữa các kiến trúc.'
+            'anchor_fn': lambda p: 'xử lý thứ hạng/ties' in p.text,
+            'old_text': 'tránh sai lệch do triển khai thủ công không nhất quán trong xử lý thứ hạng/ties và thiết lập tiêu chuẩn đối chuẩn khách quan giữa các kiến trúc.',
+            'new_text': 'tránh sai lệch do triển khai thủ công không nhất quán trong xử lý thứ hạng/ties và thống nhất cách tính giữa các kiến trúc.'
         },
         {
             'id': 'heading_324',
@@ -349,6 +383,16 @@ def run_corrections(docx_file: Path, pdf_file: Path):
             raise RuntimeError(f"[{cid}] AMBIGUOUS_OR_MISSING: matched {len(matched_p)} paragraphs (expected 1)")
 
         p = matched_p[0]
+
+        if 'is_applied_fn' in c:
+            if c['is_applied_fn'](p):
+                print(f"[{cid}] NEW_ALREADY_PRESENT: Already applied.")
+                noop_count += 1
+            else:
+                print(f"[{cid}] OLD_FOUND_ONCE: Ready to apply correction.")
+                plan_to_apply.append((c, p))
+            continue
+
         old_in = c['old_text'] in p.text
         new_in = c['new_text'] in p.text
 
@@ -372,9 +416,12 @@ def run_corrections(docx_file: Path, pdf_file: Path):
     # Apply planned corrections
     for c, p in plan_to_apply:
         cid = c['id']
-        old_txt = c['old_text']
-        new_txt = c['new_text']
-        replace_in_paragraph_runs(p, old_txt, new_txt)
+        if 'custom_apply_fn' in c:
+            c['custom_apply_fn'](p)
+        else:
+            old_txt = c['old_text']
+            new_txt = c['new_text']
+            replace_in_paragraph_runs(p, old_txt, new_txt)
         applied_count += 1
         print(f"[{cid}] APPLIED: {c['desc']}")
 
@@ -396,6 +443,14 @@ def run_corrections(docx_file: Path, pdf_file: Path):
         word.Visible = False
         word.DisplayAlerts = 0
         wdoc = word.Documents.Open(str(docx_file.resolve()))
+
+        # Re-render Figure 2.4 Canvas with updated proposed labels
+        try:
+            from research_agent.visuals.chapter2_drawings import draw_fig_2_4
+            from research_agent.composition.word_com_post_process import render_canvas_at_bookmark
+            render_canvas_at_bookmark(wdoc, "BK_FIG_2_004_CANVAS", draw_fig_2_4, "Figure 2.4")
+        except Exception as e_fig:
+            print(f"[WARNING] Could not update Figure 2.4 Canvas: {e_fig}")
 
         # Update all fields (covers citations, page refs, etc.)
         wdoc.Fields.Update()
