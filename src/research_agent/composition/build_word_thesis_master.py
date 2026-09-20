@@ -278,14 +278,14 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         ": (1) Tốc độ sinh dữ liệu cao (High Velocity) đòi hỏi các thuật toán xử lý phải vận hành trực tuyến với độ trễ thấp và tài nguyên tính toán giới hạn; (2) Tỷ lệ mất cân bằng cực đoan (Extreme Imbalance) khi các sự kiện độc hại thực sự chỉ chiếm một phần rất nhỏ (thường dưới 0.01%) so với khối lượng khổng lồ các hoạt động quản trị và vận hành hợp lệ; (3) Tính biến đổi phân phối liên tục (Distribution Drift) xuất phát từ các bản cập nhật phần mềm, sự thay đổi chính sách người dùng và các kỹ thuật tấn công liên tục biến hóa."
     ])
     add_p([
-        "Không gian dữ liệu nhật ký trong môi trường mạng doanh nghiệp được tổng hợp từ ba nguồn telemetry chính ",
+        "Không gian dữ liệu nhật ký trong môi trường mạng doanh nghiệp được tổng hợp từ ba nhóm nguồn dữ liệu chính với cấu trúc và định dạng không đồng nhất ",
         make_citation_element(["Inam2023ProvenanceSoK", "Zipperle2022PIDSSurvey"]),
-        ": Nhóm thứ nhất là nhật ký kiểm toán hệ điều hành máy chủ và điểm cuối (Host & Endpoint Audit Logs) như Linux Auditd, Windows Event Logs / Sysmon và eBPF, cung cấp chi tiết ở mức hạt nhân về các lệnh gọi hệ thống (system calls), hành vi tạo tiến trình (Process Creation - Sysmon Event ID 1), nạp thư viện động (Image Load - Sysmon Event ID 7), truy vết thao tác tệp tin ",
-        make_citation_element(["Michael2020ForensicValidity", "Inam2023ProvenanceSoK"]),
-        ", sửa đổi cấu hình registry (RegSetValue - Sysmon Event ID 13), cùng các thao tác mở và kết nối socket mạng (connect, accept - Sysmon Event ID 3) ",
-        make_citation_element(["Zhu2019LogParsing", "Jiang2024LogParsingEval"]),
-        ". Nhóm thứ hai là nhật ký luồng mạng (Network Flow & Protocol Logs), được thu thập từ Zeek, Suricata hoặc NetFlow/IPFIX, cung cấp siêu dữ liệu kết nối giữa các nút mạng, giao dịch DNS, chứng chỉ TLS/SSL và thông lượng gói tin. Nhóm thứ ba là nhật ký ứng dụng và dịch vụ (Application & Service Logs), phát sinh từ máy chủ web (Nginx, Apache), cơ sở dữ liệu, dịch vụ phân tán (HDFS) cùng hệ thống điều phối container (Kubernetes Audit Logs) ",
-        make_citation_element(["Zhu2019LogParsing", "Jiang2024LogParsingEval"]),
+        ". Nhóm thứ nhất là nhật ký kiểm toán máy chủ và viễn trắc nguồn gốc. Trên các hệ thống Linux, các cơ chế thu thập viễn trắc nguồn gốc và kiểm toán mức nhân, như Linux Auditd hoặc eBPF, ghi nhận các sự kiện lời gọi hệ thống, tiêu biểu như khởi tạo tiến trình execve, thao tác tệp tin open, openat, unlink và kết nối mạng connect, accept, để phục vụ điều tra số và xây dựng đồ thị quan hệ nhân quả ",
+        make_citation_element(["Inam2023ProvenanceSoK", "Michael2020ForensicValidity"]),
+        ". Trong khi đó, trên môi trường Windows, Microsoft Sysinternals Sysmon cung cấp viễn trắc an ninh mức hệ điều hành thông qua các sự kiện định danh chuẩn hóa theo đặc tả kỹ thuật chính thức của Russinovich & Garnier ",
+        make_citation_element(["Russinovich2026Sysmon"]),
+        ", tiêu biểu gồm: khởi tạo tiến trình (ProcessCreate - Event ID 1), kết nối mạng (NetworkConnect - Event ID 3), nạp thư viện động (ImageLoaded - Event ID 7), tạo tệp tin (FileCreate - Event ID 11), và thao tác cấu hình registry (RegistryEvent - Event ID 13). Nhóm thứ hai là nhật ký luồng mạng, được thu thập từ Zeek, Suricata hoặc NetFlow/IPFIX, cung cấp siêu dữ liệu kết nối giữa các nút mạng, giao dịch DNS, chứng chỉ TLS/SSL và thông lượng gói tin. Nhóm thứ ba là nhật ký ứng dụng và dịch vụ phân tán, phát sinh từ máy chủ web Apache, hệ thống tệp phân tán HDFS cùng các dịch vụ tính toán cụm thuộc bộ benchmark LogHub ",
+        make_citation_element(["Zhu2023Loghub"]),
         "."
     ])
     add_p([
@@ -396,9 +396,17 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         make_citation_element(["DARPA2018TCE3"]),
         " cung cấp dữ liệu kiểm toán hệ thống mức hạt nhân chi tiết, trong đó các kịch bản tấn công của đội Red Team được ghi nhận qua các báo cáo kịch bản (ground-truth reports/annotations), cho phép ánh xạ và suy diễn nhãn ở mức tiến trình và luồng phụ thuộc liên quan đến đợt tấn công, thay vì toàn bộ dữ liệu viễn trắc nền đều có nhãn sẵn ở mức hạt nhân; (2) LANL Unified Host and Network Dataset ",
         make_citation_element(["Kent2015LANL"]),
-        " phản ánh môi trường doanh nghiệp quy mô lớn với hàng tỷ sự kiện xác thực và luồng mạng, gán nhãn theo sự kiện và cửa sổ thời gian; (3) HDFS và BGL Datasets ",
-        make_citation_element(["Du2017DeepLog", "Zhu2019LogParsing"]),
-        " đại diện cho nhật ký hệ thống phân tán và siêu máy tính, được gán nhãn bất thường ở mức khối dữ liệu (Block-level) hoặc mức dòng log đơn lẻ."
+        " phản ánh môi trường doanh nghiệp quy mô lớn với hàng tỷ sự kiện xác thực và luồng mạng, gán nhãn theo sự kiện và cửa sổ thời gian; (3) Bộ dữ liệu HDFS của Xu et al. ",
+        make_citation_element(["Xu2009HDFS"]),
+        " và LogHub ",
+        make_citation_element(["Zhu2023Loghub"]),
+        " được gán nhãn bất thường theo vết thực thi ở mức khối dữ liệu ",
+        make_citation_element(["Xu2009HDFS"]),
+        ", phản ánh trạng thái của một phiên giao tác phân tán hoàn chỉnh; (4) Bộ dữ liệu BGL thuộc kho LogHub ",
+        make_citation_element(["Zhu2023Loghub"]),
+        " đại diện cho nhật ký siêu máy tính với nhãn bất thường được xác lập ở mức dòng log đơn lẻ ",
+        make_citation_element(["Zhu2023Loghub"]),
+        "."
     ])
     add_p([
         "Đặc biệt, sự xuất hiện của nhiễu từ hành vi quản trị viên (Admin-Noise) là một thách thức then chốt ",
@@ -725,8 +733,10 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         make_citation_element(["Inam2023ProvenanceSoK", "Zipperle2022PIDSSurvey"]),
         ". Tuy nhiên, việc lưu trữ và chia sẻ các biểu diễn vector chứa thông tin định danh trực tiếp vi phạm nghiêm trọng các quy định về bảo vệ dữ liệu và tiềm ẩn nguy cơ bị tấn công suy diễn thành viên (Membership Inference) ",
         make_citation_element(["Shokri2017MembershipInference"]),
-        " hoặc tái cấu trúc thông tin nhạy cảm (Model Inversion) ",
-        make_citation_element(["Fredrikson2015ModelInversion", "NIST2025SP800226"]),
+        " hoặc tái cấu trúc thông tin nhạy cảm thông qua tấn công nghịch đảo mô hình (Model Inversion) ",
+        make_citation_element(["Fredrikson2015ModelInversion"]),
+        ", đặt ra yêu cầu phải kiểm chứng và định lượng bảo đảm quyền riêng tư vi sai theo hướng dẫn NIST SP 800-226 ",
+        make_citation_element(["NIST2025SP800226"]),
         "."
     ])
     add_p(

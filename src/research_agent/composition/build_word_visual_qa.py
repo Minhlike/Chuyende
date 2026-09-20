@@ -972,12 +972,14 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
     # --- 1.1.1 ---
     add_h3("Không gian dữ liệu log doanh nghiệp: tốc độ cao, mất cân bằng cực đoan và phân phối biến đổi")
     add_p([
-        "Không gian dữ liệu nhật ký trong môi trường mạng doanh nghiệp được tổng hợp từ ba nhóm nguồn telemetry chính với cấu trúc và định dạng không đồng nhất ",
+        "Không gian dữ liệu nhật ký trong môi trường mạng doanh nghiệp được tổng hợp từ ba nhóm nguồn dữ liệu chính với cấu trúc và định dạng không đồng nhất ",
         make_citation_element(["Inam2023ProvenanceSoK", "Zipperle2022PIDSSurvey"]),
-        ". Nhóm thứ nhất là nhật ký kiểm toán máy chủ (Host Audit Logs), bao gồm Linux Auditd, Windows Event Log / Sysmon và Linux eBPF (Extended Berkeley Packet Filter). Nguồn dữ liệu này ghi nhận trực tiếp các sự kiện ở mức nhân hệ điều hành thông qua việc chặn bắt các lời gọi hệ thống (syscalls), bao gồm: khởi tạo tiến trình (execve, CreateProcess - Sysmon Event ID 1), nạp thư viện động (ImageLoaded - Sysmon Event ID 7), thao tác tệp tin (open, unlink, FileCreate - Sysmon Event ID 11), sửa đổi cấu hình registry (RegSetValue - Sysmon Event ID 13), cùng các thao tác mở và kết nối socket mạng (connect, accept - Sysmon Event ID 3) ",
-        make_citation_element(["Michael2020ForensicValidity", "Inam2023ProvenanceSoK"]),
-        ". Nhóm thứ hai là nhật ký luồng mạng (Network Flow & Protocol Logs), được thu thập từ Zeek, Suricata hoặc NetFlow/IPFIX, cung cấp siêu dữ liệu kết nối giữa các nút mạng, giao dịch DNS, chứng chỉ TLS/SSL và thông lượng gói tin. Nhóm thứ ba là nhật ký ứng dụng và dịch vụ (Application & Service Logs), phát sinh từ máy chủ web (Nginx, Apache), cơ sở dữ liệu, dịch vụ phân tán (HDFS) cùng hệ thống điều phối container (Kubernetes Audit Logs) ",
-        make_citation_element(["Zhu2019LogParsing", "Jiang2024LogParsingEval"]),
+        ". Nhóm thứ nhất là nhật ký kiểm toán máy chủ và viễn trắc nguồn gốc. Trên các hệ thống Linux, các cơ chế thu thập viễn trắc nguồn gốc và kiểm toán mức nhân, như Linux Auditd hoặc eBPF, ghi nhận các sự kiện lời gọi hệ thống, tiêu biểu như khởi tạo tiến trình execve, thao tác tệp tin open, openat, unlink và kết nối mạng connect, accept, để phục vụ điều tra số và xây dựng đồ thị quan hệ nhân quả ",
+        make_citation_element(["Inam2023ProvenanceSoK", "Michael2020ForensicValidity"]),
+        ". Trong khi đó, trên môi trường Windows, Microsoft Sysinternals Sysmon cung cấp viễn trắc an ninh mức hệ điều hành thông qua các sự kiện định danh chuẩn hóa theo đặc tả kỹ thuật chính thức của Russinovich & Garnier ",
+        make_citation_element(["Russinovich2026Sysmon"]),
+        ", tiêu biểu gồm: khởi tạo tiến trình (ProcessCreate - Event ID 1), kết nối mạng (NetworkConnect - Event ID 3), nạp thư viện động (ImageLoaded - Event ID 7), tạo tệp tin (FileCreate - Event ID 11), và thao tác cấu hình registry (RegistryEvent - Event ID 13). Nhóm thứ hai là nhật ký luồng mạng, được thu thập từ Zeek, Suricata hoặc NetFlow/IPFIX, cung cấp siêu dữ liệu kết nối giữa các nút mạng, giao dịch DNS, chứng chỉ TLS/SSL và thông lượng gói tin. Nhóm thứ ba là nhật ký ứng dụng và dịch vụ phân tán, phát sinh từ máy chủ web Apache, hệ thống tệp phân tán HDFS cùng các dịch vụ tính toán cụm thuộc bộ benchmark LogHub ",
+        make_citation_element(["Zhu2023Loghub"]),
         "."
     ])
     add_p([
@@ -1091,9 +1093,17 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         make_citation_element(["DARPA2018TCE3"]),
         " cung cấp dữ liệu kiểm toán hệ thống mức hạt nhân chi tiết, trong đó các kịch bản tấn công của đội Red Team được ghi nhận qua các báo cáo kịch bản (ground-truth reports/annotations), cho phép ánh xạ và suy diễn nhãn ở mức tiến trình và luồng phụ thuộc liên quan đến đợt tấn công, thay vì toàn bộ dữ liệu viễn trắc nền đều có nhãn sẵn ở mức hạt nhân; (2) LANL Unified Host and Network Dataset (Kent, 2015) ",
         make_citation_element(["Kent2015LANL"]),
-        " phản ánh môi trường mạng doanh nghiệp quy mô lớn với hàng tỷ sự kiện xác thực và luồng mạng, trong đó nhãn mặt đất thực nghiệm được xác lập từ tệp redteam.txt ghi nhận các sự kiện xác thực bị xâm nhập cụ thể của đội Red Team (Authentication Compromise Events) theo mốc thời gian và tài khoản/máy chủ xác định; (3) HDFS và BGL Datasets ",
-        make_citation_element(["Du2017DeepLog", "Zhu2019LogParsing"]),
-        " đại diện cho nhật ký hệ thống phân tán và siêu máy tính, được gán nhãn bất thường ở mức khối dữ liệu (Block-level) hoặc mức dòng log đơn lẻ."
+        " phản ánh môi trường mạng doanh nghiệp quy mô lớn với hàng tỷ sự kiện xác thực và luồng mạng, trong đó nhãn mặt đất thực nghiệm được xác lập từ tệp redteam.txt ghi nhận các sự kiện xác thực bị xâm nhập cụ thể của đội Red Team (Authentication Compromise Events) theo mốc thời gian và tài khoản/máy chủ xác định; (3) Bộ dữ liệu HDFS của Xu et al. ",
+        make_citation_element(["Xu2009HDFS"]),
+        " và LogHub ",
+        make_citation_element(["Zhu2023Loghub"]),
+        " được gán nhãn bất thường theo vết thực thi ở mức khối dữ liệu ",
+        make_citation_element(["Xu2009HDFS"]),
+        ", phản ánh trạng thái của một phiên giao tác phân tán hoàn chỉnh; (4) Bộ dữ liệu BGL thuộc kho LogHub ",
+        make_citation_element(["Zhu2023Loghub"]),
+        " đại diện cho nhật ký siêu máy tính với nhãn bất thường được xác lập ở mức dòng log đơn lẻ ",
+        make_citation_element(["Zhu2023Loghub"]),
+        "."
     ])
     add_p([
         "Đặc biệt, sự xuất hiện của nhiễu từ hành vi quản trị viên (Admin-Noise) là một thách thức then chốt ",
@@ -1483,13 +1493,11 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         "."
     ])
     add_p([
-        "Tuy nhiên, việc lưu giữ khả năng liên kết này trong không gian vector biểu diễn trực tiếp làm nảy sinh các nguy cơ nghiêm trọng về quyền riêng tư và an toàn thông tin ",
-        make_citation_element(["Shokri2017MembershipInference", "Fredrikson2015ModelInversion", "NIST2025SP800226"]),
-        ". Các vector biểu diễn đặc trưng tiềm ẩn có nguy cơ bị kẻ tấn công khai thác thông qua các kỹ thuật tấn công suy luận thành viên (Membership Inference Attacks - MIA ",
+        "Tuy nhiên, việc lưu giữ khả năng liên kết này trong không gian vector biểu diễn trực tiếp làm nảy sinh các nguy cơ nghiêm trọng về quyền riêng tư và an toàn thông tin: các vector biểu diễn đặc trưng tiềm ẩn có nguy cơ bị kẻ tấn công khai thác thông qua các kỹ thuật tấn công suy luận thành viên (Membership Inference Attacks - MIA ",
         make_citation_element(["Shokri2017MembershipInference"]),
         ") để xác định xem dữ liệu của một thực thể có nằm trong tập huấn luyện hay không, hoặc tấn công nghịch đảo biểu diễn (Representation / Model Inversion Attacks ",
         make_citation_element(["Fredrikson2015ModelInversion"]),
-        ") nhằm khôi phục lại các định danh nhạy cảm của người dùng và cấu hình mạng nội bộ. Cần nhấn mạnh rằng, một mô hình được thiết kế có nhận thức về quyền riêng tư (Privacy-Aware) không tự động đồng nghĩa với việc đã đạt được khả năng bảo vệ quyền riêng tư vững chắc (Privacy-Preserving) nếu chưa trải qua các kiểm thử thực nghiệm tấn công nghiêm ngặt ",
+        ") nhằm khôi phục lại các định danh nhạy cảm của người dùng và cấu hình mạng nội bộ. Cần nhấn mạnh rằng, một mô hình được thiết kế có nhận thức về quyền riêng tư (Privacy-Aware) không tự động đồng nghĩa với việc đã đạt được khả năng bảo vệ quyền riêng tư vững chắc (Privacy-Preserving) nếu chưa trải qua các kiểm thử thực nghiệm và đánh giá bảo đảm quyền riêng tư vi sai theo hướng dẫn NIST SP 800-226 ",
         make_citation_element(["NIST2025SP800226"]),
         "."
     ])
