@@ -20,7 +20,10 @@ import hashlib
 import json
 import re
 from pathlib import Path
+from xml.sax.saxutils import escape
 import docx
+from docx.oxml import parse_xml
+from docx.oxml.ns import nsdecls
 import win32com.client as win32
 import pythoncom
 
@@ -44,8 +47,37 @@ def is_toc_or_tof(p) -> bool:
     s = p.style.name.lower()
     return 'toc' in s or 'table of figures' in s
 
+def get_paragraph_full_text(p) -> str:
+    return ''.join(p._p.xpath('.//w:t/text()'))
+
+def make_fld_simple_citation(word_source_tag: str, fallback_num: str = ""):
+    xml = (
+        f'<w:fldSimple {nsdecls("w")} w:instr="CITATION {word_source_tag} \\l 1033 ">\n'
+        '  <w:r>\n'
+        '    <w:rPr>\n'
+        '      <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>\n'
+        '      <w:sz w:val="28"/>\n'
+        '    </w:rPr>\n'
+        f'    <w:t>[{fallback_num}]</w:t>\n'
+        '  </w:r>\n'
+        '</w:fldSimple>'
+    )
+    return parse_xml(xml)
+
+def make_text_run(text: str, sz_val: int = 28):
+    xml = (
+        f'<w:r {nsdecls("w")}>\n'
+        '  <w:rPr>\n'
+        '    <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>\n'
+        f'    <w:sz w:val="{sz_val}"/>\n'
+        '  </w:rPr>\n'
+        f'  <w:t xml:space="preserve">{escape(text)}</w:t>\n'
+        '</w:r>'
+    )
+    return parse_xml(xml)
+
 def replace_in_paragraph_runs(p, old_text: str, new_text: str):
-    full_text = p.text
+    full_text = get_paragraph_full_text(p)
     if old_text not in full_text:
         raise ValueError(f"Target text not found in paragraph:\nExpected: {old_text}\nActual: {full_text}")
 
@@ -55,26 +87,245 @@ def replace_in_paragraph_runs(p, old_text: str, new_text: str):
             r.text = r.text.replace(old_text, new_text)
             return
 
-    # If it spans multiple runs:
+    # Check for fields or OMML in the paragraph
+    has_fields = len(p._p.xpath('.//w:fldSimple | .//w:fldChar | .//w:instrText')) > 0
     has_omml = len(p._p.xpath('.//m:oMath')) > 0
-    if not has_omml:
-        first_run = p.runs[0] if p.runs else p.add_run()
-        first_run.text = full_text.replace(old_text, new_text)
-        for r in p.runs[1:]:
-            r.text = ""
-    else:
-        for r in p.runs:
-            if old_text in r.text:
-                r.text = r.text.replace(old_text, new_text)
-                return
-        raise ValueError("Could not surgically replace text across OMML runs without risking formula damage.")
+
+    if has_fields or has_omml:
+        raise RuntimeError(
+            f"HARD FAIL: Target text spans across runs or field boundaries in a paragraph containing "
+            f"fields (has_fields={has_fields}) or math (has_omml={has_omml}). "
+            f"Cannot flatten paragraph runs. Custom field-safe correction is required.\n"
+            f"Target: {old_text[:100]}...\nParagraph: {full_text[:100]}..."
+        )
+
+    # For plain paragraphs without any fields or OMML:
+    first_run = p.runs[0] if p.runs else p.add_run()
+    first_run.text = full_text.replace(old_text, new_text)
+    for r in p.runs[1:]:
+        r.text = ""
+
+segments_map = {
+    96: [
+        ('text', "Trong xử lý và phân tích log tự động, các nghiên cứu đối chuẩn của Zhu et al.  "),
+        ('cite', "Zhu2019LogParsing"),
+        ('text', " và Jiang et al.  "),
+        ('cite', "Jiang2024LogParsingEval"),
+        ('text', " chỉ ra rằng các bộ phân tích cú pháp (log parsers) có thể đạt độ chính xác (accuracy), độ bền vững (robustness) và hiệu quả tính toán (efficiency) cao trên các định dạng phổ biến, nhưng vẫn gặp nhiều thách thức khi xử lý các bản ghi phức tạp, mẫu log mới chưa từng thấy hoặc sự kiện hiếm gặp (complex, unseen, or rare logs). Các mô hình LSTM, GRU và Transformer được phát triển để học đặc trưng trình tự và ngữ nghĩa; mạng nơ-ron đồ thị giúp mô hình hóa quan hệ giữa nhiều thực thể; học tự giám sát hỗ trợ khai thác lượng lớn log chưa gán nhãn. Vì vậy, không có một kiến trúc duy nhất phù hợp với mọi nguồn log và mọi loại tấn công.")
+    ],
+    129: [
+        ('text', "Hình 1.2: Mô hình Không gian Bằng chứng Hành vi Đa chiều MITRE ATT&CK và các đặc trưng phi tuyến tính trong tấn công APT , nguồn tác giả tổng hợp dựa trên MITRE ATT&CK "),
+        ('cite', "MITRE2026ATTCK"),
+        ('text', " và Inam et al. "),
+        ('cite', "Inam2023ProvenanceSoK")
+    ],
+    165: [
+        ('text', "Mặc dù sở hữu ưu thế về hiệu quả tính toán trong thực tiễn (Zhu et al.  "),
+        ('cite', "Zhu2019LogParsing"),
+        ('text', "; Jiang et al.  "),
+        ('cite', "Jiang2024LogParsingEval"),
+        ('text', "), nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng: Một là, mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số (nhận định và động cơ thiết kế của chuyên đề, không phải kết luận của Michael et al.): các bộ log parser dựa trên biểu thức chính quy thường thay thế các tham số biến động như địa chỉ IP, đường dẫn tệp tin và tham số dòng lệnh bằng ký tự đại diện <*> khiến nhiều thông tin an ninh mang tính phân biệt cao bị lược bỏ; Hai là, lan truyền và khuếch đại sai số cú pháp (Parser Error Propagation) khi xử lý các định dạng phức tạp hoặc chưa từng xuất hiện (Zhu et al.  "),
+        ('cite', "Zhu2019LogParsing"),
+        ('text', "; Jiang et al.  "),
+        ('cite', "Jiang2024LogParsingEval"),
+        ('text', "), dẫn đến hiện tượng sinh ra các mẫu sự kiện giả lập hoặc gộp nhầm các sự kiện khác biệt, làm xáo trộn cấu trúc không gian vector x.")
+    ],
+    177: [
+        ('text', "Các hệ thống phát hiện xâm nhập dựa trên đồ thị nguồn gốc (PIDS) tiêu biểu bao gồm  "),
+        ('cite', "Inam2023ProvenanceSoK"),
+        ('text', ",  "),
+        ('cite', "Zipperle2022PIDSSurvey"),
+        ('text', ": Thứ nhất, UNICORN  "),
+        ('cite', "Han2020UNICORN"),
+        ('text', " (NDSS 2020) xây dựng đồ thị nguồn gốc luồng thời gian thực, áp dụng thuật toán băm cây con Weisfeiler-Lehman để chuyển đổi đồ thị động thành vector đặc trưng đếm histogram; Thứ hai, KAIROS  "),
+        ('cite', "Cheng2024KAIROS"),
+        ('text', " (IEEE S&P 2024) tích hợp mạng nơ-ron đồ thị nhận biết thời gian mã hóa đồng thời thông tin cấu trúc và sự tiến triển thời gian của đồ thị nguồn gốc để chấm điểm bất thường và tái dựng dấu vết tấn công APT; Thứ ba, NODLINK  "),
+        ('cite', "Li2024NODLINK"),
+        ('text', " (NDSS 2024) mô hình hóa bài toán phát hiện thành cây Steiner trực tuyến kết hợp cơ chế bộ nhớ đệm để khôi phục đồ thị con tấn công nhỏ gọn; Thứ tư, MAGIC  "),
+        ('cite', "Jia2024MAGIC"),
+        ('text', " (USENIX Security 2024) khai thác kiến trúc tự mã hóa đồ thị che kết hợp cơ chế thích ứng mô hình để học biểu diễn đa độ hạt và chống trôi dạt khái niệm; Thứ năm, ORTHRUS  "),
+        ('cite', "Jiang2025ORTHRUS"),
+        ('text', " (USENIX Security 2025) sử dụng mạng nơ-ron đồ thị không-thời gian (spatio-temporal GNN) phục vụ phát hiện xâm nhập ở mức đỉnh (node-level detection), phân tích phụ thuộc và tái dựng đường dẫn tấn công (attack-path reconstruction) với chất lượng quy kết cao (high Quality of Attribution). Mặc dù đạt nhiều bước tiến, nhóm phương pháp đồ thị đối mặt với ba thách thức lý thuyết và thực tiễn cốt lõi: Một là, hiện tượng bùng nổ phụ thuộc Dependency Explosion: các tiến trình hệ thống chạy dài hạn liên tục tương tác với nhiều tệp tin và socket, khiến đồ thị phát triển dày đặc và tạo ra nhiều liên kết phụ thuộc xa làm loãng tín hiệu bất thường  "),
+        ('cite', "Inam2023ProvenanceSoK"),
+        ('text', ",  "),
+        ('cite', "Zeng2022PalanTir"),
+        ('text', "; Hai là, thách thức về tính phức tạp mô hình và giao thức đánh giá thực nghiệm: kết quả đối chuẩn của Bilot et al.  "),
+        ('cite', "Bilot2025SometimesSimpler"),
+        ('text', " (USENIX Security 2025) và Guerra et al.  "),
+        ('cite', "Guerra2026PIDSEvalProtocols"),
+        ('text', " chỉ ra các hạn chế quan trọng trong thực nghiệm PIDS: Bilot et al.  "),
+        ('cite', "Bilot2025SometimesSimpler"),
+        ('text', " chỉ ra rằng các hệ thống PIDS hiện hành thường mang độ phức tạp không cần thiết (unnecessary complexity), trong khi một mạng nơ-ron đơn giản (simple neural network) có thể đạt hiệu năng phát hiện tương đương hoặc vượt trội (state-of-the-art detection) trên 5/7 tập dữ liệu DARPA; đồng thời, nghiên cứu của Guerra et al.  "),
+        ('cite', "Guerra2026PIDSEvalProtocols"),
+        ('text', " nhấn mạnh giao thức đánh giá (evaluation protocol) ảnh hưởng sâu sắc đến kết luận thực nghiệm, trong đó một giải pháp danh sách cho phép đơn giản (simple allowlist) dựa trên tên và đường dẫn thực thi có thể khớp hoặc vượt qua các baseline học máy trên 3/4 tập dữ liệu chính, và nhiều kết quả phát hiện thực chất phản ánh tính mới về mặt từ vựng (lexical novelty); Ba là, hai bệnh lý mạng nơ-ron đồ thị về mặt cấu trúc: khi tăng số lớp truyền tin, hiện tượng làm mịn quá mức (Over-smoothing), được Oono & Suzuki  "),
+        ('cite', "Oono2020OverSmoothing"),
+        ('text', " chứng minh tại ICLR 2020 dưới các điều kiện phổ ma trận kề chuẩn hóa và hàm kích hoạt không âm trên kiến trúc GCN sâu, khiến biểu diễn các đỉnh hội tụ theo hàm mũ về một không gian con giới hạn và mất dần năng lực phân tách; trong khi đó, hiện tượng nghẽn cổ chai thông tin (Over-squashing), được Alon & Yahav  "),
+        ('cite', "Alon2021OverSquashing"),
+        ('text', " phân tích tại ICLR 2021, xuất hiện khi kích thước vùng lân cận k-hop tăng nhanh và lượng thông tin từ nhiều nguồn phải truyền qua các nút cổ chai hoặc lát cắt hẹp để nén vào một vector trạng thái có kích thước cố định, khiến các tín hiệu bất thường quan trọng từ xa dễ bị hòa lẫn hoặc suy giảm. Hai hiện tượng này mang bản chất toán học độc lập và cần được xử lý bằng các cơ chế kiến trúc riêng biệt.")
+    ],
+    208: [
+        ('text', "Tuy nhiên, việc lưu giữ khả năng liên kết này trong không gian vector biểu diễn trực tiếp làm nảy sinh các nguy cơ nghiêm trọng về quyền riêng tư và an toàn thông tin  "),
+        ('cite', "Shokri2017MembershipInference"),
+        ('text', ",  "),
+        ('cite', "NIST2025SP800226"),
+        ('text', ",  "),
+        ('cite', "Fredrikson2015ModelInversion"),
+        ('text', ". Các vector biểu diễn đặc trưng tiềm ẩn có nguy cơ bị kẻ tấn công khai thác thông qua các kỹ thuật tấn công suy luận thành viên (Membership Inference Attacks - MIA  "),
+        ('cite', "Shokri2017MembershipInference"),
+        ('text', ") để xác định xem dữ liệu của một thực thể có nằm trong tập huấn luyện hay không. Về mặt lý thuyết nguồn gốc, nghiên cứu kinh điển của Fredrikson et al.  "),
+        ('cite', "Fredrikson2015ModelInversion"),
+        ('text', " đã chứng minh tấn công nghịch đảo mô hình có thể khai thác thông tin đầu ra và độ tin cậy để suy diễn lại các đặc trưng nhạy cảm của dữ liệu đầu vào. Trong bối cảnh mô hình biểu diễn nhật ký của đề tài theo mô hình đe dọa thích ứng do nghiên cứu đề xuất, các định danh như tên người dùng, tên máy chủ và chuỗi đối số dòng lệnh là các thuộc tính nhạy cảm tiềm năng cần phải kiểm thử thực nghiệm trước nguy cơ bị khôi phục hoặc xấp xỉ từ không gian vector biểu diễn. Một mô hình được thiết kế có nhận thức về quyền riêng tư không tự động đồng nghĩa với việc đã đạt được khả năng bảo vệ quyền riêng tư; các quy trình kiểm thử tấn công MIA "),
+        ('cite', "Shokri2017MembershipInference"),
+        ('text', " và đảo ngược mô hình "),
+        ('cite', "Fredrikson2015ModelInversion"),
+        ('text', ", cũng như quy trình đánh giá quyền riêng tư vi sai theo hướng dẫn NIST SP 800-226 "),
+        ('cite', "NIST2025SP800226"),
+        ('text', ", được định vị là phép kiểm tra hạ nguồn và chưa được thực thi trong phạm vi thực nghiệm hiện tại.")
+    ],
+    405: [
+        ('text', "Trong học biểu diễn tự giám sát, các hướng tiếp cận tiêu biểu bao gồm: InfoNCE/CPC "),
+        ('cite', "Oord2018CPC"),
+        ('text', ", SimCLR "),
+        ('cite', "Chen2020SimCLR"),
+        ('text', ", Barlow Twins "),
+        ('cite', "Zbontar2021BarlowTwins"),
+        ('text', ", và VICReg "),
+        ('cite', "Bardes2022VICReg"),
+        ('text', ". Bảng 2.3 phân tích đối sánh chi tiết các đặc tính lý thuyết từ các công bố gốc và các giả thuyết nghiên cứu của chuyên đề đối với dữ liệu telemetry an ninh:")
+    ],
+    407: [
+        ('text', "Từ phân tích phương pháp luận trên, chuyên đề lựa chọn VICReg (Variance-Invariance-Covariance Regularization) "),
+        ('cite', "Bardes2022VICReg"),
+        ('text', " làm ứng viên gióng hàng cốt lõi. Theo Bardes et al. "),
+        ('cite', "Bardes2022VICReg"),
+        ('text', ", VICReg thiết lập cơ chế tự giám sát không tương phản dựa trên điều hòa phương sai và hiệp phương sai để ngăn ngừa sụp đổ biểu diễn mà không cần khai thác các cặp mẫu âm. Dựa trên đặc tính lý thuyết này của công bố gốc, nghiên cứu đề xuất giả thuyết thích nghi (Author Adaptation Hypothesis): việc loại bỏ nhu cầu lấy mẫu âm tường minh trong không gian telemetry log sẽ giúp giảm thiểu rủi ro âm tính giả, hạn chế việc ép các phiên telemetry bình thường độc lập nhưng có đặc trưng tương đồng ra xa nhau một cách nhân tạo. Giả thuyết này được đề xuất làm cơ sở kiến trúc cho khung gióng hàng đa góc nhìn, trong khi việc đối sánh triệt tiêu định lượng với InfoNCE/CPC "),
+        ('cite', "Oord2018CPC"),
+        ('text', ", SimCLR "),
+        ('cite', "Chen2020SimCLR"),
+        ('text', " và Barlow Twins "),
+        ('cite', "Zbontar2021BarlowTwins"),
+        ('text', " được định vị cho các chiến dịch thực nghiệm hạ nguồn tiếp theo.")
+    ],
+    470: [
+        ('text', "Chuyên đề đề xuất áp dụng cơ chế Attention-based Deep MIL của Ilse et al.  "),
+        ('cite', "Ilse2018AttentionMIL"),
+        ('text', " (như một thiết kế mở rộng tùy chọn, chưa hiện thực và chưa kiểm chứng trong chiến dịch Stage A2 hiện tại), kết hợp thiết kế cơ chế ánh xạ Túi – Thực thể đặc thù cho bài toán an ninh mạng (Cybersecurity Bag-Instance Mapping, Đề xuất của đề tài / Ours):")
+    ],
+    517: [
+        ('text', "Khác với các phương pháp xáo trộn ngẫu nhiên truyền thống có nguy cơ rò rỉ thông tin thời gian, nghiên cứu đề xuất và áp dụng quy trình phân chia dữ liệu theo thứ tự dòng thời gian không nhìn trước (leakage-safe chronological split), tuân thủ khuyến nghị tránh rò rỉ thời gian (temporal snooping) của Arp et al. "),
+        ('cite', "Arp2022DosDonts"),
+        ('text', ". Khung đối chuẩn nghiên cứu bao quát 4 tập dữ liệu đại diện cho các miền viễn trắc an ninh khác nhau (DARPA TC E3 "),
+        ('cite', "DARPA2018TCE3"),
+        ('text', ", LANL "),
+        ('cite', "Kent2015LANL"),
+        ('text', ", HDFS (Xu et al. "),
+        ('cite', "Xu2009HDFS"),
+        ('text', "; LogHub "),
+        ('cite', "Zhu2023Loghub"),
+        ('text', ") và BGL (LogHub "),
+        ('cite', "Zhu2023Loghub"),
+        ('text', ")); trong đó, tập dữ liệu HDFS đóng vai trò là môi trường thực thi chính thức cho chiến dịch tiền huấn luyện Stage A2 hiện hành, còn các tập dữ liệu quy mô lớn còn lại định vị bối cảnh mở rộng cho các giai đoạn tiếp theo. Toàn bộ các phân vùng dữ liệu được phân định theo thứ tự thời gian và kiểm soát tính toàn vẹn bằng mã băm mật mã SHA-256 trong tệp manifest.")
+    ]
+}
+
+p235_after_segments = [
+    ('text', "dưới các giả định toán học xác định theo các hướng dẫn đánh giá của NIST SP 800-226 "),
+    ('cite', "NIST2025SP800226"),
+    ('text', ", còn rủi ro thực tế được định vị là phép kiểm tra hạ nguồn cần đánh giá thực nghiệm độc lập thông qua các quy trình kiểm thử tấn công suy luận thành viên (MIA) "),
+    ('cite', "Shokri2017MembershipInference"),
+    ('text', " và tấn công nghịch đảo/tái định danh thực thể "),
+    ('cite', "Fredrikson2015ModelInversion"),
+    ('text', ".")
+]
+
+def restore_native_citations(doc, canonical_sources, key_to_num):
+    key_to_source = {s['source_key']: s for s in canonical_sources}
+    expected_cites = {
+        96: 2,
+        129: 2,
+        165: 4,
+        177: 15,
+        208: 8,
+        235: 3,
+        405: 4,
+        407: 5,
+        470: 1,
+        517: 6
+    }
+    any_restored = False
+    for idx, exp_count in expected_cites.items():
+        p = doc.paragraphs[idx]
+        current_native = len(p._p.xpath('.//w:fldSimple[contains(@w:instr, "CITATION")] | .//w:instrText[contains(text(), "CITATION")]'))
+        if current_native == exp_count:
+            print(f"[RESTORE] p[{idx}] already has {current_native} native CITATION fields. No-op.")
+            continue
+
+        print(f"[RESTORE] p[{idx}] has {current_native} native CITATION fields (expected {exp_count}). Restoring...")
+        any_restored = True
+
+        if idx == 235:
+            # Paragraph 235: preserve pPr, r (before oMath), and oMath!
+            children = list(p._p)
+            omml_idx = None
+            for i, child in enumerate(children):
+                if child.tag.split('}')[-1] == 'oMath':
+                    omml_idx = i
+                    break
+            assert omml_idx is not None, "p235 had no oMath element"
+            for child in children[omml_idx+1:]:
+                p._p.remove(child)
+            for seg in p235_after_segments:
+                if seg[0] == 'text':
+                    el = make_text_run(seg[1])
+                elif seg[0] == 'cite':
+                    skey = seg[1]
+                    tag = key_to_source[skey]['word_source_tag']
+                    num = str(key_to_num[skey])
+                    el = make_fld_simple_citation(tag, num)
+                p._p.append(el)
+        elif idx == 129:
+            # Paragraph 129: preserve pPr, bookmarks (BK_FIG_1_002, TOC)
+            r_idx = None
+            for i, child in enumerate(p._p):
+                if child.tag.split('}')[-1] == 'r':
+                    r_idx = i
+                    break
+            assert r_idx is not None, "p129 had no 'r' element"
+            p._p.remove(p._p[r_idx])
+            curr_idx = r_idx
+            for seg in segments_map[129]:
+                if seg[0] == 'text':
+                    el = make_text_run(seg[1])
+                elif seg[0] == 'cite':
+                    skey = seg[1]
+                    tag = key_to_source[skey]['word_source_tag']
+                    num = str(key_to_num[skey])
+                    el = make_fld_simple_citation(tag, num)
+                p._p.insert(curr_idx, el)
+                curr_idx += 1
+        else:
+            # Other paragraphs: preserve pPr, remove all 'r' elements
+            for child in list(p._p):
+                if child.tag.split('}')[-1] == 'r':
+                    p._p.remove(child)
+            for seg in segments_map[idx]:
+                if seg[0] == 'text':
+                    el = make_text_run(seg[1])
+                elif seg[0] == 'cite':
+                    skey = seg[1]
+                    tag = key_to_source[skey]['word_source_tag']
+                    num = str(key_to_num[skey])
+                    el = make_fld_simple_citation(tag, num)
+                p._p.append(el)
+
+    return any_restored
 
 def apply_occ_0136_p235(p, nist_num, shokri_num, fredrikson_num):
-    # p.runs[0] is before oMath (ϵ,δ) - leave untouched to preserve formula 100%!
-    # p.runs[1] is after oMath:
-    p.runs[1].text = f'dưới các giả định toán học xác định theo các hướng dẫn đánh giá của NIST SP 800-226 [{nist_num}], còn rủi ro thực tế được định vị là phép kiểm tra hạ nguồn cần đánh giá thực nghiệm độc lập thông qua các quy trình kiểm thử tấn công suy luận thành viên (MIA) [{shokri_num}] và tấn công nghịch đảo/tái định danh thực thể [{fredrikson_num}].'
-    for r in p.runs[2:]:
-        r.text = ""
+    # Safe no-op if already has native citations
+    current_native = len(p._p.xpath('.//w:fldSimple[contains(@w:instr, "CITATION")] | .//w:instrText[contains(text(), "CITATION")]'))
+    if current_native == 3:
+        return
+    raise RuntimeError("apply_occ_0136_p235 called on un-restored paragraph. Use restore_native_citations.")
 
 def resolve_canonical_citation_numbers(doc):
     with open(canonical_json_path, "r", encoding="utf-8") as f:
@@ -167,6 +418,12 @@ def run_corrections(docx_file: Path, pdf_file: Path):
     print(f"  Michael -> [{michael_num}], Zhu2019 -> [{zhu2019_num}], Jiang2024 -> [{jiang2024_num}]")
     print(f"  ORTHRUS -> [{orthrus_num}], Bilot -> [{bilot_num}], Guerra -> [{guerra_num}]")
 
+    with open(canonical_json_path, "r", encoding="utf-8") as f:
+        canonical_sources = json.load(f)
+
+    # Restore 50 native CITATION fields across 10 paragraphs if missing
+    restored = restore_native_citations(doc, canonical_sources, key_to_num)
+
     body_paragraphs = [p for p in doc.paragraphs if not is_toc_or_tof(p)]
 
     corrections = [
@@ -230,7 +487,7 @@ def run_corrections(docx_file: Path, pdf_file: Path):
             'id': 'occ_0136_p235',
             'desc': 'OCC-0136 NIST citation separation in P235',
             'anchor_fn': lambda p: 'Trong đó lý thuyết Quyền riêng tư Vi sai (DP) đóng vai trò' in p.text,
-            'is_applied_fn': lambda p: f'NIST SP 800-226 [{nist_num}]' in p.text and f'[{shokri_num}],  [{nist_num}]' not in p.text and f'[{shokri_num}], [{nist_num}]' not in p.text,
+            'is_applied_fn': lambda p: 'NIST SP 800-226' in p.text and len(p._p.xpath('.//w:fldSimple[contains(@w:instr, "CITATION")] | .//w:instrText[contains(text(), "CITATION")]')) == 3,
             'custom_apply_fn': lambda p: apply_occ_0136_p235(p, nist_num, shokri_num, fredrikson_num)
         },
         {
@@ -429,8 +686,17 @@ def run_corrections(docx_file: Path, pdf_file: Path):
                 plan_to_apply.append((c, p))
             continue
 
-        old_in = c['old_text'] in p.text
-        new_in = c['new_text'] in p.text
+        old_norm = re.sub(r'\s+', ' ', c['old_text']).strip()
+        new_norm = re.sub(r'\s+', ' ', c['new_text']).strip()
+        p_norm = re.sub(r'\s+', ' ', get_paragraph_full_text(p)).strip()
+
+        if old_norm == new_norm:
+            print(f"[{cid}] NEW_ALREADY_PRESENT: Already applied (old == new).")
+            noop_count += 1
+            continue
+
+        old_in = old_norm in p_norm
+        new_in = new_norm in p_norm
 
         if new_in and not old_in:
             print(f"[{cid}] NEW_ALREADY_PRESENT: Already applied.")
@@ -441,8 +707,8 @@ def run_corrections(docx_file: Path, pdf_file: Path):
         else:
             raise RuntimeError(f"[{cid}] AMBIGUOUS_OR_MISSING: old_in={old_in}, new_in={new_in} for {cid}")
 
-    if not plan_to_apply:
-        print(f"\n[IDEMPOTENCE-PASS] All {noop_count} corrections already present. No modifications needed.")
+    if not restored and not plan_to_apply:
+        print(f"\n[IDEMPOTENCE-PASS] All {noop_count} corrections already present and all 50 native citations intact. No modifications needed.")
         sha_after = compute_sha256(docx_file)
         print(f"DOCX SHA-256 before: {sha_before}")
         print(f"DOCX SHA-256 after:  {sha_after}")

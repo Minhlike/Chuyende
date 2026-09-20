@@ -43,6 +43,18 @@ def is_bibliography_table(table):
             return True
     return False
 
+def is_code_snippet(text: str) -> bool:
+    """
+    Identifies code snippets in table cells or paragraphs to avoid false-positive
+    bracket citations (e.g. array indexing like [0]).
+    """
+    code_indicators = [
+        "lambda ", "def ", "assert ", "import ", "from ", "class ",
+        "return ", "self.", "nn.Linear", "key=lambda", "session_intervals",
+        "def __init__", "torch.", "np."
+    ]
+    return any(ind in text for ind in code_indicators)
+
 def parse_element_citation_items(p_el):
     """
     Parses a paragraph or cell element in OOXML document order, extracting:
@@ -410,7 +422,11 @@ def audit_citations():
             continue
         for r_idx, row in enumerate(t.rows):
             for c_idx, cell in enumerate(row.cells):
+                if is_code_snippet(cell.text):
+                    continue
                 for p in cell.paragraphs:
+                    if is_code_snippet(p.text):
+                        continue
                     process_element_occurrences("", t_idx, f"({r_idx},{c_idx})", p._element, p.text)
 
     # Write THESIS-CITATION-AUDIT.csv
