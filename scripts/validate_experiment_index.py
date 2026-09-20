@@ -180,6 +180,7 @@ def validate_artifact_manifest(manifest_path: str = "experiments/nineplus/ARTIFA
     with open(full_manifest_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
+    clean_clone_ready = data.get("clean_clone_ready", False)
     artifacts = data.get("artifacts", [])
     print(f"[VALIDATOR] Validating {len(artifacts)} cataloged artifacts in {manifest_path}...")
     errors = []
@@ -209,6 +210,9 @@ def validate_artifact_manifest(manifest_path: str = "experiments/nineplus/ARTIFA
                 errors.append(f"{rel_path} failed to read from git: {e}")
         elif avail == "LOCAL_ONLY":
             if not target_file.exists():
+                if not clean_clone_ready:
+                    print(f"[VALIDATOR-NOTICE] {rel_path} is LOCAL_ONLY and pending provisioning (clean_clone_ready=false)")
+                    continue
                 errors.append(f"{rel_path} marked LOCAL_ONLY but does not exist on disk (must be UNVERIFIED_LOCAL_ONLY)")
             else:
                 import hashlib

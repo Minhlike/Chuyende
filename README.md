@@ -83,20 +83,32 @@ Toàn bộ mô hình được đánh giá thông qua giao thức Đầu dò Tuy�
 ├── manual_reproduction/            # Thư mục thực nghiệm độc lập cho sinh viên
 │   ├── README.md                   # Hướng dẫn chi tiết từng bước
 │   ├── run_manual_sequence42.ps1   # Kịch bản PowerShell tự động (~13.6 phút)
-│   ├── MANUAL_RUN_SUMMARY.txt      # Báo cáo tóm tắt đối soát kết quả
-│   └── screenshots/                # Ảnh chụp màn hình console thực tế
+│   ├── runs/1789724927/            # Nhật ký phiên chạy thực tế
+│   │   ├── MANUAL_RUN_SUMMARY.txt  # Báo cáo tóm tắt đối soát kết quả
+│   │   └── transcript.log          # Nhật ký phiên chạy PowerShell
+│   └── screenshots/                # Ảnh chụp màn hình console thực tế (1 ảnh captured)
+│       └── 03_training_epochs_loss.png
 │
 ├── cleanroom/                      # Bộ bằng chứng kiểm thử phòng sạch độc lập
 │   ├── CLEANROOM-REPORT.md         # Báo cáo chi tiết thẩm định môi trường sạch
 │   ├── ARTIFACT_PROVISIONING_REPORT.json # Đối soát 7/7 artifact ngoại vi
-│   ├── commands.log                # Toàn bộ lệnh thực thi đã chạy
+│   ├── commands.log                # Toàn bộ nhật ký lệnh thực thi phòng sạch
+│   ├── environment.txt             # Thông số phần cứng và biến môi trường
+│   ├── pip-freeze.txt              # Danh sách thư viện và phiên bản chính xác
 │   └── V3-PROBE-RESULT.json        # Kết quả đánh giá hạ nguồn V3 độc lập
 │
 ├── experiments/                    # Hồ sơ thực nghiệm khoa học
 │   ├── experiment_index.csv        # Bảng chỉ mục 18 cột đối soát toàn bộ mô hình
 │   └── nineplus/                   # Manifest và bằng chứng V3 (JSON)
+│       ├── ARTIFACT-MANIFEST.json  # Đặc tả toàn vẹn cryptographic hashes
+│       ├── confirmatory/           # Thư mục run và manifest thực nghiệm xác nhận
+│       │   ├── CONF_SEQUENCE_ONLY_seed42_1789413645/
+│       │   ├── CONF_SEQUENCE_ONLY_seed42_1789724929/
+│       │   ├── CONF_MULTI_VIEW_ALIGNED_seed42_1789393292/
+│       │   └── ...
+│       └── evaluation_v3/          # Kết quả đánh giá hạ nguồn V3 chuẩn hóa
 │
-└── tests/                          # Bộ kiểm thử tự động pytest (50 tests pass)
+└── tests/                          # Bộ kiểm thử tự động (python -m pytest tests)
 ```
 
 ---

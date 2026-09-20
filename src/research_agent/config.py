@@ -13,11 +13,11 @@ class WorkspaceConfig:
     r"""
 Cấu hình không gian làm việc chuẩn cho hệ thống kỹ thuật nghiên cứu.
 
-    Gốc mặc định là 'D:\Research', có thể được ghi đè thông qua RESEARCH_WORKSPACE_ROOT.
+    Gốc mặc định là thư mục gốc repository, có thể được ghi đè thông qua RESEARCH_WORKSPACE_ROOT.
     Tập trung tất cả độ phân giải thư mục và ngăn chặn mã hóa cứng trên cơ sở mã.
     """
     workspace_root: Path = field(
-        default_factory=lambda: Path(os.environ.get("RESEARCH_WORKSPACE_ROOT", r"D:\Research")).resolve()
+        default_factory=lambda: Path(os.environ.get("RESEARCH_WORKSPACE_ROOT", Path(__file__).resolve().parent.parent.parent)).resolve()
     )
     specs_rel_dir: str = "research_specs"
     sources_rel_dir: str = "sources"

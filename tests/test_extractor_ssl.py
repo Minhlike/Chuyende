@@ -37,7 +37,7 @@ def test_01_sequence_ssl_three_heads_finite_and_gradients():
         masked_events=masked_events,
         true_event_targets=true_event_targets,
         mep_mask=mep_mask,
-        param_targets=param_targets,
+        true_param_targets=param_targets,
         mpp_mask=mpp_mask,
         true_adjacent_time_gaps=adjacent_time_gaps
     )

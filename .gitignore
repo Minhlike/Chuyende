@@ -59,6 +59,8 @@ credentials*
 *.pem
 *.log
 !experiments/evidence/stage-a2/implementation/*.log
+!cleanroom/commands.log
+!manual_reproduction/runs/**/transcript.log
 
 # SQLite binary databases (Disposable runtime indexes RC-17)
 *.db

@@ -1,7 +1,7 @@
 # CẨM NANG HƯỚNG DẪN CHẠY VÀ XÁC MINH THỰC NGHIỆM
 **Dành cho:** Giảng viên Hướng dẫn, Giảng viên Phản biện và Hội đồng Đánh giá Chuyên đề  
 **Đề tài:** *Nghiên cứu phương pháp trích xuất đặc trưng đối với dữ liệu log trong phát hiện tấn công*  
-**Học viên thực hiện:** Khúc Hữu Hùng  
+**Sinh viên thực hiện:** Đoàn Ngọc Hoàng Minh – AT180632  
 **Thời gian kiểm chứng dự kiến:** Khoảng 2–3 phút  
 
 ---
