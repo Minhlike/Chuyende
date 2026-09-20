@@ -442,8 +442,9 @@
       "Yichen Zhu",
       "Shenglin Zhang",
       "Dan Pei",
-      "Yu Chen",
-      "Rui Zhang",
+      "Yuqing Liu",
+      "Yihao Chen",
+      "Ruizhi Zhang",
       "Shimin Tao",
       "Pei Sun",
       "Rong Zhou"
@@ -582,14 +583,14 @@
     "canonical_title": "PalanTír: Optimizing Attack Provenance with Hardware-enhanced System Observability",
     "canonical_authors": [
       "Jun Zeng",
-      "Chao Zhang",
+      "Chuqi Zhang",
       "Zhenkai Liang"
     ],
     "year": 2022,
     "publication_type": "PEER_REVIEWED",
     "venue": "ACM SIGSAC Conference on Computer and Communications Security (CCS 2022)",
-    "doi": "10.1145/3548606.3560610",
-    "url": "https://doi.org/10.1145/3548606.3560610",
+    "doi": "10.1145/3548606.3560570",
+    "url": "https://doi.org/10.1145/3548606.3560570",
     "word_source_tag": "SRC000020",
     "aliases": ["PalanTír", "Zeng et al.", "Zeng et al. (2022)", "Zeng (2022)"]
   },
