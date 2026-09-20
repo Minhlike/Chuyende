@@ -152,12 +152,20 @@ def run_corrections(docx_file: Path, pdf_file: Path):
     shokri_num = key_to_num["Shokri2017MembershipInference"]
     fredrikson_num = key_to_num["Fredrikson2015ModelInversion"]
     nist_num = key_to_num["NIST2025SP800226"]
+    michael_num = key_to_num["Michael2020ForensicValidity"]
+    zhu2019_num = key_to_num["Zhu2019LogParsing"]
+    jiang2024_num = key_to_num["Jiang2024LogParsingEval"]
+    orthrus_num = key_to_num["Jiang2025ORTHRUS"]
+    bilot_num = key_to_num["Bilot2025SometimesSimpler"]
+    guerra_num = key_to_num["Guerra2026PIDSEvalProtocols"]
 
     print(f"[DYNAMIC-CITATION-MAP] Resolved from Table 27:")
     print(f"  MITRE -> [{mitre_num}], Inam -> [{inam_num}], VICReg -> [{vicreg_num}], Barlow -> [{barlow_num}]")
     print(f"  InfoNCE -> [{infonce_num}], SimCLR -> [{simclr_num}], Arp -> [{arp_num}], DARPA E3 -> [{darpa_num}]")
     print(f"  LANL -> [{lanl_num}], HDFS -> [{hdfs_num}], LogHub -> [{loghub_num}]")
     print(f"  Shokri -> [{shokri_num}], Fredrikson -> [{fredrikson_num}], NIST -> [{nist_num}]")
+    print(f"  Michael -> [{michael_num}], Zhu2019 -> [{zhu2019_num}], Jiang2024 -> [{jiang2024_num}]")
+    print(f"  ORTHRUS -> [{orthrus_num}], Bilot -> [{bilot_num}], Guerra -> [{guerra_num}]")
 
     body_paragraphs = [p for p in doc.paragraphs if not is_toc_or_tof(p)]
 
@@ -357,6 +365,34 @@ def run_corrections(docx_file: Path, pdf_file: Path):
             'anchor_fn': lambda p: 'Hình 3.1 ghi nhận nhật ký console' in p.text,
             'old_text': 'trên máy trạm ngoài môi trường trợ lý AI.',
             'new_text': 'trên máy trạm trong cửa sổ dòng lệnh PowerShell độc lập.'
+        },
+        {
+            'id': 'occ_0001_0002_p96',
+            'desc': 'OCC-0001/OCC-0002 log parsing benchmark citation rewrite in Preface P96',
+            'anchor_fn': lambda p: 'Các phương pháp truyền thống như Bag of Words' in p.text or 'Trong xử lý và phân tích log tự động' in p.text,
+            'old_text': f'Các phương pháp truyền thống như Bag of Words, n-gram, TF-IDF và đặc trưng thống kê có ưu điểm về tốc độ, chi phí và khả năng giải thích, nhưng hạn chế trong việc xử lý biến thể cú pháp và quan hệ dài hạn  [{inam_num}],  [{michael_num}].',
+            'new_text': f'Trong xử lý và phân tích log tự động, các nghiên cứu đối chuẩn của Zhu et al.  [{zhu2019_num}] và Jiang et al.  [{jiang2024_num}] chỉ ra rằng các bộ phân tích cú pháp (log parsers) có thể đạt độ chính xác (accuracy), độ bền vững (robustness) và hiệu quả tính toán (efficiency) cao trên các định dạng phổ biến, nhưng vẫn gặp nhiều thách thức khi xử lý các bản ghi phức tạp, mẫu log mới chưa từng thấy hoặc sự kiện hiếm gặp (complex, unseen, or rare logs).'
+        },
+        {
+            'id': 'occ_0063_p165',
+            'desc': 'OCC-0063 remove Michael [2] and align log parser semantic claims in P165',
+            'anchor_fn': lambda p: 'Mặc dù sở hữu ưu thế về tốc độ xử lý trong thực tiễn' in p.text or 'Mặc dù sở hữu ưu thế về hiệu quả tính toán trong thực tiễn (Zhu et al.' in p.text,
+            'old_text': f'Mặc dù sở hữu ưu thế về tốc độ xử lý trong thực tiễn, nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng  [{zhu2019_num}],  [{michael_num}]: Một là, mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số: các bộ log parser dựa trên biểu thức chính quy thường thay thế các tham số biến động như địa chỉ IP, đường dẫn tệp tin và tham số dòng lệnh bằng ký tự đại diện <*> khiến nhiều thông tin an ninh mang tính phân biệt cao bị lược bỏ; Hai là, lan truyền và khuếch đại sai số cú pháp Parser Error Propagation: khi gặp các định dạng log mới chưa từng xuất hiện, parser có thể phân tách không chính xác, dẫn đến hiện tượng sinh ra các mẫu sự kiện giả lập hoặc gộp nhầm các sự kiện khác biệt, làm xáo trộn cấu trúc không gian vector x.',
+            'new_text': f'Mặc dù sở hữu ưu thế về hiệu quả tính toán trong thực tiễn (Zhu et al.  [{zhu2019_num}]; Jiang et al.  [{jiang2024_num}]), nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng: Một là, mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số (nhận định và động cơ thiết kế của chuyên đề, không phải kết luận của Michael et al.): các bộ log parser dựa trên biểu thức chính quy thường thay thế các tham số biến động như địa chỉ IP, đường dẫn tệp tin và tham số dòng lệnh bằng ký tự đại diện <*> khiến nhiều thông tin an ninh mang tính phân biệt cao bị lược bỏ; Hai là, lan truyền và khuếch đại sai số cú pháp (Parser Error Propagation) khi xử lý các định dạng phức tạp hoặc chưa từng xuất hiện (Zhu et al.  [{zhu2019_num}]; Jiang et al.  [{jiang2024_num}]), dẫn đến hiện tượng sinh ra các mẫu sự kiện giả lập hoặc gộp nhầm các sự kiện khác biệt, làm xáo trộn cấu trúc không gian vector x.'
+        },
+        {
+            'id': 'occ_0092_orthrus_p177',
+            'desc': 'OCC-0092 remove evasion claim and align ORTHRUS with USENIX primary source in P177',
+            'anchor_fn': lambda p: 'Các hệ thống phát hiện xâm nhập dựa trên đồ thị nguồn gốc (PIDS) tiêu biểu bao gồm' in p.text,
+            'old_text': f'Thứ năm, ORTHRUS  [{orthrus_num}] (USENIX Security 2025) tích hợp cơ chế học biểu diễn nguồn gốc chống chịu kỹ thuật lẩn tránh.',
+            'new_text': f'Thứ năm, ORTHRUS  [{orthrus_num}] (USENIX Security 2025) sử dụng mạng nơ-ron đồ thị không-thời gian (spatio-temporal GNN) phục vụ phát hiện xâm nhập ở mức đỉnh (node-level detection), phân tích phụ thuộc và tái dựng đường dẫn tấn công (attack-path reconstruction) với chất lượng quy kết cao (high Quality of Attribution).'
+        },
+        {
+            'id': 'occ_0095_0098_bilot_guerra_p177',
+            'desc': 'OCC-0095 to OCC-0098 separate Bilot and Guerra and align claims with primary sources in P177',
+            'anchor_fn': lambda p: 'Các hệ thống phát hiện xâm nhập dựa trên đồ thị nguồn gốc (PIDS) tiêu biểu bao gồm' in p.text,
+            'old_text': f'Hai là, ranh giới giữa quan hệ phụ thuộc cấu trúc và tác động nhân quả (Dependency != Causal Effect): kết quả khảo sát thực nghiệm của Bilot et al.  [{bilot_num}] (USENIX Security 2025) và Guerra et al.  [{guerra_num}] chỉ ra rằng nhiều mô hình GNN phức tạp có nguy cơ khai thác các đặc trưng đường tắt thống kê như phân bố bậc của nút hoặc tính mới của đường dẫn; trong đó Bilot et al.  [{bilot_num}] chứng minh một mô hình mạng nơ-ron đơn giản đạt hiệu năng cạnh tranh vượt trội trên 5/7 tập dữ liệu DARPA, còn Guerra et al.  [{guerra_num}] chỉ ra hiệu quả của các baseline danh sách cho phép / thống kê sự kiện, khẳng định một cạnh phụ thuộc trong đồ thị không đồng nghĩa với tác động nhân quả an ninh;',
+            'new_text': f'Hai là, thách thức về tính phức tạp mô hình và giao thức đánh giá thực nghiệm: kết quả đối chuẩn của Bilot et al.  [{bilot_num}] (USENIX Security 2025) và Guerra et al.  [{guerra_num}] chỉ ra các hạn chế quan trọng trong thực nghiệm PIDS: Bilot et al.  [{bilot_num}] chỉ ra rằng các hệ thống PIDS hiện hành thường mang độ phức tạp không cần thiết (unnecessary complexity), trong khi một mạng nơ-ron đơn giản (simple neural network) có thể đạt hiệu năng phát hiện tương đương hoặc vượt trội (state-of-the-art detection) trên 5/7 tập dữ liệu DARPA; đồng thời, nghiên cứu của Guerra et al.  [{guerra_num}] nhấn mạnh giao thức đánh giá (evaluation protocol) ảnh hưởng sâu sắc đến kết luận thực nghiệm, trong đó một giải pháp danh sách cho phép đơn giản (simple allowlist) dựa trên tên và đường dẫn thực thi có thể khớp hoặc vượt qua các baseline học máy trên 3/4 tập dữ liệu chính, và nhiều kết quả phát hiện thực chất phản ánh tính mới về mặt từ vựng (lexical novelty);'
         }
     ]
 

@@ -1371,9 +1371,11 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
     ])
     add_display_equation(r"\mathbf{A} \mathbf{x} = \mathbf{0}")
     add_p([
-        "Mặc dù sở hữu ưu điểm về hiệu năng tính toán (độ phức tạp tuyến tính O(N)), nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng ",
-        make_citation_element([6, 8]),
-        ": (1) Mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số: các bộ log parser dựa trên biểu thức chính quy thường thay thế các tham số biến động (địa chỉ IP, đường dẫn tệp tin, tham số dòng lệnh) bằng ký tự đại diện <*> khiến nhiều thông tin an ninh mang tính phân biệt cao bị lược bỏ; (2) Lan truyền và khuếch đại sai số cú pháp (Parser Error Propagation): khi gặp các định dạng log mới chưa từng xuất hiện (unseen logs), parser có thể phân tách không chính xác, dẫn đến hiện tượng sinh ra các mẫu sự kiện giả lập hoặc gộp nhầm các sự kiện khác biệt, làm xáo trộn cấu trúc không gian vector x."
+        "Mặc dù sở hữu ưu thế về hiệu quả tính toán trong thực tiễn (độ phức tạp tuyến tính O(N)) ",
+        make_citation_element([6, 7]),
+        ", nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng: (1) Mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số (nhận định và động cơ thiết kế của chuyên đề, không phải kết luận của Michael et al.): các bộ log parser dựa trên biểu thức chính quy thường thay thế các tham số biến động như địa chỉ IP, đường dẫn tệp tin và tham số dòng lệnh bằng ký tự đại diện <*> khiến nhiều thông tin an ninh mang tính phân biệt cao bị lược bỏ; (2) Lan truyền và khuếch đại sai số cú pháp (Parser Error Propagation) khi xử lý các định dạng phức tạp hoặc chưa từng xuất hiện ",
+        make_citation_element([6, 7]),
+        ", dẫn đến hiện tượng sinh ra các mẫu sự kiện giả lập hoặc gộp nhầm các sự kiện khác biệt, làm xáo trộn cấu trúc không gian vector x."
     ])
 
     # --- 1.2.2 ---
@@ -1443,13 +1445,13 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         make_citation_element([14]),
         " (Jia et al., USENIX Security 2024) khai thác kiến trúc tự mã hóa đồ thị che (Masked Graph Autoencoder) để học biểu diễn hành vi bình thường và phát hiện bất thường APT; (5) ORTHRUS ",
         make_citation_element([15]),
-        ": (1) Hiện tượng bùng nổ phụ thuộc (Dependency Explosion): các tiến trình hệ thống chạy dài hạn (như daemon hệ thống hoặc trình duyệt) liên tục tương tác với nhiều tệp tin và socket, khiến đồ thị phát triển dày đặc và tạo ra nhiều liên kết phụ thuộc xa làm loãng tín hiệu bất thường ",
+        " (Jiang et al., USENIX Security 2025) sử dụng mạng nơ-ron đồ thị không-thời gian (spatio-temporal GNN) phục vụ phát hiện xâm nhập ở mức đỉnh (node-level detection), phân tích phụ thuộc và tái dựng đường dẫn tấn công (attack-path reconstruction) với chất lượng quy kết cao (high Quality of Attribution). Mặc dù đạt nhiều bước tiến, nhóm phương pháp đồ thị đối mặt với ba rào cản nền tảng: (1) Hiện tượng bùng nổ phụ thuộc (Dependency Explosion): các tiến trình hệ thống chạy dài hạn (như daemon hệ thống hoặc trình duyệt) liên tục tương tác với nhiều tệp tin và socket, khiến đồ thị phát triển dày đặc và tạo ra nhiều liên kết phụ thuộc xa làm loãng tín hiệu bất thường ",
         make_citation_element([9, 20]),
-        "; (2) Ranh giới giữa quan hệ phụ thuộc cấu trúc và tác động nhân quả (Dependency != Causal Effect): kết quả khảo sát thực nghiệm của Bilot et al. ",
+        "; (2) Thách thức về tính phức tạp mô hình và giao thức đánh giá thực nghiệm: kết quả đối chuẩn của Bilot et al. ",
         make_citation_element([16]),
-        " và Guerra et al. (arXiv:2608.01454) ",
+        " chỉ ra rằng các hệ thống PIDS hiện hành thường mang độ phức tạp không cần thiết (unnecessary complexity), trong khi một mạng nơ-ron đơn giản (simple neural network) có thể đạt hiệu năng phát hiện tương đương hoặc vượt trội (state-of-the-art detection) trên 5/7 tập dữ liệu DARPA; đồng thời, nghiên cứu của Guerra et al. (arXiv:2608.01454) ",
         make_citation_element([30]),
-        " trên các bộ dữ liệu PIDS chuẩn chỉ ra rằng nhiều mô hình GNN phức tạp có xu hướng khai thác các đặc trưng đường tắt thống kê (như phân bố bậc của nút hoặc tính mới của đường dẫn tệp tin); khi kiểm soát chặt chẽ các yếu tố gây nhiễu, các bộ phân loại tuyến tính đơn giản có thể đạt hiệu năng cạnh tranh; (3) Hiện tượng nghẽn cổ chai thông tin (Over-smoothing và Over-squashing): khi tăng số lớp truyền tin, Over-smoothing làm vector biểu diễn của các nút dần trở nên tương đồng, trong khi Over-squashing ",
+        " nhấn mạnh giao thức đánh giá (evaluation protocol) ảnh hưởng sâu sắc đến kết luận thực nghiệm, trong đó một giải pháp danh sách cho phép đơn giản (simple allowlist) dựa trên tên và đường dẫn thực thi có thể khớp hoặc vượt qua các baseline học máy trên 3/4 tập dữ liệu chính, và nhiều kết quả phát hiện thực chất phản ánh tính mới về mặt từ vựng (lexical novelty); (3) Hiện tượng nghẽn cổ chai thông tin (Over-smoothing và Over-squashing): khi tăng số lớp truyền tin, Over-smoothing làm vector biểu diễn của các nút dần trở nên tương đồng, trong khi Over-squashing ",
         make_citation_element([21]),
         " nén ép lượng thông tin cấu trúc tăng theo hàm mũ vào vector kích thước cố định, ảnh hưởng đến khả năng phân tách các hành vi tấn công tinh vi."
     ])

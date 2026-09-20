@@ -466,9 +466,11 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
     ])
     add_display_equation(r"\mathbf{A} \mathbf{x} = \mathbf{0}")
     add_p([
-        "Mặc dù sở hữu ưu điểm về hiệu năng tính toán (độ phức tạp tuyến tính O(N)), nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng ",
-        make_citation_element([6, 8]),
-        ": (1) Mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số: các bộ log parser dựa trên biểu thức chính quy thường thay thế các tham số biến động (địa chỉ IP, đường dẫn tệp tin, tham số dòng lệnh) bằng ký tự đại diện <*> khiến nhiều thông tin an ninh mang tính phân biệt cao bị lược bỏ; (2) Lan truyền và khuếch đại sai số cú pháp (Parser Error Propagation): khi gặp các định dạng log mới chưa từng xuất hiện (unseen logs), parser có thể phân tách không chính xác, dẫn đến hiện tượng sinh ra các mẫu sự kiện giả lập hoặc gộp nhầm các sự kiện khác biệt, làm xáo trộn cấu trúc không gian vector x."
+        "Mặc dù sở hữu ưu thế về hiệu quả tính toán trong thực tiễn (độ phức tạp tuyến tính O(N)) ",
+        make_citation_element([6, 7]),
+        ", nhóm phương pháp thống kê và cú pháp bộc lộ hai điểm nghẽn phương pháp luận quan trọng: (1) Mất mát ngữ nghĩa an ninh do trừu tượng hóa tham số (nhận định và động cơ thiết kế của chuyên đề, không phải kết luận của Michael et al.): các bộ log parser dựa trên biểu thức chính quy thường thay thế các tham số biến động như địa chỉ IP, đường dẫn tệp tin và tham số dòng lệnh bằng ký tự đại diện <*> khiến nhiều thông tin an ninh mang tính phân biệt cao bị lược bỏ; (2) Lan truyền và khuếch đại sai số cú pháp (Parser Error Propagation) khi xử lý các định dạng phức tạp hoặc chưa từng xuất hiện ",
+        make_citation_element([6, 7]),
+        ", dẫn đến hiện tượng sinh ra các mẫu sự kiện giả lập hoặc gộp nhầm các sự kiện khác biệt, làm xáo trộn cấu trúc không gian vector x."
     ])
 
     # --- 1.2.2 ---
@@ -536,18 +538,18 @@ def build_master_thesis_document(target_file: str = r"D:\Research\Chuyên đề 
         make_citation_element([14]),
         " áp dụng mô hình Masked Graph Autoencoder tự giám sát; và ORTHRUS ",
         make_citation_element([15]),
-        " phân tích đa mức độ chi tiết để quy kết nguồn gốc tấn công."
+        " sử dụng mạng nơ-ron đồ thị không-thời gian (spatio-temporal GNN) phục vụ phát hiện xâm nhập ở mức đỉnh (node-level detection), phân tích phụ thuộc và tái dựng đường dẫn tấn công (attack-path reconstruction) với chất lượng quy kết cao (high Quality of Attribution)."
     ])
     add_p([
         "Tuy nhiên, việc triển khai GNN trên đồ thị nguồn gốc quy mô thực tế đối mặt với ba rào cản nền tảng ",
         make_citation_element([9, 21]),
-        ": (1) Hiện tượng bùng nổ phụ thuộc (Dependency Explosion): qua thời gian vận hành, các tiến trình dịch vụ tồn tại lâu dài (như sshd, systemd, web server) liên kết với hàng triệu tệp tin và socket, khiến đồ thị phát triển dày đặc và làm mờ nhạt dấu vết tấn công; (2) Hiện tượng nghẽn cổ chai thông tin và suy giảm phân tách (Over-smoothing và Over-squashing) ",
+        ": (1) Hiện tượng bùng nổ phụ thuộc (Dependency Explosion): qua thời gian vận hành, các tiến trình dịch vụ tồn tại lâu dài (như sshd, systemd, web server) liên kết với hàng triệu tệp tin và socket, khiến đồ thị phát triển dày đặc và làm mờ nhạt dấu vết tấn công; (2) Thách thức về tính phức tạp mô hình và giao thức đánh giá thực nghiệm: kết quả đối chuẩn của Bilot et al. ",
+        make_citation_element([16]),
+        " chỉ ra rằng các hệ thống PIDS hiện hành thường mang độ phức tạp không cần thiết (unnecessary complexity), trong khi một mạng nơ-ron đơn giản (simple neural network) có thể đạt hiệu năng phát hiện tương đương hoặc vượt trội (state-of-the-art detection) trên 5/7 tập dữ liệu DARPA; đồng thời, nghiên cứu của Guerra et al. ",
+        make_citation_element([30]),
+        " nhấn mạnh giao thức đánh giá (evaluation protocol) ảnh hưởng sâu sắc đến kết luận thực nghiệm, trong đó một giải pháp danh sách cho phép đơn giản (simple allowlist) dựa trên tên và đường dẫn thực thi có thể khớp hoặc vượt qua các baseline học máy trên 3/4 tập dữ liệu chính, và nhiều kết quả phát hiện thực chất phản ánh tính mới về mặt từ vựng (lexical novelty); (3) Hiện tượng nghẽn cổ chai thông tin và suy giảm phân tách (Over-smoothing và Over-squashing) ",
         make_citation_element([21]),
-        " khi truyền thông điệp qua nhiều lớp GNN trên đồ thị lớn; (3) Chi phí duy trì trạng thái đồ thị và độ trễ tính toán lớn, đòi hỏi các kỹ thuật cắt tỉa (Pruning) ",
-        make_citation_element([9, 20]),
-        " hoặc đơn giản hóa kiến trúc ",
-        make_citation_element([16, 30]),
-        " để vận hành thực tế."
+        " khi truyền thông điệp qua nhiều lớp GNN trên đồ thị lớn."
     ])
     add_p([
         "Bảng so sánh tổng hợp dưới đây đối chiếu toàn diện ba nhóm phương pháp biểu diễn đặc trưng log hiện đại theo năm tiêu chí kỹ thuật cốt lõi:",
