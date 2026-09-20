@@ -91,25 +91,35 @@ def resolve_bibliography_table(doc, canonical_sources):
         
     return runtime_map
 
-def build_alias_to_source_key_map(canonical_sources):
+def build_alias_maps(canonical_sources):
     """
-    Builds a list of (alias, list_of_source_keys).
-    Ordered by alias length descending to match longest phrases first.
+    Builds:
+    - unique_aliases: list of (norm_alias, original_alias, single_source_key)
+    - ambiguous_aliases: list of (norm_alias, original_alias, sorted_list_of_source_keys)
+    Both sorted by length of original_alias descending.
     """
     alias_to_keys = {}
+    alias_repr = {}
     for s in canonical_sources:
         skey = s["source_key"]
         for alias in s.get("aliases", []):
-            alias_to_keys.setdefault(alias, []).append(skey)
-        # Add primary author last name + et al.
+            norm = alias.strip().lower()
+            alias_to_keys.setdefault(norm, set()).add(skey)
+            if norm not in alias_repr or len(alias) > len(alias_repr[norm]):
+                alias_repr[norm] = alias
         if s.get("canonical_authors"):
             first_author = s["canonical_authors"][0].split()[-1]
-            alias_to_keys.setdefault(f"{first_author} et al.", []).append(skey)
-            alias_to_keys.setdefault(f"{first_author} et al", []).append(skey)
-            
-    # Sort by length descending
-    alias_list = sorted(alias_to_keys.items(), key=lambda x: len(x[0]), reverse=True)
-    return alias_list
+            for fa_alias in [f"{first_author} et al.", f"{first_author} et al"]:
+                norm = fa_alias.strip().lower()
+                alias_to_keys.setdefault(norm, set()).add(skey)
+                if norm not in alias_repr or len(fa_alias) > len(alias_repr[norm]):
+                    alias_repr[norm] = fa_alias
+
+    unique_aliases = [(norm, alias_repr[norm], list(skeys)[0]) for norm, skeys in alias_to_keys.items() if len(skeys) == 1]
+    ambiguous_aliases = [(norm, alias_repr[norm], sorted(skeys)) for norm, skeys in alias_to_keys.items() if len(skeys) > 1]
+    unique_aliases.sort(key=lambda x: len(x[1]), reverse=True)
+    ambiguous_aliases.sort(key=lambda x: len(x[1]), reverse=True)
+    return unique_aliases, ambiguous_aliases
 
 def find_sentence_boundary(text: str, start_pos: int) -> int:
     candidates = [0]
@@ -153,18 +163,41 @@ def extract_bounded_prefix(text: str, start_pos: int) -> str:
 def audit_citations():
     canonical_sources = load_canonical_registry()
     print(f"[AUDIT] Loaded {len(canonical_sources)} canonical sources from registry.")
-    
+
+    # Preflight checks
+    assert len(canonical_sources) == 44, f"Expected 44 canonical sources, got {len(canonical_sources)}"
+    keys = [s["source_key"] for s in canonical_sources]
+    assert len(keys) == len(set(keys)) == 44, f"source_key must be unique (44), found {len(set(keys))}"
+    tags = [s["word_source_tag"] for s in canonical_sources]
+    assert len(tags) == len(set(tags)) == 44, f"word_source_tag must be unique (44), found {len(set(tags))}"
+
+    # Check cross-source duplicate aliases in CANONICAL-SOURCES.json
+    json_alias_map = {}
+    for s in canonical_sources:
+        k = s["source_key"]
+        for a in s.get("aliases", []):
+            json_alias_map.setdefault(a.strip().lower(), set()).add(k)
+    dup_json = {a: sorted(ks) for a, ks in json_alias_map.items() if len(ks) > 1}
+    print(f"[PREFLIGHT] 44 source_key unique: OK")
+    print(f"[PREFLIGHT] 44 word_source_tag unique: OK")
+    print(f"[PREFLIGHT] Cross-source duplicate aliases in CANONICAL-SOURCES.json: {len(dup_json)}")
+    for a, ks in sorted(dup_json.items()):
+        print(f"  [DUP REGISTRY] '{a}' -> {ks}")
+
     doc = docx.Document(str(docx_path))
     runtime_bib_map = resolve_bibliography_table(doc, canonical_sources)
     print(f"[AUDIT] Successfully resolved {len(runtime_bib_map)} DOCX bibliography entries to canonical source keys.")
     for num in sorted(runtime_bib_map.keys()):
         print(f"  [{num:2d}] -> {runtime_bib_map[num]}")
-        
-    alias_list = build_alias_to_source_key_map(canonical_sources)
-    
+
+    unique_aliases, ambiguous_aliases = build_alias_maps(canonical_sources)
+    print(f"[PREFLIGHT] Unique aliases: {len(unique_aliases)}, Ambiguous aliases across sources: {len(ambiguous_aliases)}")
+    for norm, orig, ks in ambiguous_aliases:
+        print(f"  [AMBIGUOUS ALIAS] '{orig}' -> {ks}")
+
     occurrences = []
     occ_counter = 0
-    
+
     # Helper to check if text is a code snippet
     def is_code_snippet(txt):
         code_markers = ["def ", "class ", "return ", "import ", "lambda ", " = ", "self.", "torch.", "np.", "session_intervals[b][0]", "np.zeros", "nn.Module", "pytest."]
@@ -175,11 +208,11 @@ def audit_citations():
         p_text = p.text
         if not p_text.strip():
             continue
-            
+
         p_style = p.style.name.lower() if p.style else ""
         if "toc" in p_style or "table of figures" in p_style or "tài liệu tham khảo" in p_text.lower():
             continue
-            
+
         if is_code_snippet(p_text):
             continue
 
@@ -187,54 +220,59 @@ def audit_citations():
         for m in re.finditer(r"\[(\d+)(?:,\s*(\d+))*\]", p_text):
             raw_match = m.group(0)
             start_pos, end_pos = m.span()
-            
+
             # Context window around the citation (-120 to +120 chars)
             ctx_start = max(0, start_pos - 120)
             ctx_end = min(len(p_text), end_pos + 120)
             context = p_text[ctx_start:ctx_end]
-            
-            # Extract numbers inside bracket
+
             nums = [int(n) for n in re.findall(r"\d+", raw_match)]
-            
-            # Find detected entities in surrounding sentence/context
-            detected_entities = []
-            expected_keys = []
-            
             sentence_prefix = extract_bounded_prefix(p_text, start_pos)
-            for alias, skeys in alias_list:
-                if alias.lower() in sentence_prefix.lower():
-                    if alias not in detected_entities:
-                        detected_entities.append(alias)
-                    for skey in skeys:
-                        if skey not in expected_keys:
-                            expected_keys.append(skey)
-                            
+
+            matched_u = [(orig, skey) for norm, orig, skey in unique_aliases if orig.lower() in sentence_prefix.lower()]
+            matched_a = [(orig, skeys) for norm, orig, skeys in ambiguous_aliases if orig.lower() in sentence_prefix.lower()]
+
             for num in nums:
                 occ_counter += 1
                 occ_id = f"OCC-{occ_counter:04d}"
-                
-                # Syntax validation
+
                 syntax_status = "PASS" if 1 <= num <= 44 else "FAIL"
-                
-                # Actual source key from runtime map
                 actual_skey = runtime_bib_map.get(num, f"UNRESOLVED_NUM_{num}")
-                
-                # Identity check:
-                # If entities were detected, does actual_skey match any expected_key?
-                # If multiple citations appear in a list (e.g. [14], [16], [17], [9]),
-                # we check if actual_skey is among expected_keys.
-                identity_status = "PASS"
-                identity_comment = ""
-                
-                if expected_keys:
-                    if actual_skey not in expected_keys:
+
+                detected_entities = []
+                expected_keys = []
+
+                if matched_u:
+                    for orig, skey in matched_u:
+                        if orig not in detected_entities:
+                            detected_entities.append(orig)
+                        if skey not in expected_keys:
+                            expected_keys.append(skey)
+                    if actual_skey in expected_keys:
+                        identity_status = "PASS"
+                        identity_comment = f"Context entity matches expected source {actual_skey}"
+                    else:
                         identity_status = "FAIL"
                         identity_comment = f"Context entities {detected_entities} expected {expected_keys}, but [{num}] resolved to {actual_skey}"
+                elif matched_a:
+                    cand_keys = []
+                    for orig, skeys in matched_a:
+                        if orig not in detected_entities:
+                            detected_entities.append(orig)
+                        for skey in skeys:
+                            if skey not in cand_keys:
+                                cand_keys.append(skey)
+                    expected_keys = cand_keys
+                    if actual_skey in cand_keys:
+                        identity_status = "AMBIGUOUS"
+                        identity_comment = f"Ambiguous alias {detected_entities} maps to multiple sources: {cand_keys}; duplicate alias not allowed for auto-PASS"
+                    else:
+                        identity_status = "FAIL"
+                        identity_comment = f"Context entity {detected_entities} maps to {cand_keys}, but [{num}] resolved to unrelated {actual_skey}"
                 else:
-                    # General citation without explicit named entity
                     identity_status = "PASS"
                     identity_comment = "General citation without named entity anchor"
-                    
+
                 occurrences.append({
                     "occurrence_id": occ_id,
                     "paragraph_index": p_idx,
@@ -266,36 +304,53 @@ def audit_citations():
                     ctx_start = max(0, start_pos - 80)
                     ctx_end = min(len(c_text), end_pos + 80)
                     context = c_text[ctx_start:ctx_end]
-                    
+
                     nums = [int(n) for n in re.findall(r"\d+", raw_match)]
                     sentence_prefix = extract_bounded_prefix(c_text, start_pos)
-                    
-                    detected_entities = []
-                    expected_keys = []
-                    for alias, skeys in alias_list:
-                        if alias.lower() in sentence_prefix.lower():
-                            if alias not in detected_entities:
-                                detected_entities.append(alias)
-                            for skey in skeys:
-                                if skey not in expected_keys:
-                                    expected_keys.append(skey)
-                                    
+
+                    matched_u = [(orig, skey) for norm, orig, skey in unique_aliases if orig.lower() in sentence_prefix.lower()]
+                    matched_a = [(orig, skeys) for norm, orig, skeys in ambiguous_aliases if orig.lower() in sentence_prefix.lower()]
+
                     for num in nums:
                         occ_counter += 1
                         occ_id = f"OCC-{occ_counter:04d}"
                         syntax_status = "PASS" if 1 <= num <= 44 else "FAIL"
                         actual_skey = runtime_bib_map.get(num, f"UNRESOLVED_NUM_{num}")
-                        
-                        identity_status = "PASS"
-                        identity_comment = ""
-                        if expected_keys:
-                            if actual_skey not in expected_keys:
+
+                        detected_entities = []
+                        expected_keys = []
+
+                        if matched_u:
+                            for orig, skey in matched_u:
+                                if orig not in detected_entities:
+                                    detected_entities.append(orig)
+                                if skey not in expected_keys:
+                                    expected_keys.append(skey)
+                            if actual_skey in expected_keys:
+                                identity_status = "PASS"
+                                identity_comment = f"Context entity matches expected source {actual_skey}"
+                            else:
                                 identity_status = "FAIL"
                                 identity_comment = f"Context entities {detected_entities} expected {expected_keys}, but [{num}] resolved to {actual_skey}"
+                        elif matched_a:
+                            cand_keys = []
+                            for orig, skeys in matched_a:
+                                if orig not in detected_entities:
+                                    detected_entities.append(orig)
+                                for skey in skeys:
+                                    if skey not in cand_keys:
+                                        cand_keys.append(skey)
+                            expected_keys = cand_keys
+                            if actual_skey in cand_keys:
+                                identity_status = "AMBIGUOUS"
+                                identity_comment = f"Ambiguous alias {detected_entities} maps to multiple sources: {cand_keys}; duplicate alias not allowed for auto-PASS"
+                            else:
+                                identity_status = "FAIL"
+                                identity_comment = f"Context entity {detected_entities} maps to {cand_keys}, but [{num}] resolved to unrelated {actual_skey}"
                         else:
                             identity_status = "PASS"
                             identity_comment = "General citation without named entity anchor"
-                            
+
                         occurrences.append({
                             "occurrence_id": occ_id,
                             "paragraph_index": "",
@@ -328,7 +383,7 @@ def audit_citations():
         "identity_comment",
         "semantic_status"
     ]
-    
+
     with open(csv_output_path, "w", encoding="utf-8-sig", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
@@ -336,14 +391,22 @@ def audit_citations():
 
     # Print summary
     syntax_fails = sum(1 for o in occurrences if not (1 <= o["resolved_number"] <= 44))
+    identity_pass = sum(1 for o in occurrences if o["identity_status"] == "PASS")
     identity_fails = [o for o in occurrences if o["identity_status"] == "FAIL"]
+    identity_ambig = [o for o in occurrences if o["identity_status"] == "AMBIGUOUS"]
     manual_review_count = sum(1 for o in occurrences if o["semantic_status"] == "MANUAL_REVIEW_REQUIRED")
-    
+
     print(f"\n[AUDIT-REPORT] Total citation occurrences: {len(occurrences)}")
     print(f"  - Syntax PASS: {len(occurrences) - syntax_fails} / FAIL: {syntax_fails}")
-    print(f"  - Identity PASS: {len(occurrences) - len(identity_fails)} / FAIL: {len(identity_fails)}")
+    print(f"  - Identity PASS: {identity_pass} / FAIL: {len(identity_fails)} / AMBIGUOUS: {len(identity_ambig)}")
     print(f"  - Semantic status: {manual_review_count} MANUAL_REVIEW_REQUIRED (0 auto-PASS)")
-    
+
+    if identity_ambig:
+        print(f"\n[AUDIT-REPORT] Detected {len(identity_ambig)} Ambiguous Citations:")
+        for a_occ in identity_ambig:
+            print(f"  {a_occ['occurrence_id']}: {a_occ['raw_citation_text']} in p[{a_occ['paragraph_index']}] / t[{a_occ['table_index']}] - {a_occ['identity_comment']}")
+            print(f"     Snippet: {a_occ['context_snippet'][:100]}")
+
     if identity_fails:
         print(f"\n[AUDIT-REPORT] Detected {len(identity_fails)} Identity Mismatches:")
         for f_occ in identity_fails:

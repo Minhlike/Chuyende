@@ -121,7 +121,7 @@
     "doi": "10.1109/ISSRE59848.2023.00071",
     "url": "https://doi.org/10.1109/ISSRE59848.2023.00071",
     "word_source_tag": "SRC000044",
-    "aliases": ["LogHub", "Loghub", "Zhu et al. (2023)", "kho LogHub", "BGL", "HDFS"]
+    "aliases": ["LogHub", "Loghub", "Zhu et al. (2023)", "kho LogHub", "BGL"]
   },
   {
     "source_key": "Arp2022DosDonts",
@@ -139,7 +139,7 @@
     "year": 2022,
     "publication_type": "PEER_REVIEWED",
     "venue": "USENIX Security Symposium 2022",
-    "doi": "10.5555/3548606.3548637",
+    "doi": null,
     "url": "https://www.usenix.org/conference/usenixsecurity22/presentation/arp",
     "word_source_tag": "SRC000002",
     "aliases": ["Arp et al.", "Arp et al. (2022)", "Arp (2022)", "Dos and Don'ts of Machine Learning in Computer Security"]
@@ -306,7 +306,7 @@
     "doi": "10.6028/NIST.SP.800-226",
     "url": "https://doi.org/10.6028/NIST.SP.800-226",
     "word_source_tag": "SRC000027",
-    "aliases": ["NIST SP 800-226", "NIST (2025)", "Near et al.", "Near & Darais", "Quyền riêng tư Vi sai", "DP", "Differential Privacy", "quy trình kiểm thử", "đảo ngược mô hình"]
+    "aliases": ["NIST SP 800-226", "NIST (2025)", "Near et al.", "Near & Darais"]
   },
   {
     "source_key": "Chen2020SimCLR",
@@ -323,7 +323,7 @@
     "doi": null,
     "url": "http://proceedings.mlr.press/v119/chen20j.html",
     "word_source_tag": "SRC000039",
-    "aliases": ["SimCLR", "Chen et al.", "Chen et al. (2020)", "Chen (2020)", "Contrastive Learning", "InfoNCE"]
+    "aliases": ["SimCLR", "Chen et al.", "Chen et al. (2020)", "Chen (2020)"]
   },
   {
     "source_key": "Zhu2019LogParsing",
@@ -365,7 +365,7 @@
     "doi": "10.1145/3650212.3652123",
     "url": "https://doi.org/10.1145/3650212.3652123",
     "word_source_tag": "SRC000007",
-    "aliases": ["Jiang et al.", "Jiang et al. (2024)", "Jiang (2024)", "A Large-Scale Evaluation for Log Parsing Techniques"]
+    "aliases": ["Jiang et al. (2024)", "Jiang (2024)", "A Large-Scale Evaluation for Log Parsing Techniques"]
   },
   {
     "source_key": "Lou2010MiningInvariants",
@@ -373,7 +373,7 @@
     "canonical_authors": [
       "Jian-Guang Lou",
       "Qiang Fu",
-      "Shenqi Yang",
+      "Shengqi Yang",
       "Ye Xu",
       "Jiang Li"
     ],
@@ -553,7 +553,7 @@
     "publication_type": "PEER_REVIEWED",
     "venue": "USENIX Security Symposium 2024",
     "doi": null,
-    "url": "https://www.usenix.org/conference/usenixsecurity24/presentation/jia",
+    "url": "https://www.usenix.org/conference/usenixsecurity24/presentation/jia-zian",
     "word_source_tag": "SRC000014",
     "aliases": ["MAGIC", "Jia et al.", "Jia et al. (2024)", "Jia (2024)"]
   },
@@ -574,9 +574,9 @@
     "publication_type": "PEER_REVIEWED",
     "venue": "USENIX Security Symposium 2025",
     "doi": null,
-    "url": "https://www.usenix.org/conference/usenixsecurity25/presentation/jiang",
+    "url": "https://www.usenix.org/conference/usenixsecurity25/presentation/jiang-baoxiang",
     "word_source_tag": "SRC000015",
-    "aliases": ["ORTHRUS", "Jiang et al.", "Jiang et al. (2025)", "Jiang (2025)"]
+    "aliases": ["ORTHRUS", "Jiang et al. (2025)", "Jiang (2025)"]
   },
   {
     "source_key": "Zeng2022PalanTir",
@@ -672,7 +672,7 @@
     "publication_type": "WEB_ARTICLE",
     "venue": "Tạp chí An toàn thông tin",
     "doi": null,
-    "url": "https://antoanthongtin.vn/",
+    "url": "https://antoanthongtin.vn/tin/phat-hien-tan-cong-apt-dua-tren-graph-learning-phan-2",
     "word_source_tag": "SRC000042",
     "aliases": ["Nguyễn Thị Thu Thủy", "T. T. T. Nguyễn", "Nguyễn (2026)", "Thu Thủy (2026)"]
   },
