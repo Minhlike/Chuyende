@@ -1204,7 +1204,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         make_citation_element([18]),
         ": (1) DARPA Transparent Computing (TC E3/E5) ",
         make_citation_element([28]),
-        " cung cấp dữ liệu kiểm toán hệ thống mức hạt nhân chi tiết với các kịch bản APT thực tế được gán nhãn ở mức độ hạt tiến trình/luồng phụ thuộc (Fine-grained Ground Truth); (2) LANL Unified Host and Network Dataset (Kent, 2015) ",
+        " cung cấp dữ liệu kiểm toán hệ thống mức hạt nhân chi tiết, trong đó các kịch bản tấn công của đội Red Team được ghi nhận qua các báo cáo kịch bản (ground-truth reports/annotations), cho phép ánh xạ và suy diễn nhãn ở mức tiến trình và luồng phụ thuộc liên quan đến đợt tấn công, thay vì toàn bộ dữ liệu viễn trắc nền đều có nhãn sẵn ở mức hạt nhân; (2) LANL Unified Host and Network Dataset (Kent, 2015) ",
         make_citation_element([29]),
         " phản ánh môi trường mạng doanh nghiệp quy mô lớn với hàng tỷ sự kiện xác thực và luồng mạng, trong đó nhãn mặt đất thực nghiệm được xác lập từ tệp redteam.txt ghi nhận các sự kiện xác thực bị xâm nhập cụ thể của đội Red Team (Authentication Compromise Events) theo mốc thời gian và tài khoản/máy chủ xác định; (3) HDFS và BGL Datasets ",
         make_citation_element([3, 6]),
@@ -1793,7 +1793,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         " được chuyển tiếp vào bộ đệm tái điều chỉnh (Reconciliation Buffer) theo giao thức ghi nhận thất thoát thông tin xác định (Explicit Information-Loss Protocol) mà không làm gián đoạn luồng suy luận thời gian thực."
     ], first_line_indent=False)
     add_p([
-        "Khi hệ thống gặp hiện tượng đột biến lưu lượng (Traffic Spike), cơ chế kiểm soát áp lực ngược (Backpressure Control) dựa trên thuật toán Token-Bucket điều tiết tốc độ nạp dữ liệu. Nếu lưu lượng vượt quá giới hạn chịu tải tối đa, việc loại bỏ gói tin (Shedding) được thực hiện hoàn toàn độc lập với kết quả phát hiện của mô hình (dựa trên hạn ngạch băng thông nguồn thu thập hoặc mức độ ưu tiên của phân vùng telemetry, tuyệt đối không dựa vào điểm số an ninh chưa kiểm chứng) nhằm tránh rủi ro rò rỉ vòng lặp (Detector Leakage) và loại bỏ nhầm các bằng chứng APT yếu thưa thớt."
+        "Đối với tình huống đột biến lưu lượng (Traffic Spike), kiến trúc đề xuất cơ chế kiểm soát áp lực ngược (Backpressure Control) dự kiến dựa trên thuật toán Token-Bucket để điều tiết tốc độ nạp dữ liệu. Trong thiết kế kiến trúc đề xuất này, chính sách loại bỏ gói tin hoặc phân luồng ưu tiên (Priority Shedding) được định vị cho kịch bản quá tải; tuy nhiên, cơ chế này chưa hiện thực trong Stage A2 và chưa được kiểm chứng thực nghiệm trong phạm vi chuyên đề hiện tại."
     ])
     add_p([
         "Về mặt lý thuyết tính toán, mô hình dòng thiết lập hợp đồng ngân sách độ phức tạp cho từng thành phần xử lý ký hiệu tổng quát: ",
@@ -2793,10 +2793,10 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         ", hỗ trợ duy trì tính phân biệt giữa các thực thể."
     ])
     add_bullet_p([
-        "Giảm thiểu Over-squashing: áp dụng cơ chế lấy mẫu lân cận có chọn lọc theo trọng số thời gian (Top-k Temporal Attention Sampling), "
+        "Giảm thiểu Over-squashing: chuyên đề đề xuất cơ chế ứng viên lấy mẫu lân cận có chọn lọc theo trọng số thời gian (Top-k Temporal Attention Sampling), "
         "ưu tiên tổng hợp thông điệp từ các đỉnh lân cận có hoạt động gần nhất thay vì mở rộng toàn bộ cây phụ thuộc nhiều bước. "
-        "Cơ chế này được thiết kế để đánh giá đối sánh với các chính sách lấy mẫu toàn bộ lân cận (Full Neighborhood) và lấy mẫu theo độ mới (Recency Sampling) tại Chương 3, "
-        "nhằm kiểm tra thực nghiệm liệu chính sách sampling có gây mất mát các bằng chứng APT dài hạn (long-range evidence) hay không."
+        "Đây là thiết kế mở rộng dự kiến phục vụ đối sánh với các chính sách lấy mẫu toàn bộ lân cận (Full Neighborhood) và lấy mẫu theo độ mới (Recency Sampling) trong các nghiên cứu tương lai; "
+        "thành phần này chưa được hiện thực và chưa kiểm chứng thực nghiệm trong chiến dịch Stage A2 hiện tại."
     ])
 
     # 2.3.3.4. Đầu ra đồ thị
@@ -3195,7 +3195,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
     # 2.4.3. Mục tiêu thống nhất + Ghi nhận bằng chứng yếu
     add_h3("Hàm mục tiêu thống nhất và phân bổ bằng chứng yếu")
     add_p([
-        "Mục 2.4.3 tổng hợp toàn bộ đồ thị tối ưu hóa (Optimization Graph) của chuyên đề, thiết lập hàm mục tiêu tự giám sát thống nhất trong Stage A, đóng kín các luồng gradient cho toàn bộ tập tham số, và tích hợp mô đun Phân bổ Bằng chứng Yếu (Weak Evidence Attribution) qua mô hình học đa thể hiện (Multiple Instance Learning, MIL) tùy chọn trong Stage B."
+        "Mục 2.4.3 tổng hợp toàn bộ đồ thị tối ưu hóa (Optimization Graph) của chuyên đề, thiết lập hàm mục tiêu tự giám sát thống nhất trong Stage A, đóng kín các luồng gradient cho toàn bộ tập tham số, và giới thiệu mô đun Phân bổ Bằng chứng Yếu (Weak Evidence Attribution) qua mô hình học đa thể hiện (Multiple Instance Learning, MIL) như một thiết kế kiến trúc mở rộng tùy chọn (Stage B; Proposed / Not implemented in Stage A2)."
     ])
 
     add_h4("Đóng kín đồ thị tối ưu hóa và kiểm toán tham số huấn luyện")
@@ -3285,9 +3285,9 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         " và sẽ được tối ưu hóa, kiểm định độ nhạy thực nghiệm trên tập xác thực (Validation Set) tại Chương 3."
     ])
 
-    add_h4("Cổng độ tin cậy động và Phẫu thuật Gradient PCGrad")
+    add_h4("Cổng độ tin cậy động và Phẫu thuật Gradient PCGrad (Proposed / Not implemented in Stage A2)")
     add_p([
-        "Để đánh giá chất lượng góc nhìn và điều hòa xung đột gradient trong quá trình tối ưu hóa Stage A, hệ thống tích hợp vector chất lượng đo kiểm quan sát được ",
+        "Để đánh giá chất lượng góc nhìn và điều hòa xung đột gradient trong thiết kế kiến trúc đề xuất cho Stage A, chuyên đề định vị việc tích hợp vector chất lượng đo kiểm quan sát được ",
         latex_to_clean_omml(r"\mathbf{q}_{\text{seq}}"),
         " và ",
         latex_to_clean_omml(r"\mathbf{q}_{\text{graph}}"),
@@ -3303,11 +3303,9 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
     add_p([
         "Trong đó ",
         latex_to_clean_omml(r"\tau = 0.05"),
-        " là siêu tham số ngưỡng chặn dưới an toàn, ngăn ngừa việc hạ trọng số về 0 (tính nhạy cảm của ",
-        latex_to_clean_omml(r"\tau"),
-        " sẽ được kiểm chứng thực nghiệm tại Chương 3). Khi tối ưu hóa liên hợp, kỹ thuật PCGrad ",
+        " là siêu tham số ngưỡng chặn dưới an toàn, ngăn ngừa việc hạ trọng số về 0. Đối với tối ưu hóa liên hợp, kỹ thuật PCGrad ",
         make_citation_element([40]),
-        " được áp dụng chặt chẽ trên tập tham số nhận đồng thời hai luồng gradient:",
+        " được đề xuất như một cơ chế ứng viên (Proposed / Not implemented in Stage A2) nhằm giảm thiểu xung đột giữa hai luồng gradient trên tập tham số nhận đồng thời hai luồng gradient:",
     ])
 
     add_display_equation(
@@ -3322,26 +3320,26 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         latex_to_clean_omml(r"\mathcal{L}_{\text{fuse-rec}}"),
         " không tham gia vào phép chiếu PCGrad vì chúng chỉ cập nhật độc lập các tham số tầng dung hợp. Khi xảy ra xung đột hướng ",
         latex_to_clean_omml(r"\langle \mathbf{g}_{\text{align}}, \mathbf{g}_{\text{preserv}} \rangle < 0"),
-        ", gradient gióng hàng được chiếu vuông góc:"
+        ", gradient gióng hàng được chiếu vuông góc theo công thức lý thuyết:"
     ])
 
     add_display_equation(make_pcgrad_omml())
 
     add_p([
-        "Kỹ thuật chiếu trực giao PCGrad giúp giảm thiểu xung đột gradient giữa mục tiêu gióng hàng liên góc nhìn và mục tiêu bảo toàn đặc thù nội góc nhìn theo tiêu chuẩn cosine; hiệu quả thực tế trong việc hạn chế hiện tượng chuyển giao tiêu cực (Negative Transfer) sẽ được kiểm định qua phân tích triệt tiêu tại Chương 3."
+        "Kỹ thuật chiếu trực giao PCGrad được đề xuất về mặt lý thuyết nhằm giảm thiểu xung đột gradient giữa mục tiêu gióng hàng liên góc nhìn và mục tiêu bảo toàn đặc thù nội góc nhìn theo tiêu chuẩn cosine. Đây là thiết kế mở rộng đề xuất (Proposed / Not tested in Stage A2); việc hiện thực hóa và đánh giá định lượng hiệu quả thực tế trong việc hạn chế hiện tượng chuyển giao tiêu cực (Negative Transfer) được định vị cho các chiến dịch thực nghiệm tiếp theo."
     ])
 
-    add_h4("Stage B (Tùy chọn): Phân bổ bằng chứng yếu qua Attention-MIL")
+    add_h4("Stage B (Tùy chọn): Phân bổ bằng chứng yếu qua Attention-MIL (Proposed Optional Architecture / Not implemented / Not tested in Stage A2)")
     add_p([
         "Trong các kịch bản an ninh thực tế, nhãn tấn công thường chỉ sẵn có ở mức độ thô (Coarse Labels), ví dụ: một phiên làm việc (Session), một máy chủ (Host), hoặc một cửa sổ chiến dịch kéo dài (Campaign Window) được xác định là bị xâm nhập (nhãn túi ",
         latex_to_clean_omml(r"Y_{\text{bag}} \in \{0, 1\}"),
-        "), nhưng không thể xác định chính xác sự kiện log đơn lẻ nào là hành vi tấn công. Để giải quyết thách thức này, chuyên đề thiết lập mô đun Phân bổ Bằng chứng Yếu (Weak Evidence Attribution) tùy chọn ở Stage B dựa trên khung tiếp cận Học Đa Thể Hiện (Multiple Instance Learning, MIL)."
+        "), nhưng không thể xác định chính xác sự kiện log đơn lẻ nào là hành vi tấn công. Để giải quyết thách thức này, chuyên đề đề xuất mô đun kiến trúc mở rộng Phân bổ Bằng chứng Yếu (Weak Evidence Attribution) tùy chọn ở Stage B dựa trên khung tiếp cận Học Đa Thể Hiện (Multiple Instance Learning, MIL; Proposed Optional Architecture / Not implemented / Not tested in Stage A2)."
     ])
 
     add_p([
-        "Chuyên đề áp dụng cơ chế Attention-based Deep MIL của Ilse et al. ",
+        "Chuyên đề đề xuất áp dụng cơ chế Attention-based Deep MIL của Ilse et al. ",
         make_citation_element([24]),
-        ", nhưng thiết kế cơ chế ánh xạ Túi, Thực thể đặc thù cho bài toán an ninh mạng (Cybersecurity Bag-Instance Mapping, Đề xuất của đề tài / Ours):"
+        " (dưới dạng thiết kế mở rộng tùy chọn, chưa hiện thực và chưa kiểm chứng trong chiến dịch Stage A2 hiện tại), kết hợp thiết kế cơ chế ánh xạ Túi – Thực thể đặc thù cho bài toán an ninh mạng (Cybersecurity Bag-Instance Mapping, Đề xuất của đề tài / Ours):"
     ], keep_with_next=True)
 
     add_bullet_p([
@@ -3375,13 +3373,13 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
     add_display_equation(make_mil_loss_omml())
 
     add_p([
-        "Phân định ranh giới giữa Khung trích xuất chuẩn tắc và Đầu phân lớp phụ trợ MIL: Cơ chế Gated Attention-MIL trang bị một đầu phân lớp túi phụ trợ ",
+        "Phân định ranh giới giữa Khung trích xuất chuẩn tắc và Đầu phân lớp phụ trợ MIL: Cơ chế Gated Attention-MIL dự kiến trang bị một đầu phân lớp túi phụ trợ ",
         latex_to_clean_omml(r"\mathbf{W}_{\text{mil,cls}}, b_{\text{mil,cls}}"),
-        " (Supervised Auxiliary Head). Trong quy trình chuẩn hóa của chuyên đề:"
+        " (Supervised Auxiliary Head, thiết kế đề xuất chưa hiện thực trong Stage A2). Trong quy trình thiết kế của chuyên đề:"
     ], keep_with_next=True)
 
     add_bullet_p([
-        "Giai đoạn Stage B: Chỉ sử dụng nhãn thô trên tập Huấn luyện và Xác thực (Train/Validation only) để huấn luyện đầu phân lớp phụ trợ và tùy chọn tinh chỉnh nhẹ không gian vector đặc trưng."
+        "Giai đoạn Stage B (đề xuất tùy chọn): Dự kiến chỉ sử dụng nhãn thô trên tập Huấn luyện và Xác thực (Train/Validation only) nếu được kích hoạt để huấn luyện đầu phân lớp phụ trợ và tinh chỉnh nhẹ không gian vector đặc trưng."
     ])
 
     add_bullet_p([
@@ -3397,7 +3395,7 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
     add_bullet_p([
         "Biến thể tùy chọn hỗ trợ MIL (Optional MIL-Assisted Variant): Nếu kịch bản triển khai thực tế có nhu cầu giám sát trực quan điểm bằng chứng ",
         latex_to_clean_omml(r"a_i"),
-        ", hệ thống định nghĩa riêng một biến thể hỗ trợ MIL, hoàn toàn phân định với Extractor chuẩn tắc. Tại Chương 3, chuyên đề sẽ báo cáo độc lập kết quả giữa ba cấu hình: SSL thuần túy (SSL-only), SSL kết hợp thích ứng MIL (SSL + MIL Adaptation), và Biến thể hỗ trợ MIL khi triển khai (MIL-assisted variant)."
+        ", hệ thống định nghĩa riêng một biến thể hỗ trợ MIL, hoàn toàn phân định với Extractor chuẩn tắc. Trong thiết kế kiến trúc mở rộng, cấu hình hỗ trợ MIL được định vị cho các nghiên cứu tương lai; phạm vi thực nghiệm Stage A2 hiện tại tập trung hoàn toàn vào khung tự giám sát chuẩn tắc (SSL-only)."
     ])
 
     add_p([
@@ -3495,11 +3493,11 @@ def build_and_audit_document(target_file: str = r"D:\Research\Chuyên đề chuy
         latex_to_clean_omml(r"\mathcal{O}(B \cdot d_{\text{proj}}^2)"),
         ", hàm tái tạo dung hợp là ",
         latex_to_clean_omml(r"\mathcal{O}(B \cdot (d_{\text{seq}} + d_{\text{graph}} + d_{\text{cross}}) d_{\text{mv}})"),
-        ", và chi phí phẫu thuật gradient PCGrad bổ sung trên tập tham số chia sẻ ",
+        ", và chi phí phẫu thuật gradient PCGrad đề xuất bổ sung trên tập tham số chia sẻ ",
         latex_to_clean_omml(r"\Theta_{\text{PCGrad}}"),
         " sau khi đã tính các gradient thành phần là ",
         latex_to_clean_omml(r"\mathcal{O}(\text{card}(\Theta_{\text{PCGrad}}))"),
-        ". Nếu kích hoạt mô đun Attention-MIL ở Stage B với không gian ẩn chú ý ",
+        ". Nếu kích hoạt mô đun Attention-MIL đề xuất ở Stage B với không gian ẩn chú ý ",
         latex_to_clean_omml(r"d_{\text{att}}"),
         ", chi phí tính toán cho mỗi túi kích thước ",
         latex_to_clean_omml(r"K"),
