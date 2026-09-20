@@ -11,11 +11,14 @@ Guarantees:
    - AMBIGUOUS_OR_MISSING: raise exception and fail.
 3. Update TOC and List of Figures strictly via Word COM (Fields.Update, TablesOfContents.Update, TablesOfFigures.Update).
 4. Strictly preserves all 606 OMML equations.
-5. Idempotent: second run makes 0 changes; DOCX SHA-256 before == after.
+5. ZERO hard-coded numeric citation targets: resolves dynamic numbers from Table 27 via CANONICAL-SOURCES.json.
+6. Idempotent: second run makes 0 changes; DOCX SHA-256 before == after.
 """
 import sys
 import shutil
 import hashlib
+import json
+import re
 from pathlib import Path
 import docx
 import win32com.client as win32
@@ -26,6 +29,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 repo_root = Path(r"D:\Research")
 docx_path = repo_root / "Chuyên đề chuyên sâu.docx"
 pdf_path = repo_root / "Chuyên đề chuyên sâu.pdf"
+canonical_json_path = repo_root / "research_specs" / "reference_map" / "CANONICAL-SOURCES.json"
 
 backup_path = repo_root / "Chuyên đề chuyên sâu.pre_audit_backup.docx"
 if not backup_path.exists():
@@ -64,6 +68,54 @@ def replace_in_paragraph_runs(p, old_text: str, new_text: str):
                 return
         raise ValueError("Could not surgically replace text across OMML runs without risking formula damage.")
 
+def resolve_canonical_citation_numbers(doc):
+    with open(canonical_json_path, "r", encoding="utf-8") as f:
+        canonical_sources = json.load(f)
+
+    t27 = doc.tables[27]
+    runtime_map = {}
+    for idx, row in enumerate(t27.rows):
+        num_cell = row.cells[0].text.strip()
+        text_cell = row.cells[1].text.strip()
+        m = re.search(r"\[(\d+)\]", num_cell)
+        if not m:
+            continue
+        num = int(m.group(1))
+        matched_key = None
+        best_score = 0
+        for s in canonical_sources:
+            score = 0
+            title = s["canonical_title"].lower()
+            title_words = [w for w in re.split(r"\W+", title) if len(w) > 3]
+            if title_words:
+                matches = sum(1 for w in title_words if w in text_cell.lower())
+                score = matches / len(title_words)
+            if s["source_key"] == "DARPA2018TCE3" and "Engagement 3" in text_cell:
+                score = 10.0
+            elif s["source_key"] == "DARPA2020TCE5" and "Engagement 5" in text_cell:
+                score = 10.0
+            elif s["source_key"] == "Russinovich2026Sysmon" and "Sysmon" in text_cell:
+                score = 10.0
+            elif s["source_key"] == "Zhu2023Loghub" and "Loghub: A Large Collection" in text_cell:
+                score = 10.0
+            elif s["source_key"] == "Zhu2019LogParsing" and "Tools and Benchmarks" in text_cell:
+                score = 10.0
+            elif s["source_key"] == "Kent2015LANL" and "Comprehensive, Multi-Source" in text_cell:
+                score = 10.0
+            elif s["source_key"] == "Ilse2018AttentionMIL" and "Attention-based Deep Multiple" in text_cell:
+                score = 10.0
+            elif s["source_key"] == "Guerra2026PIDSEvalProtocols" and "Guerra" in text_cell:
+                score = 10.0
+            elif s["source_key"] == "Nguyen2026APTGraphLearning" and "Nguyễn" in text_cell:
+                score = 10.0
+            if score > best_score and score > 0.3:
+                best_score = score
+                matched_key = s["source_key"]
+        if not matched_key:
+            raise RuntimeError(f"Could not map row [{num}]: {text_cell[:60]} in Table 27")
+        runtime_map[matched_key] = num
+    return runtime_map
+
 def run_corrections(docx_file: Path, pdf_file: Path):
     sha_before = compute_sha256(docx_file)
     print(f"Starting DOCX SHA-256: {sha_before}")
@@ -75,6 +127,25 @@ def run_corrections(docx_file: Path, pdf_file: Path):
     print(f"Initial OMML count: {initial_omml}")
     assert initial_omml == 606, f"Expected 606 OMML elements, found {initial_omml}"
 
+    # Dynamically resolve citation numbers from Table 27
+    key_to_num = resolve_canonical_citation_numbers(doc)
+    mitre_num = key_to_num["MITRE2026ATTCK"]
+    inam_num = key_to_num["Inam2023ProvenanceSoK"]
+    vicreg_num = key_to_num["Bardes2022VICReg"]
+    barlow_num = key_to_num["Zbontar2021BarlowTwins"]
+    infonce_num = key_to_num["Oord2018CPC"]
+    simclr_num = key_to_num["Chen2020SimCLR"]
+    arp_num = key_to_num["Arp2022DosDonts"]
+    darpa_num = key_to_num["DARPA2018TCE3"]
+    lanl_num = key_to_num["Kent2015LANL"]
+    hdfs_num = key_to_num["Xu2009HDFS"]
+    loghub_num = key_to_num["Zhu2023Loghub"]
+
+    print(f"[DYNAMIC-CITATION-MAP] Resolved from Table 27:")
+    print(f"  MITRE -> [{mitre_num}], Inam -> [{inam_num}], VICReg -> [{vicreg_num}], Barlow -> [{barlow_num}]")
+    print(f"  InfoNCE -> [{infonce_num}], SimCLR -> [{simclr_num}], Arp -> [{arp_num}], DARPA E3 -> [{darpa_num}]")
+    print(f"  LANL -> [{lanl_num}], HDFS -> [{hdfs_num}], LogHub -> [{loghub_num}]")
+
     body_paragraphs = [p for p in doc.paragraphs if not is_toc_or_tof(p)]
 
     corrections = [
@@ -82,15 +153,15 @@ def run_corrections(docx_file: Path, pdf_file: Path):
             'id': 'fig12_text',
             'desc': 'Figure 1.2 citation in body text',
             'anchor_fn': lambda p: 'Do đó, chuyên đề xác lập nguyên tắc: Ma trận MITRE ATT&CK' in p.text,
-            'old_text': 'MITRE ATT&CK [4] và Inam et al. [1]2',
-            'new_text': 'MITRE ATT&CK [6] và Inam et al. [3]'
+            'old_text': 'MITRE ATT&CK [6] và Inam et al. [3]',
+            'new_text': f'MITRE ATT&CK [{mitre_num}] và Inam et al. [{inam_num}]'
         },
         {
             'id': 'fig12_caption',
             'desc': 'Figure 1.2 caption',
             'anchor_fn': lambda p: 'Hình 1.2: Mô hình Không gian Bằng chứng Hành vi Đa chiều' in p.text and p.style.name == 'Caption',
-            'old_text': 'MITRE ATT&CK [4] và Inam et al. [1]2 [6] [3]',
-            'new_text': 'MITRE ATT&CK [6] và Inam et al. [3]'
+            'old_text': 'MITRE ATT&CK [6] và Inam et al. [3]',
+            'new_text': f'MITRE ATT&CK [{mitre_num}] và Inam et al. [{inam_num}]'
         },
         {
             'id': 'llm_preface',
@@ -128,11 +199,25 @@ def run_corrections(docx_file: Path, pdf_file: Path):
             'new_text': 'chuyên đề đề xuất cơ chế ứng viên lấy mẫu lân cận có chọn lọc theo trọng số thời gian Top-k Temporal Attention Sampling, ưu tiên tổng hợp thông điệp từ các đỉnh lân cận có hoạt động gần nhất thay vì mở rộng toàn bộ cây phụ thuộc nhiều bước. Đây là thiết kế mở rộng dự kiến phục vụ đối sánh với các chính sách lấy mẫu toàn bộ lân cận (Full Neighborhood) và lấy mẫu theo độ mới (Recency Sampling) trong các nghiên cứu tương lai; thành phần này chưa được hiện thực và chưa kiểm chứng thực nghiệm trong chiến dịch Stage A2 hiện tại.'
         },
         {
-            'id': 'infonce_barlow',
-            'desc': 'InfoNCE and Barlow Twins citation correction',
+            'id': 'vicreg_p407_1',
+            'desc': 'VICReg citation in Section 2.4.1.3 body',
             'anchor_fn': lambda p: 'Từ phân tích phương pháp luận trên, chuyên đề lựa chọn VICReg' in p.text,
-            'old_text': 'trong khi việc đối sánh triệt tiêu định lượng với InfoNCE [38], [37] và Barlow Twins [11] được định vị cho các chiến dịch thực nghiệm hạ nguồn tiếp theo. [41] [21] [13]',
-            'new_text': 'trong khi việc đối sánh triệt tiêu định lượng với InfoNCE [41], [21] và Barlow Twins [13] được định vị cho các chiến dịch thực nghiệm hạ nguồn tiếp theo.'
+            'old_text': 'VICReg (Variance-Invariance-Covariance Regularization) [12]',
+            'new_text': f'VICReg (Variance-Invariance-Covariance Regularization) [{vicreg_num}]'
+        },
+        {
+            'id': 'vicreg_p407_2',
+            'desc': 'Bardes et al. citation in Section 2.4.1.3 body',
+            'anchor_fn': lambda p: 'Từ phân tích phương pháp luận trên, chuyên đề lựa chọn VICReg' in p.text,
+            'old_text': 'Theo Bardes et al. [12],',
+            'new_text': f'Theo Bardes et al. [{vicreg_num}],'
+        },
+        {
+            'id': 'infonce_barlow',
+            'desc': 'InfoNCE and Barlow Twins citation correction in Section 2.4.1.3',
+            'anchor_fn': lambda p: 'Từ phân tích phương pháp luận trên, chuyên đề lựa chọn VICReg' in p.text,
+            'old_text': 'trong khi việc đối sánh triệt tiêu định lượng với InfoNCE [41], [21] và Barlow Twins [13] được định vị cho các chiến dịch thực nghiệm hạ nguồn tiếp theo.',
+            'new_text': f'trong khi việc đối sánh triệt tiêu định lượng với InfoNCE [{infonce_num}], [{simclr_num}] và Barlow Twins [{barlow_num}] được định vị cho các chiến dịch thực nghiệm hạ nguồn tiếp theo.'
         },
         {
             'id': 'mil_proposed',
@@ -164,10 +249,10 @@ def run_corrections(docx_file: Path, pdf_file: Path):
         },
         {
             'id': 'split_arp_data',
-            'desc': 'Arp [10] and datasets [14], [16], [17], [9] citation correction',
+            'desc': 'Arp and datasets citation correction in Section 3.1.2',
             'anchor_fn': lambda p: 'temporal snooping' in p.text,
-            'old_text': 'tuân thủ khuyến nghị tránh rò rỉ thời gian (temporal snooping) của Arp et al. [8]. Khung đối chuẩn nghiên cứu bao quát 4 tập dữ liệu đại diện cho các miền viễn trắc an ninh khác nhau (DARPA TC E3 [12], LANL [13], HDFS [18], BGL [42]); trong đó, tập dữ liệu HDFS đóng vai trò là môi trường thực thi chính thức cho chiến dịch tiền huấn luyện Stage A2 hiện hành, còn các tập dữ liệu quy mô lớn còn lại định vị bối cảnh mở rộng cho các giai đoạn tiếp theo. Toàn bộ các phân vùng dữ liệu được phân định theo thứ tự thời gian và xác thực bằng chữ ký mật mã: [10]',
-            'new_text': 'tuân thủ khuyến nghị tránh rò rỉ thời gian (temporal snooping) của Arp et al. [10]. Khung đối chuẩn nghiên cứu bao quát 4 tập dữ liệu đại diện cho các miền viễn trắc an ninh khác nhau (DARPA TC E3 [14], LANL [16], HDFS [17], [9], BGL [9]); trong đó, tập dữ liệu HDFS đóng vai trò là môi trường thực thi chính thức cho chiến dịch tiền huấn luyện Stage A2 hiện hành, còn các tập dữ liệu quy mô lớn còn lại định vị bối cảnh mở rộng cho các giai đoạn tiếp theo. Toàn bộ các phân vùng dữ liệu được phân định theo thứ tự thời gian và kiểm soát tính toàn vẹn bằng mã băm mật mã SHA-256 trong tệp manifest.'
+            'old_text': 'tuân thủ khuyến nghị tránh rò rỉ thời gian (temporal snooping) của Arp et al. [10]. Khung đối chuẩn nghiên cứu bao quát 4 tập dữ liệu đại diện cho các miền viễn trắc an ninh khác nhau (DARPA TC E3 [14], LANL [16], HDFS [17], [9], BGL [9]);',
+            'new_text': f'tuân thủ khuyến nghị tránh rò rỉ thời gian (temporal snooping) của Arp et al. [{arp_num}]. Khung đối chuẩn nghiên cứu bao quát 4 tập dữ liệu đại diện cho các miền viễn trắc an ninh khác nhau (DARPA TC E3 [{darpa_num}], LANL [{lanl_num}], HDFS [{hdfs_num}], [{loghub_num}], BGL [{loghub_num}]);'
         },
         {
             'id': 'frozen_probe_fairness',
@@ -274,7 +359,7 @@ def run_corrections(docx_file: Path, pdf_file: Path):
             print(f"[{cid}] OLD_FOUND_ONCE: Ready to apply correction.")
             plan_to_apply.append((c, p))
         else:
-            raise RuntimeError(f"[{cid}] AMBIGUOUS_OR_MISSING: old_in={old_in}, new_in={new_in}")
+            raise RuntimeError(f"[{cid}] AMBIGUOUS_OR_MISSING: old_in={old_in}, new_in={new_in} for {cid}")
 
     if not plan_to_apply:
         print(f"\n[IDEMPOTENCE-PASS] All {noop_count} corrections already present. No modifications needed.")

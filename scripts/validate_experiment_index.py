@@ -270,10 +270,17 @@ def validate_artifact_manifest(
 
     print(f"[VALIDATOR-COUNTS] Summary:")
     print(f"  - Catalog entries: {catalog_entries}")
-    print(f"  - AVAILABLE_IN_GIT verified: {git_verified}")
-    print(f"  - LOCAL_ONLY present and verified: {local_present_verified}")
-    print(f"  - LOCAL_ONLY absent: {local_absent}")
-    print(f"  - UNVERIFIED_LOCAL_ONLY skipped: {unverified_skipped}")
+    if catalog_only:
+        print(f"  - AVAILABLE_IN_GIT catalog entries: {git_verified}")
+        print(f"  - LOCAL_ONLY catalog entries: {local_present_verified + local_absent}")
+        print(f"  - UNVERIFIED_LOCAL_ONLY catalog entries: {unverified_skipped}")
+        print(f"  - BINARY_VERIFICATION_PERFORMED=false")
+    else:
+        print(f"  - AVAILABLE_IN_GIT verified: {git_verified}")
+        print(f"  - LOCAL_ONLY present and verified: {local_present_verified}")
+        print(f"  - LOCAL_ONLY absent: {local_absent}")
+        print(f"  - UNVERIFIED_LOCAL_ONLY skipped: {unverified_skipped}")
+        print(f"  - BINARY_VERIFICATION_PERFORMED=true")
 
     if errors:
         print("[VALIDATOR-FAIL] ARTIFACT-MANIFEST discrepancies:")

@@ -1,0 +1,785 @@
+[
+  {
+    "source_key": "Inam2023ProvenanceSoK",
+    "canonical_title": "SoK: History is a Vast Early Warning System: Audit Logging & Provenance for Enterprise Cyber Defense",
+    "canonical_authors": [
+      "Muhammad Adil Inam",
+      "Yushan Chen",
+      "Akul Goyal",
+      "Jason Liu",
+      "Jaron Mink",
+      "Noor Michael",
+      "Sneha Gaur",
+      "Adam Bates",
+      "Wajih Ul Hassan"
+    ],
+    "year": 2023,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "IEEE Symposium on Security and Privacy (S&P 2023)",
+    "doi": "10.1109/SP46215.2023.10179324",
+    "url": "https://doi.org/10.1109/SP46215.2023.10179324",
+    "word_source_tag": "SRC000009",
+    "aliases": ["Inam et al.", "Inam et al. (2023)", "Inam (2023)", "SoK: History is a Vast Early Warning System"]
+  },
+  {
+    "source_key": "Michael2020ForensicValidity",
+    "canonical_title": "On the Forensic Validity of Approximated Audit Logs",
+    "canonical_authors": [
+      "Noor Michael",
+      "Jaron Mink",
+      "Jason Liu",
+      "Sneha Gaur",
+      "Wajih Ul Hassan",
+      "Adam Bates"
+    ],
+    "year": 2020,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "Annual Computer Security Applications Conference (ACSAC 2020)",
+    "doi": "10.1145/3427228.3427254",
+    "url": "https://doi.org/10.1145/3427228.3427254",
+    "word_source_tag": "SRC000008",
+    "aliases": ["Michael et al.", "Michael et al. (2020)", "Michael (2020)", "Forensic Validity of Approximated Audit Logs"]
+  },
+  {
+    "source_key": "Liu2025DatasetQualityLogs",
+    "canonical_title": "What We Talk About When We Talk About Logs: Understanding the Effects of Dataset Quality on Endpoint Threat Detection Research",
+    "canonical_authors": [
+      "Jason Liu",
+      "Muhammad Adil Inam",
+      "Akul Goyal",
+      "Andy Riddle",
+      "Kim Westfall",
+      "Adam Bates"
+    ],
+    "year": 2025,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "IEEE Symposium on Security and Privacy (S&P 2025)",
+    "doi": "10.1109/SP61157.2025.00112",
+    "url": "https://doi.org/10.1109/SP61157.2025.00112",
+    "word_source_tag": "SRC000018",
+    "aliases": ["Liu et al.", "Liu et al. (2025)", "Liu (2025)", "What We Talk About When We Talk About Logs"]
+  },
+  {
+    "source_key": "MITRE2026ATTCK",
+    "canonical_title": "MITRE ATT&CK: Enterprise Tactics and Techniques Matrix (v19.1)",
+    "canonical_authors": [
+      "MITRE Corporation"
+    ],
+    "year": 2026,
+    "publication_type": "OFFICIAL_SOURCE",
+    "venue": "MITRE Corporation",
+    "doi": null,
+    "url": "https://attack.mitre.org/matrices/enterprise/",
+    "word_source_tag": "SRC000001",
+    "aliases": ["MITRE ATT&CK", "Ma trận MITRE ATT&CK", "MITRE ATT&CK Enterprise", "MITRE (2026)", "MITRE Corporation"]
+  },
+  {
+    "source_key": "Zipperle2022PIDSSurvey",
+    "canonical_title": "Provenance-based Intrusion Detection Systems: A Survey",
+    "canonical_authors": [
+      "Marc Zipperle",
+      "Frank Gottwalt",
+      "Elizabeth Chang",
+      "Tharam S. Dillon"
+    ],
+    "year": 2023,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "ACM Computing Surveys (CSUR)",
+    "doi": "10.1145/3547332",
+    "url": "https://doi.org/10.1145/3547332",
+    "word_source_tag": "SRC000010",
+    "aliases": ["Zipperle et al.", "Zipperle et al. (2023)", "Zipperle (2023)", "Provenance-based Intrusion Detection Systems: A Survey"]
+  },
+  {
+    "source_key": "Russinovich2026Sysmon",
+    "canonical_title": "Sysmon (System Monitor) - Sysinternals",
+    "canonical_authors": [
+      "Mark Russinovich",
+      "Thomas Garnier"
+    ],
+    "year": 2026,
+    "publication_type": "OFFICIAL_SOURCE",
+    "venue": "Microsoft Learn",
+    "doi": null,
+    "url": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon",
+    "word_source_tag": "SRC000043",
+    "aliases": ["Sysmon", "Microsoft Sysmon", "Russinovich & Garnier", "Sysinternals Sysmon"]
+  },
+  {
+    "source_key": "Zhu2023Loghub",
+    "canonical_title": "Loghub: A Large Collection of System Log Datasets for AI-driven Log Analytics",
+    "canonical_authors": [
+      "Jieming Zhu",
+      "Shilin He",
+      "Pinjia He",
+      "Jinyang Liu",
+      "Michael R. Lyu"
+    ],
+    "year": 2023,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "IEEE 34th International Symposium on Software Reliability Engineering (ISSRE 2023)",
+    "doi": "10.1109/ISSRE59848.2023.00062",
+    "url": "https://doi.org/10.1109/ISSRE59848.2023.00062",
+    "word_source_tag": "SRC000044",
+    "aliases": ["LogHub", "Loghub", "Zhu et al. (2023)", "kho LogHub", "BGL", "HDFS"]
+  },
+  {
+    "source_key": "Arp2022DosDonts",
+    "canonical_title": "Dos and Don'ts of Machine Learning in Computer Security",
+    "canonical_authors": [
+      "Daniel Arp",
+      "Erwin Quiring",
+      "Feargus Pendlebury",
+      "Alexander Warnecke",
+      "Fabio Pierazzi",
+      "Christian Wressnegger",
+      "Lorenzo Cavallaro",
+      "Konrad Rieck"
+    ],
+    "year": 2022,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "USENIX Security Symposium 2022",
+    "doi": "10.5555/3548606.3548637",
+    "url": "https://www.usenix.org/conference/usenixsecurity22/presentation/arp",
+    "word_source_tag": "SRC000002",
+    "aliases": ["Arp et al.", "Arp et al. (2022)", "Arp (2022)", "Dos and Don'ts of Machine Learning in Computer Security"]
+  },
+  {
+    "source_key": "Han2020UNICORN",
+    "canonical_title": "UNICORN: Runtime Provenance-Based Detector for Advanced Persistent Threats",
+    "canonical_authors": [
+      "Xueyuan Han",
+      "Thomas Pasquier",
+      "Adam Bates",
+      "James Mickens",
+      "Margo Seltzer"
+    ],
+    "year": 2020,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "Network and Distributed System Security Symposium (NDSS 2020)",
+    "doi": "10.14722/ndss.2020.24050",
+    "url": "https://doi.org/10.14722/ndss.2020.24050",
+    "word_source_tag": "SRC000011",
+    "aliases": ["UNICORN", "Han et al.", "Han et al. (2020)", "Han (2020)"]
+  },
+  {
+    "source_key": "Bardes2022VICReg",
+    "canonical_title": "VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning",
+    "canonical_authors": [
+      "Adrien Bardes",
+      "Jean Ponce",
+      "Yann LeCun"
+    ],
+    "year": 2022,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "International Conference on Learning Representations (ICLR 2022)",
+    "doi": null,
+    "url": "https://openreview.net/forum?id=xm6YD62D1Ub",
+    "word_source_tag": "SRC000022",
+    "aliases": ["VICReg", "Bardes et al.", "Bardes et al. (2022)", "Bardes (2022)"]
+  },
+  {
+    "source_key": "Zbontar2021BarlowTwins",
+    "canonical_title": "Barlow Twins: Self-Supervised Learning via Redundancy Reduction",
+    "canonical_authors": [
+      "Jure Zbontar",
+      "Li Jing",
+      "Ishan Misra",
+      "Yann LeCun",
+      "Stéphane Deny"
+    ],
+    "year": 2021,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "International Conference on Machine Learning (ICML 2021)",
+    "doi": null,
+    "url": "http://proceedings.mlr.press/v139/zbontar21a.html",
+    "word_source_tag": "SRC000023",
+    "aliases": ["Barlow Twins", "Zbontar et al.", "Zbontar et al. (2021)", "Zbontar (2021)"]
+  },
+  {
+    "source_key": "DARPA2018TCE3",
+    "canonical_title": "Transparent Computing Engagement 3 Data Release",
+    "canonical_authors": [
+      "Defense Advanced Research Projects Agency (DARPA)",
+      "Information Innovation Office (I2O)"
+    ],
+    "year": 2018,
+    "publication_type": "DATASET",
+    "venue": "DARPA Official Program Release",
+    "doi": null,
+    "url": "https://github.com/darpa-i2o/transparent-computing",
+    "word_source_tag": "SRC000028",
+    "aliases": ["DARPA TC E3", "DARPA TC Engagement 3", "DARPA Engagement 3", "DARPA E3"]
+  },
+  {
+    "source_key": "DARPA2020TCE5",
+    "canonical_title": "Transparent Computing Engagement 5 Data Release",
+    "canonical_authors": [
+      "Defense Advanced Research Projects Agency (DARPA)",
+      "Information Innovation Office (I2O)"
+    ],
+    "year": 2020,
+    "publication_type": "DATASET",
+    "venue": "DARPA Official Program Release",
+    "doi": null,
+    "url": "https://github.com/darpa-i2o/transparent-computing",
+    "word_source_tag": "SRC000045",
+    "aliases": ["DARPA TC E5", "DARPA TC Engagement 5", "DARPA Engagement 5", "DARPA E5"]
+  },
+  {
+    "source_key": "Kent2015LANL",
+    "canonical_title": "Comprehensive, Multi-Source Cyber-Security Events",
+    "canonical_authors": [
+      "Alexander D. Kent"
+    ],
+    "year": 2015,
+    "publication_type": "DATASET",
+    "venue": "Los Alamos National Laboratory",
+    "doi": "10.17021/1179829",
+    "url": "https://doi.org/10.17021/1179829",
+    "word_source_tag": "SRC000029",
+    "aliases": ["LANL", "Kent", "Kent (2015)", "Alexander D. Kent", "LANL Unified Host and Network Dataset"]
+  },
+  {
+    "source_key": "Xu2009HDFS",
+    "canonical_title": "Detecting Large-Scale System Problems by Mining Console Logs",
+    "canonical_authors": [
+      "Wei Xu",
+      "Ling Huang",
+      "Armando Fox",
+      "David Patterson",
+      "Michael I. Jordan"
+    ],
+    "year": 2009,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "ACM SIGOPS 22nd Symposium on Operating Systems Principles (SOSP '09)",
+    "doi": "10.1145/1629575.1629587",
+    "url": "https://doi.org/10.1145/1629575.1629587",
+    "word_source_tag": "SRC000031",
+    "aliases": ["Xu et al.", "Xu et al. (2009)", "Xu (2009)", "HDFS", "HDFS của Xu et al."]
+  },
+  {
+    "source_key": "Shokri2017MembershipInference",
+    "canonical_title": "Membership Inference Attacks Against Machine Learning Models",
+    "canonical_authors": [
+      "Reza Shokri",
+      "Marco Stronati",
+      "Congzheng Song",
+      "Vitaly Shmatikov"
+    ],
+    "year": 2017,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "IEEE Symposium on Security and Privacy (S&P 2017)",
+    "doi": "10.1109/SP.2017.41",
+    "url": "https://doi.org/10.1109/SP.2017.41",
+    "word_source_tag": "SRC000025",
+    "aliases": ["Shokri et al.", "Shokri et al. (2017)", "Shokri (2017)", "MIA", "Membership Inference Attacks"]
+  },
+  {
+    "source_key": "Fredrikson2015ModelInversion",
+    "canonical_title": "Model Inversion Attacks that Exploit Confidence Information and Basic Countermeasures",
+    "canonical_authors": [
+      "Matt Fredrikson",
+      "Somesh Jha",
+      "Thomas Ristenpart"
+    ],
+    "year": 2015,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "ACM SIGSAC Conference on Computer and Communications Security (CCS 2015)",
+    "doi": "10.1145/2810103.2813677",
+    "url": "https://doi.org/10.1145/2810103.2813677",
+    "word_source_tag": "SRC000026",
+    "aliases": ["Fredrikson et al.", "Fredrikson et al. (2015)", "Fredrikson (2015)", "Model Inversion", "Model Inversion Attacks"]
+  },
+  {
+    "source_key": "NIST2025SP800226",
+    "canonical_title": "Guidelines for Evaluating Differential Privacy Guarantees (NIST SP 800-226)",
+    "canonical_authors": [
+      "Joseph P. Near",
+      "David Darais",
+      "Naomi Lefkovitz",
+      "Gowri S. Howarth"
+    ],
+    "year": 2025,
+    "publication_type": "OFFICIAL_SOURCE",
+    "venue": "NIST Special Publication 800-226",
+    "doi": "10.6028/NIST.SP.800-226",
+    "url": "https://doi.org/10.6028/NIST.SP.800-226",
+    "word_source_tag": "SRC000027",
+    "aliases": ["NIST SP 800-226", "NIST (2025)", "Near et al.", "Near & Darais", "Quyền riêng tư Vi sai", "DP", "Differential Privacy", "quy trình kiểm thử", "đảo ngược mô hình"]
+  },
+  {
+    "source_key": "Chen2020SimCLR",
+    "canonical_title": "A Simple Framework for Contrastive Learning of Visual Representations",
+    "canonical_authors": [
+      "Ting Chen",
+      "Simon Kornblith",
+      "Mohammad Norouzi",
+      "Geoffrey Hinton"
+    ],
+    "year": 2020,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "International Conference on Machine Learning (ICML 2020)",
+    "doi": null,
+    "url": "http://proceedings.mlr.press/v119/chen20j.html",
+    "word_source_tag": "SRC000039",
+    "aliases": ["SimCLR", "Chen et al.", "Chen et al. (2020)", "Chen (2020)", "Contrastive Learning", "InfoNCE"]
+  },
+  {
+    "source_key": "Zhu2019LogParsing",
+    "canonical_title": "Tools and Benchmarks for Automated Log Parsing",
+    "canonical_authors": [
+      "Jieming Zhu",
+      "Shilin He",
+      "Jinyang Liu",
+      "Pinjia He",
+      "Qi Xie",
+      "Zibin Zheng",
+      "Michael R. Lyu"
+    ],
+    "year": 2019,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "IEEE/ACM 41st International Conference on Software Engineering: Software Engineering in Practice (ICSE-SEIP 2019)",
+    "doi": "10.1109/ICSE-SEIP.2019.00021",
+    "url": "https://doi.org/10.1109/ICSE-SEIP.2019.00021",
+    "word_source_tag": "SRC000006",
+    "aliases": ["Zhu et al.", "Zhu et al. (2019)", "Zhu (2019)", "Tools and Benchmarks for Automated Log Parsing"]
+  },
+  {
+    "source_key": "Jiang2024LogParsingEval",
+    "canonical_title": "A Large-Scale Evaluation for Log Parsing Techniques: How Far Are We?",
+    "canonical_authors": [
+      "Zhihan Jiang",
+      "Jinyang Liu",
+      "Junjie Huang",
+      "Yichen Li",
+      "Yintong Huo",
+      "Jiazhen Gu",
+      "Zhuangbin Chen",
+      "Jieming Zhu",
+      "Michael R. Lyu"
+    ],
+    "year": 2024,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "ACM SIGSOFT International Symposium on Software Testing and Analysis (ISSTA 2024)",
+    "doi": "10.1145/3650212.3680384",
+    "url": "https://doi.org/10.1145/3650212.3680384",
+    "word_source_tag": "SRC000007",
+    "aliases": ["Jiang et al.", "Jiang et al. (2024)", "Jiang (2024)", "A Large-Scale Evaluation for Log Parsing Techniques"]
+  },
+  {
+    "source_key": "Lou2010MiningInvariants",
+    "canonical_title": "Mining Invariants from Console Logs for System Problem Detection",
+    "canonical_authors": [
+      "Jian-Guang Lou",
+      "Qingwei Fu",
+      "Shengqi Yang",
+      "Jiang Li",
+      "Bin Chen"
+    ],
+    "year": 2010,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "USENIX Annual Technical Conference (USENIX ATC 2010)",
+    "doi": null,
+    "url": "https://www.usenix.org/conference/atc-10/mining-invariants-console-logs-system-problem-detection",
+    "word_source_tag": "SRC000032",
+    "aliases": ["Lou et al.", "Lou et al. (2010)", "Lou (2010)", "Mining Invariants"]
+  },
+  {
+    "source_key": "Du2017DeepLog",
+    "canonical_title": "DeepLog: Anomaly Detection and Diagnosis from System Logs through Deep Learning",
+    "canonical_authors": [
+      "Min Du",
+      "Feifei Li",
+      "Guanqing Zheng",
+      "Vivek Srikumar"
+    ],
+    "year": 2017,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "ACM SIGSAC Conference on Computer and Communications Security (CCS 2017)",
+    "doi": "10.1145/3133956.3134015",
+    "url": "https://doi.org/10.1145/3133956.3134015",
+    "word_source_tag": "SRC000003",
+    "aliases": ["DeepLog", "Du et al.", "Du et al. (2017)", "Du (2017)"]
+  },
+  {
+    "source_key": "Guo2021LogBERT",
+    "canonical_title": "LogBERT: Log Anomaly Detection via BERT",
+    "canonical_authors": [
+      "Haixuan Guo",
+      "Shuhan Yuan",
+      "Xintao Wu"
+    ],
+    "year": 2021,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "International Joint Conference on Neural Networks (IJCNN 2021)",
+    "doi": "10.1109/IJCNN52111.2021.9534113",
+    "url": "https://doi.org/10.1109/IJCNN52111.2021.9534113",
+    "word_source_tag": "SRC000004",
+    "aliases": ["LogBERT", "Guo et al.", "Guo et al. (2021)", "Guo (2021)"]
+  },
+  {
+    "source_key": "Le2021NeuralLog",
+    "canonical_title": "Log-based Anomaly Detection Without Log Parsing",
+    "canonical_authors": [
+      "Van-Hoang Le",
+      "Hongyu Zhang"
+    ],
+    "year": 2021,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "IEEE/ACM 36th International Conference on Automated Software Engineering (ASE 2021)",
+    "doi": "10.1109/ASE51524.2021.9678773",
+    "url": "https://doi.org/10.1109/ASE51524.2021.9678773",
+    "word_source_tag": "SRC000005",
+    "aliases": ["NeuralLog", "Le & Zhang", "Le & Zhang (2021)", "Le (2021)"]
+  },
+  {
+    "source_key": "Meng2019LogAnomaly",
+    "canonical_title": "LogAnomaly: Unsupervised Detection of Sequential and Quantitative Anomalies in Unstructured Logs",
+    "canonical_authors": [
+      "Weibin Meng",
+      "Ying Liu",
+      "Yichen Zhu",
+      "Shenglin Zhang",
+      "Dan Pei",
+      "Yu Chen",
+      "Rui Zhang",
+      "Shimin Tao",
+      "Pei Sun",
+      "Rong Zhou"
+    ],
+    "year": 2019,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "International Joint Conference on Artificial Intelligence (IJCAI 2019)",
+    "doi": "10.24963/ijcai.2019/658",
+    "url": "https://doi.org/10.24963/ijcai.2019/658",
+    "word_source_tag": "SRC000033",
+    "aliases": ["LogAnomaly", "Meng et al.", "Meng et al. (2019)", "Meng (2019)"]
+  },
+  {
+    "source_key": "Nedelkoski2020SelfAttentive",
+    "canonical_title": "Self-Attentive Classification-Based Anomaly Detection in Unstructured Logs",
+    "canonical_authors": [
+      "Sasho Nedelkoski",
+      "Jasmin Bogatinovski",
+      "Alexander Acker",
+      "Jorge Cardoso",
+      "Odej Kao"
+    ],
+    "year": 2020,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "IEEE International Conference on Data Mining (ICDM 2020)",
+    "doi": "10.1109/ICDM50108.2020.00147",
+    "url": "https://doi.org/10.1109/ICDM50108.2020.00147",
+    "word_source_tag": "SRC000034",
+    "aliases": ["Nedelkoski et al.", "Nedelkoski et al. (2020)", "Nedelkoski (2020)"]
+  },
+  {
+    "source_key": "Vaswani2017Transformer",
+    "canonical_title": "Attention Is All You Need",
+    "canonical_authors": [
+      "Ashish Vaswani",
+      "Noam Shazeer",
+      "Niki Parmar",
+      "Jakob Uszkoreit",
+      "Llion Jones",
+      "Aidan N. Gomez",
+      "Łukasz Kaiser",
+      "Illia Polosukhin"
+    ],
+    "year": 2017,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "Advances in Neural Information Processing Systems 30 (NeurIPS 2017)",
+    "doi": null,
+    "url": "https://proceedings.neurips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html",
+    "word_source_tag": "SRC000035",
+    "aliases": ["Transformer", "Vaswani et al.", "Vaswani et al. (2017)", "Vaswani (2017)", "Attention Is All You Need"]
+  },
+  {
+    "source_key": "Cheng2024KAIROS",
+    "canonical_title": "KAIROS: Practical Intrusion Detection and Investigation using Whole-system Provenance Graphs",
+    "canonical_authors": [
+      "Zijun Cheng",
+      "Qiujian Lv",
+      "Jinyuan Liang",
+      "Yan Wang",
+      "Degang Sun",
+      "Thomas Pasquier",
+      "Xueyuan Han"
+    ],
+    "year": 2024,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "IEEE Symposium on Security and Privacy (S&P 2024)",
+    "doi": "10.1109/SP54263.2024.00109",
+    "url": "https://doi.org/10.1109/SP54263.2024.00109",
+    "word_source_tag": "SRC000012",
+    "aliases": ["KAIROS", "Cheng et al.", "Cheng et al. (2024)", "Cheng (2024)"]
+  },
+  {
+    "source_key": "Li2024NODLINK",
+    "canonical_title": "NODLINK: An Online System for Fine-Grained APT Attack Detection and Investigation",
+    "canonical_authors": [
+      "Shaofei Li",
+      "Feng Dong",
+      "Xusheng Xiao",
+      "Haoyu Wang",
+      "Fei Shao",
+      "Jiedong Chen",
+      "Yao Guo",
+      "Xiangqun Chen",
+      "Ding Li"
+    ],
+    "year": 2024,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "Network and Distributed System Security Symposium (NDSS 2024)",
+    "doi": "10.14722/ndss.2024.241098",
+    "url": "https://doi.org/10.14722/ndss.2024.241098",
+    "word_source_tag": "SRC000013",
+    "aliases": ["NODLINK", "Li et al.", "Li et al. (2024)", "Li (2024)"]
+  },
+  {
+    "source_key": "Jia2024MAGIC",
+    "canonical_title": "MAGIC: Detecting Advanced Persistent Threats via Masked Graph Representation Learning",
+    "canonical_authors": [
+      "Zian Jia",
+      "Yun Xiong",
+      "Yuhong Nan",
+      "Yao Zhang",
+      "Jinjing Zhao",
+      "Mi Wen"
+    ],
+    "year": 2024,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "USENIX Security Symposium 2024",
+    "doi": null,
+    "url": "https://www.usenix.org/conference/usenixsecurity24/presentation/jia",
+    "word_source_tag": "SRC000014",
+    "aliases": ["MAGIC", "Jia et al.", "Jia et al. (2024)", "Jia (2024)"]
+  },
+  {
+    "source_key": "Jiang2025ORTHRUS",
+    "canonical_title": "ORTHRUS: Achieving High Quality of Attribution in Provenance-based Intrusion Detection Systems",
+    "canonical_authors": [
+      "Baoxiang Jiang",
+      "Tristan Bilot",
+      "Nour El Madhoun",
+      "Khaldoun Al Agha",
+      "Anis Zouaoui",
+      "Shahrear Iqbal",
+      "Xueyuan Han",
+      "Thomas Pasquier"
+    ],
+    "year": 2025,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "USENIX Security Symposium 2025",
+    "doi": null,
+    "url": "https://www.usenix.org/conference/usenixsecurity25/presentation/jiang",
+    "word_source_tag": "SRC000015",
+    "aliases": ["ORTHRUS", "Jiang et al.", "Jiang et al. (2025)", "Jiang (2025)"]
+  },
+  {
+    "source_key": "Zeng2022PalanTir",
+    "canonical_title": "PalanTír: Optimizing Attack Provenance with Hardware-enhanced System Observability",
+    "canonical_authors": [
+      "Jun Zeng",
+      "Chao Zhang",
+      "Zhenkai Liang"
+    ],
+    "year": 2022,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "ACM SIGSAC Conference on Computer and Communications Security (CCS 2022)",
+    "doi": "10.1145/3548606.3560610",
+    "url": "https://doi.org/10.1145/3548606.3560610",
+    "word_source_tag": "SRC000020",
+    "aliases": ["PalanTír", "Zeng et al.", "Zeng et al. (2022)", "Zeng (2022)"]
+  },
+  {
+    "source_key": "Bilot2025SometimesSimpler",
+    "canonical_title": "Sometimes Simpler is Better: A Comprehensive Analysis of State-of-the-Art Provenance-Based Intrusion Detection Systems",
+    "canonical_authors": [
+      "Tristan Bilot",
+      "Baoxiang Jiang",
+      "Zefeng Li",
+      "Nour El Madhoun",
+      "Khaldoun Al Agha",
+      "Anis Zouaoui",
+      "Thomas Pasquier"
+    ],
+    "year": 2025,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "USENIX Security Symposium 2025",
+    "doi": null,
+    "url": "https://www.usenix.org/conference/usenixsecurity25/presentation/bilot",
+    "word_source_tag": "SRC000016",
+    "aliases": ["Sometimes Simpler is Better", "Bilot et al.", "Bilot et al. (2025)", "Bilot (2025)"]
+  },
+  {
+    "source_key": "Guerra2026PIDSEvalProtocols",
+    "canonical_title": "How Benchmarks and Evaluation Protocols Shape Conclusions in Provenance-Based Intrusion Detection",
+    "canonical_authors": [
+      "Lorenzo Guerra",
+      "Thomas Chapuis",
+      "Guillaume Duc",
+      "Pavlo Mozharovskyi",
+      "Van-Tam Nguyen"
+    ],
+    "year": 2026,
+    "publication_type": "PREPRINT",
+    "venue": "arXiv preprint arXiv:2608.01454",
+    "doi": null,
+    "url": "https://arxiv.org/abs/2608.01454",
+    "word_source_tag": "SRC000030",
+    "aliases": ["Guerra et al.", "Guerra et al. (2026)", "Guerra (2026)"]
+  },
+  {
+    "source_key": "Oono2020OverSmoothing",
+    "canonical_title": "Graph Neural Networks Exponentially Lose Expressive Power for Node Classification",
+    "canonical_authors": [
+      "Kenta Oono",
+      "Taiji Suzuki"
+    ],
+    "year": 2020,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "International Conference on Learning Representations (ICLR 2020)",
+    "doi": null,
+    "url": "https://openreview.net/forum?id=S1ldO2EFPr",
+    "word_source_tag": "SRC000046",
+    "aliases": ["Oono & Suzuki", "Oono & Suzuki (2020)", "Oono (2020)", "Over-smoothing"]
+  },
+  {
+    "source_key": "Alon2021OverSquashing",
+    "canonical_title": "On the Bottleneck of Graph Neural Networks and its Practical Implications",
+    "canonical_authors": [
+      "Uri Alon",
+      "Eran Yahav"
+    ],
+    "year": 2021,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "International Conference on Learning Representations (ICLR 2021)",
+    "doi": null,
+    "url": "https://openreview.net/forum?id=i80OPhOCVH2",
+    "word_source_tag": "SRC000021",
+    "aliases": ["Alon & Yahav", "Alon & Yahav (2021)", "Alon (2021)", "Over-squashing"]
+  },
+  {
+    "source_key": "Nguyen2026APTGraphLearning",
+    "canonical_title": "Phát hiện tấn công APT dựa trên Graph Learning (Phần 2)",
+    "canonical_authors": [
+      "Nguyễn Thị Thu Thủy"
+    ],
+    "year": 2026,
+    "publication_type": "WEB_ARTICLE",
+    "venue": "Tạp chí An toàn thông tin",
+    "doi": null,
+    "url": "https://antoanthongtin.vn/",
+    "word_source_tag": "SRC000042",
+    "aliases": ["Nguyễn Thị Thu Thủy", "T. T. T. Nguyễn", "Nguyễn (2026)", "Thu Thủy (2026)"]
+  },
+  {
+    "source_key": "Xu2020TGAT",
+    "canonical_title": "Inductive Representation Learning on Temporal Graphs",
+    "canonical_authors": [
+      "Da Xu",
+      "Chuanwei Ruan",
+      "Evren Korpeoglu",
+      "Sushant Kumar",
+      "Kannan Achan"
+    ],
+    "year": 2020,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "International Conference on Learning Representations (ICLR 2020)",
+    "doi": null,
+    "url": "https://openreview.net/forum?id=rJeEk24FPr",
+    "word_source_tag": "SRC000036",
+    "aliases": ["TGAT", "Xu et al. (2020)", "Da Xu et al."]
+  },
+  {
+    "source_key": "Rossi2020TGN",
+    "canonical_title": "Temporal Graph Networks for Deep Learning on Dynamic Graphs",
+    "canonical_authors": [
+      "Emanuele Rossi",
+      "Ben Chamberlain",
+      "Fabrizio Frasca",
+      "Davide Eynard",
+      "Federico Monti",
+      "Michael Bronstein"
+    ],
+    "year": 2020,
+    "publication_type": "PREPRINT",
+    "venue": "arXiv preprint arXiv:2006.10637",
+    "doi": null,
+    "url": "https://arxiv.org/abs/2006.10637",
+    "word_source_tag": "SRC000037",
+    "aliases": ["TGN", "Rossi et al.", "Rossi et al. (2020)", "Rossi (2020)"]
+  },
+  {
+    "source_key": "Oord2018CPC",
+    "canonical_title": "Representation Learning with Contrastive Predictive Coding",
+    "canonical_authors": [
+      "Aaron van den Oord",
+      "Yazhe Li",
+      "Oriol Vinyals"
+    ],
+    "year": 2018,
+    "publication_type": "PREPRINT",
+    "venue": "arXiv preprint arXiv:1807.03748",
+    "doi": null,
+    "url": "https://arxiv.org/abs/1807.03748",
+    "word_source_tag": "SRC000038",
+    "aliases": ["InfoNCE", "CPC", "van den Oord et al.", "van den Oord et al. (2018)", "van den Oord (2018)"]
+  },
+  {
+    "source_key": "Zhang2019CPMNets",
+    "canonical_title": "CPM-Nets: Cross Partial Multi-View Networks",
+    "canonical_authors": [
+      "Changqing Zhang",
+      "Zongbo Han",
+      "Yajie Cui",
+      "Huazhu Fu",
+      "Joey Tianyi Zhou",
+      "Qinghua Hu"
+    ],
+    "year": 2019,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "Advances in Neural Information Processing Systems 32 (NeurIPS 2019)",
+    "doi": null,
+    "url": "https://proceedings.neurips.cc/paper/2019/hash/11b9842e0a271ff252c1903e7132cd68-Abstract.html",
+    "word_source_tag": "SRC000041",
+    "aliases": ["CPM-Nets", "Zhang et al.", "Zhang et al. (2019)", "Zhang (2019)"]
+  },
+  {
+    "source_key": "Yu2020PCGrad",
+    "canonical_title": "Gradient Surgery for Multi-Task Learning",
+    "canonical_authors": [
+      "Tianhe Yu",
+      "Saurabh Kumar",
+      "Abhishek Gupta",
+      "Sergey Levine",
+      "Karol Hausman",
+      "Chelsea Finn"
+    ],
+    "year": 2020,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "Advances in Neural Information Processing Systems 33 (NeurIPS 2020)",
+    "doi": null,
+    "url": "https://proceedings.neurips.cc/paper/2020/hash/3fe78a8acc1328e7a18cf0817a08648c-Abstract.html",
+    "word_source_tag": "SRC000040",
+    "aliases": ["PCGrad", "Yu et al.", "Yu et al. (2020)", "Yu (2020)", "Gradient Surgery"]
+  },
+  {
+    "source_key": "Ilse2018AttentionMIL",
+    "canonical_title": "Attention-based Deep Multiple Instance Learning",
+    "canonical_authors": [
+      "Maximilian Ilse",
+      "Jakub M. Tomczak",
+      "Max Welling"
+    ],
+    "year": 2018,
+    "publication_type": "PEER_REVIEWED",
+    "venue": "International Conference on Machine Learning (ICML 2018)",
+    "doi": null,
+    "url": "http://proceedings.mlr.press/v80/ilse18a.html",
+    "word_source_tag": "SRC000024",
+    "aliases": ["Attention-MIL", "Ilse et al.", "Ilse et al. (2018)", "Ilse (2018)"]
+  }
+]
