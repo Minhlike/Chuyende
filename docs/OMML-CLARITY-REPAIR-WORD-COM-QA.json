@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "opened_without_repair_api": true,
+  "reopened_without_repair_api": true,
+  "pages_before_save": 129,
+  "pages_immediate_reopen_word_statistic": 156,
+  "fields": 386,
+  "math": 665,
+  "docx": "D:\\Research\\.tmp\\omml-ch1-ch2-clarity\\.tmp\\wordqa.docx",
+  "pdf": "D:\\Research\\.tmp\\omml-ch1-ch2-clarity\\.tmp\\wordqa-reopened.pdf",
+  "pdf_bytes": 3284068
+}

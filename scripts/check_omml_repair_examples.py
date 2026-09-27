@@ -1,0 +1,43 @@
+from __future__ import annotations
+import json,math
+from pathlib import Path
+root=Path(__file__).resolve().parents[1]
+checks={}
+def check(name,condition):
+    checks[name]=bool(condition)
+    if not condition:raise AssertionError(name)
+check('logistic_zero',1/(1+math.exp(0))==.5)
+check('count_vector',(2,1)==(len([x for x in 'AAB' if x=='A']),len([x for x in 'AAB' if x=='B'])))
+check('idf_order',math.log(1+10/2)>math.log(1+10/10))
+check('entropy',math.isclose(-2*.5*math.log2(.5),1))
+check('pca_residual',sum(v*v for v in (0,2))==4 and 4>3)
+check('invariant',2-2==0 and 2-1==1)
+check('margin',.79>.8-.02)
+check('invariance_distance',.1<=.2)
+check('resource_one_step',4<=5 and 80<=100)
+check('pareto_example',.82>=.80 and .25<=.30)
+check('ttl',14-10<=5 and 16-10>5)
+check('watermark',100-5==95 and 93<95)
+check('attention_quadratic_ratio',20**2/10**2==4)
+check('embedding_sum',(1+0,0+1)==(1,1))
+check('cross_entropy',math.isclose(-math.log(.8),.223,abs_tol=.001))
+check('mpp_mean',math.isclose((-math.log(.8)-math.log(.5))/2,.458,abs_tol=.001))
+check('huber',math.isclose(.5*(math.log(3)-1)**2,.0049,abs_tol=.0001))
+check('sequence_readout',(.25*1+.75*0,.25*0+.75*2)==(.25,1.5))
+check('decay',math.isclose(math.exp(-math.log(2)),.5))
+check('message_sum',(1+0,0+2)==(1,2))
+check('node_mse',(1-1)**2+(2-1)**2==1)
+check('graph_readout',(.5*1+.5*0,.5*0+.5*2)==(.5,1))
+check('invariance_loss',(1+0)/2==.5)
+check('variance_sample',math.isclose(math.sqrt(2+1e-4),1.414,abs_tol=.001) and math.isclose(1-math.sqrt(1e-4),.99))
+check('covariance_loss',(2**2+2**2)/2==4)
+check('jaccard_weight',(2/4)*2==1)
+check('stage_a_weighted_sum',25*.1+25*(.1+.1)+.2+.3==8)
+check('gate',math.isclose(.05+.9/(1+3),.275))
+g_align=(1,-1);g_pres=(-1,0);dot=sum(x*y for x,y in zip(g_align,g_pres));norm=sum(x*x for x in g_pres);projected=tuple(x-dot/norm*y for x,y in zip(g_align,g_pres))
+check('pcgrad',dot==-1 and projected==(0,-1) and sum(x*y for x,y in zip(projected,g_pres))==0)
+check('mil_loss',math.isclose(-math.log(.5),.693,abs_tol=.001))
+check('hadamard',(1*3,2*4)==(3,8))
+out={'status':'PASS','checked_examples':len(checks),'checks':checks}
+p=root/'docs/OMML-CLARITY-REPAIR-NUMERIC-QA.json';p.write_text(json.dumps(out,ensure_ascii=False,indent=2),encoding='utf-8')
+print(json.dumps({'status':'PASS','checked_examples':len(checks)}))

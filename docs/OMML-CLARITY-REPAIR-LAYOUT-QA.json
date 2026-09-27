@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "pdf_sha256": "e783de4bbb53a9c69a7b9aa0d9f4522482c7d29e480a9a67fa1ddfaf61da7356",
+  "chapter_1_start_page": 15,
+  "chapter_2_start_page": 42,
+  "chapter_3_start_page": 99,
+  "chapter_1_and_2_pages_reviewed": 84,
+  "contact_sheets_reviewed": 6,
+  "full_resolution_spot_checks": [28, 67, 68, 79, 84, 88, 89, 90, 91, 92, 97, 98],
+  "all_added_note_paragraphs_kept_together": true,
+  "table_2_4_header_repeats_across_pages": true,
+  "blank_or_nearly_blank_chapter_pages": [],
+  "text_outside_page_boxes": [],
+  "known_new_equation_clipping_or_overflow": [],
+  "observations": [
+    "The native L_MPP equation wraps across lines on PDF page 67; the original baseline equation also wrapped. No glyph is clipped.",
+    "The hard page break before the Table 2.4 caption was removed because it created a nearly blank page after the new notes. The table now spans pages 88-89 with its header repeated and no row split.",
+    "All 45 added note paragraphs are present and do not split across pages according to Word pagination checks."
+  ],
+  "render_method": "Microsoft Word COM PDF/A export; PDF pages rendered with PDFium for visual inspection",
+  "skill_render_docx_py": "Unavailable in this Windows environment because LibreOffice soffice.exe is not installed; native Word COM rendering and reopen verification were used."
+}
