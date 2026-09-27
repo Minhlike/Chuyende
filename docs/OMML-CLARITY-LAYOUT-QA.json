@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "pdf_sha256": "307154e3d4cdabf35f73dbd7e95666baa6dbffd3d70da74c2a2ffc0989b3883b",
+  "chapter_1_2_pdf_pages_reviewed": "15-98",
+  "page_count_reviewed": 84,
+  "rendered_contact_sheets": 10,
+  "visual_inspection": "Tất cả 84 trang đã được render và soát trên contact sheets; trang 67-68 và 88-89 soát thêm ở độ phân giải cao.",
+  "no_equation_clipping_or_margin_overflow_observed": true,
+  "no_blank_chapter_page": true,
+  "no_orphan_explanation_observed": true,
+  "no_new_broken_figure_or_table_observed": true,
+  "table_2_4_spans_pages_88_89_with_repeated_header": true,
+  "font_and_header_footer_visual_check": "Cambria Math và Times New Roman hiển thị rõ; số trang/header/footer nhất quán với bản nền.",
+  "final_targeted_high_resolution_pages": [
+    67,
+    68,
+    88,
+    89,
+    98
+  ]
+}

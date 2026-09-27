@@ -1,0 +1,64 @@
+{
+  "status": "RESEARCH_ACCEPTED",
+  "source_repo_starting_head": "d7578872c9b101450ce1b1fcaa73f52dd1c97309",
+  "research_repo_starting_head": "cb6b30028501690c8b7dc70f8e72f78a68ce38f0",
+  "research_branch": "codex/omml-ch1-ch2-clarity",
+  "baseline_export_docx_sha256": "9bb11639807081f6ee3dafa8907f5293913ffec5697b945993b905ad93a67033",
+  "baseline_export_pdf_sha256": "087f1a69721b063fad07362ea184974143c4822d293d67db4ade6906754ce302",
+  "final_docx_sha256": "93b8df9d8485b153b97cacb9025aeeca475d28c454299852131b7db06e0937c7",
+  "final_pdf_sha256": "307154e3d4cdabf35f73dbd7e95666baa6dbffd3d70da74c2a2ffc0989b3883b",
+  "formula_zones_inventoried_chapters_1_2": 555,
+  "formula_zones_by_chapter_before": {
+    "1": 30,
+    "2": 525
+  },
+  "formula_zones_by_chapter_after": {
+    "1": 41,
+    "2": 547
+  },
+  "new_explanatory_passages": 45,
+  "original_formula_zones_directly_adjacent_to_new_explanation": 304,
+  "arithmetical_examples_verified": 31,
+  "original_formulas_mathematically_corrected": 2,
+  "new_native_omml_math_zones_in_examples": 33,
+  "chapter_3_original_math_zones": 67,
+  "chapter_3_content_sha256_before_and_after": "ddf20d1f4927a6f39ebd33804e80d891178a2df5a02e40ccd549519e7465c96b",
+  "gates": {
+    "inventory": "PASS",
+    "numeric_math": "PASS",
+    "ooxml_pre_word": "PASS",
+    "word_com": "PASS",
+    "release_docx_pdf": "PASS",
+    "layout": "PASS"
+  },
+  "scientific_claim_changes": "No original claim text changed; two formula corrections are separately justified in docs/OMML-CLARITY-MATH-CORRECTIONS.json.",
+  "known_limitations": [
+    "Cov_event, Cov_graph và Density_edge vẫn là chỉ báo dự kiến chưa khóa công thức đo trong thiết kế gốc; chú giải không tự đặt số để thay vào."
+  ],
+  "research_files_changed": [
+    "Chuyên đề chuyên sâu.docx",
+    "Chuyên đề chuyên sâu.pdf",
+    "docs/OMML-CLARITY-CHAPTER-HASHES.json",
+    "docs/OMML-CLARITY-INVENTORY-REVIEW.json",
+    "docs/OMML-CLARITY-INVENTORY.json",
+    "docs/OMML-CLARITY-LAYOUT-QA.json",
+    "docs/OMML-CLARITY-MATH-CORRECTIONS.json",
+    "docs/OMML-CLARITY-NUMERIC-QA.json",
+    "docs/OMML-CLARITY-PLAN.md",
+    "docs/OMML-CLARITY-PROVENANCE.json",
+    "docs/OMML-CLARITY-QA-OOXML.json",
+    "docs/OMML-CLARITY-QA-RELEASE.json",
+    "docs/OMML-CLARITY-RESEARCH-ACCEPTANCE.md",
+    "docs/OMML-CLARITY-WORD-COM-QA.json",
+    "scripts/annotate_omml_inventory.py",
+    "scripts/apply_omml_clarity.py",
+    "scripts/audit_omml_clarity.py",
+    "scripts/check_omml_examples.py",
+    "scripts/finalize_omml_inventory.py",
+    "scripts/finalize_omml_release.py",
+    "scripts/verify_omml_clarity.py",
+    "scripts/verify_omml_release.py",
+    "scripts/word_com_qa.py",
+    "src/research_agent/composition/native_omml_equations.py"
+  ]
+}

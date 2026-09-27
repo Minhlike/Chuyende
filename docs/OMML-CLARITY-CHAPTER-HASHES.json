@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "baseline": {
+    "1": {
+      "text_math_sha256": "30949b641ac079adc655a42cf1ac2a62e47a1ef5d806946b503f2ca1ccce58f1",
+      "omml_surfaces_sha256": "679085cd0ff7be1b4da12372a720a3738d0c6817af8a4538cb405964b8c8ad7e",
+      "omml_count": 30,
+      "characters": 43507
+    },
+    "2": {
+      "text_math_sha256": "6b1c2e06bfdd840778fca3c1a7e58c1fd923698623d8c96e7ea10d8d851834cb",
+      "omml_surfaces_sha256": "03016096a2ffb9cabe784d928a81c353132cf72f0abce05a3e22b6a8bd414f17",
+      "omml_count": 525,
+      "characters": 89867
+    },
+    "3": {
+      "text_math_sha256": "ddf20d1f4927a6f39ebd33804e80d891178a2df5a02e40ccd549519e7465c96b",
+      "omml_surfaces_sha256": "108853beb47546260af87b0dad3284c5e19bc4304465ff6743e0a7efd1aa7bf8",
+      "omml_count": 67,
+      "characters": 57572
+    }
+  },
+  "final": {
+    "1": {
+      "text_math_sha256": "5f6bab9cd0630edf58bfd8fb107d32cbaa175293f13105ae5505442e30326477",
+      "omml_surfaces_sha256": "510966f7ba13c04671833373056171a65c1bd2e7eecd7d82f32e86e274a7204f",
+      "omml_count": 41,
+      "characters": 47400
+    },
+    "2": {
+      "text_math_sha256": "311f34799583f14d6221cae0f59537f96eda3eec4d62c91581966a50aea4e0f8",
+      "omml_surfaces_sha256": "50c014abe659fd0fa757cb4068e8db2d3dc5076c4de53c504cbbd021e9a97941",
+      "omml_count": 547,
+      "characters": 103009
+    },
+    "3": {
+      "text_math_sha256": "ddf20d1f4927a6f39ebd33804e80d891178a2df5a02e40ccd549519e7465c96b",
+      "omml_surfaces_sha256": "108853beb47546260af87b0dad3284c5e19bc4304465ff6743e0a7efd1aa7bf8",
+      "omml_count": 67,
+      "characters": 57572
+    }
+  }
+}

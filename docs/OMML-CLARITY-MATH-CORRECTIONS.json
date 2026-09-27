@@ -1,0 +1,42 @@
+[
+  {
+    "id": "MATH-CORRECTION-001",
+    "chapter": 2,
+    "section": "2.3.1.2",
+    "baseline_body_index": 332,
+    "reason": "Mẫu số cũ đếm vị trí sự kiện nhưng tử số cộng theo khe tham số; khi số khe khác nhau, công thức không tương ứng với phép lấy trung bình trên tất cả khe hợp lệ trong triển khai 3D.",
+    "evidence": [
+      "Đoạn mã 2.2 trong DOCX: mpp_logits[mpp_mask] và F.cross_entropy(selected_logits, selected_targets) lấy trung bình trên mọi khe được chọn.",
+      "src/research_agent/composition/native_omml_equations.py: make_l_mpp_omml"
+    ],
+    "claim_scope": "Vẫn là cross-entropy dự đoán token tham số đã bảo vệ; chỉ sửa đơn vị chuẩn hóa từ số sự kiện sang số khe hợp lệ. Không thay đổi số liệu thực nghiệm hoặc kết luận an ninh.",
+    "old": {
+      "surface": "LMPP = 1card(Mparam)i ∈ Mparam(kj, vj) ∈ piprivLparam(φseqparam(hiseq), (kj, vj))",
+      "omml_c14n_sha256": "e306f3ad0b69d9826dcd281f90ec15f4708f849ccf26dccc336a8cb65b8e0dcc"
+    },
+    "new": {
+      "surface": "LMPP = 1i ∈ Mparamcard(Pimask)i ∈ Mparam(kj, vj) ∈ PimaskLparam(φseqparam(hiseq), (kj, vj))",
+      "omml_c14n_sha256": "21c30b89db7d6fe7ace8f598ad8f0567de3d87d3464eff68e6f55976761379ce"
+    }
+  },
+  {
+    "id": "MATH-CORRECTION-002",
+    "chapter": 2,
+    "section": "2.3.1.2",
+    "baseline_body_index": 337,
+    "reason": "Văn bản định nghĩa đầu hồi quy φ_seq,time: R^(2dmodel)→R và đầu vào [h_i;h_(i+1)], nhưng công thức cũ chỉ truyền h_i có dmodel chiều.",
+    "evidence": [
+      "Đoạn ngay trước công thức L_time trong DOCX định nghĩa miền R^(2dmodel) và vector ghép [h_i;h_(i+1)].",
+      "src/research_agent/composition/native_omml_equations.py: make_l_seq_time_omml"
+    ],
+    "claim_scope": "Giữ nguyên mục tiêu dự đoán log(1+Δt) bằng Huber; sửa đối số để khớp kích thước đã công bố. Không thay đổi claim hoặc kết quả thực nghiệm.",
+    "old": {
+      "surface": "Ltime = 1card(Mtime)i ∈ MtimeLδ(φseqtime(hiseq), log(1 + Δti))",
+      "omml_c14n_sha256": "de8ccd5cd9e9e46f30b7741b44786965877d3eff29292ab2b1ca99705f3aad72"
+    },
+    "new": {
+      "surface": "Ltime = 1card(Mtime)i ∈ MtimeLδ(φseqtime([hiseq; hi+1seq]), log(1 + Δti))",
+      "omml_c14n_sha256": "2c3036a17b38184bfb404682a91ee17b096c1f09bd798c4c21415fd8395acc8b"
+    }
+  }
+]

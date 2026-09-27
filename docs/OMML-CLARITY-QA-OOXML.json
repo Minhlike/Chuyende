@@ -1,0 +1,49 @@
+{
+  "status": "PASS",
+  "baseline_sha256": "9bb11639807081f6ee3dafa8907f5293913ffec5697b945993b905ad93a67033",
+  "final_sha256": "e8894e84dbd75625e3173528c2a61be9960d8e4298b92a93e96dc901ae1d079d",
+  "baseline_math_count": 622,
+  "final_math_count": 655,
+  "added_math_count": 33,
+  "corrected_math_count": 2,
+  "corrected_old_surfaces": [
+    "LMPP = 1card(Mparam)i ∈ Mparam(kj, vj) ∈ piprivLparam(φseqparam(hiseq), (kj, vj))",
+    "Ltime = 1card(Mtime)i ∈ MtimeLδ(φseqtime(hiseq), log(1 + Δti))"
+  ],
+  "chapter_math_counts_final": {
+    "1": 41,
+    "2": 547,
+    "3": 67
+  },
+  "unchanged_math_in_order": true,
+  "unchanged_body_in_order": true,
+  "chapter_3_xml_sha256_baseline": "447151f969d5e23c612ec6c7aa7095b92d0f5deddf3cbb067493be1f2ab7d29d",
+  "chapter_3_xml_sha256_final": "447151f969d5e23c612ec6c7aa7095b92d0f5deddf3cbb067493be1f2ab7d29d",
+  "chapter_3_unchanged": true,
+  "all_other_zip_parts_byte_identical": true,
+  "baseline_structure": {
+    "fldChar": 912,
+    "fldSimple": 0,
+    "instrText": 304,
+    "bookmarkStart": 114,
+    "bookmarkEnd": 114,
+    "drawing": 11,
+    "sectPr": 3
+  },
+  "final_structure": {
+    "fldChar": 912,
+    "fldSimple": 0,
+    "instrText": 304,
+    "bookmarkStart": 114,
+    "bookmarkEnd": 114,
+    "drawing": 11,
+    "sectPr": 3
+  },
+  "structure_counts_preserved": true,
+  "bookmarks_preserved": true,
+  "field_codes_preserved": true,
+  "dangling_relationship_targets": [],
+  "missing_document_relationship_ids": [],
+  "empty_math_indexes": [],
+  "bad_math_indexes": []
+}

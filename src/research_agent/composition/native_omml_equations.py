@@ -3,8 +3,72 @@ Sổ đăng ký phương trình OMML chính với 100% thành phần từ bản 
 Không có ký tự SMP, không có dấu phân cách thô không khớp, <w:noProof/> rõ ràng.
 """
 
+from copy import deepcopy
+from lxml import etree
 from docx.oxml import parse_xml
 from docx.oxml.ns import nsdecls
+
+M = 'http://schemas.openxmlformats.org/officeDocument/2006/math'
+
+
+def _plain_math_run(value):
+    run = etree.Element(f'{{{M}}}r')
+    etree.SubElement(run, f'{{{M}}}t').text = value
+    return run
+
+
+def _correct_l_mpp_math(math):
+    """Average MPP over the protected, masked, non-padding parameter slots."""
+    fraction = math.find(f'{{{M}}}f')
+    outer = math.find(f'{{{M}}}nary')
+    denominator = fraction.find(f'{{{M}}}den')
+    denominator.clear()
+    summation = etree.SubElement(denominator, f'{{{M}}}nary')
+    props = etree.SubElement(summation, f'{{{M}}}naryPr')
+    etree.SubElement(props, f'{{{M}}}chr').set(f'{{{M}}}val', '∑')
+    etree.SubElement(props, f'{{{M}}}limLoc').set(f'{{{M}}}val', 'undOvr')
+    etree.SubElement(props, f'{{{M}}}supHide').set(f'{{{M}}}val', '1')
+    summation.append(deepcopy(outer.find(f'{{{M}}}sub')))
+    etree.SubElement(summation, f'{{{M}}}sup')
+    operand = etree.SubElement(summation, f'{{{M}}}e')
+    operand.append(_plain_math_run('card('))
+    slot_set = etree.SubElement(operand, f'{{{M}}}sSubSup')
+    for kind, value in (('e', 'P'), ('sub', 'i'), ('sup', 'mask')):
+        etree.SubElement(etree.SubElement(slot_set, f'{{{M}}}{kind}'), f'{{{M}}}r').append(
+            etree.Element(f'{{{M}}}t')
+        )
+        slot_set.find(f'{{{M}}}{kind}/{{{M}}}r/{{{M}}}t').text = value
+    operand.append(_plain_math_run(')'))
+    inner = outer.find(f'{{{M}}}e/{{{M}}}nary')
+    parameter_sets = [
+        node for node in inner.find(f'{{{M}}}sub').iter(f'{{{M}}}sSubSup')
+        if ''.join(t.text or '' for t in node.find(f'{{{M}}}e').iter(f'{{{M}}}t')) == 'p'
+    ]
+    if len(parameter_sets) != 1:
+        raise ValueError('MPP parameter set structure changed')
+    parameter_sets[0].find(f'{{{M}}}e').find(f'.//{{{M}}}t').text = 'P'
+    parameter_sets[0].find(f'{{{M}}}sup').find(f'.//{{{M}}}t').text = 'mask'
+    return math
+
+
+def _correct_l_seq_time_math(math):
+    """The time head has 2*d_model input coordinates: [h_i; h_(i+1)]."""
+    states = [
+        node for node in math.iter(f'{{{M}}}sSubSup')
+        if ''.join(t.text or '' for t in node.find(f'{{{M}}}e').iter(f'{{{M}}}t')) == 'h'
+    ]
+    if len(states) != 1:
+        raise ValueError('Sequence time input structure changed')
+    state = states[0]
+    parent = state.getparent()
+    index = parent.index(state)
+    parent.insert(index, _plain_math_run('['))
+    following = deepcopy(state)
+    following.find(f'{{{M}}}sub').find(f'.//{{{M}}}t').text = 'i+1'
+    parent.insert(index + 2, _plain_math_run('; '))
+    parent.insert(index + 3, following)
+    parent.insert(index + 4, _plain_math_run(']'))
+    return math
 
 def make_evidence_space_omml():
     """OMML gốc cho tập hợp con Y {0, 1}^{|T|} sử dụng kiểu script trên ASCII Y và T."""
@@ -680,7 +744,7 @@ def make_l_mep_omml():
 
 
 def make_l_mpp_omml():
-    """OMML di động cho L_MPP = 1/thẻ(M_param) sum_{i in M_param} sum_{(k_j, v_j) trong p_i^priv} ..."""
+    """OMML cho trung bình L_MPP trên các khe tham số bị che không đệm."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><m:rPr><m:noProof/></m:rPr><m:t>MPP</m:t></m:r></m:sub></m:sSub>\n'
@@ -708,11 +772,11 @@ def make_l_mpp_omml():
         '  </m:nary>\n'
         '</m:oMath>'
     )
-    return parse_xml(xml_str)
+    return _correct_l_mpp_math(parse_xml(xml_str))
 
 
 def make_l_seq_time_omml():
-    """OMML di động cho L_time = 1/thẻ(M_time) tổng_{i trong M_time} l_delta(phi_seq^time(h_i), log(1 + Delta t_i))."""
+    """OMML cho L_time với đầu hồi quy nhận cặp trạng thái liên tiếp."""
     xml_str = (
         f'<m:oMath {nsdecls("m", "w")}>\n'
         '  <m:sSub><m:e><m:r><m:rPr><m:scr m:val="script"/><m:sty m:val="i"/></m:rPr><w:rPr><w:noProof/><w:lang w:val="en-US"/></w:rPr><m:t>L</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:noProof/></w:rPr><m:t>time</m:t></m:r></m:sub></m:sSub>\n'
@@ -739,7 +803,7 @@ def make_l_seq_time_omml():
         '  </m:nary>\n'
         '</m:oMath>'
     )
-    return parse_xml(xml_str)
+    return _correct_l_seq_time_math(parse_xml(xml_str))
 
 
 def make_l_mask_node_omml():

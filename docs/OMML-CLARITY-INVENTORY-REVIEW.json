@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "baseline_formula_zones_reviewed": 555,
+  "chapter_counts": {
+    "1": 30,
+    "2": 525
+  },
+  "distinct_formula_locations_reviewed": 197,
+  "new_explanatory_passages": 45,
+  "formula_zones_with_direct_adjacent_new_explanation": 304,
+  "formula_zones_reviewed_against_existing_local_prose": 251,
+  "changed_original_formula_zones": 2,
+  "unreviewed": 0
+}
