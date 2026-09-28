@@ -110,7 +110,11 @@ def main():
     parser.add_argument('docx', type=Path)
     parser.add_argument('pdf', type=Path)
     parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--expected-preword', type=Path,
+        default=Path(__file__).resolve().parents[1]/'docs/OMML-TYPOGRAPHY-REPAIR-QA-PREWORD.json')
     args = parser.parse_args()
+    expected=json.loads(args.expected_preword.read_text(encoding='utf-8'))
+    assert expected['status']=='PASS' and expected['baseline_sha256']==digest(args.baseline)
     br, bb, bs, bc, bf = parse_docx(args.baseline)
     fr, fb, fs, fc, ff = parse_docx(args.docx)
     bm = [surface(x) for x in br.iter(M + 'oMath')]
@@ -167,9 +171,9 @@ def main():
     old_flat=Counter(surface(node) for node in old_math_nodes if flat_math(node))
     new_flat=Counter(surface(node) for node in new_math_nodes if flat_math(node))
     added_flat=list((new_flat-old_flat).elements())
-    simple_flat=Counter(('σ(0)=0,5','Ax=0','0,79>0,80-0,02',
-        '-ln(0,8)≈0,223','-ln(0,8)≈0,223','ln(3)≈1,099',
-        'exp(-ln2)=0,5','-ln(0,5)≈0,693'))
+    normalized_flat=lambda value: value.replace('−','-')
+    simple_flat=Counter(normalized_flat(value) for value in expected['added_flat_simple_math'])
+    observed_flat=Counter(normalized_flat(value) for value in added_flat)
     report = {
         'status': 'PASS', 'docx_sha256': digest(args.docx), 'pdf_sha256': digest(args.pdf),
         'docx_zip_xml_valid': True, 'original_math_zones': len(bm), 'final_math_zones': len(fm),
@@ -196,9 +200,11 @@ def main():
         'final_display_math':len(list(fr.iter(M+'oMathPara'))),
     }
     conditions = [
-        len(bm) == 622, len(fm) == 699, chapter_math == {1: 40, 2: 592, 3: 67},
-        report['baseline_structured_math']==516,report['final_structured_math']==585,
-        new_flat-old_flat==simple_flat,
+        len(bm) == 622, len(fm) == expected['final_math_count'],
+        chapter_math == {int(k):v for k,v in expected['chapter_math_counts_final'].items()},
+        report['baseline_structured_math']==516,
+        report['final_structured_math']==expected['final_structured_math'],
+        observed_flat==simple_flat,
         report['baseline_display_math']==98,report['final_display_math']==102,
         not empty_math, not dangling, not missing_ids, original_math_preserved,
         ch3_original == ch3_final, ch3_math_original == ch3_math_final,

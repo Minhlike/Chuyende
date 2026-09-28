@@ -1,0 +1,1329 @@
+[
+  {
+    "anchor": 518,
+    "symbol": "B",
+    "source_body_index": 518,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 518,
+    "symbol": "K",
+    "source_body_index": 518,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 518,
+    "symbol": "d",
+    "source_body_index": 518,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 518,
+    "symbol": "K",
+    "source_body_index": 518,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 518,
+    "symbol": "dproj",
+    "source_body_index": 518,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 509,
+    "symbol": "dcross",
+    "source_body_index": 510,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 509,
+    "symbol": "mseq",
+    "source_body_index": 509,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 509,
+    "symbol": "mgraph",
+    "source_body_index": 509,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 509,
+    "symbol": "useq",
+    "source_body_index": 504,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 509,
+    "symbol": "ugraph",
+    "source_body_index": 504,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 509,
+    "symbol": "ucross",
+    "source_body_index": 509,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 509,
+    "symbol": "zmv",
+    "source_body_index": 509,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 493,
+    "symbol": "K",
+    "source_body_index": 491,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 493,
+    "symbol": "zbag",
+    "source_body_index": 492,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 482,
+    "symbol": "galign",
+    "source_body_index": 482,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 482,
+    "symbol": "gpreserv",
+    "source_body_index": 482,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 482,
+    "symbol": "galignproj",
+    "source_body_index": 483,
+    "kind": "whole_symbol",
+    "source_structure": "sSubSup"
+  },
+  {
+    "anchor": 478,
+    "symbol": "qseq",
+    "source_body_index": 477,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 478,
+    "symbol": "qgraph",
+    "source_body_index": 477,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 478,
+    "symbol": "Covevent",
+    "source_body_index": 476,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 478,
+    "symbol": "Covgraph",
+    "source_body_index": 476,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 478,
+    "symbol": "Densityedge",
+    "source_body_index": 476,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 478,
+    "symbol": "q",
+    "source_body_index": 477,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 478,
+    "symbol": "sseq",
+    "source_body_index": 478,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 478,
+    "symbol": "sgraph",
+    "source_body_index": 478,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 478,
+    "symbol": "wrelseq",
+    "source_body_index": 478,
+    "kind": "whole_symbol",
+    "source_structure": "sSubSup"
+  },
+  {
+    "anchor": 472,
+    "symbol": "Lpreserv",
+    "source_body_index": 472,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 472,
+    "symbol": "Lfuse-rec",
+    "source_body_index": 472,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 472,
+    "symbol": "Linv",
+    "source_body_index": 472,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 472,
+    "symbol": "Lvar",
+    "source_body_index": 472,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 472,
+    "symbol": "Lcov",
+    "source_body_index": 472,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 472,
+    "symbol": "Lpreserv",
+    "source_body_index": 472,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 472,
+    "symbol": "Lfuse-rec",
+    "source_body_index": 472,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 472,
+    "symbol": "LStage-A",
+    "source_body_index": 472,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 441,
+    "symbol": "ρoverlap",
+    "source_body_index": 441,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 441,
+    "symbol": "ρoverlap",
+    "source_body_index": 441,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 441,
+    "symbol": "Linv",
+    "source_body_index": 441,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 434,
+    "symbol": "dproj",
+    "source_body_index": 434,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 434,
+    "symbol": "dproj",
+    "source_body_index": 434,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 434,
+    "symbol": "Lcov",
+    "source_body_index": 434,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 434,
+    "symbol": "Lcov",
+    "source_body_index": 434,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 428,
+    "symbol": "P",
+    "source_body_index": 428,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 428,
+    "symbol": "B",
+    "source_body_index": 426,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 428,
+    "symbol": "dproj",
+    "source_body_index": 428,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 428,
+    "symbol": "p:, j",
+    "source_body_index": 428,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 428,
+    "symbol": "γ",
+    "source_body_index": 168,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 428,
+    "symbol": "ϵ",
+    "source_body_index": 237,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 426,
+    "symbol": "B",
+    "source_body_index": 426,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 426,
+    "symbol": "dproj",
+    "source_body_index": 428,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 426,
+    "symbol": "Linv",
+    "source_body_index": 426,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 416,
+    "symbol": "dproj",
+    "source_body_index": 416,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 401,
+    "symbol": "L",
+    "source_body_index": 401,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 401,
+    "symbol": "Nlayers",
+    "source_body_index": 401,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 401,
+    "symbol": "d",
+    "source_body_index": 401,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 401,
+    "symbol": "dff",
+    "source_body_index": 401,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 401,
+    "symbol": "EW",
+    "source_body_index": 401,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 401,
+    "symbol": "Vupd",
+    "source_body_index": 401,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 401,
+    "symbol": "dseq",
+    "source_body_index": 401,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 401,
+    "symbol": "dgraph",
+    "source_body_index": 401,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 401,
+    "symbol": "L",
+    "source_body_index": 401,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 395,
+    "symbol": "dgraph",
+    "source_body_index": 395,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 395,
+    "symbol": "zgraph",
+    "source_body_index": 395,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 395,
+    "symbol": "Wm",
+    "source_body_index": 395,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 378,
+    "symbol": "u",
+    "source_body_index": 378,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 360,
+    "symbol": "λ",
+    "source_body_index": 472,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 360,
+    "symbol": "te",
+    "source_body_index": 360,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 360,
+    "symbol": "exp",
+    "source_body_index": 360,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 342,
+    "symbol": "αi",
+    "source_body_index": 342,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 342,
+    "symbol": "L",
+    "source_body_index": 342,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 342,
+    "symbol": "Wproj",
+    "source_body_index": 342,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 342,
+    "symbol": "hi",
+    "source_body_index": 342,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 342,
+    "symbol": "dmodel",
+    "source_body_index": 341,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 342,
+    "symbol": "dseq",
+    "source_body_index": 342,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 342,
+    "symbol": "h1",
+    "source_body_index": 340,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 342,
+    "symbol": "h",
+    "source_body_index": 342,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 342,
+    "symbol": "Wproj",
+    "source_body_index": 342,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 342,
+    "symbol": "zseq",
+    "source_body_index": 342,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 337,
+    "symbol": "Δ",
+    "source_body_index": 336,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 337,
+    "symbol": "ti",
+    "source_body_index": 336,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 337,
+    "symbol": "log",
+    "source_body_index": 336,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 337,
+    "symbol": "ti",
+    "source_body_index": 336,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 337,
+    "symbol": "Lδ",
+    "source_body_index": 337,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 337,
+    "symbol": "Δ",
+    "source_body_index": 336,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 337,
+    "symbol": "ti",
+    "source_body_index": 336,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 332,
+    "symbol": "Pimask",
+    "source_body_index": 332,
+    "kind": "whole_symbol",
+    "source_structure": "sSubSup"
+  },
+  {
+    "anchor": 330,
+    "symbol": "Mevent",
+    "source_body_index": 330,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 330,
+    "symbol": "Mevent",
+    "source_body_index": 330,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 330,
+    "symbol": "τi",
+    "source_body_index": 330,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 326,
+    "symbol": "xi",
+    "source_body_index": 325,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 326,
+    "symbol": "dmodel",
+    "source_body_index": 326,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 326,
+    "symbol": "xi",
+    "source_body_index": 325,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 314,
+    "symbol": "Ws",
+    "source_body_index": 314,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 314,
+    "symbol": "Wm",
+    "source_body_index": 314,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 314,
+    "symbol": "W",
+    "source_body_index": 314,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 314,
+    "symbol": "Ws",
+    "source_body_index": 314,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 314,
+    "symbol": "Wm",
+    "source_body_index": 314,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 314,
+    "symbol": "W",
+    "source_body_index": 314,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 303,
+    "symbol": "pi",
+    "source_body_index": 303,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 303,
+    "symbol": "z",
+    "source_body_index": 294,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 299,
+    "symbol": "πψ",
+    "source_body_index": 299,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 299,
+    "symbol": "ψ",
+    "source_body_index": 299,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 270,
+    "symbol": "x",
+    "source_body_index": 325,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 251,
+    "symbol": "Cstep",
+    "source_body_index": 251,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 251,
+    "symbol": "Cseq",
+    "source_body_index": 251,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 251,
+    "symbol": "Cgraph",
+    "source_body_index": 251,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 251,
+    "symbol": "Cstate",
+    "source_body_index": 251,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 251,
+    "symbol": "Calign",
+    "source_body_index": 251,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 251,
+    "symbol": "d",
+    "source_body_index": 257,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 251,
+    "symbol": "L",
+    "source_body_index": 251,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 248,
+    "symbol": "δdelay",
+    "source_body_index": 248,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 248,
+    "symbol": "δdelay",
+    "source_body_index": 248,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 248,
+    "symbol": "twm",
+    "source_body_index": 248,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 248,
+    "symbol": "s",
+    "source_body_index": 314,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 245,
+    "symbol": "tlast",
+    "source_body_index": 245,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 245,
+    "symbol": "v",
+    "source_body_index": 264,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 245,
+    "symbol": "τTTL",
+    "source_body_index": 245,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 245,
+    "symbol": "v",
+    "source_body_index": 264,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 245,
+    "symbol": "τTTL",
+    "source_body_index": 245,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 245,
+    "symbol": "v",
+    "source_body_index": 264,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 245,
+    "symbol": "St",
+    "source_body_index": 245,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 245,
+    "symbol": "St",
+    "source_body_index": 245,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 239,
+    "symbol": "et",
+    "source_body_index": 239,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 239,
+    "symbol": "Tbudget",
+    "source_body_index": 239,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 239,
+    "symbol": "St",
+    "source_body_index": 239,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 239,
+    "symbol": "Mmax",
+    "source_body_index": 239,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 237,
+    "symbol": "ϵinv",
+    "source_body_index": 237,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 234,
+    "symbol": "ϵmargin",
+    "source_body_index": 234,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 224,
+    "symbol": "St-1",
+    "source_body_index": 224,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 224,
+    "symbol": "et",
+    "source_body_index": 224,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 224,
+    "symbol": "St",
+    "source_body_index": 224,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 224,
+    "symbol": "fθ",
+    "source_body_index": 224,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 224,
+    "symbol": "zt",
+    "source_body_index": 224,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 224,
+    "symbol": "d",
+    "source_body_index": 223,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 222,
+    "symbol": "P",
+    "source_body_index": 236,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 222,
+    "symbol": "F",
+    "source_body_index": 434,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 222,
+    "symbol": "P",
+    "source_body_index": 236,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 182,
+    "symbol": "ϕ",
+    "source_body_index": 270,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 182,
+    "symbol": "Tv",
+    "source_body_index": 182,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 182,
+    "symbol": "ψ",
+    "source_body_index": 275,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 182,
+    "symbol": "Te",
+    "source_body_index": 182,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 182,
+    "symbol": "τ",
+    "source_body_index": 222,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 175,
+    "symbol": "Et",
+    "source_body_index": 175,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 175,
+    "symbol": "g",
+    "source_body_index": 175,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 175,
+    "symbol": "A",
+    "source_body_index": 266,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 175,
+    "symbol": "B",
+    "source_body_index": 356,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 175,
+    "symbol": "C",
+    "source_body_index": 140,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 175,
+    "symbol": "Et",
+    "source_body_index": 175,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 175,
+    "symbol": "C",
+    "source_body_index": 140,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 170,
+    "symbol": "A",
+    "source_body_index": 266,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 170,
+    "symbol": "x",
+    "source_body_index": 168,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 168,
+    "symbol": "P",
+    "source_body_index": 168,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 168,
+    "symbol": "x",
+    "source_body_index": 168,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 168,
+    "symbol": "I",
+    "source_body_index": 140,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 168,
+    "symbol": "xa",
+    "source_body_index": 168,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 168,
+    "symbol": "P",
+    "source_body_index": 168,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 168,
+    "symbol": "xa",
+    "source_body_index": 168,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 168,
+    "symbol": "xa",
+    "source_body_index": 168,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 168,
+    "symbol": "γα",
+    "source_body_index": 168,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 166,
+    "symbol": "W",
+    "source_body_index": 166,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 166,
+    "symbol": "M",
+    "source_body_index": 166,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 166,
+    "symbol": "ei",
+    "source_body_index": 166,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 166,
+    "symbol": "ei",
+    "source_body_index": 166,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 166,
+    "symbol": "W",
+    "source_body_index": 166,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 166,
+    "symbol": "W",
+    "source_body_index": 166,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 166,
+    "symbol": "A",
+    "source_body_index": 266,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 166,
+    "symbol": "A",
+    "source_body_index": 266,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 166,
+    "symbol": "B",
+    "source_body_index": 356,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 166,
+    "symbol": "B",
+    "source_body_index": 356,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 166,
+    "symbol": "log2",
+    "source_body_index": 166,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 166,
+    "symbol": "log2",
+    "source_body_index": 166,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 166,
+    "symbol": "A",
+    "source_body_index": 266,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 165,
+    "symbol": "N",
+    "source_body_index": 165,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 165,
+    "symbol": "ei",
+    "source_body_index": 165,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 165,
+    "symbol": "ei",
+    "source_body_index": 165,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 165,
+    "symbol": "A",
+    "source_body_index": 266,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 165,
+    "symbol": "B",
+    "source_body_index": 356,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 165,
+    "symbol": "log",
+    "source_body_index": 165,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 165,
+    "symbol": "log",
+    "source_body_index": 165,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 165,
+    "symbol": "log",
+    "source_body_index": 165,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 165,
+    "symbol": "log",
+    "source_body_index": 165,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 164,
+    "symbol": "x",
+    "source_body_index": 168,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 164,
+    "symbol": "W",
+    "source_body_index": 163,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 164,
+    "symbol": "A",
+    "source_body_index": 266,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 164,
+    "symbol": "B",
+    "source_body_index": 356,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 164,
+    "symbol": "A",
+    "source_body_index": 266,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 164,
+    "symbol": "A",
+    "source_body_index": 266,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 164,
+    "symbol": "B",
+    "source_body_index": 356,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 164,
+    "symbol": "B",
+    "source_body_index": 356,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 164,
+    "symbol": "A",
+    "source_body_index": 266,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 164,
+    "symbol": "A",
+    "source_body_index": 266,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 156,
+    "symbol": "z",
+    "source_body_index": 223,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 156,
+    "symbol": "d",
+    "source_body_index": 154,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 156,
+    "symbol": "W",
+    "source_body_index": 156,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 156,
+    "symbol": "d",
+    "source_body_index": 154,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 156,
+    "symbol": "b",
+    "source_body_index": 463,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 156,
+    "symbol": "W⊤",
+    "source_body_index": 156,
+    "kind": "whole_symbol",
+    "source_structure": "sSup"
+  },
+  {
+    "anchor": 127,
+    "symbol": "Pt",
+    "source_body_index": 127,
+    "kind": "whole_symbol",
+    "source_structure": "sSub"
+  },
+  {
+    "anchor": 127,
+    "symbol": "X",
+    "source_body_index": 125,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 127,
+    "symbol": "Y",
+    "source_body_index": 132,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 127,
+    "symbol": "z",
+    "source_body_index": 223,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 127,
+    "symbol": "X",
+    "source_body_index": 125,
+    "kind": "run_style"
+  },
+  {
+    "anchor": 127,
+    "symbol": "Y",
+    "source_body_index": 132,
+    "kind": "run_style"
+  }
+]

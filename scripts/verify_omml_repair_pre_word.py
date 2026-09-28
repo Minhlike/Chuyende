@@ -2,6 +2,10 @@ from __future__ import annotations
 import argparse, collections, hashlib, json, posixpath, sys, zipfile
 from pathlib import Path
 from lxml import etree
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from scripts.apply_omml_clarity_repair import NOTES, MATH_RE, added_expressions, fix_verified_math
+from scripts.omml_clarity_math import make_example
+from scripts.omml_source_style import SourceMathStyle
 sys.stdout.reconfigure(encoding='utf-8',errors='backslashreplace')
 W='http://schemas.openxmlformats.org/wordprocessingml/2006/main'
 M='http://schemas.openxmlformats.org/officeDocument/2006/math'
@@ -90,9 +94,14 @@ def main():
     flat_before=collections.Counter(text(m) for m in bmath if flat_math(m))
     flat_after=collections.Counter(text(m) for m in fmath if flat_math(m))
     added_flat=list((flat_after-flat_before).elements())
-    permitted_flat=collections.Counter(('σ(0)=0,5','Ax=0','0,79>0,80−0,02',
-        '−ln(0,8)≈0,223','−ln(0,8)≈0,223','ln(3)≈1,099',
-        'exp(−ln2)=0,5','−ln(0,5)≈0,693'))
+    style_root=etree.fromstring(etree.tostring(br))
+    style_body=style_root.find(f'{{{W}}}body')
+    fix_verified_math(style_body[332].find(f'.//{{{M}}}oMath'),style_body[337].find(f'.//{{{M}}}oMath'))
+    source_style=SourceMathStyle(style_body)
+    added_raw=list(added_expressions())
+    expected_new=[source_style.apply(make_example(raw),anchor) for anchor,raw in added_raw]
+    permitted_flat=collections.Counter(text(m) for m in expected_new if flat_math(m))
+    expected_structured=sum(not flat_math(m) for m in expected_new)
     counts={}
     for ch,a0,e0 in ((1,fh[1],fh[2]),(2,fh[2],fh[3]),(3,fh[3],len(fb))):
         counts[str(ch)]=sum(len(x.findall(f'.//{{{M}}}oMath')) for x in fb[a0:e0])
@@ -113,9 +122,13 @@ def main():
                    'baseline_display_math_count':len(list(br.iter(f'{{{M}}}oMathPara'))),
                    'final_display_math_count':len(list(fr.iter(f'{{{M}}}oMathPara')))})
     checks=[math_subsequence,body_subsequence,ch3_base==ch3_final,part_equal,bs==fs,book_ok,field_ok,
-        len(corrected_math)==2,len(fmath)-len(bmath)==77,counts=={'1':40,'2':592,'3':67},
+        len(corrected_math)==2,len(fmath)-len(bmath)==len(expected_new),
+        counts=={'1':30+sum(1 for i,_ in added_raw if i<bh[2]),
+                 '2':525+sum(1 for i,_ in added_raw if bh[2]<=i<bh[3]),
+                 '3':67},
         flat_after-flat_before==permitted_flat,
-        report['baseline_structured_math']==516,report['final_structured_math']==585,
+        report['baseline_structured_math']==516,
+        report['final_structured_math']==516+expected_structured,
         report['baseline_display_math_count']==98,report['final_display_math_count']==102,
         not report['dangling_relationship_targets'],not missing_ids,not math_empty,not math_bad]
     if not all(checks):report['status']='FAIL'

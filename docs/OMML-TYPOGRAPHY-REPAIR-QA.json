@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "notes_expected": 45,
+  "notes_matched": 45,
+  "added_math_zones_checked": 225,
+  "math_runs_checked": 566,
+  "original_math_font": [
+    "Cambria Math"
+  ],
+  "old_example_labels_present": false,
+  "source_typography_and_subscript_superscript_positions_match": true,
+  "defects": []
+}

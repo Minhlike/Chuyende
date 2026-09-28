@@ -7,6 +7,7 @@ from lxml import etree
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from scripts.omml_clarity_math import EXAMPLES, make_example
+from scripts.omml_source_style import SourceMathStyle
 DOCX=ROOT/'Chuyên đề chuyên sâu.docx'
 EXPECTED='9bb11639807081f6ee3dafa8907f5293913ffec5697b945993b905ad93a67033'
 W='http://schemas.openxmlformats.org/wordprocessingml/2006/main'
@@ -110,9 +111,21 @@ PROSE_SYMBOLS=(
  'zbag','zmv','useq','ugraph','ucross','galign','gpreserv',
  'Cov_event','Cov_graph','Density_edge','Cstep','Cseq','Cgraph','Cstate',
  'Calign','Mmax','Tbudget','εinv','εmargin',
+ 'P_t','X','Y','z','x','W','M','N','P','I','d','b','g','u','v','L','A','B','C','F','K',
+ 'σ','γ','ε','λ','ϕ','ψ','τ','⊥','∀t',
+ 'n(eᵢ)','p(eᵢ)','eᵢ','N=10','p(A)=p(B)=0,5','H(W)=0','xₐ','(3,0)ᵀ','γα=3','4>3',
+ 'x=(2,1)ᵀ','Ax=1','g=2','Eₜ={A,B}','Eₜ','Tᵥ','Tₑ',
+ 'Sₜ₋₁','eₜ','Sₜ','fθ','zₜ','Δt(eₜ)','Mem(Sₜ)','|Sₜ|',
+ 'τTTL=5','τTTL','δdelay=5','δdelay','tlast(v)','Retain(x)','Normalize(x)=ϕ(x)','πψ','pᵢ',
+ 'Wₛ','Wₘ','Wₗ','xᵢ','|Mₑᵥₑₙₜ|','Mₑᵥₑₙₜ','τᵢ',
+ 'log(1+Δtᵢ)','Δtᵢ=2','Δtᵢ','Lδ','δ=1','αᵢ','hᵢ',
+ 't≥tₑ','λ=ln(2)','ε=10⁻⁴','B≥2','B=2','γ=1','C(P)','p_:,j','dproj×dproj',
+ 'ρoverlap=0,5','ρoverlap','τ=0,05','Linv=2','Linv=0,1',
+ 'Lpreserv=0,2','Lfuse-rec=0,3','sseq=0','sgraph=ln 3','mseq','mgraph',
+ 'Pfuse','Wout','q','O',
 )
 assert all(symbol in EXAMPLES for symbol in PROSE_SYMBOLS)
-SYMBOL_RE=re.compile(r'(?<![A-Za-z0-9_])(?:'+ '|'.join(map(re.escape,sorted(PROSE_SYMBOLS,key=len,reverse=True))) +r')(?![A-Za-z0-9_])')
+SYMBOL_RE=re.compile(r'(?<!\w)(?:'+ '|'.join(map(re.escape,sorted(PROSE_SYMBOLS,key=len,reverse=True))) +r')(?!\w)')
 def mathify_prose(value):
     out=[];last=0
     for match in MATH_RE.finditer(value):
@@ -121,7 +134,20 @@ def mathify_prose(value):
         last=match.end()
     out.append(SYMBOL_RE.sub(lambda m:'⟦'+m.group(0)+'⟧',value[last:]))
     return ''.join(out)
-NOTES={index:mathify_prose(note) for index,note in NOTES.items()}
+NOTES={index:mathify_prose(note.replace('Ví dụ minh họa','Ví dụ').replace('Ví dụ khái niệm','Ví dụ')
+                         .replace('ngưỡng minh họa','ngưỡng giả định')
+                         .replace('galign,proj=(0,−1)','galign^proj=(0,−1)')
+                         .replace('Pfuse đưa hai vector','Hai phép chiếu dung hợp đưa hai vector')
+                         .replace('các ma trận Wout','các ma trận đầu ra'))
+       for index,note in NOTES.items()}
+
+def added_expressions():
+    for anchor, note in NOTES.items():
+        for raw in MATH_RE.findall(note):
+            yield anchor, raw
+            if raw in DISPLAY_EXAMPLES:
+                for tail in MATH_RE.findall(mathify_prose(DISPLAY_EXAMPLES[raw])):
+                    yield anchor, tail
 
 def math_run(value):
     r=etree.Element(f'{{{M}}}r')
@@ -172,7 +198,7 @@ def fix_verified_math(mpp, time):
     parent.insert(idx+2,math_run('; '))
     parent.insert(idx+3,other)
     parent.insert(idx+4,math_run(']'))
-def paragraphs(text, template_ppr, equation_ppr, *, keep_lines=False):
+def paragraphs(text, template_ppr, equation_ppr, *, anchor, source_style, keep_lines=False):
     result=[]
     p=etree.Element(Q('p'))
     if template_ppr is not None:p.append(copy.deepcopy(template_ppr))
@@ -191,13 +217,14 @@ def paragraphs(text, template_ppr, equation_ppr, *, keep_lines=False):
             if equation_ppr is not None:eq.append(copy.deepcopy(equation_ppr))
             if eq.find(Q('pPr')) is not None:etree.SubElement(eq.find(Q('pPr')),Q('keepNext'))
             display=etree.SubElement(eq,f'{{{M}}}oMathPara')
-            display.append(make_example(raw))
+            display.append(source_style.apply(make_example(raw), anchor))
             result.append(eq)
-            p=etree.Element(Q('p'))
-            if template_ppr is not None:p.append(copy.deepcopy(template_ppr))
-            r=etree.SubElement(p,Q('r'));t=etree.SubElement(r,Q('t'));t.text=DISPLAY_EXAMPLES[raw]
+            tail=paragraphs(mathify_prose(DISPLAY_EXAMPLES[raw]),template_ppr,equation_ppr,
+                            anchor=anchor,source_style=source_style,keep_lines=keep_lines)
+            if len(tail)!=1:raise RuntimeError('Display follow-up unexpectedly contains another display')
+            p=tail[0]
         else:
-            p.append(copy.deepcopy(make_example(raw)))
+            p.append(source_style.apply(make_example(raw), anchor))
         last=m.end()
     if last<len(text):
         r=etree.SubElement(p,Q('r')); t=etree.SubElement(r,Q('t')); t.text=text[last:]; t.set('{http://www.w3.org/XML/1998/namespace}space','preserve')
@@ -229,10 +256,12 @@ def main():
         raise RuntimeError('Table 2.4 caption moved')
     template_ppr=body[165].find(Q('pPr'))
     equation_ppr=body[166].find(Q('pPr'))
+    fix_verified_math(targets[332],targets[337])
+    source_style=SourceMathStyle(body)
     for idx in sorted(NOTES,reverse=True):
         if not 111<=idx<523:raise ValueError(f'Out of scope index {idx}')
-        for p in reversed(paragraphs(NOTES[idx],template_ppr,equation_ppr,
-                keep_lines=idx in (165,166,168,234,248,251,332,342,401,472,478,509))):
+        for p in reversed(paragraphs(NOTES[idx],template_ppr,equation_ppr,anchor=idx,source_style=source_style,
+                keep_lines=idx in (165,166,168,177,234,248,251,332,342,401,472,478,509))):
             body.insert(idx+1,p)
     # Ngắt trang cứng của caption Bảng 2.4 chỉ hữu ích ở bản nền 120 trang;
     # với chú giải mới nó để gần trọn một trang trống. Giữ các thuộc tính khác.
@@ -240,9 +269,8 @@ def main():
     page_break=ppr.find(Q('pageBreakBefore')) if ppr is not None else None
     if page_break is None:raise RuntimeError('Expected original Table 2.4 page break missing')
     ppr.remove(page_break)
-    fix_verified_math(targets[332],targets[337])
     current=[hashlib.sha256(etree.tostring(x,method='c14n')).hexdigest() for x in root.iter(f'{{{M}}}oMath')]
-    n_new=sum(len(MATH_RE.findall(s)) for s in NOTES.values())
+    n_new=sum(1 for _ in added_expressions())
     changed={original_math.index(targets[332]),original_math.index(targets[337])}
     unchanged=[originals[j] for j in range(len(originals)) if j not in changed]
     new_counter={h:current.count(h) for h in set(unchanged)}
@@ -251,5 +279,7 @@ def main():
     if len(current)!=len(originals)+n_new:raise RuntimeError('Unexpected math count')
     payload=etree.tostring(root,xml_declaration=True,encoding='UTF-8',standalone=True)
     replace_member(DOCX,payload)
+    (ROOT/'docs/OMML-TYPOGRAPHY-SOURCE-MAP.json').write_text(
+        json.dumps(source_style.matches,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps({'notes':len(NOTES),'new_omml':n_new,'original_omml':len(originals),'final_omml':len(current),'corrected_equations':2},ensure_ascii=False))
 if __name__=='__main__':main()
