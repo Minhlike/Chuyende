@@ -11,8 +11,9 @@
 
 | Văn bản | Định dạng | Quy mô | Mã băm SHA-256 kiểm chứng |
 | :--- | :---: | :---: | :--- |
-| **Bản thảo Chuyên đề (PDF)** | [PDF](Chuyên%20đề%20chuyên%20sâu.pdf) | **121 trang** | `a4a347ea159043e8ab0dd308f3ad9ccd5d06369062c58e6f4a23deaf1a6e5052` |
-| **Bản thảo Master (DOCX)** | [DOCX](Chuyên%20đề%20chuyên%20sâu.docx) | 8.77 MB | `3a6a2be313154654c4004e687d30357a4bb3c5e0e5d612083a93b46f21559704` |
+| **Bản thảo Chuyên đề (PDF)** | [PDF](Chuyên%20đề%20chuyên%20sâu.pdf) | **128 trang** | `0df209c1d95037e18b97a52e4c278bb0442693d8322114861d645323505e1f85` |
+| **Bản thảo Master (DOCX)** | [DOCX](Chuyên%20đề%20chuyên%20sâu.docx) | 8.76 MB | `cc314001a1770f9c3e87f05a170c2913511956b8ee2732ff88184587e79f81cf` |
+| **QA hình thức tinh** | [Báo cáo](docs/FINE-LAYOUT-ACCEPTANCE.md) | 14 FIX cục bộ; giữ 8 KEEP / 2 REVIEW | *Bảo toàn bullet, OMML và citation* |
 | **Hướng dẫn chạy & xác minh** | [Markdown](HUONG_DAN_CHAY_VA_XAC_MINH.md) | Tóm tắt 2 phút | *Dành cho Giảng viên / Hội đồng phản biện* |
 | **Tái lập độc lập cho sinh viên** | [Markdown](manual_reproduction/README.md) | PowerShell tự động | *Chạy độc lập trên máy trạm cá nhân* |
 | **Chỉ mục thực nghiệm chuẩn** | [CSV](experiments/experiment_index.csv) | 18 cột đối soát | *Tra cứu toàn bộ mô hình và kiểm định* |
@@ -61,8 +62,8 @@ Toàn bộ mô hình được đánh giá thông qua giao thức Đầu dò Tuy�
 ## 4. CẤU TRÚC THƯ MỤC HỆ THỐNG
 
 ```text
-├── Chuyên đề chuyên sâu.pdf        # Bản thảo PDF chính thức (121 trang)
-├── Chuyên đề chuyên sâu.docx       # Bản thảo Word Master (606 công thức OMML)
+├── Chuyên đề chuyên sâu.pdf        # Bản thảo PDF chính thức (128 trang)
+├── Chuyên đề chuyên sâu.docx       # Bản thảo Word Master (861 vùng OMML)
 ├── HUONG_DAN_CHAY_VA_XAC_MINH.md   # Cẩm nang 2 phút dành cho Giảng viên / Hội đồng
 ├── requirements-lock.txt           # Khóa phụ thuộc chính thức (kèm CUDA 12.4 index)
 ├── pyproject.toml                  # Cấu hình gói và metadata cài đặt

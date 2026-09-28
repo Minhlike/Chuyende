@@ -1,0 +1,309 @@
+{
+  "baseline_release_commit": "441866d323baa73f876109fdfda5d391dec3181c",
+  "baseline_docx_sha256": "a8d225253a83965050a0efd5843b20b0ebecea5df3954d9ecad12d9274e48d71",
+  "baseline_pdf_sha256": "8c36df58cd16c85ad0c1ea9697603d7db370c98410d8d82fe95e8435b185508c",
+  "baseline_pdf_pages": 130,
+  "classification_completed_before_docx_edit": true,
+  "FIX": [
+    {
+      "id": "F01",
+      "body_indices": [
+        1
+      ],
+      "pdf_pages_before": [
+        2,
+        3,
+        4
+      ],
+      "location": "Đoạn trống mang section break sau hai bìa",
+      "evidence": "Word: section 1 kết thúc ở trang 3; cả 3 section đều New Page, không Odd/Even. Đoạn trống style Mục lục dựa trên Heading1 thừa hưởng pageBreakBefore và keepNext. Trang 3 không có nội dung/đối tượng.",
+      "action": "Tắt pageBreakBefore và keepNext chỉ trên đoạn ngắt section trống; giữ nguyên section, hai bìa và hệ số trang. Không thay font hoặc spacing.",
+      "pdf_pages_after_reviewed": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "F02",
+      "body_indices": [
+        276
+      ],
+      "pdf_pages_before": [
+        50,
+        51
+      ],
+      "location": "Mục 2.1.3 / Hình 2.1",
+      "evidence": "Trang 50 chỉ có heading và bốn dòng dẫn; ảnh/caption bị pageBreakBefore trực tiếp ép sang 51, khối ảnh/caption đủ chỗ trên 50.",
+      "action": "Tắt pageBreakBefore trên đoạn ảnh; giữ keepNext nối ảnh với caption, không đổi kích thước hoặc nội dung.",
+      "pdf_pages_after_reviewed": [
+        49,
+        50
+      ]
+    },
+    {
+      "id": "F03",
+      "body_indices": [
+        142
+      ],
+      "pdf_pages_before": [
+        21,
+        22
+      ],
+      "location": "Mục 1.1.3 / Hợp đồng Biểu diễn",
+      "evidence": "Phương trình ở cuối 21, đoạn đọc ba điều kiện bắt đầu 22.",
+      "action": "Keep with next chỉ trên đoạn phương trình.",
+      "pdf_pages_after_reviewed": [
+        20,
+        21,
+        22
+      ]
+    },
+    {
+      "id": "F04",
+      "body_indices": [
+        176
+      ],
+      "pdf_pages_before": [
+        28,
+        29
+      ],
+      "location": "Mục 1.2.1 / phép chiếu phần dư PCA",
+      "evidence": "Phương trình ở cuối 28, ký hiệu và ví dụ bắt đầu 29.",
+      "action": "Keep with next chỉ trên đoạn phương trình.",
+      "pdf_pages_after_reviewed": [
+        27,
+        28,
+        29
+      ]
+    },
+    {
+      "id": "F05",
+      "body_indices": [
+        249
+      ],
+      "pdf_pages_before": [
+        45,
+        46
+      ],
+      "location": "Mục 2.1.1 / ràng buộc H2",
+      "evidence": "Hai dòng công thức cuối 45, định nghĩa và ví dụ đầu 46.",
+      "action": "Keep with next chỉ trên đoạn phương trình.",
+      "pdf_pages_after_reviewed": [
+        44,
+        45,
+        46
+      ]
+    },
+    {
+      "id": "F06",
+      "body_indices": [
+        373,
+        374
+      ],
+      "pdf_pages_before": [
+        68,
+        69
+      ],
+      "location": "Mục 2.3.1.3 / tổng hợp có trọng số chú ý",
+      "evidence": "Cặp alpha và z_seq cuối 68, chú giải/ví dụ nằm ở 69.",
+      "action": "Giữ hai đoạn công thức với nhau và với đoạn chú giải đầu tiên bằng keepNext.",
+      "pdf_pages_after_reviewed": [
+        66,
+        67,
+        68
+      ]
+    },
+    {
+      "id": "F07",
+      "body_indices": [
+        451,
+        452
+      ],
+      "pdf_pages_before": [
+        80,
+        81
+      ],
+      "location": "Mục 2.4.1.2 / hai đầu chiếu",
+      "evidence": "p_seq cuối 80, p_graph đầu 81, làm cặp công thức bị chia trang.",
+      "action": "Keep with next trên hai đoạn công thức để đi cùng đoạn chú giải đầu tiên.",
+      "pdf_pages_after_reviewed": [
+        78,
+        79,
+        80
+      ]
+    },
+    {
+      "id": "F08",
+      "body_indices": [
+        513
+      ],
+      "pdf_pages_before": [
+        90,
+        91
+      ],
+      "location": "Mục 2.4.3.2 / mục tiêu Stage A",
+      "evidence": "Công thức tổng hợp cuối 90; chú giải và phép thay số đầu 91.",
+      "action": "Keep with next trên đoạn phương trình.",
+      "pdf_pages_after_reviewed": [
+        88,
+        89
+      ]
+    },
+    {
+      "id": "F09",
+      "body_indices": [
+        558
+      ],
+      "pdf_pages_before": [
+        95,
+        96
+      ],
+      "location": "Mục 2.4.4.1 / vector dung hợp",
+      "evidence": "Công thức cuối 95; chú giải Hadamard và ví dụ đầu 96.",
+      "action": "Keep with next trên đoạn phương trình.",
+      "pdf_pages_after_reviewed": [
+        93,
+        94,
+        95
+      ]
+    },
+    {
+      "id": "F10",
+      "body_indices": [
+        512
+      ],
+      "pdf_pages_before": [
+        90,
+        91
+      ],
+      "location": "Câu dẫn ngắn trước mục tiêu Stage A",
+      "evidence": "Sau thử F08, câu dẫn kết thúc bằng dấu hai chấm đứng một mình cuối trang 88, công thức nằm ở trang 89.",
+      "action": "Keep with next chỉ trên câu dẫn để đi cùng công thức đã được giữ với chú giải.",
+      "discovered_after_first_trial": true,
+      "pdf_pages_after_reviewed": [
+        88,
+        89
+      ]
+    },
+    {
+      "id": "F11",
+      "body_indices": [
+        268
+      ],
+      "location": "Mục 2.1.2 / watermark",
+      "evidence": "Sau bỏ ngắt trang thừa ở Hình 2.1, công thức watermark ở cuối trang thử 47 nhưng ví dụ/định nghĩa ở 48.",
+      "action": "Keep with next chỉ trên các đoạn công thức được chỉ định; giữ nguyên OMML.",
+      "discovered_after_first_trial": true,
+      "pdf_pages_after_reviewed": [
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "F12",
+      "body_indices": [
+        291,
+        292
+      ],
+      "location": "Mục 2.2.1.2 / Retain và Normalize",
+      "evidence": "Sau phân trang, hai công thức đi cùng nhau bị chia giữa trang thử 51 và 52.",
+      "action": "Keep with next chỉ trên các đoạn công thức được chỉ định; giữ nguyên OMML.",
+      "discovered_after_first_trial": true,
+      "pdf_pages_after_reviewed": [
+        51,
+        52,
+        53
+      ]
+    },
+    {
+      "id": "F13",
+      "body_indices": [
+        521,
+        522
+      ],
+      "location": "Mục 2.4.3.3 / chỉ báo chất lượng và trọng số dung hợp",
+      "evidence": "Sau sửa mục tiêu Stage A, cụm công thức q/s/w cuối trang thử 89 tách khỏi chú giải và phép thay số ở 90.",
+      "action": "Giữ công thức tính điểm và trọng số với chú giải; vector chất lượng giữ cùng câu dẫn ở trang trước. Không nối toàn cụm để tránh khoảng trắng lớn.",
+      "discovered_after_first_trial": true,
+      "trial_refinement": "Thử nối cả ba phương trình làm trang 89 quá thưa; bỏ keepNext của vector chất lượng, chỉ giữ hai phương trình phụ thuộc trực tiếp vào nhau.",
+      "pdf_pages_after_reviewed": [
+        89,
+        90,
+        91
+      ]
+    },
+    {
+      "id": "F14",
+      "body_indices": [
+        538,
+        539,
+        540,
+        541
+      ],
+      "location": "Mục 2.4.3.4 / Attention-MIL",
+      "evidence": "Sau phân trang, attention cuối trang thử 91 bị tách khỏi tổng hợp túi và loss ở 92.",
+      "action": "Keep with next chỉ trên các đoạn công thức được chỉ định; giữ nguyên OMML.",
+      "discovered_after_first_trial": true,
+      "pdf_pages_after_reviewed": [
+        91,
+        92,
+        93
+      ]
+    }
+  ],
+  "KEEP": [
+    {
+      "id": "K01",
+      "location": "Toàn bộ Heading 1–4",
+      "reason": "Word xác nhận không có heading tách trang với nội dung đầu; keepNext/keepLines hiện hành đủ, không sửa style toàn cục."
+    },
+    {
+      "id": "K02",
+      "location": "Trang 8,9,14,16,41,98,115,126,130 trước sửa",
+      "reason": "Đuôi danh mục/đầu chương, khối hình-caption hoặc đoạn kết thúc tạo khoảng trắng hợp lý; không ép nội dung hoặc nén font."
+    },
+    {
+      "id": "K03",
+      "location": "Caption và các bảng dài: viết tắt; Bảng 2.1,2.3,2.4,3.5",
+      "reason": "Caption đi cùng đối tượng; header đã lặp, các hàng dữ liệu có cantSplit; cho phép bảng qua trang."
+    },
+    {
+      "id": "K04",
+      "location": "Các đoạn prose/list chia 2+ dòng qua trang; chú giải message passing Mục 2.3.3.1",
+      "reason": "Widow control bật; không phát hiện một dòng cô độc. Chú giải ngắn chia 2+2 là hợp lệ; giữ để tránh khoảng trắng lớn từ chuỗi keep."
+    },
+    {
+      "id": "K05",
+      "location": "Mục lục, Danh mục hình/bảng",
+      "reason": "Dấu chấm dẫn và số trang đã thẳng hàng; danh mục bảng một trang, đủ cỡ chữ. Chỉ làm mới số trang cache nếu phân trang đổi."
+    },
+    {
+      "id": "K06",
+      "location": "Bảng 3.3 và các bảng kết quả Chương 3",
+      "reason": "Epoch, seed và số thập phân đọc nguyên vẹn; không cần đổi độ rộng/padding/font thêm."
+    },
+    {
+      "id": "K07",
+      "location": "Mất mát quan hệ cuối trang 105 trước sửa",
+      "reason": "Công thức có phần dẫn cùng trang và đã trọn vẹn; đầu 106 là một hàm mất mát khác, không phải chú giải bị tách."
+    },
+    {
+      "id": "K08",
+      "location": "Font code, caption code, Heading4 và bảng",
+      "reason": "Khác biệt theo vai trò có chủ đích; không chuẩn hóa font/spacing."
+    }
+  ],
+  "REVIEW": [
+    {
+      "id": "R01",
+      "location": "Bảng 3.8: SHA-256 checkpoint dài 64 ký tự",
+      "reason": "Mã vẫn đầy đủ trong cùng ô/hàng nhưng ngắt qua hai dòng. Giữ một dòng với font hiện tại cần chiều rộng lớn hơn ô, có nguy cơ làm vỡ hai cột; không thay đổi cấu trúc bảng hoặc giảm font."
+    },
+    {
+      "id": "R02",
+      "location": "Hai bìa trang 1–2",
+      "reason": "Hai trang có nội dung gần giống nhau trong bảng bìa hiện tại; chưa đủ bằng chứng một bìa là dư. Giữ nguyên cả hai, chỉ xử lý đoạn ngắt trống phía sau."
+    }
+  ]
+}

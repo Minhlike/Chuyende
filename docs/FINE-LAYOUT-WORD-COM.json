@@ -1,0 +1,864 @@
+{
+  "status": "PASS",
+  "source_docx_sha256": "cc314001a1770f9c3e87f05a170c2913511956b8ee2732ff88184587e79f81cf",
+  "read_only": true,
+  "open_and_repair": false,
+  "word_saved_source": false,
+  "reason_no_word_save": "Bảo toàn XML bullet/OMML; cập nhật field trong bộ nhớ và cache PAGEREF có kiểm soát bằng OOXML.",
+  "word_math_count": 827,
+  "word_field_count": 400,
+  "resolved_counts": {
+    "REF": 14,
+    "SEQ": 30,
+    "PAGEREF": 83
+  },
+  "resolved_fields": [
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508820 \\h",
+      "result": "i",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508821 \\h",
+      "result": "iii",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508822 \\h",
+      "result": "vi",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508823 \\h",
+      "result": "vii",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508824 \\h",
+      "result": "1",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508825 \\h",
+      "result": "5",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508826 \\h",
+      "result": "5",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508827 \\h",
+      "result": "5",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508828 \\h",
+      "result": "9",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508829 \\h",
+      "result": "11",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508830 \\h",
+      "result": "16",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508831 \\h",
+      "result": "16",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508832 \\h",
+      "result": "20",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508833 \\h",
+      "result": "22",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508834 \\h",
+      "result": "26",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508835 \\h",
+      "result": "26",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508836 \\h",
+      "result": "27",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508837 \\h",
+      "result": "28",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508838 \\h",
+      "result": "29",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508839 \\h",
+      "result": "30",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508840 \\h",
+      "result": "32",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508841 \\h",
+      "result": "32",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508842 \\h",
+      "result": "32",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508843 \\h",
+      "result": "38",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508844 \\h",
+      "result": "40",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508845 \\h",
+      "result": "41",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508846 \\h",
+      "result": "41",
+      "absolute_page": 3
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508847 \\h",
+      "result": "47",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508848 \\h",
+      "result": "51",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508849 \\h",
+      "result": "53",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508850 \\h",
+      "result": "53",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508851 \\h",
+      "result": "59",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508852 \\h",
+      "result": "62",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508853 \\h",
+      "result": "68",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508854 \\h",
+      "result": "69",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508855 \\h",
+      "result": "75",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508856 \\h",
+      "result": "77",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508857 \\h",
+      "result": "84",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508858 \\h",
+      "result": "88",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508859 \\h",
+      "result": "88",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508860 \\h",
+      "result": "88",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508861 \\h",
+      "result": "90",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508862 \\h",
+      "result": "92",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508863 \\h",
+      "result": "95",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508864 \\h",
+      "result": "95",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508865 \\h",
+      "result": "98",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508866 \\h",
+      "result": "99",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508867 \\h",
+      "result": "102",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508868 \\h",
+      "result": "105",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508869 \\h",
+      "result": "105",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508870 \\h",
+      "result": "106",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508871 \\h",
+      "result": "111",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508872 \\h",
+      "result": "112",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508873 \\h",
+      "result": "112",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508874 \\h",
+      "result": "112",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508875 \\h",
+      "result": "114",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508876 \\h",
+      "result": "116",
+      "absolute_page": 4
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508877 \\h",
+      "result": "6",
+      "absolute_page": 8
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508878 \\h",
+      "result": "10",
+      "absolute_page": 8
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508879 \\h",
+      "result": "14",
+      "absolute_page": 8
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508880 \\h",
+      "result": "26",
+      "absolute_page": 8
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508881 \\h",
+      "result": "40",
+      "absolute_page": 8
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508882 \\h",
+      "result": "59",
+      "absolute_page": 8
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508883 \\h",
+      "result": "67",
+      "absolute_page": 8
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241508884 \\h",
+      "result": "86",
+      "absolute_page": 8
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _TocCF_Fig31 \\h",
+      "result": "105",
+      "absolute_page": 8
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241077111 \\h",
+      "result": "7",
+      "absolute_page": 9
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241077112 \\h",
+      "result": "13",
+      "absolute_page": 9
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241077113 \\h",
+      "result": "25",
+      "absolute_page": 9
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241077114 \\h",
+      "result": "44",
+      "absolute_page": 9
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241077115 \\h",
+      "result": "68",
+      "absolute_page": 9
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241077116 \\h",
+      "result": "71",
+      "absolute_page": 9
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241077117 \\h",
+      "result": "77",
+      "absolute_page": 9
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241077118 \\h",
+      "result": "89",
+      "absolute_page": 9
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241077119 \\h",
+      "result": "91",
+      "absolute_page": 9
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241077120 \\h",
+      "result": "96",
+      "absolute_page": 9
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241077121 \\h",
+      "result": "97",
+      "absolute_page": 9
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241077122 \\h",
+      "result": "98",
+      "absolute_page": 9
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241077123 \\h",
+      "result": "100",
+      "absolute_page": 9
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241077124 \\h",
+      "result": "101",
+      "absolute_page": 9
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _TocCF_Table38 \\h",
+      "result": "104",
+      "absolute_page": 9
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241077125 \\h",
+      "result": "107",
+      "absolute_page": 9
+    },
+    {
+      "type": "PAGEREF",
+      "code": "PAGEREF _Toc241077126 \\h",
+      "result": "109",
+      "absolute_page": 9
+    },
+    {
+      "type": "REF",
+      "code": "REF BK_FIG_1_001 \\h",
+      "result": "Hình 1.1",
+      "absolute_page": 15
+    },
+    {
+      "type": "REF",
+      "code": "REF BK_TBL_1_001 \\h",
+      "result": "Bảng 1.1",
+      "absolute_page": 15
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Hình \\* ARABIC",
+      "result": "1",
+      "absolute_page": 15
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Bảng \\* ARABIC",
+      "result": "1",
+      "absolute_page": 16
+    },
+    {
+      "type": "REF",
+      "code": "REF BK_FIG_1_002 \\h",
+      "result": "Hình 1.2",
+      "absolute_page": 18
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Hình \\* ARABIC",
+      "result": "2",
+      "absolute_page": 19
+    },
+    {
+      "type": "REF",
+      "code": "REF BK_TBL_1_002 \\h",
+      "result": "Bảng 1.2",
+      "absolute_page": 21
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Bảng \\* ARABIC",
+      "result": "2",
+      "absolute_page": 22
+    },
+    {
+      "type": "REF",
+      "code": "REF BK_TBL_1_002 \\h",
+      "result": "Bảng 1.2",
+      "absolute_page": 23
+    },
+    {
+      "type": "REF",
+      "code": "REF BK_FIG_1_003 \\h",
+      "result": "Hình 1.3",
+      "absolute_page": 23
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Hình \\* ARABIC",
+      "result": "3",
+      "absolute_page": 23
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Bảng \\* ARABIC",
+      "result": "3",
+      "absolute_page": 34
+    },
+    {
+      "type": "REF",
+      "code": "REF BK_FIG_1_004 \\h",
+      "result": "Hình 1.4",
+      "absolute_page": 35
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Hình \\* ARABIC",
+      "result": "4",
+      "absolute_page": 35
+    },
+    {
+      "type": "REF",
+      "code": "REF BK_FIG_2_001 \\h",
+      "result": "Hình 2.1",
+      "absolute_page": 49
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Hình \\r 1 \\* ARABIC",
+      "result": "1",
+      "absolute_page": 49
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Bảng \\r 1 \\* ARABIC",
+      "result": "1",
+      "absolute_page": 53
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Hình \\* ARABIC",
+      "result": "2",
+      "absolute_page": 68
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Hình \\* ARABIC",
+      "result": "3",
+      "absolute_page": 76
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Bảng \\* ARABIC",
+      "result": "2",
+      "absolute_page": 77
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Bảng \\* ARABIC",
+      "result": "3",
+      "absolute_page": 80
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Bảng \\* ARABIC",
+      "result": "4",
+      "absolute_page": 86
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Hình \\* ARABIC",
+      "result": "4",
+      "absolute_page": 95
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Bảng \\r 1 \\* ARABIC",
+      "result": "1",
+      "absolute_page": 98
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ ĐoạnMã \\r 1 \\* ARABIC",
+      "result": "1",
+      "absolute_page": 98
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Bảng \\* ARABIC",
+      "result": "2",
+      "absolute_page": 100
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ ĐoạnMã \\* ARABIC",
+      "result": "2",
+      "absolute_page": 100
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ ĐoạnMã \\* ARABIC",
+      "result": "3",
+      "absolute_page": 102
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ ĐoạnMã \\* ARABIC",
+      "result": "4",
+      "absolute_page": 102
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Bảng \\* ARABIC",
+      "result": "3",
+      "absolute_page": 105
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Bảng \\* ARABIC",
+      "result": "4",
+      "absolute_page": 106
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Bảng \\* ARABIC",
+      "result": "5",
+      "absolute_page": 107
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Bảng \\* ARABIC",
+      "result": "6",
+      "absolute_page": 109
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Bảng \\* ARABIC",
+      "result": "7",
+      "absolute_page": 110
+    },
+    {
+      "type": "REF",
+      "code": "REF BK_TBL_3_008 \\h",
+      "result": "Bảng 3.8",
+      "absolute_page": 112
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Bảng \\* ARABIC",
+      "result": "8",
+      "absolute_page": 113
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Hình \\r 1 \\* ARABIC",
+      "result": "1",
+      "absolute_page": 114
+    },
+    {
+      "type": "REF",
+      "code": "REF BK_FIG_3_001 \\h",
+      "result": "Hình 3.1",
+      "absolute_page": 114
+    },
+    {
+      "type": "REF",
+      "code": "REF BK_TBL_3_009 \\h",
+      "result": "Bảng 3.9",
+      "absolute_page": 116
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Bảng \\* ARABIC",
+      "result": "9",
+      "absolute_page": 116
+    },
+    {
+      "type": "REF",
+      "code": "REF BK_TBL_3_009 \\h",
+      "result": "Bảng 3.9",
+      "absolute_page": 116
+    },
+    {
+      "type": "REF",
+      "code": "REF BK_TBL_3_010 \\h",
+      "result": "Bảng 3.10",
+      "absolute_page": 118
+    },
+    {
+      "type": "SEQ",
+      "code": "SEQ Bảng \\* ARABIC",
+      "result": "10",
+      "absolute_page": 118
+    },
+    {
+      "type": "REF",
+      "code": "REF BK_TBL_3_010 \\h",
+      "result": "Bảng 3.10",
+      "absolute_page": 118
+    }
+  ],
+  "pageref_results": {
+    "_Toc241508820": "1",
+    "_Toc241508821": "3",
+    "_Toc241508822": "6",
+    "_Toc241508823": "7",
+    "_Toc241508824": "1",
+    "_Toc241508825": "5",
+    "_Toc241508826": "5",
+    "_Toc241508827": "5",
+    "_Toc241508828": "9",
+    "_Toc241508829": "11",
+    "_Toc241508830": "16",
+    "_Toc241508831": "16",
+    "_Toc241508832": "20",
+    "_Toc241508833": "22",
+    "_Toc241508834": "26",
+    "_Toc241508835": "26",
+    "_Toc241508836": "27",
+    "_Toc241508837": "28",
+    "_Toc241508838": "29",
+    "_Toc241508839": "30",
+    "_Toc241508840": "32",
+    "_Toc241508841": "32",
+    "_Toc241508842": "32",
+    "_Toc241508843": "38",
+    "_Toc241508844": "40",
+    "_Toc241508845": "41",
+    "_Toc241508846": "41",
+    "_Toc241508847": "47",
+    "_Toc241508848": "51",
+    "_Toc241508849": "53",
+    "_Toc241508850": "53",
+    "_Toc241508851": "59",
+    "_Toc241508852": "62",
+    "_Toc241508853": "68",
+    "_Toc241508854": "69",
+    "_Toc241508855": "75",
+    "_Toc241508856": "77",
+    "_Toc241508857": "84",
+    "_Toc241508858": "88",
+    "_Toc241508859": "88",
+    "_Toc241508860": "88",
+    "_Toc241508861": "90",
+    "_Toc241508862": "92",
+    "_Toc241508863": "95",
+    "_Toc241508864": "95",
+    "_Toc241508865": "98",
+    "_Toc241508866": "99",
+    "_Toc241508867": "102",
+    "_Toc241508868": "105",
+    "_Toc241508869": "105",
+    "_Toc241508870": "106",
+    "_Toc241508871": "111",
+    "_Toc241508872": "112",
+    "_Toc241508873": "112",
+    "_Toc241508874": "112",
+    "_Toc241508875": "114",
+    "_Toc241508876": "116",
+    "_Toc241508877": "6",
+    "_Toc241508878": "10",
+    "_Toc241508879": "14",
+    "_Toc241508880": "26",
+    "_Toc241508881": "40",
+    "_Toc241508882": "59",
+    "_Toc241508883": "67",
+    "_Toc241508884": "86",
+    "_TocCF_Fig31": "105",
+    "_Toc241077111": "7",
+    "_Toc241077112": "13",
+    "_Toc241077113": "25",
+    "_Toc241077114": "44",
+    "_Toc241077115": "68",
+    "_Toc241077116": "71",
+    "_Toc241077117": "77",
+    "_Toc241077118": "89",
+    "_Toc241077119": "91",
+    "_Toc241077120": "96",
+    "_Toc241077121": "97",
+    "_Toc241077122": "98",
+    "_Toc241077123": "100",
+    "_Toc241077124": "101",
+    "_TocCF_Table38": "104",
+    "_Toc241077125": "107",
+    "_Toc241077126": "109"
+  }
+}
