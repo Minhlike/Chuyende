@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "chapter_1_2_pages_compared": 84,
+  "chapter_1_2_pages_with_identical_pixel_render": 82,
+  "chapter_1_2_text_and_line_breaks_identical_all_pages": true,
+  "minor_word_export_glyph_position_variations": [
+    {
+      "pdf_page": 15,
+      "max_glyph_position_variation_pt": 0.276580810546875,
+      "text_and_line_breaks_identical": true,
+      "ignored_extraction_differences": "trailing spaces only"
+    },
+    {
+      "pdf_page": 16,
+      "max_glyph_position_variation_pt": 0.0501708984375,
+      "text_and_line_breaks_identical": true,
+      "ignored_extraction_differences": "trailing spaces only"
+    }
+  ],
+  "addition_pdf_pages": {
+    "probe": [
+      103
+    ],
+    "metrics": [
+      103
+    ],
+    "symbols": [
+      105
+    ],
+    "weights": [
+      106
+    ],
+    "variance": [
+      110
+    ],
+    "delta": [
+      111
+    ],
+    "sd": [
+      112
+    ],
+    "slots": [
+      117
+    ],
+    "cosine": [
+      118
+    ]
+  },
+  "all_31_pages_from_chapter_3_through_references_visually_reviewed": true,
+  "table_3_8_all_rows_on_pdf_page": 117,
+  "layout_clipping_or_new_blank_pages_found": false,
+  "original_table_xml_unchanged": true,
+  "docx_sha256": "d29077dbecb3fff58b417734e0b19e49d271c34750b361c89f534b6d6d15c319",
+  "pdf_sha256": "649b63d107276d8b1123397d2d2e01c2c7fa6cce010ee5e2fe7e222244d903f1",
+  "final_chapter_3_render_pixel_identical_to_visually_reviewed_pages": true
+}

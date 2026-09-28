@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "opened_without_repair_api": true,
+  "read_only": true,
+  "word_math_count": 827,
+  "word_field_count": 386,
+  "pages_word": 157,
+  "pdf_bytes": 3291773,
+  "source_docx": "D:\\Research\\.tmp\\omml-ch1-ch2-clarity\\Chuyên đề chuyên sâu.docx",
+  "pdf": "D:\\Research\\.tmp\\omml-ch1-ch2-clarity\\Chuyên đề chuyên sâu.pdf",
+  "pagination_fields_updated_in_memory_only": false,
+  "pageref_values_resolved_from_original_bookmarks": false,
+  "pageref_results": {},
+  "document_saved_by_word": false
+}
