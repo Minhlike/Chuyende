@@ -1,0 +1,221 @@
+{
+  "baseline_docx_sha256": "d29077dbecb3fff58b417734e0b19e49d271c34750b361c89f534b6d6d15c319",
+  "changes": [
+    {
+      "original_body_indices": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "reason": "11 prose Lời nói đầu: TNR 14 pt, 1.5; giữ nội dung và indent/căn lề"
+    },
+    {
+      "original_body_indices": [
+        302,
+        366,
+        402,
+        557,
+        584,
+        596,
+        602,
+        605,
+        645,
+        646,
+        647,
+        652
+      ],
+      "reason": "12 prose Chương 2–3: 13 → 14 pt, 1.3 → 1.5; không sửa heading/table/code/caption/math"
+    },
+    {
+      "original_body_indices": [
+        583,
+        595,
+        601,
+        604
+      ],
+      "reason": "Đoạn mã 3.1 → 3.4 theo thứ tự xuất hiện; native SEQ; giữ nguyên code và phần mô tả caption"
+    },
+    {
+      "original_body_indices": [
+        650,
+        651
+      ],
+      "reason": "Hình 3.1: sao chép đúng pPr/rPr caption Hình 2.4, native SEQ và bookmark; giữ ảnh đi cùng caption"
+    },
+    {
+      "original_body_indices": [
+        648,
+        662,
+        668
+      ],
+      "reason": "Bảng 3.7b/3.8/3.9 → 3.8/3.9/3.10; giữ nguyên nội dung bảng"
+    },
+    {
+      "original_body_indices": [
+        72,
+        73
+      ],
+      "reason": "Thêm Hình 3.1 vào kết quả danh mục hình native, dùng hyperlink/PAGEREF theo hệ hiện có"
+    },
+    {
+      "original_body_indices": [
+        621
+      ],
+      "reason": "Bảng 3.3: giảm padding ngang 120 → 36 twip; giữ nguyên grid, font, số liệu và OMML header"
+    },
+    {
+      "original_body_indices": [
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92
+      ],
+      "reason": "Chỉ danh mục bảng: spacing 1.5 → 1.4, Before/After 0; giữ font 11 pt hiện hành"
+    },
+    {
+      "original_body_indices": [
+        92,
+        93
+      ],
+      "reason": "Chuyển field end TOC sang entry cuối, bỏ đoạn đóng field trống có spacing thừa; giữ nguyên field code và section break"
+    },
+    {
+      "original_body_indices": [
+        649,
+        651
+      ],
+      "reason": "Chống tách header bảng tái lập khỏi dữ liệu và chống tách các dòng caption Hình 3.1"
+    }
+  ],
+  "reference_changes": [
+    {
+      "original_body_index": 646,
+      "before": "Bảng 3.7b",
+      "after": "Bảng 3.8",
+      "target": "BK_TBL_3_008"
+    },
+    {
+      "original_body_index": 661,
+      "before": "Bảng 3.8",
+      "after": "Bảng 3.9",
+      "target": "BK_TBL_3_009"
+    },
+    {
+      "original_body_index": 665,
+      "before": "Bảng 3.8",
+      "after": "Bảng 3.9",
+      "target": "BK_TBL_3_009"
+    },
+    {
+      "original_body_index": 667,
+      "before": "Bảng 3.9",
+      "after": "Bảng 3.10",
+      "target": "BK_TBL_3_010"
+    },
+    {
+      "original_body_index": 671,
+      "before": "Bảng 3.9",
+      "after": "Bảng 3.10",
+      "target": "BK_TBL_3_010"
+    },
+    {
+      "original_body_index": 652,
+      "before": "Hình 3.1",
+      "after": "Hình 3.1",
+      "target": "BK_FIG_3_001"
+    }
+  ],
+  "field_counts_before": {
+    "TOC": 3,
+    "PAGEREF": 82,
+    "CITATION": 186,
+    "REF": 8,
+    "SEQ": 24,
+    "BIBLIOGRAPHY": 1
+  },
+  "field_counts_after": {
+    "TOC": 3,
+    "PAGEREF": 83,
+    "CITATION": 186,
+    "REF": 14,
+    "SEQ": 30,
+    "BIBLIOGRAPHY": 1
+  },
+  "body13_indices": [
+    302,
+    366,
+    402,
+    557,
+    584,
+    596,
+    602,
+    605,
+    645,
+    646,
+    647,
+    652
+  ],
+  "caption_style_source_original_body_index": 564,
+  "bookmark_renames": {
+    "BK_TBL_3_008": "BK_TBL_3_009",
+    "BK_TBL_3_009": "BK_TBL_3_010",
+    "_Toc_B37b": "_TocCF_Table38"
+  },
+  "kept_13pt_heading_indices": [
+    284,
+    289,
+    303,
+    311,
+    315,
+    320,
+    332,
+    337,
+    349,
+    354,
+    371,
+    381,
+    387,
+    389,
+    396,
+    405,
+    413,
+    424,
+    428,
+    443,
+    449,
+    455,
+    460,
+    476,
+    487,
+    495,
+    501,
+    505,
+    518,
+    532,
+    550,
+    565
+  ],
+  "added_list_paragraph_index": 73,
+  "removed_empty_field_end_original_body_index": 93
+}

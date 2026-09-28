@@ -1,0 +1,190 @@
+{
+  "status": "PASS",
+  "open_and_repair": false,
+  "read_only": true,
+  "word_math_count": 827,
+  "word_field_count": 400,
+  "caption_sequence_checks": {
+    "BK_TBL_3_001": {
+      "code": "SEQ Bảng \\r 1 \\* ARABIC",
+      "sequence_value": "1",
+      "label": "Bảng 3.1"
+    },
+    "BK_TBL_3_002": {
+      "code": "SEQ Bảng \\* ARABIC",
+      "sequence_value": "2",
+      "label": "Bảng 3.2"
+    },
+    "BK_TBL_3_003": {
+      "code": "SEQ Bảng \\* ARABIC",
+      "sequence_value": "3",
+      "label": "Bảng 3.3"
+    },
+    "BK_TBL_3_004": {
+      "code": "SEQ Bảng \\* ARABIC",
+      "sequence_value": "4",
+      "label": "Bảng 3.4"
+    },
+    "BK_TBL_3_005": {
+      "code": "SEQ Bảng \\* ARABIC",
+      "sequence_value": "5",
+      "label": "Bảng 3.5"
+    },
+    "BK_TBL_3_006": {
+      "code": "SEQ Bảng \\* ARABIC",
+      "sequence_value": "6",
+      "label": "Bảng 3.6"
+    },
+    "BK_TBL_3_007": {
+      "code": "SEQ Bảng \\* ARABIC",
+      "sequence_value": "7",
+      "label": "Bảng 3.7"
+    },
+    "BK_TBL_3_008": {
+      "code": "SEQ Bảng \\* ARABIC",
+      "sequence_value": "8",
+      "label": "Bảng 3.8"
+    },
+    "BK_TBL_3_009": {
+      "code": "SEQ Bảng \\* ARABIC",
+      "sequence_value": "9",
+      "label": "Bảng 3.9"
+    },
+    "BK_TBL_3_010": {
+      "code": "SEQ Bảng \\* ARABIC",
+      "sequence_value": "10",
+      "label": "Bảng 3.10"
+    },
+    "BK_CODE_3_001": {
+      "code": "SEQ ĐoạnMã \\r 1 \\* ARABIC",
+      "sequence_value": "1",
+      "label": "Đoạn mã 3.1"
+    },
+    "BK_CODE_3_002": {
+      "code": "SEQ ĐoạnMã \\* ARABIC",
+      "sequence_value": "2",
+      "label": "Đoạn mã 3.2"
+    },
+    "BK_CODE_3_003": {
+      "code": "SEQ ĐoạnMã \\* ARABIC",
+      "sequence_value": "3",
+      "label": "Đoạn mã 3.3"
+    },
+    "BK_CODE_3_004": {
+      "code": "SEQ ĐoạnMã \\* ARABIC",
+      "sequence_value": "4",
+      "label": "Đoạn mã 3.4"
+    },
+    "BK_FIG_3_001": {
+      "code": "SEQ Hình \\r 1 \\* ARABIC",
+      "sequence_value": "1",
+      "label": "Hình 3.1"
+    }
+  },
+  "caption_absolute_pages": {
+    "BK_TBL_3_001": 100,
+    "BK_TBL_3_002": 102,
+    "BK_TBL_3_003": 107,
+    "BK_TBL_3_004": 108,
+    "BK_TBL_3_005": 109,
+    "BK_TBL_3_006": 111,
+    "BK_TBL_3_007": 112,
+    "BK_TBL_3_008": 115,
+    "BK_TBL_3_009": 118,
+    "BK_TBL_3_010": 120,
+    "BK_CODE_3_001": 100,
+    "BK_CODE_3_002": 102,
+    "BK_CODE_3_003": 104,
+    "BK_CODE_3_004": 104,
+    "BK_FIG_3_001": 116
+  },
+  "pageref_results": {
+    "_Toc241508820": "1",
+    "_Toc241508821": "3",
+    "_Toc241508822": "6",
+    "_Toc241508823": "7",
+    "_Toc241508824": "1",
+    "_Toc241508825": "5",
+    "_Toc241508826": "5",
+    "_Toc241508827": "5",
+    "_Toc241508828": "9",
+    "_Toc241508829": "11",
+    "_Toc241508830": "16",
+    "_Toc241508831": "16",
+    "_Toc241508832": "20",
+    "_Toc241508833": "22",
+    "_Toc241508834": "26",
+    "_Toc241508835": "26",
+    "_Toc241508836": "27",
+    "_Toc241508837": "28",
+    "_Toc241508838": "29",
+    "_Toc241508839": "30",
+    "_Toc241508840": "32",
+    "_Toc241508841": "32",
+    "_Toc241508842": "32",
+    "_Toc241508843": "37",
+    "_Toc241508844": "40",
+    "_Toc241508845": "42",
+    "_Toc241508846": "42",
+    "_Toc241508847": "48",
+    "_Toc241508848": "52",
+    "_Toc241508849": "54",
+    "_Toc241508850": "54",
+    "_Toc241508851": "60",
+    "_Toc241508852": "63",
+    "_Toc241508853": "69",
+    "_Toc241508854": "69",
+    "_Toc241508855": "76",
+    "_Toc241508856": "78",
+    "_Toc241508857": "84",
+    "_Toc241508858": "89",
+    "_Toc241508859": "89",
+    "_Toc241508860": "89",
+    "_Toc241508861": "91",
+    "_Toc241508862": "93",
+    "_Toc241508863": "96",
+    "_Toc241508864": "96",
+    "_Toc241508865": "99",
+    "_Toc241508866": "100",
+    "_Toc241508867": "103",
+    "_Toc241508868": "106",
+    "_Toc241508869": "106",
+    "_Toc241508870": "107",
+    "_Toc241508871": "112",
+    "_Toc241508872": "113",
+    "_Toc241508873": "113",
+    "_Toc241508874": "113",
+    "_Toc241508875": "115",
+    "_Toc241508876": "117",
+    "_Toc241508877": "6",
+    "_Toc241508878": "10",
+    "_Toc241508879": "14",
+    "_Toc241508880": "26",
+    "_Toc241508881": "41",
+    "_Toc241508882": "59",
+    "_Toc241508883": "68",
+    "_Toc241508884": "86",
+    "_TocCF_Fig31": "106",
+    "_Toc241077111": "7",
+    "_Toc241077112": "13",
+    "_Toc241077113": "25",
+    "_Toc241077114": "45",
+    "_Toc241077115": "68",
+    "_Toc241077116": "71",
+    "_Toc241077117": "78",
+    "_Toc241077118": "90",
+    "_Toc241077119": "92",
+    "_Toc241077120": "97",
+    "_Toc241077121": "98",
+    "_Toc241077122": "99",
+    "_Toc241077123": "101",
+    "_Toc241077124": "102",
+    "_TocCF_Table38": "105",
+    "_Toc241077125": "108",
+    "_Toc241077126": "110"
+  },
+  "source_docx": "D:\\Research\\.tmp\\omml-ch1-ch2-clarity\\Chuyên đề chuyên sâu.docx",
+  "document_saved_by_word": false,
+  "caption_fields_updated_in_memory": false,
+  "source_docx_sha256": "a8d225253a83965050a0efd5843b20b0ebecea5df3954d9ecad12d9274e48d71"
+}
