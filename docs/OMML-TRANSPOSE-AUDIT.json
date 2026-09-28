@@ -1,0 +1,428 @@
+{
+  "status": "PASS",
+  "baseline_docx_sha256": "9bb11639807081f6ee3dafa8907f5293913ffec5697b945993b905ad93a67033",
+  "docx_sha256": "4f4f2b55f8e4cb632d358fc695a0bb72e0a628a3b3402fbd7cbca167acd97054",
+  "notes_reviewed": 45,
+  "new_native_omml_zones_reviewed": 239,
+  "transpose_operators_reviewed": 8,
+  "mismatch_count": 0,
+  "source_policy": "Exact original OMML superscript from the defining formula for the same mathematical object",
+  "formula_without_explicit_transpose": {
+    "anchor": 170,
+    "formula": "Ax=0",
+    "reason": "Numeric x is the count vector already defined at original paragraph 164; no unrelated formula or glyph similarity is used."
+  },
+  "positions_changed": [],
+  "notes": [
+    {
+      "anchor": 127,
+      "note": "Ở bốn biểu thức trên, Pt là phân phối tại thời điểm t; X là log quan sát, Y là nhãn và z là biểu diễn đã học. Ví dụ: cùng dạng log X ở hai giai đoạn có thể đi kèm tỷ lệ nhãn Y khác nhau. Dấu khác nhau chỉ mô tả phân phối đổi, chưa chỉ ra nguyên nhân hay xác nhận tấn công.",
+      "native_math_zones": 7,
+      "transposes": []
+    },
+    {
+      "anchor": 132,
+      "note": "Tích Descartes ở đây ghép một chiến thuật với một kỹ thuật, còn tập nhãn của một phiên có thể chứa nhiều cặp như vậy. Ví dụ: một phiên có thể có bằng chứng liên quan đến cả Duy trì và Thu thập, nhưng công thức chỉ mô tả không gian nhãn có thể gán, không xác nhận phiên ấy thực sự bị tấn công.",
+      "native_math_zones": 0,
+      "transposes": []
+    },
+    {
+      "anchor": 156,
+      "note": "Trong công thức đầu dò, z là vector d chiều đã học; W có d trọng số, b là độ lệch và σ biến điểm tuyến tính thành giá trị trong khoảng 0–1. Ví dụ: nếu W⊤z+b=0 thì σ(0)=0,5. Đây là đầu ra của bộ phân loại được huấn luyện và hiệu chuẩn theo giao thức đánh giá, không phải bằng chứng rằng bộ mã hóa hiểu nguyên nhân an ninh.",
+      "native_math_zones": 8,
+      "transposes": [
+        {
+          "base": "W",
+          "actual_glyph": "⊤",
+          "original_glyph": "⊤",
+          "source_body_index": 156,
+          "source_xpath": "/w:document/w:body/w:p[153]/m:oMathPara/m:oMath/m:sSup/m:sup",
+          "source_reason": "linear-probe weight transpose",
+          "source_sup_sha256": "bf0d15394bb17893d04ed2371ee27333c72a165d13cfe553ded8b339fe78b892",
+          "native_sup_xpath": "/w:document/w:body/w:p[156]/m:oMath[7]/m:sSup/m:sup",
+          "exact_sup_xml_matches": true
+        }
+      ]
+    },
+    {
+      "anchor": 164,
+      "note": "Mỗi tọa độ của x đếm một loại sự kiện trong cửa sổ W. Ví dụ: nếu tập loại là e1, e2 và cửa sổ là e1, e1, e2 thì x=(2,1)T. Cửa sổ e2, e1, e1 cho cùng vector; phép đếm không giữ thứ tự.",
+      "native_math_zones": 11,
+      "transposes": [
+        {
+          "base": ")",
+          "actual_glyph": "T",
+          "original_glyph": "T",
+          "source_body_index": 164,
+          "source_xpath": "/w:document/w:body/w:p[161]/m:oMathPara/m:oMath/m:sSup[1]/m:sup",
+          "source_reason": "original count-vector definition",
+          "source_sup_sha256": "30902fb58a2fc0abe4c6aeee97f800141cbed2a9702fb5ae4700ae6213407ae2",
+          "native_sup_xpath": "/w:document/w:body/w:p[165]/m:oMath[8]/m:sSup/m:sup",
+          "exact_sup_xml_matches": true
+        }
+      ]
+    },
+    {
+      "anchor": 165,
+      "note": "N là số cửa sổ tham chiếu, còn n(ei) là số cửa sổ chứa loại ei. Ví dụ: N=10, e1 có trong 2 cửa sổ và e2 có trong 10; hệ số nghịch đảo lần lượt là log(1+102)=log(6) và log(1+1010)=log(2). Loại hiếm được tăng trọng số thống kê, chưa phải dấu hiệu tấn công.",
+      "native_math_zones": 8,
+      "transposes": []
+    },
+    {
+      "anchor": 166,
+      "note": "W là cửa sổ, M là số loại sự kiện, p(ei) là tỷ lệ loại ei trong W; loại không xuất hiện đóng góp 0 theo quy ước giới hạn. Ví dụ: W gồm e1, e1, e2, e2 nên p(e1)=p(e2)=0,5. Khi thay số:",
+      "native_math_zones": 14,
+      "transposes": []
+    },
+    {
+      "anchor": 168,
+      "note": "P gồm các phương PCA được giữ lại và có các cột trực chuẩn; x là vector đã tâm hóa, I là ma trận đơn vị cùng chiều, còn xa là phần không được P giải thích. Ví dụ: với x=(3,2)⊤,P=(1,0)⊤, phép chiếu giữ lại (3,0)⊤ nên xa=(0,2)⊤,‖xa‖2=4. Nếu ngưỡng giả định γα=3 thì 4>3 gắn cờ lệch khỏi không gian nền; cờ này không xác nhận nguyên nhân độc hại.",
+      "native_math_zones": 10,
+      "transposes": [
+        {
+          "base": ")",
+          "actual_glyph": "⊤",
+          "original_glyph": "⊤",
+          "source_body_index": 168,
+          "source_xpath": "/w:document/w:body/w:p[165]/m:oMathPara/m:oMath/m:sSup[1]/m:sup",
+          "source_reason": "PCA transpose convention in the explained formula",
+          "source_sup_sha256": "bf0d15394bb17893d04ed2371ee27333c72a165d13cfe553ded8b339fe78b892",
+          "native_sup_xpath": "/w:document/w:body/w:p[174]/m:oMath[6]/m:sSup[1]/m:sup",
+          "exact_sup_xml_matches": true
+        },
+        {
+          "base": ")",
+          "actual_glyph": "⊤",
+          "original_glyph": "⊤",
+          "source_body_index": 168,
+          "source_xpath": "/w:document/w:body/w:p[165]/m:oMathPara/m:oMath/m:sSup[1]/m:sup",
+          "source_reason": "PCA transpose convention in the explained formula",
+          "source_sup_sha256": "bf0d15394bb17893d04ed2371ee27333c72a165d13cfe553ded8b339fe78b892",
+          "native_sup_xpath": "/w:document/w:body/w:p[174]/m:oMath[6]/m:sSup[2]/m:sup",
+          "exact_sup_xml_matches": true
+        },
+        {
+          "base": ")",
+          "actual_glyph": "⊤",
+          "original_glyph": "⊤",
+          "source_body_index": 168,
+          "source_xpath": "/w:document/w:body/w:p[165]/m:oMathPara/m:oMath/m:sSup[1]/m:sup",
+          "source_reason": "PCA transpose convention in the explained formula",
+          "source_sup_sha256": "bf0d15394bb17893d04ed2371ee27333c72a165d13cfe553ded8b339fe78b892",
+          "native_sup_xpath": "/w:document/w:body/w:p[174]/m:oMath[7]/m:sSup/m:sup",
+          "exact_sup_xml_matches": true
+        },
+        {
+          "base": ")",
+          "actual_glyph": "⊤",
+          "original_glyph": "⊤",
+          "source_body_index": 168,
+          "source_xpath": "/w:document/w:body/w:p[165]/m:oMathPara/m:oMath/m:sSup[1]/m:sup",
+          "source_reason": "PCA transpose convention in the explained formula",
+          "source_sup_sha256": "bf0d15394bb17893d04ed2371ee27333c72a165d13cfe553ded8b339fe78b892",
+          "native_sup_xpath": "/w:document/w:body/w:p[174]/m:oMath[8]/m:sSup[1]/m:sup",
+          "exact_sup_xml_matches": true
+        }
+      ]
+    },
+    {
+      "anchor": 170,
+      "note": "A chứa hệ số của các quan hệ bất biến; x là vector số đếm, 0 là vector không. Ví dụ: A=[1,-1],x=(2,2)T cho Ax=0; x=(2,1)T cho Ax=1, tức quan hệ “hai loại bằng nhau” bị vi phạm. Quan hệ phải được học và kiểm định trong ngữ cảnh hệ thống; vi phạm không tự xác nhận tấn công.",
+      "native_math_zones": 7,
+      "transposes": [
+        {
+          "base": ")",
+          "actual_glyph": "T",
+          "original_glyph": "T",
+          "source_body_index": 164,
+          "source_xpath": "/w:document/w:body/w:p[161]/m:oMathPara/m:oMath/m:sSup[1]/m:sup",
+          "source_reason": "same count vector defined before Ax=0",
+          "source_sup_sha256": "30902fb58a2fc0abe4c6aeee97f800141cbed2a9702fb5ae4700ae6213407ae2",
+          "native_sup_xpath": "/w:document/w:body/w:p[177]/m:oMath[4]/m:sSup/m:sup",
+          "exact_sup_xml_matches": true
+        },
+        {
+          "base": ")",
+          "actual_glyph": "T",
+          "original_glyph": "T",
+          "source_body_index": 164,
+          "source_xpath": "/w:document/w:body/w:p[161]/m:oMathPara/m:oMath/m:sSup[1]/m:sup",
+          "source_reason": "same count vector defined before Ax=0",
+          "source_sup_sha256": "30902fb58a2fc0abe4c6aeee97f800141cbed2a9702fb5ae4700ae6213407ae2",
+          "native_sup_xpath": "/w:document/w:body/w:p[177]/m:oMath[6]/m:sSup/m:sup",
+          "exact_sup_xml_matches": true
+        }
+      ]
+    },
+    {
+      "anchor": 175,
+      "note": "Et là tập g loại sự kiện có xác suất dự đoán cao nhất cho bước t, không phải xác suất của chính sự kiện quan sát. Ví dụ: nếu mô hình gán e1: 0,6; e2: 0,3; e3: 0,1 và g=2, thì Et={e1,e2}; quan sát e3 nằm ngoài tập này và là ứng viên bất thường. Việc gắn nhãn an ninh cần bằng chứng và ngưỡng đánh giá riêng.",
+      "native_math_zones": 9,
+      "transposes": []
+    },
+    {
+      "anchor": 177,
+      "note": "Ví dụ cho chú ý tự thân: hai điểm Query–Key bằng nhau cho trọng số softmax 0,5 và 0,5; đầu ra là trung bình có trọng số của hai vector Value. Trọng số cho biết mô hình đang tổng hợp thông tin từ đâu trong cửa sổ, không chỉ ra quan hệ nhân quả giữa hai sự kiện.",
+      "native_math_zones": 0,
+      "transposes": []
+    },
+    {
+      "anchor": 182,
+      "note": "Trong bộ ký hiệu đồ thị, ϕ gán mỗi đỉnh vào một kiểu trong Tv, ψ gán mỗi cạnh vào một kiểu trong Te, còn τ gán mốc thời gian cho cạnh/sự kiện quan sát. Ví dụ: một tiến trình đọc một tệp tạo cạnh có hướng kiểu read tại thời điểm ghi nhận; cạnh thể hiện quan hệ phụ thuộc đã quan sát, không chứng minh nội dung tệp gây ra hành vi tiếp theo.",
+      "native_math_zones": 5,
+      "transposes": []
+    },
+    {
+      "anchor": 222,
+      "note": "Bộ sáu tách “khi nào, loại gì, ai, tác động lên gì, bằng thao tác nào, kèm tham số nào” cho một sự kiện; ký hiệu ⊥ nghĩa là không có đối tượng đích được ghi nhận. Ví dụ: tại giây 10, một tiến trình đọc một tệp với tham số đường dẫn đã chuẩn hóa; đây là một sự kiện, không phải kết luận rằng tiến trình đó độc hại.",
+      "native_math_zones": 1,
+      "transposes": []
+    },
+    {
+      "anchor": 224,
+      "note": "Update chỉ dùng trạng thái trước St-1 và sự kiện vừa đến et để tạo St; fθ đọc trạng thái này thành vector zt gồm d số thực. Ví dụ: từ trạng thái rỗng, sau sự kiện đọc tệp, bộ nhớ có thể lưu tóm tắt rằng tiến trình đã tương tác với tệp. Công thức không quy định chính xác nội dung bộ nhớ hay giá trị vector nếu chưa biết tham số đã học.",
+      "native_math_zones": 7,
+      "transposes": []
+    },
+    {
+      "anchor": 234,
+      "note": "Utility là thước đo đã khóa trước đánh giá; ϵmargin là biên dung sai cùng đơn vị. Bất đẳng thức chỉ yêu cầu điểm đa góc nhìn không kém điểm đơn tốt nhất quá biên. Ví dụ: 0,79 vẫn thỏa 0,79>0,80-0,02. Đây chưa phải chứng cứ vượt trội; các điều kiện phương sai và thông tin cũng cần kiểm định riêng.",
+      "native_math_zones": 3,
+      "transposes": []
+    },
+    {
+      "anchor": 237,
+      "note": "T là phép đổi cú pháp đã xác định trước là vô hại; ϵinv chặn khoảng cách giữa hai biểu diễn cùng thang đo. Ví dụ: đổi định dạng thời gian mà giữ sự kiện, khoảng cách 0,1 nhỏ hơn ngưỡng giả định 0,2. Điều này chỉ thỏa điều kiện hình học cho ví dụ đó, chưa chứng minh mọi T an toàn hoặc điều kiện thông tin về S.",
+      "native_math_zones": 4,
+      "transposes": []
+    },
+    {
+      "anchor": 239,
+      "note": "Δt(et) là độ trễ xử lý một sự kiện; Tbudget phải dùng cùng đơn vị thời gian. Mem(St) và Mmax phải đo cùng đơn vị bộ nhớ. Ví dụ: giới hạn 5 mili-giây và 100 MiB được thỏa ở một bước có độ trễ 4 mili-giây, bộ nhớ 80 MiB; ký hiệu ∀t đòi hỏi điều kiện đúng ở mọi bước, không chỉ một phép đo mẫu.",
+      "native_math_zones": 5,
+      "transposes": []
+    },
+    {
+      "anchor": 241,
+      "note": "Hai vế so sánh cùng một điểm vận hành với đường cơ sở trên hai thước đo đã khóa: Utility càng cao càng tốt, PrivacyLoss càng thấp càng tốt. Ví dụ: ứng viên (0,82; 0,25) so với cơ sở (0,80; 0,30) thỏa cả hai chiều; các số này hoàn toàn giả định, không phải bằng chứng H5 đã đạt. Cần phép đo quyền riêng tư từ mô hình đe dọa cụ thể.",
+      "native_math_zones": 2,
+      "transposes": []
+    },
+    {
+      "anchor": 245,
+      "note": "tlast(v) là lần tương tác gần nhất của v và τTTL là thời lượng sống theo cùng đơn vị thời gian. Ví dụ: nếu v hoạt động lần cuối ở giây 10 và τTTL=5 giây, tại giây 14 v còn trong tập hoạt động, tại giây 16 thì không. Ký hiệu |St| được hiểu là số mục trạng thái được lưu; để khẳng định chặn bộ nhớ vật lý phải đo thêm Mem(St) bằng byte như ER1, vì số mục không quyết định số byte.",
+      "native_math_zones": 8,
+      "transposes": []
+    },
+    {
+      "anchor": 248,
+      "note": "Watermark lấy mốc thời gian sự kiện lớn nhất đã thấy rồi trừ dung sai đến muộn δdelay; mọi đại lượng thời gian phải cùng đơn vị. Ví dụ: mốc lớn nhất là giây 100 và δdelay=5 giây thì twm=100-5=95 giây. Một sự kiện mang mốc 93 giây đã ở phía sau watermark và cần xử lý theo chính sách đến muộn, không được âm thầm đảo lại quá khứ.",
+      "native_math_zones": 3,
+      "transposes": []
+    },
+    {
+      "anchor": 251,
+      "note": "Cstep là tổng chi phí cho một bước, còn Cseq, Cgraph, Cstate và Calign là chi phí từng nhánh với đầu vào và cấu trúc dữ liệu đã nêu. Ví dụ: nếu giữ d và số tầng cố định, tăng độ dài cửa sổ L từ 10 lên 20 làm số cặp chú ý từ khoảng 100 lên 400; đó là tỷ lệ của số hạng bậc hai, không phải cam kết thời gian chạy đầu-cuối.",
+      "native_math_zones": 7,
+      "transposes": []
+    },
+    {
+      "anchor": 270,
+      "note": "Retain(x) là chỉ báo nhận giá trị 1 khi trường x thuộc kiểu an ninh đã đặc tả hoặc khớp quy tắc tiền nghiệm; Normalize(x)=ϕ(x) chỉ chuẩn hóa biểu diễn của trường, không xóa đặc trưng có ý nghĩa an ninh. Ví dụ: một đường dẫn cấu hình được giữ lại và chuẩn hóa dạng viết; nhãn “giữ lại” không phải phán quyết đường dẫn đó độc hại.",
+      "native_math_zones": 3,
+      "transposes": []
+    },
+    {
+      "anchor": 299,
+      "note": "πψ dùng khóa hoặc tham số ψ trong phạm vi liên kết đã chọn: cùng thực thể trong cùng phạm vi phải cho cùng mã, còn việc đổi phạm vi/khóa có thể cho mã khác. Ví dụ: hai lần truy cập của cùng một tiến trình trong một phiên vẫn nối được với nhau; điều này không bảo đảm chống tái định danh từ mẫu hành vi hay tạo ra quyền riêng tư vi sai.",
+      "native_math_zones": 2,
+      "transposes": []
+    },
+    {
+      "anchor": 303,
+      "note": "ParamProtect chỉ nhận pi sau phân loại chính sách: loại bỏ trường đã biết cần loại, giữ token an ninh đã chuẩn hóa và dùng token kiểu an toàn cho giá trị chưa biết. Đây là mô tả biến đổi dữ liệu đầu vào, chưa là chứng minh rằng z không rò rỉ thuộc tính nhạy cảm.",
+      "native_math_zones": 3,
+      "transposes": []
+    },
+    {
+      "anchor": 314,
+      "note": "Ws là chuỗi gần, Wm là ngữ cảnh trung hạn và WL là bản tóm tắt lịch sử cũ có chặn; chúng khác nhau về thông tin giữ lại. Ví dụ: ba sự kiện mới nhất nằm ở Ws, các tương tác trong một giờ nằm ở Wm, còn lịch sử xa hơn chỉ còn bộ đếm nén trong WL. Các khoảng này là ví dụ thiết kế, không phải giá trị đã đo hoặc khóa trong thí nghiệm.",
+      "native_math_zones": 6,
+      "transposes": []
+    },
+    {
+      "anchor": 326,
+      "note": "Các số hạng của xi đều có dmodel chiều; tổng tham số chỉ gồm token còn được giữ sau bảo vệ quyền riêng tư. Ví dụ ở hai chiều: nhúng kiểu (1,0) cộng nhúng thao tác (0,1), các phần khác bằng 0, cho xi=(1,1). Mã thời gian cần đơn vị tương thích; một thành phần cos riêng lẻ không xác định duy nhất khoảng thời gian.",
+      "native_math_zones": 4,
+      "transposes": []
+    },
+    {
+      "anchor": 330,
+      "note": "Mevent là tập vị trí bị che, |Mevent| là số vị trí đó; chỉ xác suất của lớp đúng τi đi vào log. Ví dụ: một vị trí có xác suất lớp đúng 0,8 tạo mất mát -log(0,8)≈0,223 khi dùng log tự nhiên như hàm cross-entropy. Mất mát thấp chỉ nói mô hình đoán token bị che tốt hơn theo mục tiêu này, không chứng minh đã nhận ra tấn công.",
+      "native_math_zones": 4,
+      "transposes": []
+    },
+    {
+      "anchor": 332,
+      "note": "Tập khe tham số trong mẫu số chỉ gồm các khe bị che, không gồm khe đệm; mẫu số đếm tổng khe hợp lệ trong lô. Ví dụ: hai khe có xác suất lớp đúng 0,8 và 0,5 cho mất mát trung bình:",
+      "native_math_zones": 1,
+      "transposes": []
+    },
+    {
+      "anchor": 337,
+      "note": "Δti là khoảng thời gian không âm giữa hai sự kiện; log(1+Δti) dùng đơn vị thời gian đã quy ước. Đầu hồi quy nhận cặp trạng thái liên tiếp và Lδ là mất mát Huber với δ=1. Ví dụ: Δti=2 cho đích log(3)≈1,099; dự đoán 1,000 cho mất mát xấp xỉ 0,0049. Đây là lỗi dự đoán thời gian, không phải điểm tấn công.",
+      "native_math_zones": 6,
+      "transposes": []
+    },
+    {
+      "anchor": 342,
+      "note": "αi là trọng số chuẩn hóa trên L vị trí nên không âm và có tổng bằng 1; Wproj chuyển mỗi hi từ dmodel sang dseq trước khi cộng. Ví dụ: với hai vị trí có trọng số 0,25 và 0,75, h1=(1,0),h2=(0,2),Wproj=I, ta được zseq=(0,25;1,5). Trọng số nói vị trí nào được dùng nhiều trong phép tổng hợp, không phải xác suất vị trí đó gây ra tấn công.",
+      "native_math_zones": 8,
+      "transposes": []
+    },
+    {
+      "anchor": 360,
+      "note": "λ là tốc độ suy giảm có đơn vị nghịch đảo đơn vị thời gian của t; để trọng số không vượt 1 cần xét cạnh đã xảy ra với t≥te. Ví dụ: dùng logarit tự nhiên, nếu λ=log(2) mỗi giờ, sau một giờ trọng số từ 1 giảm còn exp(-log2)=0,5. Đây là chính sách ưu tiên cạnh cũ/mới, không xóa bỏ chứng cứ gốc hay xác định quan hệ nhân quả.",
+      "native_math_zones": 5,
+      "transposes": []
+    },
+    {
+      "anchor": 378,
+      "note": "Msg tạo thông điệp từ trạng thái trước sự kiện và thuộc tính cạnh; Agg gộp thông điệp đến đỉnh u, rồi Update tạo trạng thái mới. Ví dụ: nếu chọn phép cộng, hai thông điệp (1,0) và (0,2) gộp thành (1,2). Chưa thể tính trạng thái mới khi không biết Update và trọng số đã học; cạnh chỉ là quan hệ quan sát được.",
+      "native_math_zones": 5,
+      "transposes": []
+    },
+    {
+      "anchor": 387,
+      "note": "Ba mất mát đồ thị lần lượt tái tạo thuộc tính đỉnh, dự đoán loại cạnh và khoảng thời gian. Ví dụ: đích (1,1), dự đoán (1,2) cho sai số (1-1)2+(2-1)2=1; xác suất lớp cạnh đúng 0,8 cho -log(0,8)≈0,223. Đây là kiểm tra tác vụ tự giám sát, không xác nhận đồ thị đã ghi đủ hành vi tấn công.",
+      "native_math_zones": 2,
+      "transposes": []
+    },
+    {
+      "anchor": 395,
+      "note": "Readoutgraph gán trọng số cho các trạng thái đỉnh đang hoạt động rồi chiếu và cộng chúng thành một vector dgraph chiều. Ví dụ: nếu có hai đỉnh, trọng số chuẩn hóa đều 0,5, phép chiếu là đồng nhất và trạng thái lần lượt là (1,0), (0,2), thì zgraph=(0,5;1). Đây là bản tóm tắt của đồ thị quan sát trong Wm; nó không giữ nguyên mọi cạnh hay chứng minh luồng nhân quả.",
+      "native_math_zones": 4,
+      "transposes": []
+    },
+    {
+      "anchor": 401,
+      "note": "Trong Bảng 2.2, L là độ dài chuỗi, Nlayers là số tầng, d và dff là chiều trạng thái và tầng truyền thẳng; EW và Vupd là tập cạnh và đỉnh được xử lý, còn dseq và dgraph là chiều đầu ra. Ví dụ: giữ các chiều cố định, L tăng từ 10 lên 20 làm số cặp chú ý tăng từ 100 lên 400. Ký hiệu O nói về bậc tăng trưởng theo giả định, không phải độ trễ đo được.",
+      "native_math_zones": 10,
+      "transposes": []
+    },
+    {
+      "anchor": 416,
+      "note": "Hai đầu chiếu có thể nhận vector gốc khác số chiều nhưng đều phải xuất dproj chiều để phép gióng hàng có nghĩa. Ví dụ: vector chuỗi hai chiều và vector đồ thị ba chiều có thể cùng được chiếu về không gian bốn chiều; các ma trận ở hai nhánh vì vậy có kích thước đầu vào khác nhau. Gần nhau trong không gian chiếu không buộc hai vector gốc mất hết thông tin riêng.",
+      "native_math_zones": 1,
+      "transposes": []
+    },
+    {
+      "anchor": 426,
+      "note": "B là số cặp chuỗi–đồ thị tương ứng trong lô; mỗi hạng tử là bình phương khoảng cách Euclid giữa hai vector chiếu cùng dproj chiều. Ví dụ với hai cặp: cặp thứ nhất lệch một đơn vị ở một chiều, cặp thứ hai trùng nhau; khi đó Linv=1+02=0,5. Chỉ có độ gần trong không gian chiếu được tối ưu, chưa có chứng cứ về tính đúng an ninh.",
+      "native_math_zones": 3,
+      "transposes": []
+    },
+    {
+      "anchor": 428,
+      "note": "P có B hàng, dproj cột; p:, j là cột j, γ là độ lệch chuẩn tối thiểu và ϵ tránh căn của 0. Phương sai mẫu cần B≥2. Ví dụ: với B=2, cột (0,2) có độ lệch chuẩn khoảng 1,414, không bị phạt khi γ=1; cột (0,0) với ϵ=10-4 bị phạt khoảng 0,99. Hình phạt chống sụp đổ từng chiều, chưa bảo đảm thông tin an ninh.",
+      "native_math_zones": 10,
+      "transposes": []
+    },
+    {
+      "anchor": 434,
+      "note": "C(P) là ma trận dproj×dproj; Lcov chỉ cộng bình phương các phần tử ngoài đường chéo. Ví dụ: B=2 với hai vector (0,0), (2,2) cho hai phần tử ngoài đường chéo đều bằng 2, nên Lcov=22+222=4. Phạt này giảm tương quan tuyến tính, không chứng minh độc lập thống kê.",
+      "native_math_zones": 5,
+      "transposes": []
+    },
+    {
+      "anchor": 441,
+      "note": "ρoverlap là tỷ lệ Jaccard giữa phần giao và phần hợp của phạm vi tương ứng đã xác định; nó chỉ được tính khi cả hai góc nhìn hiện diện. Ví dụ: hai phạm vi có 2 thực thể chung trong 4 thực thể hợp thì ρoverlap=0,5; nếu Linv=2, số hạng gióng hàng có trọng số là 1. Giảm trọng số không tự sửa được cặp ghép sai về thời gian hoặc thực thể.",
+      "native_math_zones": 3,
+      "transposes": []
+    },
+    {
+      "anchor": 472,
+      "note": "Lpreserv giữ tác vụ tự giám sát; Lfuse-rec yêu cầu vector dung hợp tái tạo hai biểu diễn gốc, còn stopgrad chỉ chặn gradient ở đích. Ví dụ: Linv=0,1, hai Lvar đều 0,1, hai Lcov bằng 0, Lpreserv=0,2, Lfuse-rec=0,3 với trọng số đã nêu cho:",
+      "native_math_zones": 9,
+      "transposes": []
+    },
+    {
+      "anchor": 478,
+      "note": "qseq và qgraph chứa cờ hiện diện cùng chỉ báo chất lượng; Covevent, Covgraph, Densityedge chưa khóa phép đo nên chưa thể thay số cho các vector chất lượng. Với điểm cổng giả định sseq=0, sgraph=log3, τ=0,05, ta có:",
+      "native_math_zones": 9,
+      "transposes": []
+    },
+    {
+      "anchor": 482,
+      "note": "PCGrad chỉ chiếu hai gradient trên cùng tham số khi tích vô hướng âm; mẫu số là bình phương chuẩn gradient được giữ. Ví dụ: galign=(1,-1),gpreserv=(-1,0) có tích −1; chiếu cho galignproj=(0,-1), tích mới bằng 0. Phép chiếu tại bước này không bảo đảm cả hai mục tiêu cùng cải thiện.",
+      "native_math_zones": 2,
+      "transposes": []
+    },
+    {
+      "anchor": 493,
+      "note": "Trong túi K thể hiện, các trọng số chú ý không âm và cộng thành 1; zbag là tổng có trọng số để phân lớp túi. Ví dụ: hai trọng số bằng 0,5, logit túi bằng 0, nhãn thật 1 cho mất mát -log(0,5)≈0,693. Trọng số chỉ gợi ý thể hiện cần xem, không phải xác suất sự kiện là tấn công.",
+      "native_math_zones": 3,
+      "transposes": []
+    },
+    {
+      "anchor": 509,
+      "note": "Hai phép chiếu dung hợp đưa hai vector về cùng dcross chiều; tích Hadamard nhân từng tọa độ, còn mseq và mgraph chặn nhánh bị khuyết trước khi cộng rồi chuẩn hóa. Ví dụ: nếu useq=(1,2),ugraph=(3,4) thì ucross=(3,8); chưa thể tính zmv nếu không biết các ma trận đầu ra, trọng số cổng và LayerNorm. Tương tác lớn ở một tọa độ không tự có nghĩa là bằng chứng tấn công.",
+      "native_math_zones": 7,
+      "transposes": []
+    },
+    {
+      "anchor": 518,
+      "note": "B là số cặp trong lô, K là số thể hiện; các ký hiệu chiều có chỉ số là chiều tương ứng của từng vector. Ví dụ: giữ các chiều cố định, K từ 10 lên 20 làm số điểm chú ý MIL xấp xỉ gấp đôi; tăng dproj làm số phần tử hiệp phương sai tăng bậc hai. Ký hiệu O mô tả bậc tăng, không phải mili-giây hay MiB đã đo.",
+      "native_math_zones": 5,
+      "transposes": []
+    }
+  ],
+  "defects": [],
+  "pdf_sha256": "684c59e99246be3dfb1e49de71c5b2911ef4c3d38471daafa5afee05ef1ad643",
+  "research_starting_head": "4e401094044824facd6fa9740c813b32b6e5acea",
+  "export_starting_head": "3eea0b0746c68fc130ecd78709ee409b760eae25",
+  "research_branch": "codex/omml-transpose-source-repair",
+  "artifacts_changed": false,
+  "original_formulae_content_numbers_citations_chapter_3_changed": false,
+  "word_com": {
+    "status": "PASS",
+    "opened_without_repair": true,
+    "read_only": true,
+    "word_math_count": 827,
+    "word_field_count": 386,
+    "exported_pdf_bytes": 3276486
+  },
+  "pdf_comparison": {
+    "status": "PASS",
+    "pages_compared": 129,
+    "mismatched_pages": [],
+    "note_pdf_pages": {
+      "156": 25,
+      "164": 27
+    }
+  },
+  "layout": {
+    "status": "PASS",
+    "native_pdf_pages_reviewed": [
+      25,
+      27,
+      28,
+      29
+    ],
+    "new_transpose_note_pages": {
+      "156": 25,
+      "164": 27,
+      "168": 29,
+      "170": 29
+    },
+    "clipping_or_overflow": [],
+    "pdf_sha256_identical_to_previously_accepted_layout": true,
+    "blank_or_nearly_blank_pages": [],
+    "outside_page_boxes": []
+  },
+  "omml_ooxml_release_check": "PASS",
+  "typography_operator_counts": {
+    "T": 3,
+    "⊤": 5
+  }
+}
