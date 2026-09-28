@@ -1,82 +1,69 @@
-"""Reuse the original thesis' OMML symbol shapes, scripts and typography."""
+"""Copy symbols using reviewed object-specific baseline XML selectors."""
 from __future__ import annotations
-
-import copy
-from collections import defaultdict
+import copy,hashlib,json
+from pathlib import Path
 from lxml import etree
+M='{http://schemas.openxmlformats.org/officeDocument/2006/math}'
+W='{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
+ROOT=Path(__file__).resolve().parents[1]
+SCRIPT_TAGS={M+name for name in ('sSub','sSup','sSubSup')}
 
-M = '{http://schemas.openxmlformats.org/officeDocument/2006/math}'
-W = '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
-SCRIPT_TAGS = {M + name for name in ('sSub', 'sSup', 'sSubSup')}
-
-
-def surface(node):
-    return ''.join(t.text or '' for t in node.iter(M + 't'))
-
-
-def key(value):
-    return ''.join(value.split()).replace('ϕ', 'φ').replace('ϵ', 'ε').replace('⟂', '⊥').replace('−', '-')
-
+def surface(node):return ''.join(t.text or '' for t in node.iter(M+'t'))
+def key(value):return ''.join(value.split()).replace('−','-')
+def canonical(node):return etree.tostring(node,method='c14n',exclusive=True)
+def at(root,path):
+    for index in path:root=root[index]
+    return root
 
 class SourceMathStyle:
-    def __init__(self, body):
-        self.symbols = defaultdict(list)
-        self.runs = defaultdict(list)
-        self.matches = []
-        for index, paragraph in enumerate(body):
-            for node in paragraph.iter():
-                if node.tag in SCRIPT_TAGS:
-                    base = node.find(M + 'e')
-                    # Atomic symbols only; do not mistake a whole formula or
-                    # a norm for a reusable symbol.
-                    if base is not None and not any(n.tag in SCRIPT_TAGS for n in base.iter()):
-                        text = surface(base).strip()
-                        if any(c.isalpha() for c in text) and all(c.isalnum() or c in 'Δϕφψθσλγερτπ' for c in text):
-                            self.symbols[key(surface(node))].append((index, copy.deepcopy(node)))
-                elif node.tag == M + 'r':
-                    text = surface(node).strip()
-                    if (any(c.isalpha() for c in text) or text in ('⊥','⟂')) and all(c.isalnum() or c in 'Δϕφψθσλγερτπ⊥⟂' for c in text):
-                        self.runs[key(text)].append((index, copy.deepcopy(node)))
+    def __init__(self,body):
+        self.body=copy.deepcopy(body)
+        data=json.loads((ROOT/'docs/OMML-OBJECT-SYMBOL-BINDINGS.json').read_text(encoding='utf-8'))
+        self.baseline_sha256=data['baseline_sha256']
+        if data['mixed_candidates_to_review']:raise ValueError('Unreviewed object ambiguity')
+        self.bindings={(r['anchor'],r['expression']):r for r in data['bindings']}
+        self.matches=[]
 
-    @staticmethod
-    def nearest(candidates, anchor):
-        return min(candidates, key=lambda item: (abs(item[0] - anchor), item[0] > anchor, item[0]))
+    def source(self,record):
+        source=at(self.body[record['source_body_index']],record['source_path'])
+        if hashlib.sha256(canonical(source)).hexdigest()!=record['source_sha256']:
+            raise ValueError('Original object XML changed: '+str(record))
+        result=copy.deepcopy(source)
+        if record['kind']=='run_span':
+            lo,hi=record['span']
+            result.find(M+'t').text=surface(source)[lo:hi]
+        if record['kind']=='indexed_example':
+            change=record['substitution'];slot=result.find(M+change['slot'])
+            if surface(slot)!=change['old']:raise ValueError('Indexed example source changed')
+            texts=list(slot.iter(M+'t'))
+            if len(texts)!=1:raise ValueError('Indexed example source must be atomic')
+            texts[0].text=change['new']
+        return result
 
-    def apply(self, omml, anchor):
-        result = copy.deepcopy(omml)
-
-        def walk(node):
-            for child in list(node):
-                candidates = self.symbols.get(key(surface(child))) if child.tag in SCRIPT_TAGS else None
-                if candidates:
-                    index, original = self.nearest(candidates, anchor)
-                    node.replace(child, copy.deepcopy(original))
-                    self.matches.append({'anchor': anchor, 'symbol': surface(original),
-                                         'source_body_index': index, 'kind': 'whole_symbol',
-                                         'source_structure': etree.QName(original).localname})
-                    continue
-                if child.tag == M + 'r':
-                    candidates = self.runs.get(key(surface(child).strip()))
-                    if candidates:
-                        index, original = self.nearest(candidates, anchor)
-                        # Keep new numbers and operators; copy the symbol's
-                        # original math alphabet, bold/italic/normal style,
-                        # font and other run properties exactly.
-                        for tag in (M + 'rPr', W + 'rPr'):
-                            current = child.find(tag)
-                            if current is not None:
-                                child.remove(current)
-                        props = [copy.deepcopy(p) for p in original if p.tag in (M + 'rPr', W + 'rPr')]
-                        for position, prop in enumerate(props):
-                            child.insert(position, prop)
-                        # Variants of phi/epsilon/bottom must match the source.
-                        old_text = original.find(M + 't')
-                        new_text = child.find(M + 't')
-                        if old_text is not None and new_text is not None:
-                            new_text.text = old_text.text
-                        self.matches.append({'anchor': anchor, 'symbol': surface(original),
-                                             'source_body_index': index, 'kind': 'run_style'})
-                walk(child)
-
-        walk(result)
+    def apply(self,omml,anchor,raw):
+        record=self.bindings.get((anchor,raw))
+        if record is None:raise ValueError(f'Unbound mathematical object: {anchor}, {raw}')
+        if hashlib.sha256(canonical(omml)).hexdigest()!=record['input_omml_sha256']:
+            raise ValueError(f'Unreviewed input expression: {anchor}, {raw}')
+        result=copy.deepcopy(omml)
+        # Reverse index order preserves frozen paths when a run is split.
+        for operation in sorted(record['operations'],key=lambda r:r['target_path'],reverse=True):
+            target=at(result,operation['target_path']);parent=target.getparent();index=parent.index(target)
+            if operation['kind']=='split_run':
+                value=surface(target);replacement=[];last=0
+                for part in operation['segments']:
+                    lo,hi=part['target_span']
+                    if lo>last:
+                        plain=copy.deepcopy(target);plain.find(M+'t').text=value[last:lo];replacement.append(plain)
+                    replacement.append(self.source(part));last=hi
+                    self.matches.append({'anchor':anchor,'expression':raw,'object_context':record['object_context'],
+                        **{k:v for k,v in part.items() if not k.startswith('target_')}})
+                if last<len(value):
+                    plain=copy.deepcopy(target);plain.find(M+'t').text=value[last:];replacement.append(plain)
+                parent.remove(target)
+                for offset,node in enumerate(replacement):parent.insert(index+offset,node)
+            else:
+                parent.replace(target,self.source(operation))
+                self.matches.append({'anchor':anchor,'expression':raw,'object_context':record['object_context'],
+                    **{k:v for k,v in operation.items() if not k.startswith('target_')}})
         return result

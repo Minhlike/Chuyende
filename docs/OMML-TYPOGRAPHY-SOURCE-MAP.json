@@ -1,1329 +1,5184 @@
 [
   {
     "anchor": 518,
-    "symbol": "B",
+    "expression": "B",
+    "object_context": "độ phức tạp Bảng 2.4",
     "source_body_index": 518,
-    "kind": "run_style"
+    "source_path": [
+      2,
+      0
+    ],
+    "source_sha256": "5963a10ebde6eaa79a56b10610082607ffb9bd6a9b65f66ff4f2c52b843ad361",
+    "source_surface": "B",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 518,
-    "symbol": "K",
+    "expression": "K",
+    "object_context": "độ phức tạp Bảng 2.4",
     "source_body_index": 518,
-    "kind": "run_style"
+    "source_path": [
+      16,
+      0
+    ],
+    "source_sha256": "830b2df5eaf18e914cf152e790b9df31a2b70af776e0278045efbbd356f51ff4",
+    "source_surface": "K",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 518,
-    "symbol": "d",
+    "expression": "K",
+    "object_context": "độ phức tạp Bảng 2.4",
     "source_body_index": 518,
-    "kind": "run_style"
+    "source_path": [
+      16,
+      0
+    ],
+    "source_sha256": "830b2df5eaf18e914cf152e790b9df31a2b70af776e0278045efbbd356f51ff4",
+    "source_surface": "K",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 518,
-    "symbol": "K",
+    "expression": "dproj",
+    "object_context": "độ phức tạp Bảng 2.4",
     "source_body_index": 518,
-    "kind": "run_style"
+    "source_path": [
+      4,
+      6
+    ],
+    "source_sha256": "489d981da84563fdb2856b048e302bb8c11456946479b0244a9bd459e0ee3afa",
+    "source_surface": "dproj",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 518,
-    "symbol": "dproj",
+    "expression": "O",
+    "object_context": "độ phức tạp Bảng 2.4",
     "source_body_index": 518,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      4,
+      0
+    ],
+    "source_sha256": "5318bb694fd0d42f41f8b16c8373f04dbf568ada19a8fe6910fc9ad0c43e31ed",
+    "source_surface": "O(",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 509,
-    "symbol": "dcross",
-    "source_body_index": 510,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 509,
-    "symbol": "mseq",
-    "source_body_index": 509,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 509,
-    "symbol": "mgraph",
-    "source_body_index": 509,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 509,
-    "symbol": "useq",
+    "expression": "dcross",
+    "object_context": "vector dung hợp / tích Hadamard",
     "source_body_index": 504,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      6,
+      2,
+      0
+    ],
+    "source_sha256": "3c854bd07eff9da7c2572d444f0020bf13cc3033f40636c38198670b6596c636",
+    "source_surface": "dcross",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 509,
-    "symbol": "ugraph",
+    "expression": "mseq",
+    "object_context": "vector dung hợp / tích Hadamard",
+    "source_body_index": 509,
+    "source_path": [
+      1,
+      0,
+      2,
+      1,
+      0
+    ],
+    "source_sha256": "98791cbf8fa78fdff93fba923512d3e07abf2e4276209dfa4d67bfa331034aa9",
+    "source_surface": "mseq",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 509,
+    "expression": "mgraph",
+    "object_context": "vector dung hợp / tích Hadamard",
+    "source_body_index": 509,
+    "source_path": [
+      1,
+      0,
+      2,
+      1,
+      5
+    ],
+    "source_sha256": "8e166377095fe68012f9fadbd7afe665a31ebcaa47f9518aca101fd71d7dd935",
+    "source_surface": "mgraph",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 509,
+    "expression": "useq=(1,2), ugraph=(3,4)",
+    "object_context": "vector dung hợp / tích Hadamard",
     "source_body_index": 504,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      4
+    ],
+    "source_sha256": "797120aef79f57bb037483a5ff620ed04fd6acb10638e5924c648d701b1bdf6e",
+    "source_surface": "ugraph",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 509,
-    "symbol": "ucross",
-    "source_body_index": 509,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "expression": "useq=(1,2), ugraph=(3,4)",
+    "object_context": "vector dung hợp / tích Hadamard",
+    "source_body_index": 504,
+    "source_path": [
+      1,
+      0,
+      2
+    ],
+    "source_sha256": "ac01210a90561c074277473d2ec61fe206fda0dfbce60e9de582ed631ca2817c",
+    "source_surface": "useq",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 509,
-    "symbol": "zmv",
+    "expression": "ucross=(3,8)",
+    "object_context": "vector dung hợp / tích Hadamard",
+    "source_body_index": 504,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "b42d16ae6c22224af1c8defe7e183574b50bcb83e6d63629a8a3a2c687e6d521",
+    "source_surface": "ucross",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 509,
+    "expression": "zmv",
+    "object_context": "vector dung hợp / tích Hadamard",
     "source_body_index": 509,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "eaa073266674ea00370a63e88cdaba2f3b647f26627ce3f52207a97a6e0624df",
+    "source_surface": "zmv",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 509,
+    "expression": "LayerNorm",
+    "object_context": "vector dung hợp / tích Hadamard",
+    "source_body_index": 509,
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "daeb6e72a009f79c91e6c820af8a2d31d6aeb3b933d52cd233fd1bd5c42a8040",
+    "source_surface": " = LayerNorm",
+    "span": [
+      3,
+      12
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 493,
-    "symbol": "K",
+    "expression": "K",
+    "object_context": "túi MIL",
     "source_body_index": 491,
-    "kind": "run_style"
+    "source_path": [
+      1,
+      0,
+      2,
+      2,
+      0
+    ],
+    "source_sha256": "830b2df5eaf18e914cf152e790b9df31a2b70af776e0278045efbbd356f51ff4",
+    "source_surface": "K",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 493,
-    "symbol": "zbag",
-    "source_body_index": 492,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "expression": "zbag",
+    "object_context": "túi MIL",
+    "source_body_index": 491,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "56aa312875711f4e1cdd7674e4c6ec8317c43b808f71fbcf3cbe7ccd7818d8f7",
+    "source_surface": "zbag",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 493,
+    "expression": "−ln(0,5)≈0,693",
+    "object_context": "túi MIL",
+    "source_body_index": 493,
+    "source_path": [
+      1,
+      0,
+      3
+    ],
+    "source_sha256": "5f565c59fb860f1458beb848248dd52a3a3176f14eb85406982afc47d4d49ae7",
+    "source_surface": " log",
+    "span": [
+      1,
+      4
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 482,
-    "symbol": "galign",
+    "expression": "galign=(1,−1), gpreserv=(−1,0)",
+    "object_context": "gradient PCGrad",
     "source_body_index": 482,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      4,
+      1,
+      0,
+      1,
+      2
+    ],
+    "source_sha256": "9cf4276eaa8de3055beddecf4d98d8f6ca0f057bca9cd490b9b1fd96d27c5e7e",
+    "source_surface": "gpreserv",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 482,
-    "symbol": "gpreserv",
+    "expression": "galign=(1,−1), gpreserv=(−1,0)",
+    "object_context": "gradient PCGrad",
     "source_body_index": 482,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "c3b0142e2e098bf0e4805eeb429e690cd35d86d0281968ca6b124936275e9343",
+    "source_surface": "galign",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 482,
-    "symbol": "galignproj",
+    "expression": "galign^proj=(0,−1)",
+    "object_context": "gradient PCGrad",
     "source_body_index": 483,
-    "kind": "whole_symbol",
-    "source_structure": "sSubSup"
+    "source_path": [
+      8,
+      0
+    ],
+    "source_sha256": "9f85be00b523bc405b53a33c0cc83977aa173391b2e3d76d2c026073c257590b",
+    "source_surface": "galignproj",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 478,
-    "symbol": "qseq",
-    "source_body_index": 477,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 478,
-    "symbol": "qgraph",
-    "source_body_index": 477,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 478,
-    "symbol": "Covevent",
+    "expression": "qseq",
+    "object_context": "chỉ báo chất lượng và trọng số dung hợp",
     "source_body_index": 476,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "6bf77f598126ab264231729b3d7d018dde393bc0d657d9cbb02703d8e297c861",
+    "source_surface": "qseq",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 478,
-    "symbol": "Covgraph",
+    "expression": "qgraph",
+    "object_context": "chỉ báo chất lượng và trọng số dung hợp",
     "source_body_index": 476,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      6
+    ],
+    "source_sha256": "5a02fb9748cb8d91547f7bcf450a66470141b4bc81b3de81dd7f80ed7aa5da02",
+    "source_surface": "qgraph",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 478,
-    "symbol": "Densityedge",
+    "expression": "Cov_event",
+    "object_context": "chỉ báo chất lượng và trọng số dung hợp",
     "source_body_index": 476,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      2,
+      1,
+      0,
+      1,
+      2
+    ],
+    "source_sha256": "00edea508982e9d3ee2b36ef429bb9775db0c6ff19035460f09f5c5dcb737771",
+    "source_surface": "Covevent",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 478,
-    "symbol": "q",
+    "expression": "Cov_graph",
+    "object_context": "chỉ báo chất lượng và trọng số dung hợp",
+    "source_body_index": 476,
+    "source_path": [
+      1,
+      0,
+      8,
+      1,
+      0,
+      1,
+      2
+    ],
+    "source_sha256": "8c79fcd7cef4451d345a94fc678bbddbaa66688ba8f3de3d19472bf03911af43",
+    "source_surface": "Covgraph",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 478,
+    "expression": "Density_edge",
+    "object_context": "chỉ báo chất lượng và trọng số dung hợp",
+    "source_body_index": 476,
+    "source_path": [
+      1,
+      0,
+      8,
+      1,
+      0,
+      1,
+      4
+    ],
+    "source_sha256": "88483d34bde340e3e40de5aa5091e7e90dcd7fa2f6b32893393e4c8136369405",
+    "source_surface": "Densityedge",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 478,
+    "expression": "sseq=0",
+    "object_context": "chỉ báo chất lượng và trọng số dung hợp",
     "source_body_index": 477,
-    "kind": "run_style"
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "72e5742dc451b9e6d9dd875ea8fee41e684e713299e0ae5b785995d50397d29c",
+    "source_surface": "sseq",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 478,
-    "symbol": "sseq",
-    "source_body_index": 478,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "expression": "sgraph=ln 3",
+    "object_context": "chỉ báo chất lượng và trọng số dung hợp",
+    "source_body_index": 337,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      5
+    ],
+    "source_sha256": "613f78c85e3c54a2fa0db86e117a8f3b1629973522962ea2e07f45b5061b5716",
+    "source_surface": "), log(1 + ",
+    "span": [
+      3,
+      6
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 478,
-    "symbol": "sgraph",
-    "source_body_index": 478,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "expression": "sgraph=ln 3",
+    "object_context": "chỉ báo chất lượng và trọng số dung hợp",
+    "source_body_index": 477,
+    "source_path": [
+      1,
+      0,
+      10
+    ],
+    "source_sha256": "915396a955c362e725dd85108a2a0d2abcb0bfb4811357136823f032654f8182",
+    "source_surface": "sgraph",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 478,
-    "symbol": "wrelseq",
+    "expression": "τ=0,05",
+    "object_context": "chỉ báo chất lượng và trọng số dung hợp",
     "source_body_index": 478,
-    "kind": "whole_symbol",
-    "source_structure": "sSubSup"
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "f8484094beaa12485f5adc36111959a9edd3fea62dfe5331f1e1f8528e19a91b",
+    "source_surface": " = τ + ",
+    "span": [
+      3,
+      4
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 478,
+    "expression": "wrelseq=0,05+0,90×1/(1+3)=0,275",
+    "object_context": "chỉ báo chất lượng và trọng số dung hợp",
+    "source_body_index": 478,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "f56974c670eaa9432c6d4f363315e605a3b783b5cb043c408581d74e6cc3a4cf",
+    "source_surface": "wrelseq",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 472,
-    "symbol": "Lpreserv",
+    "expression": "Lpreserv",
+    "object_context": "mất mát tổng Stage A",
     "source_body_index": 472,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      12
+    ],
+    "source_sha256": "2319970921e921698f346cc30812b384b4f38599ef19c07ae1bf3cf5623f41b9",
+    "source_surface": "Lpreserv",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 472,
-    "symbol": "Lfuse-rec",
+    "expression": "Lfuse-rec",
+    "object_context": "mất mát tổng Stage A",
     "source_body_index": 472,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      15
+    ],
+    "source_sha256": "777242cdfff9d73fa8ddc195a84c9e4abc25004c2729e1b5abb137dd001b5820",
+    "source_surface": "Lfuse-rec",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 472,
-    "symbol": "Linv",
-    "source_body_index": 472,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "expression": "stopgrad",
+    "object_context": "mất mát tổng Stage A",
+    "source_body_index": 469,
+    "source_path": [
+      1,
+      0,
+      2,
+      1,
+      0,
+      1,
+      2
+    ],
+    "source_sha256": "6aaebc0f5fc7319ff072b5c27da32fb0f7f27a0e487fd933a985c92a34070e19",
+    "source_surface": " - stopgrad",
+    "span": [
+      3,
+      11
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 472,
-    "symbol": "Lvar",
+    "expression": "Linv=0,1",
+    "object_context": "mất mát tổng Stage A",
     "source_body_index": 472,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      3
+    ],
+    "source_sha256": "b784a6149f06eb8e312cde7ccd5e7573a8d2f03e2edd78c09e3980bacebd348c",
+    "source_surface": "Linv",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 472,
-    "symbol": "Lcov",
+    "expression": "Lvar",
+    "object_context": "mất mát tổng Stage A",
     "source_body_index": 472,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      6,
+      1,
+      0
+    ],
+    "source_sha256": "46e14e8742b8ee7fd51e09058a2d4df38f4c25c53463157f23db83aa48606bdb",
+    "source_surface": "Lvar",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 472,
-    "symbol": "Lpreserv",
+    "expression": "Lcov",
+    "object_context": "mất mát tổng Stage A",
     "source_body_index": 472,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      9,
+      1,
+      0
+    ],
+    "source_sha256": "a810b41df6c834d60ac39fada0670e606f4976c0a055a77480039e0c8b4b0f4b",
+    "source_surface": "Lcov",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 472,
-    "symbol": "Lfuse-rec",
+    "expression": "Lpreserv=0,2",
+    "object_context": "mất mát tổng Stage A",
     "source_body_index": 472,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      12
+    ],
+    "source_sha256": "2319970921e921698f346cc30812b384b4f38599ef19c07ae1bf3cf5623f41b9",
+    "source_surface": "Lpreserv",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 472,
-    "symbol": "LStage-A",
+    "expression": "Lfuse-rec=0,3",
+    "object_context": "mất mát tổng Stage A",
     "source_body_index": 472,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      15
+    ],
+    "source_sha256": "777242cdfff9d73fa8ddc195a84c9e4abc25004c2729e1b5abb137dd001b5820",
+    "source_surface": "Lfuse-rec",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 472,
+    "expression": "LStage-A=25×0,1+25×(0,1+0,1)+0,2+0,3=8,0",
+    "object_context": "mất mát tổng Stage A",
+    "source_body_index": 472,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "dcf3d5072c06b5b0a065785afb76f211e0bdead0c6f78f78a569cfa5a98c7b02",
+    "source_surface": "LStage-A",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 441,
-    "symbol": "ρoverlap",
+    "expression": "ρoverlap",
+    "object_context": "Jaccard và gióng hàng có trọng số",
     "source_body_index": 441,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      4,
+      2
+    ],
+    "source_sha256": "f54a2c2f37551ad27dd832bc472a899430f4177f8e1d250f8a7aeeadf74591a0",
+    "source_surface": "ρoverlap",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 441,
-    "symbol": "ρoverlap",
+    "expression": "ρoverlap=0,5",
+    "object_context": "Jaccard và gióng hàng có trọng số",
     "source_body_index": 441,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      4,
+      2
+    ],
+    "source_sha256": "f54a2c2f37551ad27dd832bc472a899430f4177f8e1d250f8a7aeeadf74591a0",
+    "source_surface": "ρoverlap",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 441,
-    "symbol": "Linv",
+    "expression": "Linv=2",
+    "object_context": "Jaccard và gióng hàng có trọng số",
     "source_body_index": 441,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      4,
+      4
+    ],
+    "source_sha256": "75c3d904c1d09ca152cea70a76cebf5597450e6e6a2e05af502134b4e7010553",
+    "source_surface": "Linv",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 434,
-    "symbol": "dproj",
-    "source_body_index": 434,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "expression": "C(P)",
+    "object_context": "ma trận covariance và mất mát ngoài đường chéo",
+    "source_body_index": 431,
+    "source_path": [
+      4,
+      0
+    ],
+    "source_sha256": "8f2ecd4bbac27a776534c62ddabb6ba19436c3cbedd7b0f3c98edd7309a1ee3f",
+    "source_surface": "C(P)∈",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 434,
-    "symbol": "dproj",
+    "expression": "C(P)",
+    "object_context": "ma trận covariance và mất mát ngoài đường chéo",
     "source_body_index": 434,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      1,
+      1,
+      0
+    ],
+    "source_sha256": "d2b9a5ae026e748561d4972bd780acd41cf8498eb4b45fd9c8ba7764e2e18eb4",
+    "source_surface": "P",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 434,
-    "symbol": "Lcov",
+    "expression": "dproj×dproj",
+    "object_context": "ma trận covariance và mất mát ngoài đường chéo",
     "source_body_index": 434,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      3,
+      1,
+      0,
+      2,
+      0
+    ],
+    "source_sha256": "ef80bfd817c84b17548f3f6b6222796da6db4201bc6419d80ed5d125c31bd68d",
+    "source_surface": "dproj",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 434,
-    "symbol": "Lcov",
+    "expression": "dproj×dproj",
+    "object_context": "ma trận covariance và mất mát ngoài đường chéo",
     "source_body_index": 434,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      3,
+      1,
+      0,
+      2,
+      0
+    ],
+    "source_sha256": "ef80bfd817c84b17548f3f6b6222796da6db4201bc6419d80ed5d125c31bd68d",
+    "source_surface": "dproj",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
-    "anchor": 428,
-    "symbol": "P",
-    "source_body_index": 428,
-    "kind": "run_style"
+    "anchor": 434,
+    "expression": "Lcov",
+    "object_context": "ma trận covariance và mất mát ngoài đường chéo",
+    "source_body_index": 434,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "db90c2e7f3068b9eabef7e91bf02fac613c7174bdd48b8a6c34bf8afb8c329c6",
+    "source_surface": "Lcov",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
-    "anchor": 428,
-    "symbol": "B",
+    "anchor": 434,
+    "expression": "B=2",
+    "object_context": "ma trận covariance và mất mát ngoài đường chéo",
     "source_body_index": 426,
-    "kind": "run_style"
+    "source_path": [
+      1,
+      0,
+      3,
+      2,
+      0
+    ],
+    "source_sha256": "0c0b4ddedd8d29a74ab82fb0a6a94c27eaf9667e5c396a154a9dc3fe87b73661",
+    "source_surface": "B",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 434,
+    "expression": "Lcov=(2²+2²)/2=4",
+    "object_context": "ma trận covariance và mất mát ngoài đường chéo",
+    "source_body_index": 434,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "db90c2e7f3068b9eabef7e91bf02fac613c7174bdd48b8a6c34bf8afb8c329c6",
+    "source_surface": "Lcov",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 428,
-    "symbol": "dproj",
+    "expression": "P",
+    "object_context": "ma trận lô và variance",
     "source_body_index": 428,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      1,
+      1,
+      0
+    ],
+    "source_sha256": "be6bb231d72cf3825e0b27ec37f9f0283b0c023471d1767725e063b2534044e9",
+    "source_surface": "P",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 428,
-    "symbol": "p:, j",
+    "expression": "B",
+    "object_context": "ma trận lô và variance",
+    "source_body_index": 426,
+    "source_path": [
+      1,
+      0,
+      3,
+      2,
+      0
+    ],
+    "source_sha256": "0c0b4ddedd8d29a74ab82fb0a6a94c27eaf9667e5c396a154a9dc3fe87b73661",
+    "source_surface": "B",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 428,
+    "expression": "dproj",
+    "object_context": "ma trận lô và variance",
     "source_body_index": 428,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      3,
+      2,
+      0
+    ],
+    "source_sha256": "2d6b70eac65a28a7618bc5ad305084450c517577d3ce783aded1c1ace69880ba",
+    "source_surface": "dproj",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 428,
-    "symbol": "γ",
-    "source_body_index": 168,
-    "kind": "run_style"
+    "expression": "p_:,j",
+    "object_context": "ma trận lô và variance",
+    "source_body_index": 428,
+    "source_path": [
+      1,
+      0,
+      4,
+      3,
+      1,
+      1,
+      1,
+      2,
+      1,
+      1,
+      0
+    ],
+    "source_sha256": "dd7a98e573da11bcac3e554cecd9f48491ecfeee4a4a4b6857f47dacbfb7b000",
+    "source_surface": "p:, j",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 428,
-    "symbol": "ϵ",
-    "source_body_index": 237,
-    "kind": "run_style"
+    "expression": "γ",
+    "object_context": "ma trận lô và variance",
+    "source_body_index": 428,
+    "source_path": [
+      1,
+      0,
+      4,
+      3,
+      1,
+      1,
+      0
+    ],
+    "source_sha256": "44a92ca035bc69fec37986e26959ca6a46c39aa5f8cb6bc98296706107d91f91",
+    "source_surface": "0, γ - ",
+    "span": [
+      3,
+      4
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 428,
+    "expression": "ε",
+    "object_context": "ma trận lô và variance",
+    "source_body_index": 428,
+    "source_path": [
+      1,
+      0,
+      4,
+      3,
+      1,
+      1,
+      1,
+      2,
+      2
+    ],
+    "source_sha256": "a596d22df03b59600a1d78ad0e984180317addb606079f35979a4467c2aafbd7",
+    "source_surface": " + ϵ",
+    "span": [
+      3,
+      4
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 428,
+    "expression": "B≥2",
+    "object_context": "ma trận lô và variance",
+    "source_body_index": 426,
+    "source_path": [
+      1,
+      0,
+      3,
+      2,
+      0
+    ],
+    "source_sha256": "0c0b4ddedd8d29a74ab82fb0a6a94c27eaf9667e5c396a154a9dc3fe87b73661",
+    "source_surface": "B",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 428,
+    "expression": "B=2",
+    "object_context": "ma trận lô và variance",
+    "source_body_index": 426,
+    "source_path": [
+      1,
+      0,
+      3,
+      2,
+      0
+    ],
+    "source_sha256": "0c0b4ddedd8d29a74ab82fb0a6a94c27eaf9667e5c396a154a9dc3fe87b73661",
+    "source_surface": "B",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 428,
+    "expression": "γ=1",
+    "object_context": "ma trận lô và variance",
+    "source_body_index": 428,
+    "source_path": [
+      1,
+      0,
+      4,
+      3,
+      1,
+      1,
+      0
+    ],
+    "source_sha256": "44a92ca035bc69fec37986e26959ca6a46c39aa5f8cb6bc98296706107d91f91",
+    "source_surface": "0, γ - ",
+    "span": [
+      3,
+      4
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 428,
+    "expression": "ε=10⁻⁴",
+    "object_context": "ma trận lô và variance",
+    "source_body_index": 428,
+    "source_path": [
+      1,
+      0,
+      4,
+      3,
+      1,
+      1,
+      1,
+      2,
+      2
+    ],
+    "source_sha256": "a596d22df03b59600a1d78ad0e984180317addb606079f35979a4467c2aafbd7",
+    "source_surface": " + ϵ",
+    "span": [
+      3,
+      4
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 426,
-    "symbol": "B",
+    "expression": "B",
+    "object_context": "mất mát invariance",
     "source_body_index": 426,
-    "kind": "run_style"
+    "source_path": [
+      1,
+      0,
+      3,
+      2,
+      0
+    ],
+    "source_sha256": "0c0b4ddedd8d29a74ab82fb0a6a94c27eaf9667e5c396a154a9dc3fe87b73661",
+    "source_surface": "B",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 426,
-    "symbol": "dproj",
-    "source_body_index": 428,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "expression": "dproj",
+    "object_context": "mất mát invariance",
+    "source_body_index": 417,
+    "source_path": [
+      6,
+      0
+    ],
+    "source_sha256": "489d981da84563fdb2856b048e302bb8c11456946479b0244a9bd459e0ee3afa",
+    "source_surface": "dproj",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 426,
-    "symbol": "Linv",
+    "expression": "Linv=(1+0)/2=0,5",
+    "object_context": "mất mát invariance",
     "source_body_index": 426,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "b784a6149f06eb8e312cde7ccd5e7573a8d2f03e2edd78c09e3980bacebd348c",
+    "source_surface": "Linv",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 416,
-    "symbol": "dproj",
+    "expression": "dproj",
+    "object_context": "chiều không gian chiếu",
     "source_body_index": 416,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      15,
+      2,
+      0
+    ],
+    "source_sha256": "489d981da84563fdb2856b048e302bb8c11456946479b0244a9bd459e0ee3afa",
+    "source_surface": "dproj",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 401,
-    "symbol": "L",
+    "expression": "L",
+    "object_context": "độ phức tạp Bảng 2.2",
     "source_body_index": 401,
-    "kind": "run_style"
+    "source_path": [
+      3,
+      3,
+      1,
+      4,
+      0
+    ],
+    "source_sha256": "fae725532046c61e2f739e2ca1aa51e97c5b4515e53acbfbc43158217c4a55f2",
+    "source_surface": "L",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 401,
-    "symbol": "Nlayers",
+    "expression": "Nlayers",
+    "object_context": "độ phức tạp Bảng 2.2",
     "source_body_index": 401,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      3,
+      5,
+      1,
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "668e864e47d19e13c51d883aa694088a44720756df986cd2f8e0c004284dfab0",
+    "source_surface": "Nlayers",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 401,
-    "symbol": "d",
+    "expression": "d",
+    "object_context": "độ phức tạp Bảng 2.2",
     "source_body_index": 401,
-    "kind": "run_style"
+    "source_path": [
+      3,
+      5,
+      1,
+      1,
+      0,
+      4
+    ],
+    "source_sha256": "c96aa9846c357a595009f3c15e276f5fcb5a9b29519c27b9ef1a2d247309d38e",
+    "source_surface": "·d+L·d·",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 401,
-    "symbol": "dff",
+    "expression": "dff",
+    "object_context": "độ phức tạp Bảng 2.2",
     "source_body_index": 401,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      3,
+      5,
+      1,
+      1,
+      0,
+      5
+    ],
+    "source_sha256": "0bef619020b6100f9c56358fbdc3d9c36f9abba1f942173959a974b367cb5c29",
+    "source_surface": "dff",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 401,
-    "symbol": "EW",
+    "expression": "E_W",
+    "object_context": "độ phức tạp Bảng 2.2",
     "source_body_index": 401,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      4,
+      5,
+      1,
+      1,
+      0,
+      3
+    ],
+    "source_sha256": "4794fe1b729d768ae7eefa7c6686b025294feae34bf37a36d452825bfca83d59",
+    "source_surface": "EW",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 401,
-    "symbol": "Vupd",
+    "expression": "Vupd",
+    "object_context": "độ phức tạp Bảng 2.2",
     "source_body_index": 401,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      5,
+      5,
+      1,
+      1,
+      0,
+      7
+    ],
+    "source_sha256": "32d826311ef94cafb44fceb9a5b800a9a663eef061a157d8bc80e9c676844048",
+    "source_surface": "Vupd",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 401,
-    "symbol": "dseq",
+    "expression": "dseq",
+    "object_context": "độ phức tạp Bảng 2.2",
     "source_body_index": 401,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      6,
+      5,
+      1,
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "a933ea3f90102215a3762f000a0daecfe71dddb2eb775bbe2808772a4fac151a",
+    "source_surface": "dseq",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 401,
-    "symbol": "dgraph",
+    "expression": "dgraph",
+    "object_context": "độ phức tạp Bảng 2.2",
     "source_body_index": 401,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      6,
+      5,
+      1,
+      1,
+      0,
+      3
+    ],
+    "source_sha256": "c6c7f95c1c78bd2d21d6d4565fd1d0db92bb8c7a7980c0b49a0ee6221b094fda",
+    "source_surface": "dgraph",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 401,
-    "symbol": "L",
+    "expression": "L",
+    "object_context": "độ phức tạp Bảng 2.2",
     "source_body_index": 401,
-    "kind": "run_style"
+    "source_path": [
+      3,
+      3,
+      1,
+      4,
+      0
+    ],
+    "source_sha256": "fae725532046c61e2f739e2ca1aa51e97c5b4515e53acbfbc43158217c4a55f2",
+    "source_surface": "L",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 401,
+    "expression": "O",
+    "object_context": "độ phức tạp Bảng 2.2",
+    "source_body_index": 401,
+    "source_path": [
+      3,
+      5,
+      1,
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "5318bb694fd0d42f41f8b16c8373f04dbf568ada19a8fe6910fc9ad0c43e31ed",
+    "source_surface": "O(",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 395,
-    "symbol": "dgraph",
+    "expression": "Readoutgraph",
+    "object_context": "tổng hợp đồ thị",
     "source_body_index": 395,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      2
+    ],
+    "source_sha256": "175cc30c96b26fd164a107be208a31dd0b12c6efaf538e67f99a7cd8a2924b73",
+    "source_surface": "Readoutgraph",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 395,
-    "symbol": "zgraph",
+    "expression": "dgraph",
+    "object_context": "tổng hợp đồ thị",
     "source_body_index": 395,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      12,
+      2,
+      0
+    ],
+    "source_sha256": "fe66684a466b9cf519f9fcb3527ac598927b5c265fbb998bce96b1ef192172b2",
+    "source_surface": "dgraph",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 395,
-    "symbol": "Wm",
+    "expression": "zgraph=(0,5;1)",
+    "object_context": "tổng hợp đồ thị",
     "source_body_index": 395,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "2a883812e3849027d1b52a5b172ce3597a4aea40e52fb051225da17c243b00d5",
+    "source_surface": "zgraph",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 395,
+    "expression": "Wₘ",
+    "object_context": "tổng hợp đồ thị",
+    "source_body_index": 394,
+    "source_path": [
+      4,
+      0
+    ],
+    "source_sha256": "e9dc7cb705f6f940615d6f06d496a3b63cb44825ffa6bf9ff86006aaf67bf8c3",
+    "source_surface": "Wm",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 387,
+    "expression": "−ln(0,8)≈0,223",
+    "object_context": "mất mát cạnh",
+    "source_body_index": 385,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      0
+    ],
+    "source_sha256": "cce744dc60640877359140817838ad4e0c14964256b7c83b82b115d52bfa1868",
+    "source_surface": "log",
+    "span": [
+      0,
+      3
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 378,
-    "symbol": "u",
+    "expression": "Msg",
+    "object_context": "đỉnh nhận thông điệp",
+    "source_body_index": 374,
+    "source_path": [
+      1,
+      0,
+      2
+    ],
+    "source_sha256": "ea19d42bde0903284357caa08493f1be2679ad6852af1d3f323de64a6a213a3f",
+    "source_surface": "= Msg",
+    "span": [
+      2,
+      5
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 378,
+    "expression": "Agg",
+    "object_context": "đỉnh nhận thông điệp",
+    "source_body_index": 376,
+    "source_path": [
+      1,
+      0,
+      2
+    ],
+    "source_sha256": "6d193bf9f1679df982599dfe77bcfb3f4948f2c61df45b5a2c34c43b815eafb8",
+    "source_surface": "= Agg",
+    "span": [
+      2,
+      5
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 378,
+    "expression": "u",
+    "object_context": "đỉnh nhận thông điệp",
+    "source_body_index": 377,
+    "source_path": [
+      2,
+      0
+    ],
+    "source_sha256": "b41cfc407f93ba557742733b33b4980b11c84e6f44bd99778a261276924ab0fd",
+    "source_surface": "u",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 378,
+    "expression": "Update",
+    "object_context": "đỉnh nhận thông điệp",
     "source_body_index": 378,
-    "kind": "run_style"
+    "source_path": [
+      1,
+      0,
+      2
+    ],
+    "source_sha256": "071a45b24648b599752e7cd833d53fed897e3f55508ce9fe2f060809fe26683f",
+    "source_surface": "= Update",
+    "span": [
+      2,
+      8
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 378,
+    "expression": "Update",
+    "object_context": "đỉnh nhận thông điệp",
+    "source_body_index": 378,
+    "source_path": [
+      1,
+      0,
+      2
+    ],
+    "source_sha256": "071a45b24648b599752e7cd833d53fed897e3f55508ce9fe2f060809fe26683f",
+    "source_surface": "= Update",
+    "span": [
+      2,
+      8
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 360,
-    "symbol": "λ",
-    "source_body_index": 472,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 360,
-    "symbol": "te",
+    "expression": "λ",
+    "object_context": "suy giảm cạnh theo thời gian",
     "source_body_index": 360,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      2,
+      2
+    ],
+    "source_sha256": "3ddb572022eac7e22284fff89bd7e035b23d4212d75143cf7f6d191321921ec9",
+    "source_surface": "(-λ(t-",
+    "span": [
+      2,
+      3
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 360,
-    "symbol": "exp",
+    "expression": "t",
+    "object_context": "suy giảm cạnh theo thời gian",
     "source_body_index": 360,
-    "kind": "run_style"
+    "source_path": [
+      2,
+      2
+    ],
+    "source_sha256": "3ddb572022eac7e22284fff89bd7e035b23d4212d75143cf7f6d191321921ec9",
+    "source_surface": "(-λ(t-",
+    "span": [
+      4,
+      5
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
-    "anchor": 342,
-    "symbol": "αi",
-    "source_body_index": 342,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "anchor": 360,
+    "expression": "t≥tₑ",
+    "object_context": "suy giảm cạnh theo thời gian",
+    "source_body_index": 360,
+    "source_path": [
+      2,
+      3
+    ],
+    "source_sha256": "0a016d1c3c3b246c439183871ffba3a61c819a9bff86bfb9aff98069de2dd57c",
+    "source_surface": "te",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
-    "anchor": 342,
-    "symbol": "L",
-    "source_body_index": 342,
-    "kind": "run_style"
+    "anchor": 360,
+    "expression": "t≥tₑ",
+    "object_context": "suy giảm cạnh theo thời gian",
+    "source_body_index": 360,
+    "source_path": [
+      2,
+      2
+    ],
+    "source_sha256": "3ddb572022eac7e22284fff89bd7e035b23d4212d75143cf7f6d191321921ec9",
+    "source_surface": "(-λ(t-",
+    "span": [
+      4,
+      5
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
-    "anchor": 342,
-    "symbol": "Wproj",
-    "source_body_index": 342,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 342,
-    "symbol": "hi",
-    "source_body_index": 342,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 342,
-    "symbol": "dmodel",
-    "source_body_index": 341,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 342,
-    "symbol": "dseq",
-    "source_body_index": 342,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 342,
-    "symbol": "h1",
-    "source_body_index": 340,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 342,
-    "symbol": "h",
-    "source_body_index": 342,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 342,
-    "symbol": "Wproj",
-    "source_body_index": 342,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 342,
-    "symbol": "zseq",
-    "source_body_index": 342,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 337,
-    "symbol": "Δ",
-    "source_body_index": 336,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 337,
-    "symbol": "ti",
-    "source_body_index": 336,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 337,
-    "symbol": "log",
-    "source_body_index": 336,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 337,
-    "symbol": "ti",
-    "source_body_index": 336,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 337,
-    "symbol": "Lδ",
+    "anchor": 360,
+    "expression": "λ=ln(2)",
+    "object_context": "suy giảm cạnh theo thời gian",
     "source_body_index": 337,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      5
+    ],
+    "source_sha256": "613f78c85e3c54a2fa0db86e117a8f3b1629973522962ea2e07f45b5061b5716",
+    "source_surface": "), log(1 + ",
+    "span": [
+      3,
+      6
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 360,
+    "expression": "λ=ln(2)",
+    "object_context": "suy giảm cạnh theo thời gian",
+    "source_body_index": 360,
+    "source_path": [
+      2,
+      2
+    ],
+    "source_sha256": "3ddb572022eac7e22284fff89bd7e035b23d4212d75143cf7f6d191321921ec9",
+    "source_surface": "(-λ(t-",
+    "span": [
+      2,
+      3
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 360,
+    "expression": "exp(−ln 2)=0,5",
+    "object_context": "suy giảm cạnh theo thời gian",
+    "source_body_index": 337,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      5
+    ],
+    "source_sha256": "613f78c85e3c54a2fa0db86e117a8f3b1629973522962ea2e07f45b5061b5716",
+    "source_surface": "), log(1 + ",
+    "span": [
+      3,
+      6
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 360,
+    "expression": "exp(−ln 2)=0,5",
+    "object_context": "suy giảm cạnh theo thời gian",
+    "source_body_index": 360,
+    "source_path": [
+      2,
+      1
+    ],
+    "source_sha256": "03a7b45573556e3e491839fb2683ff3f015571f4ca93bfd6a2627d88a727430b",
+    "source_surface": "exp",
+    "span": [
+      0,
+      3
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 342,
+    "expression": "αᵢ",
+    "object_context": "tổng hợp chuỗi có trọng số",
+    "source_body_index": 342,
+    "source_path": [
+      1,
+      0,
+      2,
+      3,
+      0
+    ],
+    "source_sha256": "23fb013d580dcb4f5cd9b257419a0a7c1ad006dd6f3b6ca1a788f9345a5dd8fe",
+    "source_surface": "αi",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 342,
+    "expression": "L",
+    "object_context": "tổng hợp chuỗi có trọng số",
+    "source_body_index": 342,
+    "source_path": [
+      1,
+      0,
+      2,
+      2,
+      0
+    ],
+    "source_sha256": "fae725532046c61e2f739e2ca1aa51e97c5b4515e53acbfbc43158217c4a55f2",
+    "source_surface": "L",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 342,
+    "expression": "Wproj",
+    "object_context": "tổng hợp chuỗi có trọng số",
+    "source_body_index": 342,
+    "source_path": [
+      1,
+      0,
+      2,
+      3,
+      1
+    ],
+    "source_sha256": "5094e48694f85114420c690a1f7e23bcd39e5ddf1dfcd2e010487de5da8b287d",
+    "source_surface": "Wproj",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 342,
+    "expression": "hᵢ",
+    "object_context": "tổng hợp chuỗi có trọng số",
+    "source_body_index": 342,
+    "source_path": [
+      1,
+      0,
+      2,
+      3,
+      2
+    ],
+    "source_sha256": "dff9bb9e48cf581eed74c041854ca64c0a309a8dcdcd90374487064720d2526c",
+    "source_surface": "hi",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 342,
+    "expression": "dmodel",
+    "object_context": "tổng hợp chuỗi có trọng số",
+    "source_body_index": 343,
+    "source_path": [
+      14,
+      0
+    ],
+    "source_sha256": "9b68f2df523617271ffcfe5acedeae946c9e66cc59ba134db11af1fdc66df53f",
+    "source_surface": "dmodel",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 342,
+    "expression": "dseq",
+    "object_context": "tổng hợp chuỗi có trọng số",
+    "source_body_index": 342,
+    "source_path": [
+      1,
+      0,
+      2,
+      3,
+      5,
+      2,
+      0
+    ],
+    "source_sha256": "700393a3e7ce0cc6bc1bc242123dda684e16e8fbc81ad323f103df1e3ae7dd3f",
+    "source_surface": "dseq",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 342,
+    "expression": "h₁=(1,0), h₂=(0,2), Wproj=I",
+    "object_context": "tổng hợp chuỗi có trọng số",
+    "source_body_index": 168,
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "3a520b3fc4f2c4e72d75e67d4c8fba9852ac7bd37339b02ef36c2dd3d5e8f50d",
+    "source_surface": "=(I-P",
+    "span": [
+      2,
+      3
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 342,
+    "expression": "h₁=(1,0), h₂=(0,2), Wproj=I",
+    "object_context": "tổng hợp chuỗi có trọng số",
+    "source_body_index": 342,
+    "source_path": [
+      1,
+      0,
+      2,
+      3,
+      1
+    ],
+    "source_sha256": "5094e48694f85114420c690a1f7e23bcd39e5ddf1dfcd2e010487de5da8b287d",
+    "source_surface": "Wproj",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 342,
+    "expression": "h₁=(1,0), h₂=(0,2), Wproj=I",
+    "object_context": "tổng hợp chuỗi có trọng số",
+    "source_body_index": 342,
+    "source_path": [
+      1,
+      0,
+      2,
+      3,
+      2
+    ],
+    "source_sha256": "dff9bb9e48cf581eed74c041854ca64c0a309a8dcdcd90374487064720d2526c",
+    "source_surface": "hi",
+    "span": null,
+    "kind": "indexed_example",
+    "candidate_styles": 1,
+    "substitution": {
+      "slot": "sub",
+      "old": "i",
+      "new": "2"
+    }
+  },
+  {
+    "anchor": 342,
+    "expression": "h₁=(1,0), h₂=(0,2), Wproj=I",
+    "object_context": "tổng hợp chuỗi có trọng số",
+    "source_body_index": 342,
+    "source_path": [
+      1,
+      0,
+      2,
+      3,
+      2
+    ],
+    "source_sha256": "dff9bb9e48cf581eed74c041854ca64c0a309a8dcdcd90374487064720d2526c",
+    "source_surface": "hi",
+    "span": null,
+    "kind": "indexed_example",
+    "candidate_styles": 1,
+    "substitution": {
+      "slot": "sub",
+      "old": "i",
+      "new": "1"
+    }
+  },
+  {
+    "anchor": 342,
+    "expression": "zseq=(0,25;1,5)",
+    "object_context": "tổng hợp chuỗi có trọng số",
+    "source_body_index": 342,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "66b363f82e22f38bfeb375caa278a9121e5640117f001129313c5bdbfa90937c",
+    "source_surface": "zseq",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 337,
-    "symbol": "Δ",
-    "source_body_index": 336,
-    "kind": "run_style"
+    "expression": "Δtᵢ",
+    "object_context": "khoảng thời gian và Huber",
+    "source_body_index": 337,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      6
+    ],
+    "source_sha256": "893fa39b8f4de4c592e7474256e57638ad0462aa994a2e5735dcefefa751ed67",
+    "source_surface": "Δti",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 337,
-    "symbol": "ti",
+    "expression": "log(1+Δtᵢ)",
+    "object_context": "khoảng thời gian và Huber",
+    "source_body_index": 337,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      6
+    ],
+    "source_sha256": "893fa39b8f4de4c592e7474256e57638ad0462aa994a2e5735dcefefa751ed67",
+    "source_surface": "Δti",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 337,
+    "expression": "log(1+Δtᵢ)",
+    "object_context": "khoảng thời gian và Huber",
+    "source_body_index": 337,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      5
+    ],
+    "source_sha256": "613f78c85e3c54a2fa0db86e117a8f3b1629973522962ea2e07f45b5061b5716",
+    "source_surface": "), log(1 + ",
+    "span": [
+      3,
+      6
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 337,
+    "expression": "Lδ",
+    "object_context": "khoảng thời gian và Huber",
+    "source_body_index": 337,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      0
+    ],
+    "source_sha256": "7465bbfae43456a8b82967b57ef354ebe4b43ff047a52826af75db6374507736",
+    "source_surface": "Lδ",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 337,
+    "expression": "δ=1",
+    "object_context": "khoảng thời gian và Huber",
     "source_body_index": 336,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      12,
+      0
+    ],
+    "source_sha256": "fa46251839e800cdc7e581b25f575e3c52db31051ac65a73b2004f810e3f9299",
+    "source_surface": "δ=1.0",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 337,
+    "expression": "Δtᵢ=2",
+    "object_context": "khoảng thời gian và Huber",
+    "source_body_index": 337,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      6
+    ],
+    "source_sha256": "893fa39b8f4de4c592e7474256e57638ad0462aa994a2e5735dcefefa751ed67",
+    "source_surface": "Δti",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 337,
+    "expression": "ln(3)≈1,099",
+    "object_context": "khoảng thời gian và Huber",
+    "source_body_index": 337,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      5
+    ],
+    "source_sha256": "613f78c85e3c54a2fa0db86e117a8f3b1629973522962ea2e07f45b5061b5716",
+    "source_surface": "), log(1 + ",
+    "span": [
+      3,
+      6
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 332,
-    "symbol": "Pimask",
-    "source_body_index": 332,
-    "kind": "whole_symbol",
-    "source_structure": "sSubSup"
+    "expression": "[−ln(0,8)−ln(0,5)]/2≈0,458",
+    "object_context": "cross-entropy tham số",
+    "source_body_index": 330,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      0
+    ],
+    "source_sha256": "cce744dc60640877359140817838ad4e0c14964256b7c83b82b115d52bfa1868",
+    "source_surface": "log",
+    "span": [
+      0,
+      3
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 332,
+    "expression": "[−ln(0,8)−ln(0,5)]/2≈0,458",
+    "object_context": "cross-entropy tham số",
+    "source_body_index": 330,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      0
+    ],
+    "source_sha256": "cce744dc60640877359140817838ad4e0c14964256b7c83b82b115d52bfa1868",
+    "source_surface": "log",
+    "span": [
+      0,
+      3
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 330,
-    "symbol": "Mevent",
+    "expression": "Mₑᵥₑₙₜ",
+    "object_context": "che loại sự kiện",
     "source_body_index": 330,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      2,
+      2,
+      1
+    ],
+    "source_sha256": "f96e612a1a4d374d0b4f87c13c29f0e2f4e7d1c196f971199c95364006fb9cda",
+    "source_surface": "Mevent",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 330,
-    "symbol": "Mevent",
+    "expression": "|Mₑᵥₑₙₜ|",
+    "object_context": "che loại sự kiện",
     "source_body_index": 330,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      2,
+      2,
+      1
+    ],
+    "source_sha256": "f96e612a1a4d374d0b4f87c13c29f0e2f4e7d1c196f971199c95364006fb9cda",
+    "source_surface": "Mevent",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 330,
-    "symbol": "τi",
+    "expression": "τᵢ",
+    "object_context": "che loại sự kiện",
     "source_body_index": 330,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      1,
+      2,
+      0
+    ],
+    "source_sha256": "2ca89860c9c43db3d660741e04868a970e2783506825f57086d5aab9d5d019bb",
+    "source_surface": "τi",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 330,
+    "expression": "−ln(0,8)≈0,223",
+    "object_context": "che loại sự kiện",
+    "source_body_index": 330,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      0
+    ],
+    "source_sha256": "cce744dc60640877359140817838ad4e0c14964256b7c83b82b115d52bfa1868",
+    "source_surface": "log",
+    "span": [
+      0,
+      3
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 326,
-    "symbol": "xi",
+    "expression": "xᵢ",
+    "object_context": "vector nhúng sự kiện và chiều mô hình",
     "source_body_index": 325,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "0fa483f716f046cfe2d6a9fcdb99de9f1b9268e77a077ad8ca0fed76eb2ca174",
+    "source_surface": "xi",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 326,
-    "symbol": "dmodel",
+    "expression": "dmodel",
+    "object_context": "vector nhúng sự kiện và chiều mô hình",
     "source_body_index": 326,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      27,
+      0
+    ],
+    "source_sha256": "9b68f2df523617271ffcfe5acedeae946c9e66cc59ba134db11af1fdc66df53f",
+    "source_surface": "dmodel",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 326,
-    "symbol": "xi",
+    "expression": "xᵢ=(1,1)",
+    "object_context": "vector nhúng sự kiện và chiều mô hình",
     "source_body_index": 325,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "0fa483f716f046cfe2d6a9fcdb99de9f1b9268e77a077ad8ca0fed76eb2ca174",
+    "source_surface": "xi",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 326,
+    "expression": "cos",
+    "object_context": "vector nhúng sự kiện và chiều mô hình",
+    "source_body_index": 326,
+    "source_path": [
+      12,
+      4
+    ],
+    "source_sha256": "c71cc1e6320a78789b4d9f3d30d7a28ebfb2ce57963fe797f8ac8c0fcdcf818a",
+    "source_surface": "cos",
+    "span": [
+      0,
+      3
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 314,
-    "symbol": "Ws",
+    "expression": "Wₛ",
+    "object_context": "cửa sổ ngắn/trung/historical",
     "source_body_index": 314,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "a7058063cad1310854d85ea745a4ce59deef3519780990b077d481037251e36b",
+    "source_surface": "Ws",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 314,
-    "symbol": "Wm",
+    "expression": "Wₘ",
+    "object_context": "cửa sổ ngắn/trung/historical",
     "source_body_index": 314,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      3
+    ],
+    "source_sha256": "e9dc7cb705f6f940615d6f06d496a3b63cb44825ffa6bf9ff86006aaf67bf8c3",
+    "source_surface": "Wm",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 314,
-    "symbol": "W",
+    "expression": "Wₗ",
+    "object_context": "cửa sổ ngắn/trung/historical",
     "source_body_index": 314,
-    "kind": "run_style"
+    "source_path": [
+      1,
+      0,
+      5
+    ],
+    "source_sha256": "547b7ed04df5696bc2a1906815a0b9eb9c81dc8d695f25e996cd5ba1318beff2",
+    "source_surface": "WL",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 314,
-    "symbol": "Ws",
+    "expression": "Wₛ",
+    "object_context": "cửa sổ ngắn/trung/historical",
     "source_body_index": 314,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "a7058063cad1310854d85ea745a4ce59deef3519780990b077d481037251e36b",
+    "source_surface": "Ws",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 314,
-    "symbol": "Wm",
+    "expression": "Wₘ",
+    "object_context": "cửa sổ ngắn/trung/historical",
     "source_body_index": 314,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      3
+    ],
+    "source_sha256": "e9dc7cb705f6f940615d6f06d496a3b63cb44825ffa6bf9ff86006aaf67bf8c3",
+    "source_surface": "Wm",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 314,
-    "symbol": "W",
+    "expression": "Wₗ",
+    "object_context": "cửa sổ ngắn/trung/historical",
     "source_body_index": 314,
-    "kind": "run_style"
+    "source_path": [
+      1,
+      0,
+      5
+    ],
+    "source_sha256": "547b7ed04df5696bc2a1906815a0b9eb9c81dc8d695f25e996cd5ba1318beff2",
+    "source_surface": "WL",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 303,
-    "symbol": "pi",
+    "expression": "ParamProtect",
+    "object_context": "tham số bảo vệ và biểu diễn hạ nguồn",
     "source_body_index": 303,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      16
+    ],
+    "source_sha256": "690464b55d70b011339fa94c032796e6a689b6d17f7de7279a102687925ac0ef",
+    "source_surface": "ParamProtect",
+    "span": [
+      0,
+      12
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 303,
-    "symbol": "z",
-    "source_body_index": 294,
-    "kind": "run_style"
+    "expression": "pᵢ",
+    "object_context": "tham số bảo vệ và biểu diễn hạ nguồn",
+    "source_body_index": 303,
+    "source_path": [
+      1,
+      0,
+      18
+    ],
+    "source_sha256": "43070da2515b0bafda31409746389f38d1c55e34fa0dae6d603e61df8b6ac72b",
+    "source_surface": "pi",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 303,
+    "expression": "z",
+    "object_context": "tham số bảo vệ và biểu diễn hạ nguồn",
+    "source_body_index": 223,
+    "source_path": [
+      6,
+      0,
+      1,
+      0
+    ],
+    "source_sha256": "0d0dca7d4a944f5624b87b400e0bae3a38b722c2eac9d3da111272177954ed2a",
+    "source_surface": "z",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 299,
-    "symbol": "πψ",
+    "expression": "πψ",
+    "object_context": "khóa giả danh hóa",
     "source_body_index": 299,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      5,
+      2
+    ],
+    "source_sha256": "b10a23c1850b30463b96b7613f5999b489f0f18b4ec879f5b813205c6b23bc1f",
+    "source_surface": "πψ",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 299,
-    "symbol": "ψ",
+    "expression": "ψ",
+    "object_context": "khóa giả danh hóa",
     "source_body_index": 299,
-    "kind": "run_style"
+    "source_path": [
+      5,
+      2,
+      2,
+      0
+    ],
+    "source_sha256": "6dd5c690e1408337d54d282af8bba1a821dbc7a85e4999764fbb7521174d495c",
+    "source_surface": "ψ",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 270,
-    "symbol": "x",
-    "source_body_index": 325,
-    "kind": "run_style"
+    "expression": "Retain(x)",
+    "object_context": "trường dữ liệu và hàm chuẩn hóa",
+    "source_body_index": 269,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "4d661e3aa5d0015c642a9055ae4cabcd5417761c4d6370d8c665ac8aba346523",
+    "source_surface": "Retain",
+    "span": [
+      0,
+      6
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 270,
+    "expression": "Retain(x)",
+    "object_context": "trường dữ liệu và hàm chuẩn hóa",
+    "source_body_index": 270,
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "4642ce67eaaa55bbb97c03ac887a3408fc2dd4bb3a46c121310d8e5b1fd01109",
+    "source_surface": "(x)=ϕ(x)",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 270,
+    "expression": "x",
+    "object_context": "trường dữ liệu và hàm chuẩn hóa",
+    "source_body_index": 270,
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "4642ce67eaaa55bbb97c03ac887a3408fc2dd4bb3a46c121310d8e5b1fd01109",
+    "source_surface": "(x)=ϕ(x)",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 270,
+    "expression": "Normalize(x)=ϕ(x)",
+    "object_context": "trường dữ liệu và hàm chuẩn hóa",
+    "source_body_index": 270,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "8c6e0f2ed89072551dad49b2fd730af667fde3b88b9dbb43693f75925d472595",
+    "source_surface": "Normalize",
+    "span": [
+      0,
+      9
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 270,
+    "expression": "Normalize(x)=ϕ(x)",
+    "object_context": "trường dữ liệu và hàm chuẩn hóa",
+    "source_body_index": 270,
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "4642ce67eaaa55bbb97c03ac887a3408fc2dd4bb3a46c121310d8e5b1fd01109",
+    "source_surface": "(x)=ϕ(x)",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 270,
+    "expression": "Normalize(x)=ϕ(x)",
+    "object_context": "trường dữ liệu và hàm chuẩn hóa",
+    "source_body_index": 270,
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "4642ce67eaaa55bbb97c03ac887a3408fc2dd4bb3a46c121310d8e5b1fd01109",
+    "source_surface": "(x)=ϕ(x)",
+    "span": [
+      4,
+      5
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 270,
+    "expression": "Normalize(x)=ϕ(x)",
+    "object_context": "trường dữ liệu và hàm chuẩn hóa",
+    "source_body_index": 270,
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "4642ce67eaaa55bbb97c03ac887a3408fc2dd4bb3a46c121310d8e5b1fd01109",
+    "source_surface": "(x)=ϕ(x)",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 251,
-    "symbol": "Cstep",
+    "expression": "Cstep",
+    "object_context": "chi phí từng thành phần",
     "source_body_index": 251,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      2,
+      0
+    ],
+    "source_sha256": "d259a975323dc369683cb9e63c8ca85f8961b3628e6bdec725d71670119808f3",
+    "source_surface": "Cstep",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 251,
-    "symbol": "Cseq",
+    "expression": "Cseq",
+    "object_context": "chi phí từng thành phần",
     "source_body_index": 251,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      2,
+      2
+    ],
+    "source_sha256": "42525d4966346b4d2bee60155b13fe8a2e9b6aa8f07599aa07cf538a7ae4d73c",
+    "source_surface": "Cseq",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 251,
-    "symbol": "Cgraph",
+    "expression": "Cgraph",
+    "object_context": "chi phí từng thành phần",
     "source_body_index": 251,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      2,
+      6
+    ],
+    "source_sha256": "0f38bc4d4e6660d2cde09d5269386eb8cb8466f67b359715271b105705d2806b",
+    "source_surface": "Cgraph",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 251,
-    "symbol": "Cstate",
+    "expression": "Cstate",
+    "object_context": "chi phí từng thành phần",
     "source_body_index": 251,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      2,
+      18
+    ],
+    "source_sha256": "0129bb2a864bcb79d5ad7dea99f383d5546cae45db65f6689d4f249d4a0d8081",
+    "source_surface": "Cstate",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 251,
-    "symbol": "Calign",
+    "expression": "Calign",
+    "object_context": "chi phí từng thành phần",
     "source_body_index": 251,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      2,
+      24
+    ],
+    "source_sha256": "70fe525347ba6603960afbe9b020b2e9486fc9d86f4b1a55f040426b7c5a40c8",
+    "source_surface": "Calign",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 251,
-    "symbol": "d",
-    "source_body_index": 257,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 251,
-    "symbol": "L",
+    "expression": "d",
+    "object_context": "chi phí từng thành phần",
     "source_body_index": 251,
-    "kind": "run_style"
+    "source_path": [
+      2,
+      3
+    ],
+    "source_sha256": "4c7fe37a3f69ff62f26786c2002a58805a9fa6d4a7d3f2d803f7d36fd789ff1f",
+    "source_surface": "(L,d,",
+    "span": [
+      3,
+      4
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 251,
+    "expression": "L",
+    "object_context": "chi phí từng thành phần",
+    "source_body_index": 251,
+    "source_path": [
+      2,
+      3
+    ],
+    "source_sha256": "4c7fe37a3f69ff62f26786c2002a58805a9fa6d4a7d3f2d803f7d36fd789ff1f",
+    "source_surface": "(L,d,",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 248,
-    "symbol": "δdelay",
+    "expression": "δdelay",
+    "object_context": "watermark và dung sai",
     "source_body_index": 248,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      8
+    ],
+    "source_sha256": "e2fe0279416dece93f100ba8eeec810ddea43fbf954ed888cf0aa62af6c4cf76",
+    "source_surface": "δdelay",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 248,
-    "symbol": "δdelay",
+    "expression": "δdelay=5",
+    "object_context": "watermark và dung sai",
     "source_body_index": 248,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      8
+    ],
+    "source_sha256": "e2fe0279416dece93f100ba8eeec810ddea43fbf954ed888cf0aa62af6c4cf76",
+    "source_surface": "δdelay",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 248,
-    "symbol": "twm",
+    "expression": "twm=100−5=95 giây",
+    "object_context": "watermark và dung sai",
     "source_body_index": 248,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 248,
-    "symbol": "s",
-    "source_body_index": 314,
-    "kind": "run_style"
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "ae7f673924df7bf723e81d1ebafde0d267726ee13c9e25d8a42d4b7c3844d915",
+    "source_surface": "twm",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 245,
-    "symbol": "tlast",
+    "expression": "tlast(v)",
+    "object_context": "thực thể hoạt động / TTL / trạng thái",
     "source_body_index": 245,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "ffba82374ca8cfdfdddd6533c23b6f661c0eb5598a851503cf99e12adac55eb1",
+    "source_surface": "(t)={v∈",
+    "span": [
+      5,
+      6
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 245,
-    "symbol": "v",
-    "source_body_index": 264,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 245,
-    "symbol": "τTTL",
+    "expression": "tlast(v)",
+    "object_context": "thực thể hoạt động / TTL / trạng thái",
     "source_body_index": 245,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      4
+    ],
+    "source_sha256": "36737943cd5c821c0db1bc02275df296fca3a8897d98841048f0314cdc720925",
+    "source_surface": "tlast",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 245,
-    "symbol": "v",
-    "source_body_index": 264,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 245,
-    "symbol": "τTTL",
+    "expression": "v",
+    "object_context": "thực thể hoạt động / TTL / trạng thái",
     "source_body_index": 245,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "ffba82374ca8cfdfdddd6533c23b6f661c0eb5598a851503cf99e12adac55eb1",
+    "source_surface": "(t)={v∈",
+    "span": [
+      5,
+      6
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 245,
-    "symbol": "v",
-    "source_body_index": 264,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 245,
-    "symbol": "St",
+    "expression": "τTTL",
+    "object_context": "thực thể hoạt động / TTL / trạng thái",
     "source_body_index": 245,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      6
+    ],
+    "source_sha256": "239c399d002937414170ce7ef5c2f3876e4a8131587309f284378edcbb6c5e0b",
+    "source_surface": "τTTL",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 245,
-    "symbol": "St",
+    "expression": "v",
+    "object_context": "thực thể hoạt động / TTL / trạng thái",
     "source_body_index": 245,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "ffba82374ca8cfdfdddd6533c23b6f661c0eb5598a851503cf99e12adac55eb1",
+    "source_surface": "(t)={v∈",
+    "span": [
+      5,
+      6
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 245,
+    "expression": "τTTL=5",
+    "object_context": "thực thể hoạt động / TTL / trạng thái",
+    "source_body_index": 245,
+    "source_path": [
+      1,
+      0,
+      6
+    ],
+    "source_sha256": "239c399d002937414170ce7ef5c2f3876e4a8131587309f284378edcbb6c5e0b",
+    "source_surface": "τTTL",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 245,
+    "expression": "v",
+    "object_context": "thực thể hoạt động / TTL / trạng thái",
+    "source_body_index": 245,
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "ffba82374ca8cfdfdddd6533c23b6f661c0eb5598a851503cf99e12adac55eb1",
+    "source_surface": "(t)={v∈",
+    "span": [
+      5,
+      6
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 245,
+    "expression": "|Sₜ|",
+    "object_context": "thực thể hoạt động / TTL / trạng thái",
+    "source_body_index": 245,
+    "source_path": [
+      1,
+      0,
+      8
+    ],
+    "source_sha256": "4c4b29641072b788ac8d61e97fc79f8ebca1e410c3d448f43472ba407b2fa57b",
+    "source_surface": "St",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 245,
+    "expression": "Mem(Sₜ)",
+    "object_context": "thực thể hoạt động / TTL / trạng thái",
+    "source_body_index": 245,
+    "source_path": [
+      1,
+      0,
+      8
+    ],
+    "source_sha256": "4c4b29641072b788ac8d61e97fc79f8ebca1e410c3d448f43472ba407b2fa57b",
+    "source_surface": "St",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 245,
+    "expression": "Mem(Sₜ)",
+    "object_context": "thực thể hoạt động / TTL / trạng thái",
+    "source_body_index": 239,
+    "source_path": [
+      1,
+      0,
+      5
+    ],
+    "source_sha256": "26e705cc2777174f4aa3a566135b97508880f33845139e38f68cd1f7ba161767",
+    "source_surface": "Mem",
+    "span": [
+      0,
+      3
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 241,
+    "expression": "Utility",
+    "object_context": "Utility/PrivacyLoss tại cùng điểm vận hành",
+    "source_body_index": 241,
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "b8d93e9b8783f869f786dfe6a17bfb8a57d103adad2ef70002ce7fcb5849768a",
+    "source_surface": "Utility",
+    "span": [
+      0,
+      7
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 241,
+    "expression": "PrivacyLoss",
+    "object_context": "Utility/PrivacyLoss tại cùng điểm vận hành",
+    "source_body_index": 241,
+    "source_path": [
+      1,
+      0,
+      7
+    ],
+    "source_sha256": "a47718dfdce35c96cfecca3cce1021fdd0c3d7bf2d9138e47e46c5538d061eae",
+    "source_surface": "PrivacyLoss",
+    "span": [
+      0,
+      11
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 239,
-    "symbol": "et",
+    "expression": "Δt(eₜ)",
+    "object_context": "giới hạn tài nguyên theo bước",
     "source_body_index": 239,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "64e2f65527f2c1c924680950221e0c0bd7e4809b68263014c288caf02253181c",
+    "source_surface": "et",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 239,
-    "symbol": "Tbudget",
+    "expression": "Δt(eₜ)",
+    "object_context": "giới hạn tài nguyên theo bước",
     "source_body_index": 239,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "338c734de071085d6bf79091cdd62c708207389b236136891de2d4c4295e93ae",
+    "source_surface": "Δt(",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 239,
-    "symbol": "St",
+    "expression": "Δt(eₜ)",
+    "object_context": "giới hạn tài nguyên theo bước",
     "source_body_index": 239,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "338c734de071085d6bf79091cdd62c708207389b236136891de2d4c4295e93ae",
+    "source_surface": "Δt(",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 239,
-    "symbol": "Mmax",
+    "expression": "Tbudget",
+    "object_context": "giới hạn tài nguyên theo bước",
     "source_body_index": 239,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      3
+    ],
+    "source_sha256": "b195108da887ea5fc7a316039b17c21ba654dc504988c098e74a81b71558f73d",
+    "source_surface": "Tbudget",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 239,
+    "expression": "Mem(Sₜ)",
+    "object_context": "giới hạn tài nguyên theo bước",
+    "source_body_index": 239,
+    "source_path": [
+      1,
+      0,
+      7
+    ],
+    "source_sha256": "4c4b29641072b788ac8d61e97fc79f8ebca1e410c3d448f43472ba407b2fa57b",
+    "source_surface": "St",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 239,
+    "expression": "Mem(Sₜ)",
+    "object_context": "giới hạn tài nguyên theo bước",
+    "source_body_index": 239,
+    "source_path": [
+      1,
+      0,
+      5
+    ],
+    "source_sha256": "26e705cc2777174f4aa3a566135b97508880f33845139e38f68cd1f7ba161767",
+    "source_surface": "Mem",
+    "span": [
+      0,
+      3
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 239,
+    "expression": "Mmax",
+    "object_context": "giới hạn tài nguyên theo bước",
+    "source_body_index": 239,
+    "source_path": [
+      1,
+      0,
+      9
+    ],
+    "source_sha256": "c30b5b5ac51d94d40f034bdb80f230f60bd59239de3a31118edda924117c07d7",
+    "source_surface": "Mmax",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 239,
+    "expression": "∀t",
+    "object_context": "giới hạn tài nguyên theo bước",
+    "source_body_index": 239,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "338c734de071085d6bf79091cdd62c708207389b236136891de2d4c4295e93ae",
+    "source_surface": "Δt(",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 237,
-    "symbol": "ϵinv",
+    "expression": "T",
+    "object_context": "biến đổi vô hại và shortcut",
+    "source_body_index": 236,
+    "source_path": [
+      8,
+      0
+    ],
+    "source_sha256": "f33a4693dfb769e39668caacb49635f3d135d858d650208dec3f2d0042b02fc8",
+    "source_surface": "T∈",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 237,
+    "expression": "εinv",
+    "object_context": "biến đổi vô hại và shortcut",
     "source_body_index": 237,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      3
+    ],
+    "source_sha256": "d5252c3312b19db19886f60d1cd6f18775e08f7c6da1bd3a139471bcd8fe1f22",
+    "source_surface": "ϵinv",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 237,
+    "expression": "T",
+    "object_context": "biến đổi vô hại và shortcut",
+    "source_body_index": 236,
+    "source_path": [
+      8,
+      0
+    ],
+    "source_sha256": "f33a4693dfb769e39668caacb49635f3d135d858d650208dec3f2d0042b02fc8",
+    "source_surface": "T∈",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 237,
+    "expression": "S",
+    "object_context": "biến đổi vô hại và shortcut",
+    "source_body_index": 236,
+    "source_path": [
+      2,
+      0
+    ],
+    "source_sha256": "bf168e1a81be81cede721db82e3f532490f5e0330e09128790996895eb3ee6ff",
+    "source_surface": "S∈",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 234,
-    "symbol": "ϵmargin",
+    "expression": "Utility",
+    "object_context": "biên Utility",
     "source_body_index": 234,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "b8d93e9b8783f869f786dfe6a17bfb8a57d103adad2ef70002ce7fcb5849768a",
+    "source_surface": "Utility",
+    "span": [
+      0,
+      7
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 234,
+    "expression": "εmargin",
+    "object_context": "biên Utility",
+    "source_body_index": 234,
+    "source_path": [
+      1,
+      0,
+      10
+    ],
+    "source_sha256": "02610a0fddcf856950437e69ad468f31a0c0b0430a44e93ffa42233911b6e424",
+    "source_surface": "ϵmargin",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 224,
-    "symbol": "St-1",
+    "expression": "Update",
+    "object_context": "bộ nhớ dòng và ánh xạ biểu diễn",
     "source_body_index": 224,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      8
+    ],
+    "source_sha256": "5973cf307cc2dd507d0e9569925aa9e77309c69a8efc9236f7fa133cb3ded152",
+    "source_surface": "Update",
+    "span": [
+      0,
+      6
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 224,
-    "symbol": "et",
+    "expression": "Sₜ₋₁",
+    "object_context": "bộ nhớ dòng và ánh xạ biểu diễn",
     "source_body_index": 224,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      10
+    ],
+    "source_sha256": "4e268dcdb44b53704d26076d767b718ae8feffa00de88a57aa004d6a06115228",
+    "source_surface": "St-1",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 224,
-    "symbol": "St",
+    "expression": "eₜ",
+    "object_context": "bộ nhớ dòng và ánh xạ biểu diễn",
     "source_body_index": 224,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      12
+    ],
+    "source_sha256": "64e2f65527f2c1c924680950221e0c0bd7e4809b68263014c288caf02253181c",
+    "source_surface": "et",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 224,
-    "symbol": "fθ",
+    "expression": "Sₜ",
+    "object_context": "bộ nhớ dòng và ánh xạ biểu diễn",
     "source_body_index": 224,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      4
+    ],
+    "source_sha256": "4c4b29641072b788ac8d61e97fc79f8ebca1e410c3d448f43472ba407b2fa57b",
+    "source_surface": "St",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 224,
-    "symbol": "zt",
+    "expression": "fθ",
+    "object_context": "bộ nhớ dòng và ánh xạ biểu diễn",
     "source_body_index": 224,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      2
+    ],
+    "source_sha256": "a91fc035cf804fc41d919579cbec012681e90567be83b711c70e73734a91debb",
+    "source_surface": "fθ",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 224,
-    "symbol": "d",
+    "expression": "zₜ",
+    "object_context": "bộ nhớ dòng và ánh xạ biểu diễn",
+    "source_body_index": 224,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "6a2a75b44ea26de71870d3b2f440b90aa2510d68bb720033caf74026a4885e52",
+    "source_surface": "zt",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 224,
+    "expression": "d",
+    "object_context": "bộ nhớ dòng và ánh xạ biểu diễn",
     "source_body_index": 223,
-    "kind": "run_style"
+    "source_path": [
+      6,
+      2,
+      2,
+      0
+    ],
+    "source_sha256": "b53b797d16cb60cf1b65547e8e8b1810c79dad4b4bbe89c59ddcc7e05ff6fdee",
+    "source_surface": "d",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 222,
-    "symbol": "P",
-    "source_body_index": 236,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 222,
-    "symbol": "F",
-    "source_body_index": 434,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 222,
-    "symbol": "P",
-    "source_body_index": 236,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 182,
-    "symbol": "ϕ",
-    "source_body_index": 270,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 182,
-    "symbol": "Tv",
-    "source_body_index": 182,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 182,
-    "symbol": "ψ",
-    "source_body_index": 275,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 182,
-    "symbol": "Te",
-    "source_body_index": 182,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 182,
-    "symbol": "τ",
+    "expression": "⊥",
+    "object_context": "đối tượng đích thiếu trong bộ sáu sự kiện",
     "source_body_index": 222,
-    "kind": "run_style"
+    "source_path": [
+      12,
+      1
+    ],
+    "source_sha256": "7f6953e2484602cc118eef10a941d1ff453d0de24d6549748f6a02893b70a494",
+    "source_surface": "∈O∪{⊥}",
+    "span": [
+      4,
+      5
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 182,
+    "expression": "ϕ",
+    "object_context": "kiểu đỉnh/cạnh và ánh xạ đồ thị",
+    "source_body_index": 181,
+    "source_path": [
+      1,
+      0,
+      4
+    ],
+    "source_sha256": "60bab02928c393241ed3c2140f3a2a18853fc880cd404bd7da4cb8e291762e49",
+    "source_surface": ",ϕ,ψ,τ)",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 182,
+    "expression": "Tᵥ",
+    "object_context": "kiểu đỉnh/cạnh và ánh xạ đồ thị",
+    "source_body_index": 182,
+    "source_path": [
+      2,
+      0
+    ],
+    "source_sha256": "923d0e0c02bc85c5fc03b44e24661d1ab5ef18cd0877767e320cf756440af206",
+    "source_surface": "Tv",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 182,
+    "expression": "ψ",
+    "object_context": "kiểu đỉnh/cạnh và ánh xạ đồ thị",
+    "source_body_index": 181,
+    "source_path": [
+      1,
+      0,
+      4
+    ],
+    "source_sha256": "60bab02928c393241ed3c2140f3a2a18853fc880cd404bd7da4cb8e291762e49",
+    "source_surface": ",ϕ,ψ,τ)",
+    "span": [
+      3,
+      4
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 182,
+    "expression": "Tₑ",
+    "object_context": "kiểu đỉnh/cạnh và ánh xạ đồ thị",
+    "source_body_index": 182,
+    "source_path": [
+      4,
+      0
+    ],
+    "source_sha256": "9c27b06bfb94886711d60b05b770288cad2e0b1ab65fa4bba3319b821ec440b2",
+    "source_surface": "Te",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 182,
+    "expression": "τ",
+    "object_context": "kiểu đỉnh/cạnh và ánh xạ đồ thị",
+    "source_body_index": 181,
+    "source_path": [
+      1,
+      0,
+      4
+    ],
+    "source_sha256": "60bab02928c393241ed3c2140f3a2a18853fc880cd404bd7da4cb8e291762e49",
+    "source_surface": ",ϕ,ψ,τ)",
+    "span": [
+      5,
+      6
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 175,
-    "symbol": "Et",
+    "expression": "Eₜ",
+    "object_context": "tập top-g và họ loại sự kiện e_i",
     "source_body_index": 175,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "ebfa59cafa9039c62a41d99ea9a1f0e764ba0527ca5b03c70aa87942934072ec",
+    "source_surface": "Et",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 175,
-    "symbol": "g",
+    "expression": "g",
+    "object_context": "tập top-g và họ loại sự kiện e_i",
     "source_body_index": 175,
-    "kind": "run_style"
+    "source_path": [
+      1,
+      0,
+      2,
+      1,
+      0
+    ],
+    "source_sha256": "bd710ca5bc86f6535d5c4ae395a717dd3f1bbd9eac6067e04ebbdf8d69e99927",
+    "source_surface": "g",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 175,
-    "symbol": "A",
-    "source_body_index": 266,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 175,
-    "symbol": "B",
-    "source_body_index": 356,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 175,
-    "symbol": "C",
-    "source_body_index": 140,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 175,
-    "symbol": "Et",
+    "expression": "t",
+    "object_context": "tập top-g và họ loại sự kiện e_i",
     "source_body_index": 175,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      1,
+      0,
+      0,
+      2,
+      0
+    ],
+    "source_sha256": "459d94fd8b0a4b719a40e5737675bdaf90db9f6be1b41020789259dc50ac546b",
+    "source_surface": "t",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 175,
-    "symbol": "C",
-    "source_body_index": 140,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 170,
-    "symbol": "A",
-    "source_body_index": 266,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 170,
-    "symbol": "x",
-    "source_body_index": 168,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 168,
-    "symbol": "P",
-    "source_body_index": 168,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 168,
-    "symbol": "x",
-    "source_body_index": 168,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 168,
-    "symbol": "I",
-    "source_body_index": 140,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 168,
-    "symbol": "xa",
-    "source_body_index": 168,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 168,
-    "symbol": "P",
-    "source_body_index": 168,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 168,
-    "symbol": "xa",
-    "source_body_index": 168,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 168,
-    "symbol": "xa",
-    "source_body_index": 168,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 168,
-    "symbol": "γα",
-    "source_body_index": 168,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 166,
-    "symbol": "W",
-    "source_body_index": 166,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 166,
-    "symbol": "M",
-    "source_body_index": 166,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 166,
-    "symbol": "ei",
-    "source_body_index": 166,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 166,
-    "symbol": "ei",
-    "source_body_index": 166,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 166,
-    "symbol": "W",
-    "source_body_index": 166,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 166,
-    "symbol": "W",
-    "source_body_index": 166,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 166,
-    "symbol": "A",
-    "source_body_index": 266,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 166,
-    "symbol": "A",
-    "source_body_index": 266,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 166,
-    "symbol": "B",
-    "source_body_index": 356,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 166,
-    "symbol": "B",
-    "source_body_index": 356,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 166,
-    "symbol": "log2",
-    "source_body_index": 166,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 166,
-    "symbol": "log2",
-    "source_body_index": 166,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 166,
-    "symbol": "A",
-    "source_body_index": 266,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 165,
-    "symbol": "N",
-    "source_body_index": 165,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 165,
-    "symbol": "ei",
-    "source_body_index": 165,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 165,
-    "symbol": "ei",
-    "source_body_index": 165,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
-  },
-  {
-    "anchor": 165,
-    "symbol": "A",
-    "source_body_index": 266,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 165,
-    "symbol": "B",
-    "source_body_index": 356,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 165,
-    "symbol": "log",
-    "source_body_index": 165,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 165,
-    "symbol": "log",
-    "source_body_index": 165,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 165,
-    "symbol": "log",
-    "source_body_index": 165,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 165,
-    "symbol": "log",
-    "source_body_index": 165,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 164,
-    "symbol": "x",
-    "source_body_index": 168,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 164,
-    "symbol": "W",
+    "expression": "e₁",
+    "object_context": "tập top-g và họ loại sự kiện e_i",
     "source_body_index": 163,
-    "kind": "run_style"
+    "source_path": [
+      4,
+      1
+    ],
+    "source_sha256": "92f5c7061017a08c4f8bfaf20cabd1bf7e75036c4695b06ae6bdf73f523ee1b2",
+    "source_surface": "e1",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 175,
+    "expression": "e₂",
+    "object_context": "tập top-g và họ loại sự kiện e_i",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      3
+    ],
+    "source_sha256": "d6f2795d23079b74c3491bc2091f36511d091740e91f1b5c01085e1806a1e0bc",
+    "source_surface": "e2",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 175,
+    "expression": "e₃",
+    "object_context": "tập top-g và họ loại sự kiện e_i",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      5
+    ],
+    "source_sha256": "8361d31d7527464b76e5359e63f77c8e14140829994109e43f86dd19ff113cf3",
+    "source_surface": "eM",
+    "span": null,
+    "kind": "indexed_example",
+    "candidate_styles": 1,
+    "substitution": {
+      "slot": "sub",
+      "old": "M",
+      "new": "3"
+    }
+  },
+  {
+    "anchor": 175,
+    "expression": "g=2",
+    "object_context": "tập top-g và họ loại sự kiện e_i",
+    "source_body_index": 175,
+    "source_path": [
+      1,
+      0,
+      2,
+      1,
+      0
+    ],
+    "source_sha256": "bd710ca5bc86f6535d5c4ae395a717dd3f1bbd9eac6067e04ebbdf8d69e99927",
+    "source_surface": "g",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 175,
+    "expression": "Eₜ={e₁,e₂}",
+    "object_context": "tập top-g và họ loại sự kiện e_i",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      3
+    ],
+    "source_sha256": "d6f2795d23079b74c3491bc2091f36511d091740e91f1b5c01085e1806a1e0bc",
+    "source_surface": "e2",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 175,
+    "expression": "Eₜ={e₁,e₂}",
+    "object_context": "tập top-g và họ loại sự kiện e_i",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      1
+    ],
+    "source_sha256": "92f5c7061017a08c4f8bfaf20cabd1bf7e75036c4695b06ae6bdf73f523ee1b2",
+    "source_surface": "e1",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 175,
+    "expression": "Eₜ={e₁,e₂}",
+    "object_context": "tập top-g và họ loại sự kiện e_i",
+    "source_body_index": 175,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "ebfa59cafa9039c62a41d99ea9a1f0e764ba0527ca5b03c70aa87942934072ec",
+    "source_surface": "Et",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 175,
+    "expression": "e₃",
+    "object_context": "tập top-g và họ loại sự kiện e_i",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      5
+    ],
+    "source_sha256": "8361d31d7527464b76e5359e63f77c8e14140829994109e43f86dd19ff113cf3",
+    "source_surface": "eM",
+    "span": null,
+    "kind": "indexed_example",
+    "candidate_styles": 1,
+    "substitution": {
+      "slot": "sub",
+      "old": "M",
+      "new": "3"
+    }
+  },
+  {
+    "anchor": 170,
+    "expression": "A",
+    "object_context": "quan hệ bất biến tuyến tính",
+    "source_body_index": 170,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "a1cf034d8bbb09b119d43b9b069254add94f734c680f12c64d658654d6033f77",
+    "source_surface": "Ax=",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 170,
+    "expression": "x",
+    "object_context": "quan hệ bất biến tuyến tính",
+    "source_body_index": 170,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "a1cf034d8bbb09b119d43b9b069254add94f734c680f12c64d658654d6033f77",
+    "source_surface": "Ax=",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 170,
+    "expression": "zero_vector",
+    "object_context": "quan hệ bất biến tuyến tính",
+    "source_body_index": 170,
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "55fe14cdad62215fe78680d6d08465951f83c305c1076fe9c208aa48a4369c9c",
+    "source_surface": "0",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 170,
+    "expression": "A=[1,−1], x=(2,2)ᵀ",
+    "object_context": "quan hệ bất biến tuyến tính",
+    "source_body_index": 164,
+    "source_path": [
+      1,
+      0,
+      1,
+      2,
+      0
+    ],
+    "source_sha256": "79e7108f6079b37198ce85dfd75756c2fd3a7abdc6f51b1bc774ed3a4aac1a21",
+    "source_surface": "T",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 170,
+    "expression": "A=[1,−1], x=(2,2)ᵀ",
+    "object_context": "quan hệ bất biến tuyến tính",
+    "source_body_index": 170,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "a1cf034d8bbb09b119d43b9b069254add94f734c680f12c64d658654d6033f77",
+    "source_surface": "Ax=",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 170,
+    "expression": "A=[1,−1], x=(2,2)ᵀ",
+    "object_context": "quan hệ bất biến tuyến tính",
+    "source_body_index": 170,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "a1cf034d8bbb09b119d43b9b069254add94f734c680f12c64d658654d6033f77",
+    "source_surface": "Ax=",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 170,
+    "expression": "Ax=0",
+    "object_context": "quan hệ bất biến tuyến tính",
+    "source_body_index": 170,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "a1cf034d8bbb09b119d43b9b069254add94f734c680f12c64d658654d6033f77",
+    "source_surface": "Ax=",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 170,
+    "expression": "Ax=0",
+    "object_context": "quan hệ bất biến tuyến tính",
+    "source_body_index": 170,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "a1cf034d8bbb09b119d43b9b069254add94f734c680f12c64d658654d6033f77",
+    "source_surface": "Ax=",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 170,
+    "expression": "Ax=0",
+    "object_context": "quan hệ bất biến tuyến tính",
+    "source_body_index": 170,
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "55fe14cdad62215fe78680d6d08465951f83c305c1076fe9c208aa48a4369c9c",
+    "source_surface": "0",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 170,
+    "expression": "x=(2,1)ᵀ",
+    "object_context": "quan hệ bất biến tuyến tính",
+    "source_body_index": 164,
+    "source_path": [
+      1,
+      0,
+      1,
+      2,
+      0
+    ],
+    "source_sha256": "79e7108f6079b37198ce85dfd75756c2fd3a7abdc6f51b1bc774ed3a4aac1a21",
+    "source_surface": "T",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 170,
+    "expression": "x=(2,1)ᵀ",
+    "object_context": "quan hệ bất biến tuyến tính",
+    "source_body_index": 170,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "a1cf034d8bbb09b119d43b9b069254add94f734c680f12c64d658654d6033f77",
+    "source_surface": "Ax=",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 170,
+    "expression": "Ax=1",
+    "object_context": "quan hệ bất biến tuyến tính",
+    "source_body_index": 170,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "a1cf034d8bbb09b119d43b9b069254add94f734c680f12c64d658654d6033f77",
+    "source_surface": "Ax=",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 170,
+    "expression": "Ax=1",
+    "object_context": "quan hệ bất biến tuyến tính",
+    "source_body_index": 170,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "a1cf034d8bbb09b119d43b9b069254add94f734c680f12c64d658654d6033f77",
+    "source_surface": "Ax=",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 168,
+    "expression": "P",
+    "object_context": "phép chiếu PCA / ma trận đơn vị / phần dư",
+    "source_body_index": 168,
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "3a520b3fc4f2c4e72d75e67d4c8fba9852ac7bd37339b02ef36c2dd3d5e8f50d",
+    "source_surface": "=(I-P",
+    "span": [
+      4,
+      5
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 168,
+    "expression": "x",
+    "object_context": "phép chiếu PCA / ma trận đơn vị / phần dư",
+    "source_body_index": 168,
+    "source_path": [
+      1,
+      0,
+      0,
+      1,
+      0
+    ],
+    "source_sha256": "c0bad8fdfc1bac6359c46a7e82c0e15fcb92ae2addf6aa67e539e353e89c42af",
+    "source_surface": "x",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 168,
+    "expression": "I",
+    "object_context": "phép chiếu PCA / ma trận đơn vị / phần dư",
+    "source_body_index": 168,
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "3a520b3fc4f2c4e72d75e67d4c8fba9852ac7bd37339b02ef36c2dd3d5e8f50d",
+    "source_surface": "=(I-P",
+    "span": [
+      2,
+      3
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 168,
+    "expression": "xₐ",
+    "object_context": "phép chiếu PCA / ma trận đơn vị / phần dư",
+    "source_body_index": 168,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "7042f67989d89da7e3c98c7bc53c0a00fac83d7466ac1c47fc79e7b6276cb722",
+    "source_surface": "xa",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 168,
+    "expression": "P",
+    "object_context": "phép chiếu PCA / ma trận đơn vị / phần dư",
+    "source_body_index": 168,
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "3a520b3fc4f2c4e72d75e67d4c8fba9852ac7bd37339b02ef36c2dd3d5e8f50d",
+    "source_surface": "=(I-P",
+    "span": [
+      4,
+      5
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 168,
+    "expression": "x=(3,2)ᵀ, P=(1,0)ᵀ",
+    "object_context": "phép chiếu PCA / ma trận đơn vị / phần dư",
+    "source_body_index": 168,
+    "source_path": [
+      1,
+      0,
+      2,
+      2,
+      0
+    ],
+    "source_sha256": "5463e33cd36bcc13ad39f3934e5af249ee64c4bcb342afd84b30423cb781672d",
+    "source_surface": "⊤",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 168,
+    "expression": "x=(3,2)ᵀ, P=(1,0)ᵀ",
+    "object_context": "phép chiếu PCA / ma trận đơn vị / phần dư",
+    "source_body_index": 168,
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "3a520b3fc4f2c4e72d75e67d4c8fba9852ac7bd37339b02ef36c2dd3d5e8f50d",
+    "source_surface": "=(I-P",
+    "span": [
+      4,
+      5
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 168,
+    "expression": "x=(3,2)ᵀ, P=(1,0)ᵀ",
+    "object_context": "phép chiếu PCA / ma trận đơn vị / phần dư",
+    "source_body_index": 168,
+    "source_path": [
+      1,
+      0,
+      2,
+      2,
+      0
+    ],
+    "source_sha256": "5463e33cd36bcc13ad39f3934e5af249ee64c4bcb342afd84b30423cb781672d",
+    "source_surface": "⊤",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 168,
+    "expression": "x=(3,2)ᵀ, P=(1,0)ᵀ",
+    "object_context": "phép chiếu PCA / ma trận đơn vị / phần dư",
+    "source_body_index": 168,
+    "source_path": [
+      1,
+      0,
+      0,
+      1,
+      0
+    ],
+    "source_sha256": "c0bad8fdfc1bac6359c46a7e82c0e15fcb92ae2addf6aa67e539e353e89c42af",
+    "source_surface": "x",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 168,
+    "expression": "(3,0)ᵀ",
+    "object_context": "phép chiếu PCA / ma trận đơn vị / phần dư",
+    "source_body_index": 168,
+    "source_path": [
+      1,
+      0,
+      2,
+      2,
+      0
+    ],
+    "source_sha256": "5463e33cd36bcc13ad39f3934e5af249ee64c4bcb342afd84b30423cb781672d",
+    "source_surface": "⊤",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 168,
+    "expression": "xₐ=(0,2)ᵀ, ‖xₐ‖²=4",
+    "object_context": "phép chiếu PCA / ma trận đơn vị / phần dư",
+    "source_body_index": 168,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "7042f67989d89da7e3c98c7bc53c0a00fac83d7466ac1c47fc79e7b6276cb722",
+    "source_surface": "xa",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 168,
+    "expression": "xₐ=(0,2)ᵀ, ‖xₐ‖²=4",
+    "object_context": "phép chiếu PCA / ma trận đơn vị / phần dư",
+    "source_body_index": 168,
+    "source_path": [
+      1,
+      0,
+      2,
+      2,
+      0
+    ],
+    "source_sha256": "5463e33cd36bcc13ad39f3934e5af249ee64c4bcb342afd84b30423cb781672d",
+    "source_surface": "⊤",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 168,
+    "expression": "xₐ=(0,2)ᵀ, ‖xₐ‖²=4",
+    "object_context": "phép chiếu PCA / ma trận đơn vị / phần dư",
+    "source_body_index": 168,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "7042f67989d89da7e3c98c7bc53c0a00fac83d7466ac1c47fc79e7b6276cb722",
+    "source_surface": "xa",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 168,
+    "expression": "γα=3",
+    "object_context": "phép chiếu PCA / ma trận đơn vị / phần dư",
+    "source_body_index": 168,
+    "source_path": [
+      1,
+      0,
+      7
+    ],
+    "source_sha256": "7844db1dd3f12d1badba3a710d6d6ef97249cf940819b1cbb87ad0a702db1543",
+    "source_surface": "γα",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "W",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 166,
+    "source_path": [
+      1,
+      0,
+      1,
+      1,
+      0
+    ],
+    "source_sha256": "6d1c1f7b17ce8ae1706bdaeb22a0410142c888ce831215f61a94a36e8019c37d",
+    "source_surface": "W",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "M",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 166,
+    "source_path": [
+      1,
+      0,
+      3,
+      2,
+      0
+    ],
+    "source_sha256": "20359e05983bcf2ab7451bedfc3e230af77996961a3fdd2f3f6b5c63ef969440",
+    "source_surface": "M",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "p(eᵢ)",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 166,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      1,
+      1,
+      0
+    ],
+    "source_sha256": "dc7f5f0720a94fdfbce9b9a8011ec11e4c83fcc73979e5a2c267069fb5eb7045",
+    "source_surface": "ei",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "p(eᵢ)",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 166,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      0
+    ],
+    "source_sha256": "42a379eb99adb285fb20c4b9875a958c568f85a6db805f2bb5ef9e4f393d1995",
+    "source_surface": "p",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "eᵢ",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 166,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      1,
+      1,
+      0
+    ],
+    "source_sha256": "dc7f5f0720a94fdfbce9b9a8011ec11e4c83fcc73979e5a2c267069fb5eb7045",
+    "source_surface": "ei",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "W",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 166,
+    "source_path": [
+      1,
+      0,
+      1,
+      1,
+      0
+    ],
+    "source_sha256": "6d1c1f7b17ce8ae1706bdaeb22a0410142c888ce831215f61a94a36e8019c37d",
+    "source_surface": "W",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "W",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 166,
+    "source_path": [
+      1,
+      0,
+      1,
+      1,
+      0
+    ],
+    "source_sha256": "6d1c1f7b17ce8ae1706bdaeb22a0410142c888ce831215f61a94a36e8019c37d",
+    "source_surface": "W",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "e₁",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      1
+    ],
+    "source_sha256": "92f5c7061017a08c4f8bfaf20cabd1bf7e75036c4695b06ae6bdf73f523ee1b2",
+    "source_surface": "e1",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "e₁",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      1
+    ],
+    "source_sha256": "92f5c7061017a08c4f8bfaf20cabd1bf7e75036c4695b06ae6bdf73f523ee1b2",
+    "source_surface": "e1",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "e₂",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      3
+    ],
+    "source_sha256": "d6f2795d23079b74c3491bc2091f36511d091740e91f1b5c01085e1806a1e0bc",
+    "source_surface": "e2",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "e₂",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      3
+    ],
+    "source_sha256": "d6f2795d23079b74c3491bc2091f36511d091740e91f1b5c01085e1806a1e0bc",
+    "source_surface": "e2",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "p(e₁)=p(e₂)=0,5",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      3
+    ],
+    "source_sha256": "d6f2795d23079b74c3491bc2091f36511d091740e91f1b5c01085e1806a1e0bc",
+    "source_surface": "e2",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "p(e₁)=p(e₂)=0,5",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 166,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      0
+    ],
+    "source_sha256": "42a379eb99adb285fb20c4b9875a958c568f85a6db805f2bb5ef9e4f393d1995",
+    "source_surface": "p",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "p(e₁)=p(e₂)=0,5",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      1
+    ],
+    "source_sha256": "92f5c7061017a08c4f8bfaf20cabd1bf7e75036c4695b06ae6bdf73f523ee1b2",
+    "source_surface": "e1",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "p(e₁)=p(e₂)=0,5",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 166,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      0
+    ],
+    "source_sha256": "42a379eb99adb285fb20c4b9875a958c568f85a6db805f2bb5ef9e4f393d1995",
+    "source_surface": "p",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "H(W)=−[0,5 log₂(0,5)+0,5 log₂(0,5)]=1 bit",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 166,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      2,
+      1,
+      0
+    ],
+    "source_sha256": "7eee11cc5154d19cb52bebef5926537e71d4a7a03217d4904680848838ce6d4a",
+    "source_surface": "log2",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "H(W)=−[0,5 log₂(0,5)+0,5 log₂(0,5)]=1 bit",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 166,
+    "source_path": [
+      1,
+      0,
+      3,
+      3,
+      2,
+      1,
+      0
+    ],
+    "source_sha256": "7eee11cc5154d19cb52bebef5926537e71d4a7a03217d4904680848838ce6d4a",
+    "source_surface": "log2",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "H(W)=−[0,5 log₂(0,5)+0,5 log₂(0,5)]=1 bit",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 166,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "13423e50579dfc9e2d4eacee5d7a570166768bae2fde1743859cde4175cd935a",
+    "source_surface": "H",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "H(W)=−[0,5 log₂(0,5)+0,5 log₂(0,5)]=1 bit",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 166,
+    "source_path": [
+      1,
+      0,
+      1,
+      1,
+      0
+    ],
+    "source_sha256": "6d1c1f7b17ce8ae1706bdaeb22a0410142c888ce831215f61a94a36e8019c37d",
+    "source_surface": "W",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "e₁",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      1
+    ],
+    "source_sha256": "92f5c7061017a08c4f8bfaf20cabd1bf7e75036c4695b06ae6bdf73f523ee1b2",
+    "source_surface": "e1",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "H(W)=0",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 166,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "13423e50579dfc9e2d4eacee5d7a570166768bae2fde1743859cde4175cd935a",
+    "source_surface": "H",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 166,
+    "expression": "H(W)=0",
+    "object_context": "entropy và loại sự kiện",
+    "source_body_index": 166,
+    "source_path": [
+      1,
+      0,
+      1,
+      1,
+      0
+    ],
+    "source_sha256": "6d1c1f7b17ce8ae1706bdaeb22a0410142c888ce831215f61a94a36e8019c37d",
+    "source_surface": "W",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 165,
+    "expression": "N",
+    "object_context": "kho cửa sổ tham chiếu TF-IDF",
+    "source_body_index": 165,
+    "source_path": [
+      6,
+      1,
+      1,
+      1,
+      1,
+      0
+    ],
+    "source_sha256": "a12344e6dc033438255aca9ae3589d9ce9f86717f8f0e894d505a96b95c393b4",
+    "source_surface": "N",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 165,
+    "expression": "n(eᵢ)",
+    "object_context": "kho cửa sổ tham chiếu TF-IDF",
+    "source_body_index": 165,
+    "source_path": [
+      2,
+      1
+    ],
+    "source_sha256": "61f2f290fba1a30a0afc79513909edc7378336b2703c8e927cbcd8a146c03086",
+    "source_surface": "ei",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 165,
+    "expression": "n(eᵢ)",
+    "object_context": "kho cửa sổ tham chiếu TF-IDF",
+    "source_body_index": 165,
+    "source_path": [
+      6,
+      1,
+      1,
+      1,
+      2,
+      0
+    ],
+    "source_sha256": "ff030fbe7372f49506816f332a682425d7069b773eed452fb6bfe8867689cf09",
+    "source_surface": "n(",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 165,
+    "expression": "eᵢ",
+    "object_context": "kho cửa sổ tham chiếu TF-IDF",
+    "source_body_index": 165,
+    "source_path": [
+      2,
+      1
+    ],
+    "source_sha256": "61f2f290fba1a30a0afc79513909edc7378336b2703c8e927cbcd8a146c03086",
+    "source_surface": "ei",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 165,
+    "expression": "N=10",
+    "object_context": "kho cửa sổ tham chiếu TF-IDF",
+    "source_body_index": 165,
+    "source_path": [
+      6,
+      1,
+      1,
+      1,
+      1,
+      0
+    ],
+    "source_sha256": "a12344e6dc033438255aca9ae3589d9ce9f86717f8f0e894d505a96b95c393b4",
+    "source_surface": "N",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 165,
+    "expression": "e₁",
+    "object_context": "kho cửa sổ tham chiếu TF-IDF",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      1
+    ],
+    "source_sha256": "92f5c7061017a08c4f8bfaf20cabd1bf7e75036c4695b06ae6bdf73f523ee1b2",
+    "source_surface": "e1",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 165,
+    "expression": "e₂",
+    "object_context": "kho cửa sổ tham chiếu TF-IDF",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      3
+    ],
+    "source_sha256": "d6f2795d23079b74c3491bc2091f36511d091740e91f1b5c01085e1806a1e0bc",
+    "source_surface": "e2",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 165,
+    "expression": "log(1+10/2)=log 6",
+    "object_context": "kho cửa sổ tham chiếu TF-IDF",
+    "source_body_index": 165,
+    "source_path": [
+      6,
+      0
+    ],
+    "source_sha256": "07d69309493d94f641b5a25fefc5b52272c348d260cb8b7a8ffed7114a4ef54e",
+    "source_surface": "log",
+    "span": [
+      0,
+      3
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 165,
+    "expression": "log(1+10/2)=log 6",
+    "object_context": "kho cửa sổ tham chiếu TF-IDF",
+    "source_body_index": 165,
+    "source_path": [
+      6,
+      0
+    ],
+    "source_sha256": "07d69309493d94f641b5a25fefc5b52272c348d260cb8b7a8ffed7114a4ef54e",
+    "source_surface": "log",
+    "span": [
+      0,
+      3
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 165,
+    "expression": "log(1+10/10)=log 2",
+    "object_context": "kho cửa sổ tham chiếu TF-IDF",
+    "source_body_index": 165,
+    "source_path": [
+      6,
+      0
+    ],
+    "source_sha256": "07d69309493d94f641b5a25fefc5b52272c348d260cb8b7a8ffed7114a4ef54e",
+    "source_surface": "log",
+    "span": [
+      0,
+      3
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 165,
+    "expression": "log(1+10/10)=log 2",
+    "object_context": "kho cửa sổ tham chiếu TF-IDF",
+    "source_body_index": 165,
+    "source_path": [
+      6,
+      0
+    ],
+    "source_sha256": "07d69309493d94f641b5a25fefc5b52272c348d260cb8b7a8ffed7114a4ef54e",
+    "source_surface": "log",
+    "span": [
+      0,
+      3
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 164,
-    "symbol": "A",
-    "source_body_index": 266,
-    "kind": "run_style"
+    "expression": "x",
+    "object_context": "vector đếm và cửa sổ log",
+    "source_body_index": 164,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "6cf7e537cb2f16b0fa2686836f722722a4e35d66991bee9662608006c24e4bac",
+    "source_surface": "x = ",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 164,
-    "symbol": "B",
-    "source_body_index": 356,
-    "kind": "run_style"
+    "expression": "W",
+    "object_context": "vector đếm và cửa sổ log",
+    "source_body_index": 163,
+    "source_path": [
+      6,
+      0
+    ],
+    "source_sha256": "6d1c1f7b17ce8ae1706bdaeb22a0410142c888ce831215f61a94a36e8019c37d",
+    "source_surface": "W",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 164,
-    "symbol": "A",
-    "source_body_index": 266,
-    "kind": "run_style"
+    "expression": "e₁",
+    "object_context": "vector đếm và cửa sổ log",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      1
+    ],
+    "source_sha256": "92f5c7061017a08c4f8bfaf20cabd1bf7e75036c4695b06ae6bdf73f523ee1b2",
+    "source_surface": "e1",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 164,
-    "symbol": "A",
-    "source_body_index": 266,
-    "kind": "run_style"
+    "expression": "e₂",
+    "object_context": "vector đếm và cửa sổ log",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      3
+    ],
+    "source_sha256": "d6f2795d23079b74c3491bc2091f36511d091740e91f1b5c01085e1806a1e0bc",
+    "source_surface": "e2",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 164,
-    "symbol": "B",
-    "source_body_index": 356,
-    "kind": "run_style"
+    "expression": "e₁",
+    "object_context": "vector đếm và cửa sổ log",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      1
+    ],
+    "source_sha256": "92f5c7061017a08c4f8bfaf20cabd1bf7e75036c4695b06ae6bdf73f523ee1b2",
+    "source_surface": "e1",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 164,
-    "symbol": "B",
-    "source_body_index": 356,
-    "kind": "run_style"
+    "expression": "e₁",
+    "object_context": "vector đếm và cửa sổ log",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      1
+    ],
+    "source_sha256": "92f5c7061017a08c4f8bfaf20cabd1bf7e75036c4695b06ae6bdf73f523ee1b2",
+    "source_surface": "e1",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 164,
-    "symbol": "A",
-    "source_body_index": 266,
-    "kind": "run_style"
+    "expression": "e₂",
+    "object_context": "vector đếm và cửa sổ log",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      3
+    ],
+    "source_sha256": "d6f2795d23079b74c3491bc2091f36511d091740e91f1b5c01085e1806a1e0bc",
+    "source_surface": "e2",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 164,
-    "symbol": "A",
-    "source_body_index": 266,
-    "kind": "run_style"
+    "expression": "x=(2,1)ᵀ",
+    "object_context": "vector đếm và cửa sổ log",
+    "source_body_index": 164,
+    "source_path": [
+      1,
+      0,
+      1,
+      2,
+      0
+    ],
+    "source_sha256": "79e7108f6079b37198ce85dfd75756c2fd3a7abdc6f51b1bc774ed3a4aac1a21",
+    "source_surface": "T",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 164,
+    "expression": "x=(2,1)ᵀ",
+    "object_context": "vector đếm và cửa sổ log",
+    "source_body_index": 164,
+    "source_path": [
+      1,
+      0,
+      0
+    ],
+    "source_sha256": "6cf7e537cb2f16b0fa2686836f722722a4e35d66991bee9662608006c24e4bac",
+    "source_surface": "x = ",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 164,
+    "expression": "e₂",
+    "object_context": "vector đếm và cửa sổ log",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      3
+    ],
+    "source_sha256": "d6f2795d23079b74c3491bc2091f36511d091740e91f1b5c01085e1806a1e0bc",
+    "source_surface": "e2",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 164,
+    "expression": "e₁",
+    "object_context": "vector đếm và cửa sổ log",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      1
+    ],
+    "source_sha256": "92f5c7061017a08c4f8bfaf20cabd1bf7e75036c4695b06ae6bdf73f523ee1b2",
+    "source_surface": "e1",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 164,
+    "expression": "e₁",
+    "object_context": "vector đếm và cửa sổ log",
+    "source_body_index": 163,
+    "source_path": [
+      4,
+      1
+    ],
+    "source_sha256": "92f5c7061017a08c4f8bfaf20cabd1bf7e75036c4695b06ae6bdf73f523ee1b2",
+    "source_surface": "e1",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 156,
-    "symbol": "z",
-    "source_body_index": 223,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 156,
-    "symbol": "d",
-    "source_body_index": 154,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 156,
-    "symbol": "W",
+    "expression": "z",
+    "object_context": "đầu dò tuyến tính",
     "source_body_index": 156,
-    "kind": "run_style"
+    "source_path": [
+      1,
+      0,
+      3
+    ],
+    "source_sha256": "78c6a9feb3485a32ab5a6c2392ad6a30ed4c0c95d3c8a4cfddf547f8d0c5353b",
+    "source_surface": "z+b)",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 156,
-    "symbol": "d",
+    "expression": "d",
+    "object_context": "đầu dò tuyến tính",
     "source_body_index": 154,
-    "kind": "run_style"
+    "source_path": [
+      3,
+      3,
+      2,
+      0
+    ],
+    "source_sha256": "b53b797d16cb60cf1b65547e8e8b1810c79dad4b4bbe89c59ddcc7e05ff6fdee",
+    "source_surface": "d",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 156,
-    "symbol": "b",
-    "source_body_index": 463,
-    "kind": "run_style"
-  },
-  {
-    "anchor": 156,
-    "symbol": "W⊤",
+    "expression": "W",
+    "object_context": "đầu dò tuyến tính",
     "source_body_index": 156,
-    "kind": "whole_symbol",
-    "source_structure": "sSup"
+    "source_path": [
+      1,
+      0,
+      2,
+      1,
+      0
+    ],
+    "source_sha256": "6d1c1f7b17ce8ae1706bdaeb22a0410142c888ce831215f61a94a36e8019c37d",
+    "source_surface": "W",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 156,
+    "expression": "d",
+    "object_context": "đầu dò tuyến tính",
+    "source_body_index": 154,
+    "source_path": [
+      3,
+      3,
+      2,
+      0
+    ],
+    "source_sha256": "b53b797d16cb60cf1b65547e8e8b1810c79dad4b4bbe89c59ddcc7e05ff6fdee",
+    "source_surface": "d",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 156,
+    "expression": "b",
+    "object_context": "đầu dò tuyến tính",
+    "source_body_index": 156,
+    "source_path": [
+      1,
+      0,
+      3
+    ],
+    "source_sha256": "78c6a9feb3485a32ab5a6c2392ad6a30ed4c0c95d3c8a4cfddf547f8d0c5353b",
+    "source_surface": "z+b)",
+    "span": [
+      2,
+      3
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 156,
+    "expression": "σ",
+    "object_context": "đầu dò tuyến tính",
+    "source_body_index": 156,
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "459f73d0be29f99543a84bd753bcd2cd98fdbd0a699a2a2ed3f4623651772c8e",
+    "source_surface": "=σ(",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 156,
+    "expression": "Wᵀz+b=0",
+    "object_context": "đầu dò tuyến tính",
+    "source_body_index": 156,
+    "source_path": [
+      1,
+      0,
+      3
+    ],
+    "source_sha256": "78c6a9feb3485a32ab5a6c2392ad6a30ed4c0c95d3c8a4cfddf547f8d0c5353b",
+    "source_surface": "z+b)",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 156,
+    "expression": "Wᵀz+b=0",
+    "object_context": "đầu dò tuyến tính",
+    "source_body_index": 156,
+    "source_path": [
+      1,
+      0,
+      3
+    ],
+    "source_sha256": "78c6a9feb3485a32ab5a6c2392ad6a30ed4c0c95d3c8a4cfddf547f8d0c5353b",
+    "source_surface": "z+b)",
+    "span": [
+      2,
+      3
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 156,
+    "expression": "Wᵀz+b=0",
+    "object_context": "đầu dò tuyến tính",
+    "source_body_index": 156,
+    "source_path": [
+      1,
+      0,
+      2
+    ],
+    "source_sha256": "017191dd151a00c83c44b82d18de038cfaff1447d54eebd07b00914ea263189e",
+    "source_surface": "W⊤",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 156,
+    "expression": "σ(0)=0,5",
+    "object_context": "đầu dò tuyến tính",
+    "source_body_index": 156,
+    "source_path": [
+      1,
+      0,
+      1
+    ],
+    "source_sha256": "459f73d0be29f99543a84bd753bcd2cd98fdbd0a699a2a2ed3f4623651772c8e",
+    "source_surface": "=σ(",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 127,
-    "symbol": "Pt",
+    "expression": "P_t",
+    "object_context": "phân phối trôi dạt và biến quan sát/nhãn/biểu diễn",
     "source_body_index": 127,
-    "kind": "whole_symbol",
-    "source_structure": "sSub"
+    "source_path": [
+      2,
+      0
+    ],
+    "source_sha256": "f8c2a4c7f8466d245689dfe5ac003357210d0d36dee2d11228a3c787a7269024",
+    "source_surface": "Pt",
+    "span": null,
+    "kind": "symbol",
+    "candidate_styles": 1
   },
   {
     "anchor": 127,
-    "symbol": "X",
-    "source_body_index": 125,
-    "kind": "run_style"
+    "expression": "t",
+    "object_context": "phân phối trôi dạt và biến quan sát/nhãn/biểu diễn",
+    "source_body_index": 127,
+    "source_path": [
+      2,
+      0,
+      2,
+      0
+    ],
+    "source_sha256": "459d94fd8b0a4b719a40e5737675bdaf90db9f6be1b41020789259dc50ac546b",
+    "source_surface": "t",
+    "span": [
+      0,
+      1
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 127,
-    "symbol": "Y",
-    "source_body_index": 132,
-    "kind": "run_style"
+    "expression": "X",
+    "object_context": "phân phối trôi dạt và biến quan sát/nhãn/biểu diễn",
+    "source_body_index": 126,
+    "source_path": [
+      2,
+      1
+    ],
+    "source_sha256": "0bf1ee718fecc11a6b5f42877d98b6948736bc3123841afe6c7cf0dcb62b4c30",
+    "source_surface": "(X)≠",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 127,
-    "symbol": "z",
-    "source_body_index": 223,
-    "kind": "run_style"
+    "expression": "Y",
+    "object_context": "phân phối trôi dạt và biến quan sát/nhãn/biểu diễn",
+    "source_body_index": 124,
+    "source_path": [
+      2,
+      1
+    ],
+    "source_sha256": "cc3125f98210fb1118ef9f5356919556aee699150f6602752080d4d844dfe51a",
+    "source_surface": "(Y∣X)≠",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 127,
-    "symbol": "X",
-    "source_body_index": 125,
-    "kind": "run_style"
+    "expression": "z",
+    "object_context": "phân phối trôi dạt và biến quan sát/nhãn/biểu diễn",
+    "source_body_index": 127,
+    "source_path": [
+      2,
+      1
+    ],
+    "source_sha256": "0b6eec3e602c5d830ba3070c20a5e144a49149a0a356b53db90a7ac60873a2b6",
+    "source_surface": "(z∣X)≠",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   },
   {
     "anchor": 127,
-    "symbol": "Y",
-    "source_body_index": 132,
-    "kind": "run_style"
+    "expression": "X",
+    "object_context": "phân phối trôi dạt và biến quan sát/nhãn/biểu diễn",
+    "source_body_index": 126,
+    "source_path": [
+      2,
+      1
+    ],
+    "source_sha256": "0bf1ee718fecc11a6b5f42877d98b6948736bc3123841afe6c7cf0dcb62b4c30",
+    "source_surface": "(X)≠",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
+  },
+  {
+    "anchor": 127,
+    "expression": "Y",
+    "object_context": "phân phối trôi dạt và biến quan sát/nhãn/biểu diễn",
+    "source_body_index": 124,
+    "source_path": [
+      2,
+      1
+    ],
+    "source_sha256": "cc3125f98210fb1118ef9f5356919556aee699150f6602752080d4d844dfe51a",
+    "source_surface": "(Y∣X)≠",
+    "span": [
+      1,
+      2
+    ],
+    "kind": "run_span",
+    "candidate_styles": 1
   }
 ]

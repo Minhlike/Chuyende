@@ -36,7 +36,7 @@ NOTES={
  239: 'Δt(eₜ) là độ trễ xử lý một sự kiện; Tbudget phải dùng cùng đơn vị thời gian. Mem(Sₜ) và Mmax phải đo cùng đơn vị bộ nhớ. Ví dụ minh họa: giới hạn 5 mili-giây và 100 MiB được thỏa ở một bước có độ trễ 4 mili-giây, bộ nhớ 80 MiB; ký hiệu ∀t đòi hỏi điều kiện đúng ở mọi bước, không chỉ một phép đo mẫu.',
  241: 'Hai vế so sánh cùng một điểm vận hành với đường cơ sở trên hai thước đo đã khóa: Utility càng cao càng tốt, PrivacyLoss càng thấp càng tốt. Ví dụ minh họa: ứng viên (0,82; 0,25) so với cơ sở (0,80; 0,30) thỏa cả hai chiều; các số này hoàn toàn giả định, không phải bằng chứng H5 đã đạt. Cần phép đo quyền riêng tư từ mô hình đe dọa cụ thể.',
  245: 'tlast(v) là lần tương tác gần nhất của v và τTTL là thời lượng sống theo cùng đơn vị thời gian. Ví dụ minh họa: nếu v hoạt động lần cuối ở giây 10 và τTTL=5 giây, tại giây 14 v còn trong tập hoạt động, tại giây 16 thì không. Ký hiệu |Sₜ| được hiểu là số mục trạng thái được lưu; để khẳng định chặn bộ nhớ vật lý phải đo thêm Mem(Sₜ) bằng byte như ER1, vì số mục không quyết định số byte.',
- 248: 'Watermark lấy mốc thời gian sự kiện lớn nhất đã thấy rồi trừ dung sai đến muộn δdelay; mọi đại lượng thời gian phải cùng đơn vị. Ví dụ minh họa: mốc lớn nhất là giây 100 và δdelay=5 giây thì ⟦twm=100−5=95 giây⟧. Một sự kiện mang mốc 93 giây đã ở phía sau watermark và cần xử lý theo chính sách đến muộn, không được âm thầm đảo lại quá khứ.',
+ 248: 'Watermark lấy mốc thời gian sự kiện lớn nhất đã thấy rồi trừ dung sai đến muộn δdelay; mọi đại lượng thời gian phải cùng đơn vị. Ví dụ minh họa: mốc lớn nhất là giây 100 và δdelay=5 giây thì ⟦twm=100−5=95 giây⟧ giây. Một sự kiện mang mốc 93 giây đã ở phía sau watermark và cần xử lý theo chính sách đến muộn, không được âm thầm đảo lại quá khứ.',
  251: 'Cstep là tổng chi phí cho một bước, còn Cseq, Cgraph, Cstate và Calign là chi phí từng nhánh với đầu vào và cấu trúc dữ liệu đã nêu. Ví dụ minh họa: nếu giữ d và số tầng cố định, tăng độ dài cửa sổ L từ 10 lên 20 làm số cặp chú ý từ khoảng 100 lên 400; đó là tỷ lệ của số hạng bậc hai, không phải cam kết thời gian chạy đầu-cuối.',
  270: 'Retain(x) là chỉ báo nhận giá trị 1 khi trường x thuộc kiểu an ninh đã đặc tả hoặc khớp quy tắc tiền nghiệm; Normalize(x)=ϕ(x) chỉ chuẩn hóa biểu diễn của trường, không xóa đặc trưng có ý nghĩa an ninh. Ví dụ khái niệm: một đường dẫn cấu hình được giữ lại và chuẩn hóa dạng viết; nhãn “giữ lại” không phải phán quyết đường dẫn đó độc hại.',
  299: 'πψ dùng khóa hoặc tham số ψ trong phạm vi liên kết đã chọn: cùng thực thể trong cùng phạm vi phải cho cùng mã, còn việc đổi phạm vi/khóa có thể cho mã khác. Ví dụ khái niệm: hai lần truy cập của cùng một tiến trình trong một phiên vẫn nối được với nhau; điều này không bảo đảm chống tái định danh từ mẫu hành vi hay tạo ra quyền riêng tư vi sai.',
@@ -95,7 +95,7 @@ NOTES.update({
 })
 
 DISPLAY_EXAMPLES={
- 'H(W)=−[0,5 log₂(0,5)+0,5 log₂(0,5)]=1 bit': 'Nếu cả bốn sự kiện đều là A thì H(W)=0. Entropy đo độ phân tán, không xác nhận tấn công.',
+ 'H(W)=−[0,5 log₂(0,5)+0,5 log₂(0,5)]=1 bit': 'Giá trị entropy là 1 bit. Nếu cả bốn sự kiện đều thuộc loại e₁ thì H(W)=0. Entropy đo độ phân tán, không xác nhận tấn công.',
  '[−ln(0,8)−ln(0,5)]/2≈0,458': 'Đích là token đã bảo vệ, không phải giá trị thô. Khi không có khe hợp lệ, triển khai trả 0; mất mát thấp chưa chứng minh mô hình hiểu an ninh.',
  'LStage-A=25×0,1+25×(0,1+0,1)+0,2+0,3=8,0': 'Giá trị 8,0 chỉ là phép cộng giả định, không phải kết quả phát hiện.',
  'wrelseq=0,05+0,90×1/(1+3)=0,275': 'Khi đó trọng số góc nhìn đồ thị là 0,725. Đây là trọng số dung hợp, không phải xác suất góc nhìn đúng về an ninh.',
@@ -105,16 +105,17 @@ DISPLAY_EXAMPLES={
 # Chỉ các tên kỹ thuật được kiểm duyệt ở đây mới được chuyển; không đụng vào
 # các biểu thức đã nằm trong ⟦...⟧ và không biến mọi chữ cái thành math zone.
 PROSE_SYMBOLS=(
+ 'Utility','PrivacyLoss','Update','Msg','Agg','ParamProtect','Readoutgraph','LayerNorm','stopgrad','cos',
  'Nlayers','dff','dmodel','dseq','dgraph','dproj','dcross','datt','dmv',
  'E_W','Vupd','Wproj','Lpreserv','Lfuse-rec','Linv','Lvar','Lcov','LStage-A',
  'qseq','qgraph','sseq','sgraph','wrelseq','wrelgraph','zseq','zgraph',
  'zbag','zmv','useq','ugraph','ucross','galign','gpreserv',
  'Cov_event','Cov_graph','Density_edge','Cstep','Cseq','Cgraph','Cstate',
  'Calign','Mmax','Tbudget','εinv','εmargin',
- 'P_t','X','Y','z','x','W','M','N','P','I','d','b','g','u','v','L','A','B','C','F','K',
+ 'P_t','X','Y','z','x','W','M','N','P','I','d','b','g','u','v','L','A','B','C','F','K','T','S','t',
  'σ','γ','ε','λ','ϕ','ψ','τ','⊥','∀t',
- 'n(eᵢ)','p(eᵢ)','eᵢ','N=10','p(A)=p(B)=0,5','H(W)=0','xₐ','(3,0)ᵀ','γα=3','4>3',
- 'x=(2,1)ᵀ','Ax=1','g=2','Eₜ={A,B}','Eₜ','Tᵥ','Tₑ',
+ 'n(eᵢ)','p(eᵢ)','eᵢ','e₁','e₂','e₃','N=10','p(e₁)=p(e₂)=0,5','H(W)=0','xₐ','(3,0)ᵀ','γα=3','4>3',
+ 'x=(2,1)ᵀ','Ax=1','g=2','Eₜ={e₁,e₂}','Eₜ','Tᵥ','Tₑ',
  'Sₜ₋₁','eₜ','Sₜ','fθ','zₜ','Δt(eₜ)','Mem(Sₜ)','|Sₜ|',
  'τTTL=5','τTTL','δdelay=5','δdelay','tlast(v)','Retain(x)','Normalize(x)=ϕ(x)','πψ','pᵢ',
  'Wₛ','Wₘ','Wₗ','xᵢ','|Mₑᵥₑₙₜ|','Mₑᵥₑₙₜ','τᵢ',
@@ -134,6 +135,20 @@ def mathify_prose(value):
         last=match.end()
     out.append(SYMBOL_RE.sub(lambda m:'⟦'+m.group(0)+'⟧',value[last:]))
     return ''.join(out)
+for index in (164,165,166,175):
+    # Các loại sự kiện dùng đúng họ e_i của baseline; A/B/C ở bản cũ
+    # là những đối tượng khác, không được mượn kiểu chữ cho tên ví dụ.
+    NOTES[index]=re.sub(r'\bA\b','e₁',NOTES[index])
+    NOTES[index]=re.sub(r'\bB\b','e₂',NOTES[index])
+    NOTES[index]=re.sub(r'\bC\b','e₃',NOTES[index])
+NOTES[170]=NOTES[170].replace('0 là vector không','⟦zero_vector⟧ là vector không')
+NOTES[222]=NOTES[222].replace('tiến trình P đọc tệp F','một tiến trình đọc một tệp').replace('P độc hại','tiến trình đó độc hại')
+NOTES[222]=re.sub(r'\bP\b','tiến trình đó',NOTES[222])
+NOTES[222]=re.sub(r'\bF\b','tệp đó',NOTES[222])
+NOTES[332]=NOTES[332].replace('⟦Pᵢᵐᵃˢᵏ⟧ là tập khe tham số bị che','Tập khe tham số trong mẫu số chỉ gồm các khe bị che')
+NOTES[478]=NOTES[478].replace('thay số cho q','thay số cho các vector chất lượng')
+NOTES[518]=NOTES[518].replace('các d có chỉ số','các ký hiệu chiều có chỉ số')
+NOTES[360]=NOTES[360].replace('Ví dụ minh họa:','Ví dụ minh họa: dùng logarit tự nhiên,')
 NOTES={index:mathify_prose(note.replace('Ví dụ minh họa','Ví dụ').replace('Ví dụ khái niệm','Ví dụ')
                          .replace('ngưỡng minh họa','ngưỡng giả định')
                          .replace('galign,proj=(0,−1)','galign^proj=(0,−1)')
@@ -217,14 +232,14 @@ def paragraphs(text, template_ppr, equation_ppr, *, anchor, source_style, keep_l
             if equation_ppr is not None:eq.append(copy.deepcopy(equation_ppr))
             if eq.find(Q('pPr')) is not None:etree.SubElement(eq.find(Q('pPr')),Q('keepNext'))
             display=etree.SubElement(eq,f'{{{M}}}oMathPara')
-            display.append(source_style.apply(make_example(raw), anchor))
+            display.append(source_style.apply(make_example(raw), anchor, raw))
             result.append(eq)
             tail=paragraphs(mathify_prose(DISPLAY_EXAMPLES[raw]),template_ppr,equation_ppr,
                             anchor=anchor,source_style=source_style,keep_lines=keep_lines)
             if len(tail)!=1:raise RuntimeError('Display follow-up unexpectedly contains another display')
             p=tail[0]
         else:
-            p.append(source_style.apply(make_example(raw), anchor))
+            p.append(source_style.apply(make_example(raw), anchor, raw))
         last=m.end()
     if last<len(text):
         r=etree.SubElement(p,Q('r')); t=etree.SubElement(r,Q('t')); t.text=text[last:]; t.set('{http://www.w3.org/XML/1998/namespace}space','preserve')
@@ -256,8 +271,8 @@ def main():
         raise RuntimeError('Table 2.4 caption moved')
     template_ppr=body[165].find(Q('pPr'))
     equation_ppr=body[166].find(Q('pPr'))
-    fix_verified_math(targets[332],targets[337])
     source_style=SourceMathStyle(body)
+    fix_verified_math(targets[332],targets[337])
     for idx in sorted(NOTES,reverse=True):
         if not 111<=idx<523:raise ValueError(f'Out of scope index {idx}')
         for p in reversed(paragraphs(NOTES[idx],template_ppr,equation_ppr,anchor=idx,source_style=source_style,

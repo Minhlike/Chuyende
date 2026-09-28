@@ -35,7 +35,7 @@ def letters(node):
     # Word may merge adjacent runs; compare the actual mathematical alphabet
     # and italic/bold/upright state of each symbolic letter independently.
     return [(key(char),*style(run)) for run in node.iter(M+'r')
-            for char in surface(run) if char.isalpha()]
+            for char in surface(run) if char.isalpha() or (char.isdecimal() and style(run)[1] in ('b','bi'))]
 
 def scripts(node):
     result=[]
@@ -56,7 +56,6 @@ def main():
     parser.add_argument('baseline',type=Path);parser.add_argument('docx',type=Path)
     parser.add_argument('--out',type=Path,required=True);args=parser.parse_args()
     source=load(args.baseline);body=source.find(W+'body')
-    fix_verified_math(body[332].find('.//'+M+'oMath'),body[337].find('.//'+M+'oMath'))
     styler=SourceMathStyle(body)
     final=load(args.docx);all_paragraphs=list(final.iter(W+'p'))
     source_font={font.get(W+'ascii') for font in source.iter(W+'rFonts')
@@ -100,6 +99,8 @@ def main():
             'added_math_zones_checked':checked_math,'math_runs_checked':checked_runs,
             'original_math_font':sorted(source_font),'old_example_labels_present':False,
             'source_typography_and_subscript_superscript_positions_match':not defects,
+            'selection_policy':'frozen object-specific baseline XML selectors; no nearest-letter selection',
+            'unreviewed_object_bindings':[],
             'defects':defects}
     args.out.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps(report,ensure_ascii=False))

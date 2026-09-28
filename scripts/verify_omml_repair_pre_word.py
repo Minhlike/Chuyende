@@ -96,10 +96,9 @@ def main():
     added_flat=list((flat_after-flat_before).elements())
     style_root=etree.fromstring(etree.tostring(br))
     style_body=style_root.find(f'{{{W}}}body')
-    fix_verified_math(style_body[332].find(f'.//{{{M}}}oMath'),style_body[337].find(f'.//{{{M}}}oMath'))
     source_style=SourceMathStyle(style_body)
     added_raw=list(added_expressions())
-    expected_new=[source_style.apply(make_example(raw),anchor) for anchor,raw in added_raw]
+    expected_new=[source_style.apply(make_example(raw),anchor,raw) for anchor,raw in added_raw]
     permitted_flat=collections.Counter(text(m) for m in expected_new if flat_math(m))
     expected_structured=sum(not flat_math(m) for m in expected_new)
     counts={}
